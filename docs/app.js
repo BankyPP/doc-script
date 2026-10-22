@@ -27,12 +27,10 @@
   function fbOn() { return !!(window.POY_CONFIG.firebase && window.POY_CONFIG.firebase.apiKey); }
   /* ---------- รหัสเข้าเว็บ (soft lock เหมือนคลังข้อสอบเก่า) ---------- */
   var gateOk = false;
-  function devTrusted() {
-    var keys = ['poy-trusted'].concat((window.POY_CONFIG.gate && window.POY_CONFIG.gate.trustKeys) || []);
-    try { return keys.some(function (k) { return localStorage.getItem(k) === '1'; }); } catch (e) { return false; }
-  }
+  /* เครื่องที่เชื่อถือ = เคยกดเข้าสู่ระบบในโพยหมอเองเท่านั้น (ล็อกอินค้างจากคลังข้อสอบเก่าไม่นับ) */
+  function devTrusted() { try { return localStorage.getItem('poy-trusted') === '1'; } catch (e) { return false; } }
   function markTrusted() { try { localStorage.setItem('poy-trusted', '1'); } catch (e) { } }
-  function gateOn() { var g = window.POY_CONFIG.gate; return !!(g && g.on && g.h) && !gateOk && !devTrusted() && !(FB && FB.user); }
+  function gateOn() { var g = window.POY_CONFIG.gate; return !!(g && g.on && g.h) && !gateOk && !devTrusted(); }
   function gateHash(t) {
     return crypto.subtle.digest('SHA-256', new TextEncoder().encode((window.POY_CONFIG.gate.salt || '') + t)).then(function (b) {
       return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
@@ -122,11 +120,10 @@
       var fapp = m[0].initializeApp(window.POY_CONFIG.firebase);
       FB = { au: m[1], fs: m[2], auth: m[1].getAuth(fapp), db: m[2].getFirestore(fapp), user: null };
       m[1].setPersistence(FB.auth, m[1].browserLocalPersistence).catch(function () { });
-      m[1].getRedirectResult(FB.auth).catch(function (e) { authErr = errMsg(e); paintAcct(); });
+      m[1].getRedirectResult(FB.auth).then(function (r) { if (r && r.user) markTrusted(); }).catch(function (e) { authErr = errMsg(e); paintAcct(); });
       m[1].onAuthStateChanged(FB.auth, function (u) {
         FB.user = u; if (unsub) { unsub(); unsub = null; }
         if (!u) { syncState = 'local'; paintAcct(); return; }
-        markTrusted(); if (document.body.classList.contains('gated')) { gateOk = true; render(false); }
         authErr = ''; syncState = 'saving'; paintAcct();
         FB.fs.getDoc(fbRef()).then(function (snap) {
           var need = mergeRemote(snap.exists() ? snap.data() : null);
@@ -833,10 +830,13 @@
         : syncState === 'saving' ? '<p class="info"><span class="spin" aria-hidden="true"></span> กำลังบันทึก…</p>' : '<p class="info">บันทึกในบัญชีแล้ว · เปิดจากเครื่องไหนก็ได้</p>';
       return {
         title: 'บัญชี', html: box('<div><span class="label">เข้าสู่ระบบเป็น</span><p class="k" style="font-size:24px;margin-top:4px">' + esc(who(FB.user)) + '</p></div>' + st +
+          (devTrusted() ? '' : '<div class="sheet" style="padding:16px 18px;display:flex;flex-direction:column;gap:10px"><p>เครื่องนี้ล็อกอินค้างมาจากคลังข้อสอบเก่า แต่ยังไม่เคยเข้าสู่ระบบในโพยหมอ จึงยังต้องใส่รหัสทุกครั้งที่เข้า</p><button class="btn ghost" type="button" id="trust" style="align-self:flex-start">ยืนยันเข้าสู่ระบบในโพยหมอ (เครื่องนี้ไม่ต้องใส่รหัสอีก)</button></div>') +
           '<div><span class="label">สิ่งที่ซิงก์ข้ามเครื่อง</span>' + syncList + '</div>' +
           '<label class="ck"><input type="checkbox" id="wipe"><span>ลบข้อมูลออกจากเครื่องนี้ด้วยตอนออกจากระบบ <span class="muted">(แนะนำถ้าเป็นเครื่องคนอื่น — ข้อมูลยังอยู่ในบัญชี)</span></span></label>' +
           '<div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" href="#/">กลับหน้าแรก</a><button class="btn ghost" type="button" id="out">ออกจากระบบ</button></div>'),
         after: function () {
+          var tb = document.getElementById('trust');
+          if (tb) tb.addEventListener('click', function () { markTrusted(); toast('จำเครื่องนี้แล้ว ไม่ต้องใส่รหัสอีก'); render(true); });
           document.getElementById('out').addEventListener('click', function () {
             var wipe = document.getElementById('wipe').checked;
             pushNow().then(function () { return FB.au.signOut(FB.auth); }).then(function () {
@@ -862,10 +862,10 @@
       after: function () {
         var A = FB.au, el = function (id) { return document.getElementById(id); };
         function err(m) { authErr = m; el('err').textContent = m; el('err').hidden = !m; }
-        function cred(fn) { err(''); var e; try { e = toEmail(el('em').value); } catch (x) { err(errMsg(x)); return; } fn(FB.auth, e, el('pw').value).catch(function (x) { err(errMsg(x)); }); }
+        function cred(fn) { err(''); var e; try { e = toEmail(el('em').value); } catch (x) { err(errMsg(x)); return; } fn(FB.auth, e, el('pw').value).then(markTrusted).catch(function (x) { err(errMsg(x)); }); }
         el('gIn').addEventListener('click', function () {
           err(''); var p = new A.GoogleAuthProvider();
-          A.signInWithPopup(FB.auth, p).catch(function (e) {
+          A.signInWithPopup(FB.auth, p).then(markTrusted).catch(function (e) {
             if (['auth/popup-blocked', 'auth/operation-not-supported-in-this-environment', 'auth/cancelled-popup-request'].indexOf(e.code) >= 0) A.signInWithRedirect(FB.auth, p).catch(function (e2) { err(errMsg(e2)); });
             else err(errMsg(e));
           });
