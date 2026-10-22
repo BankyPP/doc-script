@@ -20,6 +20,18 @@ window.POY_CONFIG = {
     { name: 'NL3', date: '' }
   ],
 
+  /* บัญชี — ใช้ Firebase โปรเจกต์เดียวกับคลังข้อสอบเก่า MDCU (ล็อกอินบัญชีเดียวกันได้)
+     ข้อมูลเก็บที่ Firestore: poymor/<uid>/data/state (rules: match /poymor/{uid}/{doc=**}) */
+  firebase: {
+    apiKey: 'AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg',
+    authDomain: 'ac-mdcu.firebaseapp.com',
+    projectId: 'ac-mdcu',
+    storageBucket: 'ac-mdcu.firebasestorage.app',
+    messagingSenderId: '537236830552',
+    appId: '1:537236830552:web:40d77940f7adf0fecd8d2d'
+  },
+  userDomain: '@sxmcq.example.com',   /* ชื่อผู้ใช้แบบไม่มีอีเมล — ต้องตรงกับคลังข้อสอบเก่า */
+
   /* ลิงก์คลังข้อสอบเก่า */
   acUrl: 'https://bankypp.github.io/ac-mdcu/',
 

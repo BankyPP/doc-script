@@ -9,11 +9,107 @@
   /* ---------- helpers ---------- */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function pad(n) { return ('000' + n).slice(-4); }
+  /* ค่าที่ซิงก์เข้าบัญชี (API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์นั้นเท่านั้น) */
+  var SYNC_KEYS = ['recent', 'quiz', 'level', 'count', 'engine', 'model'];
+  function rawGet(k, d) { try { var v = localStorage.getItem('poy-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }
+  function rawSet(k, v) { try { localStorage.setItem('poy-' + k, JSON.stringify(v)); } catch (e) { } }
   var LS = {
-    get: function (k, d) { try { var v = localStorage.getItem('poy-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
-    set: function (k, v) { try { localStorage.setItem('poy-' + k, JSON.stringify(v)); } catch (e) { } },
+    get: rawGet,
+    set: function (k, v) {
+      rawSet(k, v);
+      if (SYNC_KEYS.indexOf(k) >= 0) { var ts = rawGet('ts', {}); ts[k] = Date.now(); rawSet('ts', ts); schedulePush(); }
+    },
     del: function (k) { try { localStorage.removeItem('poy-' + k); } catch (e) { } }
   };
+
+  /* ---------- บัญชี (Firebase — ใช้โปรเจกต์เดียวกับคลังข้อสอบเก่า MDCU) ---------- */
+  var FB = null, fbFail = false, syncState = 'local', authErr = '';
+  function fbOn() { return !!(window.POY_CONFIG.firebase && window.POY_CONFIG.firebase.apiKey); }
+  function fbRef() { return FB.fs.doc(FB.db, 'poymor', FB.user.uid, 'data', 'state'); }
+  function who(u) {
+    var dom = window.POY_CONFIG.userDomain || '', e = (u && u.email) || '';
+    return dom && e.slice(-dom.length) === dom ? e.slice(0, -dom.length) : (e || (u && u.displayName) || '');
+  }
+  function toEmail(x) {
+    x = String(x || '').trim(); if (x.indexOf('@') >= 0) return x;
+    var n = x.toLowerCase(); if (!/^[a-z0-9._-]{3,30}$/.test(n)) throw { code: 'bad-username' };
+    return n + window.POY_CONFIG.userDomain;
+  }
+  function errMsg(e) {
+    var c = (e && e.code) || '';
+    return ({
+      'bad-username': 'ชื่อผู้ใช้ใช้ได้เฉพาะ a-z, 0-9, จุด, ขีด ยาว 3–30 ตัว',
+      'auth/invalid-email': 'ชื่อผู้ใช้หรืออีเมลไม่ถูกต้อง', 'auth/missing-password': 'กรุณาใส่รหัสผ่าน',
+      'auth/weak-password': 'รหัสผ่านต้องยาวอย่างน้อย 6 ตัว',
+      'auth/email-already-in-use': 'ชื่อผู้ใช้/อีเมลนี้มีคนใช้แล้ว ถ้าเป็นของคุณให้กดเข้าสู่ระบบ',
+      'auth/invalid-credential': 'ชื่อผู้ใช้/อีเมล หรือรหัสผ่านไม่ถูกต้อง', 'auth/wrong-password': 'ชื่อผู้ใช้/อีเมล หรือรหัสผ่านไม่ถูกต้อง',
+      'auth/user-not-found': 'ยังไม่มีบัญชีนี้ ให้กดสมัครใหม่', 'auth/too-many-requests': 'ลองหลายครั้งเกินไป รอสักครู่แล้วลองใหม่',
+      'auth/popup-closed-by-user': 'ปิดหน้าต่าง Google ก่อนเข้าสู่ระบบเสร็จ', 'auth/network-request-failed': 'เชื่อมต่ออินเทอร์เน็ตไม่ได้',
+      'auth/unauthorized-domain': 'โดเมนนี้ยังไม่ได้รับอนุญาตใน Firebase (Authentication → Settings → Authorized domains)',
+      'permission-denied': 'Firestore ไม่อนุญาต — ตรวจ rules ของ poymor'
+    })[c] || ((e && e.message) || 'เกิดข้อผิดพลาด');
+  }
+  function paintAcct() {
+    var b = document.getElementById('acct'); if (!b) return;
+    if (!fbOn()) { b.hidden = true; return; }
+    b.hidden = false;
+    var u = FB && FB.user;
+    var dot = !u ? 'var(--rule-3)' : syncState === 'error' ? 'var(--sienna)' : syncState === 'saving' ? 'var(--ochre, #C9952E)' : 'var(--moss)';
+    b.innerHTML = '<span class="dot" style="background:' + dot + '"></span>' + (u ? esc(who(u) || 'บัญชีของฉัน') : 'เข้าสู่ระบบ');
+    b.title = !u ? 'บันทึกในเบราว์เซอร์นี้ — เข้าสู่ระบบเพื่อใช้หลายเครื่อง' : syncState === 'error' ? 'ซิงก์ไม่สำเร็จ — ยังบันทึกในเครื่องนี้' : syncState === 'saving' ? 'กำลังบันทึก…' : 'บันทึกในบัญชีแล้ว';
+    if (route().name === 'account') render(true);
+  }
+  function mergeRemote(data) {
+    var lts = rawGet('ts', {}), rts = (data && data.ts) || {}, v = (data && data.v) || {}, changed = [], needPush = false;
+    SYNC_KEYS.forEach(function (k) {
+      var r = rts[k] || 0, l = lts[k] || 0, hasLocal = localStorage.getItem('poy-' + k) != null;
+      if (r > l && v[k] != null) { try { rawSet(k, JSON.parse(v[k])); lts[k] = r; changed.push(k); } catch (e) { } }
+      else if (hasLocal && (l > r || !v.hasOwnProperty(k))) { if (!l) lts[k] = 1; needPush = true; }
+    });
+    rawSet('ts', lts);
+    if (changed.length) {
+      var n = route().name;
+      if ((n === '' && changed.indexOf('recent') >= 0) || n === 'exam') render(true);
+    }
+    return needPush;
+  }
+  var pushT = null;
+  function schedulePush() {
+    if (!FB || !FB.user) return;
+    clearTimeout(pushT); syncState = 'saving'; paintAcct();
+    pushT = setTimeout(pushNow, 1200);
+  }
+  function pushNow() {
+    clearTimeout(pushT);
+    if (!FB || !FB.user) return Promise.resolve();
+    var v = {}; SYNC_KEYS.forEach(function (k) { var s = localStorage.getItem('poy-' + k); if (s != null) v[k] = s; });
+    syncState = 'saving'; paintAcct();
+    return FB.fs.setDoc(fbRef(), { v: v, ts: rawGet('ts', {}), u: FB.fs.serverTimestamp() }).then(function () { syncState = 'cloud'; paintAcct(); })
+      .catch(function (e) { console.warn(e); syncState = 'error'; authErr = errMsg(e); paintAcct(); });
+  }
+  var unsub = null;
+  function initFB() {
+    if (!fbOn()) { paintAcct(); return; }
+    var b = 'https://www.gstatic.com/firebasejs/10.12.2/';
+    Promise.all([import(b + 'firebase-app.js'), import(b + 'firebase-auth.js'), import(b + 'firebase-firestore.js')]).then(function (m) {
+      var fapp = m[0].initializeApp(window.POY_CONFIG.firebase);
+      FB = { au: m[1], fs: m[2], auth: m[1].getAuth(fapp), db: m[2].getFirestore(fapp), user: null };
+      m[1].setPersistence(FB.auth, m[1].browserLocalPersistence).catch(function () { });
+      m[1].getRedirectResult(FB.auth).catch(function (e) { authErr = errMsg(e); paintAcct(); });
+      m[1].onAuthStateChanged(FB.auth, function (u) {
+        FB.user = u; if (unsub) { unsub(); unsub = null; }
+        if (!u) { syncState = 'local'; paintAcct(); return; }
+        authErr = ''; syncState = 'saving'; paintAcct();
+        FB.fs.getDoc(fbRef()).then(function (snap) {
+          var need = mergeRemote(snap.exists() ? snap.data() : null);
+          syncState = 'cloud'; paintAcct();
+          if (need) pushNow();
+          unsub = FB.fs.onSnapshot(fbRef(), function (s) { if (s.exists() && !s.metadata.hasPendingWrites) mergeRemote(s.data()); });
+        }).catch(function (e) { console.warn(e); syncState = 'error'; authErr = errMsg(e); paintAcct(); });
+      });
+    }).catch(function (e) { console.warn('firebase', e); fbFail = true; paintAcct(); });
+  }
+  window.addEventListener('pagehide', function () { if (pushT) pushNow(); });
   function toast(msg) {
     var t = document.getElementById('toast');
     t.textContent = msg; t.hidden = false;
@@ -693,9 +789,72 @@
     return { title: 'ไม่พบหน้า', html: '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><h1 style="font-size:44px">ไม่พบหน้านี้</h1><a class="btn ghost" href="#/" style="align-self:flex-start">กลับหน้าแรก</a></div></section>' };
   };
 
+  /* =========================================================
+     บัญชีของฉัน
+     ========================================================= */
+  PAGES.account = function () {
+    var head = '<section class="wrap phead" style="padding-bottom:24px"><div style="display:flex;flex-direction:column;gap:14px"><span class="label">บัญชี</span><h1 style="font-size:clamp(38px,5vw,60px)">บัญชีของฉัน</h1></div></section>';
+    var box = function (inner) { return head + '<section class="wrap" style="padding-bottom:80px"><div class="sheet" style="max-width:560px;padding:clamp(22px,4vw,36px);display:flex;flex-direction:column;gap:16px">' + inner + '</div></section>'; };
+    if (!fbOn()) return { title: 'บัญชี', html: box('<p>ยังไม่ได้ตั้งค่า Firebase — ข้อมูลบันทึกในเบราว์เซอร์นี้อย่างเดียว</p>') };
+    if (!FB) return { title: 'บัญชี', html: box(fbFail ? '<p>เชื่อมต่อระบบบัญชีไม่ได้ ตรวจอินเทอร์เน็ตแล้วรีเฟรชหน้า ระหว่างนี้ใช้งานได้ตามปกติ (บันทึกในเครื่อง)</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเชื่อมต่อระบบบัญชี…</p>') };
+    var syncList = '<ul class="muted" style="font-size:15px"><li>หน้าที่อ่านค้าง</li><li>ข้อสอบ AI ชุดล่าสุดและคำตอบ</li><li>ค่าที่เลือกในห้องสอบ (ระดับ จำนวนข้อ วิธีใช้ AI รุ่น)</li></ul><p class="note">API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์ที่ใส่ไว้เท่านั้น</p>';
+    if (FB.user) {
+      var st = syncState === 'error' ? '<p class="warn">ซิงก์ไม่สำเร็จ: ' + esc(authErr) + ' — ข้อมูลยังบันทึกในเครื่องนี้</p>'
+        : syncState === 'saving' ? '<p class="info"><span class="spin" aria-hidden="true"></span> กำลังบันทึก…</p>' : '<p class="info">บันทึกในบัญชีแล้ว · เปิดจากเครื่องไหนก็ได้</p>';
+      return {
+        title: 'บัญชี', html: box('<div><span class="label">เข้าสู่ระบบเป็น</span><p class="k" style="font-size:24px;margin-top:4px">' + esc(who(FB.user)) + '</p></div>' + st +
+          '<div><span class="label">สิ่งที่ซิงก์ข้ามเครื่อง</span>' + syncList + '</div>' +
+          '<label class="ck"><input type="checkbox" id="wipe"><span>ลบข้อมูลออกจากเครื่องนี้ด้วยตอนออกจากระบบ <span class="muted">(แนะนำถ้าเป็นเครื่องคนอื่น — ข้อมูลยังอยู่ในบัญชี)</span></span></label>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" href="#/">กลับหน้าแรก</a><button class="btn ghost" type="button" id="out">ออกจากระบบ</button></div>'),
+        after: function () {
+          document.getElementById('out').addEventListener('click', function () {
+            var wipe = document.getElementById('wipe').checked;
+            pushNow().then(function () { return FB.au.signOut(FB.auth); }).then(function () {
+              if (wipe) { SYNC_KEYS.concat(['ts', 'apikey']).forEach(function (k) { LS.del(k); }); }
+              toast('ออกจากระบบแล้ว'); location.hash = '#/';
+            });
+          });
+        }
+      };
+    }
+    return {
+      title: 'เข้าสู่ระบบ', html: box(
+        '<p>ไม่บังคับ — เข้าสู่ระบบเพื่อบันทึกในบัญชี แล้วใช้ได้หลายเครื่อง สิ่งที่ทำไว้ในเครื่องนี้จะรวมเข้าบัญชีให้</p>' +
+        '<p class="info">ใช้บัญชีเดียวกับคลังข้อสอบเก่า MDCU ได้เลย</p>' +
+        '<button class="btn" type="button" id="gIn">เข้าสู่ระบบด้วย Google</button>' +
+        '<p class="note">ถ้าเปิดจากในแอป LINE/IG แล้วกด Google ไม่ได้ ให้เปิดลิงก์ใน Safari/Chrome หรือใช้ชื่อผู้ใช้ด้านล่าง</p>' +
+        '<div class="label" style="border-top:1px dashed var(--rule);padding-top:16px">หรือใช้ชื่อผู้ใช้ / อีเมล</div>' +
+        '<label class="sr" for="em">ชื่อผู้ใช้หรืออีเมล</label><input class="field" id="em" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="ชื่อผู้ใช้ (a-z, 0-9) หรืออีเมล">' +
+        '<label class="sr" for="pw">รหัสผ่าน</label><input class="field" id="pw" type="password" autocomplete="current-password" placeholder="รหัสผ่าน (อย่างน้อย 6 ตัว)">' +
+        '<p class="warn" id="err"' + (authErr ? '' : ' hidden') + '>' + esc(authErr) + '</p>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><button class="btn" type="button" id="eIn">เข้าสู่ระบบ</button><button class="btn ghost" type="button" id="eUp">สมัครใหม่</button><button class="chip" type="button" id="eReset" style="margin-left:auto">ลืมรหัสผ่าน</button></div>' +
+        '<a class="chip" href="#/" style="align-self:flex-start">ใช้งานโดยไม่เข้าสู่ระบบ</a>'),
+      after: function () {
+        var A = FB.au, el = function (id) { return document.getElementById(id); };
+        function err(m) { authErr = m; el('err').textContent = m; el('err').hidden = !m; }
+        function cred(fn) { err(''); var e; try { e = toEmail(el('em').value); } catch (x) { err(errMsg(x)); return; } fn(FB.auth, e, el('pw').value).catch(function (x) { err(errMsg(x)); }); }
+        el('gIn').addEventListener('click', function () {
+          err(''); var p = new A.GoogleAuthProvider();
+          A.signInWithPopup(FB.auth, p).catch(function (e) {
+            if (['auth/popup-blocked', 'auth/operation-not-supported-in-this-environment', 'auth/cancelled-popup-request'].indexOf(e.code) >= 0) A.signInWithRedirect(FB.auth, p).catch(function (e2) { err(errMsg(e2)); });
+            else err(errMsg(e));
+          });
+        });
+        el('eIn').addEventListener('click', function () { cred(A.signInWithEmailAndPassword); });
+        el('eUp').addEventListener('click', function () { cred(A.createUserWithEmailAndPassword); });
+        el('eReset').addEventListener('click', function () {
+          var v = el('em').value.trim();
+          if (v.indexOf('@') < 0) { err('รีเซ็ตรหัสได้เฉพาะบัญชีที่สมัครด้วยอีเมล — ใส่อีเมลแล้วกดอีกครั้ง'); return; }
+          A.sendPasswordResetEmail(FB.auth, v).then(function () { err('ส่งลิงก์ตั้งรหัสผ่านใหม่ไปที่อีเมลแล้ว'); }).catch(function (e) { err(errMsg(e)); });
+        });
+      }
+    };
+  };
+
   /* ---------- boot ---------- */
   var lm = new Date(document.lastModified);
   document.getElementById('built').textContent = isNaN(lm) ? '' : 'อัปเดตเว็บล่าสุด ' + fmtTime(lm);
   initDiseases();
   render(false);
+  initFB();
 })();
