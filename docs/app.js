@@ -25,6 +25,30 @@
   /* ---------- บัญชี (Firebase — ใช้โปรเจกต์เดียวกับคลังข้อสอบเก่า MDCU) ---------- */
   var FB = null, fbFail = false, syncState = 'local', authErr = '';
   function fbOn() { return !!(window.POY_CONFIG.firebase && window.POY_CONFIG.firebase.apiKey); }
+  /* ---------- รหัสเข้าเว็บ (soft lock เหมือนคลังข้อสอบเก่า) ---------- */
+  var gateOk = false;
+  function devTrusted() { try { return localStorage.getItem('poy-trusted') === '1'; } catch (e) { return false; } }
+  function markTrusted() { try { localStorage.setItem('poy-trusted', '1'); } catch (e) { } }
+  function gateOn() { var g = window.POY_CONFIG.gate; return !!(g && g.on && g.h) && !gateOk && !devTrusted() && !(FB && FB.user); }
+  function gateHash(t) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode((window.POY_CONFIG.gate.salt || '') + t)).then(function (b) {
+      return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+  function renderGate() {
+    document.body.classList.add('gated');
+    document.title = window.POY_CONFIG.title;
+    app.innerHTML = '<form class="gate" id="gateF" autocomplete="off"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>' +
+      '<input class="field" type="password" id="gateIn" placeholder="รหัสผ่าน" aria-label="รหัสผ่าน" autocomplete="off"><button class="btn" type="submit">เข้าเว็บ</button><p class="warn" id="gateErr" hidden>รหัสไม่ถูกต้อง</p></form>';
+    var i = document.getElementById('gateIn'); setTimeout(function () { i.focus(); }, 50);
+    document.getElementById('gateF').addEventListener('submit', function (e) {
+      e.preventDefault();
+      gateHash(i.value).then(function (h) { return h === window.POY_CONFIG.gate.h; }, function () { return false; }).then(function (ok) {
+        if (ok) { gateOk = true; render(false); } else { document.getElementById('gateErr').hidden = false; i.value = ''; i.focus(); }
+      });
+    });
+  }
+
   function fbRef() { return FB.fs.doc(FB.db, 'poymor', FB.user.uid, 'data', 'state'); }
   function who(u) {
     var dom = window.POY_CONFIG.userDomain || '', e = (u && u.email) || '';
@@ -99,6 +123,7 @@
       m[1].onAuthStateChanged(FB.auth, function (u) {
         FB.user = u; if (unsub) { unsub(); unsub = null; }
         if (!u) { syncState = 'local'; paintAcct(); return; }
+        markTrusted(); if (document.body.classList.contains('gated')) { gateOk = true; render(false); }
         authErr = ''; syncState = 'saving'; paintAcct();
         FB.fs.getDoc(fbRef()).then(function (snap) {
           var need = mergeRemote(snap.exists() ? snap.data() : null);
@@ -265,6 +290,8 @@
   var PAGES = {};
   var lastPath = null;
   function render(keepScroll) {
+    if (gateOn()) { renderGate(); return; }
+    document.body.classList.remove('gated');
     var r = route();
     var page = PAGES[r.name] || PAGES._404;
     document.querySelectorAll('.nav a').forEach(function (a) {
