@@ -9,6 +9,7 @@
   --tape:#DCCDA6; --empty:#DDD5C2;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:'Sarabun',system-ui,sans-serif;font-size:17px;line-height:1.65}
 h1,h2,h3,h4,.k{font-family:'Kanit',system-ui,sans-serif;line-height:1.2;margin:0;font-weight:600}
