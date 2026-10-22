@@ -27,7 +27,10 @@
   function fbOn() { return !!(window.POY_CONFIG.firebase && window.POY_CONFIG.firebase.apiKey); }
   /* ---------- รหัสเข้าเว็บ (soft lock เหมือนคลังข้อสอบเก่า) ---------- */
   var gateOk = false;
-  function devTrusted() { try { return localStorage.getItem('poy-trusted') === '1'; } catch (e) { return false; } }
+  function devTrusted() {
+    var keys = ['poy-trusted'].concat((window.POY_CONFIG.gate && window.POY_CONFIG.gate.trustKeys) || []);
+    try { return keys.some(function (k) { return localStorage.getItem(k) === '1'; }); } catch (e) { return false; }
+  }
   function markTrusted() { try { localStorage.setItem('poy-trusted', '1'); } catch (e) { } }
   function gateOn() { var g = window.POY_CONFIG.gate; return !!(g && g.on && g.h) && !gateOk && !devTrusted() && !(FB && FB.user); }
   function gateHash(t) {

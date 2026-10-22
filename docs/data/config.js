@@ -34,7 +34,9 @@ window.POY_CONFIG = {
 
   /* รหัสเข้าเว็บ (gate) — รหัสเดียวกับคลังข้อสอบเก่า MDCU · เก็บแค่ hash = sha256(salt + รหัส) ห้ามใส่รหัสจริง
      on: true = เครื่องที่ไม่เคยเข้าสู่ระบบในเว็บนี้ต้องพิมพ์รหัสทุกครั้งที่เข้า · เข้าสู่ระบบครั้งเดียว = เครื่องที่เชื่อถือ ไม่ถามอีก */
-  gate: { on: true, salt: '06faf800614125fd', h: 'ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b' },
+  gate: { on: true, salt: '06faf800614125fd', h: 'ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b',
+    /* เครื่องที่เคยเข้าสู่ระบบในคลังข้อสอบเก่า (MDCU / SI) ถือว่าเชื่อถือด้วย — โดเมนเดียวกัน อ่านค่าได้ */
+    trustKeys: ['ac-sx-mcq-mdcu-y4-v1-site-v3-trusted', 'ac-si-v1-site-v3-trusted'] },
 
   /* ลิงก์คลังข้อสอบเก่า */
   acUrl: 'https://bankypp.github.io/ac-mdcu/',
