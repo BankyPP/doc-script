@@ -342,7 +342,7 @@
     '<circle cx="248" cy="250" r="6" fill="#A44A2A"/>' +
     '<g font-family="Sarabun, sans-serif" font-size="15" fill="#1E2620">' +
     '<text x="358" y="36"><tspan font-family="Kanit, sans-serif" font-weight="600">ดอก</tspan><tspan x="358" dy="20" fill="#5A6258">Compre · NL · License</tspan></text>' +
-    '<text x="366" y="172"><tspan font-family="Kanit, sans-serif" font-weight="600">ลำต้นและใบ</tspan><tspan x="366" dy="20" fill="#5A6258">Clinic ปี 4–6</tspan><tspan x="366" dy="20" fill="#5A6258">1000 โรค</tspan></text>' +
+    '<text x="366" y="172"><tspan font-family="Kanit, sans-serif" font-weight="600">ลำต้นและใบ</tspan><tspan x="366" dy="20" fill="#5A6258">Clinic ปี 4–6</tspan><tspan x="366" dy="20" fill="#5A6258">1000 MAI</tspan></text>' +
     '<text x="378" y="466"><tspan font-family="Kanit, sans-serif" font-weight="600">ราก</tspan><tspan x="378" dy="20" fill="#5A6258">Preclinic ปี 1–3</tspan></text>' +
     '<text x="142" y="246" text-anchor="end"><tspan font-family="Kanit, sans-serif" font-weight="600" fill="#A44A2A">ตอนนี้</tspan><tspan x="142" dy="20" fill="#5A6258">ปี ' + esc(C.currentYear) + '</tspan></text>' +
     '<text x="40" y="548" font-style="italic" fill="#5A6258" font-size="14">Fig. 1 — Medicus studens, ปี 1 → License</text></g></svg>';
@@ -353,7 +353,7 @@
     var plots = [
       ['#/preclinic', '#3E7CA6', '01 · ราก', 'Preclinic แยกตาม system', 'สรุปปี 1–3 จัดตาม 12 ระบบ อ่านต่อกันได้ตั้งแต่ anatomy ไปจนถึง pharmacology', '<span class="muted">ดึงจาก Google Docs</span>'],
       ['#/clinic', '#5C7F3A', '02 · ลำต้น', 'Clinic', 'สมุดวอร์ดของแต่ละ rotation และ approach ตามอาการนำ ที่กดต่อไปหาโรคได้ทันที', '<span class="muted">เขียนในเว็บ + คลังข้อสอบเก่า</span>'],
-      ['#/diseases', '#9B4F2E', '03 · พรรณไม้', '1000 โรค', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
+      ['#/diseases', '#9B4F2E', '03 · พรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
         '<span class="live' + (D.src === 'sample' ? ' off' : '') + '"><i></i>' + (D.src === 'sample' ? 'ยังไม่ได้เชื่อม Google Sheet' : 'ซิงก์จาก Google Sheet') + '</span>',
         '<div style="display:flex;flex-direction:column;gap:6px"><div style="height:6px;background:#E4DDCB;border-radius:3px"><div style="width:' + pct + '%;height:6px;background:#9B4F2E;border-radius:3px"></div></div><span class="muted" style="font-size:14px">เก็บแล้ว ' + n + ' / 1000</span></div>'],
       ['#/exam', '#C9952E', '04 · ห้องสอบ', 'ข้อสอบจาก AI', 'เลือกโรค ระบบ หรือเอกสาร แล้วให้ AI ออกข้อสอบ case-based พร้อมเฉลย', '<span class="muted">ใช้ Claude หรือ API key</span>'],
@@ -398,7 +398,7 @@
         '<section class="wrap hero"><div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:26px"><span class="label">สมุดสนามของหมอ · เล่มที่ 1</span>' +
         '<h1>ทุกอย่างที่เคยเรียน<br>เก็บไว้ในเล่มเดียว</h1>' +
         '<p style="font-size:19px;max-width:560px;color:var(--ink-2)">คลังความรู้ตั้งแต่ปี 1 จนถึงวันสอบใบประกอบวิชาชีพ — สรุป preclinic, clinic, 1000 โรคที่ต้องรู้จัก และห้องสอบที่ให้ AI ช่วยออกข้อสอบจากสิ่งที่เราเก็บไว้เอง</p>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn" href="#/diseases">เปิดหอพรรณไม้ 1000 โรค</a><a class="btn ghost" href="#/exam">เข้าห้องสอบ AI</a></div></div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn" href="#/diseases">เปิด 1000 MAI</a><a class="btn ghost" href="#/exam">เข้าห้องสอบ AI</a></div></div>' +
         '<figure style="flex:1 1 420px;max-width:560px;min-width:0">' + PLANT + '</figure></section>' +
         '<section style="border-top:1px solid var(--rule);padding:56px 0 72px"><div class="wrap" style="display:flex;flex-direction:column;gap:32px">' +
         '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px 32px"><div style="display:flex;flex-direction:column;gap:8px"><span class="label">เมนู</span><h2 style="font-size:38px">วันนี้จะเดินแปลงไหน</h2></div>' +
@@ -417,7 +417,7 @@
   };
 
   /* =========================================================
-     1000 โรค — list
+     1000 MAI — list
      ========================================================= */
   function filterDiseases(st) {
     var q = (st.q || '').toLowerCase();
@@ -476,13 +476,13 @@
     var ticks = '';
     for (var i = 1; i < 10; i++) ticks += 'M' + (1 + i * 37.8).toFixed(1) + ' 23v' + (i === 5 ? -12 : i % 2 ? -6 : -10);
     return {
-      title: '1000 โรค', html:
-        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · พรรณไม้</span><h1>1000 โรค</h1>' +
+      title: '1000 MAI', html:
+        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · พรรณไม้</span><h1>1000 MAI</h1>' +
         '<p class="lede">หอพรรณไม้ของโรค — แต่ละโรคคือหนึ่งแผ่นตัวอย่าง รู้จักให้พอจะ diag ได้ รู้ว่าต้องส่ง lab อะไร และเริ่ม initial management ได้</p>' +
         '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px">' + liveHTML() + (hasSheet() ? '<button class="chip" type="button" id="reload" style="min-height:40px">ดึงใหม่</button>' : '') + '</div></div>' +
         '<div style="flex:0 1 380px;min-width:260px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:baseline;gap:10px"><span class="k" style="font-size:64px;line-height:1">' + n + '</span><span class="muted" style="font-size:18px">/ 1000 แผ่นตัวอย่าง</span></div>' +
         '<svg viewBox="0 0 380 34" width="100%" aria-hidden="true"><rect x="1" y="1" width="378" height="22" rx="3" fill="#FBF9F3" stroke="#BDB39B"/><rect x="1" y="1" width="' + Math.max(0, Math.min(378, n * 0.378)) + '" height="22" rx="3" fill="#9B4F2E" opacity=".85"/><path d="' + ticks + '" stroke="#7A6E58" stroke-width="1"/><g font-family="Sarabun, sans-serif" font-size="10" fill="#5A6258"><text x="2" y="33">0</text><text x="182" y="33">500</text><text x="358" y="33">1000</text></g></svg></div></section>' +
-        '<section class="wrap" style="padding-bottom:20px"><label class="search" style="max-width:560px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="sr">ค้นใน 1000 โรค</span><input type="search" id="dq" placeholder="ค้นชื่อโรค อาการ หรือ lab ที่นึกถึง…" value="' + esc(st.q) + '"></label></section>' +
+        '<section class="wrap" style="padding-bottom:20px"><label class="search" style="max-width:560px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="sr">ค้นใน 1000 MAI</span><input type="search" id="dq" placeholder="ค้นชื่อโรค อาการ หรือ lab ที่นึกถึง…" value="' + esc(st.q) + '"></label></section>' +
         '<div id="dbody">' + diseasesBody(st) + '</div>',
       after: function () {
         var body = document.getElementById('dbody');
@@ -505,9 +505,9 @@
   PAGES.disease = function (r) {
     var d = findDisease(r.args[0]);
     if (!d) return {
-      title: 'ไม่พบโรค', html: '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><span class="label">1000 โรค</span><h1 style="font-size:44px">ไม่พบแผ่นตัวอย่างนี้</h1><p class="muted">' + (D.loading ? 'กำลังดึงข้อมูลจาก Google Sheet…' : 'อาจถูกลบหรือเปลี่ยนเลขในชีต') + '</p><a class="btn ghost" href="#/diseases" style="align-self:flex-start">กลับไปหอพรรณไม้</a></div></section>'
+      title: 'ไม่พบโรค', html: '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><span class="label">1000 MAI</span><h1 style="font-size:44px">ไม่พบแผ่นตัวอย่างนี้</h1><p class="muted">' + (D.loading ? 'กำลังดึงข้อมูลจาก Google Sheet…' : 'อาจถูกลบหรือเปลี่ยนเลขในชีต') + '</p><a class="btn ghost" href="#/diseases" style="align-self:flex-start">กลับไปหอพรรณไม้</a></div></section>'
     };
-    remember({ href: '#/disease/' + encodeURIComponent(d.no), title: d.name, crumb: '1000 โรค › ' + d.sys.name, c: d.sys.c });
+    remember({ href: '#/disease/' + encodeURIComponent(d.no), title: d.name, crumb: '1000 MAI › ' + d.sys.name, c: d.sys.c });
     var rel = D.list.filter(function (x) { return x !== d && x.sys === d.sys; }).slice(0, 6);
     var sheetLink = C.sheet && C.sheet.id ? 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(C.sheet.id) + '/edit#gid=' + encodeURIComponent(C.sheet.gid || '0') + '&range=A' + d.row : '';
     var entries = d.fields.map(function (f, i) {
@@ -515,7 +515,7 @@
     }).join('');
     return {
       title: d.name, html:
-        '<div class="wrap" style="padding-top:28px;padding-bottom:80px"><nav aria-label="ตำแหน่ง" style="font-size:15px;margin-bottom:28px"><a href="#/diseases">1000 โรค</a><span class="muted"> › </span><a href="#/diseases?s=' + d.sys.id + '">' + esc(d.sys.name) + '</a><span class="muted"> › </span><span>' + esc(d.name) + '</span></nav>' +
+        '<div class="wrap" style="padding-top:28px;padding-bottom:80px"><nav aria-label="ตำแหน่ง" style="font-size:15px;margin-bottom:28px"><a href="#/diseases">1000 MAI</a><span class="muted"> › </span><a href="#/diseases?s=' + d.sys.id + '">' + esc(d.sys.name) + '</a><span class="muted"> › </span><span>' + esc(d.name) + '</span></nav>' +
         '<div class="dsheet"><aside>' +
         '<div class="sheet" style="position:relative;padding:34px 24px 24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start"><div class="tape" style="left:28px;margin-left:0;transform:rotate(-6deg)"></div>' +
         brush(d.sys.c, 220) + '<span class="k" style="font-size:30px">' + esc(d.name) + '</span>' + (d.th ? '<span class="muted">' + esc(d.th) + '</span>' : '') +
@@ -575,7 +575,7 @@
     return {
       title: 'Preclinic', html:
         '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">01 · ราก · ปี 1–3</span><h1>Preclinic</h1>' +
-        '<p class="lede">สรุปที่เขียนไว้ใน Google Docs ดึงมาจัดหน้าใหม่ให้อ่านง่าย และกดต่อไปหาโรคที่เกี่ยวข้องใน 1000 โรคได้</p></div></section>' +
+        '<p class="lede">สรุปที่เขียนไว้ใน Google Docs ดึงมาจัดหน้าใหม่ให้อ่านง่าย และกดต่อไปหาโรคที่เกี่ยวข้องใน 1000 MAIได้</p></div></section>' +
         '<section class="wrap" style="padding-bottom:56px"><div class="syss">' + cards + '</div></section>' +
         '<section id="read" class="band" style="padding:48px 0 80px"><div class="wrap reader">' + reader + '</div></section>'
     };
@@ -602,7 +602,7 @@
     return {
       title: 'Clinic', html:
         '<section class="wrap phead" style="padding-bottom:28px"><div style="display:flex;flex-direction:column;gap:16px"><span class="label">02 · ลำต้น · ปี 4–6</span><h1>Clinic</h1>' +
-        '<p class="lede">เข้าได้สามทาง: ตามวอร์ดที่วนอยู่ ตามอาการนำของคนไข้ หรือตามงานที่ต้องทำบนวอร์ด — ทุกทางกดต่อไปหาแผ่นตัวอย่างใน 1000 โรคได้</p></div></section>' +
+        '<p class="lede">เข้าได้สามทาง: ตามวอร์ดที่วนอยู่ ตามอาการนำของคนไข้ หรือตามงานที่ต้องทำบนวอร์ด — ทุกทางกดต่อไปหาแผ่นตัวอย่างใน 1000 MAIได้</p></div></section>' +
         '<section style="padding-bottom:48px"><div class="wrap" style="display:flex;flex-direction:column;gap:14px"><span class="label">ชั้นหนังสือ · สมุดวอร์ด</span><div style="overflow-x:auto;padding:12px 2px 0"><div class="shelf">' + books + '</div></div>' +
         '<p class="muted" style="font-size:15px">ตอนนี้แต่ละเล่มเปิดไปคลังข้อสอบเก่า MDCU · เนื้อหาในสมุดวอร์ดจะทยอยเพิ่ม</p></div></section>' +
         '<section class="band" style="padding:40px 0 80px"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 48px;align-items:flex-start">' +
@@ -627,10 +627,10 @@
     ['ยอดเขา', 'หลายขั้นตอน รายละเอียดระดับ guideline แยกแยะข้อยกเว้น', '<path d="M2 21L9 7l4 6 3-4 6 12Z"/><path d="M7.2 10.6L9 12l1.6-1.6"/>']
   ];
   function sourceOptions(sel) {
-    var o = '<optgroup label="1000 โรค"><option value="all">สุ่มจากทุกโรค</option>';
+    var o = '<optgroup label="1000 MAI"><option value="all">สุ่มจากทุกโรค</option>';
     var used = {}; D.list.forEach(function (d) { used[d.sys.id] = d.sys; });
     Object.keys(used).forEach(function (k) { o += '<option value="s:' + k + '">สุ่มจากระบบ ' + esc(used[k].name) + '</option>'; });
-    o += '</optgroup><optgroup label="1000 โรค · รายโรค">' + D.list.map(function (d) { return '<option value="d:' + esc(d.no) + '">' + esc(d.name) + '</option>'; }).join('') + '</optgroup>';
+    o += '</optgroup><optgroup label="1000 MAI · รายโรค">' + D.list.map(function (d) { return '<option value="d:' + esc(d.no) + '">' + esc(d.name) + '</option>'; }).join('') + '</optgroup>';
     var pre = []; PRE.forEach(function (s) { s.groups.forEach(function (g) { g.docs.forEach(function (d) { if (d.html) pre.push([s, d]); }); }); });
     if (pre.length) o += '<optgroup label="Preclinic">' + pre.map(function (x) { return '<option value="p:' + x[0].id + '/' + x[1].id + '">' + esc(x[0].name + ' › ' + x[1].title) + '</option>'; }).join('') + '</optgroup>';
     o += '<optgroup label="Clinic">' + CLI.approaches.map(function (a) { return '<option value="c:' + a.id + '">' + esc('Approach › ' + a.title) + '</option>'; }).join('') + '</optgroup>';
@@ -728,7 +728,7 @@
         '<section class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 48px;align-items:flex-start;padding-bottom:80px">' +
         '<form id="gen" class="sheet" style="flex:1 1 480px;min-width:0;padding:clamp(22px,3.5vw,40px)">' +
         '<div class="step"><span class="n">1</span><div><label class="h" for="src">ออกข้อสอบจาก</label><select id="src" class="field">' + sourceOptions(src) + '</select>' +
-        (D.src === 'sample' ? '<p class="note" style="margin-top:8px">ตอนนี้ 1000 โรคยังเป็นข้อมูลตัวอย่าง (เต็มแค่ Melioidosis)</p>' : '') + '</div></div>' +
+        (D.src === 'sample' ? '<p class="note" style="margin-top:8px">ตอนนี้ 1000 MAIยังเป็นข้อมูลตัวอย่าง (เต็มแค่ Melioidosis)</p>' : '') + '</div></div>' +
         '<div class="step"><span class="n">2</span><fieldset><legend class="h">จำนวนข้อ</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' +
         [5, 10, 20].map(function (n) { return '<label class="opt"><input type="radio" name="cnt" value="' + n + '"' + (cnt === n ? ' checked' : '') + '><span>' + n + ' ข้อ</span></label>'; }).join('') + '</div></fieldset></div>' +
         '<div class="step"><span class="n">3</span><fieldset><legend class="h">ระดับความยาก</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' + levelHTML + '</div><p class="note" style="margin-top:10px" id="lvdesc"></p></fieldset></div>' +

@@ -5,7 +5,7 @@ window.POY_CONFIG = {
   owner: 'BankyPP',
   currentYear: 4,
 
-  /* Google Sheet 1000 โรค
+  /* Google Sheet 1000 MAI
      - ตั้งแชร์เป็น Anyone with the link → Viewer
      - id = ตัวยาวในลิงก์ docs.google.com/spreadsheets/d/<id>/edit
      - gid = เลขหลัง #gid= ของแท็บที่ใช้ (แท็บแรกมักเป็น 0)
