@@ -28,9 +28,15 @@
   /* ---------- รหัสเข้าเว็บ (soft lock เหมือนคลังข้อสอบเก่า) ---------- */
   var gateOk = false;
   /* เครื่องที่เชื่อถือ = เคยกดเข้าสู่ระบบในโพยหมอเองเท่านั้น (ล็อกอินค้างจากคลังข้อสอบเก่าไม่นับ) */
-  function devTrusted() { try { return localStorage.getItem('poy-trusted') === '1'; } catch (e) { return false; } }
-  function markTrusted() { try { localStorage.setItem('poy-trusted', '1'); } catch (e) { } }
-  function gateOn() { var g = window.POY_CONFIG.gate; return !!(g && g.on && g.h) && !gateOk && !devTrusted(); }
+  /* รอบ reset (gate.r): //toggle pw reset เพิ่มเลขนี้ → เครื่องที่ยืนยันไว้รอบก่อนต้องใส่รหัสใหม่ (ไม่ log out) */
+  function gateR() { var g = window.POY_CONFIG.gate; return (g && +g.r) || 0; }
+  function devTrusted() { try { var v = localStorage.getItem('poy-trusted'); return v === 'r' + gateR() || (gateR() === 0 && v === '1'); } catch (e) { return false; } }
+  function markTrusted() { try { localStorage.setItem('poy-trusted', 'r' + gateR()); } catch (e) { } }
+  /* ใส่รหัสแล้วจำไว้จนปิดแท็บ (sessionStorage) */
+  function passTok() { var g = window.POY_CONFIG.gate; return g && g.h ? g.h + ':' + gateR() : ''; }
+  function gatePassed() { try { return sessionStorage.getItem('poy-pass') === passTok(); } catch (e) { return false; } }
+  function markPassed() { try { sessionStorage.setItem('poy-pass', passTok()); } catch (e) { } }
+  function gateOn() { var g = window.POY_CONFIG.gate; return !!(g && g.on && g.h) && !gateOk && !gatePassed() && !devTrusted(); }
   function gateHash(t) {
     return crypto.subtle.digest('SHA-256', new TextEncoder().encode((window.POY_CONFIG.gate.salt || '') + t)).then(function (b) {
       return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
@@ -45,7 +51,7 @@
     document.getElementById('gateF').addEventListener('submit', function (e) {
       e.preventDefault();
       gateHash(i.value).then(function (h) { return h === window.POY_CONFIG.gate.h; }, function () { return false; }).then(function (ok) {
-        if (ok) { gateOk = true; render(false); } else { document.getElementById('gateErr').hidden = false; i.value = ''; i.focus(); }
+        if (ok) { gateOk = true; markPassed(); render(false); } else { document.getElementById('gateErr').hidden = false; i.value = ''; i.focus(); }
       });
     });
   }
@@ -830,7 +836,7 @@
         : syncState === 'saving' ? '<p class="info"><span class="spin" aria-hidden="true"></span> กำลังบันทึก…</p>' : '<p class="info">บันทึกในบัญชีแล้ว · เปิดจากเครื่องไหนก็ได้</p>';
       return {
         title: 'บัญชี', html: box('<div><span class="label">เข้าสู่ระบบเป็น</span><p class="k" style="font-size:24px;margin-top:4px">' + esc(who(FB.user)) + '</p></div>' + st +
-          (devTrusted() ? '' : '<div class="sheet" style="padding:16px 18px;display:flex;flex-direction:column;gap:10px"><p>เครื่องนี้ล็อกอินค้างมาจากคลังข้อสอบเก่า แต่ยังไม่เคยเข้าสู่ระบบในโพยหมอ จึงยังต้องใส่รหัสทุกครั้งที่เข้า</p><button class="btn ghost" type="button" id="trust" style="align-self:flex-start">ยืนยันเข้าสู่ระบบในโพยหมอ (เครื่องนี้ไม่ต้องใส่รหัสอีก)</button></div>') +
+          (devTrusted() ? '' : '<div class="sheet" style="padding:16px 18px;display:flex;flex-direction:column;gap:10px"><p>เครื่องนี้ล็อกอินอยู่ แต่ยังไม่ได้ยืนยันในโพยหมอ จึงต้องใส่รหัสทุกครั้งที่เปิดแท็บใหม่</p><button class="btn ghost" type="button" id="trust" style="align-self:flex-start">ยืนยันเข้าสู่ระบบในโพยหมอ (เครื่องนี้ไม่ต้องใส่รหัสอีก)</button></div>') +
           '<div><span class="label">สิ่งที่ซิงก์ข้ามเครื่อง</span>' + syncList + '</div>' +
           '<label class="ck"><input type="checkbox" id="wipe"><span>ลบข้อมูลออกจากเครื่องนี้ด้วยตอนออกจากระบบ <span class="muted">(แนะนำถ้าเป็นเครื่องคนอื่น — ข้อมูลยังอยู่ในบัญชี)</span></span></label>' +
           '<div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" href="#/">กลับหน้าแรก</a><button class="btn ghost" type="button" id="out">ออกจากระบบ</button></div>'),
