@@ -1,16 +1,16 @@
 /* โพยหมอ — single-page app (hash routes)
-   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach] · #/diseases?s=&q=&f=&v= · #/disease/<no> · #/exam?t=&src= */
+   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach] · #/diseases?s=&q=&f=&v= · #/disease/<no> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/account */
 (function () {
   'use strict';
   var C = window.POY_CONFIG, SYS = window.POY_SYSTEMS, OTHER = window.POY_OTHER;
-  var PRE = window.POY_PRECLINIC, CLI = window.POY_CLINIC;
+  var PRE = window.POY_PRECLINIC, CLI = window.POY_CLINIC, NLD = window.POY_NL || { notes: [] };
   var app = document.getElementById('app');
 
   /* ---------- helpers ---------- */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function pad(n) { return ('000' + n).slice(-4); }
   /* ค่าที่ซิงก์เข้าบัญชี (API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์นั้นเท่านั้น) */
-  var SYNC_KEYS = ['recent', 'quiz', 'level', 'count', 'engine', 'model'];
+  var SYNC_KEYS = ['recent', 'quiz', 'level', 'count', 'engine', 'model', 'nlset'];
   function rawGet(k, d) { try { var v = localStorage.getItem('poy-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }
   function rawSet(k, v) { try { localStorage.setItem('poy-' + k, JSON.stringify(v)); } catch (e) { } }
   var LS = {
@@ -101,6 +101,10 @@
     if (changed.length) {
       var n = route().name;
       if ((n === '' && changed.indexOf('recent') >= 0) || n === 'exam') render(true);
+      else if (n === 'nl' && changed.indexOf('nlset') >= 0) {
+        var ae = document.activeElement;
+        if (!(ae && ae.closest && ae.closest('#nlset'))) render(true);
+      }
     }
     return needPush;
   }
@@ -125,10 +129,12 @@
     Promise.all([import(b + 'firebase-app.js'), import(b + 'firebase-auth.js'), import(b + 'firebase-firestore.js')]).then(function (m) {
       var fapp = m[0].initializeApp(window.POY_CONFIG.firebase);
       FB = { au: m[1], fs: m[2], auth: m[1].getAuth(fapp), db: m[2].getFirestore(fapp), user: null };
+      if (onBoard()) render(true);
       m[1].setPersistence(FB.auth, m[1].browserLocalPersistence).catch(function () { });
       m[1].getRedirectResult(FB.auth).then(function (r) { if (r && r.user) markTrusted(); }).catch(function (e) { authErr = errMsg(e); paintAcct(); });
       m[1].onAuthStateChanged(FB.auth, function (u) {
-        FB.user = u; if (unsub) { unsub(); unsub = null; }
+        var was = FB.user ? FB.user.uid : null; FB.user = u; if (unsub) { unsub(); unsub = null; }
+        if ((u ? u.uid : null) !== was && onBoard()) render(true);
         if (!u) { syncState = 'local'; paintAcct(); return; }
         authErr = ''; syncState = 'saving'; paintAcct();
         FB.fs.getDoc(fbRef()).then(function (snap) {
@@ -138,7 +144,7 @@
           unsub = FB.fs.onSnapshot(fbRef(), function (s) { if (s.exists() && !s.metadata.hasPendingWrites) mergeRemote(s.data()); });
         }).catch(function (e) { console.warn(e); syncState = 'error'; authErr = errMsg(e); paintAcct(); });
       });
-    }).catch(function (e) { console.warn('firebase', e); fbFail = true; paintAcct(); });
+    }).catch(function (e) { console.warn('firebase', e); fbFail = true; paintAcct(); if (onBoard()) render(true); });
   }
   window.addEventListener('pagehide', function () { if (pushT) pushNow(); });
   function toast(msg) {
@@ -294,16 +300,20 @@
     return { name: parts[0] || '', args: parts.slice(1), q: new URLSearchParams(qs) };
   }
   var PAGES = {};
-  var lastPath = null;
+  var lastPath = null, pageCleanup = null;
+  function onBoard() { var r = route(); return r.name === 'nl' && r.args[0] === 'board'; }
   function render(keepScroll) {
     if (gateOn()) { renderGate(); return; }
     document.body.classList.remove('gated');
     var r = route();
     var page = PAGES[r.name] || PAGES._404;
-    document.querySelectorAll('.nav a').forEach(function (a) {
-      var on = a.getAttribute('data-r') === r.name || (r.name === 'disease' && a.getAttribute('data-r') === 'diseases');
+    if (pageCleanup) { try { pageCleanup(); } catch (e) { } pageCleanup = null; }
+    var here = r.name === 'disease' ? 'diseases' : r.name, sub = r.name === 'nl' && r.args[0] ? 'nl/' + r.args[0] : '';
+    document.querySelectorAll('#drawer [data-r]').forEach(function (a) {
+      var k = a.getAttribute('data-r');
+      var on = k === here || (k === sub && sub !== '');
       a.classList.toggle('on', on);
-      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      if (on && (k === sub || !sub)) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     var res = page(r);
     app.innerHTML = res.html;
@@ -324,10 +334,40 @@
   }
 
   /* ---------- header search ---------- */
-  document.getElementById('gsearch').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var v = this.querySelector('input').value.trim();
-    location.hash = '#/diseases' + (v ? '?q=' + encodeURIComponent(v) : '');
+  ['gsearch', 'dsearch'].forEach(function (id) {
+    document.getElementById(id).addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = this.querySelector('input').value.trim();
+      closeDrawer(false);
+      location.hash = '#/diseases' + (v ? '?q=' + encodeURIComponent(v) : '');
+    });
+  });
+
+  /* ---------- เมนู ☰ (เด้งจากซ้าย) ---------- */
+  var drawer = document.getElementById('drawer'), scrim = document.getElementById('scrim'), burger = document.getElementById('burger');
+  function openDrawer() {
+    document.body.classList.add('dopen'); burger.setAttribute('aria-expanded', 'true');
+    var f = drawer.querySelector('a.on[aria-current]') || drawer.querySelector('.dlinks a');
+    setTimeout(function () { if (f) f.focus(); }, 60);
+  }
+  function closeDrawer(focusBack) {
+    if (!document.body.classList.contains('dopen')) return;
+    document.body.classList.remove('dopen'); burger.setAttribute('aria-expanded', 'false');
+    if (focusBack) burger.focus();
+  }
+  burger.addEventListener('click', function () { if (document.body.classList.contains('dopen')) closeDrawer(true); else openDrawer(); });
+  document.getElementById('dclose').addEventListener('click', function () { closeDrawer(true); });
+  scrim.addEventListener('click', function () { closeDrawer(true); });
+  drawer.addEventListener('click', function (e) { if (e.target.closest('a')) closeDrawer(false); });
+  document.addEventListener('keydown', function (e) {
+    if (!document.body.classList.contains('dopen')) return;
+    if (e.key === 'Escape') { closeDrawer(true); return; }
+    if (e.key === 'Tab') {   /* วนโฟกัสในเมนู */
+      var f = Array.prototype.filter.call(drawer.querySelectorAll('a,button,input'), function (x) { return x.offsetParent !== null; });
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
   });
 
   /* =========================================================
@@ -371,7 +411,7 @@
         '<span class="label">' + p[2] + '</span><h3>' + p[3] + '</h3><p class="muted">' + p[4] + '</p>' + (p[6] || '') +
         '<div class="foot">' + p[5] + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
     }).join('') +
-      '<a class="plot soon" href="#/?to=nl">' + brush('#4A5560') + '<span class="label">06 · ยอดเขา</span><h3>ติว NL &amp; Compre</h3><p class="muted">กำลังเตรียมแปลง — รายละเอียดจะมาเพิ่มทีหลัง</p><div class="foot"><span class="muted">เร็ว ๆ นี้</span></div></a>';
+      '<a class="sheet plot" href="#/nl"><div class="tape" style="transform:rotate(2.5deg)"></div>' + brush('#4A5560') + '<span class="label">06 · ยอดเขา</span><h3>ติว NL &amp; Compre</h3><p class="muted">บอร์ดประกาศ สรุปเนื้อหาจากจุฬาฯ และศิริราช ข้อสอบเก่า NL1–2 และ Compre 1–3</p><div class="foot">' + nlNextHTML() + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
 
     var recent = LS.get('recent', []);
     var recentHTML = recent.length ? recent.slice(0, 4).map(function (x) {
@@ -389,16 +429,6 @@
       var dot = cur ? '<span class="n now"></span>' : '<span class="n" style="' + (past ? 'background:' + (y <= 3 ? '#3E7CA6' : '#5C7F3A') : 'border:2px solid ' + (y <= 3 ? '#3E7CA6' : '#5C7F3A') + ';background:var(--paper)') + '"></span>';
       tl += '<div>' + dot + '<span class="k" style="font-size:18px' + (cur ? ';color:var(--sienna)' : '') + '">ปี ' + y + (cur ? ' · ตอนนี้' : '') + '</span><span class="muted" style="font-size:14px">' + (y <= 3 ? 'Preclinic' : y === 6 ? 'Extern' : 'Clinic') + '</span></div>';
     }
-    var today = new Date(); today.setHours(0, 0, 0, 0);
-    var exams = (C.exams || []).map(function (e) {
-      var sub = 'วันสอบ — ยังไม่ได้ใส่';
-      if (e.date) {
-        var d = new Date(e.date + 'T00:00:00'), days = Math.round((d - today) / 864e5);
-        sub = d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }) + ' · ' + (days > 0 ? 'อีก ' + days + ' วัน' : days === 0 ? 'วันนี้' : 'ผ่านไปแล้ว');
-      }
-      return '<div class="sheet" style="padding:22px;display:flex;flex-direction:column;gap:6px"><span class="label">ปลายทาง</span><span class="k" style="font-size:22px">' + esc(e.name) + '</span><span class="muted" style="font-size:15px">' + esc(sub) + '</span></div>';
-    }).join('');
-
     return {
       title: '', html:
         '<section class="wrap hero"><div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:26px"><span class="label">สมุดสนามของหมอ · เล่มที่ 1</span>' +
@@ -414,11 +444,10 @@
         '<div style="flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:6px"><span class="label">ที่ค้างไว้</span><h2 style="font-size:30px;margin-bottom:8px">อ่านต่อจากครั้งก่อน</h2>' + recentHTML + '</div>' +
         '<div style="flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:6px"><span class="label">' + (D.src === 'sample' ? 'ข้อมูลตัวอย่าง' : 'เพิ่งเก็บเข้าหอพรรณไม้ · จาก Google Sheet') + '</span><h2 style="font-size:30px;margin-bottom:8px">ตัวอย่างล่าสุด</h2>' + newHTML + '</div>' +
         '</div></section>' +
-        '<section id="nl" style="padding:64px 0 72px"><div class="wrap" style="display:flex;flex-direction:column;gap:36px">' +
+        '<section id="path" style="padding:64px 0 72px"><div class="wrap" style="display:flex;flex-direction:column;gap:36px">' +
         '<div style="display:flex;flex-direction:column;gap:8px"><span class="label">เส้นทาง</span><h2 style="font-size:38px">จากปี 1 ถึงใบประกอบวิชาชีพ</h2></div>' +
         '<div style="overflow-x:auto;padding-bottom:8px"><div class="timeline"><svg viewBox="0 0 1000 40" preserveAspectRatio="none" style="position:absolute;left:0;top:14px;width:100%;height:40px" aria-hidden="true"><path d="M20 20 C180 8 320 32 500 18 C680 6 820 30 980 18" fill="none" stroke="#7A5C3E" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/></svg>' + tl + '</div></div>' +
-        '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px">' + exams + '</div>' +
-        '<p class="muted">ติว NL &amp; Compre — รายละเอียดจะมาเพิ่มทีหลัง · วันสอบแก้ได้ใน data/config.js</p></div></section>'
+        '</div></section>'
     };
   };
 
@@ -720,7 +749,7 @@
     if (t === 'mock') return {
       title: 'Mock exam', html: head + '<section class="wrap" style="padding-bottom:80px;display:flex;flex-wrap:wrap;gap:32px 48px;align-items:flex-start">' +
         '<div class="sheet" style="flex:1 1 540px;min-width:0;padding:clamp(22px,3.5vw,40px)">' +
-        '<div class="step"><span class="n">1</span><fieldset><legend class="h">สนามสอบ</legend><div style="display:flex;flex-wrap:wrap;gap:8px"><label class="opt"><input type="radio" name="field" checked><span>Comprehensive</span></label><label class="opt"><input type="radio" name="field"><span>NL1</span></label><label class="opt"><input type="radio" name="field"><span>NL2</span></label></div></fieldset></div>' +
+        '<div class="step"><span class="n">1</span><fieldset><legend class="h">สนามสอบ</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' + NLX().map(function (x, i) { return '<label class="opt"><input type="radio" name="field"' + (i ? '' : ' checked') + '><span>' + esc(x.name) + '</span></label>'; }).join('') + '</div></fieldset></div>' +
         '<div class="step"><span class="n">2</span><div><span class="h">Blueprint</span><div class="empty" style="padding:22px"><p class="muted">ยังไม่มี blueprint — ส่ง blueprint ของ Compre / NL มา แล้ว Claude จะใส่สัดส่วนแต่ละหมวดให้</p></div></div></div>' +
         '<div class="step"><span class="n">3</span><fieldset><legend class="h">ระดับความยาก</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' + levelHTML + '</div><p class="note" style="margin-top:10px">นิยามแต่ละระดับตอนนี้เป็นแบบชั่วคราว รอกำหนดใหม่</p></fieldset></div>' +
         '<div style="display:flex;flex-wrap:wrap;gap:12px;border-top:1px solid var(--empty);padding-top:24px"><button class="btn" type="button" disabled>เริ่ม Mock exam</button><span class="note" style="align-self:center">เปิดใช้เมื่อมี blueprint</span></div></div>' +
@@ -818,6 +847,345 @@
     };
   };
 
+  /* =========================================================
+     ติว NL & Compre — หน้ารวม + หน้าย่อย (บอร์ดประกาศ · สรุปเนื้อหา · ข้อสอบ · ตั้งค่า)
+     ========================================================= */
+  var NL_TYPES = ['MCQ', 'MEQ', 'OSCE'];
+  var KIND = { nl: 'NL', compre: 'Compre' };
+  var SRC = { MDCU: ['mdcu', 'จุฬาฯ'], SI: ['si', 'ศิริราช'] };
+  function NLX() { return (C.nl && C.nl.exams) || []; }
+  /* ตั้งค่าการสอบ: ค่าที่แก้ในเว็บ (LS nlset, ซิงก์บัญชี) ทับค่าเริ่มต้นใน config.js */
+  function nlSet() {
+    var saved = LS.get('nlset', {}) || {};
+    return NLX().map(function (x) {
+      var src = saved[x.id] && saved[x.id].parts ? saved[x.id].parts : (x.parts || []), by = {};
+      src.forEach(function (p) { if (p && p.type) by[p.type] = p; });
+      return {
+        id: x.id, name: x.name, kind: x.kind,
+        parts: NL_TYPES.filter(function (t) { return by[t]; }).map(function (t) { var p = by[t]; return { type: t, date: p.date || '', time: p.time || '', n: p.n || '', min: p.min || '' }; })
+      };
+    });
+  }
+  function nlSave(list) { var o = {}; list.forEach(function (x) { o[x.id] = { parts: x.parts }; }); LS.set('nlset', o); }
+  function dayDiff(ds) { var t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((new Date(ds + 'T00:00:00') - t) / 864e5); }
+  function thDate(ds) { return new Date(ds + 'T00:00:00').toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }); }
+  function daysText(ds) { var d = dayDiff(ds); return d > 0 ? 'อีก ' + d + ' วัน' : d === 0 ? 'วันนี้' : 'ผ่านไปแล้ว'; }
+  function nextPart(x) {
+    var b = null; x.parts.forEach(function (p) { if (p.date && dayDiff(p.date) >= 0 && (!b || p.date < b.date)) b = p; }); return b;
+  }
+  function nlNextHTML() {
+    var b = null; nlSet().forEach(function (x) { var p = nextPart(x); if (p && (!b || p.date < b.p.date)) b = { x: x, p: p }; });
+    return b ? '<span class="muted">' + esc(b.x.name + ' ' + b.p.type) + ' · ' + daysText(b.p.date) + '</span>' : '<span class="muted">ใส่วันสอบได้ในหน้าตั้งค่า</span>';
+  }
+  function partLine(p) {
+    var bits = [];
+    if (p.date) bits.push(thDate(p.date) + (p.time ? ' ' + p.time + ' น.' : ''));
+    if (p.n) bits.push(p.n + (p.type === 'OSCE' ? ' สถานี' : ' ข้อ'));
+    if (p.min) bits.push(p.min + ' นาที');
+    return '<span class="k" style="font-weight:500">' + p.type + '</span> <span class="muted">' + (bits.length ? esc(bits.join(' · ')) : 'ยังไม่ได้ใส่รายละเอียด') + '</span>';
+  }
+  function srcBadges(arr) { return (arr || []).map(function (k) { var s = SRC[k]; return s ? '<span class="src ' + s[0] + '">' + s[1] + '</span>' : ''; }).join(''); }
+
+  var ICON = {
+    board: '<path d="M12 3.2c1.6 0 2.9 1.2 2.9 2.8 0 1.2-.7 2.1-1.7 2.5l.6 5.3H10.2l.6-5.3C9.8 8.1 9.1 7.2 9.1 6c0-1.6 1.3-2.8 2.9-2.8z"/><path d="M12 13.8v7"/><path d="M8.6 13.8c2.2.3 4.6.2 6.8 0"/>',
+    notes: '<path d="M5 4.5c2.5-.4 5.6-.2 7 1.4 1.4-1.6 4.5-1.8 7-1.4v14c-2.5-.4-5.6-.2-7 1.4-1.4-1.6-4.5-1.8-7-1.4z"/><path d="M12 5.9v14"/>',
+    exams: '<path d="M6 3.8h9l3 3v13.4H6z"/><path d="M9 10.5l1.6 1.6 3.2-3.4"/><path d="M9 16h6"/>',
+    settings: '<circle cx="12" cy="12" r="3"/><path d="M12 3.5v2.4M12 18.1v2.4M3.5 12h2.4M18.1 12h2.4M6 6l1.7 1.7M16.3 16.3 18 18M6 18l1.7-1.7M16.3 7.7 18 6"/>'
+  };
+  function icon(k, c) { return '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="' + (c || '#355A3A') + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg>'; }
+  var NL_SUB = [
+    ['board', 'บอร์ดประกาศ', 'ประกาศเรื่อง NL และ Compre — ใครเข้าสู่ระบบก็มาแปะได้ แยกดูตามเรื่อง', '#A44A2A'],
+    ['notes', 'สรุปเนื้อหา', 'เลคเชอร์ สรุป และ resource จากทั้งจุฬาฯ และศิริราช — บอกที่มาทุกเรื่อง', '#355A3A'],
+    ['exams', 'ข้อสอบ', 'NL1 · NL2 · Compre 1 · Compre 2 · Compre 3', '#C9952E'],
+    ['settings', 'ตั้งค่า', 'วันสอบ รูปแบบ จำนวน และเวลาสอบของแต่ละการสอบ', '#4A5560']
+  ];
+  function nlHead(cur, h1, lede) {
+    var me = NL_SUB.filter(function (x) { return x[0] === cur; })[0];
+    var tabs = NL_SUB.map(function (x) { return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/nl/' + x[0] + '">' + x[1] + '</a>'; }).join('');
+    return '<section class="wrap phead" style="padding-bottom:20px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0">' +
+      (me ? '<nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/nl">ติว NL &amp; Compre</a><span class="muted"> › </span><span>' + me[1] + '</span></nav>' : '<span class="label">06 · ยอดเขา</span>') +
+      '<h1 style="font-size:clamp(38px,5vw,64px)">' + h1 + '</h1>' + (lede ? '<p class="lede">' + lede + '</p>' : '') +
+      (me ? '<div class="subtabs" aria-label="หน้าย่อย">' + tabs + '</div>' : '') + '</div></section>';
+  }
+
+  PAGES.nl = function (r) {
+    var a = r.args[0];
+    if (a === 'board') return nlBoard(r);
+    if (a === 'notes') return nlNotes(r);
+    if (a === 'exams') return nlExams();
+    if (a === 'settings') return nlSettings();
+    remember({ href: '#/nl', title: 'ติว NL & Compre', crumb: 'ยอดเขา', c: '#4A5560' });
+    var cards = NL_SUB.map(function (x, i) {
+      return '<a class="sheet plot" href="#/nl/' + x[0] + '"><div class="tape" style="transform:rotate(' + [-2, 2.5, -1.5, 1][i] + 'deg)"></div>' + icon(x[0], x[3]) +
+        '<h3>' + x[1] + '</h3><p class="muted">' + x[2] + '</p><div class="foot"><span></span><span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
+    }).join('');
+    var dest = nlSet().map(function (x) {
+      var p = nextPart(x), all = x.parts.filter(function (q) { return q.date; });
+      var sub = p ? thDate(p.date) + ' · ' + daysText(p.date) : all.length ? 'ผ่านไปแล้ว' : 'ยังไม่ได้ใส่วันสอบ';
+      return '<div class="sheet dest"><span class="label">' + KIND[x.kind] + '</span><span class="k" style="font-size:22px">' + esc(x.name) + '</span><span class="muted" style="font-size:15px">' + esc(sub) + '</span>' +
+        (x.parts.length ? '<span class="types">' + x.parts.map(function (q) { return '<span class="pill">' + q.type + '</span>'; }).join('') + '</span>' : '') + '</div>';
+    }).join('');
+    return {
+      title: 'ติว NL & Compre', html: nlHead('', 'ติว NL &amp; Compre', 'รวมของสำหรับสอบใบประกอบ (NL) และ Comprehensive — เนื้อหาจากทั้งจุฬาฯ และศิริราช บอกที่มาทุกเรื่อง') +
+        '<section class="wrap" style="padding-bottom:56px"><div class="plots four">' + cards + '</div></section>' +
+        '<section class="band" style="padding:48px 0 56px"><div class="wrap" style="display:flex;flex-direction:column;gap:24px">' +
+        '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px 32px"><div style="display:flex;flex-direction:column;gap:8px"><span class="label">ปลายทาง</span><h2 style="font-size:32px">นับวันถึงสนามสอบ</h2></div><a class="chip" href="#/nl/settings">แก้วันสอบในตั้งค่า</a></div>' +
+        '<div class="dests">' + dest + '</div></div></section>'
+    };
+  };
+
+  /* ---------- ตั้งค่า ---------- */
+  function nlSettings() {
+    var list = nlSet();
+    var html = list.map(function (x) {
+      var on = {}; x.parts.forEach(function (p) { on[p.type] = p; });
+      var types = NL_TYPES.map(function (t) {
+        return '<label class="opt"><input type="checkbox" data-t="' + t + '"' + (on[t] ? ' checked' : '') + '><span>' + t + '</span></label>';
+      }).join('');
+      var rows = x.parts.map(function (p) {
+        var f = function (k, lab, type, attrs) { return '<label class="pf"><span class="label">' + lab + '</span><input class="field" type="' + type + '" data-k="' + k + '" value="' + esc(p[k]) + '"' + (attrs || '') + '></label>'; };
+        return '<div class="prow" data-t="' + p.type + '"><span class="k ptype">' + p.type + '</span>' +
+          '<label class="pf"><span class="label">วันสอบ</span><input class="field" type="date" data-k="date" value="' + esc(p.date) + '"><span class="note" data-days' + (p.date ? '' : ' hidden') + '>' + (p.date ? daysText(p.date) : '') + '</span></label>' +
+          f('time', 'เวลาเริ่ม', 'time') +
+          f('n', p.type === 'OSCE' ? 'จำนวนสถานี' : 'จำนวนข้อ', 'number', ' min="0" inputmode="numeric"') +
+          f('min', 'เวลาสอบ (นาที)', 'number', ' min="0" inputmode="numeric"') + '</div>';
+      }).join('');
+      return '<fieldset class="sheet xset" data-x="' + x.id + '"><legend class="sr">' + esc(x.name) + '</legend>' +
+        '<div class="xhead"><span class="label">' + KIND[x.kind] + '</span><h2 class="k" style="font-size:26px">' + esc(x.name) + '</h2></div>' +
+        '<div><span class="label" style="display:block;margin-bottom:8px">รูปแบบที่มีสอบ</span><div class="types">' + types + '</div></div>' +
+        (rows || '<p class="note">เลือกรูปแบบที่การสอบนี้มี แล้วใส่วันสอบ จำนวน และเวลา</p>') + '</fieldset>';
+    }).join('');
+    return {
+      title: 'ตั้งค่า — ติว NL & Compre', html: nlHead('settings', 'ตั้งค่าการสอบ', 'ใส่วันสอบ รูปแบบ จำนวน และเวลาสอบของแต่ละการสอบ — บันทึกให้อัตโนมัติ และซิงก์เข้าบัญชีถ้าเข้าสู่ระบบ') +
+        '<section class="wrap" style="padding-bottom:80px"><form id="nlset" class="nlset" onsubmit="return false">' + html + '</form></section>',
+      after: function () {
+        var form = document.getElementById('nlset'), t = null;
+        function find(el) { var fs = el.closest('[data-x]'); return fs ? list.filter(function (x) { return x.id === fs.getAttribute('data-x'); })[0] : null; }
+        form.addEventListener('change', function (e) {
+          var cb = e.target.closest('input[data-t]'); if (!cb) return;
+          var x = find(cb), ty = cb.getAttribute('data-t'); if (!x) return;
+          if (cb.checked) { x.parts.push({ type: ty, date: '', time: '', n: '', min: '' }); x.parts.sort(function (a, b) { return NL_TYPES.indexOf(a.type) - NL_TYPES.indexOf(b.type); }); }
+          else {
+            var p = x.parts.filter(function (q) { return q.type === ty; })[0];
+            if (p && (p.date || p.time || p.n || p.min) && !confirm('ลบรายละเอียด ' + ty + ' ของ ' + x.name + '?')) { cb.checked = true; return; }
+            x.parts = x.parts.filter(function (q) { return q.type !== ty; });
+          }
+          clearTimeout(t); nlSave(list); render(true);
+          var again = document.querySelector('[data-x="' + x.id + '"] input[data-t="' + ty + '"]'); if (again) again.focus();
+        });
+        form.addEventListener('input', function (e) {
+          var inp = e.target.closest('input[data-k]'); if (!inp) return;
+          var x = find(inp), row = inp.closest('[data-t]'); if (!x || !row) return;
+          var p = x.parts.filter(function (q) { return q.type === row.getAttribute('data-t'); })[0]; if (!p) return;
+          var k = inp.getAttribute('data-k'), v = inp.value.trim();
+          if ((k === 'n' || k === 'min') && v) v = String(Math.max(0, Math.round(+v) || 0));
+          p[k] = v;
+          if (k === 'date') { var dd = row.querySelector('[data-days]'); if (dd) { dd.textContent = v ? daysText(v) : ''; dd.hidden = !v; } }
+          clearTimeout(t); t = setTimeout(function () { nlSave(list); }, 400);
+        });
+        pageCleanup = function () { if (t) { clearTimeout(t); nlSave(list); } };
+      }
+    };
+  }
+
+  /* ---------- ข้อสอบ ---------- */
+  function nlExams() {
+    var cards = nlSet().map(function (x) {
+      return '<div class="sheet xcard"><div class="xhead"><span class="label">' + KIND[x.kind] + '</span><h2 class="k" style="font-size:28px">' + esc(x.name) + '</h2></div>' +
+        (x.parts.length ? '<div style="display:flex;flex-direction:column;gap:6px">' + x.parts.map(function (p) { return '<div>' + partLine(p) + '</div>'; }).join('') + '</div>'
+          : '<p class="muted">ยังไม่ได้ตั้งรูปแบบ — <a href="#/nl/settings">ไปที่ตั้งค่า</a></p>') +
+        '<p class="note" style="border-top:1px dashed var(--rule);padding-top:12px">' + (x.kind === 'compre'
+          ? 'ข้อสอบเก่าแยกตามสถาบัน <span class="src mdcu">จุฬาฯ</span> <span class="src si">ศิริราช</span>'
+          : 'ข้อสอบเก่ารวมจากทั้งสองฝั่ง กำกับที่มาทุกข้อ <span class="src mdcu">จุฬาฯ</span> <span class="src si">ศิริราช</span>') + '</p>' +
+        '<span class="note">หน้าหลักของการสอบนี้ — ยังไม่เปิด</span></div>';
+    }).join('');
+    return {
+      title: 'ข้อสอบ — ติว NL & Compre', html: nlHead('exams', 'ข้อสอบ', 'แต่ละการสอบจะมีหน้าหลักของตัวเอง (MCQ · MEQ · OSCE ตามที่การสอบนั้นมี) — รูปแบบที่แสดงด้านล่างมาจากหน้าตั้งค่า') +
+        '<section class="wrap" style="padding-bottom:80px"><div class="xcards">' + cards + '</div></section>'
+    };
+  }
+
+  /* ---------- สรุปเนื้อหา ---------- */
+  function nlNotes(r) {
+    var notes = NLD.notes || [], id = r.args[1];
+    var note = id && notes.filter(function (n) { return n.id === id; })[0];
+    if (note) {
+      remember({ href: '#/nl/notes/' + encodeURIComponent(note.id), title: note.title, crumb: 'ติว NL & Compre › สรุปเนื้อหา', c: '#4A5560' });
+      return {
+        title: note.title, html: nlHead('notes', esc(note.title), '') +
+          '<section class="wrap" style="padding-bottom:80px"><article class="sheet doc"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">' + srcBadges(note.src) +
+          (note.exams || []).map(function (k) { return '<span class="pill">' + (KIND[k] || esc(k)) + '</span>'; }).join('') +
+          (note.topic ? '<span class="muted" style="font-size:14px">' + esc(note.topic) + '</span>' : '') + '</div>' +
+          '<div class="val">' + (note.html || '') + '</div>' +
+          ((note.files && note.files.length) || note.updated ? '<p class="note" style="border-top:1px dashed var(--rule);padding-top:12px">' + (note.files && note.files.length ? 'ไฟล์ต้นทาง: ' + esc(note.files.join(', ')) : '') + (note.updated ? ' · อัปเดต ' + esc(note.updated) : '') + '</p>' : '') +
+          '</article><p style="margin-top:20px"><a class="btn ghost" href="#/nl/notes">กลับไปสรุปทั้งหมด</a></p></section>'
+      };
+    }
+    var fx = r.q.get('x') || '', fs = r.q.get('s') || '';
+    var chip = function (k, v, lab, cur) { return '<a class="chip' + (cur === v ? ' on' : '') + '" href="#/nl/notes?' + (k === 'x' ? 'x=' + v + (fs ? '&s=' + fs : '') : (fx ? 'x=' + fx + '&' : '') + 's=' + v) + '">' + lab + '</a>'; };
+    var list = notes.filter(function (n) { return (!fx || (n.exams || []).indexOf(fx) >= 0) && (!fs || (n.src || []).indexOf(fs) >= 0); });
+    var groups = {}, order = [];
+    list.forEach(function (n) { var g = n.topic || 'อื่น ๆ'; if (!groups[g]) { groups[g] = []; order.push(g); } groups[g].push(n); });
+    var body = !notes.length
+      ? '<div class="empty"><p class="k" style="font-size:22px">ยังไม่มีสรุป</p><p class="muted" style="max-width:560px;margin:8px auto 0">ส่งเลคเชอร์ สรุป resource หรือข้อสอบเก่ามาในแชทกับ Claude พร้อมบอกว่ามาจากจุฬาฯ หรือศิริราช แล้วสรุปจะขึ้นที่นี่ ทุกเรื่องกำกับที่มา <span class="src mdcu">จุฬาฯ</span> <span class="src si">ศิริราช</span></p></div>'
+      : !list.length ? '<div class="empty"><p class="muted">ไม่มีสรุปที่ตรงกับตัวกรอง</p></div>'
+        : order.map(function (g) {
+          return '<div class="grp-h label">' + esc(g) + '</div>' + groups[g].map(function (n) {
+            return '<a class="row" href="#/nl/notes/' + encodeURIComponent(n.id) + '"><span class="k" style="flex:1;min-width:0;font-size:18px;font-weight:500">' + esc(n.title) + '</span><span style="display:inline-flex;gap:6px;flex-wrap:wrap">' + srcBadges(n.src) + '</span></a>';
+          }).join('');
+        }).join('');
+    return {
+      title: 'สรุปเนื้อหา — ติว NL & Compre', html: nlHead('notes', 'สรุปเนื้อหา', 'เนื้อหาจากทั้งจุฬาฯ และศิริราช ไม่มีฝั่งไหนเป็นหลัก — Compre ใช้เนื้อหาเดียวกับ NL') +
+        '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:20px">' +
+        (notes.length ? '<div class="filters"><span class="label">การสอบ</span>' + chip('x', '', 'ทั้งหมด', fx) + chip('x', 'nl', 'NL', fx) + chip('x', 'compre', 'Compre', fx) +
+          '<span class="label" style="margin-left:12px">ที่มา</span>' + chip('s', '', 'ทั้งหมด', fs) + chip('s', 'MDCU', 'จุฬาฯ', fs) + chip('s', 'SI', 'ศิริราช', fs) + '</div>' : '') +
+        '<div>' + body + '</div></section>'
+    };
+  }
+
+  /* ---------- บอร์ดประกาศ (Firestore — ทุกคนอ่านได้, เข้าสู่ระบบแล้วโพสต์ได้, แก้/ลบได้เฉพาะของตัวเอง) ---------- */
+  var BTAG = { nl: 'NL', compre: 'Compre', both: 'NL + Compre' };
+  var BOARD = { list: null, err: '', f: '', editing: null, dirty: false };
+  function boardCol() { return FB.fs.collection(FB.db, (C.nl && C.nl.board) || 'poymor_board'); }
+  function pubName(u) {
+    if (!u) return '';
+    if (u.displayName) return u.displayName;
+    var dom = C.userDomain || '', e = u.email || '';
+    return dom && e.slice(-dom.length) === dom ? e.slice(0, -dom.length) : (e.split('@')[0] || '');
+  }
+  function linkify(t) {
+    return esc(t).replace(/https?:\/\/[^\s<]+/g, function (u) {
+      var tail = (u.match(/[).,;:!?]+$/) || [''])[0]; u = u.slice(0, u.length - tail.length);
+      return '<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>' + tail;
+    });
+  }
+  function boardText(v) {
+    var out = '', ul = false;
+    String(v || '').split(/\r?\n/).forEach(function (l) {
+      l = l.trim(); if (!l) { if (ul) { out += '</ul>'; ul = false; } return; }
+      var m = l.match(/^[-•*·]\s+(.*)$/);
+      if (m) { if (!ul) { out += '<ul>'; ul = true; } out += '<li>' + linkify(m[1]) + '</li>'; }
+      else { if (ul) { out += '</ul>'; ul = false; } out += '<p>' + linkify(l) + '</p>'; }
+    });
+    return out + (ul ? '</ul>' : '');
+  }
+  function pDate(x) { return x && x.toDate ? x.toDate() : x ? new Date(x) : null; }
+  function boardErr(e) {
+    return e && e.code === 'permission-denied' ? 'บอร์ดยังเปิดไม่ได้ — Firestore ยังไม่อนุญาต (ต้องเพิ่ม rules ของ poymor_board)' : errMsg(e);
+  }
+  function tagRadios(name, cur) {
+    return Object.keys(BTAG).map(function (k) { return '<label class="opt"><input type="radio" name="' + name + '" value="' + k + '"' + (cur === k ? ' checked' : '') + '><span>' + BTAG[k] + '</span></label>'; }).join('');
+  }
+  function boardFilters() {
+    var L = BOARD.list || [], n = function (f) { return L.filter(function (p) { return !f || p.tag === f || p.tag === 'both'; }).length; };
+    return [['', 'ทั้งหมด'], ['nl', 'NL'], ['compre', 'Compre']].map(function (x) {
+      return '<button class="chip' + (BOARD.f === x[0] ? ' on' : '') + '" type="button" data-bf="' + x[0] + '" aria-pressed="' + (BOARD.f === x[0]) + '">' + x[1] + (BOARD.list ? ' <span style="opacity:.7">' + n(x[0]) + '</span>' : '') + '</button>';
+    }).join('');
+  }
+  function noteHTML(p, i) {
+    var mine = FB && FB.user && FB.user.uid === p.uid, at = pDate(p.at), ed = pDate(p.ed);
+    var rot = [-.8, .6, -.4, .9, -.6, .3][i % 6];
+    return '<article class="sheet bnote" data-id="' + esc(p.id) + '" style="transform:rotate(' + rot + 'deg)">' +
+      '<svg class="pin" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><circle cx="11" cy="9" r="7" fill="' + (p.tag === 'compre' ? '#A44A2A' : p.tag === 'nl' ? '#355A3A' : '#C9952E') + '"/><circle cx="9" cy="7" r="2" fill="#fff" opacity=".45"/><path d="M11 16v10" stroke="#5A6258" stroke-width="1.4" stroke-linecap="round"/></svg>' +
+      '<span class="btag ' + esc(p.tag) + '">' + (BTAG[p.tag] || '') + '</span>' +
+      '<h3>' + esc(p.title) + '</h3>' + (p.body ? '<div class="val">' + boardText(p.body) + '</div>' : '') +
+      '<div class="bfoot"><span class="muted">' + esc(p.name || 'ไม่ระบุชื่อ') + (at ? ' · ' + esc(fmtTime(at)) : '') + (ed ? ' · แก้ไขแล้ว' : '') + '</span>' +
+      (mine ? '<span style="display:inline-flex;gap:6px"><button class="chip" type="button" data-be="' + esc(p.id) + '">แก้ไข</button><button class="chip" type="button" data-bd="' + esc(p.id) + '">ลบ</button></span>' : '') + '</div></article>';
+  }
+  function boardListHTML() {
+    if (BOARD.err) return '<p class="warn">' + esc(BOARD.err) + '</p>';
+    if (!BOARD.list) return '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดประกาศ…</p>';
+    var f = BOARD.f, list = BOARD.list.filter(function (p) { return !f || p.tag === f || p.tag === 'both'; });
+    if (!list.length) return '<div class="empty"><p class="k" style="font-size:20px">ยังไม่มีประกาศ' + (f ? 'เรื่อง ' + BTAG[f] : '') + '</p><p class="muted">ประกาศแรกแปะได้จากกล่องด้านบน</p></div>';
+    return '<div class="bnotes">' + list.map(noteHTML).join('') + '</div>';
+  }
+  function paintBoard() {
+    if (BOARD.editing) { BOARD.dirty = true; return; }
+    var a = document.getElementById('bList'), b = document.getElementById('bFil');
+    if (a) a.innerHTML = boardListHTML();
+    if (b) b.innerHTML = boardFilters();
+  }
+  function bDraft(v) { try { if (v === undefined) return JSON.parse(sessionStorage.getItem('poy-bdraft') || '{}'); sessionStorage.setItem('poy-bdraft', JSON.stringify(v)); } catch (e) { return {}; } }
+  function nlBoard(r) {
+    BOARD.f = r.q.get('f') || ''; if (!BTAG[BOARD.f] || BOARD.f === 'both') BOARD.f = '';
+    BOARD.editing = null; BOARD.dirty = false;
+    var form;
+    if (!fbOn() || fbFail) form = '<div class="sheet bform"><p class="muted">' + (fbOn() ? 'เชื่อมต่อระบบบัญชีไม่ได้ — ตรวจอินเทอร์เน็ตแล้วรีเฟรชหน้า' : 'ยังไม่ได้ตั้งค่า Firebase') + '</p></div>';
+    else if (!FB) form = '<div class="sheet bform"><p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเชื่อมต่อ…</p></div>';
+    else if (!FB.user) form = '<div class="sheet bform"><span class="k" style="font-size:20px">อยากแปะประกาศ?</span><p class="muted">ทุกคนอ่านบอร์ดได้ — เข้าสู่ระบบก่อนถึงจะแปะประกาศได้ (บัญชีเดียวกับคลังข้อสอบเก่า)</p><a class="btn" href="#/account" style="align-self:flex-start">เข้าสู่ระบบ</a></div>';
+    else {
+      var d = bDraft(), nm = LS.get('bname', '') || pubName(FB.user);
+      form = '<form class="sheet bform" id="bForm" autocomplete="off"><span class="k" style="font-size:20px">แปะประกาศใหม่</span>' +
+        '<fieldset><legend class="label" style="margin-bottom:8px">เรื่องของ</legend><div class="types">' + tagRadios('btag', d.tag || 'nl') + '</div></fieldset>' +
+        '<label class="sr" for="bTitle">หัวข้อ</label><input class="field" id="bTitle" maxlength="120" placeholder="หัวข้อประกาศ" value="' + esc(d.title || '') + '">' +
+        '<label class="sr" for="bBody">รายละเอียด</label><textarea class="field" id="bBody" maxlength="4000" rows="5" placeholder="รายละเอียด — ขึ้นบรรทัดด้วย &quot;- &quot; เป็น bullet · ใส่ลิงก์ได้">' + esc(d.body || '') + '</textarea>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><label class="sr" for="bName">ชื่อที่แสดง</label><input class="field" id="bName" maxlength="40" placeholder="ชื่อที่แสดง" value="' + esc(nm) + '" style="flex:1 1 200px;width:auto">' +
+        '<button class="btn" type="submit" id="bPost">แปะประกาศ</button></div><p class="warn" id="bErr" hidden></p></form>';
+    }
+    return {
+      title: 'บอร์ดประกาศ — ติว NL & Compre', html: nlHead('board', 'บอร์ดประกาศ', 'ประกาศเรื่อง NL และ Compre — ใครเข้าสู่ระบบก็มาแปะได้ ประกาศที่ติดทั้งสองเรื่องจะขึ้นในทั้งสองหมวด') +
+        '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' + form +
+        '<div style="display:flex;flex-direction:column;gap:18px"><div class="filters" id="bFil" role="group" aria-label="แยกตามเรื่อง">' + boardFilters() + '</div><div id="bList" aria-live="polite">' + boardListHTML() + '</div></div></section>',
+      after: function () {
+        var el = function (id) { return document.getElementById(id); };
+        if (FB) {
+          BOARD.err = '';
+          var q = FB.fs.query(boardCol(), FB.fs.orderBy('at', 'desc'), FB.fs.limit(300));
+          var un = FB.fs.onSnapshot(q, function (snap) {
+            BOARD.list = snap.docs.map(function (dc) { var v = dc.data({ serverTimestamps: 'estimate' }); v.id = dc.id; return v; });
+            BOARD.err = ''; paintBoard();
+          }, function (e) { console.warn(e); BOARD.err = boardErr(e); paintBoard(); });
+          pageCleanup = function () { un(); BOARD.editing = null; };
+        }
+        var f = el('bForm');
+        if (f) {
+          var save = function () { var c = f.querySelector('input[name=btag]:checked'); bDraft({ tag: c ? c.value : 'nl', title: el('bTitle').value, body: el('bBody').value }); };
+          f.addEventListener('input', save); f.addEventListener('change', save);
+          el('bName').addEventListener('change', function () { LS.set('bname', this.value.trim()); });
+          f.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var c = f.querySelector('input[name=btag]:checked'), title = el('bTitle').value.trim(), body = el('bBody').value.trim(), name = el('bName').value.trim() || pubName(FB.user) || 'ไม่ระบุชื่อ';
+            var er = el('bErr'); er.hidden = true;
+            if (!title) { er.textContent = 'ใส่หัวข้อก่อน'; er.hidden = false; el('bTitle').focus(); return; }
+            var btn = el('bPost'); btn.disabled = true;
+            FB.fs.addDoc(boardCol(), { uid: FB.user.uid, name: name.slice(0, 40), tag: c ? c.value : 'nl', title: title.slice(0, 120), body: body.slice(0, 4000), at: FB.fs.serverTimestamp() })
+              .then(function () { bDraft({}); el('bTitle').value = ''; el('bBody').value = ''; toast('แปะประกาศแล้ว'); })
+              .catch(function (x) { er.textContent = boardErr(x); er.hidden = false; })
+              .then(function () { btn.disabled = false; });
+          });
+        }
+        el('bFil').addEventListener('click', function (e) {
+          var b = e.target.closest('[data-bf]'); if (!b) return;
+          BOARD.f = b.getAttribute('data-bf'); setQuery(route(), { f: BOARD.f }); paintBoard();
+        });
+        el('bList').addEventListener('click', function (e) {
+          var del = e.target.closest('[data-bd]'), edt = e.target.closest('[data-be]');
+          if (del) {
+            if (!confirm('ลบประกาศนี้?')) return;
+            FB.fs.deleteDoc(FB.fs.doc(boardCol(), del.getAttribute('data-bd'))).then(function () { toast('ลบแล้ว'); }).catch(function (x) { toast(boardErr(x)); });
+          } else if (edt) {
+            var id = edt.getAttribute('data-be'), p = (BOARD.list || []).filter(function (x) { return x.id === id; })[0], art = edt.closest('.bnote');
+            if (!p || !art) return;
+            BOARD.editing = id; art.style.transform = 'none';
+            art.innerHTML = '<form class="bform" data-ef style="padding:0;border:0;background:none"><span class="k" style="font-size:18px">แก้ไขประกาศ</span><div class="types">' + tagRadios('etag-' + id, p.tag) + '</div>' +
+              '<input class="field" data-ek="title" maxlength="120" value="' + esc(p.title) + '" aria-label="หัวข้อ"><textarea class="field" data-ek="body" maxlength="4000" rows="5" aria-label="รายละเอียด">' + esc(p.body || '') + '</textarea>' +
+              '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="submit">บันทึก</button><button class="btn ghost" type="button" data-ec>ยกเลิก</button></div></form>';
+            var ef = art.querySelector('form'); ef.querySelector('[data-ek=title]').focus();
+            var done = function () { BOARD.editing = null; if (BOARD.dirty) BOARD.dirty = false; paintBoard(); };
+            ef.querySelector('[data-ec]').addEventListener('click', done);
+            ef.addEventListener('submit', function (ev) {
+              ev.preventDefault();
+              var t = ef.querySelector('[data-ek=title]').value.trim(), bd = ef.querySelector('[data-ek=body]').value.trim(), c = ef.querySelector('input[type=radio]:checked');
+              if (!t) { ef.querySelector('[data-ek=title]').focus(); return; }
+              FB.fs.updateDoc(FB.fs.doc(boardCol(), id), { tag: c ? c.value : p.tag, title: t.slice(0, 120), body: bd.slice(0, 4000), ed: FB.fs.serverTimestamp() })
+                .then(function () { toast('บันทึกแล้ว'); done(); }).catch(function (x) { toast(boardErr(x)); });
+            });
+          }
+        });
+      }
+    };
+  }
+
   PAGES._404 = function () {
     return { title: 'ไม่พบหน้า', html: '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><h1 style="font-size:44px">ไม่พบหน้านี้</h1><a class="btn ghost" href="#/" style="align-self:flex-start">กลับหน้าแรก</a></div></section>' };
   };
@@ -830,7 +1198,7 @@
     var box = function (inner) { return head + '<section class="wrap" style="padding-bottom:80px"><div class="sheet" style="max-width:560px;padding:clamp(22px,4vw,36px);display:flex;flex-direction:column;gap:16px">' + inner + '</div></section>'; };
     if (!fbOn()) return { title: 'บัญชี', html: box('<p>ยังไม่ได้ตั้งค่า Firebase — ข้อมูลบันทึกในเบราว์เซอร์นี้อย่างเดียว</p>') };
     if (!FB) return { title: 'บัญชี', html: box(fbFail ? '<p>เชื่อมต่อระบบบัญชีไม่ได้ ตรวจอินเทอร์เน็ตแล้วรีเฟรชหน้า ระหว่างนี้ใช้งานได้ตามปกติ (บันทึกในเครื่อง)</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเชื่อมต่อระบบบัญชี…</p>') };
-    var syncList = '<ul class="muted" style="font-size:15px"><li>หน้าที่อ่านค้าง</li><li>ข้อสอบ AI ชุดล่าสุดและคำตอบ</li><li>ค่าที่เลือกในห้องสอบ (ระดับ จำนวนข้อ วิธีใช้ AI รุ่น)</li></ul><p class="note">API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์ที่ใส่ไว้เท่านั้น</p>';
+    var syncList = '<ul class="muted" style="font-size:15px"><li>หน้าที่อ่านค้าง</li><li>ข้อสอบ AI ชุดล่าสุดและคำตอบ</li><li>ค่าที่เลือกในห้องสอบ (ระดับ จำนวนข้อ วิธีใช้ AI รุ่น)</li><li>ตั้งค่าการสอบ NL &amp; Compre (วันสอบ รูปแบบ จำนวน เวลา)</li></ul><p class="note">API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์ที่ใส่ไว้เท่านั้น</p>';
     if (FB.user) {
       var st = syncState === 'error' ? '<p class="warn">ซิงก์ไม่สำเร็จ: ' + esc(authErr) + ' — ข้อมูลยังบันทึกในเครื่องนี้</p>'
         : syncState === 'saving' ? '<p class="info"><span class="spin" aria-hidden="true"></span> กำลังบันทึก…</p>' : '<p class="info">บันทึกในบัญชีแล้ว · เปิดจากเครื่องไหนก็ได้</p>';

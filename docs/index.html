@@ -10,22 +10,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="app.css?v=8">
+<link rel="stylesheet" href="app.css?v=9">
 </head>
 <body>
 <header class="top">
   <div class="wrap">
+    <button class="burger" id="burger" type="button" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="drawer">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7C9 6.4 15 7.4 20 6.8"/><path d="M4 12.2C9.5 11.7 14.5 12.6 20 12"/><path d="M4 17.2C8.5 16.8 15 17.6 20 17"/></svg>
+    </button>
     <a class="brand" href="#/">
       <svg width="38" height="38" viewBox="0 0 36 36" fill="none" stroke="#355A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 33 C18 24 17 16 19 5"/><path d="M18 22 C12 21 8 17 7 11 C13 12 17 16 18 22Z" fill="#355A3A" fill-opacity=".18"/><path d="M18.5 15 C23 14 27 10 28 5 C23 6 19.5 9.5 18.5 15Z" fill="#355A3A" fill-opacity=".18"/><circle cx="19" cy="4.5" r="2" fill="#A44A2A" stroke="none"/></svg>
       <span><b>โพยหมอ</b><small>สมุดสนามความรู้ · ปี 1 ถึง License</small></span>
     </a>
-    <nav class="nav" aria-label="เมนูหลัก">
-      <a href="#/preclinic" data-r="preclinic">Preclinic</a>
-      <a href="#/clinic" data-r="clinic">Clinic</a>
-      <a href="#/diseases" data-r="diseases">1000 MAI</a>
-      <a href="#/exam" data-r="exam">ห้องสอบ AI</a>
-      <a href="#/?to=nl" data-r="nl">ติว NL &amp; Compre</a>
-    </nav>
     <form id="gsearch" class="search" role="search">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       <label class="sr" for="gq">ค้นหาโรค</label>
@@ -34,6 +30,36 @@
     <a id="acct" class="chip" href="#/account" hidden>เข้าสู่ระบบ</a>
   </div>
 </header>
+
+<div class="scrim" id="scrim"></div>
+<nav class="drawer" id="drawer" aria-label="เมนูหลัก">
+  <div class="dhead">
+    <span class="k">เมนู</span>
+    <button class="burger" id="dclose" type="button" aria-label="ปิดเมนู">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M6 6.3L18 17.6M18 6.2L6.2 17.8"/></svg>
+    </button>
+  </div>
+  <form id="dsearch" class="search" role="search">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <label class="sr" for="dq2">ค้นหาโรค</label>
+    <input id="dq2" type="search" placeholder="ค้นหาโรค อาการ lab…">
+  </form>
+  <div class="dlinks">
+    <a href="#/" data-r=""><span class="sw" style="background:#8A8F86"></span><span><b>หน้าแรก</b><small>ภาพรวมทั้งเล่ม</small></span></a>
+    <a href="#/preclinic" data-r="preclinic"><span class="sw" style="background:#3E7CA6"></span><span><b>Preclinic</b><small>ราก · สรุปปี 1–3 ตาม system</small></span></a>
+    <a href="#/clinic" data-r="clinic"><span class="sw" style="background:#5C7F3A"></span><span><b>Clinic</b><small>ลำต้น · สมุดวอร์ด + approach</small></span></a>
+    <a href="#/diseases" data-r="diseases"><span class="sw" style="background:#9B4F2E"></span><span><b>1000 MAI</b><small>พรรณไม้ · หนึ่งโรค หนึ่งแผ่น</small></span></a>
+    <a href="#/exam" data-r="exam"><span class="sw" style="background:#C9952E"></span><span><b>ห้องสอบ AI</b><small>ออกข้อสอบ · mock exam</small></span></a>
+    <a href="#/nl" data-r="nl"><span class="sw" style="background:#4A5560"></span><span><b>ติว NL &amp; Compre</b><small>ยอดเขา · จุฬาฯ + ศิริราช</small></span></a>
+    <div class="dsub">
+      <a href="#/nl/board" data-r="nl/board">บอร์ดประกาศ</a>
+      <a href="#/nl/notes" data-r="nl/notes">สรุปเนื้อหา</a>
+      <a href="#/nl/exams" data-r="nl/exams">ข้อสอบ</a>
+      <a href="#/nl/settings" data-r="nl/settings">ตั้งค่า</a>
+    </div>
+  </div>
+  <a class="dacct" href="#/account" data-r="account">บัญชีของฉัน</a>
+</nav>
 
 <main id="app"><p class="wrap muted" style="padding:64px 32px">กำลังเปิดสมุด…</p></main>
 
@@ -45,11 +71,12 @@
 </footer>
 <div id="toast" role="status" hidden style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1E2620;color:#F3EFE5;padding:12px 20px;border-radius:12px;font-size:15px;z-index:50;max-width:calc(100% - 32px)"></div>
 
-<script src="data/config.js?v=8"></script>
-<script src="data/systems.js?v=8"></script>
-<script src="data/sample-diseases.js?v=8"></script>
-<script src="data/preclinic.js?v=8"></script>
-<script src="data/clinic.js?v=8"></script>
-<script src="app.js?v=8"></script>
+<script src="data/config.js?v=9"></script>
+<script src="data/systems.js?v=9"></script>
+<script src="data/sample-diseases.js?v=9"></script>
+<script src="data/preclinic.js?v=9"></script>
+<script src="data/clinic.js?v=9"></script>
+<script src="data/nl.js?v=9"></script>
+<script src="app.js?v=9"></script>
 </body>
 </html>

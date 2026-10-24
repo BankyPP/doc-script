@@ -12,13 +12,21 @@ window.POY_CONFIG = {
      ถ้ายังว่าง เว็บจะใช้ข้อมูลตัวอย่างใน data/sample-diseases.js */
   sheet: { id: '', gid: '0' },
 
-  /* วันสอบ — ใส่เป็น 'YYYY-MM-DD' หรือปล่อยว่าง */
-  exams: [
-    { name: 'Comprehensive', date: '' },
-    { name: 'NL1', date: '' },
-    { name: 'NL2', date: '' },
-    { name: 'NL3', date: '' }
-  ],
+  /* ติว NL & Compre — รายการการสอบ
+     วันสอบ / รูปแบบ / จำนวน / เวลา ใส่ในเว็บ (ติว NL & Compre › ตั้งค่า) — บันทึกต่อคน ซิงก์เข้าบัญชี
+     ค่าใน parts ด้านล่างคือค่าเริ่มต้น ถ้ายังไม่เคยแก้ในเว็บ
+     part: { type: 'MCQ'|'MEQ'|'OSCE', date: 'YYYY-MM-DD', time: 'HH:MM', n: จำนวนข้อ/สถานี, min: เวลาสอบ (นาที) } */
+  nl: {
+    exams: [
+      { id: 'nl1', name: 'NL1', kind: 'nl', parts: [] },
+      { id: 'nl2', name: 'NL2', kind: 'nl', parts: [] },
+      { id: 'c1', name: 'Compre 1', kind: 'compre', parts: [] },
+      { id: 'c2', name: 'Compre 2', kind: 'compre', parts: [] },
+      { id: 'c3', name: 'Compre 3', kind: 'compre', parts: [] }
+    ],
+    /* บอร์ดประกาศ — Firestore คอลเลกชันนี้ (rules ดู README) */
+    board: 'poymor_board'
+  },
 
   /* บัญชี — ใช้ Firebase โปรเจกต์เดียวกับคลังข้อสอบเก่า MDCU (ล็อกอินบัญชีเดียวกันได้)
      ข้อมูลเก็บที่ Firestore: poymor/<uid>/data/state (rules: match /poymor/{uid}/{doc=**}) */
