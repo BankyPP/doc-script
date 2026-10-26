@@ -12,6 +12,7 @@ window.POY_TOPICS = [
     th: 'โรคติดเชื้อและยาต้านจุลชีพ',
     c: '#2F7466',
     dir: 'topics/id-atb/',
+    v: 2,
     pages: 20,
     pdf: 'ABX_Spectrum_Summary_v4_20pages.pdf',
     source: 'ABX Spectrum — ฉบับขยาย 20 หน้า (สรุปโดย Claude)',

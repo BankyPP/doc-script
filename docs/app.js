@@ -1242,9 +1242,9 @@
   function groupOf(d, n) { return d.groups.filter(function (g) { return g.pages.indexOf(n) >= 0; })[0]; }
   /* ภาพตัดเฉพาะกล่อง (ใช้ภาพหน้าเดียวกัน แค่เลื่อนกรอบ) */
   function cropHTML(t, u) {
-    var bb = u.bb, ar = bb[2] / bb[3] * PAGE_R, maxw = Math.round(bb[2] * IMG_W * 1.15);
-    return '<figure class="crop" id="u' + u.key + '"><button type="button" class="cimg" data-zoom="' + u.p + '" data-bb="' + bb.join(',') + '" style="aspect-ratio:' + ar.toFixed(4) + ';max-width:' + maxw + 'px;min-width:' + Math.round(bb[2] * IMG_W * 0.6) + 'px" aria-label="ขยายภาพ: ' + esc(u.title) + '">' +
-      '<img src="' + tImg(t, u.p) + '" alt="" loading="lazy" decoding="async" style="width:' + (100 / bb[2]).toFixed(3) + '%;left:' + (-bb[0] / bb[2] * 100).toFixed(3) + '%;top:' + (-bb[1] / bb[3] * 100).toFixed(3) + '%"></button></figure>';
+    var bb = u.bb, w = Math.round(bb[2] * IMG_W), h = Math.round(bb[3] * IMG_W / PAGE_R);
+    return '<figure class="crop" id="u' + u.key + '"><button type="button" class="cimg" data-zoom="' + u.p + '" data-bb="' + bb.join(',') + '" style="max-width:' + Math.round(w * 1.15) + 'px;min-width:' + Math.round(w * 0.6) + 'px" aria-label="ขยายภาพ: ' + esc(u.title) + '">' +
+      '<img src="' + t.dir + 'c/' + u.key + '.webp?v=' + (t.v || 1) + '" width="' + w + '" height="' + h + '" alt="" loading="lazy" decoding="async"></button></figure>';
   }
   /* ดูภาพเต็ม ซูมได้ */
   function openZoom(t, n, bb) {
@@ -1335,7 +1335,7 @@
       }).join('');
     }).join('');
     var body;
-    if (full) body = '<button type="button" class="cimg fullp" data-zoom="' + n + '" aria-label="ขยายภาพหน้า ' + n + '" style="aspect-ratio:' + PAGE_R.toFixed(4) + '"><img src="' + tImg(t, n) + '" alt="" style="width:100%;left:0;top:0"></button><p class="note">แตะที่ภาพเพื่อขยาย</p>';
+    if (full) body = '<button type="button" class="cimg fullp" data-zoom="' + n + '" aria-label="ขยายภาพหน้า ' + n + '"><img src="' + tImg(t, n) + '" width="' + IMG_W + '" height="' + Math.round(IMG_W / PAGE_R) + '" alt=""></button><p class="note">แตะที่ภาพเพื่อขยาย</p>';
     else {
       var lastHead = null;
       body = '<div class="crops">' + mine.map(function (u) {
