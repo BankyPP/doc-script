@@ -48,7 +48,7 @@ window.POY_CONFIG = {
   /* ลิงก์คลังข้อสอบเก่า */
   acUrl: 'https://bankypp.github.io/ac-mdcu/',
 
-  /* ห้องสอบ AI */
+  /* ห้องสอบ */
   ai: {
     models: [
       { id: 'claude-sonnet-5-5', name: 'Claude Sonnet 5.5 (เร็ว)' },

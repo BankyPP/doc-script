@@ -399,20 +399,20 @@
     var plots = [
       ['#/preclinic', '#3E7CA6', '01 · ราก', 'Preclinic แยกตาม system', 'สรุปปี 1–3 จัดตาม 12 ระบบ อ่านต่อกันได้ตั้งแต่ anatomy ไปจนถึง pharmacology', '<span class="muted">ดึงจาก Google Docs</span>'],
       ['#/clinic', '#5C7F3A', '02 · ลำต้น', 'Clinic', 'สมุดวอร์ดของแต่ละ rotation และ approach ตามอาการนำ ที่กดต่อไปหาโรคได้ทันที', '<span class="muted">เขียนในเว็บ + คลังข้อสอบเก่า</span>'],
-      ['#/diseases', '#9B4F2E', '03 · พรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
+      ['#/diseases', '#9B4F2E', '04 · พรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
         '<span class="live' + (D.src === 'sample' ? ' off' : '') + '"><i></i>' + (D.src === 'sample' ? 'ยังไม่ได้เชื่อม Google Sheet' : 'ซิงก์จาก Google Sheet') + '</span>',
         '<div style="display:flex;flex-direction:column;gap:6px"><div style="height:6px;background:#E4DDCB;border-radius:3px"><div style="width:' + pct + '%;height:6px;background:#9B4F2E;border-radius:3px"></div></div><span class="muted" style="font-size:14px">เก็บแล้ว ' + n + ' / 1000</span></div>'],
-      ['#/exam', '#C9952E', '04 · ห้องสอบ', 'ข้อสอบจาก AI', 'เลือกโรค ระบบ หรือเอกสาร แล้วให้ AI ออกข้อสอบ case-based พร้อมเฉลย', '<span class="muted">ใช้ Claude หรือ API key</span>'],
-      ['#/exam?t=mock', '#A33A3A', '05 · เก็งข้อสอบ', 'Mock exam ตาม blueprint', 'จัดชุดตาม blueprint ของ Compre และ NL กำหนดระดับความยากได้ 5 ระดับ', '<span class="muted">รอ blueprint และนิยามความยาก</span>']
+      ['#/exam', '#C9952E', '05 · ห้องสอบ', 'ข้อสอบจาก AI', 'เลือกโรค ระบบ หรือเอกสาร แล้วให้ AI ออกข้อสอบ case-based พร้อมเฉลย', '<span class="muted">ใช้ Claude หรือ API key</span>'],
+      ['#/exam?t=mock', '#A33A3A', '06 · เก็งข้อสอบ', 'Mock exam ตาม blueprint', 'จัดชุดตาม blueprint ของ Compre และ NL กำหนดระดับความยากได้ 5 ระดับ', '<span class="muted">รอ blueprint และนิยามความยาก</span>']
     ];
     var rot = [-2.5, 2, -4, 1, -1.5];
     var plotsHTML = plots.map(function (p, i) {
       return '<a class="sheet plot" href="' + p[0] + '"><div class="tape" style="transform:rotate(' + rot[i] + 'deg)"></div>' + brush(p[1]) +
         '<span class="label">' + p[2] + '</span><h3>' + p[3] + '</h3><p class="muted">' + p[4] + '</p>' + (p[6] || '') +
-        '<div class="foot">' + p[5] + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
+        '<div class="foot">' + p[5] + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>' +
+        (i === 1 ? '<a class="sheet plot" href="#/topics"><div class="tape" style="transform:rotate(-1.8deg)"></div>' + brush('#2F7466') + '<span class="label">03 · เมล็ดพันธุ์</span><h3>Random Topic Summary</h3><p class="muted">สรุปแยกเป็นเรื่อง ๆ ตามหัวข้อที่เลือกเอง พร้อมโจทย์ AI ที่ออกทีละข้อจากหัวข้อใหญ่หรือย่อย</p><div class="foot"><span class="muted">' + (window.POY_TOPICS || []).map(function (x) { return esc(x.title); }).join(' · ') + '</span><span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>' : '');
     }).join('') +
-      '<a class="sheet plot" href="#/nl"><div class="tape" style="transform:rotate(2.5deg)"></div>' + brush('#4A5560') + '<span class="label">06 · ยอดเขา</span><h3>ติว NL &amp; Compre</h3><p class="muted">บอร์ดประกาศ สรุปเนื้อหาจากจุฬาฯ และศิริราช ข้อสอบเก่า NL1–2 และ Compre 1–3</p><div class="foot">' + nlNextHTML() + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>' +
-      '<a class="sheet plot" href="#/topics"><div class="tape" style="transform:rotate(-1.8deg)"></div>' + brush('#2F7466') + '<span class="label">07 · เมล็ดพันธุ์</span><h3>Random Topic Summary</h3><p class="muted">สรุปแยกเป็นเรื่อง ๆ ตามหัวข้อที่เลือกเอง พร้อมโจทย์ AI ที่ออกทีละข้อจากหัวข้อใหญ่หรือย่อย</p><div class="foot"><span class="muted">' + (window.POY_TOPICS || []).map(function (x) { return esc(x.title); }).join(' · ') + '</span><span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
+      '<a class="sheet plot" href="#/nl"><div class="tape" style="transform:rotate(2.5deg)"></div>' + brush('#4A5560') + '<span class="label">07 · ยอดเขา</span><h3>ติว NL &amp; Compre</h3><p class="muted">บอร์ดประกาศ สรุปเนื้อหาจากจุฬาฯ และศิริราช ข้อสอบเก่า NL1–2 และ Compre 1–3</p><div class="foot">' + nlNextHTML() + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
 
     var recent = LS.get('recent', []);
     var recentHTML = recent.length ? recent.slice(0, 4).map(function (x) {
@@ -435,7 +435,7 @@
         '<section class="wrap hero"><div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:26px"><span class="label">สมุดสนามของหมอ · เล่มที่ 1</span>' +
         '<h1>ทุกอย่างที่เคยเรียน<br>เก็บไว้ในเล่มเดียว</h1>' +
         '<p style="font-size:19px;max-width:560px;color:var(--ink-2)">คลังความรู้ตั้งแต่ปี 1 จนถึงวันสอบใบประกอบวิชาชีพ — สรุป preclinic, clinic, 1000 โรคที่ต้องรู้จัก และห้องสอบที่ให้ AI ช่วยออกข้อสอบจากสิ่งที่เราเก็บไว้เอง</p>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn" href="#/diseases">เปิด 1000 MAI</a><a class="btn ghost" href="#/exam">เข้าห้องสอบ AI</a></div></div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn" href="#/diseases">เปิด 1000 MAI</a><a class="btn ghost" href="#/exam">เข้าห้องสอบ</a></div></div>' +
         '<figure style="flex:1 1 420px;max-width:560px;min-width:0">' + PLANT + '</figure></section>' +
         '<section style="border-top:1px solid var(--rule);padding:56px 0 72px"><div class="wrap" style="display:flex;flex-direction:column;gap:32px">' +
         '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px 32px"><div style="display:flex;flex-direction:column;gap:8px"><span class="label">เมนู</span><h2 style="font-size:38px">วันนี้จะเดินแปลงไหน</h2></div>' +
@@ -513,7 +513,7 @@
     for (var i = 1; i < 10; i++) ticks += 'M' + (1 + i * 37.8).toFixed(1) + ' 23v' + (i === 5 ? -12 : i % 2 ? -6 : -10);
     return {
       title: '1000 MAI', html:
-        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · พรรณไม้</span><h1>1000 MAI</h1>' +
+        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">04 · พรรณไม้</span><h1>1000 MAI</h1>' +
         '<p class="lede">หอพรรณไม้ของโรค — แต่ละโรคคือหนึ่งแผ่นตัวอย่าง รู้จักให้พอจะ diag ได้ รู้ว่าต้องส่ง lab อะไร และเริ่ม initial management ได้</p>' +
         '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px">' + liveHTML() + (hasSheet() ? '<button class="chip" type="button" id="reload" style="min-height:40px">ดึงใหม่</button>' : '') + '</div></div>' +
         '<div style="flex:0 1 380px;min-width:260px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:baseline;gap:10px"><span class="k" style="font-size:64px;line-height:1">' + n + '</span><span class="muted" style="font-size:18px">/ 1000 แผ่นตัวอย่าง</span></div>' +
@@ -653,7 +653,7 @@
   };
 
   /* =========================================================
-     ห้องสอบ AI
+     ห้องสอบ
      ========================================================= */
   var LEVELS = [
     ['ต้นกล้า', 'recall ข้อเท็จจริงตรง ๆ จากเนื้อหา', '<path d="M12 22V13"/><path d="M12 15C8 15 6 12 6 9C9 9 12 11 12 15Z"/><path d="M12 13C15 13 18 11 18 8C15 8 12 10 12 13Z"/><path d="M7 22h10"/>'],
@@ -740,7 +740,7 @@
     var levelHTML = LEVELS.map(function (l, i) {
       return '<label class="lv"><input type="radio" name="lv" value="' + (i + 1) + '"' + (lvl === i + 1 ? ' checked' : '') + '><span><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#355A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + l[2] + '</svg><b class="k" style="font-weight:500">' + (i + 1) + ' · ' + l[0] + '</b></span></label>';
     }).join('');
-    var head = '<section class="wrap phead" style="padding-bottom:24px"><div style="display:flex;flex-direction:column;gap:16px"><span class="label">04–05 · ห้องสอบ</span><h1 style="font-size:clamp(38px,5vw,66px);max-width:900px">ให้ AI ออกข้อสอบจากสิ่งที่เราเก็บไว้</h1>' +
+    var head = '<section class="wrap phead" style="padding-bottom:24px"><div style="display:flex;flex-direction:column;gap:16px"><span class="label">05–06 · ห้องสอบ</span><h1 style="font-size:clamp(38px,5vw,66px);max-width:900px">ให้ AI ออกข้อสอบจากสิ่งที่เราเก็บไว้</h1>' +
       '<p class="lede">สร้างข้อสอบจากโรค ระบบ หรือเอกสารที่เลือก หรือจัด mock exam ทั้งชุดตาม blueprint ของ Compre และ NL</p>' +
       '<div role="tablist" aria-label="โหมดห้องสอบ" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">' + tabs + '</div></div></section>';
 
@@ -760,7 +760,7 @@
     var quiz = LS.get('quiz', null);
     var models = C.ai.models.map(function (m) { return '<option value="' + esc(m.id) + '"' + (m.id === model ? ' selected' : '') + '>' + esc(m.name) + '</option>'; }).join('');
     return {
-      title: 'ห้องสอบ AI', html: head +
+      title: 'ห้องสอบ', html: head +
         '<section class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 48px;align-items:flex-start;padding-bottom:80px">' +
         '<form id="gen" class="sheet" style="flex:1 1 480px;min-width:0;padding:clamp(22px,3.5vw,40px)">' +
         '<div class="step"><span class="n">1</span><div><label class="h" for="src">ออกข้อสอบจาก</label><select id="src" class="field">' + sourceOptions(src) + '</select>' +
@@ -904,7 +904,7 @@
     var me = NL_SUB.filter(function (x) { return x[0] === cur; })[0];
     var tabs = NL_SUB.map(function (x) { return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/nl/' + x[0] + '">' + x[1] + '</a>'; }).join('');
     return '<section class="wrap phead" style="padding-bottom:20px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0">' +
-      (me ? '<nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/nl">ติว NL &amp; Compre</a><span class="muted"> › </span><span>' + me[1] + '</span></nav>' : '<span class="label">06 · ยอดเขา</span>') +
+      (me ? '<nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/nl">ติว NL &amp; Compre</a><span class="muted"> › </span><span>' + me[1] + '</span></nav>' : '<span class="label">07 · ยอดเขา</span>') +
       '<h1 style="font-size:clamp(38px,5vw,64px)">' + h1 + '</h1>' + (lede ? '<p class="lede">' + lede + '</p>' : '') +
       (me ? '<div class="subtabs" aria-label="หน้าย่อย">' + tabs + '</div>' : '') + '</div></section>';
   }
@@ -1295,7 +1295,7 @@
       '<div class="plot soon" style="justify-content:center"><span class="label">หัวข้อถัดไป</span><h3 style="font-size:22px">+ เพิ่มหัวข้อ</h3><p class="muted">ส่งไฟล์สรุปมาในแชทกับ Claude พร้อมบอกชื่อหัวข้อ แล้วจะขึ้นเป็นการ์ดใหม่ที่นี่ แยกส่วนสรุปกับส่วนฝึก</p></div>';
     return {
       title: 'Random Topic Summary', html:
-        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">07 · เมล็ดพันธุ์</span><h1 style="font-size:clamp(40px,5.4vw,72px)">Random Topic Summary</h1>' +
+        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · เมล็ดพันธุ์</span><h1 style="font-size:clamp(40px,5.4vw,72px)">Random Topic Summary</h1>' +
         '<p class="lede">สรุปแยกเป็นเรื่อง ๆ ตามหัวข้อที่เลือกเอง — แต่ละหัวข้อมีส่วนสรุป (แบ่งหัวข้อย่อย) และส่วนฝึก: AI ออกโจทย์ทีละข้อต่อเนื่องจากหัวข้อใหญ่หรือย่อยที่เลือก</p></div></section>' +
         '<section class="wrap" style="padding-bottom:80px"><div class="plots">' + cards + '</div></section>'
     };
@@ -1594,7 +1594,7 @@
         '<label class="h" for="aiFocus" style="font-size:16px;margin:14px 0 8px">เน้นเรื่อง (ไม่ใส่ก็ได้)</label><input class="field" id="aiFocus" maxlength="120" placeholder="เช่น CRAB, เลือกยาในคนท้อง, dose เด็ก" value="' + esc(set.focus || '') + '"></fieldset></div>' +
         '<div class="step"><span class="n">2</span><fieldset><legend class="h">ระดับความยาก</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' + levelHTML + '</div></fieldset></div>' +
         '<div class="step"><span class="n">3</span><fieldset><legend class="h">ใช้ AI ผ่าน</legend><div style="display:flex;flex-direction:column;gap:10px">' +
-        '<label class="eng"><input type="radio" name="teng" value="api"' + (eng === 'api' ? ' checked' : '') + '><span style="flex:1;min-width:0"><b class="k" style="font-weight:500;font-size:17px">Anthropic API key</b><br><span class="muted" style="font-size:15px">ทำในหน้านี้ทีละข้อ ข้อถัดไปเตรียมไว้ระหว่างอ่านเฉลย · key เก็บในเบราว์เซอร์นี้เท่านั้น (ใช้ร่วมกับห้องสอบ AI)</span>' +
+        '<label class="eng"><input type="radio" name="teng" value="api"' + (eng === 'api' ? ' checked' : '') + '><span style="flex:1;min-width:0"><b class="k" style="font-weight:500;font-size:17px">Anthropic API key</b><br><span class="muted" style="font-size:15px">ทำในหน้านี้ทีละข้อ ข้อถัดไปเตรียมไว้ระหว่างอ่านเฉลย · key เก็บในเบราว์เซอร์นี้เท่านั้น (ใช้ร่วมกับห้องสอบ)</span>' +
         '<input id="tkey" type="password" class="field" style="margin-top:10px" placeholder="sk-ant-…" autocomplete="off" aria-label="Anthropic API key" value="' + esc(key) + '">' +
         '<select id="tmodel" class="field" style="margin-top:8px" aria-label="รุ่นของ Claude">' + models + '</select></span></label>' +
         '<label class="eng"><input type="radio" name="teng" value="claude"' + (eng === 'claude' ? ' checked' : '') + '><span><b class="k" style="font-weight:500;font-size:17px">Claude</b><br><span class="muted" style="font-size:15px">เปิดแชทใหม่ใน claude.ai ด้วยบัญชีของคุณ — Claude ออกทีละข้อต่อเนื่องในแชท (ส่งเนื้อหาไปได้บางส่วนเพราะลิงก์ยาวจำกัด)</span></span></label></div></fieldset></div>' +

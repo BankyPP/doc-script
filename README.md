@@ -1,6 +1,6 @@
 # โพยหมอ
 
-คลังความรู้ตั้งแต่ปี 1 ถึงใบประกอบวิชาชีพ — preclinic, clinic, 1000 MAI และห้องสอบ AI
+คลังความรู้ตั้งแต่ปี 1 ถึงใบประกอบวิชาชีพ — preclinic, clinic, 1000 MAI และห้องสอบ
 
 เว็บอยู่ในโฟลเดอร์ `docs/` (GitHub Pages: branch `main`, folder `/docs`) ไม่ต้อง build
 
