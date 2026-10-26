@@ -1620,6 +1620,9 @@
     ['ป่าดิบ', 'เคสซับซ้อน มีโรคร่วมหรือข้อมูลรบกวน ตัวลวงใกล้เคียงกันมาก', '<path d="M7 3L2 15h10Z"/><path d="M17 6l-5 12h10Z"/><path d="M7 15v6M17 18v4M2 22h20"/>'],
     ['ยอดเขา', 'หลายขั้นตอน รายละเอียดระดับ guideline แยกแยะข้อยกเว้น', '<path d="M2 21L9 7l4 6 3-4 6 12Z"/><path d="M7.2 10.6L9 12l1.6-1.6"/>']
   ];
+  /* จำนวนข้อ: ปุ่ม 1 / 5 / 10 / 20 + พิมพ์เอง (1–100) */
+  var CNT_PRESET = [1, 5, 10, 20], CNT_MAX = 100;
+  function cntOf(v) { var n = Math.floor(+v); return n >= 1 && n <= CNT_MAX ? n : 0; }
   function sourceOptions(sel) {
     var o = '<optgroup label="1000 MAI"><option value="all">สุ่มจากทุกโรค</option>';
     var used = {}; D.list.forEach(function (d) { used[d.sys.id] = d.sys; });
@@ -1743,7 +1746,10 @@
         '<div class="step"><span class="n">1</span><div><label class="h" for="src">ออกข้อสอบจาก</label><select id="src" class="field">' + sourceOptions(src) + '</select>' +
         (D.src === 'sample' ? '<p class="note" style="margin-top:8px">ตอนนี้ 1000 MAIยังเป็นข้อมูลตัวอย่าง (เต็มแค่ Melioidosis)</p>' : '') + '</div></div>' +
         '<div class="step"><span class="n">2</span><fieldset><legend class="h">จำนวนข้อ</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' +
-        [5, 10, 20].map(function (n) { return '<label class="opt"><input type="radio" name="cnt" value="' + n + '"' + (cnt === n ? ' checked' : '') + '><span>' + n + ' ข้อ</span></label>'; }).join('') + '</div></fieldset></div>' +
+        CNT_PRESET.map(function (n) { return '<label class="opt"><input type="radio" name="cnt" value="' + n + '"' + (cnt === n ? ' checked' : '') + '><span>' + n + ' ข้อ</span></label>'; }).join('') +
+        '<label class="opt"><input type="radio" name="cnt" value="c"' + (CNT_PRESET.indexOf(cnt) < 0 ? ' checked' : '') + '><span>พิมพ์เอง</span></label>' +
+        '<span class="cntw"><input class="field cntin" id="cntIn" type="number" min="1" max="' + CNT_MAX + '" step="1" inputmode="numeric" value="' + (CNT_PRESET.indexOf(cnt) < 0 ? cnt : '') + '" placeholder="1–' + CNT_MAX + '" aria-label="จำนวนข้อที่พิมพ์เอง (1–' + CNT_MAX + ')"><span class="muted">ข้อ</span></span>' +
+        '</div></fieldset></div>' +
         '<div class="step"><span class="n">3</span><fieldset><legend class="h">ระดับความยาก</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' + levelHTML + '</div><p class="note" style="margin-top:10px" id="lvdesc"></p></fieldset></div>' +
         '<div class="step"><span class="n">4</span><fieldset><legend class="h">ใช้ AI ผ่าน</legend><div style="display:flex;flex-direction:column;gap:10px">' +
         '<label class="eng"><input type="radio" name="eng" value="claude"' + (eng === 'claude' ? ' checked' : '') + '><span><b class="k" style="font-weight:500;font-size:17px">Claude</b><br><span class="muted" style="font-size:15px">เปิดแชทใหม่ใน claude.ai ด้วยบัญชีของคุณ ไม่ต้องใส่ key — ทำข้อสอบในแชท</span></span></label>' +
@@ -1762,9 +1768,11 @@
         function showLv() { var l = LEVELS[lvNow() - 1]; document.getElementById('lvdesc').textContent = 'ระดับ ' + lvNow() + ' ' + l[0] + ': ' + l[1] + ' (นิยามชั่วคราว)'; }
         showLv();
         (function () { var sv = document.getElementById('src').value; if (sv.indexOf('y:') === 0 && syCh(sv.slice(2))) syLoad(syCh(sv.slice(2))); })();
+        document.getElementById('cntIn').addEventListener('input', function () { form.querySelector('input[name=cnt][value=c]').checked = true; if (cntOf(this.value)) LS.set('count', cntOf(this.value)); });
         form.addEventListener('change', function (e) {
           if (e.target.name === 'lv') { LS.set('level', lvNow()); showLv(); }
-          if (e.target.name === 'cnt') LS.set('count', +e.target.value);
+          if (e.target.name === 'cnt') { if (e.target.value === 'c') { var ci = document.getElementById('cntIn'); ci.focus(); if (cntOf(ci.value)) LS.set('count', cntOf(ci.value)); } else LS.set('count', +e.target.value); }
+          if (e.target.id === 'cntIn') { form.querySelector('input[name=cnt][value=c]').checked = true; if (cntOf(e.target.value)) LS.set('count', cntOf(e.target.value)); }
           if (e.target.name === 'eng') LS.set('engine', e.target.value);
           if (e.target.id === 'model') LS.set('model', e.target.value);
           if (e.target.id === 'src') { setQuery(route(), { src: e.target.value }); if (e.target.value.indexOf('y:') === 0 && syCh(e.target.value.slice(2))) syLoad(syCh(e.target.value.slice(2))); }
@@ -1773,7 +1781,10 @@
         if (fg) fg.addEventListener('click', function () { LS.del('apikey'); document.getElementById('key').value = ''; fg.remove(); toast('ลบ key แล้ว'); });
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          var o = { n: +(form.querySelector('input[name=cnt]:checked') || { value: 5 }).value, level: lvNow() };
+          var cv = (form.querySelector('input[name=cnt]:checked') || { value: 5 }).value;
+          var nQ = cv === 'c' ? cntOf(document.getElementById('cntIn').value) : +cv;
+          if (!nQ) { var ci2 = document.getElementById('cntIn'); ci2.focus(); toast('ใส่จำนวนข้อ 1–' + CNT_MAX); return; }
+          var o = { n: nQ, level: lvNow() };
           var engine = (form.querySelector('input[name=eng]:checked') || { value: 'claude' }).value;
           var srcVal = document.getElementById('src').value;
           if (engine === 'claude') {
@@ -1796,7 +1807,7 @@
           fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
             headers: { 'content-type': 'application/json', 'x-api-key': k, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-            body: JSON.stringify({ model: mdl, max_tokens: Math.min(16000, 1200 * o.n + 1000), messages: [{ role: 'user', content: buildPrompt(o, false) }] })
+            body: JSON.stringify({ model: mdl, max_tokens: Math.min(64000, 1200 * o.n + 1000), messages: [{ role: 'user', content: buildPrompt(o, false) }] })
           }).then(function (res) {
             return res.json().then(function (j) { if (!res.ok) throw new Error((j.error && j.error.message) || ('HTTP ' + res.status)); return j; });
           }).then(function (j) {

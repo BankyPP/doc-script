@@ -607,3 +607,7 @@ body.lbopen,body.fopen{overflow:hidden}
   .gdoc .gl{margin-left:calc(var(--l,0)*16px);padding-left:20px}
   .gpn a{max-width:100%}
 }
+
+/* ห้องสอบ: จำนวนข้อแบบพิมพ์เอง */
+.cntw{display:inline-flex;align-items:center;gap:8px}
+.cntin{width:96px;min-height:44px;text-align:center}

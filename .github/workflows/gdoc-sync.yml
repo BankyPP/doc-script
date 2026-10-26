@@ -23,8 +23,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: ติดตั้ง Playwright (ใช้ Chrome ที่มีในเครื่อง)
-        run: pip install playwright==1.48.0
+      - name: ติดตั้ง Playwright + Chromium
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
       - name: ดึง Doc โพยหมอ
         run: |
           mkdir -p /tmp/gdoc && cd /tmp/gdoc
@@ -32,10 +34,14 @@ jobs:
           file doc.zip
           unzip -o -q doc.zip
           ls -la
+          echo "::notice title=ดึง Doc::$(ls | tr '\n' ' ')"
       - name: แปลงเป็นหน้าเว็บ
-        env:
-          PW_CHANNEL: chrome
-        run: python3 tools/gdoc/build.py /tmp/gdoc poymor --hide "homework (?)" --min-tabs 20
+        run: |
+          set -o pipefail
+          if ! python3 tools/gdoc/build.py /tmp/gdoc poymor --hide "homework (?)" --min-tabs 20 2>&1 | tee /tmp/build.log; then
+            echo "::error title=แปลง Doc ไม่สำเร็จ::$(tail -c 900 /tmp/build.log | tr '\n' ' ')"
+            exit 1
+          fi
       - name: commit ถ้ามีอะไรเปลี่ยน
         run: |
           if [ -n "$(git status --porcelain docs/gdoc)" ]; then
