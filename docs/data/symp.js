@@ -1,7 +1,7 @@
 /* Clinic › Symptomatology & Approach — สร้างอัตโนมัติด้วย tools/symp/build.py (อย่าแก้ด้วยมือ)
    เนื้อหาแต่ละบทอยู่ใน docs/symp/chNN.json · รูปใน docs/symp/img/ */
 window.POY_SYMP = {
- "v": 1793033773,
+ "v": 1793034139,
  "book": {
   "title": "ตำราอายุรศาสตร์ อาการวิทยา",
   "by": "ภาควิชาอายุรศาสตร์ คณะแพทยศาสตร์ศิริราชพยาบาล",
@@ -617,7 +617,7 @@ window.POY_SYMP = {
    "n": 17,
    "f": 2,
    "i": 1,
-   "kb": 35
+   "kb": 36
   },
   {
    "no": 40,

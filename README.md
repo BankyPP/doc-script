@@ -11,6 +11,7 @@
 | `docs/data/sample-diseases.js` | ข้อมูลตัวอย่าง ใช้ตอนยังไม่เชื่อมชีต |
 | `docs/data/preclinic.js` | สรุป preclinic แยกตาม system |
 | `docs/data/clinic.js` | สมุดวอร์ด + approach ตามอาการนำ |
+| `docs/data/symp.js` + `docs/symp/` | Clinic › Symptomatology & Approach — ตำราอาการวิทยา (ศิริราช) 44 บท: `chNN.json` เนื้อหา+algorithm, `img/` รูป, `search.json` ค้นทุกบท · สร้างด้วย `tools/symp/build.py` (อย่าแก้ symp.js ด้วยมือ) |
 | `docs/data/nl.js` | ติว NL & Compre — สรุปเนื้อหา (กำกับที่มา จุฬาฯ / ศิริราช ทุกเรื่อง) |
 | `docs/data/topics.js` | Random Topic Summary — รายการหัวข้อ (ไฟล์ของแต่ละหัวข้ออยู่ใน `docs/topics/<id>/`) |
 | `docs/app.js`, `docs/app.css` | ตัวเว็บ |
@@ -62,3 +63,10 @@ match /poymor_board/{id} {
 
 ## อัปเดตเว็บ
 - ทุกครั้งที่แก้ `app.js` / `app.css` / `data/*.js` ให้เพิ่มเลข `?v=` ใน `docs/index.html` ทุกบรรทัด เพื่อไม่ให้เบราว์เซอร์ใช้ไฟล์เก่าที่จำไว้
+
+## Clinic › Symptomatology & Approach (`#/clinic/symp`)
+- ที่มา: ตำราอายุรศาสตร์ อาการวิทยา ภาควิชาอายุรศาสตร์ ศิริราช พิมพ์ครั้งที่ 3 (2559) — 44 บท
+- แต่ละบท: หัวข้อเป็น toggle, หัวข้อย่อยเป็นกล่องหลายคอลัมน์, algorithm กดกล่องดูรายละเอียด/ไฮไลต์เส้นทาง หรือโหมดทีละขั้น, รูปต้นฉบับ, ออกข้อสอบจากบท (`#/exam?src=y:<id>`)
+- แก้เนื้อหา: แก้ `/home/claude/symp/out/chNN.json` (หรือ `docs/symp/chNN.json` แล้ว copy กลับ) → `python3 tools/symp/validate.py NN` → `python3 tools/symp/build.py <โฟลเดอร์>`
+- รูปแบบไฟล์บทและกติกาเนื้อหา: `tools/symp/BRIEF.md`
+- Clinical skills (`#/clinic/skills`): ยังว่าง รอไฟล์
