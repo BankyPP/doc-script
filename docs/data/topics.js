@@ -18,6 +18,12 @@ window.POY_TOPICS = [
     source: 'ABX Spectrum — ฉบับขยาย 20 หน้า (สรุปโดย Claude)',
     added: '26 ต.ค. 2026',
     selftest: true,
+    /* โจทย์ AI: case-based MCQ 5 ตัวเลือก ออกเรื่องอะไรก็ได้ในไฟล์ แต่ ~80% เน้นเชื้อและการเลือกยา */
+    mix: {
+      p: 0.8,
+      main: 'เน้นเรื่องเชื้อก่อโรคและการเลือกยา — จากเคสให้นึกถึงเชื้อ แล้วเลือกยา (empiric / definitive / drug of choice / ยาทางเลือกเมื่อแพ้ยา ตั้งครรภ์ เด็ก หรือเชื้อดื้อยา)',
+      other: 'ถามเรื่องอื่นในเนื้อหาได้ เช่น กลไกออกฤทธิ์ กลไกดื้อยา ADR/DI, PK/PD, dose, ระยะเวลารักษา, prophylaxis หรือ lab/micro'
+    },
     flash: [
       { id: 'bug-drug', title: 'Flashcard — Bug → Drug', note: 'จากหน้า 10–11 ของสรุป', pages: [10, 11], file: '' }
     ]
