@@ -315,6 +315,7 @@
       a.classList.toggle('on', on);
       if (on && (k === sub || !sub)) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
+    paintDsub();
     var res = page(r);
     app.innerHTML = res.html;
     document.title = (res.title ? res.title + ' — ' : '') + C.title;
@@ -355,6 +356,22 @@
     document.body.classList.remove('dopen'); burger.setAttribute('aria-expanded', 'false');
     if (focusBack) burger.focus();
   }
+  /* เปิด/ปิดหัวข้อย่อยในเมนู — จำค่าที่กดไว้ ถ้ายังไม่เคยกด: เปิดเฉพาะส่วนที่อยู่ตอนนี้ */
+  function dsubState(k) { try { var o = JSON.parse(localStorage.getItem('poy-dsub') || '{}'); return o.hasOwnProperty(k) ? !!o[k] : null; } catch (e) { return null; } }
+  function paintDsub() {
+    var cur = route().name;
+    drawer.querySelectorAll('[data-tog]').forEach(function (b) {
+      var k = b.getAttribute('data-tog'), s = dsubState(k), open = s === null ? cur === k : s;
+      b.setAttribute('aria-expanded', String(open));
+      var sub = document.getElementById('dsub-' + k); if (sub) sub.hidden = !open;
+    });
+  }
+  drawer.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tog]'); if (!b) return;
+    var k = b.getAttribute('data-tog'), open = b.getAttribute('aria-expanded') !== 'true';
+    try { var o = JSON.parse(localStorage.getItem('poy-dsub') || '{}'); o[k] = open; localStorage.setItem('poy-dsub', JSON.stringify(o)); } catch (x) { }
+    paintDsub();
+  });
   burger.addEventListener('click', function () { if (document.body.classList.contains('dopen')) closeDrawer(true); else openDrawer(); });
   document.getElementById('dclose').addEventListener('click', function () { closeDrawer(true); });
   scrim.addEventListener('click', function () { closeDrawer(true); });

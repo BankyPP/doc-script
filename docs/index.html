@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="app.css?v=10">
+<link rel="stylesheet" href="app.css?v=12">
 </head>
 <body>
 <header class="top">
@@ -48,14 +48,14 @@
     <a href="#/" data-r=""><span class="sw" style="background:#8A8F86"></span><span><b>หน้าแรก</b><small>ภาพรวมทั้งเล่ม</small></span></a>
     <a href="#/preclinic" data-r="preclinic"><span class="sw" style="background:#3E7CA6"></span><span><b>Preclinic</b><small>ราก · สรุปปี 1–3 ตาม system</small></span></a>
     <a href="#/clinic" data-r="clinic"><span class="sw" style="background:#5C7F3A"></span><span><b>Clinic</b><small>ลำต้น · สมุดวอร์ด + approach</small></span></a>
-    <a href="#/topics" data-r="topics"><span class="sw" style="background:#2F7466"></span><span><b>Random Topic Summary</b><small>เมล็ดพันธุ์ · สรุปตามหัวข้อ + ฝึกโจทย์</small></span></a>
-    <div class="dsub">
+    <div class="drow"><a href="#/topics" data-r="topics"><span class="sw" style="background:#2F7466"></span><span><b>Random Topic Summary</b><small>เมล็ดพันธุ์ · สรุปตามหัวข้อ + ฝึกโจทย์</small></span></a><button class="dtog" type="button" data-tog="topics" aria-expanded="true" aria-controls="dsub-topics" aria-label="เปิด/ปิดหัวข้อย่อยของ Random Topic Summary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></svg></button></div>
+    <div class="dsub" id="dsub-topics">
       <a href="#/topics/id-atb" data-r="topics/id-atb">ID &amp; Antibiotics</a>
     </div>
     <a href="#/diseases" data-r="diseases"><span class="sw" style="background:#9B4F2E"></span><span><b>1000 MAI</b><small>พรรณไม้ · หนึ่งโรค หนึ่งแผ่น</small></span></a>
     <a href="#/exam" data-r="exam"><span class="sw" style="background:#C9952E"></span><span><b>ห้องสอบ</b><small>ออกข้อสอบ · mock exam</small></span></a>
-    <a href="#/nl" data-r="nl"><span class="sw" style="background:#4A5560"></span><span><b>ติว NL &amp; Compre</b><small>ยอดเขา · จุฬาฯ + ศิริราช</small></span></a>
-    <div class="dsub">
+    <div class="drow"><a href="#/nl" data-r="nl"><span class="sw" style="background:#4A5560"></span><span><b>ติว NL &amp; Compre</b><small>ยอดเขา · จุฬาฯ + ศิริราช</small></span></a><button class="dtog" type="button" data-tog="nl" aria-expanded="true" aria-controls="dsub-nl" aria-label="เปิด/ปิดหัวข้อย่อยของ ติว NL &amp; Compre"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></svg></button></div>
+    <div class="dsub" id="dsub-nl">
       <a href="#/nl/board" data-r="nl/board">บอร์ดประกาศ</a>
       <a href="#/nl/notes" data-r="nl/notes">สรุปเนื้อหา</a>
       <a href="#/nl/exams" data-r="nl/exams">ข้อสอบ</a>
@@ -82,6 +82,6 @@
 <script src="data/clinic.js?v=10"></script>
 <script src="data/nl.js?v=10"></script>
 <script src="data/topics.js?v=10"></script>
-<script src="app.js?v=11"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>

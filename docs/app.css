@@ -55,12 +55,18 @@ body.dopen{overflow:hidden}
 .dhead .k{font-size:15px;font-weight:500;letter-spacing:.06em;color:var(--muted)}
 .drawer .search{flex:none}
 .dlinks{display:flex;flex-direction:column;border-top:1px solid var(--rule);padding-top:6px}
-.dlinks>a{display:flex;align-items:center;gap:14px;min-height:60px;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--ink)}
-.dlinks>a b{font-family:'Kanit',sans-serif;font-weight:500;font-size:18px;display:block;line-height:1.25}
-.dlinks>a small{display:block;font-size:13px;color:var(--muted);line-height:1.3}
-.dlinks>a:hover,.dsub a:hover,.dacct:hover{background:var(--hover);color:var(--ink)}
-.dlinks>a.on{background:var(--ink);color:var(--paper)}
-.dlinks>a.on small{color:#C9CFC4}
+.dlinks>a,.drow>a{display:flex;align-items:center;gap:14px;min-height:60px;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--ink)}
+.dlinks>a b,.drow>a b{font-family:'Kanit',sans-serif;font-weight:500;font-size:18px;display:block;line-height:1.25}
+.dlinks>a small,.drow>a small{display:block;font-size:13px;color:var(--muted);line-height:1.3}
+.dlinks>a:hover,.drow>a:hover,.dsub a:hover,.dacct:hover{background:var(--hover);color:var(--ink)}
+.dlinks>a.on,.drow>a.on{background:var(--ink);color:var(--paper)}
+.dlinks>a.on small,.drow>a.on small{color:#C9CFC4}
+.drow{display:flex;align-items:center;gap:6px}
+.drow>a{flex:1;min-width:0}
+.dtog{width:44px;height:44px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--rule-3);border-radius:12px;background:var(--sheet);color:var(--ink);cursor:pointer}
+.dtog:hover{background:var(--hover)}
+.dtog svg{transition:transform .2s}
+.dtog[aria-expanded="false"] svg{transform:rotate(-90deg)}
 .dsub{display:flex;flex-direction:column;margin:2px 0 6px 31px;padding-left:14px;border-left:1.5px dashed var(--rule-3)}
 .dsub a{font-family:'Kanit',sans-serif;font-weight:400;font-size:15px;display:flex;align-items:center;min-height:42px;padding:0 12px;border-radius:8px;text-decoration:none;color:var(--ink-2)}
 .dsub a.on{color:var(--moss);font-weight:600;background:var(--moss-bg)}
@@ -335,4 +341,4 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 
   .phead{padding-top:36px}
   .hero{padding-top:40px}
 }
-@media (prefers-reduced-motion:reduce){.plot,.book,.spec,.drawer,.scrim{transition:none}.spin{animation:none}}
+@media (prefers-reduced-motion:reduce){.dtog svg,.plot,.book,.spec,.drawer,.scrim{transition:none}.spin{animation:none}}
