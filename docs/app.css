@@ -511,3 +511,6 @@ body.lbopen,body.fopen{overflow:hidden}
 }
 @media (prefers-reduced-motion:reduce){.chev,.sxcard,.fn{transition:none}.sx .hl,.sxsec.hl,.sxbox.hl,.fbox.hl{animation:none}}
 .fopt .chip{display:inline-block}
+.sx .tbl tbody th{background:var(--moss-bg);color:var(--moss-dk);text-align:left;font-size:13.5px}
+.sx .tbl small{display:block;margin-top:4px}
+.sx small{font-size:13.5px;color:var(--muted)}

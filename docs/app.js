@@ -817,7 +817,7 @@
       title: c.th + ' · ' + c.en, html: head +
         '<section class="band" style="padding:30px 0 80px"><div class="wrap reader sxreader" id="sxr" style="--g:' + g.c + '">' +
         '<details class="ttree sxtoc" id="sxtoc" open><summary class="k">หัวข้อในบท <span class="muted" style="font-weight:400;font-size:14px">· ' + d.sections.length + ' หัวข้อ</span></summary><nav class="tree" aria-label="หัวข้อในบท ' + esc(c.th) + '">' + toc + ftoc + '</nav></details>' +
-        '<article class="sheet doc sxdoc sx"><div class="sxtools"><button type="button" class="chip" data-all="1">เปิดทั้งหมด</button><button type="button" class="chip" data-all="0">ปิดทั้งหมด</button>' +
+        '<article class="sheet doc sxdoc sx"><div class="sxtools"><button type="button" class="chip" data-all="1">เปิดทั้งหมด</button><button type="button" class="chip" data-all="0">ปิดทั้งหมด</button><a class="chip" href="#/exam?src=' + encodeURIComponent('y:' + c.id) + '">ออกข้อสอบจากบทนี้</a>' +
         (flows.length ? '<span class="muted" style="font-size:14px">' + flows.length + ' algorithm — กดกล่องเพื่อดูรายละเอียด หรือเลือก "ทีละขั้น"</span>' : '') + '</div>' +
         secs + nav + '</article></div></section>',
       after: function () {
@@ -1100,6 +1100,7 @@
     var pre = []; PRE.forEach(function (s) { s.groups.forEach(function (g) { g.docs.forEach(function (d) { if (d.html) pre.push([s, d]); }); }); });
     if (pre.length) o += '<optgroup label="Preclinic">' + pre.map(function (x) { return '<option value="p:' + x[0].id + '/' + x[1].id + '">' + esc(x[0].name + ' › ' + x[1].title) + '</option>'; }).join('') + '</optgroup>';
     o += '<optgroup label="Clinic">' + CLI.approaches.map(function (a) { return '<option value="c:' + a.id + '">' + esc('Approach › ' + a.title) + '</option>'; }).join('') + '</optgroup>';
+    if (SY.chapters.length) o += '<optgroup label="Symptomatology &amp; Approach (ศิริราช)">' + SY.chapters.map(function (c) { return '<option value="y:' + c.id + '">' + esc('บทที่ ' + c.no + ' ' + c.th + ' · ' + c.en) + '</option>'; }).join('') + '</optgroup>';
     if (sel) o = o.replace('value="' + esc(sel) + '"', 'value="' + esc(sel) + '" selected');
     return o;
   }
@@ -1114,6 +1115,15 @@
     } else if (src.indexOf('c:') === 0) {
       var a = CLI.approaches.filter(function (x) { return x.id === src.slice(2); })[0];
       if (a) { label = 'Approach ' + a.title; text = '## ' + a.title + '\n' + a.steps.map(function (s, i) { return (i + 1) + '. ' + s.title + ': ' + (s.links ? s.links.map(function (l) { return l[0] + ' → ' + l[1]; }).join('; ') : htmlText(s.html)); }).join('\n'); }
+    } else if (src.indexOf('y:') === 0) {
+      var yc = syCh(src.slice(2)), yd = yc && syLoad(yc);
+      if (yd) {
+        label = 'ตำราอาการวิทยา (ศิริราช) บทที่ ' + yc.no + ' ' + yc.th + ' · ' + yc.en;
+        var tx = [];
+        (function walk(ss, dep) { ss.forEach(function (x) { tx.push(new Array(dep + 3).join('#') + ' ' + x.h); if (x.html) tx.push(htmlText(x.html)); walk(x.sub || [], dep + 1); }); })(yd.sections, 0);
+        (yd.flows || []).forEach(function (f) { tx.push('## Algorithm: ' + f.title); f.edges.forEach(function (e) { var a = f.nodes.filter(function (x) { return x.id === e.f; })[0], b = f.nodes.filter(function (x) { return x.id === e.t; })[0]; if (a && b) tx.push(htmlText(a.t) + (e.l ? ' —[' + e.l + ']→ ' : ' → ') + htmlText(b.t)); }); });
+        text = '## ' + label + '\n' + tx.join('\n');
+      }
     } else {
       var pool = src === 'all' ? D.list : D.list.filter(function (x) { return 's:' + x.sys.id === src; });
       pool = shuffle(pool.filter(function (x) { return x.filled; })).slice(0, Math.max(n, 3));
@@ -1214,12 +1224,13 @@
         function lvNow() { var c = form.querySelector('input[name=lv]:checked'); return c ? +c.value : 3; }
         function showLv() { var l = LEVELS[lvNow() - 1]; document.getElementById('lvdesc').textContent = 'ระดับ ' + lvNow() + ' ' + l[0] + ': ' + l[1] + ' (นิยามชั่วคราว)'; }
         showLv();
+        (function () { var sv = document.getElementById('src').value; if (sv.indexOf('y:') === 0 && syCh(sv.slice(2))) syLoad(syCh(sv.slice(2))); })();
         form.addEventListener('change', function (e) {
           if (e.target.name === 'lv') { LS.set('level', lvNow()); showLv(); }
           if (e.target.name === 'cnt') LS.set('count', +e.target.value);
           if (e.target.name === 'eng') LS.set('engine', e.target.value);
           if (e.target.id === 'model') LS.set('model', e.target.value);
-          if (e.target.id === 'src') setQuery(route(), { src: e.target.value });
+          if (e.target.id === 'src') { setQuery(route(), { src: e.target.value }); if (e.target.value.indexOf('y:') === 0 && syCh(e.target.value.slice(2))) syLoad(syCh(e.target.value.slice(2))); }
         });
         var fg = document.getElementById('forget');
         if (fg) fg.addEventListener('click', function () { LS.del('apikey'); document.getElementById('key').value = ''; fg.remove(); toast('ลบ key แล้ว'); });
@@ -1230,7 +1241,7 @@
           var srcVal = document.getElementById('src').value;
           if (engine === 'claude') {
             o.src = gatherSource(srcVal, o.n, 4500);
-            if (!o.src.text) { st.textContent = 'ไม่มีเนื้อหาในแหล่งที่เลือก'; return; }
+            if (!o.src.text) { st.textContent = srcVal.indexOf('y:') === 0 ? 'กำลังโหลดเนื้อหาบทนี้ — รอสักครู่แล้วกดอีกครั้ง' : 'ไม่มีเนื้อหาในแหล่งที่เลือก'; return; }
             var p = buildPrompt(o, true);
             try { navigator.clipboard.writeText(p); } catch (err) { }
             window.open('https://claude.ai/new?q=' + encodeURIComponent(p), '_blank', 'noopener');
@@ -1242,7 +1253,7 @@
           LS.set('apikey', k);
           var mdl = document.getElementById('model').value;
           o.src = gatherSource(srcVal, o.n, 40000);
-          if (!o.src.text) { st.textContent = 'ไม่มีเนื้อหาในแหล่งที่เลือก'; return; }
+          if (!o.src.text) { st.textContent = srcVal.indexOf('y:') === 0 ? 'กำลังโหลดเนื้อหาบทนี้ — รอสักครู่แล้วกดอีกครั้ง' : 'ไม่มีเนื้อหาในแหล่งที่เลือก'; return; }
           var btn = document.getElementById('go'); btn.disabled = true;
           st.innerHTML = '<span class="spin" aria-hidden="true"></span> กำลังให้ AI ออกข้อสอบ ' + o.n + ' ข้อ…';
           fetch('https://api.anthropic.com/v1/messages', {
