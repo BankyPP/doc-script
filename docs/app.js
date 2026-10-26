@@ -278,11 +278,13 @@
     });
     var content = cols.filter(function (c) { return !c.role || c.role === 'alias' || c.role === 'brief' || c.role === 'onset' || c.role === 'prog'; });
     function val(r, c) { return c ? String(r[c.j] == null ? '' : r[c.j]).trim() : ''; }
-    var out = [], ids = {};
+    var out = [], ids = {}, lastNo = 0, exact = {};
     rows.slice(hi + (hasSub ? 2 : 1)).forEach(function (r, k) {
       var name = val(r, role.name); if (!name) return;
       var rowNo = hi + (hasSub ? 2 : 1) + k + 1;
-      var noRaw = val(r, role.no), star = noRaw === '*';
+      /* เลขในช่อง # — ถ้าเป็น * หรือว่าง ให้นับต่อจากเลขก่อนหน้าเอง (ซ้ำหรือไม่ เว็บตรวจเอง) */
+      var noRaw = val(r, role.no), no = /^\d+$/.test(noRaw) ? noRaw : String(lastNo + 1); lastNo = +no;
+      var ek = name.trim().toLowerCase(); (exact[ek] = exact[ek] || []).push(out.length);
       var id = slug(name); if (ids[id]) id = id + '-' + rowNo; ids[id] = 1;
       var systems = splitMulti(val(r, role.sys));
       var groups = [], gmap = {}, fields = [], filled = 0;
@@ -298,7 +300,7 @@
       name.replace(/\([^)]*\)/g, function (m) { return m.replace(/\//g, '\u0000'); }).split('/').forEach(function (p) { p = p.replace(/\u0000/g, '/').trim(); if (p && p !== name) aliases.push(p); });
       val(r, role.alias).split(/\r?\n/).forEach(function (l) { l = l.replace(/^[-•*·]\s*/, '').trim(); if (l) aliases.push(l); });
       out.push({
-        no: star ? '*' : (noRaw || String(k + 1)), star: star, id: id, row: rowNo, name: name, th: '',
+        no: no, star: false, id: id, row: rowNo, name: name, th: '',
         systems: systems, sysRaw: systems.join(', '), sys: sysOf(systems[0] || ''),
         ward: val(r, role.ward), type: val(r, role.type), gen: val(r, role.gen), onset: val(r, role.onset), prog: splitMulti(val(r, role.prog)),
         seen: (role.seen || []).filter(function (c) { return isTrue(val(r, c)); }).map(function (c) { return c.sub || c.group; }),
@@ -306,6 +308,7 @@
         groups: groups, fields: fields, filled: filled, total: total
       });
     });
+    Object.keys(exact).forEach(function (k) { if (exact[k].length > 1) exact[k].forEach(function (i) { out[i].star = true; }); });
     D.people = (role.seen || []).map(function (c) { return c.sub || c.group; });
     return out;
   }
