@@ -1,5 +1,5 @@
 /* โพยหมอ — single-page app (hash routes)
-   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach|/skills|/symp[/<บท>?to=]] · #/diseases?s=&q=&f=&v= · #/disease/<no> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
+   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach|/skills|/symp[/<บท>?to=]] · #/diseases?q=&ward=&sys=&type=&gen=&onset=&prog=&seen=&e= · #/disease/<id> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
 (function () {
   'use strict';
   var C = window.POY_CONFIG, SYS = window.POY_SYSTEMS, OTHER = window.POY_OTHER;
@@ -10,7 +10,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function pad(n) { return ('000' + n).slice(-4); }
   /* ค่าที่ซิงก์เข้าบัญชี (API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์นั้นเท่านั้น) */
-  var SYNC_KEYS = ['recent', 'quiz', 'level', 'count', 'engine', 'model', 'nlset', 'topicset', 'topicq', 'topicst'];
+  var SYNC_KEYS = ['recent', 'quiz', 'level', 'count', 'engine', 'model', 'nlset', 'topicset', 'topicq', 'topicst', 'maiok'];
   function rawGet(k, d) { try { var v = localStorage.getItem('poy-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }
   function rawSet(k, v) { try { localStorage.setItem('poy-' + k, JSON.stringify(v)); } catch (e) { } }
   var LS = {
@@ -160,13 +160,14 @@
   function brush(c, w) {
     return '<svg width="' + (w || 150) + '" height="26" viewBox="0 0 180 28" aria-hidden="true"><path d="M4 15 C22 6 64 4 122 8 C150 10 168 12 176 16 C160 23 110 25 62 23 C30 22 10 21 4 15Z" fill="' + c + '" opacity=".88"/></svg>';
   }
+  function bold(h) { return h.replace(/\*\*([^*]+?)\*\*/g, '<b>$1</b>'); }
   function rich(v) {
     var lines = String(v || '').split(/\r?\n/).map(function (s) { return s.trim(); }).filter(Boolean);
     var out = '', ul = false;
     lines.forEach(function (l) {
       var m = l.match(/^[-•*·]\s*(.*)$/);
-      if (m) { if (!ul) { out += '<ul>'; ul = true; } out += '<li>' + esc(m[1]) + '</li>'; }
-      else { if (ul) { out += '</ul>'; ul = false; } out += '<p>' + esc(l) + '</p>'; }
+      if (m) { if (!ul) { out += '<ul>'; ul = true; } out += '<li>' + bold(esc(m[1])) + '</li>'; }
+      else { if (ul) { out += '</ul>'; ul = false; } out += '<p>' + bold(esc(l)) + '</p>'; }
     });
     if (ul) out += '</ul>';
     return out;
@@ -214,7 +215,19 @@
   function sysById(id) { if (id === 'other') return OTHER; for (var i = 0; i < SYS.length; i++) if (SYS[i].id === id) return SYS[i]; return null; }
 
   /* ---------- diseases: build from rows (sheet or sample) ---------- */
-  function build(rows) {
+  var MAI = window.POY_MAI || { cols: {}, multi: [], filters: [], sysColors: {}, order: {}, short: {}, typeColors: {}, softWords: [] };
+  function slug(s) { return String(s || '').toLowerCase().replace(/\([^)]*\)/g, ' ').replace(/[^a-z0-9ก-๙]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'x'; }
+  function isTrue(v) { return /^(true|yes|✓|✔|1|y)$/i.test(String(v || '').trim()); }
+  function splitMulti(v) { return String(v || '').split(/\s*,\s*/).map(function (s) { return s.trim(); }).filter(Boolean); }
+  function blankDisease(o) {
+    o.systems = o.systems || []; o.prog = o.prog || []; o.seen = o.seen || []; o.aliases = o.aliases || [];
+    o.ward = o.ward || ''; o.type = o.type || ''; o.gen = o.gen || ''; o.onset = o.onset || ''; o.icd = o.icd || ''; o.brief = o.brief || '';
+    o.total = o.fields.length;
+    o.groups = o.groups || [{ label: '', cols: o.fields.map(function (f) { return { label: f.label, sub: '', value: f.value }; }) }];
+    return o;
+  }
+  /* ชีตแบบเดิม (หัวตารางแถวเดียว) — ใช้กับข้อมูลตัวอย่าง */
+  function buildSimple(rows) {
     rows = rows.filter(function (r) { return r.some(function (c) { return String(c).trim(); }); });
     if (!rows.length) return [];
     var H = rows[0].map(function (h) { return String(h).trim(); });
@@ -232,43 +245,116 @@
       var no = iNo >= 0 && String(r[iNo] || '').trim() ? String(r[iNo]).trim() : pad(k + 1);
       if (seen[no]) no = no + '-' + (k + 1); seen[no] = 1;
       var sysRaw = iSys >= 0 ? String(r[iSys] || '').trim() : '';
-      out.push({
-        no: no, row: k + 2, name: name, th: iTh >= 0 ? String(r[iTh] || '').trim() : '',
-        sysRaw: sysRaw, sys: sysOf(sysRaw), fields: fields,
+      out.push(blankDisease({
+        no: no, id: no, row: k + 2, name: name, th: iTh >= 0 ? String(r[iTh] || '').trim() : '',
+        sysRaw: sysRaw, sys: sysOf(sysRaw), systems: sysRaw ? [sysRaw] : [], fields: fields,
         filled: fields.filter(function (f) { return f.value; }).length
-      });
+      }));
     });
     return out;
   }
+  /* ชีต "1000 โรค": แถวหัว = หมวด, แถวถัดไป = หมวดย่อย (ช่องที่ merge ไว้ใช้หมวดจากช่องซ้าย) */
+  function build(rows) {
+    var hi = -1, i, j;
+    for (i = 0; i < Math.min(rows.length, 6); i++) if (rows[i].some(function (c) { return MAI.cols.name && MAI.cols.name.test(String(c).trim()); })) { hi = i; break; }
+    if (hi < 0) return buildSimple(rows);
+    var H1 = rows[hi], H2 = rows[hi + 1] || [], W = Math.max(H1.length, H2.length);
+    var iNm = H1.map(function (c) { return String(c).trim(); }).findIndex(function (c) { return MAI.cols.name.test(c); });
+    var hasSub = !String(H2[iNm] || '').trim() && H2.some(function (c) { return String(c).trim(); });
+    if (!hasSub) H2 = [];
+    var cols = [], cur = '';
+    for (j = 0; j < W; j++) {
+      var g = String(H1[j] || '').replace(/\s*\n\s*/g, ' ').trim(), s = String(H2[j] || '').replace(/\s*\n\s*/g, ' ').trim();
+      if (g) cur = g; else if (s) g = cur; else continue;
+      cols.push({ j: j, group: g, sub: g === s ? '' : s, label: s && g !== s ? g + ' › ' + s : g, role: '' });
+    }
+    var role = {};
+    Object.keys(MAI.cols).forEach(function (k) {
+      cols.forEach(function (c) {
+        if (c.role || !MAI.cols[k].test(c.label)) return;
+        if (k === 'seen') { c.role = 'seen'; (role.seen = role.seen || []).push(c); }
+        else if (!role[k]) { c.role = k; role[k] = c; }
+      });
+    });
+    var content = cols.filter(function (c) { return !c.role || c.role === 'alias' || c.role === 'brief' || c.role === 'onset' || c.role === 'prog'; });
+    function val(r, c) { return c ? String(r[c.j] == null ? '' : r[c.j]).trim() : ''; }
+    var out = [], ids = {};
+    rows.slice(hi + (hasSub ? 2 : 1)).forEach(function (r, k) {
+      var name = val(r, role.name); if (!name) return;
+      var rowNo = hi + (hasSub ? 2 : 1) + k + 1;
+      var noRaw = val(r, role.no), star = noRaw === '*';
+      var id = slug(name); if (ids[id]) id = id + '-' + rowNo; ids[id] = 1;
+      var systems = splitMulti(val(r, role.sys));
+      var groups = [], gmap = {}, fields = [], filled = 0;
+      content.forEach(function (c) {
+        var v = val(r, c);
+        if (!gmap[c.group]) { gmap[c.group] = { label: c.group, cols: [] }; groups.push(gmap[c.group]); }
+        gmap[c.group].cols.push({ label: c.label, sub: c.sub, value: v, role: c.role });
+        fields.push({ label: c.label, value: v });
+        if (v && c.role !== 'onset' && c.role !== 'prog') filled++;
+      });
+      var total = content.filter(function (c) { return c.role !== 'onset' && c.role !== 'prog'; }).length;
+      var aliases = [];
+      name.replace(/\([^)]*\)/g, function (m) { return m.replace(/\//g, '\u0000'); }).split('/').forEach(function (p) { p = p.replace(/\u0000/g, '/').trim(); if (p && p !== name) aliases.push(p); });
+      val(r, role.alias).split(/\r?\n/).forEach(function (l) { l = l.replace(/^[-•*·]\s*/, '').trim(); if (l) aliases.push(l); });
+      out.push({
+        no: star ? '*' : (noRaw || String(k + 1)), star: star, id: id, row: rowNo, name: name, th: '',
+        systems: systems, sysRaw: systems.join(', '), sys: sysOf(systems[0] || ''),
+        ward: val(r, role.ward), type: val(r, role.type), gen: val(r, role.gen), onset: val(r, role.onset), prog: splitMulti(val(r, role.prog)),
+        seen: (role.seen || []).filter(function (c) { return isTrue(val(r, c)); }).map(function (c) { return c.sub || c.group; }),
+        icd: val(r, role.icd), brief: val(r, role.brief), aliases: aliases,
+        groups: groups, fields: fields, filled: filled, total: total
+      });
+    });
+    D.people = (role.seen || []).map(function (c) { return c.sub || c.group; });
+    return out;
+  }
 
-  var D = { list: [], src: 'sample', at: null, err: null, loading: false };
+  var D = { list: [], src: 'sample', at: null, err: null, loading: false, people: [] };
   function hasSheet() { return !!(C.sheet && (C.sheet.id || C.sheet.csvUrl)); }
-  function sheetUrl() {
-    if (C.sheet.csvUrl) return C.sheet.csvUrl + (C.sheet.csvUrl.indexOf('?') >= 0 ? '&' : '?') + '_=' + Date.now();
-    return 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(C.sheet.id) + '/gviz/tq?tqx=out:csv&headers=1&gid=' + encodeURIComponent(C.sheet.gid || '0') + '&_=' + Date.now();
+  /* export?format=csv ได้ข้อความตรงตามชีต · gviz เป็นทางสำรอง (อาจทิ้งค่าที่ชนิดไม่ตรงกับทั้งคอลัมน์ เช่น * ในช่อง #) */
+  function sheetUrls() {
+    var t = '_=' + Date.now();
+    if (C.sheet.csvUrl) return [C.sheet.csvUrl + (C.sheet.csvUrl.indexOf('?') >= 0 ? '&' : '?') + t];
+    var base = 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(C.sheet.id), gid = encodeURIComponent(C.sheet.gid || '0');
+    return [base + '/export?format=csv&gid=' + gid + '&' + t, base + '/gviz/tq?tqx=out:csv&headers=0&gid=' + gid + '&' + t];
+  }
+  function trimRows(rows) {
+    var n = rows.length; while (n && !rows[n - 1].some(function (c) { return String(c).trim(); })) n--;
+    return rows.slice(0, n).map(function (r) { var m = r.length; while (m && !String(r[m - 1]).trim()) m--; return r.slice(0, m); });
   }
   function initDiseases() {
     if (!hasSheet()) { D.list = build(window.POY_SAMPLE || []); D.src = 'sample'; return; }
     var cache = LS.get('dcache', null);
     if (cache && cache.id === (C.sheet.id || C.sheet.csvUrl) && cache.rows) { D.list = build(cache.rows); D.src = 'cache'; D.at = cache.at; }
     loadSheet();
+    /* กลับมาที่แท็บหลังไปแก้ชีต → ดึงใหม่ (ห่างครั้งก่อนเกิน 30 วิ) */
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible' && !D.loading && (!D.at || Date.now() - D.at > 30000)) loadSheet();
+    });
   }
-  function loadSheet() {
-    if (!hasSheet() || D.loading) return;
-    D.loading = true; D.err = null; refreshLive();
-    fetch(sheetUrl(), { cache: 'no-store' }).then(function (res) {
+  function fetchCSV(urls) {
+    var u = urls[0];
+    return fetch(u, { cache: 'no-store' }).then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.text();
     }).then(function (txt) {
       if (/^\s*</.test(txt)) throw new Error('ชีตยังไม่ได้เปิดแชร์ให้ทุกคนที่มีลิงก์ดูได้');
-      var rows = parseCSV(txt);
+      return txt;
+    }).catch(function (e) { if (urls.length > 1) return fetchCSV(urls.slice(1)); throw e; });
+  }
+  function loadSheet() {
+    if (!hasSheet() || D.loading) return;
+    D.loading = true; D.err = null; refreshLive();
+    fetchCSV(sheetUrls()).then(function (txt) {
+      var rows = trimRows(parseCSV(txt));
       D.list = build(rows); D.src = 'sheet'; D.at = Date.now();
       LS.set('dcache', { id: C.sheet.id || C.sheet.csvUrl, at: D.at, rows: rows });
     }).catch(function (e) {
       D.err = e.message || String(e);
       if (!D.list.length) { D.list = build(window.POY_SAMPLE || []); D.src = 'sample'; }
     }).then(function () {
-      D.loading = false;
+      D.loading = false; DUPS = null;
       var r = route();
       if (['', 'diseases', 'disease', 'exam'].indexOf(r.name) >= 0) render(true); else refreshLive();
     });
@@ -283,13 +369,80 @@
   function refreshLive() { var el = document.querySelector('[data-live]'); if (el) el.outerHTML = liveHTML(); }
   function findDisease(key) {
     key = String(key || '').toLowerCase();
-    for (var i = 0; i < D.list.length; i++) if (D.list[i].no.toLowerCase() === key) return D.list[i];
+    if (!key) return null;
+    var i;
+    for (i = 0; i < D.list.length; i++) if (String(D.list[i].id).toLowerCase() === key) return D.list[i];
+    for (i = 0; i < D.list.length; i++) if (D.list[i].no.toLowerCase() === key) return D.list[i];
     for (i = 0; i < D.list.length; i++) if (D.list[i].name.toLowerCase() === key) return D.list[i];
+    var s = slug(key);
+    for (i = 0; i < D.list.length; i++) if (slug(D.list[i].name) === s) return D.list[i];
     return null;
   }
+  function dHref(d) { return '#/disease/' + encodeURIComponent(d.id); }
   function dLink(name) {
     var d = findDisease(name);
-    return d ? '#/disease/' + encodeURIComponent(d.no) : '#/diseases?q=' + encodeURIComponent(name);
+    return d ? dHref(d) : '#/diseases?q=' + encodeURIComponent(name);
+  }
+
+  /* ---------- 1000 MAI: โรคที่น่าจะซ้ำ ---------- */
+  var DUPS = null;
+  function nKey(s) { return String(s || '').toLowerCase().replace(/\([^)]*\)/g, ' ').replace(/['’`]s\b/g, 's').replace(/[^a-z0-9ก-๙]+/g, ' ').trim(); }
+  function softKey(s) { return nKey(s).split(' ').filter(function (w) { return MAI.softWords.indexOf(w) < 0; }).join(' '); }
+  function lev(a, b) {
+    if (Math.abs(a.length - b.length) > 2) return 9;
+    var p = [], q, i, j;
+    for (j = 0; j <= b.length; j++) p[j] = j;
+    for (i = 1; i <= a.length; i++) {
+      q = [i];
+      for (j = 1; j <= b.length; j++) q[j] = Math.min(p[j] + 1, q[j - 1] + 1, p[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      p = q;
+    }
+    return p[b.length];
+  }
+  function typoPair(a, b) {
+    var x = nKey(a).split(' '), y = nKey(b).split(' ');
+    if (x.length !== y.length) return false;
+    var diff = [];
+    for (var i = 0; i < x.length; i++) if (x[i] !== y[i]) diff.push([x[i], y[i]]);
+    if (diff.length !== 1) return false;
+    var u = diff[0][0], v = diff[0][1];
+    if (u.length < 5 || v.length < 5) return false;
+    if (/^hyper/.test(u) && /^hypo/.test(v) || /^hypo/.test(u) && /^hyper/.test(v)) return false;
+    var d = lev(u, v);
+    return d >= 1 && d <= (Math.min(u.length, v.length) >= 10 ? 2 : 1);
+  }
+  function findDups() {
+    if (DUPS) return DUPS;
+    var L = D.list, pairs = [], seenPair = {};
+    function add(a, b, why) {
+      if (a === b) return;
+      var k = [a.id, b.id].sort().join('|'); if (seenPair[k]) return;
+      seenPair[k] = 1; pairs.push({ a: a.row < b.row ? a : b, b: a.row < b.row ? b : a, why: why, key: k });
+    }
+    var byExact = {}, byKey = {}, bySoft = {};
+    L.forEach(function (d) {
+      var e = d.name.trim().toLowerCase(), k = nKey(d.name).replace(/ /g, ''), s = softKey(d.name).replace(/ /g, '');
+      (byExact[e] = byExact[e] || []).push(d);
+      if (k) (byKey[k] = byKey[k] || []).push(d);
+      if (s) (bySoft[s] = bySoft[s] || []).push(d);
+    });
+    function each(map, why) { Object.keys(map).forEach(function (k) { var g = map[k]; for (var i = 0; i < g.length; i++) for (var j = i + 1; j < g.length; j++) add(g[i], g[j], why); }); }
+    each(byExact, 'ชื่อตรงกันทุกตัวอักษร');
+    each(byKey, 'ชื่อเหมือนกันถ้าไม่นับวงเล็บ ตัวพิมพ์ หรือเครื่องหมาย');
+    each(bySoft, 'ต่างกันแค่คำทั่วไป เช่น acute / disease / syndrome');
+    /* ชื่ออื่น (คั่นด้วย / ในชื่อโรค หรือช่อง Other names) ตรงกับชื่อโรคอีกแถว */
+    L.forEach(function (d) {
+      d.aliases.forEach(function (al) {
+        var k = nKey(al).replace(/ /g, ''), s = softKey(al).replace(/ /g, '');
+        if (k.length < 5) return;
+        (byKey[k] || []).concat(bySoft[s] || []).forEach(function (x) { add(d, x, 'ชื่ออื่น "' + al + '" ของโรคนี้ ตรงกับอีกแถว'); });
+      });
+    });
+    /* สะกดต่างกันนิดเดียว */
+    for (var i = 0; i < L.length; i++) for (var j = i + 1; j < L.length; j++) if (typoPair(L[i].name, L[j].name)) add(L[i], L[j], 'สะกดต่างกัน 1–2 ตัวอักษร — อาจพิมพ์ผิด');
+    pairs.sort(function (p, q) { return p.a.row - q.a.row || p.b.row - q.b.row; });
+    DUPS = pairs;
+    return pairs;
   }
 
   /* ---------- router ---------- */
@@ -438,7 +591,7 @@
 
     var newest = D.list.slice(-4).reverse();
     var newHTML = newest.map(function (d) {
-      return '<a class="row" href="#/disease/' + encodeURIComponent(d.no) + '"><span class="muted" style="font-style:italic;font-size:14px;width:74px;flex:none">No. ' + esc(d.no) + '</span><span class="k" style="flex:1;min-width:0;font-size:18px;font-weight:500">' + esc(d.name) + '</span><span class="muted" style="display:inline-flex;align-items:center;gap:8px;font-size:14px"><span class="sw" style="background:' + d.sys.c + '"></span>' + esc(d.sys.name) + '</span></a>';
+      return '<a class="row" href="' + dHref(d) + '"><span class="muted" style="font-style:italic;font-size:14px;width:74px;flex:none">No. ' + esc(d.no) + '</span><span class="k" style="flex:1;min-width:0;font-size:18px;font-weight:500">' + esc(d.name) + '</span>' + (d.systems[0] ? '<span class="mtag" style="background:' + sysCol(d.systems[0])[0] + ';color:' + sysCol(d.systems[0])[1] + '">' + esc(d.systems[0]) + '</span>' : '') + '</a>';
     }).join('');
 
     var tl = '';
@@ -472,80 +625,148 @@
   /* =========================================================
      1000 MAI — list
      ========================================================= */
-  function filterDiseases(st) {
-    var q = (st.q || '').toLowerCase();
-    return D.list.filter(function (d) {
-      if (st.s && d.sys.id !== st.s) return false;
-      if (st.f === 'full' && d.filled < d.fields.length) return false;
-      if (st.f === 'part' && d.filled >= d.fields.length) return false;
-      if (q) {
-        var hay = (d.name + ' ' + d.th + ' ' + d.sysRaw + ' ' + d.fields.map(function (f) { return f.value; }).join(' ')).toLowerCase();
-        if (hay.indexOf(q) < 0) return false;
-      }
-      return true;
-    });
+  var FKEYS = MAI.filters.map(function (f) { return f.key; });
+  function dVals(d, k) {
+    var v = k === 'sys' ? d.systems : k === 'prog' ? d.prog : k === 'seen' ? d.seen : [d[k]];
+    return (v || []).filter(Boolean);
   }
-  function specCard(d, i) {
-    var sum = d.fields.filter(function (f) { return f.value; }).slice(0, 2);
-    var dots = d.fields.slice(0, 12).map(function (f) { return '<span class="dot" style="background:' + (f.value ? d.sys.c : 'var(--empty)') + '"></span>'; }).join('');
-    var rot = ((i * 37) % 13 - 6) / 10;
-    return '<a class="sheet spec" href="#/disease/' + encodeURIComponent(d.no) + '" style="transform:rotate(' + rot + 'deg)"><div class="tape"></div>' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span class="muted" style="font-style:italic;font-size:14px">No. ' + esc(d.no) + '</span>' +
-      '<span class="muted" style="display:inline-flex;align-items:center;gap:6px;font-size:13px"><span class="sw" style="background:' + d.sys.c + '"></span>' + esc(d.sys === OTHER && d.sysRaw ? d.sysRaw : d.sys.name) + '</span></div>' +
-      '<div style="display:flex;flex-direction:column;gap:2px"><h3>' + esc(d.name) + '</h3>' + (d.th ? '<span class="muted" style="font-size:15px">' + esc(d.th) + '</span>' : '') + '</div>' +
-      (sum.length ? '<dl>' + sum.map(function (f) { return '<div><dt>' + esc(f.label) + '</dt><dd>' + esc(plain(f.value)) + '</dd></div>'; }).join('') + '</dl>' : '') +
-      '<div class="bottom"><span style="display:inline-flex;flex-wrap:wrap;gap:5px" aria-hidden="true">' + dots + '</span><span class="muted" style="font-size:13px;white-space:nowrap">กรอกแล้ว ' + d.filled + '/' + d.fields.length + ' ช่อง</span></div></a>';
+  function sysCol(name) { return MAI.sysColors[name] || ['#E4DDCB', '#3A423B']; }
+  function shortOf(k, v) { return (MAI.short[k] && MAI.short[k][v]) || v; }
+  function tagHTML(k, v) {
+    var c;
+    if (k === 'sys') { c = sysCol(v); return '<span class="mtag" style="background:' + c[0] + ';color:' + c[1] + '">' + esc(v) + '</span>'; }
+    if (k === 'type' && MAI.typeColors[v]) { c = MAI.typeColors[v]; return '<span class="mtag" style="background:' + c[0] + ';color:' + c[1] + '">' + esc(v) + '</span>'; }
+    if (k === 'seen') return '<span class="mtag seen">✓ ' + esc(v) + '</span>';
+    if (k === 'onset' || k === 'prog') return '<span class="mtag soft">' + esc(v) + '</span>';
+    return '<span class="mtag o">' + esc(shortOf(k, v)) + '</span>';
+  }
+  function tagsHTML(d) {
+    var h = d.star ? '<span class="mtag dup">ซ้ำ</span>' : '';
+    ['sys', 'ward', 'type', 'gen', 'onset', 'prog'].forEach(function (k) { dVals(d, k).forEach(function (v) { h += tagHTML(k, v); }); });
+    return h;
+  }
+  function selOf(st, k) { return st[k] ? st[k].split('|') : []; }
+  function passes(d, st, skip) {
+    for (var i = 0; i < FKEYS.length; i++) {
+      var k = FKEYS[i]; if (k === skip) continue;
+      var S = selOf(st, k); if (!S.length) continue;
+      var dv = dVals(d, k);
+      if (!(S.indexOf('~') >= 0 && !dv.length) && !dv.some(function (v) { return S.indexOf(v) >= 0; })) return false;
+    }
+    return true;
+  }
+  function textHit(d, q) {
+    if (!q) return true;
+    if (!d._hay) d._hay = (d.name + ' ' + d.aliases.join(' ') + ' ' + d.icd + ' ' + d.systems.join(' ') + ' ' + d.fields.map(function (f) { return f.value; }).join(' ')).toLowerCase();
+    return q.split(/\s+/).every(function (w) { return d._hay.indexOf(w) >= 0; });
+  }
+  function filterDiseases(st) {
+    var q = (st.q || '').toLowerCase().trim();
+    return D.list.filter(function (d) { return textHit(d, q) && (st.e !== '1' || d.filled) && passes(d, st, null); });
+  }
+  function optsOf(k) {
+    var seen = {}, out = [];
+    function push(v) { if (v && !seen[v]) { seen[v] = 1; out.push(v); } }
+    if (k === 'sys') Object.keys(MAI.sysColors).forEach(push);
+    else if (k === 'seen') (D.people || []).forEach(push);
+    else (MAI.order[k] || []).forEach(push);
+    D.list.forEach(function (d) { dVals(d, k).forEach(push); });
+    return out;
+  }
+  function dupBox() {
+    var all = findDups(), ok = LS.get('maiok', []), vis = all.filter(function (p) { return ok.indexOf(p.key) < 0; }), hid = all.length - vis.length;
+    if (!vis.length) return hid ? '<section class="wrap" style="padding-bottom:12px"><button class="linkbtn" type="button" data-unhide>ซ่อนคู่ที่น่าซ้ำไว้ ' + hid + ' คู่ · แสดงอีกครั้ง</button></section>' : '';
+    function one(d) { return '<a href="' + dHref(d) + '"><span class="muted">No. ' + esc(d.no) + '</span> ' + esc(d.name) + '</a>'; }
+    return '<section class="wrap" style="padding-bottom:22px"><details class="mai-dup"' + (vis.length <= 2 || window.innerWidth >= 760 ? ' open' : '') + '><summary><span class="bang" aria-hidden="true">!</span><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span class="k" style="font-size:18px">อาจเป็นโรคซ้ำ ' + vis.length + ' คู่</span><span class="muted" style="font-size:14px">พิมพ์ผิด ชื่อเดียวกันคนละแบบ หรือโรคเดียวกันคนละชื่อ — แก้ในชีต หรือกด “ไม่ซ้ำ” เพื่อซ่อน</span></span></summary><ul>' +
+      vis.map(function (p) {
+        return '<li><div class="pair">' + one(p.a) + '<span class="muted" aria-label="กับ">↔</span>' + one(p.b) + '</div><div class="why">' + esc(p.why) + '</div><button class="chip sm" type="button" data-ok="' + esc(p.key) + '">ไม่ซ้ำ</button></li>';
+      }).join('') + '</ul>' + (hid ? '<button class="linkbtn" type="button" data-unhide>แสดงคู่ที่ซ่อนไว้ (' + hid + ')</button>' : '') + '</details></section>';
+  }
+  function letterOf(d) { var c = d.name.trim().charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '#'; }
+  function rowHTML(d) {
+    var ck = (D.people || []).map(function (p) { var on = d.seen.indexOf(p) >= 0; return '<span class="mai-cb' + (on ? ' on' : '') + '" role="img" aria-label="' + esc(p) + (on ? ' เคยดูคนไข้แล้ว' : ' ยังไม่เคยดู') + '">' + (on ? '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2 5 8.6 9.6 3.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '') + '</span>'; }).join('');
+    return '<a class="mai-row' + (d.filled ? '' : ' blank') + '" href="' + dHref(d) + '">' + (ck ? '<span class="mai-ck">' + ck + '</span>' : '') + '<span class="mai-no">' + esc(d.no) + '</span><span class="mai-main"><span class="mai-name">' + esc(d.name) + '</span>' +
+      '<span class="mai-tags">' + tagsHTML(d) + '</span></span>' + (d.filled ? '' : '<span class="sr">ยังไม่ได้เขียนรายละเอียด</span>') + '</a>';
   }
   function diseasesBody(st) {
-    var counts = {}; D.list.forEach(function (d) { counts[d.sys.id] = (counts[d.sys.id] || 0) + 1; });
-    var pal = SYS.concat(counts.other ? [OTHER] : []);
-    var wells = '<button class="well' + (!st.s ? ' on' : '') + '" type="button" data-sys=""><span class="blob" style="background:conic-gradient(#A33A3A,#C9952E,#5C7F3A,#2F7466,#3E7CA6,#5E4A7E,#A33A3A)"></span><span class="k" style="font-size:14px;font-weight:500">ทุกระบบ</span><span class="muted" style="font-size:12px">' + D.list.length + ' โรค</span></button>' +
-      pal.map(function (s) {
-        return '<button class="well' + (st.s === s.id ? ' on' : '') + '" type="button" data-sys="' + s.id + '"><span class="blob" style="background:' + s.c + '"></span><span class="k" style="font-size:14px;font-weight:500">' + esc(s.name) + '</span><span class="muted" style="font-size:12px;font-style:italic;line-height:1.1">' + esc(s.pig) + ' · ' + (counts[s.id] || 0) + '</span></button>';
-      }).join('');
-    var list = filterDiseases(st);
-    var body;
-    if (!list.length) body = '<div class="empty"><p class="k" style="font-size:20px">ไม่พบโรคที่ตรงกับตัวกรอง</p><p class="muted">ลองล้างคำค้นหรือเลือกทุกระบบ</p></div>';
-    else if (st.v === 'table') {
-      var H = D.list[0] ? D.list[0].fields.map(function (f) { return f.label; }) : [];
-      body = '<div class="tbl"><table><thead><tr><th>No.</th><th>โรค</th><th>ระบบ</th>' + H.slice(0, 4).map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '<th>กรอกแล้ว</th></tr></thead><tbody>' +
-        list.map(function (d) {
-          return '<tr><td class="muted" style="font-style:italic">' + esc(d.no) + '</td><td><a href="#/disease/' + encodeURIComponent(d.no) + '">' + esc(d.name) + '</a>' + (d.th ? '<div class="muted" style="font-size:14px">' + esc(d.th) + '</div>' : '') + '</td><td style="white-space:nowrap"><span class="sw" style="background:' + d.sys.c + ';vertical-align:-2px"></span> ' + esc(d.sys.name) + '</td>' +
-            d.fields.slice(0, 4).map(function (f) { return '<td>' + esc(plain(f.value).slice(0, 140)) + '</td>'; }).join('') + '<td class="muted">' + d.filled + '/' + d.fields.length + '</td></tr>';
-        }).join('') + '</tbody></table></div>';
-    } else body = '<div class="specs">' + list.map(specCard).join('') + '</div>';
-    return '<section class="wrap" style="display:flex;flex-direction:column;gap:14px;padding-bottom:24px"><span class="label">จานสี · กรองตามระบบ</span><div class="wells">' + wells + '</div></section>' +
-      '<section class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding-bottom:32px">' +
-      '<div style="display:flex;flex-wrap:wrap;gap:8px">' +
-      [['', 'ทั้งหมด'], ['full', 'กรอกครบทุกช่อง'], ['part', 'ยังไม่ครบ']].map(function (x) { return '<button class="chip' + ((st.f || '') === x[0] ? ' on' : '') + '" type="button" data-f="' + x[0] + '">' + x[1] + '</button>'; }).join('') +
-      '</div><span class="muted" style="font-size:15px">' + list.length + ' จาก ' + D.list.length + ' โรค</span>' +
-      '<div role="group" aria-label="มุมมอง" style="display:flex;border:1px solid var(--rule-3);border-radius:999px;padding:3px;margin-left:auto">' +
-      '<button class="chip' + (st.v !== 'table' ? ' on' : '') + '" type="button" data-v="" style="border:0;min-height:38px">แผ่นตัวอย่าง</button><button class="chip' + (st.v === 'table' ? ' on' : '') + '" type="button" data-v="table" style="border:0;min-height:38px">ตาราง</button></div>' +
-      '</section><section class="wrap" style="padding-bottom:72px">' + body + '</section>';
+    var q = (st.q || '').toLowerCase().trim();
+    var base = D.list.filter(function (d) { return textHit(d, q) && (st.e !== '1' || d.filled); });
+    var list = base.filter(function (d) { return passes(d, st, null); });
+    var nSel = 0;
+    var bar = MAI.filters.map(function (f) {
+      var n = selOf(st, f.key).length; nSel += n;
+      return '<button class="chip mai-fb' + (n ? ' on' : '') + (st.open === f.key ? ' open' : '') + '" type="button" data-open="' + f.key + '" aria-expanded="' + (st.open === f.key) + '" aria-controls="maiPanel">' + esc(f.label) + (n ? ' <b>' + n + '</b>' : '') + '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>';
+    }).join('');
+    var panel = '';
+    if (st.open && FKEYS.indexOf(st.open) >= 0) {
+      var k = st.open, S = selOf(st, k), pool = base.filter(function (d) { return passes(d, st, k); });
+      var cnt = {}, none = 0;
+      pool.forEach(function (d) { var v = dVals(d, k); if (!v.length) none++; v.forEach(function (x) { cnt[x] = (cnt[x] || 0) + 1; }); });
+      var f = MAI.filters.filter(function (x) { return x.key === k; })[0];
+      panel = '<div class="mai-panel sheet" id="maiPanel" role="group" aria-label="' + esc(f.label) + '">' +
+        optsOf(k).map(function (v) {
+          var on = S.indexOf(v) >= 0, n = cnt[v] || 0, c = k === 'sys' ? sysCol(v) : null;
+          return '<button class="mopt' + (on ? ' on' : '') + '" type="button" data-k="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + on + '"' + (!n && !on ? ' disabled' : '') + '>' +
+            (c ? '<span class="sw" style="background:' + c[0] + ';border:1px solid rgba(30,38,32,.18)"></span>' : '') + esc(k === 'gen' ? shortOf(k, v) : v) + '<span class="oc">' + n + '</span></button>';
+        }).join('') +
+        '<button class="mopt' + (S.indexOf('~') >= 0 ? ' on' : '') + '" type="button" data-k="' + k + '" data-v="~" aria-pressed="' + (S.indexOf('~') >= 0) + '"' + (!none && S.indexOf('~') < 0 ? ' disabled' : '') + '><i>' + (k === 'seen' ? 'ยังไม่มีใครดู' : 'ยังไม่ระบุ') + '</i><span class="oc">' + none + '</span></button></div>';
+    }
+    var act = '';
+    FKEYS.forEach(function (k) {
+      selOf(st, k).forEach(function (v) {
+        act += '<button class="pill mai-x" type="button" data-k="' + k + '" data-v="' + esc(v) + '" aria-label="เอาตัวกรอง ' + esc(v) + ' ออก">' + esc(v === '~' ? (k === 'seen' ? 'ยังไม่มีใครดู' : MAI.filters.filter(function (f) { return f.key === k; })[0].label + ': ยังไม่ระบุ') : k === 'gen' ? shortOf(k, v) : v) + ' <span aria-hidden="true">×</span></button>';
+      });
+    });
+    var groups = [], cur = null;
+    var gm = {};
+    list.forEach(function (d) { var L = letterOf(d); if (!gm[L]) { gm[L] = { L: L, items: [] }; groups.push(gm[L]); } gm[L].items.push(d); });
+    groups.sort(function (x, y) { return x.L === '#' ? 1 : y.L === '#' ? -1 : x.L < y.L ? -1 : 1; });
+    var body = !list.length ? '<div class="empty"><p class="k" style="font-size:20px">ไม่พบโรคที่ตรงกับตัวกรอง</p><p class="muted">ลองล้างคำค้นหรือตัวกรอง</p></div>' :
+      (groups.length > 3 ? '<nav class="mai-az" aria-label="ไปที่ตัวอักษร">' + groups.map(function (g) { return '<button type="button" data-jump="' + g.L + '">' + g.L + '</button>'; }).join('') + '</nav>' : '') +
+      ((D.people || []).length ? '<div class="mai-ckhead" aria-hidden="true">' + D.people.map(function (p) { return '<span>' + esc(p) + '</span>'; }).join('') + '</div>' : '') +
+      groups.map(function (g) { return '<h2 class="mai-letter" id="mai-L-' + (g.L === '#' ? 'x' : g.L) + '">' + g.L + '</h2>' + g.items.map(rowHTML).join(''); }).join('');
+    var nBlank = list.filter(function (d) { return !d.filled; }).length;
+    return dupBox() +
+      '<section class="wrap mai-tools"><div class="mai-fbar">' + bar + (nSel ? '<button class="linkbtn" type="button" data-clear>ล้างตัวกรอง</button>' : '') + '</div>' + panel +
+      (act ? '<div class="mai-act">' + act + '</div>' : '') +
+      '<div class="mai-count"><span class="muted">' + list.length + ' จาก ' + D.list.length + ' โรค' + (nBlank && st.e !== '1' ? ' · ยังว่าง ' + nBlank : '') + '</span>' +
+      '<button class="chip sm' + (st.e === '1' ? ' on' : '') + '" type="button" data-e aria-pressed="' + (st.e === '1') + '">เฉพาะที่เขียนแล้ว</button></div></section>' +
+      '<section class="wrap mai-list" style="padding-bottom:80px">' + body + '</section>';
   }
   PAGES.diseases = function (r) {
-    var st = { s: r.q.get('s') || '', q: r.q.get('q') || '', f: r.q.get('f') || '', v: r.q.get('v') || '' };
+    var st = { q: r.q.get('q') || '', e: r.q.get('e') || '', open: '' };
+    FKEYS.forEach(function (k) { st[k] = r.q.get(k) || ''; });
     var n = D.src === 'sample' ? 0 : D.list.length;
     var ticks = '';
     for (var i = 1; i < 10; i++) ticks += 'M' + (1 + i * 37.8).toFixed(1) + ' 23v' + (i === 5 ? -12 : i % 2 ? -6 : -10);
     return {
       title: '1000 MAI', html:
-        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">04 · พรรณไม้</span><h1>1000 MAI</h1>' +
-        '<p class="lede">หอพรรณไม้ของโรค — แต่ละโรคคือหนึ่งแผ่นตัวอย่าง รู้จักให้พอจะ diag ได้ รู้ว่าต้องส่ง lab อะไร และเริ่ม initial management ได้</p>' +
+        '<section class="wrap phead" style="padding-bottom:28px"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">04 · พรรณไม้</span><h1>1000 MAI</h1>' +
+        '<p class="lede">หอพรรณไม้ของโรค — รู้จักให้พอจะ diag ได้ รู้ว่าต้องส่ง lab อะไร และเริ่ม initial management ได้</p>' +
         '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px">' + liveHTML() + (hasSheet() ? '<button class="chip" type="button" id="reload" style="min-height:40px">ดึงใหม่</button>' : '') + '</div></div>' +
-        '<div style="flex:0 1 380px;min-width:260px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:baseline;gap:10px"><span class="k" style="font-size:64px;line-height:1">' + n + '</span><span class="muted" style="font-size:18px">/ 1000 แผ่นตัวอย่าง</span></div>' +
+        '<div style="flex:0 1 380px;min-width:240px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:baseline;gap:10px"><span class="k" style="font-size:64px;line-height:1">' + n + '</span><span class="muted" style="font-size:18px">/ 1000 โรค</span></div>' +
         '<svg viewBox="0 0 380 34" width="100%" aria-hidden="true"><rect x="1" y="1" width="378" height="22" rx="3" fill="#FBF9F3" stroke="#BDB39B"/><rect x="1" y="1" width="' + Math.max(0, Math.min(378, n * 0.378)) + '" height="22" rx="3" fill="#9B4F2E" opacity=".85"/><path d="' + ticks + '" stroke="#7A6E58" stroke-width="1"/><g font-family="Sarabun, sans-serif" font-size="10" fill="#5A6258"><text x="2" y="33">0</text><text x="182" y="33">500</text><text x="358" y="33">1000</text></g></svg></div></section>' +
-        '<section class="wrap" style="padding-bottom:20px"><label class="search" style="max-width:560px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="sr">ค้นใน 1000 MAI</span><input type="search" id="dq" placeholder="ค้นชื่อโรค อาการ หรือ lab ที่นึกถึง…" value="' + esc(st.q) + '"></label></section>' +
+        '<section class="wrap" style="padding-bottom:14px"><label class="search" style="max-width:560px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="sr">ค้นใน 1000 MAI</span><input type="search" id="dq" placeholder="ค้นชื่อโรค อาการ หรือ lab ที่นึกถึง…" value="' + esc(st.q) + '"></label></section>' +
         '<div id="dbody">' + diseasesBody(st) + '</div>',
       after: function () {
         var body = document.getElementById('dbody');
-        function upd(patch) { Object.keys(patch).forEach(function (k) { st[k] = patch[k]; }); setQuery(route(), patch); body.innerHTML = diseasesBody(st); }
+        function paint() { body.innerHTML = diseasesBody(st); }
+        function upd(patch) { Object.keys(patch).forEach(function (k) { st[k] = patch[k]; }); var p = {}; Object.keys(patch).forEach(function (k) { if (k !== 'open') p[k] = patch[k]; }); setQuery(route(), p); paint(); }
         document.getElementById('dq').addEventListener('input', function () { upd({ q: this.value.trim() }); });
         body.addEventListener('click', function (e) {
           var b = e.target.closest('button'); if (!b) return;
-          if (b.hasAttribute('data-sys')) upd({ s: b.getAttribute('data-sys') });
-          else if (b.hasAttribute('data-f')) upd({ f: b.getAttribute('data-f') });
-          else if (b.hasAttribute('data-v')) upd({ v: b.getAttribute('data-v') });
+          if (b.hasAttribute('data-open')) { var k = b.getAttribute('data-open'); st.open = st.open === k ? '' : k; paint(); var fb = body.querySelector('[data-open="' + k + '"]'); if (fb) fb.focus(); }
+          else if (b.hasAttribute('data-k')) {
+            var key = b.getAttribute('data-k'), v = b.getAttribute('data-v'), S = selOf(st, key), at = S.indexOf(v);
+            if (at >= 0) S.splice(at, 1); else S.push(v);
+            var patch = {}; patch[key] = S.join('|'); upd(patch);
+            var same = body.querySelector('.mopt[data-k="' + key + '"][data-v="' + (window.CSS && CSS.escape ? CSS.escape(v) : v) + '"]'); if (same) same.focus();
+          }
+          else if (b.hasAttribute('data-clear')) { var c = { open: '' }; FKEYS.forEach(function (k) { c[k] = ''; }); upd(c); }
+          else if (b.hasAttribute('data-e')) upd({ e: st.e === '1' ? '' : '1' });
+          else if (b.hasAttribute('data-jump')) { var L = b.getAttribute('data-jump'), t = document.getElementById('mai-L-' + (L === '#' ? 'x' : L)); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+          else if (b.hasAttribute('data-ok')) { var ok = LS.get('maiok', []); ok.push(b.getAttribute('data-ok')); LS.set('maiok', ok); paint(); toast('ซ่อนแล้ว — กดแสดงคู่ที่ซ่อนไว้ได้ทีหลัง'); }
+          else if (b.hasAttribute('data-unhide')) { LS.set('maiok', []); paint(); }
         });
         var rl = document.getElementById('reload'); if (rl) rl.addEventListener('click', loadSheet);
       }
@@ -558,33 +779,57 @@
   PAGES.disease = function (r) {
     var d = findDisease(r.args[0]);
     if (!d) return {
-      title: 'ไม่พบโรค', html: '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><span class="label">1000 MAI</span><h1 style="font-size:44px">ไม่พบแผ่นตัวอย่างนี้</h1><p class="muted">' + (D.loading ? 'กำลังดึงข้อมูลจาก Google Sheet…' : 'อาจถูกลบหรือเปลี่ยนเลขในชีต') + '</p><a class="btn ghost" href="#/diseases" style="align-self:flex-start">กลับไปหอพรรณไม้</a></div></section>'
+      title: 'ไม่พบโรค', html: '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><span class="label">1000 MAI</span><h1 style="font-size:44px">ไม่พบโรคนี้</h1><p class="muted">' + (D.loading ? 'กำลังดึงข้อมูลจาก Google Sheet…' : 'อาจถูกลบหรือเปลี่ยนชื่อในชีต') + '</p><a class="btn ghost" href="#/diseases" style="align-self:flex-start">กลับไป 1000 MAI</a></div></section>'
     };
-    remember({ href: '#/disease/' + encodeURIComponent(d.no), title: d.name, crumb: '1000 MAI › ' + d.sys.name, c: d.sys.c });
-    var rel = D.list.filter(function (x) { return x !== d && x.sys === d.sys; }).slice(0, 6);
-    var sheetLink = C.sheet && C.sheet.id ? 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(C.sheet.id) + '/edit#gid=' + encodeURIComponent(C.sheet.gid || '0') + '&range=A' + d.row : '';
-    var entries = d.fields.map(function (f, i) {
-      return '<section class="entry' + (f.value ? '' : ' blank') + '"><span class="num">' + roman(i) + '</span><div><h2>' + esc(f.label) + '</h2><div class="val">' + (f.value ? rich(f.value) : '<p>ยังไม่ได้กรอกช่องนี้ในชีต</p>') + '</div></div></section>';
-    }).join('');
+    var s0 = d.systems[0] || '', col = s0 ? sysCol(s0) : [d.sys.c, '#fff'];
+    remember({ href: dHref(d), title: d.name, crumb: '1000 MAI' + (s0 ? ' › ' + s0 : ''), c: col[0] });
+    var idx = D.list.indexOf(d), prev = D.list[idx - 1], next = D.list[idx + 1];
+    var rel = s0 ? D.list.filter(function (x) { return x !== d && x.systems.indexOf(s0) >= 0; }).sort(function (a, b) { return (b.filled ? 1 : 0) - (a.filled ? 1 : 0); }).slice(0, 8) : [];
+    var sheetLink = C.sheet && C.sheet.id ? 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(C.sheet.id) + '/edit#gid=' + encodeURIComponent(C.sheet.gid || '0') + '&range=B' + d.row : '';
+    var shown = [], empty = [], num = 0;
+    d.groups.forEach(function (g) {
+      var cols = g.cols.filter(function (c) { return c.role !== 'brief' && c.role !== 'alias'; });
+      if (!cols.length) return;
+      var full = cols.filter(function (c) { return c.value; });
+      cols.forEach(function (c) { if (!c.value && c.role !== 'onset' && c.role !== 'prog') empty.push(c.sub ? g.label + ' › ' + c.sub : g.label); });
+      if (!full.length) return;
+      var one = cols.length === 1 && !cols[0].sub;
+      shown.push('<section class="entry"><span class="num">' + roman(num++) + '</span><div><h2>' + esc(g.label) + '</h2>' +
+        (one ? '<div class="val">' + rich(full[0].value) + '</div>' :
+          full.map(function (c) {
+            var v = c.role === 'onset' ? [c.value] : c.role === 'prog' ? splitMulti(c.value) : null;
+            return '<div class="mai-sub"><h3>' + esc(c.sub || g.label) + '</h3>' + (v ? '<div class="mai-tags">' + v.map(function (x) { return tagHTML(c.role, x); }).join('') + '</div>' : '<div class="val">' + rich(c.value) + '</div>') + '</div>';
+          }).join('')) + '</div></section>');
+    });
+    function lbl(k, v) { return v ? '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>' : ''; }
+    var tags = tagsHTML(d);
     return {
       title: d.name, html:
-        '<div class="wrap" style="padding-top:28px;padding-bottom:80px"><nav aria-label="ตำแหน่ง" style="font-size:15px;margin-bottom:28px"><a href="#/diseases">1000 MAI</a><span class="muted"> › </span><a href="#/diseases?s=' + d.sys.id + '">' + esc(d.sys.name) + '</a><span class="muted"> › </span><span>' + esc(d.name) + '</span></nav>' +
-        '<div class="dsheet"><aside>' +
-        '<div class="sheet" style="position:relative;padding:34px 24px 24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start"><div class="tape" style="left:28px;margin-left:0;transform:rotate(-6deg)"></div>' +
-        brush(d.sys.c, 220) + '<span class="k" style="font-size:30px">' + esc(d.name) + '</span>' + (d.th ? '<span class="muted">' + esc(d.th) + '</span>' : '') +
-        '<span class="muted" style="font-size:13px;font-style:italic">สีประจำระบบ: ' + esc(d.sys.pig) + '</span></div>' +
+        '<div class="wrap" style="padding-top:28px;padding-bottom:80px"><nav aria-label="ตำแหน่ง" style="font-size:15px;margin-bottom:28px"><a href="#/diseases">1000 MAI</a>' +
+        (s0 ? '<span class="muted"> › </span><a href="#/diseases?sys=' + encodeURIComponent(s0) + '">' + esc(s0) + '</a>' : '') + '<span class="muted"> › </span><span>' + esc(d.name) + '</span></nav>' +
+        '<div class="dsheet mai-d"><aside>' +
+        '<div class="sheet mai-card" style="position:relative;padding:34px 24px 24px;display:flex;flex-direction:column;gap:14px;align-items:flex-start"><div class="tape" style="left:28px;margin-left:0;transform:rotate(-6deg)"></div>' +
+        brush(col[0], 220) + '<span class="k" style="font-size:28px">' + esc(d.name) + '</span>' +
+        (d.aliases.length ? '<span class="muted" style="font-size:15px">ชื่ออื่น: ' + d.aliases.map(esc).join(' · ') + '</span>' : '') + '</div>' +
         '<div class="hlabel"><div class="t">หอพรรณไม้โพยหมอ · HERBARIUM MEDICUM</div><dl>' +
-        '<div><dt>เลขตัวอย่าง</dt><dd>No. ' + esc(d.no) + '</dd></div><div><dt>วงศ์ (ระบบ)</dt><dd>' + esc(d.sysRaw || d.sys.name) + '</dd></div>' +
-        '<div><dt>กรอกแล้ว</dt><dd>' + d.filled + ' / ' + d.fields.length + ' ช่อง</dd></div><div><dt>แหล่งข้อมูล</dt><dd>' + (D.src === 'sample' ? 'ข้อมูลตัวอย่าง' : 'Google Sheet แถว ' + d.row) + '</dd></div>' +
+        lbl('เลขในชีต', 'No. ' + esc(d.no)) + lbl('Ward', esc(d.ward)) +
+        (d.systems.length ? '<div class="full"><dt>ระบบ</dt><dd class="mai-tags" style="padding-top:4px">' + d.systems.map(function (v) { return tagHTML('sys', v); }).join('') + '</dd></div>' : '') +
+        lbl('ประเภท', esc(d.type)) + lbl('Genetic', esc(d.gen)) + lbl('ICD-10', esc(d.icd)) + lbl('เคยดูคนไข้', esc(d.seen.join(', '))) +
+        lbl('เขียนแล้ว', d.filled + ' / ' + d.total + ' ช่อง') + lbl('แหล่งข้อมูล', D.src === 'sample' ? 'ข้อมูลตัวอย่าง' : 'Google Sheet แถว ' + d.row) +
         '</dl></div>' +
-        '<div style="display:flex;flex-direction:column;gap:10px"><a class="btn" href="#/exam?src=' + encodeURIComponent('d:' + d.no) + '">สร้างข้อสอบจากโรคนี้</a>' +
+        '<div style="display:flex;flex-direction:column;gap:10px">' + (d.filled ? '<a class="btn" href="#/exam?src=' + encodeURIComponent('d:' + d.id) + '">สร้างข้อสอบจากโรคนี้</a>' : '') +
         (sheetLink ? '<a class="btn ghost" href="' + sheetLink + '" target="_blank" rel="noopener">แก้ข้อมูลใน Google Sheet ↗</a>' : '') + '</div></aside>' +
-        '<article><div style="display:flex;flex-direction:column;gap:14px;padding-bottom:24px"><span class="label">No. ' + esc(d.no) + ' · ' + esc(d.sys.name.toUpperCase()) + '</span>' +
-        '<h1 style="font-size:clamp(40px,5vw,66px)">' + esc(d.name) + '</h1>' + (d.th ? '<p class="muted" style="font-size:20px">' + esc(d.th) + '</p>' : '') +
-        '<div style="display:flex;flex-wrap:wrap;gap:8px"><span class="pill"><span class="sw" style="background:' + d.sys.c + '"></span>' + esc(d.sys.name) + '</span><span class="pill">กรอก ' + d.filled + '/' + d.fields.length + ' ช่อง</span></div></div>' +
-        entries +
-        (rel.length ? '<section style="border-top:1px solid var(--empty);padding-top:28px;display:flex;flex-direction:column;gap:10px"><span class="label">ตัวอย่างในวงศ์เดียวกัน</span><div style="display:flex;flex-wrap:wrap;gap:8px">' +
-          rel.map(function (x) { return '<a class="pill" href="#/disease/' + encodeURIComponent(x.no) + '"><span class="sw" style="background:' + x.sys.c + '"></span>' + esc(x.name) + '</a>'; }).join('') + '</div></section>' : '') +
+        '<article><div style="display:flex;flex-direction:column;gap:14px;padding-bottom:24px"><span class="label">No. ' + esc(d.no) + (d.ward ? ' · ' + esc(d.ward) : '') + '</span>' +
+        '<h1 style="font-size:clamp(34px,5vw,60px)">' + esc(d.name) + '</h1>' +
+        (tags ? '<div class="mai-tags">' + tags + '</div>' : '') +
+        (d.brief ? '<div class="lede mai-brief">' + rich(d.brief) + '</div>' : '') + '</div>' +
+        (shown.length ? shown.join('') : '<div class="empty" style="margin:8px 0 24px"><p class="k" style="font-size:20px">ยังไม่ได้เขียนรายละเอียดของโรคนี้</p><p class="muted">เพิ่มในชีตแล้วกลับมาหน้านี้ เว็บจะดึงให้เอง</p></div>') +
+        (shown.length && empty.length ? '<details class="mai-empty"><summary class="muted">ช่องที่ยังไม่ได้เขียน (' + empty.length + ')</summary><div>' + empty.map(function (x) { return '<span class="pill">' + esc(x) + '</span>'; }).join('') + '</div></details>' : '') +
+        (rel.length ? '<section style="border-top:1px solid var(--empty);padding-top:28px;margin-top:12px;display:flex;flex-direction:column;gap:10px"><span class="label">ระบบเดียวกัน · ' + esc(s0) + '</span><div style="display:flex;flex-wrap:wrap;gap:8px">' +
+          rel.map(function (x) { return '<a class="pill' + (x.filled ? '' : ' mai-dim') + '" href="' + dHref(x) + '">' + esc(x.name) + '</a>'; }).join('') + '</div></section>' : '') +
+        '<nav class="mai-pn" aria-label="โรคก่อนหน้าและถัดไป">' +
+        (prev ? '<a href="' + dHref(prev) + '"><span class="muted" style="font-size:13px">← ก่อนหน้า</span><span class="k">' + esc(prev.name) + '</span></a>' : '<span></span>') +
+        (next ? '<a href="' + dHref(next) + '" style="align-items:flex-end;text-align:right"><span class="muted" style="font-size:13px">ถัดไป →</span><span class="k">' + esc(next.name) + '</span></a>' : '') + '</nav>' +
         '<section style="margin-top:28px" class="sheet"><div style="padding:18px 20px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px"><div><div class="k" style="font-size:17px;font-weight:500">ข้อสอบเก่าที่เกี่ยวกับโรคนี้</div><p class="muted" style="font-size:15px">เปิดคลังข้อสอบเก่า MDCU แล้วค้นชื่อโรค</p></div><a class="btn ghost" href="' + esc(C.acUrl) + '" target="_blank" rel="noopener">เปิดคลังข้อสอบเก่า ↗</a></div></section>' +
         '</article></div></div>'
     };
@@ -1096,7 +1341,7 @@
     var o = '<optgroup label="1000 MAI"><option value="all">สุ่มจากทุกโรค</option>';
     var used = {}; D.list.forEach(function (d) { used[d.sys.id] = d.sys; });
     Object.keys(used).forEach(function (k) { o += '<option value="s:' + k + '">สุ่มจากระบบ ' + esc(used[k].name) + '</option>'; });
-    o += '</optgroup><optgroup label="1000 MAI · รายโรค">' + D.list.map(function (d) { return '<option value="d:' + esc(d.no) + '">' + esc(d.name) + '</option>'; }).join('') + '</optgroup>';
+    o += '</optgroup><optgroup label="1000 MAI · รายโรค">' + D.list.map(function (d) { return '<option value="d:' + esc(d.id) + '">' + esc(d.name) + '</option>'; }).join('') + '</optgroup>';
     var pre = []; PRE.forEach(function (s) { s.groups.forEach(function (g) { g.docs.forEach(function (d) { if (d.html) pre.push([s, d]); }); }); });
     if (pre.length) o += '<optgroup label="Preclinic">' + pre.map(function (x) { return '<option value="p:' + x[0].id + '/' + x[1].id + '">' + esc(x[0].name + ' › ' + x[1].title) + '</option>'; }).join('') + '</optgroup>';
     o += '<optgroup label="Clinic">' + CLI.approaches.map(function (a) { return '<option value="c:' + a.id + '">' + esc('Approach › ' + a.title) + '</option>'; }).join('') + '</optgroup>';

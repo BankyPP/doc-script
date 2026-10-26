@@ -10,7 +10,7 @@ window.POY_CONFIG = {
      - id = ตัวยาวในลิงก์ docs.google.com/spreadsheets/d/<id>/edit
      - gid = เลขหลัง #gid= ของแท็บที่ใช้ (แท็บแรกมักเป็น 0)
      ถ้ายังว่าง เว็บจะใช้ข้อมูลตัวอย่างใน data/sample-diseases.js */
-  sheet: { id: '', gid: '0' },
+  sheet: { id: '10Gv4qlYArhsEE3VH1aWhuyBjdoLy-oyUAtxuD4QLzBI', gid: '0' },   /* "1000 โรค" แท็บ 1000 Diseases — วิธีอ่านคอลัมน์ดู data/mai.js */
 
   /* ติว NL & Compre — รายการการสอบ
      วันสอบ / รูปแบบ / จำนวน / เวลา ใส่ในเว็บ (ติว NL & Compre › ตั้งค่า) — บันทึกต่อคน ซิงก์เข้าบัญชี

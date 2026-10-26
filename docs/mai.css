@@ -1,0 +1,98 @@
+/* 1000 MAI — ลิสต์โรค ตัวกรอง และหน้ารายโรค */
+.linkbtn{font-family:'Kanit',sans-serif;font-weight:500;font-size:14px;background:none;border:0;padding:8px 4px;min-height:40px;color:var(--moss);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.linkbtn:hover{color:var(--moss-dk)}
+.chip.sm{min-height:36px;padding:0 13px;font-size:13px}
+
+/* tag */
+.mtag{font-family:'Kanit',sans-serif;font-weight:500;font-size:12px;line-height:1;display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;border:1px solid rgba(30,38,32,.14);white-space:nowrap}
+.mtag.o{border-color:var(--rule-3);color:var(--ink-2);background:var(--sheet)}
+.mtag.soft{border-color:transparent;color:var(--muted);background:var(--paper-2)}
+.mtag.seen{border-color:#B8CBB2;color:var(--moss-dk);background:var(--moss-bg)}
+.mtag.dup{background:var(--sienna);color:#fff;border-color:var(--sienna)}
+.mai-tags{display:flex;flex-wrap:wrap;gap:5px}
+
+/* กล่องโรคน่าซ้ำ */
+.mai-dup{border:1.5px solid var(--sienna);border-radius:6px;background:#FBF1EC}
+.mai-dup summary{display:flex;align-items:center;gap:14px;position:relative;padding-right:44px!important;padding:14px 18px;cursor:pointer;list-style:none}
+.mai-dup summary::-webkit-details-marker{display:none}
+.mai-dup summary::after{content:'';position:absolute;right:20px;top:50%;width:9px;height:9px;border-right:1.6px solid var(--sienna-dk);border-bottom:1.6px solid var(--sienna-dk);transform:translateY(-70%) rotate(45deg);transition:transform .15s}
+.mai-dup[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+.mai-dup .bang{flex:none;width:34px;height:34px;border-radius:50%;background:var(--sienna);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-family:'Kanit',sans-serif;font-weight:700;font-size:20px}
+.mai-dup ul{list-style:none;margin:0;padding:0 18px 6px}
+.mai-dup li{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;padding:12px 0;border-top:1px dashed #E2C3B5}
+.mai-dup .pair{flex:1 1 420px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;min-width:0}
+.mai-dup .pair a{text-decoration:none;color:var(--ink);font-weight:600}
+.mai-dup .pair a:hover{color:var(--moss)}
+.mai-dup .why{flex:1 1 220px;font-size:14px;color:var(--sienna-dk)}
+.mai-dup>.linkbtn{margin:0 18px 10px}
+
+/* แถบตัวกรอง */
+.mai-tools{display:flex;flex-direction:column;gap:12px;padding-bottom:20px}
+.mai-fbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.mai-fb{gap:6px;padding:0 14px}
+.mai-fb b{font-weight:600;font-size:12px;min-width:20px;height:20px;border-radius:10px;background:var(--paper);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
+.mai-fb svg{transition:transform .15s}
+.mai-fb.open svg{transform:rotate(180deg)}
+.mai-fb.open:not(.on){background:var(--hover)}
+.mai-panel{display:flex;flex-wrap:wrap;gap:6px;padding:12px}
+.mopt{font-family:'Kanit',sans-serif;font-weight:500;font-size:14px;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;border:1px solid var(--rule-3);border-radius:10px;background:var(--sheet-hi);color:var(--ink);cursor:pointer}
+.mopt:hover{background:var(--hover)}
+.mopt.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.mopt .oc{font-family:'Sarabun',sans-serif;font-size:12px;color:var(--muted)}
+.mopt.on .oc{color:#C9CFC6}
+.mopt[disabled]{opacity:.42;cursor:default}
+.mopt[disabled]:hover{background:var(--sheet-hi)}
+.mopt i{font-style:normal;color:var(--muted)}
+.mopt.on i{color:inherit}
+.mai-act{display:flex;flex-wrap:wrap;gap:6px}
+.mai-x{background:var(--sheet);cursor:pointer;min-height:34px}
+.mai-x:hover{background:var(--hover)}
+.mai-count{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;font-size:15px}
+
+/* ลิสต์ */
+.mai-az{display:flex;flex-wrap:wrap;gap:2px;padding-bottom:6px}
+.mai-az button{font-family:'Kanit',sans-serif;font-weight:500;font-size:14px;min-width:32px;min-height:36px;border:0;border-radius:8px;background:transparent;color:var(--moss);cursor:pointer}
+.mai-az button:hover{background:var(--hover)}
+.mai-letter{font-size:22px;color:var(--sienna);padding:22px 0 6px;border-bottom:1.5px solid var(--ink);scroll-margin-top:84px}
+.mai-row{display:flex;align-items:flex-start;gap:14px;padding:11px 4px;border-bottom:1px dashed var(--rule);text-decoration:none;color:var(--ink);min-height:52px}
+.mai-row:hover{background:var(--sheet)}
+.mai-row:hover .mai-name{color:var(--moss)}
+.mai-no{flex:none;width:34px;font-style:italic;font-size:14px;color:var(--muted);text-align:right;padding-top:3px}
+.mai-main{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.mai-name{font-family:'Kanit',sans-serif;font-weight:500;font-size:17px;line-height:1.35;flex:1 1 280px;min-width:0;overflow-wrap:anywhere}
+.mai-row .mai-tags{flex:0 1 auto;justify-content:flex-end}
+.mai-row.blank .mai-name{font-weight:400;color:var(--muted)}
+.mai-row.blank .mai-tags,.mai-row.blank .mai-no{opacity:.55}
+.mai-dim{opacity:.6}
+.mai-ck{flex:none;display:flex;gap:6px;padding-top:4px}
+.mai-cb{width:20px;height:20px;border:1.5px solid var(--rule-3);border-radius:5px;background:var(--sheet-hi);display:inline-flex;align-items:center;justify-content:center;color:#fff}
+.mai-cb.on{background:var(--moss);border-color:var(--moss)}
+.mai-row.blank .mai-cb:not(.on){opacity:.6}
+.mai-ckhead{display:flex;gap:6px;padding:14px 4px 0;position:relative}
+.mai-ckhead span{width:20px;font-family:'Kanit',sans-serif;font-weight:500;font-size:11px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);line-height:20px;white-space:nowrap}
+
+/* หน้ารายโรค */
+.mai-brief{display:flex;flex-direction:column;gap:6px}
+.mai-sub+.mai-sub{margin-top:18px}
+.mai-sub h3{font-size:16px;font-weight:500;color:var(--umber);margin-bottom:6px}
+.mai-empty{margin:4px 0 8px;border-top:1px solid var(--empty);padding-top:16px}
+.mai-empty summary{cursor:pointer;font-size:15px;min-height:40px;display:flex;align-items:center}
+.mai-empty>div{display:flex;flex-wrap:wrap;gap:6px;padding-top:10px}
+.mai-empty .pill{color:var(--muted);font-weight:400}
+.mai-pn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--empty);padding-top:18px;margin-top:28px}
+.mai-pn a{display:flex;flex-direction:column;text-decoration:none;min-height:44px;max-width:48%}
+.mai-pn .k{font-size:17px;font-weight:500}
+
+@media (max-width:760px){
+  .mai-fbar{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px;padding:2px 16px 6px;scrollbar-width:none}
+  .mai-fbar::-webkit-scrollbar{display:none}
+  .mai-fbar>*{flex:none}
+  .mai-row .mai-tags{justify-content:flex-start}
+  .mai-name{flex-basis:100%}
+  .mai-no{width:28px}
+  .mai-dup summary{padding:12px 14px}
+  .mai-dup ul{padding:0 14px 6px}
+  .mai-d{gap:36px}
+  .mai-d aside{order:2;max-width:none}
+  .mai-d .mai-card{display:none}
+}
