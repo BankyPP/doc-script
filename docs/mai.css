@@ -24,7 +24,15 @@
 .mai-dup .pair a{text-decoration:none;color:var(--ink);font-weight:600}
 .mai-dup .pair a:hover{color:var(--moss)}
 .mai-dup .why{flex:1 1 220px;font-size:14px;color:var(--sienna-dk)}
-.mai-dup>.linkbtn{margin:0 18px 10px}
+.mai-dupfoot{padding:0 18px 10px}
+.mai-hidlist{list-style:none;margin:0;padding:0}
+.mai-hidlist li{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;padding:10px 0;border-top:1px dashed var(--rule)}
+.mai-hidlist li .pair{flex:1 1 420px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;min-width:0;opacity:.75}
+.mai-hidlist li .pair a{text-decoration:none;color:var(--ink)}
+.mai-hidlist li .why{flex:1 1 220px;font-size:14px;color:var(--muted)}
+.mai-dupok{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;font-size:15px}
+.mai-dupok .mai-hidlist{flex-basis:100%}
+.mai-search{padding-top:6px;padding-bottom:4px}
 
 /* แถบตัวกรอง */
 .mai-tools{display:flex;flex-direction:column;gap:12px;padding-bottom:20px}
