@@ -1,5 +1,5 @@
 /* โพยหมอ — single-page app (hash routes)
-   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach] · #/diseases?s=&q=&f=&v= · #/disease/<no> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/account */
+   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach] · #/diseases?s=&q=&f=&v= · #/disease/<no> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
 (function () {
   'use strict';
   var C = window.POY_CONFIG, SYS = window.POY_SYSTEMS, OTHER = window.POY_OTHER;
@@ -10,7 +10,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function pad(n) { return ('000' + n).slice(-4); }
   /* ค่าที่ซิงก์เข้าบัญชี (API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์นั้นเท่านั้น) */
-  var SYNC_KEYS = ['recent', 'quiz', 'level', 'count', 'engine', 'model', 'nlset'];
+  var SYNC_KEYS = ['recent', 'quiz', 'level', 'count', 'engine', 'model', 'nlset', 'topicset', 'topicq', 'topicst'];
   function rawGet(k, d) { try { var v = localStorage.getItem('poy-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }
   function rawSet(k, v) { try { localStorage.setItem('poy-' + k, JSON.stringify(v)); } catch (e) { } }
   var LS = {
@@ -308,7 +308,7 @@
     var r = route();
     var page = PAGES[r.name] || PAGES._404;
     if (pageCleanup) { try { pageCleanup(); } catch (e) { } pageCleanup = null; }
-    var here = r.name === 'disease' ? 'diseases' : r.name, sub = r.name === 'nl' && r.args[0] ? 'nl/' + r.args[0] : '';
+    var here = r.name === 'disease' ? 'diseases' : r.name, sub = (r.name === 'nl' || r.name === 'topics') && r.args[0] ? r.name + '/' + r.args[0] : '';
     document.querySelectorAll('#drawer [data-r]').forEach(function (a) {
       var k = a.getAttribute('data-r');
       var on = k === here || (k === sub && sub !== '');
@@ -411,7 +411,8 @@
         '<span class="label">' + p[2] + '</span><h3>' + p[3] + '</h3><p class="muted">' + p[4] + '</p>' + (p[6] || '') +
         '<div class="foot">' + p[5] + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
     }).join('') +
-      '<a class="sheet plot" href="#/nl"><div class="tape" style="transform:rotate(2.5deg)"></div>' + brush('#4A5560') + '<span class="label">06 · ยอดเขา</span><h3>ติว NL &amp; Compre</h3><p class="muted">บอร์ดประกาศ สรุปเนื้อหาจากจุฬาฯ และศิริราช ข้อสอบเก่า NL1–2 และ Compre 1–3</p><div class="foot">' + nlNextHTML() + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
+      '<a class="sheet plot" href="#/nl"><div class="tape" style="transform:rotate(2.5deg)"></div>' + brush('#4A5560') + '<span class="label">06 · ยอดเขา</span><h3>ติว NL &amp; Compre</h3><p class="muted">บอร์ดประกาศ สรุปเนื้อหาจากจุฬาฯ และศิริราช ข้อสอบเก่า NL1–2 และ Compre 1–3</p><div class="foot">' + nlNextHTML() + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>' +
+      '<a class="sheet plot" href="#/topics"><div class="tape" style="transform:rotate(-1.8deg)"></div>' + brush('#2F7466') + '<span class="label">07 · เมล็ดพันธุ์</span><h3>Random Topic Summary</h3><p class="muted">สรุปแยกเป็นเรื่อง ๆ ตามหัวข้อที่เลือกเอง พร้อมโจทย์ AI ที่ออกทีละข้อจากหัวข้อใหญ่หรือย่อย</p><div class="foot"><span class="muted">' + (window.POY_TOPICS || []).map(function (x) { return esc(x.title); }).join(' · ') + '</span><span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
 
     var recent = LS.get('recent', []);
     var recentHTML = recent.length ? recent.slice(0, 4).map(function (x) {
@@ -1186,6 +1187,486 @@
     };
   }
 
+  /* =========================================================
+     Random Topic Summary
+     #/topics · #/topics/<id>[/sum[/<หน้า>]] · #/topics/<id>/practice?m=ai|test|flash
+     ========================================================= */
+  var TOPICS = window.POY_TOPICS || [];
+  var TD = {};               /* id → { data, st, ...L (กำลังโหลด), ...E (ผิดพลาด) } */
+  var PAGE_R = 1191.12 / 841.92, IMG_W = 2813;
+  function topicById(id) { return TOPICS.filter(function (t) { return t.id === id; })[0]; }
+  function p2(n) { return ('0' + n).slice(-2); }
+  function tImg(t, n) { return t.dir + 'p' + p2(n) + '.webp?v=' + (t.v || 1); }
+  function tLoad(t, what) {
+    var s = TD[t.id] || (TD[t.id] = {});
+    if (s[what] || s[what + 'L'] || s[what + 'E']) return s[what] || null;
+    s[what + 'L'] = true;
+    fetch(t.dir + (what === 'data' ? 'data.json' : 'selftest.json') + '?v=' + (t.v || 1)).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status); return r.json();
+    }).then(function (j) { s[what] = j; }).catch(function (e) { s[what + 'E'] = e.message || String(e); }).then(function () {
+      s[what + 'L'] = false;
+      var r = route(); if (r.name === 'topics' && r.args[0] === t.id) render(true);
+    });
+    return null;
+  }
+  /* หน่วยเนื้อหา = กล่องในหน้า (หรือทั้งคอลัมน์ ถ้าคอลัมน์นั้นไม่มีกล่องย่อย) */
+  function tUnits(d) {
+    var out = [];
+    d.pages.forEach(function (p) {
+      p.cols.forEach(function (c, ci) {
+        if (c.boxes.length) c.boxes.forEach(function (b, bi) { out.push({ key: p.n + '-' + ci + '-' + bi, p: p.n, pt: p.t, head: c.h, title: b.t || c.h || ('คอลัมน์ ' + (ci + 1)), text: b.x, bb: b.bb }); });
+        else out.push({ key: p.n + '-' + ci, p: p.n, pt: p.t, head: c.h, title: c.h || ('คอลัมน์ ' + (ci + 1)), text: c.x || '', bb: c.bb });
+      });
+    });
+    return out;
+  }
+  function tUnitsCached(t, d) { var s = TD[t.id]; if (!s.units) s.units = tUnits(d); return s.units; }
+  function uLink(t, u) { return '#/topics/' + t.id + '/sum/' + u.p + '?to=u' + u.key; }
+  function groupOf(d, n) { return d.groups.filter(function (g) { return g.pages.indexOf(n) >= 0; })[0]; }
+  /* ภาพตัดเฉพาะกล่อง (ใช้ภาพหน้าเดียวกัน แค่เลื่อนกรอบ) */
+  function cropHTML(t, u) {
+    var bb = u.bb, ar = bb[2] / bb[3] * PAGE_R, maxw = Math.round(bb[2] * IMG_W * 1.15);
+    return '<figure class="crop" id="u' + u.key + '"><button type="button" class="cimg" data-zoom="' + u.p + '" data-bb="' + bb.join(',') + '" style="aspect-ratio:' + ar.toFixed(4) + ';max-width:' + maxw + 'px;min-width:' + Math.round(bb[2] * IMG_W * 0.6) + 'px" aria-label="ขยายภาพ: ' + esc(u.title) + '">' +
+      '<img src="' + tImg(t, u.p) + '" alt="" loading="lazy" decoding="async" style="width:' + (100 / bb[2]).toFixed(3) + '%;left:' + (-bb[0] / bb[2] * 100).toFixed(3) + '%;top:' + (-bb[1] / bb[3] * 100).toFixed(3) + '%"></button></figure>';
+  }
+  /* ดูภาพเต็ม ซูมได้ */
+  function openZoom(t, n, bb) {
+    var back = document.activeElement, o = document.createElement('div');
+    o.className = 'zoom'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-label', 'ภาพหน้า ' + n);
+    o.innerHTML = '<div class="zbar"><span class="k">หน้า ' + n + ' / ' + t.pages + '</span><span style="flex:1"></span>' +
+      '<button class="chip" type="button" data-z="-" aria-label="ย่อ">−</button><button class="chip" type="button" data-z="+" aria-label="ขยาย">+</button><button class="chip" type="button" data-z="x">ปิด</button></div>' +
+      '<div class="zsc"><img src="' + tImg(t, n) + '" alt="หน้า ' + n + ' ของสรุป ' + esc(t.title) + '"></div>';
+    document.body.appendChild(o); document.body.classList.add('zopen');
+    var sc = o.querySelector('.zsc'), img = o.querySelector('img');
+    var w = Math.round(Math.min(IMG_W, Math.max(1900, window.innerWidth * 1.6)));
+    function setW(nw) {
+      var cx = (sc.scrollLeft + sc.clientWidth / 2) / w, cy = (sc.scrollTop + sc.clientHeight / 2) / (w / PAGE_R);
+      w = Math.round(Math.max(sc.clientWidth, Math.min(IMG_W * 1.6, nw))); img.style.width = w + 'px'; img.style.height = Math.round(w / PAGE_R) + 'px';
+      sc.scrollLeft = cx * w - sc.clientWidth / 2; sc.scrollTop = cy * (w / PAGE_R) - sc.clientHeight / 2;
+    }
+    img.style.width = w + 'px'; img.style.height = Math.round(w / PAGE_R) + 'px';
+    if (bb) { sc.scrollLeft = bb[0] * w - 12; sc.scrollTop = bb[1] * (w / PAGE_R) - 12; }
+    function close() { o.remove(); document.body.classList.remove('zopen'); document.removeEventListener('keydown', key); if (back && back.focus) back.focus(); }
+    function key(e) { if (e.key === 'Escape') close(); }
+    document.addEventListener('keydown', key);
+    o.querySelector('.zbar').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-z]'); if (!b) return;
+      var z = b.getAttribute('data-z'); if (z === 'x') close(); else setW(w * (z === '+' ? 1.3 : 1 / 1.3));
+    });
+    o.querySelector('[data-z="x"]').focus();
+  }
+  function bindZoom(t, root) {
+    root.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-zoom]'); if (!b) return;
+      var bb = (b.getAttribute('data-bb') || '').split(',').map(Number);
+      openZoom(t, +b.getAttribute('data-zoom'), bb.length === 4 ? bb : null);
+    });
+  }
+
+  function topicHead(t, cur, extra) {
+    var tabs = [['sum', 'สรุป'], ['practice', 'ฝึก']].map(function (x) {
+      return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/topics/' + t.id + '/' + x[0] + '">' + x[1] + '</a>';
+    }).join('');
+    return '<section class="wrap phead" style="padding-bottom:20px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0">' +
+      '<nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/topics">Random Topic Summary</a><span class="muted"> › </span><span>' + esc(t.title) + '</span></nav>' +
+      '<h1 style="font-size:clamp(38px,5vw,64px)">' + esc(t.title) + '</h1>' +
+      '<p class="lede">' + esc(t.th) + ' · <span class="muted">' + esc(t.source) + '</span></p>' +
+      '<div class="subtabs" aria-label="ส่วนของหัวข้อ">' + tabs + (extra || '') + '</div></div></section>';
+  }
+  function loadingHTML(s, what) {
+    return s && s[what + 'E'] ? '<p class="warn">โหลดข้อมูลไม่สำเร็จ: ' + esc(s[what + 'E']) + ' — ลองรีเฟรชหน้า</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดหัวข้อ…</p>';
+  }
+
+  PAGES.topics = function (r) {
+    var t = topicById(r.args[0]);
+    if (!r.args[0] || !t) return topicsHub();
+    if (r.args[1] === 'practice') return topicPractice(t, r);
+    return topicSummary(t, r);
+  };
+
+  function topicsHub() {
+    remember({ href: '#/topics', title: 'Random Topic Summary', crumb: 'เมล็ดพันธุ์', c: '#2F7466' });
+    var cards = TOPICS.map(function (t, i) {
+      return '<div class="sheet plot tcard"><div class="tape" style="transform:rotate(' + [-2, 2, -1.5][i % 3] + 'deg)"></div>' + brush(t.c) +
+        '<span class="label">' + t.pages + ' หน้า · เพิ่มเมื่อ ' + esc(t.added) + '</span><h3>' + esc(t.title) + '</h3><p class="muted">' + esc(t.th) + '</p>' +
+        '<p class="note">' + esc(t.source) + '</p>' +
+        '<div class="foot" style="gap:10px;justify-content:flex-start"><a class="btn" href="#/topics/' + t.id + '/sum">อ่านสรุป</a><a class="btn ghost" href="#/topics/' + t.id + '/practice">ฝึกโจทย์</a></div></div>';
+    }).join('') +
+      '<div class="plot soon" style="justify-content:center"><span class="label">หัวข้อถัดไป</span><h3 style="font-size:22px">+ เพิ่มหัวข้อ</h3><p class="muted">ส่งไฟล์สรุปมาในแชทกับ Claude พร้อมบอกชื่อหัวข้อ แล้วจะขึ้นเป็นการ์ดใหม่ที่นี่ แยกส่วนสรุปกับส่วนฝึก</p></div>';
+    return {
+      title: 'Random Topic Summary', html:
+        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">07 · เมล็ดพันธุ์</span><h1 style="font-size:clamp(40px,5.4vw,72px)">Random Topic Summary</h1>' +
+        '<p class="lede">สรุปแยกเป็นเรื่อง ๆ ตามหัวข้อที่เลือกเอง — แต่ละหัวข้อมีส่วนสรุป (แบ่งหัวข้อย่อย) และส่วนฝึก: AI ออกโจทย์ทีละข้อต่อเนื่องจากหัวข้อใหญ่หรือย่อยที่เลือก</p></div></section>' +
+        '<section class="wrap" style="padding-bottom:80px"><div class="plots">' + cards + '</div></section>'
+    };
+  }
+
+  /* ---------- สรุป ---------- */
+  function topicSummary(t, r) {
+    var s = TD[t.id] || {}, d = tLoad(t, 'data');
+    var dl = '<a class="chip" href="' + t.dir + encodeURIComponent(t.pdf) + '" download>ไฟล์ต้นฉบับ (PDF)</a>';
+    if (!d) return { title: t.title, html: topicHead(t, 'sum', dl) + '<section class="wrap" style="padding-bottom:80px">' + loadingHTML(TD[t.id], 'data') + '</section>' };
+    var n = Math.max(1, Math.min(d.pages.length, +r.args[2] || 1)), p = d.pages[n - 1], g = groupOf(d, n);
+    var full = r.q.get('v') === 'page', qq = (r.q.get('q') || '').trim();
+    remember({ href: '#/topics/' + t.id + '/sum/' + n, title: t.title + ' · หน้า ' + n, crumb: 'Random Topic Summary › ' + p.t, c: t.c });
+    var units = tUnitsCached(t, d), mine = units.filter(function (u) { return u.p === n; });
+    var tree = d.groups.map(function (gr) {
+      return '<div class="grp">' + esc(gr.t) + '</div>' + gr.pages.map(function (pn) {
+        var pp = d.pages[pn - 1], on = pn === n;
+        return '<a href="#/topics/' + t.id + '/sum/' + pn + '"' + (on ? ' class="on" aria-current="page"' : '') + '><span class="pn">' + pn + '</span><span>' + esc(pp.t) + '</span></a>' +
+          (on && !full ? '<div class="tsub">' + mine.map(function (u) { return '<a href="#/topics/' + t.id + '/sum/' + pn + '?to=u' + u.key + '">' + esc(u.title) + '</a>'; }).join('') + '</div>' : '');
+      }).join('');
+    }).join('');
+    var body;
+    if (full) body = '<button type="button" class="cimg fullp" data-zoom="' + n + '" aria-label="ขยายภาพหน้า ' + n + '" style="aspect-ratio:' + PAGE_R.toFixed(4) + '"><img src="' + tImg(t, n) + '" alt="" style="width:100%;left:0;top:0"></button><p class="note">แตะที่ภาพเพื่อขยาย</p>';
+    else {
+      var lastHead = null;
+      body = '<div class="crops">' + mine.map(function (u) {
+        var h = u.head && u.head !== lastHead && !/^\s*$/.test(u.head) ? '<div class="chead label">' + esc(u.head.replace(/\s*\(ต่อ\)\s*$/, '')) + '</div>' : '';
+        lastHead = u.head; return h + cropHTML(t, u);
+      }).join('') + '</div>';
+    }
+    var prev = d.pages[n - 2], next = d.pages[n];
+    var nav = '<nav aria-label="หน้าก่อนหน้าและถัดไป" class="pnav">' +
+      (prev ? '<a href="#/topics/' + t.id + '/sum/' + (n - 1) + '"><span class="muted" style="font-size:13px">← หน้า ' + (n - 1) + '</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.t) + '</span></a>' : '<span></span>') +
+      (next ? '<a href="#/topics/' + t.id + '/sum/' + (n + 1) + '" style="align-items:flex-end;text-align:right"><span class="muted" style="font-size:13px">หน้า ' + (n + 1) + ' →</span><span class="k" style="font-size:17px;font-weight:500">' + esc(next.t) + '</span></a>' : '') + '</nav>';
+    var hits = '';
+    if (qq) {
+      var ql = qq.toLowerCase(), hs = units.filter(function (u) { return (u.title + ' ' + u.text).toLowerCase().indexOf(ql) >= 0; });
+      hits = '<div class="thits"><span class="label">พบ ' + hs.length + ' ส่วน</span>' + hs.slice(0, 40).map(function (u) { return '<a href="' + uLink(t, u) + '&q=' + encodeURIComponent(qq) + '"><span class="pn">' + u.p + '</span><span>' + esc(u.title) + '</span></a>'; }).join('') + '</div>';
+    }
+    var pageQ = function (v) { return '#/topics/' + t.id + '/sum/' + n + (v ? '?v=page' : ''); };
+    return {
+      title: t.title + ' · หน้า ' + n, html: topicHead(t, 'sum', dl) +
+        '<section class="band" style="padding:36px 0 80px"><div class="wrap reader" id="treader">' +
+        '<details class="ttree" id="ttree" open><summary class="k">หัวข้อย่อย <span class="muted" style="font-weight:400;font-size:14px">· หน้า ' + n + ' / ' + d.pages.length + '</span></summary>' +
+        '<form class="search tsearch" id="tsrch" role="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="tq">ค้นในหัวข้อนี้</label><input id="tq" type="search" placeholder="ค้นในหัวข้อนี้ เช่น CRAB, PID" value="' + esc(qq) + '"></form>' +
+        hits + '<nav class="tree" aria-label="หัวข้อย่อยของ ' + esc(t.title) + '">' + tree + '</nav></details>' +
+        '<article class="sheet doc tdoc"><div style="display:flex;flex-direction:column;gap:8px"><span class="muted" style="font-size:14px">' + esc(g ? g.t : '') + ' · หน้า ' + n + ' / ' + d.pages.length + '</span><h2 style="font-size:clamp(24px,3vw,32px)">' + esc(p.t) + '</h2>' +
+        '<div class="filters" role="group" aria-label="มุมมอง"><a class="chip' + (full ? '' : ' on') + '" href="' + pageQ(false) + '">อ่านทีละกล่อง</a><a class="chip' + (full ? ' on' : '') + '" href="' + pageQ(true) + '">ทั้งหน้า</a>' +
+        '<a class="chip" href="#/topics/' + t.id + '/practice?m=ai&p=' + n + '">ฝึกโจทย์หน้านี้</a></div></div>' + body + nav + '</article></div></section>',
+      after: function () {
+        if (window.innerWidth < 900) { var tt = document.getElementById('ttree'); if (tt && !qq) tt.open = false; }
+        bindZoom(t, document.getElementById('treader'));
+        document.getElementById('tsrch').addEventListener('submit', function (e) {
+          e.preventDefault(); var v = document.getElementById('tq').value.trim();
+          location.hash = '#/topics/' + t.id + '/sum/' + n + (v ? '?q=' + encodeURIComponent(v) : '');
+        });
+        if (r.q.get('to')) { var el = document.getElementById(r.q.get('to')); if (el) el.classList.add('hl'); }
+      }
+    };
+  }
+
+  /* ---------- ฝึก ---------- */
+  function tset(id) { var all = LS.get('topicset', {}) || {}; return all[id] || {}; }
+  function tsetSave(id, v) { var all = LS.get('topicset', {}) || {}; all[id] = v; LS.set('topicset', all); }
+  function tprog(k, id) { var all = LS.get(k, {}) || {}; return all[id] || {}; }
+  function tprogSave(k, id, v) { var all = LS.get(k, {}) || {}; all[id] = v; LS.set(k, all); }
+
+  function topicPractice(t, r) {
+    var m = r.q.get('m') || 'ai';
+    var modes = [['ai', 'AI ออกโจทย์ทีละข้อ']].concat(t.selftest ? [['test', 'ข้อสอบในสรุป']] : []).concat([['flash', 'Flashcard']]);
+    var tabs = '<div class="filters" role="tablist" aria-label="วิธีฝึก" style="margin-bottom:6px">' + modes.map(function (x) {
+      return '<a class="chip' + (m === x[0] ? ' on' : '') + '" role="tab" aria-selected="' + (m === x[0]) + '" href="#/topics/' + t.id + '/practice?m=' + x[0] + '">' + x[1] + '</a>';
+    }).join('') + '</div>';
+    var head = topicHead(t, 'practice');
+    if (m === 'flash') return flashPage(t, head, tabs);
+    var d = tLoad(t, 'data');
+    if (!d) return { title: 'ฝึก — ' + t.title, html: head + '<section class="wrap" style="padding-bottom:80px">' + tabs + loadingHTML(TD[t.id], 'data') + '</section>' };
+    if (m === 'test') return selfTestPage(t, d, head, tabs);
+    return aiPage(t, d, r, head, tabs);
+  }
+
+  function flashPage(t, head, tabs) {
+    var sets = t.flash || [];
+    var body = sets.map(function (f) {
+      if (!f.file) return '<div class="empty" style="text-align:left"><span class="label">' + esc(f.note || '') + '</span><p class="k" style="font-size:22px;margin:6px 0">' + esc(f.title) + '</p>' +
+        '<p class="muted" style="max-width:640px">ช่องนี้เตรียมไว้แล้ว — รอไฟล์ flashcard (ส่งไฟล์ .html ของ artifact มาในแชท แล้ว Claude จะใส่ให้เล่นได้ตรงนี้ พร้อมลิงก์ไปหน้า ' + (f.pages || []).join('–') + ' ของสรุป)</p>' +
+        ((f.pages || []).length ? '<p style="margin-top:12px"><a class="chip" href="#/topics/' + t.id + '/sum/' + f.pages[0] + '">เปิดสรุปหน้า ' + f.pages.join('–') + '</a></p>' : '') + '</div>';
+      return '<div class="sheet" style="padding:0;overflow:hidden"><div style="padding:14px 18px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;border-bottom:1px solid var(--rule-2)"><span class="k" style="font-size:19px">' + esc(f.title) + '</span><span class="muted" style="font-size:14px">' + esc(f.note || '') + '</span><a class="chip" style="margin-left:auto" href="' + t.dir + f.file + '" target="_blank" rel="noopener">เปิดเต็มจอ ↗</a></div>' +
+        '<iframe class="flashf" src="' + t.dir + f.file + '" title="' + esc(f.title) + '" loading="lazy"></iframe></div>';
+    }).join('');
+    return { title: 'Flashcard — ' + t.title, html: head + '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:22px">' + tabs + (body || '<div class="empty"><p class="muted">ยังไม่มี flashcard ในหัวข้อนี้</p></div>') + '</section>' };
+  }
+
+  /* ----- ข้อสอบในสรุป (ตามไฟล์ — ไม่แก้เนื้อหา แค่ทำให้กดตอบได้) ----- */
+  var STS = { order: null, key: '' };
+  function selfTestPage(t, d, head, tabs) {
+    var st = tLoad(t, 'st');
+    if (!st) return { title: 'ข้อสอบในสรุป — ' + t.title, html: head + '<section class="wrap" style="padding-bottom:80px">' + tabs + loadingHTML(TD[t.id], 'st') + '</section>' };
+    var pr = tprog('topicst', t.id), ans = pr.a || {}, secs = pr.sec || [], ord = pr.ord || 'seq', flt = pr.f || 'all';
+    var L = 'ABCDE';
+    function build() {
+      var list = st.qs.filter(function (q) {
+        if (secs.length && secs.indexOf(q.s) < 0) return false;
+        var a = ans[q.n];
+        if (flt === 'todo' && a != null) return false;
+        if (flt === 'wrong' && !(a != null && L[a] !== q.answer)) return false;
+        return true;
+      }).map(function (q) { return q.n; });
+      if (ord === 'rnd') list = shuffle(list);
+      return list;
+    }
+    var key = [secs.join(','), ord, flt].join('|');
+    if (!STS.order || STS.key !== t.id + key) { STS.order = build(); STS.key = t.id + key; STS.i = 0; if (pr.cur && STS.order.indexOf(pr.cur) >= 0 && ord === 'seq') STS.i = STS.order.indexOf(pr.cur); }
+    var done = st.qs.filter(function (q) { return ans[q.n] != null; }), ok = done.filter(function (q) { return L[ans[q.n]] === q.answer; }).length;
+    var chips = function (attr, list, cur, multi) {
+      return list.map(function (x) {
+        var on = multi ? cur.indexOf(x[0]) >= 0 : cur === x[0];
+        return '<button type="button" class="chip' + (on ? ' on' : '') + '" ' + attr + '="' + x[0] + '" aria-pressed="' + on + '">' + x[1] + '</button>';
+      }).join('');
+    };
+    function qHTML() {
+      if (!STS.order.length) return '<div class="empty"><p class="k" style="font-size:20px">ไม่มีข้อที่ตรงกับตัวกรอง</p><p class="muted">ลองเปลี่ยนตัวกรองด้านบน</p></div>';
+      var qn = STS.order[STS.i], q = st.qs[qn - 1], a = ans[qn], doneQ = a != null, ai = L.indexOf(q.answer);
+      return '<article class="sheet q" data-stq="' + qn + '"><div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px"><span class="k" style="font-size:28px">ข้อ ' + qn + '</span><span class="muted" style="font-size:14px">' + (STS.i + 1) + ' / ' + STS.order.length + ' · ' + esc(st.sections[q.s]) + '</span></div>' +
+        '<p>' + esc(q.stem) + '</p><div style="display:flex;flex-direction:column;gap:2px">' +
+        q.options.map(function (op, j) {
+          var cls = doneQ ? (j === ai ? ' ok' : j === a ? ' bad' : '') : '';
+          return '<button class="choice' + cls + '" type="button" data-sp="' + j + '"' + (doneQ ? ' disabled' : '') + '><b>' + L[j] + '</b><span>' + esc(op) + '</span></button>';
+        }).join('') + '</div>' +
+        (doneQ ? '<div class="explain"><p class="k" style="font-weight:500;color:' + (a === ai ? 'var(--moss)' : 'var(--sienna-dk)') + '">' + (a === ai ? 'ถูก' : 'ยังไม่ถูก') + ' · ตอบ ' + q.answer + '</p><p>' + esc(q.explanation) + '</p>' +
+          '<p style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px"><button class="chip" type="button" data-sredo>ลบคำตอบข้อนี้</button><a class="chip" href="#/topics/' + t.id + '/sum/' + (qn <= 66 ? 18 : qn <= 132 ? 19 : 20) + '?v=page">ดูในหน้าสรุป</a></p></div>' : '') +
+        '</article><div class="qnav"><button class="btn ghost" type="button" data-sgo="-1"' + (STS.i ? '' : ' disabled') + '>← ข้อก่อน</button><button class="btn" type="button" data-sgo="1"' + (STS.i < STS.order.length - 1 ? '' : ' disabled') + '>ข้อต่อไป →</button></div>';
+    }
+    function gridHTML() {
+      return st.qs.map(function (q) {
+        var a = ans[q.n], cls = a == null ? '' : L[a] === q.answer ? ' ok' : ' bad', inList = STS.order.indexOf(q.n) >= 0;
+        return '<button type="button" class="gn' + cls + (STS.order[STS.i] === q.n ? ' cur' : '') + '" data-sj="' + q.n + '"' + (inList ? '' : ' disabled') + ' aria-label="ข้อ ' + q.n + '">' + q.n + '</button>';
+      }).join('');
+    }
+    return {
+      title: 'ข้อสอบในสรุป — ' + t.title, html: head + '<section class="wrap" id="stwrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:20px">' + tabs +
+        '<p class="muted" style="max-width:760px">ข้อสอบ ' + st.qs.length + ' ข้อที่อยู่ในไฟล์สรุป (หน้า 18–20) — เนื้อหาตามต้นฉบับ แค่ทำให้กดตอบได้ทีละข้อ · บันทึกคำตอบให้อัตโนมัติ</p>' +
+        '<div class="sheet" style="padding:18px 20px;display:flex;flex-direction:column;gap:12px">' +
+        '<div class="filters"><span class="label" style="min-width:64px">หมวด</span><button type="button" class="chip' + (secs.length ? '' : ' on') + '" data-ssec="all">ทุกหมวด</button>' + chips('data-ssec', st.sections.map(function (x, i) { return [i, x]; }), secs, true) + '</div>' +
+        '<div class="filters"><span class="label" style="min-width:64px">ลำดับ</span>' + chips('data-sord', [['seq', 'ตามลำดับ'], ['rnd', 'สุ่ม']], ord) +
+        '<span class="label" style="margin-left:10px">แสดง</span>' + chips('data-sflt', [['all', 'ทุกข้อ'], ['todo', 'ยังไม่ทำ'], ['wrong', 'ทำผิด']], flt) + '</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;border-top:1px dashed var(--rule);padding-top:12px"><span>ทำแล้ว <b>' + done.length + '</b> / ' + st.qs.length + ' · ถูก <b>' + ok + '</b>' + (done.length ? ' (' + Math.round(ok / done.length * 100) + '%)' : '') + '</span>' +
+        (done.length ? '<button type="button" class="chip" data-sreset style="margin-left:auto">ล้างคำตอบทั้งหมด</button>' : '') + '</div></div>' +
+        '<div id="stq">' + qHTML() + '</div>' +
+        '<details class="sheet" style="padding:14px 18px"><summary class="k" style="cursor:pointer;min-height:32px">กระโดดไปข้อ…</summary><div class="ggrid" id="sgrid">' + gridHTML() + '</div></details></section>',
+      after: function () {
+        function save() { tprogSave('topicst', t.id, { a: ans, sec: secs, ord: ord, f: flt, cur: STS.order[STS.i] || null }); }
+        function paint() { document.getElementById('stq').innerHTML = qHTML(); document.getElementById('sgrid').innerHTML = gridHTML(); }
+        document.getElementById('stwrap').addEventListener('click', function (e) {
+          var b = e.target.closest('button'); if (!b || b.disabled) return;
+          if (b.hasAttribute('data-sp')) { ans[STS.order[STS.i]] = +b.getAttribute('data-sp'); save(); var y = window.scrollY; render(true); window.scrollTo(0, y); return; }
+          if (b.hasAttribute('data-sgo')) { STS.i = Math.max(0, Math.min(STS.order.length - 1, STS.i + +b.getAttribute('data-sgo'))); save(); paint(); document.getElementById('stq').scrollIntoView({ block: 'start' }); return; }
+          if (b.hasAttribute('data-sj')) { STS.i = STS.order.indexOf(+b.getAttribute('data-sj')); save(); paint(); document.getElementById('stq').scrollIntoView({ block: 'start' }); return; }
+          if (b.hasAttribute('data-sredo')) { delete ans[STS.order[STS.i]]; save(); render(true); return; }
+          if (b.hasAttribute('data-sreset')) { if (!confirm('ล้างคำตอบทั้ง ' + done.length + ' ข้อ?')) return; ans = {}; STS.order = null; save(); render(true); return; }
+          var v;
+          if ((v = b.getAttribute('data-ssec')) != null) { if (v === 'all') secs = []; else { v = +v; secs = secs.indexOf(v) >= 0 ? secs.filter(function (x) { return x !== v; }) : secs.concat([v]); } }
+          else if ((v = b.getAttribute('data-sord')) != null) ord = v;
+          else if ((v = b.getAttribute('data-sflt')) != null) flt = v;
+          else return;
+          STS.order = null; tprogSave('topicst', t.id, { a: ans, sec: secs, ord: ord, f: flt, cur: null }); render(true);
+        });
+      }
+    };
+  }
+
+  /* ----- AI ออกโจทย์ทีละข้อ (เหมือน Admission round: ออกต่อไปเรื่อย ๆ) ----- */
+  var AIQ = { t: null, cur: null, next: null, busy: false, err: '', units: null, nq: 0, ok: 0 };
+  function aiScope(t, d, set) {
+    var all = tUnitsCached(t, d), sel = set.units;
+    if (!sel || !sel.length) return all.filter(function (u) { return u.p < 18; });   /* ค่าเริ่มต้น: ทุกหน้า ยกเว้นหน้าข้อสอบ */
+    return all.filter(function (u) { return sel.indexOf(u.key) >= 0; });
+  }
+  function aiPrompt(t, u, set, recent, forChat, pool) {
+    var lv = LEVELS[(set.level || 3) - 1];
+    var rules = 'กติกา\n- โจทย์เป็น clinical vignette (case-based) ภาษาอังกฤษแบบข้อสอบทางการ ตัวเลือก 5 ข้อ A–E เป็นภาษาอังกฤษ คำตอบถูกข้อเดียว\n' +
+      '- ใส่ข้อมูลเท่าที่จำเป็นให้ได้คำตอบเดียว ห้ามใบ้คำตอบในโจทย์ (เช่นใส่ชื่อโรคในวงเล็บหลังค่าแลป) ตัวเลือกที่ถูกห้ามยาวหรือละเอียดกว่าตัวเลือกอื่น\n' +
+      '- ระดับความยาก ' + (set.level || 3) + '/5 (' + lv[0] + '): ' + lv[1] + '\n' +
+      (set.focus ? '- เน้นเรื่อง: ' + set.focus + '\n' : '') +
+      '- คำอธิบายเป็นภาษาไทย: ทำไมข้อถูกถึงถูก ทำไมแต่ละตัวเลือกที่เหลือผิด และสรุปความรู้ของข้อนี้ให้ครบในตัว\n' +
+      '- เนื้อหาหลักต้องมาจากสรุปด้านล่าง ถ้าต้องใช้ความรู้นอกสรุปให้ใช้ความรู้มาตรฐานที่ถูกต้อง (guideline ล่าสุด) และบอกไว้ในคำอธิบาย ห้ามแต่งข้อมูล\n' +
+      '- ข้อความสรุปสกัดมาจาก PDF อาจมีสระ/วรรณยุกต์ไทยเพี้ยนหรือสัญลักษณ์หายบางจุด (เช่น ⊕ ⊖ ★ = ดอกจัน/ออกสอบ) ให้ตีความตามความหมายทางการแพทย์\n';
+    var head = 'คุณเป็นอาจารย์แพทย์ที่ออกข้อสอบ MCQ ให้นักศึกษาแพทย์ไทยชั้นปีที่ ' + C.currentYear + ' (เตรียม Compre และ NL) หัวข้อ "' + t.title + '" (' + t.th + ')\n';
+    if (forChat) {
+      var txt = '', used = [];
+      shuffle(pool).forEach(function (x) { var s = '## ' + x.pt + ' › ' + x.title + '\n' + x.text + '\n\n'; if (txt.length + s.length < 3800) { txt += s; used.push(x); } });
+      return head + 'ออกข้อสอบทีละข้อ สุ่มหัวข้อย่อยไปเรื่อย ๆ จากหัวข้อย่อยที่ฉันเลือก — แสดงทีละข้อ รอฉันตอบก่อนแล้วค่อยเฉลย แล้วออกข้อต่อไปทันที ต่อเนื่องจนกว่าฉันจะบอกให้หยุด ไม่ต้องสรุปคะแนนจนกว่าจะหยุด\n\n' + rules +
+        '\nหัวข้อย่อยที่เลือก (' + pool.length + '): ' + pool.map(function (x) { return x.title; }).join(' · ').slice(0, 1500) +
+        '\n\nตัวอย่างเนื้อหาจากสรุป (บางส่วน)\n<<<\n' + txt + '>>>';
+    }
+    var ctx = u.text;
+    if (ctx.length < 450) tUnitsCached(t, TD[t.id].data).forEach(function (x) { if (x.p === u.p && x.head === u.head && x.key !== u.key && ctx.length < 1400) ctx += '\n\n' + x.title + '\n' + x.text; });
+    return head + 'ออกข้อสอบ 1 ข้อ จากหัวข้อย่อยด้านล่าง\n\n' + rules +
+      (recent.length ? '- ห้ามซ้ำหรือคล้ายข้อที่ออกไปแล้ว:\n' + recent.map(function (s) { return '  · ' + s; }).join('\n') + '\n' : '') +
+      '\nตอบเป็น JSON อย่างเดียว ไม่มีข้อความอื่น รูปแบบ:\n{"stem":"...","options":["...","...","...","...","..."],"answer":"A","explanation":"...","tags":["หัวข้อย่อย 1–3 คำ"]}\n' +
+      '\nเนื้อหา (' + u.pt + ' › ' + u.title + ')\n<<<\n' + ctx + '\n>>>';
+  }
+  function callClaude(key, model, prompt, maxTok) {
+    return fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({ model: model, max_tokens: maxTok, messages: [{ role: 'user', content: prompt }] })
+    }).then(function (res) {
+      return res.json().then(function (j) { if (!res.ok) throw new Error((j.error && j.error.message) || ('HTTP ' + res.status)); return j; });
+    }).then(function (j) { return (j.content || []).filter(function (c) { return c.type === 'text'; }).map(function (c) { return c.text; }).join(''); });
+  }
+  function aiPick(units, hist) {
+    var lastU = (hist || []).slice(-4).map(function (h) { return h.u; });
+    var pool = units.filter(function (u) { return lastU.indexOf(u.key) < 0 && u.text.length > 40; });
+    if (!pool.length) pool = units;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+  function aiFetch(t, d) {
+    var set = tset(t.id), units = aiScope(t, d, set), pr = tprog('topicq', t.id), hist = pr.h || [];
+    var u = aiPick(units, hist);
+    var recent = hist.slice(-10).map(function (h) { return h.s; });
+    if (AIQ.cur && AIQ.cur.stem) recent.push(AIQ.cur.stem.slice(0, 160));
+    var key = LS.get('apikey', ''), mdl = LS.get('model', C.ai.models[0].id);
+    return callClaude(key, mdl, aiPrompt(t, u, set, recent, false), 2500).then(function (txt) {
+      var q = extractJSON(txt);
+      if (!q.stem || !q.options || q.options.length < 2) throw new Error('AI ไม่ได้ส่งข้อสอบกลับมา');
+      return { stem: q.stem, options: q.options.slice(0, 5), answer: String(q.answer || '').trim().toUpperCase().charAt(0), explanation: q.explanation || '', tags: q.tags || [], u: u.key, ut: u.title, up: u.p, model: mdl };
+    });
+  }
+  function aiQHTML(t) {
+    var q = AIQ.cur, L = 'ABCDE';
+    if (AIQ.err && !q) return '<p class="warn">' + esc(AIQ.err) + '</p>';
+    if (!q) return '<div class="sheet q"><p class="muted"><span class="spin" aria-hidden="true"></span> AI กำลังออกข้อ ' + (AIQ.nq + 1) + '…</p></div>';
+    var done = q.pick != null, ai = L.indexOf(q.answer);
+    return '<article class="sheet q"><div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px"><span class="k" style="font-size:28px">' + (AIQ.nq + 1) + '</span>' +
+      '<span style="display:inline-flex;flex-wrap:wrap;gap:6px">' + [q.ut].concat(q.tags || []).slice(0, 3).map(function (x) { return '<span class="pill">' + esc(x) + '</span>'; }).join('') + '</span></div>' +
+      '<p lang="en">' + esc(q.stem) + '</p><div style="display:flex;flex-direction:column;gap:2px" lang="en">' +
+      q.options.map(function (op, j) {
+        var cls = done ? (j === ai ? ' ok' : j === q.pick ? ' bad' : '') : '';
+        return '<button class="choice' + cls + '" type="button" data-ap="' + j + '"' + (done ? ' disabled' : '') + '><b>' + L[j] + '</b><span>' + esc(String(op).replace(/^[A-E][.)]\s*/, '')) + '</span></button>';
+      }).join('') + '</div>' +
+      (done ? '<div class="explain"><p class="k" style="font-weight:500;color:' + (q.pick === ai ? 'var(--moss)' : 'var(--sienna-dk)') + '">' + (q.pick === ai ? 'ถูก' : 'ยังไม่ถูก') + ' · เฉลย ' + esc(L[ai] || q.answer) + '</p>' + rich(q.explanation) +
+        '<p style="margin-top:4px"><a class="chip" href="#/topics/' + t.id + '/sum/' + q.up + '?to=u' + q.u + '">ดูสรุปส่วนนี้ (หน้า ' + q.up + ')</a></p></div>' : '') +
+      '</article>' + (done ? '<div class="qnav"><span class="muted" id="aiNx" style="align-self:center;font-size:15px">' + (AIQ.next ? 'ข้อต่อไปพร้อมแล้ว' : '') + '</span><button class="btn" type="button" data-anext>ข้อต่อไป →</button></div>' : '');
+  }
+  function aiPaint(t) {
+    var el = document.getElementById('aiQ'); if (!el || AIQ.t !== t.id) return;
+    el.innerHTML = '<p class="note">ทำในรอบนี้ ' + (AIQ.nq + (AIQ.cur && AIQ.cur.pick != null ? 1 : 0)) + ' ข้อ · ถูก ' + AIQ.ok + '</p>' + aiQHTML(t) +
+      (AIQ.err && !AIQ.cur ? '<p style="margin-top:10px"><button class="btn ghost" type="button" data-anext>ลองอีกครั้ง</button></p>' : '');
+  }
+  function aiPrefetch(t, d) {
+    var mine = AIQ.run;
+    AIQ.next = null;
+    AIQ.nextP = aiFetch(t, d).then(function (q) { if (AIQ.run === mine) { AIQ.next = q; var el = document.getElementById('aiNx'); if (el) el.textContent = 'ข้อต่อไปพร้อมแล้ว'; } return q; });
+    AIQ.nextP.catch(function () { });
+  }
+  function aiShowNext(t, d) {
+    var mine = AIQ.run;
+    AIQ.err = ''; AIQ.cur = null; AIQ.busy = true; aiPaint(t);
+    var p = AIQ.next ? Promise.resolve(AIQ.next) : (AIQ.nextP || aiFetch(t, d));
+    AIQ.next = null; AIQ.nextP = null;
+    p.then(function (q) {
+      if (AIQ.run !== mine) return;
+      AIQ.cur = q; AIQ.busy = false; aiPaint(t);
+      var el = document.getElementById('aiQ'); if (el) el.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      aiPrefetch(t, d);
+    }).catch(function (err) { if (AIQ.run !== mine) return; AIQ.busy = false; AIQ.err = 'ออกข้อสอบไม่สำเร็จ: ' + (err.message || err); aiPaint(t); });
+  }
+  function aiPage(t, d, r, head, tabs) {
+    var set = tset(t.id), units = tUnitsCached(t, d);
+    if (r.q.get('p')) { var pn = +r.q.get('p'); set = Object.assign({}, set, { units: units.filter(function (u) { return u.p === pn; }).map(function (u) { return u.key; }) }); tsetSave(t.id, set); history.replaceState(null, '', '#/topics/' + t.id + '/practice?m=ai'); }
+    var sel = set.units && set.units.length ? set.units : units.filter(function (u) { return u.p < 18; }).map(function (u) { return u.key; });
+    var on = function (k) { return sel.indexOf(k) >= 0; };
+    var key = LS.get('apikey', ''), model = LS.get('model', C.ai.models[0].id), eng = set.eng || (key ? 'api' : 'claude'), lvl = set.level || 3;
+    var scope = d.groups.map(function (g) {
+      var gu = units.filter(function (u) { return g.pages.indexOf(u.p) >= 0; }), gn = gu.filter(function (u) { return on(u.key); }).length;
+      return '<details class="sg"><summary><label class="ck sgl"><input type="checkbox" data-sg="' + g.id + '"' + (gn === gu.length ? ' checked' : '') + (gn && gn < gu.length ? ' data-mixed' : '') + '><span class="k" style="font-weight:500">' + esc(g.t) + '</span></label><span class="muted" style="font-size:13px;margin-left:auto">' + gn + '/' + gu.length + '</span></summary>' +
+        g.pages.map(function (pn) {
+          var pu = gu.filter(function (u) { return u.p === pn; }), k = pu.filter(function (u) { return on(u.key); }).length;
+          return '<div class="sp"><label class="ck"><input type="checkbox" data-spg="' + pn + '"' + (k === pu.length ? ' checked' : '') + (k && k < pu.length ? ' data-mixed' : '') + '><span>หน้า ' + pn + ' · ' + esc(d.pages[pn - 1].t) + '</span></label>' +
+            '<div class="su">' + pu.map(function (u) { return '<label class="ck"><input type="checkbox" data-su="' + u.key + '"' + (on(u.key) ? ' checked' : '') + '><span>' + esc(u.title) + '</span></label>'; }).join('') + '</div></div>';
+        }).join('') + '</details>';
+    }).join('');
+    var levelHTML = LEVELS.map(function (l, i) {
+      return '<label class="lv"><input type="radio" name="tlv" value="' + (i + 1) + '"' + (lvl === i + 1 ? ' checked' : '') + '><span><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#355A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + l[2] + '</svg><b class="k" style="font-weight:500">' + (i + 1) + ' · ' + l[0] + '</b></span></label>';
+    }).join('');
+    var models = C.ai.models.map(function (m) { return '<option value="' + esc(m.id) + '"' + (m.id === model ? ' selected' : '') + '>' + esc(m.name) + '</option>'; }).join('');
+    var pr = tprog('topicq', t.id), running = AIQ.t === t.id && (AIQ.cur || AIQ.busy);
+    return {
+      title: 'ฝึก — ' + t.title, html: head + '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:20px">' + tabs +
+        '<p class="muted" style="max-width:780px">AI ออกโจทย์ case-based ทีละข้อต่อไปเรื่อย ๆ จากหัวข้อที่เลือก — เลือกทั้งหัวข้อ เป็นกลุ่ม เป็นหน้า หรือเฉพาะหัวข้อย่อยก็ได้ แต่ละข้อสุ่มหัวข้อย่อยใหม่' +
+        (pr.n ? ' · ที่ผ่านมาทำแล้ว ' + pr.n + ' ข้อ ถูก ' + (pr.ok || 0) : '') + '</p>' +
+        '<div class="aiwrap"><form id="aiset" class="sheet" style="padding:clamp(20px,3vw,32px)" onsubmit="return false">' +
+        '<div class="step"><span class="n">1</span><fieldset><legend class="h">หัวข้อที่จะออก <span class="muted" style="font-size:15px;font-weight:400" id="aiCnt">' + sel.length + ' / ' + units.length + ' หัวข้อย่อย</span></legend>' +
+        '<div class="filters" style="margin-bottom:10px"><button type="button" class="chip" data-sall="1">ทั้งหัวข้อ</button><button type="button" class="chip" data-sall="0">ไม่เลือกเลย</button></div><div class="scope">' + scope + '</div>' +
+        '<label class="h" for="aiFocus" style="font-size:16px;margin:14px 0 8px">เน้นเรื่อง (ไม่ใส่ก็ได้)</label><input class="field" id="aiFocus" maxlength="120" placeholder="เช่น CRAB, เลือกยาในคนท้อง, dose เด็ก" value="' + esc(set.focus || '') + '"></fieldset></div>' +
+        '<div class="step"><span class="n">2</span><fieldset><legend class="h">ระดับความยาก</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' + levelHTML + '</div></fieldset></div>' +
+        '<div class="step"><span class="n">3</span><fieldset><legend class="h">ใช้ AI ผ่าน</legend><div style="display:flex;flex-direction:column;gap:10px">' +
+        '<label class="eng"><input type="radio" name="teng" value="api"' + (eng === 'api' ? ' checked' : '') + '><span style="flex:1;min-width:0"><b class="k" style="font-weight:500;font-size:17px">Anthropic API key</b><br><span class="muted" style="font-size:15px">ทำในหน้านี้ทีละข้อ ข้อถัดไปเตรียมไว้ระหว่างอ่านเฉลย · key เก็บในเบราว์เซอร์นี้เท่านั้น (ใช้ร่วมกับห้องสอบ AI)</span>' +
+        '<input id="tkey" type="password" class="field" style="margin-top:10px" placeholder="sk-ant-…" autocomplete="off" aria-label="Anthropic API key" value="' + esc(key) + '">' +
+        '<select id="tmodel" class="field" style="margin-top:8px" aria-label="รุ่นของ Claude">' + models + '</select></span></label>' +
+        '<label class="eng"><input type="radio" name="teng" value="claude"' + (eng === 'claude' ? ' checked' : '') + '><span><b class="k" style="font-weight:500;font-size:17px">Claude</b><br><span class="muted" style="font-size:15px">เปิดแชทใหม่ใน claude.ai ด้วยบัญชีของคุณ — Claude ออกทีละข้อต่อเนื่องในแชท (ส่งเนื้อหาไปได้บางส่วนเพราะลิงก์ยาวจำกัด)</span></span></label></div></fieldset></div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--empty);padding-top:22px"><button class="btn" type="button" id="aiGo">' + (running ? 'เริ่มใหม่ด้วยค่านี้' : 'เริ่มฝึก') + '</button><span id="aiSt" class="note" role="status"></span></div></form>' +
+        '<div id="aiQ" class="aiq" aria-live="polite">' + (AIQ.t === t.id && (AIQ.cur || AIQ.busy || AIQ.err) ? '<p class="note">ทำในรอบนี้ ' + (AIQ.nq + (AIQ.cur && AIQ.cur.pick != null ? 1 : 0)) + ' ข้อ · ถูก ' + AIQ.ok + '</p>' + aiQHTML(t) : '<div class="empty"><p class="k" style="font-size:20px">ยังไม่ได้เริ่ม</p><p class="muted">เลือกหัวข้อแล้วกด “เริ่มฝึก” — โจทย์จะขึ้นตรงนี้ทีละข้อ</p></div>') + '</div></div></section>',
+      after: function () {
+        var form = document.getElementById('aiset'), st = document.getElementById('aiSt');
+        form.querySelectorAll('input[data-mixed]').forEach(function (x) { x.indeterminate = true; });
+        function readSel() { return Array.prototype.map.call(form.querySelectorAll('input[data-su]:checked'), function (x) { return x.getAttribute('data-su'); }); }
+        function saveSet() {
+          var lv = form.querySelector('input[name=tlv]:checked'), en = form.querySelector('input[name=teng]:checked');
+          var s2 = { units: readSel(), focus: document.getElementById('aiFocus').value.trim(), level: lv ? +lv.value : 3, eng: en ? en.value : 'api' };
+          tsetSave(t.id, s2); return s2;
+        }
+        function syncParents() {
+          form.querySelectorAll('[data-spg]').forEach(function (pg) {
+            var bx = pg.closest('.sp').querySelectorAll('input[data-su]'), k = Array.prototype.filter.call(bx, function (x) { return x.checked; }).length;
+            pg.checked = k === bx.length; pg.indeterminate = k > 0 && k < bx.length;
+          });
+          form.querySelectorAll('[data-sg]').forEach(function (gg) {
+            var bx = gg.closest('details').querySelectorAll('input[data-su]'), k = Array.prototype.filter.call(bx, function (x) { return x.checked; }).length;
+            gg.checked = k === bx.length; gg.indeterminate = k > 0 && k < bx.length;
+            gg.closest('summary').querySelector('.muted').textContent = k + '/' + bx.length;
+          });
+          document.getElementById('aiCnt').textContent = readSel().length + ' / ' + units.length + ' หัวข้อย่อย';
+        }
+        form.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-sall]'); if (!b) return;
+          form.querySelectorAll('input[data-su]').forEach(function (x) { x.checked = b.getAttribute('data-sall') === '1'; });
+          syncParents(); saveSet();
+        });
+        form.addEventListener('change', function (e) {
+          var x = e.target;
+          if (x.hasAttribute('data-sg')) x.closest('details').querySelectorAll('input[data-su]').forEach(function (y) { y.checked = x.checked; });
+          if (x.hasAttribute('data-spg')) x.closest('.sp').querySelectorAll('input[data-su]').forEach(function (y) { y.checked = x.checked; });
+          if (x.id === 'tmodel') LS.set('model', x.value);
+          syncParents(); saveSet();
+        });
+        document.getElementById('aiFocus').addEventListener('change', saveSet);
+        document.getElementById('tkey').addEventListener('input', function () { var a = form.querySelector('input[name=teng][value=api]'); if (a && !a.checked) { a.checked = true; saveSet(); } });
+        /* กดที่ checkbox ใน summary ไม่ให้พับ/กาง */
+        form.querySelectorAll('.sgl').forEach(function (l) { l.addEventListener('click', function (e) { e.stopPropagation(); }); });
+        var qbox = document.getElementById('aiQ');
+        document.getElementById('aiGo').addEventListener('click', function () {
+          var s2 = saveSet(), pool = aiScope(t, d, s2);
+          if (!s2.units.length) { st.textContent = 'เลือกอย่างน้อย 1 หัวข้อย่อย'; return; }
+          if (s2.eng === 'claude') {
+            var pmt = aiPrompt(t, null, s2, [], true, pool);
+            try { navigator.clipboard.writeText(pmt).catch(function () { }); } catch (er) { }
+            window.open('https://claude.ai/new?q=' + encodeURIComponent(pmt), '_blank', 'noopener');
+            st.textContent = 'เปิด Claude ในแท็บใหม่แล้ว · คัดลอกคำสั่งไว้ให้ด้วย ถ้าแชทไม่ขึ้นข้อความให้วางเอง'; return;
+          }
+          var k = document.getElementById('tkey').value.trim();
+          if (!k) { st.textContent = 'ใส่ API key ก่อน'; document.getElementById('tkey').focus(); return; }
+          LS.set('apikey', k); LS.set('model', document.getElementById('tmodel').value); st.textContent = '';
+          AIQ.t = t.id; AIQ.run = Date.now(); AIQ.nq = 0; AIQ.ok = 0; AIQ.next = null; AIQ.nextP = null; AIQ.cur = null;
+          aiShowNext(t, d);
+        });
+        qbox.addEventListener('click', function (e) {
+          var b = e.target.closest('button'); if (!b || b.disabled) return;
+          if (b.hasAttribute('data-ap') && AIQ.cur && AIQ.cur.pick == null) {
+            var q = AIQ.cur; q.pick = +b.getAttribute('data-ap');
+            var good = 'ABCDE'.charAt(q.pick) === q.answer; if (good) AIQ.ok++;
+            var pr2 = tprog('topicq', t.id); pr2.n = (pr2.n || 0) + 1; pr2.ok = (pr2.ok || 0) + (good ? 1 : 0);
+            pr2.h = (pr2.h || []).concat([{ s: q.stem.slice(0, 160), u: q.u, r: good ? 1 : 0 }]).slice(-40); tprogSave('topicq', t.id, pr2);
+            aiPaint(t);
+          } else if (b.hasAttribute('data-anext')) { AIQ.nq += AIQ.cur && AIQ.cur.pick != null ? 1 : 0; aiShowNext(t, d); }
+        });
+      }
+    };
+  }
+
   PAGES._404 = function () {
     return { title: 'ไม่พบหน้า', html: '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><h1 style="font-size:44px">ไม่พบหน้านี้</h1><a class="btn ghost" href="#/" style="align-self:flex-start">กลับหน้าแรก</a></div></section>' };
   };
@@ -1198,7 +1679,7 @@
     var box = function (inner) { return head + '<section class="wrap" style="padding-bottom:80px"><div class="sheet" style="max-width:560px;padding:clamp(22px,4vw,36px);display:flex;flex-direction:column;gap:16px">' + inner + '</div></section>'; };
     if (!fbOn()) return { title: 'บัญชี', html: box('<p>ยังไม่ได้ตั้งค่า Firebase — ข้อมูลบันทึกในเบราว์เซอร์นี้อย่างเดียว</p>') };
     if (!FB) return { title: 'บัญชี', html: box(fbFail ? '<p>เชื่อมต่อระบบบัญชีไม่ได้ ตรวจอินเทอร์เน็ตแล้วรีเฟรชหน้า ระหว่างนี้ใช้งานได้ตามปกติ (บันทึกในเครื่อง)</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเชื่อมต่อระบบบัญชี…</p>') };
-    var syncList = '<ul class="muted" style="font-size:15px"><li>หน้าที่อ่านค้าง</li><li>ข้อสอบ AI ชุดล่าสุดและคำตอบ</li><li>ค่าที่เลือกในห้องสอบ (ระดับ จำนวนข้อ วิธีใช้ AI รุ่น)</li><li>ตั้งค่าการสอบ NL &amp; Compre (วันสอบ รูปแบบ จำนวน เวลา)</li></ul><p class="note">API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์ที่ใส่ไว้เท่านั้น</p>';
+    var syncList = '<ul class="muted" style="font-size:15px"><li>หน้าที่อ่านค้าง</li><li>ข้อสอบ AI ชุดล่าสุดและคำตอบ</li><li>ค่าที่เลือกในห้องสอบ (ระดับ จำนวนข้อ วิธีใช้ AI รุ่น)</li><li>ตั้งค่าการสอบ NL &amp; Compre (วันสอบ รูปแบบ จำนวน เวลา)</li><li>Random Topic Summary: หัวข้อที่เลือกฝึก คะแนน และคำตอบข้อสอบในสรุป</li></ul><p class="note">API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์ที่ใส่ไว้เท่านั้น</p>';
     if (FB.user) {
       var st = syncState === 'error' ? '<p class="warn">ซิงก์ไม่สำเร็จ: ' + esc(authErr) + ' — ข้อมูลยังบันทึกในเครื่องนี้</p>'
         : syncState === 'saving' ? '<p class="info"><span class="spin" aria-hidden="true"></span> กำลังบันทึก…</p>' : '<p class="info">บันทึกในบัญชีแล้ว · เปิดจากเครื่องไหนก็ได้</p>';

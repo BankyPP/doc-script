@@ -12,6 +12,7 @@
 | `docs/data/preclinic.js` | สรุป preclinic แยกตาม system |
 | `docs/data/clinic.js` | สมุดวอร์ด + approach ตามอาการนำ |
 | `docs/data/nl.js` | ติว NL & Compre — สรุปเนื้อหา (กำกับที่มา จุฬาฯ / ศิริราช ทุกเรื่อง) |
+| `docs/data/topics.js` | Random Topic Summary — รายการหัวข้อ (ไฟล์ของแต่ละหัวข้ออยู่ใน `docs/topics/<id>/`) |
 | `docs/app.js`, `docs/app.css` | ตัวเว็บ |
 
 ## Google Sheet 1000 MAI
@@ -50,6 +51,13 @@ match /poymor_board/{id} {
   allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
 }
 ```
+
+## Random Topic Summary (`#/topics`)
+- สรุปแยกตามหัวข้อที่เลือกเอง · แต่ละหัวข้อมี **สรุป** (`#/topics/<id>/sum/<หน้า>`) และ **ฝึก** (`#/topics/<id>/practice?m=ai|test|flash`)
+- สรุป: ใช้ภาพแต่ละหน้าของไฟล์ต้นฉบับ (เนื้อหาไม่แก้) ตัดเป็นกล่องตามหัวข้อย่อย อ่านทีละกล่องหรือทั้งหน้า แตะเพื่อซูม ค้นในหัวข้อได้ · ดาวน์โหลด PDF ต้นฉบับได้
+- ฝึก: (1) AI ออกโจทย์ case-based ทีละข้อต่อเนื่อง เลือกขอบเขตได้ตั้งแต่ทั้งหัวข้อ → กลุ่ม → หน้า → หัวข้อย่อย + "เน้นเรื่อง" + ระดับความยาก · ผ่าน API key (ทำในหน้าเว็บ ข้อต่อไปเตรียมไว้ล่วงหน้า) หรือเปิดแชท Claude (2) ข้อสอบที่อยู่ในไฟล์สรุปเอง กดตอบได้ (3) Flashcard (ไฟล์ html ใน `docs/topics/<id>/`, ใส่ชื่อไฟล์ใน `flash[].file`)
+- ซิงก์เข้าบัญชี: `topicset` (ค่าที่เลือก), `topicq` (คะแนน AI), `topicst` (คำตอบข้อสอบในสรุป)
+- เพิ่มหัวข้อใหม่จาก PDF: สคริปต์ใน `tools/topic-from-pdf/` — `pdftoppm -r 170` → webp, `extract.py` (กล่อง/คอลัมน์ + ข้อความ, แก้สระไทยที่ฟอนต์ map ไม่ได้ใน `cidpatch.py`), `build_data.py` (ชื่อหน้า/กลุ่ม ต้องแก้ตามไฟล์), `selftest.py` (ถ้ามีข้อสอบในไฟล์)
 
 ## อัปเดตเว็บ
 - ทุกครั้งที่แก้ `app.js` / `app.css` / `data/*.js` ให้เพิ่มเลข `?v=` ใน `docs/index.html` ทุกบรรทัด เพื่อไม่ให้เบราว์เซอร์ใช้ไฟล์เก่าที่จำไว้
