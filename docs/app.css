@@ -514,3 +514,96 @@ body.lbopen,body.fopen{overflow:hidden}
 .sx .tbl tbody th{background:var(--moss-bg);color:var(--moss-dk);text-align:left;font-size:13.5px}
 .sx .tbl small{display:block;margin-top:4px}
 .sx small{font-size:13.5px;color:var(--muted)}
+
+/* ---------- Google Doc "โพยหมอ" (Preclinic / Clinic) ---------- */
+.greader{padding-top:28px;padding-bottom:80px}
+.gtree{flex:1 1 260px;max-width:320px;min-width:0;align-self:flex-start;position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto}
+.gtree>summary{display:flex;align-items:center;gap:10px;padding:0 12px 10px;cursor:pointer;list-style:none;flex-wrap:wrap}
+.gtree>summary::-webkit-details-marker{display:none}
+.gtree>summary .gtc{font-size:13px;margin-left:auto}
+.gtree>summary .gchev{margin-left:auto;transition:transform .2s;display:none}
+.gtree[open]>summary .gchev{transform:rotate(180deg)}
+.gtree .tree{max-width:none}
+.gtree .tree a.gti-a{padding-left:calc(12px + var(--d,0)*16px);gap:8px;line-height:1.35;min-height:38px}
+.gtree .tree a.gempty{color:var(--muted)}
+.gtree .tree a.on{color:var(--paper)}
+.gtree .gico{font-size:13px;opacity:.8}
+.gsrc{font-family:'Kanit',sans-serif;font-size:11px;font-weight:500;padding:1px 6px;border-radius:6px;background:var(--moss-bg);color:var(--moss-dk);margin-left:auto}
+.gtree .tree a.on .gsrc{background:#3A4A3C;color:#E7EDE2}
+.gtoc{display:flex;flex-direction:column;margin:2px 0 6px;padding-left:calc(24px + var(--d,0)*16px);border-left:2px solid var(--rule);margin-left:calc(14px + var(--d,0)*16px)}
+.gtoc a{min-height:32px!important;font-size:14px!important;padding:4px 10px!important;color:var(--ink-2)!important}
+.gtoc a.l2{padding-left:22px!important;font-size:13px!important;color:var(--muted)!important}
+.gdocart{gap:24px}
+.gdocart h2{font-size:clamp(28px,4vw,40px)}
+.gpn{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--empty);padding-top:18px}
+.gpn a{display:flex;flex-direction:column;text-decoration:none;min-height:44px;max-width:48%}
+.gsub{display:flex;flex-direction:column;gap:12px;border-top:1px dashed var(--rule);padding-top:20px}
+.gkids{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.gkid{display:flex;flex-direction:column;gap:4px;padding:14px 16px;text-decoration:none;color:var(--ink)}
+.gkid:hover{background:var(--sheet-hi);border-color:var(--rule-3)}
+.gsymp{display:flex;flex-direction:column;gap:6px;padding:20px 22px;text-decoration:none;color:var(--ink);border-left:6px solid var(--g)}
+.gsymp:hover{background:var(--sheet-hi)}
+
+/* เนื้อหาที่แปลงจาก Doc */
+.gdoc{display:flex;flex-direction:column;gap:10px;min-width:0;font-size:17px}
+.gdoc p,.gdoc li{white-space:pre-wrap;overflow-wrap:break-word}
+.gdoc .gh{scroll-margin-top:90px;margin-top:14px}
+.gdoc h3.gh{font-size:26px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.gdoc h4.gh{font-size:21px}
+.gdoc h5.gh{font-size:18px}
+.gdoc h6.gh{font-size:16px;font-family:'Kanit',sans-serif;font-weight:600;margin-bottom:0}
+.gdoc>.gh:first-child{margin-top:0}
+.gdoc .gti{font-family:'Kanit',sans-serif;font-weight:600;font-size:28px;line-height:1.2}
+.gdoc .gst{color:var(--muted);font-size:19px}
+.gdoc .ga-center{text-align:center}.gdoc .ga-right{text-align:right}
+.gdoc .gl{margin:0 0 0 calc(var(--l,0)*26px);padding-left:24px}
+.gdoc ul.gl{list-style-type:disc}
+.gdoc ul.gl[style*="--l:1"],.gdoc ul.gl[style*="--l:4"],.gdoc ul.gl[style*="--l:7"]{list-style-type:circle}
+.gdoc ul.gl[style*="--l:2"],.gdoc ul.gl[style*="--l:5"],.gdoc ul.gl[style*="--l:8"]{list-style-type:square}
+.gdoc ol.gl[data-t="lower-alpha"]{list-style-type:lower-alpha}
+.gdoc ol.gl[data-t="upper-alpha"]{list-style-type:upper-alpha}
+.gdoc ol.gl[data-t="lower-roman"]{list-style-type:lower-roman}
+.gdoc ol.gl[data-t="upper-roman"]{list-style-type:upper-roman}
+.gdoc .gl li{margin:3px 0}
+.gdoc .gl+.gl{margin-top:-6px}
+.gdoc hr{border:0;border-top:1px dashed var(--rule-3);margin:10px 0;width:100%}
+.gdoc img{height:auto;max-width:100%;border-radius:4px}
+.gdoc img.gbad{min-height:40px;border:1px dashed var(--rule-3)}
+.gdoc .gf{display:flex;flex-wrap:wrap;gap:12px}
+.gdoc .gc{border-radius:3px}
+.gtw{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.gt{border-collapse:collapse;font-size:15px;line-height:1.5;min-width:min(100%,520px)}
+.gt td{border:1px solid var(--rule-3);padding:6px 10px;vertical-align:top;background:var(--sheet-hi);min-width:110px}
+.gt td p,.gt td li{white-space:pre-wrap}
+.gt td .gl{margin-left:calc(var(--l,0)*18px);padding-left:18px}
+.gt td>*+*{margin-top:4px}
+
+/* ตารางจาก Google Sheets — คงสี เส้นขอบ และการรวมช่องตามต้นฉบับ */
+.gsheets{display:flex;flex-direction:column;gap:14px;min-width:0}
+.gstabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.gstabs .chip{white-space:nowrap;flex:none}
+.gsheet{min-width:0;border:1px solid var(--rule-2);border-radius:4px;background:#fff}
+.gsw{overflow:auto;max-height:78vh;-webkit-overflow-scrolling:touch}
+/* :where() = specificity ต่ำ ให้ CSS ของแต่ละชีต (.gs-xxx .sN: สีพื้น เส้นขอบ) ชนะเสมอ */
+:where(.gsheet) .waffle{table-layout:fixed;border-collapse:separate;border-spacing:0;width:0}
+:where(.gsheet .waffle) td{overflow:hidden;border:1px solid rgba(0,0,0,.12);border-width:0 1px 1px 0;vertical-align:bottom;padding:0 3px;background-color:#fff;font-size:14px;line-height:1.45;height:21px}
+.gsheet .waffle td,.gsheet .waffle td *{font-family:'Sarabun',sans-serif!important}
+:where(.gsheet .waffle) .softmerge{overflow:visible}
+:where(.gsheet) .softmerge-inner{white-space:nowrap;overflow:hidden;position:relative}
+:where(.gsheet) td.empty{font-size:0!important}
+.gsheet a{color:#1155cc}
+
+@media (max-width:899px){
+  .gtree{position:static;max-width:none;flex-basis:100%;max-height:none;border:1px solid var(--rule-2);border-radius:8px;padding:12px 6px 6px;background:var(--sheet)}
+  .gtree>summary{padding-bottom:6px}
+  .gtree>summary .gchev{display:inline-flex}
+  .gtree>summary .gtc{margin-left:0}
+  .gtree:not([open])>summary{padding-bottom:0}
+}
+@media (max-width:640px){
+  .greader{padding-top:16px}
+  .gdoc{font-size:16px}
+  .gdoc h3.gh{font-size:22px}
+  .gdoc .gl{margin-left:calc(var(--l,0)*16px);padding-left:20px}
+  .gpn a{max-width:100%}
+}

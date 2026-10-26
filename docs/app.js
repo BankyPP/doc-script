@@ -1,9 +1,9 @@
 /* โพยหมอ — single-page app (hash routes)
-   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach|/skills|/symp[/<บท>?to=]] · #/diseases?q=&ward=&sys=&type=&gen=&onset=&prog=&seen=&e= · #/disease/<id> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
+   #/ · #/preclinic[/<แท็บ>?to=] · #/clinic[/approach|/skills|/ward|/doc/<แท็บ>|/symp[/<บท>?to=]] · #/diseases?q=&ward=&sys=&type=&gen=&onset=&prog=&seen=&e= · #/disease/<id> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
 (function () {
   'use strict';
   var C = window.POY_CONFIG, SYS = window.POY_SYSTEMS, OTHER = window.POY_OTHER;
-  var PRE = window.POY_PRECLINIC, CLI = window.POY_CLINIC, NLD = window.POY_NL || { notes: [] };
+  var CLI = window.POY_CLINIC, NLD = window.POY_NL || { notes: [] };
   var app = document.getElementById('app');
 
   /* ---------- helpers ---------- */
@@ -465,6 +465,8 @@
     var page = PAGES[r.name] || PAGES._404;
     if (pageCleanup) { try { pageCleanup(); } catch (e) { } pageCleanup = null; }
     var here = r.name === 'disease' ? 'diseases' : r.name, sub = (r.name === 'nl' || r.name === 'topics' || (r.name === 'clinic' && (r.args[0] === 'symp' || r.args[0] === 'skills'))) && r.args[0] ? r.name + '/' + r.args[0] : '';
+    if (r.name === 'clinic' && (r.args[0] === 'ward' || r.args[0] === 'doc')) { var gn = r.args[0] === 'doc' && G.by[r.args[1]]; sub = 'clinic/' + (gn && gn.ck && gn.ck !== 'ward' ? gn.ck : 'ward'); }
+    if (r.name === 'preclinic' && r.args[0] && G.by[r.args[0]]) sub = 'preclinic/' + (G.by[r.args[0]].topN || G.by[r.args[0]]).slug;
     document.querySelectorAll('#drawer [data-r]').forEach(function (a) {
       var k = a.getAttribute('data-r');
       var on = k === here || (k === sub && sub !== '');
@@ -570,7 +572,7 @@
     var n = D.src === 'sample' ? 0 : D.list.length;
     var pct = Math.min(100, n / 10);
     var plots = [
-      ['#/preclinic', '#3E7CA6', '01 · ราก', 'Preclinic แยกตาม system', 'สรุปปี 1–3 จัดตาม 12 ระบบ อ่านต่อกันได้ตั้งแต่ anatomy ไปจนถึง pharmacology', '<span class="muted">ดึงจาก Google Docs</span>'],
+      ['#/preclinic', '#3E7CA6', '01 · ราก', 'Preclinic แยกตาม system', 'สรุปปี 1–3 จาก Google Doc โพยหมอ แยกตามแท็บเดิมทุกแท็บ' + (G.st === 'ready' ? ' — ' + G.top.pre.length + ' หมวด' : ''), G.st === 'ready' ? gLiveHTML() : '<span class="muted">ดึงจาก Google Docs</span>'],
       ['#/clinic', '#5C7F3A', '02 · ลำต้น', 'Clinic', 'สมุดวอร์ดของแต่ละ rotation และ approach ตามอาการนำ ที่กดต่อไปหาโรคได้ทันที', '<span class="muted">เขียนในเว็บ + คลังข้อสอบเก่า</span>'],
       ['#/diseases', '#9B4F2E', '04 · พรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
         '<span class="live' + (D.src === 'sample' ? ' off' : '') + '"><i></i>' + (D.src === 'sample' ? 'ยังไม่ได้เชื่อม Google Sheet' : 'ซิงก์จาก Google Sheet') + '</span>',
@@ -854,46 +856,272 @@
   };
 
   /* =========================================================
+     GOOGLE DOC "โพยหมอ" → Preclinic + Clinic
+     ข้อมูลตั้งค่า: data/gdoc.js · ตัวแปลง HTML: gdoc.js · ฉบับเก็บ: gdoc/*.json
+     โหลดฉบับเก็บก่อน (เร็ว) แล้วดึง Doc สดจาก Google มาแทนเมื่อสำเร็จ
+     ========================================================= */
+  var GD = window.POY_GDOC || null, GLIB = window.POY_GDOC_LIB;
+  var G = { st: 'idle', err: '', live: 'off', liveAt: 0, snapAt: '', main: null, ex: {}, nodes: [], by: {}, byHead: {}, top: { pre: [], clinic: [] } };
+  function gslug(s) { return String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9ก-๙]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) || 'x'; }
+  function gSpec() {
+    var m = {};
+    ((GD && GD.tree) || []).forEach(function (l, i) { var t = l.replace(/^\s+/, ''); m[t] = { d: Math.floor((l.length - t.length) / 2), i: i }; });
+    return m;
+  }
+  function gFetchJSON(u) { return fetch(u + (u.indexOf('?') < 0 ? '?' : '&') + 'v=' + (window.POY_GDOC_V || 1)).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
+  function gBuild() {
+    var spec = gSpec(), hide = (GD.main.hide || []), nodes = [], by = {}, byHead = {}, used = {};
+    function uniq(s) { var k = s, n = 2; while (used[k]) k = s + '-' + (n++); used[k] = 1; return k; }
+    function add(n) { n.slug = uniq(n.slug); nodes.push(n); by[n.slug] = n; (n.heads || []).forEach(function (h) { byHead[h.id] = n; }); return n; }
+    var tops = [], stack = [], prevDepth = 0;
+    ((G.main && G.main.tabs) || []).forEach(function (t) {
+      if (hide.indexOf(t.title) >= 0) return;
+      var sp = spec[t.title], d = sp ? sp.d : prevDepth;
+      d = Math.min(d, stack.length);
+      var n = add({ title: t.title || '(แท็บไม่มีชื่อ)', html: t.html, heads: t.heads || [], kids: [], depth: d, kind: 'doc', src: 'main', slug: gslug(t.title) });
+      stack.length = d;
+      if (d === 0) tops.push(n); else { n.parent = stack[d - 1]; n.parent.kids.push(n); }
+      stack.push(n); prevDepth = d;
+    });
+    function findTitle(title, pref) {
+      var hit = null;
+      if (pref) nodes.forEach(function (n) { if (!hit && n.src === pref && n.title === title) hit = n; });
+      nodes.forEach(function (n) { if (!hit && n.src === 'main' && n.title === title) hit = n; });
+      return hit;
+    }
+    (GD.extras || []).forEach(function (e) {
+      var data = G.ex[e.snap], key = e.snap.replace(/^.*\/|\.json$/g, '');
+      if (e.kind === 'sheet') {
+        var parent = findTitle(e.under);
+        if (!parent) return;
+        var g = add({ title: e.title, html: '', heads: [], kids: [], kind: 'sheets', src: key, from: e.from, at: data ? data.at : '', pending: !data, snap: e.snap, slug: key });
+        g.parent = parent; parent.kids.push(g);
+        if (data) data.sheets.forEach(function (s) {
+          var c = add({ title: s.title, html: s.html, css: s.css, scope: s.scope, heads: [], kids: [], kind: 'sheet', src: key, from: e.from, at: data.at, slug: key + '-' + gslug(s.title) });
+          c.parent = g; g.kids.push(c);
+        });
+      } else if (data) {
+        (e.tabs || []).forEach(function (m) {
+          var t = data.tabs.filter(function (x) { return x.title === m.tab; })[0];
+          var parent = findTitle(m.under, key);
+          if (!t || !parent) return;
+          var n = add({ title: t.title, html: t.html, heads: t.heads || [], kids: [], kind: 'doc', src: key, from: e.from, at: data.at, slug: key + '-' + gslug(t.title) });
+          n.parent = parent; parent.kids.push(n);
+        });
+      }
+    });
+    function fill(n, area, ck, top, d) { n.area = area; n.ck = ck; n.topN = top; n.depth = d; n.kids.forEach(function (k) { fill(k, area, ck, top, d + 1); }); }
+    var T = { pre: [], clinic: [] };
+    tops.forEach(function (n) { var ck = (GD.clinic || {})[n.title] || ''; fill(n, ck ? 'clinic' : 'pre', ck, n, 0); T[ck ? 'clinic' : 'pre'].push(n); });
+    G.nodes = nodes; G.by = by; G.byHead = byHead; G.top = T;
+    gPaintDrawer();
+  }
+  function gLook(n) { var t = n.topN || n, l = (GD.look || {})[t.title]; return l ? { c: l[0], pig: l[1], th: l[2] } : { c: '#5A6258', pig: '', th: '' }; }
+  function gHref(n, to) { return (n.area === 'clinic' ? '#/clinic/doc/' : '#/preclinic/') + encodeURIComponent(n.slug) + (to ? '?to=' + encodeURIComponent(to) : ''); }
+  function gFull(n) { return !!(n.html && n.html.replace(/<[^>]+>/g, '').trim()) || (n.kind === 'sheet' && n.html); }
+  function gCount(n) { var a = 0, b = 0; (function w(x) { b++; if (gFull(x)) a++; x.kids.forEach(w); })(n); return [a, b]; }
+  function gFlat(n) { var o = []; (function w(x) { o.push(x); x.kids.forEach(w); })(n); return o; }
+  function gPath(n) { var p = []; while (n) { p.unshift(n); n = n.parent; } return p; }
+  function gRefresh(liveOnly) {
+    var r = route();
+    if (r.name === 'preclinic' || r.name === 'clinic' || r.name === '' || (!liveOnly && r.name === 'exam')) render(true);
+  }
+  function gLoad() {
+    if (!GD || G.st !== 'idle') return;
+    G.st = 'loading';
+    var docExtras = (GD.extras || []).filter(function (e) { return e.kind !== 'sheet'; });
+    Promise.all([gFetchJSON(GD.main.snap)].concat(docExtras.map(function (e) { return gFetchJSON(e.snap).then(function (j) { G.ex[e.snap] = j; }, function (x) { console.warn('gdoc extra', e.snap, x); }); })))
+      .then(function (res) { G.main = res[0]; G.snapAt = res[0].at || ''; G.st = 'ready'; gBuild(); })
+      .catch(function (e) { G.st = 'err'; G.err = e.message || String(e); })
+      .then(function () { gRefresh(false); gLive(); });
+  }
+  /* ดึง Doc สด — export HTML ของ Google (Doc ต้องแชร์ Anyone with the link) */
+  function gLive() {
+    if (!GD || !GD.main.live || !GD.main.id || !GLIB || G.live === 'loading') return;
+    G.live = 'loading';
+    fetch('https://docs.google.com/document/d/' + GD.main.id + '/export?format=html&t=' + Date.now(), { cache: 'no-store', credentials: 'omit' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function (h) {
+        var o = GLIB.parse(h, {});
+        if (!o.tabs.length || !o.tabs.some(function (t) { return t.title; })) throw new Error('ไม่พบแท็บใน Doc (อาจยังไม่ได้แชร์ Anyone with the link)');
+        G.main = { tabs: o.tabs, at: '' }; G.live = 'ok'; G.liveAt = Date.now(); G.liveErr = '';
+        if (G.st !== 'ready') G.st = 'ready';
+        gBuild(); gRefresh(true);
+      })
+      .catch(function (e) { console.warn('gdoc live', e); G.live = 'fail'; G.liveErr = e.message || String(e); G.liveAt = Date.now(); gPaintLive(); });
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && G.st === 'ready' && G.live !== 'loading' && Date.now() - G.liveAt > 10 * 60 * 1000) gLive();
+  });
+  /* ชีตโหลดเมื่อจำเป็น (ไฟล์ใหญ่) */
+  function gNeedSheets(nodes) {
+    var need = [];
+    nodes.forEach(function (n) { if (n.kind === 'sheets' && n.pending && !n.loading) need.push(n); });
+    need.forEach(function (n) {
+      n.loading = true;
+      gFetchJSON(n.snap).then(function (j) { G.ex[n.snap] = j; gBuild(); gRefresh(true); }, function (e) { n.loading = false; n.err = e.message || String(e); gRefresh(true); });
+    });
+  }
+  /* ลิงก์ตรงไปชีตที่ยังไม่ได้โหลด → โหลดตารางทั้งหมดที่ค้างก่อน */
+  function gPendingSheets() {
+    var p = G.nodes.filter(function (n) { return n.kind === 'sheets' && n.pending && !n.err; });
+    gNeedSheets(p);
+    return p.length > 0;
+  }
+  function gLiveHTML() {
+    if (!GD || !GD.main.live) return '<span class="live off" data-glive><i></i>ฉบับวันที่ ' + esc(G.snapAt) + '</span>';
+    if (G.live === 'ok') return '<span class="live" data-glive><i></i>ดึงสดจาก Google Doc · ' + esc(fmtTime(new Date(G.liveAt))) + '</span>';
+    if (G.live === 'fail') return '<span class="live err" data-glive title="' + esc(G.liveErr || '') + '"><i></i>ดึง Doc สดไม่ได้ · ใช้ฉบับวันที่ ' + esc(G.snapAt) + '</span>';
+    return '<span class="live off" data-glive><i></i>กำลังดึง Doc สด… (ระหว่างนี้ใช้ฉบับวันที่ ' + esc(G.snapAt) + ')</span>';
+  }
+  function gPaintLive() { document.querySelectorAll('[data-glive]').forEach(function (el) { el.outerHTML = gLiveHTML(); }); }
+  function gSrcLine(n) {
+    if (n.src === 'main') return gLiveHTML();
+    return '<span class="muted" style="font-size:14px">จาก ' + esc(n.from || '') + ' · ดึงไว้เมื่อ ' + esc(n.at || '') + ' (ไม่อัปเดตเอง)</span>';
+  }
+  function gPaintDrawer() {
+    var box = document.getElementById('dsub-preclinic');
+    if (!box) return;
+    box.innerHTML = G.top.pre.map(function (n) { return '<a href="' + gHref(n) + '" data-r="preclinic/' + esc(n.slug) + '">' + esc(n.title) + '</a>'; }).join('');
+  }
+  function gText(n) {
+    if (n._t != null) return n._t;
+    var h = String(n.html || '').replace(/<\/(p|h\d|li|tr|figure)>/g, '$&\n').replace(/<br>/g, '\n').replace(/<\/td>/g, ' | ');
+    var div = document.createElement('div'); div.innerHTML = h.replace(/<style[\s\S]*?<\/style>/g, '');
+    n._t = div.textContent.replace(/[ \t ]+/g, ' ').replace(/ ?\| ?\n/g, '\n').replace(/\n\s*\n+/g, '\n').trim();
+    return n._t;
+  }
+  function gWaiting(area) {
+    var msg = G.st === 'err' ? '<p class="warn">โหลดสรุปจาก Google Doc ไม่สำเร็จ: ' + esc(G.err) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดสรุปจาก Google Doc…</p>';
+    return '<section class="wrap" style="padding:24px 32px 80px"><div class="empty" style="text-align:left">' + msg + '</div></section>';
+  }
+  /* ---------- หน้าของแต่ละแท็บ ---------- */
+  function gTreeNav(top, cur) {
+    var path = gPath(cur);
+    function item(n) {
+      var on = n === cur, open = path.indexOf(n) >= 0;
+      var s = '<a href="' + gHref(n) + '" class="gti-a' + (on ? ' on' : '') + (gFull(n) || n.kind === 'sheets' ? '' : ' gempty') + '" style="--d:' + (n.depth - top.depth) + '"' + (on ? ' aria-current="page"' : '') + '>' +
+        (n.kind === 'sheets' ? '<span class="gico" aria-hidden="true">▦</span>' : n.kind === 'sheet' ? '<span class="gico" aria-hidden="true">▤</span>' : '') + '<span>' + esc(n.title) + '</span>' + (n.src !== 'main' && n.kind === 'doc' ? '<span class="gsrc">DocQ</span>' : '') + '</a>';
+      if (on && n.heads && n.heads.length) {
+        var hs = n.heads.filter(function (h) { return h.l <= 2 && h.t; }).slice(0, 80);
+        if (hs.length) s += '<div class="gtoc" style="--d:' + (n.depth - top.depth) + '">' + hs.map(function (h) { return '<a href="' + gHref(n, h.id) + '" class="l' + h.l + '">' + esc(h.t) + '</a>'; }).join('') + '</div>';
+      }
+      if (n.kids.length && (open || n.depth - top.depth < 1 || n.kind !== 'sheets')) s += n.kids.map(item).join('');
+      return s;
+    }
+    var lk = gLook(top);
+    return '<details class="gtree" open><summary><span class="sw" style="background:' + lk.c + ';width:18px;height:18px"></span><span class="k" style="font-size:19px">' + esc(top.title) + '</span>' + (top.kids.length ? '<span class="muted gtc">' + top.kids.length + ' หัวข้อย่อย</span>' : '') + '<span class="gchev" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></svg></span><span class="sr">สารบัญ</span></summary>' +
+      '<nav class="tree" aria-label="แท็บใน ' + esc(top.title) + '">' + item(top) + '</nav></details>';
+  }
+  function gKidCards(n) {
+    if (!n.kids.length) return '';
+    return '<div class="gkids">' + n.kids.map(function (k) {
+      var c = gCount(k);
+      return '<a class="sheet gkid" href="' + gHref(k) + '"><span class="k" style="font-size:17px;font-weight:500">' + (k.kind === 'sheets' ? '▦ ' : k.kind === 'sheet' ? '▤ ' : '') + esc(k.title) + '</span>' +
+        '<span class="muted" style="font-size:13px">' + (k.kind === 'sheets' ? (k.kids.length ? k.kids.length + ' ชีต' : 'ตาราง') : k.kind === 'sheet' ? 'ชีต' : (gFull(k) ? 'มีเนื้อหา' : 'ยังว่าง') + (c[1] > 1 ? ' · ' + (c[1] - 1) + ' แท็บย่อย' : '')) + (k.src !== 'main' && k.kind === 'doc' ? ' · DocQ' : '') + '</span></a>';
+    }).join('') + '</div>';
+  }
+  function gSheetBody(n) {
+    var sibs = n.parent ? n.parent.kids : [n];
+    return '<div class="gsheets"><nav class="gstabs" aria-label="ชีต">' + sibs.map(function (s) { return '<a class="chip' + (s === n ? ' on" aria-current="page' : '') + '" href="' + gHref(s) + '">' + esc(s.title) + '</a>'; }).join('') + '</nav>' +
+      (n.html ? '<style>' + n.css + '</style><div class="gsheet ' + esc(n.scope) + '"><div class="gsw">' + n.html + '</div></div>' : '<div class="empty"><p class="muted">ชีตนี้ว่าง</p></div>') + '</div>';
+  }
+  function gNodePage(n, r) {
+    var top = n.topN || n, lk = gLook(top), path = gPath(n);
+    gNeedSheets(gFlat(top));
+    remember({ href: gHref(n), title: n.title, crumb: (n.area === 'clinic' ? 'Clinic › ' : 'Preclinic › ') + path.slice(0, -1).map(function (x) { return x.title; }).join(' › '), c: lk.c });
+    var flat = gFlat(top).filter(function (x) { return x.kind !== 'sheets' || true; }), i = flat.indexOf(n), prev = flat[i - 1], next = flat[i + 1];
+    var crumb = path.map(function (x, k) { return k === path.length - 1 ? '<span>' + esc(x.title) + '</span>' : '<a href="' + gHref(x) + '">' + esc(x.title) + '</a>'; }).join('<span class="muted"> › </span>');
+    var body;
+    if (n.kind === 'sheet') body = gSheetBody(n);
+    else if (n.kind === 'sheets') body = n.pending ? (n.err ? '<p class="warn">โหลดตารางไม่สำเร็จ: ' + esc(n.err) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดตาราง…</p>') :
+      '<p class="muted">แยกตามชีตเหมือนในไฟล์เดิม — เลือกชีตด้านล่าง</p>' + gKidCards(n);
+    else body = (gFull(n) ? '<div class="gdoc">' + n.html + '</div>' : '<div class="empty" style="text-align:left"><p class="muted">แท็บนี้ยังไม่มีเนื้อหาใน Doc' + (n.kids.length ? ' — มีแท็บย่อยด้านล่าง' : '') + '</p></div>') +
+      (n.kids.length ? '<div class="gsub"><span class="label">แท็บย่อยใน ' + esc(n.title) + '</span>' + gKidCards(n) + '</div>' : '');
+    var tools = (gFull(n) ? '<a class="chip" href="#/exam?src=' + encodeURIComponent('g:' + n.slug) + '">สร้างข้อสอบจากหน้านี้</a>' : '') +
+      (n.src === 'main' ? '<a class="chip" href="https://docs.google.com/document/d/' + esc(GD.main.id) + '/edit" target="_blank" rel="noopener">เปิด Doc ต้นฉบับ ↗</a>' : '');
+    var art = '<article class="sheet doc gdocart"><div style="display:flex;flex-direction:column;gap:10px"><nav class="muted" aria-label="ตำแหน่ง" style="font-size:14px">' + (n.area === 'clinic' ? '<a href="#/clinic">Clinic</a>' : '<a href="#/preclinic">Preclinic</a>') + '<span class="muted"> › </span>' + crumb + '</nav>' +
+      '<h2 style="overflow-wrap:anywhere">' + esc(n.title) + '</h2>' + gSrcLine(n) + (tools ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + tools + '</div>' : '') + '</div>' + body +
+      '<nav aria-label="หน้าก่อนหน้าและถัดไป" class="gpn">' +
+      (prev ? '<a href="' + gHref(prev) + '"><span class="muted" style="font-size:13px">← ก่อนหน้า</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.title) + '</span></a>' : '<span></span>') +
+      (next ? '<a href="' + gHref(next) + '" style="align-items:flex-end;text-align:right"><span class="muted" style="font-size:13px">ถัดไป →</span><span class="k" style="font-size:17px;font-weight:500">' + esc(next.title) + '</span></a>' : '') + '</nav></article>';
+    return {
+      title: n.title,
+      html: '<div class="wrap reader greader">' + gTreeNav(top, n) + art + '</div>',
+      after: gAfter
+    };
+  }
+  function gAfter() {
+    var t = document.querySelector('.gtree');
+    if (t && window.matchMedia('(max-width: 899px)').matches) t.open = false;
+    document.querySelectorAll('.gdoc [data-anchor]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var id = a.getAttribute('data-anchor'), el = document.getElementById(id);
+        if (el) { el.scrollIntoView(); return; }
+        var n = G.byHead[id]; if (n) location.hash = gHref(n, id);
+      });
+    });
+    document.querySelectorAll('.gdoc img').forEach(function (im) { im.addEventListener('error', function () { im.alt = 'โหลดรูปไม่ได้'; im.classList.add('gbad'); }); });
+  }
+  /* ---------- ค้นในสรุป ---------- */
+  function gSearchHTML(q, area) {
+    var ql = q.toLowerCase(), hits = [];
+    G.nodes.forEach(function (n) {
+      if (area && n.area !== area) return;
+      var t = gText(n), i = t.toLowerCase().indexOf(ql), ti = n.title.toLowerCase().indexOf(ql) >= 0;
+      if (i < 0 && !ti) return;
+      var snip = '';
+      if (i >= 0) { var a = Math.max(0, i - 50); snip = (a ? '…' : '') + esc(t.slice(a, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length, i + q.length + 70)) + '…'; }
+      hits.push('<a href="' + gHref(n) + '"><span class="pn"><span class="sw" style="background:' + gLook(n).c + '"></span></span><span><b>' + esc(gPath(n).map(function (x) { return x.title; }).join(' › ')) + '</b>' + (snip ? '<small>' + snip.replace(/\n/g, ' ') + '</small>' : '') + '</span></a>');
+    });
+    return '<span class="label">พบ ' + hits.length + ' หน้า' + (hits.length > 80 ? ' · แสดง 80 แรก' : '') + '</span>' + hits.slice(0, 80).join('');
+  }
+  function gSearchBar(area, ph) {
+    return '<div class="sxbar"><form class="search sxsearch" id="gsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
+      '<label class="sr" for="gq3">ค้นในสรุป</label><input id="gq3" type="search" placeholder="' + esc(ph) + '" data-area="' + area + '"></form>' + gLiveHTML() + '</div><div id="gres" class="sxres" hidden></div>';
+  }
+  function gSearchAfter() {
+    var inp = document.getElementById('gq3'), res = document.getElementById('gres'), t = null;
+    if (!inp) return;
+    function run() {
+      var v = inp.value.trim();
+      if (v.length < 2) { res.hidden = true; res.innerHTML = ''; return; }
+      res.hidden = false; res.innerHTML = gSearchHTML(v, inp.getAttribute('data-area'));
+    }
+    inp.addEventListener('input', function () { clearTimeout(t); t = setTimeout(run, 220); });
+    document.getElementById('gsf').addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(t); run(); });
+  }
+  function gTopCard(n) {
+    var lk = gLook(n), c = gCount(n);
+    return '<a class="sheet sys" href="' + gHref(n) + '">' +
+      '<svg width="100%" height="30" viewBox="0 0 240 34" preserveAspectRatio="none" aria-hidden="true"><path d="M3 18 C30 6 90 4 160 9 C200 12 228 14 237 19 C214 28 150 31 86 29 C44 28 12 25 3 18Z" fill="' + lk.c + '" opacity=".88"/></svg>' +
+      '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><h3 style="font-size:20px;overflow-wrap:anywhere">' + esc(n.title) + '</h3>' + (lk.pig ? '<span class="muted" style="font-size:12px;font-style:italic;white-space:nowrap">' + esc(lk.pig) + '</span>' : '') + '</div>' +
+      (lk.th ? '<span class="muted" style="font-size:15px">' + esc(lk.th) + '</span>' : '') +
+      '<span style="font-size:14px;margin-top:auto;border-top:1px dashed var(--rule);padding-top:10px">' + (n.kids.length ? esc(n.kids.slice(0, 4).map(function (k) { return k.title; }).join(' · ')) + (n.kids.length > 4 ? ' …' : '') : 'แท็บเดียว') + '</span>' +
+      '<span class="muted" style="font-size:13px">' + c[0] + ' / ' + c[1] + ' หน้ามีเนื้อหา</span></a>';
+  }
+
+  /* =========================================================
      PRECLINIC
      ========================================================= */
   PAGES.preclinic = function (r) {
-    var sysId = r.args[0] || 'cvs', docId = r.args[1];
-    var sys = PRE.filter(function (s) { return s.id === sysId; })[0] || PRE[1];
-    var docs = []; sys.groups.forEach(function (g) { g.docs.forEach(function (d) { docs.push(d); }); });
-    var doc = docs.filter(function (d) { return d.id === docId; })[0] || docs.filter(function (d) { return d.html; })[0] || docs[0];
-    var cards = PRE.map(function (s) {
-      var n = 0, m = 0; s.groups.forEach(function (g) { g.docs.forEach(function (d) { m++; if (d.html) n++; }); });
-      return '<a class="sheet sys' + (s === sys ? ' on' : '') + '" href="#/preclinic/' + s.id + '">' +
-        '<svg width="100%" height="30" viewBox="0 0 240 34" preserveAspectRatio="none" aria-hidden="true"><path d="M3 18 C30 6 90 4 160 9 C200 12 228 14 237 19 C214 28 150 31 86 29 C44 28 12 25 3 18Z" fill="' + s.c + '" opacity=".88"/></svg>' +
-        '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><h3 style="font-size:20px">' + esc(s.name) + '</h3><span class="muted" style="font-size:12px;font-style:italic;white-space:nowrap">' + esc(s.pig) + '</span></div>' +
-        '<span class="muted" style="font-size:15px">' + esc(s.th) + '</span><span style="font-size:14px;margin-top:auto;border-top:1px dashed var(--rule);padding-top:10px">' + esc(s.subj) + '</span>' +
-        '<span class="muted" style="font-size:13px">' + (m ? n + ' / ' + m + ' เอกสารมีเนื้อหา' : 'ยังไม่มีเอกสาร') + '</span></a>';
-    }).join('');
-    var reader;
-    if (!docs.length) reader = '<div class="empty" style="flex:1"><p class="k" style="font-size:22px">' + esc(sys.name) + ' ยังไม่มีเอกสาร</p><p class="muted">ส่งลิงก์หรือไฟล์ Google Docs ของระบบนี้มา แล้ว Claude จะแปลงเป็นหน้าเว็บให้</p></div>';
-    else {
-      if (doc) remember({ href: '#/preclinic/' + sys.id + '/' + doc.id, title: doc.title, crumb: 'Preclinic › ' + sys.name, c: sys.c });
-      var idx = docs.indexOf(doc), prev = docs[idx - 1], next = docs[idx + 1];
-      reader = '<nav class="tree" aria-label="เอกสารใน ' + esc(sys.name) + '"><div style="display:flex;align-items:center;gap:10px;padding:0 12px 10px"><span class="sw" style="background:' + sys.c + ';width:18px;height:18px"></span><span class="k" style="font-size:20px">' + esc(sys.name) + '</span></div>' +
-        sys.groups.map(function (g) {
-          return '<div class="grp">' + esc(g.name) + '</div>' + g.docs.map(function (d) { return '<a href="#/preclinic/' + sys.id + '/' + d.id + '"' + (d === doc ? ' class="on" aria-current="page"' : '') + '>' + esc(d.title) + (d.html ? '' : ' <span style="opacity:.6;margin-left:6px;font-size:12px">· ว่าง</span>') + '</a>'; }).join('');
-        }).join('') + '</nav>' +
-        '<article class="sheet doc"><div style="display:flex;flex-direction:column;gap:10px"><span class="muted" style="font-size:14px">Preclinic › ' + esc(sys.name) + '</span><h2>' + esc(doc.title) + '</h2>' +
-        '<span class="muted" style="font-size:14px">' + (doc.html ? esc(doc.source || 'จาก Google Docs') : 'ยังไม่ได้ดึงเนื้อหาจาก Google Docs') + '</span></div>' +
-        (doc.html || '<div class="empty"><p class="muted">เอกสารนี้ยังว่าง — ส่ง Google Docs ของหัวข้อนี้มาให้ Claude ได้เลย</p></div>') +
-        (doc.related && doc.related.length ? '<div style="border-top:1px dashed var(--rule);padding-top:18px;display:flex;flex-direction:column;gap:10px"><span class="label">ต่อไปยังคลินิก</span><div style="display:flex;flex-wrap:wrap;gap:8px">' +
-          doc.related.map(function (n) { return '<a class="pill" href="' + dLink(n) + '"><span class="sw" style="background:' + sys.c + '"></span>' + esc(n) + '</a>'; }).join('') + '</div></div>' : '') +
-        '<nav aria-label="เอกสารก่อนหน้าและถัดไป" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--empty);padding-top:18px">' +
-        (prev ? '<a href="#/preclinic/' + sys.id + '/' + prev.id + '" style="display:flex;flex-direction:column;text-decoration:none;min-height:44px"><span class="muted" style="font-size:13px">← ก่อนหน้า</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.title) + '</span></a>' : '<span></span>') +
-        (next ? '<a href="#/preclinic/' + sys.id + '/' + next.id + '" style="display:flex;flex-direction:column;align-items:flex-end;text-decoration:none;min-height:44px"><span class="muted" style="font-size:13px">ถัดไป →</span><span class="k" style="font-size:17px;font-weight:500">' + esc(next.title) + '</span></a>' : '') +
-        '</nav></article>';
+    gLoad();
+    var head = '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">01 · ราก · ปี 1–3</span><h1>Preclinic</h1>' +
+      '<p class="lede">สรุปจาก Google Doc <b>' + esc(GD ? GD.main.name : '') + '</b> — แยกตามแท็บเดิมของ Doc ทุกแท็บ แก้ใน Doc แล้วหน้านี้เปลี่ยนตามเอง</p></div></section>';
+    if (G.st !== 'ready') return { title: 'Preclinic', html: head + gWaiting('pre') };
+    if (r.args[0]) {
+      var n = G.by[r.args[0]];
+      if (n && n.area === 'clinic') { location.replace(gHref(n)); return { title: n.title, html: '' }; }
+      if (n) return gNodePage(n, r);
+      if (gPendingSheets()) return { title: 'Preclinic', html: head + gWaiting('pre') };
     }
+    remember({ href: '#/preclinic', title: 'Preclinic', crumb: 'หน้าหลัก', c: '#3E7CA6' });
     return {
-      title: 'Preclinic', html:
-        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">01 · ราก · ปี 1–3</span><h1>Preclinic</h1>' +
-        '<p class="lede">สรุปที่เขียนไว้ใน Google Docs ดึงมาจัดหน้าใหม่ให้อ่านง่าย และกดต่อไปหาโรคที่เกี่ยวข้องใน 1000 MAIได้</p></div></section>' +
-        '<section class="wrap" style="padding-bottom:56px"><div class="syss">' + cards + '</div></section>' +
-        '<section id="read" class="band" style="padding:48px 0 80px"><div class="wrap reader">' + reader + '</div></section>'
+      title: 'Preclinic', html: head +
+        '<section class="wrap" style="padding-bottom:22px;display:flex;flex-direction:column;gap:14px">' + (r.args[0] ? '<p class="warn">ไม่พบแท็บนี้ใน Doc แล้ว — อาจถูกเปลี่ยนชื่อ</p>' : '') + gSearchBar('pre', 'ค้นในสรุป preclinic ทุกแท็บ…') + '</section>' +
+        '<section class="wrap" style="padding-bottom:72px"><div class="syss">' + G.top.pre.map(gTopCard).join('') + '</div></section>',
+      after: gSearchAfter
     };
   };
 
@@ -903,6 +1131,7 @@
   PAGES.clinic = function (r) {
     if (r.args[0] === 'symp') return sympPage(r);
     if (r.args[0] === 'skills') return skillsPage(r);
+    if (r.args[0] === 'doc' || r.args[0] === 'ward') return gClinicDoc(r);
     var ap = CLI.approaches.filter(function (a) { return a.id === r.args[0]; })[0] || CLI.approaches[0];
     remember({ href: '#/clinic/' + ap.id, title: ap.title, crumb: 'Clinic › ตามอาการนำ', c: '#5C7F3A' });
     var books = CLI.wards.map(function (w, i) {
@@ -962,7 +1191,7 @@
       .then(function (j) { SYS_SEARCH.d = j; }).catch(function (e) { SYS_SEARCH.E = e.message || String(e); }).then(function () { SYS_SEARCH.L = false; cb(); });
   }
   function clinicTabs(cur) {
-    return '<div class="subtabs" aria-label="ส่วนของ Clinic">' + [['', 'ภาพรวม · สมุดวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach']].map(function (x) {
+    return '<div class="subtabs" aria-label="ส่วนของ Clinic">' + [['', 'ภาพรวม · สมุดวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach'], ['ward', 'สรุปวอร์ด']].map(function (x) {
       return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/clinic' + (x[0] ? '/' + x[0] : '') + '">' + x[1] + '</a>';
     }).join('') + '</div>';
   }
@@ -975,17 +1204,43 @@
   function syBookLine() { return esc(SY.book.title || '') + ' · ' + esc(SY.book.by || '') + ' · ' + esc(SY.book.ed || ''); }
 
   /* ---------- Clinical skills ---------- */
+  /* แท็บหลักของ Doc โพยหมอที่อยู่ฝั่ง Clinic (ตั้งใน data/gdoc.js → clinic) */
+  function gClinicTops(ck) { return G.top.clinic.filter(function (n) { return n.ck === ck; }); }
+  function gClinicBlock(ck, label) {
+    if (G.st !== 'ready') return gWaiting('clinic').replace('<section class="wrap" style="padding:24px 32px 80px">', '<div>').replace(/<\/section>$/, '</div>');
+    var tops = gClinicTops(ck);
+    if (!tops.length) return '';
+    return '<div style="display:flex;flex-direction:column;gap:12px"><span class="label">' + label + '</span>' +
+      '<div class="syss">' + tops.map(gTopCard).join('') + '</div></div>';
+  }
   function skillsPage() {
+    gLoad();
     remember({ href: '#/clinic/skills', title: 'Clinical skills', crumb: 'Clinic', c: '#5C7F3A' });
     var rel = SY.chapters.filter(function (c) { return c.g === 'base'; });
     return {
       title: 'Clinical skills', html: clinicHead('skills', '<a href="#/clinic">Clinic</a><span class="muted"> › </span><span>Clinical skills</span>', 'Clinical skills',
-        'ทักษะทางคลินิก — ซักประวัติ ตรวจร่างกาย หัตถการ การสื่อสาร และงานบนวอร์ด') +
+        'ทักษะทางคลินิก — ซักประวัติ ตรวจร่างกาย หัตถการ จาก Google Doc ' + esc(GD ? GD.main.name : '') + ' (แยกตามแท็บเดิม อัปเดตเองเมื่อแก้ Doc)') +
         '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' +
-        '<div class="empty" style="text-align:left"><span class="label">ยังไม่มีเนื้อหา</span><p class="k" style="font-size:22px;margin:6px 0">แท็บนี้เตรียมไว้แล้ว</p><p class="muted" style="max-width:640px">ส่งไฟล์สรุปทักษะทางคลินิกมาในแชทกับ Claude แล้วจะจัดเป็นหัวข้อให้อ่านที่นี่</p></div>' +
+        (G.st === 'ready' ? gSearchBar('clinic', 'ค้นในสรุปฝั่ง clinic…') : '') +
+        gClinicBlock('skills', 'จาก Google Doc ' + esc(GD ? GD.main.name : '')) +
         (rel.length ? '<div style="display:flex;flex-direction:column;gap:12px"><span class="label">ที่เกี่ยวข้องใน Symptomatology &amp; Approach</span><div class="sxcards">' + rel.map(syCard).join('') + '</div></div>' : '') +
-        '</section>'
+        '</section>',
+      after: gSearchAfter
     };
+  }
+  /* #/clinic/ward = แท็บ Clinic ของ Doc · #/clinic/doc/<แท็บ> = แท็บใดก็ได้ฝั่ง clinic */
+  function gClinicDoc(r) {
+    gLoad();
+    var crumb = '<a href="#/clinic">Clinic</a><span class="muted"> › </span><span>สรุปวอร์ด</span>';
+    if (G.st !== 'ready') return { title: 'Clinic', html: clinicHead(r.args[0] === 'ward' ? 'ward' : '', crumb, 'สรุปวอร์ด', '') + gWaiting('clinic') };
+    var n = r.args[0] === 'ward' ? gClinicTops('ward')[0] : G.by[r.args[1]];
+    if (!n && gPendingSheets()) return { title: 'Clinic', html: clinicHead('', crumb, 'สรุปวอร์ด', '') + gWaiting('clinic') };
+    if (n && n.area === 'pre') { location.replace(gHref(n)); return { title: n.title, html: '' }; }
+    if (!n) return { title: 'ไม่พบแท็บ', html: clinicHead('', crumb, 'ไม่พบแท็บนี้', 'อาจถูกเปลี่ยนชื่อใน Doc แล้ว — <a href="#/clinic/skills">ไป Clinical skills</a>') };
+    var res = gNodePage(n, r);
+    var cur = n.ck === 'skills' ? 'skills' : n.ck === 'symp' ? 'symp' : 'ward';
+    res.html = '<div style="padding-top:8px">' + '<div class="wrap" style="padding-top:20px;padding-bottom:18px">' + clinicTabs(cur) + '</div>' + res.html + '</div>';
+    return res;
   }
 
   /* ---------- หน้ารวมบท ---------- */
@@ -993,6 +1248,15 @@
     var g = syGroup(c);
     return '<a class="sheet sxcard" href="#/clinic/symp/' + c.id + '" style="--g:' + g.c + '"><span class="sxno">บทที่ ' + c.no + '</span><h3>' + esc(c.th) + '</h3><span class="sxen">' + esc(c.en) + '</span>' +
       '<span class="sxmeta">' + c.n + ' หัวข้อ' + (c.f ? ' · ' + c.f + ' algorithm' : '') + (c.i ? ' · ' + c.i + ' รูป' : '') + '</span></a>';
+  }
+  function gSympCard() {
+    gLoad();
+    if (G.st !== 'ready') return '';
+    var n = gClinicTops('symp')[0];
+    if (!n) return '';
+    var lk = gLook(n), c = gCount(n);
+    return '<a class="sheet gsymp" href="' + gHref(n) + '" style="--g:' + lk.c + '"><span class="label">สรุปของฉัน · Google Doc ' + esc(GD.main.name) + '</span><span class="k" style="font-size:22px">' + esc(n.title) + '</span>' +
+      '<span class="muted" style="font-size:14px">' + esc((n.heads || []).filter(function (h) { return h.l === 1 && h.t; }).slice(0, 12).map(function (h) { return h.t; }).join(' · ')) + '</span><span class="muted" style="font-size:13px">' + c[0] + ' / ' + c[1] + ' หน้ามีเนื้อหา · อัปเดตเองเมื่อแก้ Doc</span></a>';
   }
   function sympHub(r) {
     remember({ href: '#/clinic/symp', title: 'Symptomatology & Approach', crumb: 'Clinic', c: '#5C7F3A' });
@@ -1014,7 +1278,7 @@
         '<div class="sxbar"><form class="search sxsearch" id="sxsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sxq">ค้นทุกบท</label><input id="sxq" type="search" placeholder="ค้นทุกบท เช่น MCV, Rockall, eschar" value="' + esc(qq) + '" autocomplete="off"></form>' +
         '<div class="filters" role="group" aria-label="เรียงบท"><a class="chip' + (view === 'sys' ? ' on' : '') + '" href="' + hq('sys') + '">ตามระบบ</a><a class="chip' + (view === 'book' ? ' on' : '') + '" href="' + hq('book') + '">ตามเล่ม</a></div>' +
         '<span class="muted" style="font-size:14px">' + SY.chapters.length + ' / ' + (SY.total || SY.chapters.length) + ' บท · ' + nf + ' algorithm · ' + ni + ' รูป</span></div>' +
-        '<div id="sxres" class="sxres" hidden></div>' + body + '</section>',
+        '<div id="sxres" class="sxres" hidden></div>' + gSympCard() + body + '</section>',
       after: function () {
         var inp = document.getElementById('sxq'), res = document.getElementById('sxres'), t = null;
         function run() {
@@ -1360,8 +1624,12 @@
     var used = {}; D.list.forEach(function (d) { used[d.sys.id] = d.sys; });
     Object.keys(used).forEach(function (k) { o += '<option value="s:' + k + '">สุ่มจากระบบ ' + esc(used[k].name) + '</option>'; });
     o += '</optgroup><optgroup label="1000 MAI · รายโรค">' + D.list.map(function (d) { return '<option value="d:' + esc(d.id) + '">' + esc(d.name) + '</option>'; }).join('') + '</optgroup>';
-    var pre = []; PRE.forEach(function (s) { s.groups.forEach(function (g) { g.docs.forEach(function (d) { if (d.html) pre.push([s, d]); }); }); });
-    if (pre.length) o += '<optgroup label="Preclinic">' + pre.map(function (x) { return '<option value="p:' + x[0].id + '/' + x[1].id + '">' + esc(x[0].name + ' › ' + x[1].title) + '</option>'; }).join('') + '</optgroup>';
+    if (G.st === 'ready') ['pre', 'clinic'].forEach(function (ar) {
+      var opts = G.nodes.filter(function (n) { return n.area === ar && (gFull(n) || (n.kids.length && gCount(n)[0])); });
+      if (opts.length) o += '<optgroup label="' + (ar === 'pre' ? 'Preclinic' : 'Clinic') + ' · สรุปจาก Google Doc">' + opts.map(function (n) {
+        return '<option value="g:' + esc(n.slug) + '">' + esc(gPath(n).map(function (x) { return x.title; }).join(' › ') + (n.kids.length ? ' (รวมแท็บย่อย)' : '')) + '</option>';
+      }).join('') + '</optgroup>';
+    });
     o += '<optgroup label="Clinic">' + CLI.approaches.map(function (a) { return '<option value="c:' + a.id + '">' + esc('Approach › ' + a.title) + '</option>'; }).join('') + '</optgroup>';
     if (SY.chapters.length) o += '<optgroup label="Symptomatology &amp; Approach (ศิริราช)">' + SY.chapters.map(function (c) { return '<option value="y:' + c.id + '">' + esc('บทที่ ' + c.no + ' ' + c.th + ' · ' + c.en) + '</option>'; }).join('') + '</optgroup>';
     if (sel) o = o.replace('value="' + esc(sel) + '"', 'value="' + esc(sel) + '" selected');
@@ -1373,8 +1641,13 @@
   function gatherSource(src, n, limit) {
     var label = '', text = '';
     if (src.indexOf('d:') === 0) { var d = findDisease(src.slice(2)); if (d) { label = d.name; text = diseaseText(d); } }
-    else if (src.indexOf('p:') === 0) {
-      var p = src.slice(2).split('/'); PRE.forEach(function (s) { if (s.id === p[0]) s.groups.forEach(function (g) { g.docs.forEach(function (doc) { if (doc.id === p[1]) { label = s.name + ' › ' + doc.title; text = '## ' + label + '\n' + htmlText(doc.html); } }); }); });
+    else if (src.indexOf('g:') === 0) {
+      var gn = G.by[src.slice(2)];
+      if (gn) {
+        gNeedSheets(gFlat(gn));
+        label = gPath(gn).map(function (x) { return x.title; }).join(' › ');
+        text = gFlat(gn).filter(gFull).map(function (x) { return '## ' + gPath(x).map(function (y) { return y.title; }).join(' › ') + '\n' + gText(x); }).join('\n\n');
+      }
     } else if (src.indexOf('c:') === 0) {
       var a = CLI.approaches.filter(function (x) { return x.id === src.slice(2); })[0];
       if (a) { label = 'Approach ' + a.title; text = '## ' + a.title + '\n' + a.steps.map(function (s, i) { return (i + 1) + '. ' + s.title + ': ' + (s.links ? s.links.map(function (l) { return l[0] + ' → ' + l[1]; }).join('; ') : htmlText(s.html)); }).join('\n'); }
@@ -2450,6 +2723,7 @@
   var lm = new Date(document.lastModified);
   document.getElementById('built').textContent = isNaN(lm) ? '' : 'อัปเดตเว็บล่าสุด ' + fmtTime(lm);
   initDiseases();
+  gLoad();
   render(false);
   initFB();
 })();
