@@ -1,21 +1,20 @@
-# ชั่วคราว: หาว่าดึงทุกแท็บของ Doc สาธารณะได้ทางไหน (ไม่ใช้ key ใด ๆ)
+# ชั่วคราว: เก็บตัวอย่างไฟล์จาก Doc สาธารณะไว้ที่ branch probe-data (ไม่ใช้ key ใด ๆ)
 name: probe
 on:
   push:
     branches: [main]
     paths: ['.github/workflows/probe.yml']
+permissions:
+  contents: write
 jobs:
   p:
     runs-on: ubuntu-latest
     steps:
       - run: |
           ID=11lXA1hl_ZiBV_kCget8vxl1RGVGM_7beGwfYX6r2EnE
-          curl -sL "https://docs.google.com/document/d/$ID/export?format=html" -o all.html
-          echo "::notice title=html titles::$(grep -o 'class="title"' all.html | wc -l) / $(grep -oE 'class="[^"]*title[^"]*"' all.html | sort | uniq -c | head -5 | tr '\n' ' ')"
-          echo "::notice title=html near Neuroanatomy::$(grep -oE '.{300}Neuroanatomy.{80}' all.html | head -1 | sed 's/[<>]/ /g' | head -c 600)"
+          mkdir s && cd s
           curl -sL "https://docs.google.com/document/d/$ID/edit" -o edit.html
-          echo "::notice title=edit near Neuroanatomy::$(grep -oE '.{300}Neuroanatomy.{200}' edit.html | head -2 | sed 's/[<>]/ /g' | head -c 900)"
-          T=$(grep -oE 't\.[a-z0-9]{8,16}' edit.html | head -1)
-          echo "::notice title=edit near first id $T::$(grep -oE ".{200}$T.{200}" edit.html | head -1 | sed 's/[<>]/ /g' | head -c 700)"
-          curl -sL "https://docs.google.com/document/d/$ID/export?format=html&tab=$T" -o one.html
-          echo "::notice title=export one tab::size $(wc -c < one.html) $(grep -o 'class="title"' one.html | wc -l) titles"
+          for T in t.iraleqedgdi8 $(grep -oE '"t\.[a-z0-9]+",\[1,"(Normal values[^"]*|Physical Exam \(GA\)|Lipid Lowering Drugs)"' edit.html | grep -oE 't\.[a-z0-9]+'); do curl -sL "https://docs.google.com/document/d/$ID/export?format=html&tab=$T" -o "tab-$T.html"; done
+          ls -la
+          git init -q && git checkout -q -b probe-data && git add . && git -c user.name=probe -c user.email=probe@example.com commit -q -m data
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" probe-data
