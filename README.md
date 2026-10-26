@@ -19,7 +19,8 @@
 | `docs/app.js`, `docs/app.css` | ตัวเว็บ |
 
 ## Preclinic + Clinic จาก Google Doc "โพยหมอ" (`#/preclinic`, `#/clinic/skills`, `#/clinic/ward`)
-- Doc โพยหมอ แชร์ Anyone with the link → Viewer แล้ว · ทุกครั้งที่เปิดเว็บ: แสดงฉบับเก็บก่อน แล้วดึง Doc สด (`export?format=html`) มาแทน — มุมหน้าบอกสถานะ "ดึงสดจาก Google Doc" (เขียว) หรือ "ดึง Doc สดไม่ได้" (แดง = ใช้ฉบับเก็บ)
+- Doc โพยหมอ แชร์ Anyone with the link → Viewer แล้ว · หน้าเว็บอ่าน Doc ตรงจาก Google ไม่ได้ (Google ไม่ส่ง CORS) จึงใช้ **GitHub Actions** `.github/workflows/gdoc-sync.yml` ดึง `export?format=zip` → `tools/gdoc/build.py` → commit `docs/gdoc/poymor.json` ทุก ~10 นาที (commit เฉพาะเมื่อ Doc เปลี่ยน) · อยากอัปเดตทันที: แท็บ Actions → Sync Google Doc → Run workflow
+- ถ้า Actions ล้มด้วย "ได้แค่ N แท็บ" = Google ส่งหน้า login มา (Doc ถูกปิดแชร์)
 - ทุกแท็บอยู่ Preclinic ยกเว้นแท็บหลักใน `clinic` ของ data/gdoc.js (History Taking, Physical Exam, Lab Procedures → Clinical skills · Symptomatology → การ์ดในหน้า Symptomatology & Approach · Clinic → สรุปวอร์ด) · แท็บ `homework (?)` ไม่ขึ้นเว็บ (ตัดทั้งตอนดึงสดและในฉบับเก็บ)
 - export ของ Google ไม่บอกว่าแท็บไหนเป็นแท็บย่อย → ชั้นของแท็บกำหนดใน `tree` (เว้น 2 ช่อง = ลึกหนึ่งชั้น) · แท็บใหม่ที่ไม่อยู่ในรายการจะอยู่ชั้นเดียวกับแท็บก่อนหน้า · ถ้าย้าย/สร้างแท็บย่อยใหม่ ให้แก้ `tree`
 - ไฟล์ที่ดึงครั้งเดียว (ไม่อัปเดตเอง) อยู่ใน `extras`: MSK Anatomy Atlas (ชีต MSK ปี 2 → ใต้ MS Anatomy), Tissue Bio Spot Hack (→ ใต้ Histology), DocQ Med Template 2026 (แต่ละแท็บ → เรื่องที่ตรงกัน)

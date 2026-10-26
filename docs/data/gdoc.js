@@ -2,8 +2,8 @@
 window.POY_GDOC_V = 1;
 
 /* Preclinic + Clinic จาก Google Docs / Sheets
-   - main: Doc "โพยหมอ" — ดึงสดทุกครั้งที่เปิดเว็บ (Doc ต้องแชร์ Anyone with the link → Viewer)
-     ถ้าดึงสดไม่ได้ ใช้ฉบับที่เก็บไว้ (snap) แทน · สร้างฉบับเก็บใหม่: tools/gdoc/build.py (ดู README)
+   - main: Doc "โพยหมอ" (แชร์ Anyone with the link → Viewer) — GitHub Actions ดึงมาอัปเดต snap ทุก ~10 นาที
+     สร้างเองได้ด้วย tools/gdoc/build.py (ดู README)
    - tree: แท็บไหนอยู่ใต้แท็บไหน (ไฟล์ export ของ Google ไม่บอกชั้นของแท็บ) — เว้นวรรค 2 ช่อง = ลึกลงหนึ่งชั้น
      แท็บใหม่ที่ไม่มีในรายการนี้ จะไปอยู่ชั้นเดียวกับแท็บก่อนหน้ามัน
    - clinic: แท็บหลักที่ไปอยู่ฝั่ง Clinic (ที่เหลือทั้งหมดอยู่ Preclinic) → skills = Clinical skills, symp = Symptomatology & Approach, ward = สรุปวอร์ด
@@ -14,7 +14,9 @@ window.POY_GDOC = {
     id: '11lXA1hl_ZiBV_kCget8vxl1RGVGM_7beGwfYX6r2EnE',
     name: 'โพยหมอ',
     snap: 'gdoc/poymor.json',
-    live: true,
+    /* live: true = หน้าเว็บดึง Doc ตรงจาก Google — Google ไม่อนุญาต (CORS) จึงปิด
+       แทนด้วย GitHub Actions (.github/workflows/gdoc-sync.yml) ดึงมาอัปเดต snap ทุก ~10 นาที */
+    live: false,
     hide: ['homework (?)']
   },
   clinic: {

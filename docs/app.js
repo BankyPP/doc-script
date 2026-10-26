@@ -868,7 +868,8 @@
     ((GD && GD.tree) || []).forEach(function (l, i) { var t = l.replace(/^\s+/, ''); m[t] = { d: Math.floor((l.length - t.length) / 2), i: i }; });
     return m;
   }
-  function gFetchJSON(u) { return fetch(u + (u.indexOf('?') < 0 ? '?' : '&') + 'v=' + (window.POY_GDOC_V || 1)).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
+  /* no-cache = ถามเซิร์ฟเวอร์ทุกครั้งว่าไฟล์เปลี่ยนไหม (ฉบับเก็บของ Doc โพยหมอถูกอัปเดตอัตโนมัติโดย GitHub Actions) */
+  function gFetchJSON(u) { return fetch(u + (u.indexOf('?') < 0 ? '?' : '&') + 'v=' + (window.POY_GDOC_V || 1), { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
   function gBuild() {
     var spec = gSpec(), hide = (GD.main.hide || []), nodes = [], by = {}, byHead = {}, used = {};
     function uniq(s) { var k = s, n = 2; while (used[k]) k = s + '-' + (n++); used[k] = 1; return k; }
@@ -969,7 +970,7 @@
     return p.length > 0;
   }
   function gLiveHTML() {
-    if (!GD || !GD.main.live) return '<span class="live off" data-glive><i></i>ฉบับวันที่ ' + esc(G.snapAt) + '</span>';
+    if (!GD || !GD.main.live) return '<span class="live" data-glive title="GitHub Actions ดึง Doc มาอัปเดตเว็บทุก ~10 นาที"><i></i>อัปเดตจาก Google Doc อัตโนมัติ · ล่าสุด ' + esc(G.snapAt) + '</span>';
     if (G.live === 'ok') return '<span class="live" data-glive><i></i>ดึงสดจาก Google Doc · ' + esc(fmtTime(new Date(G.liveAt))) + '</span>';
     if (G.live === 'fail') return '<span class="live err" data-glive title="' + esc(G.liveErr || '') + '"><i></i>ดึง Doc สดไม่ได้ · ใช้ฉบับวันที่ ' + esc(G.snapAt) + '</span>';
     return '<span class="live off" data-glive><i></i>กำลังดึง Doc สด… (ระหว่างนี้ใช้ฉบับวันที่ ' + esc(G.snapAt) + ')</span>';
