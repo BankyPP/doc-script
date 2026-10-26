@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="app.css?v=14">
+<link rel="stylesheet" href="app.css?v=15">
 </head>
 <body>
 <header class="top">
@@ -47,7 +47,11 @@
   <div class="dlinks">
     <a href="#/" data-r=""><span class="sw" style="background:#8A8F86"></span><span><b>หน้าแรก</b><small>ภาพรวมทั้งเล่ม</small></span></a>
     <a href="#/preclinic" data-r="preclinic"><span class="sw" style="background:#3E7CA6"></span><span><b>Preclinic</b><small>ราก · สรุปปี 1–3 ตาม system</small></span></a>
-    <a href="#/clinic" data-r="clinic"><span class="sw" style="background:#5C7F3A"></span><span><b>Clinic</b><small>ลำต้น · สมุดวอร์ด + approach</small></span></a>
+    <div class="drow"><a href="#/clinic" data-r="clinic"><span class="sw" style="background:#5C7F3A"></span><span><b>Clinic</b><small>ลำต้น · สมุดวอร์ด + approach</small></span></a><button class="dtog" type="button" data-tog="clinic" aria-expanded="true" aria-controls="dsub-clinic" aria-label="เปิด/ปิดหัวข้อย่อยของ Clinic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></svg></button></div>
+    <div class="dsub" id="dsub-clinic">
+      <a href="#/clinic/skills" data-r="clinic/skills">Clinical skills</a>
+      <a href="#/clinic/symp" data-r="clinic/symp">Symptomatology &amp; Approach</a>
+    </div>
     <div class="drow"><a href="#/topics" data-r="topics"><span class="sw" style="background:#2F7466"></span><span><b>Random Topic Summary</b><small>เมล็ดพันธุ์ · สรุปตามหัวข้อ + ฝึกโจทย์</small></span></a><button class="dtog" type="button" data-tog="topics" aria-expanded="true" aria-controls="dsub-topics" aria-label="เปิด/ปิดหัวข้อย่อยของ Random Topic Summary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></svg></button></div>
     <div class="dsub" id="dsub-topics">
       <a href="#/topics/id-atb" data-r="topics/id-atb">ID &amp; Antibiotics</a>
@@ -80,8 +84,9 @@
 <script src="data/sample-diseases.js?v=10"></script>
 <script src="data/preclinic.js?v=10"></script>
 <script src="data/clinic.js?v=10"></script>
+<script src="data/symp.js?v=1793032937"></script>
 <script src="data/nl.js?v=10"></script>
 <script src="data/topics.js?v=16"></script>
-<script src="app.js?v=16"></script>
+<script src="app.js?v=17"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /* โพยหมอ — single-page app (hash routes)
-   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach] · #/diseases?s=&q=&f=&v= · #/disease/<no> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
+   #/ · #/preclinic[/sys[/doc]] · #/clinic[/approach|/skills|/symp[/<บท>?to=]] · #/diseases?s=&q=&f=&v= · #/disease/<no> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
 (function () {
   'use strict';
   var C = window.POY_CONFIG, SYS = window.POY_SYSTEMS, OTHER = window.POY_OTHER;
@@ -308,7 +308,7 @@
     var r = route();
     var page = PAGES[r.name] || PAGES._404;
     if (pageCleanup) { try { pageCleanup(); } catch (e) { } pageCleanup = null; }
-    var here = r.name === 'disease' ? 'diseases' : r.name, sub = (r.name === 'nl' || r.name === 'topics') && r.args[0] ? r.name + '/' + r.args[0] : '';
+    var here = r.name === 'disease' ? 'diseases' : r.name, sub = (r.name === 'nl' || r.name === 'topics' || (r.name === 'clinic' && (r.args[0] === 'symp' || r.args[0] === 'skills'))) && r.args[0] ? r.name + '/' + r.args[0] : '';
     document.querySelectorAll('#drawer [data-r]').forEach(function (a) {
       var k = a.getAttribute('data-r');
       var on = k === here || (k === sub && sub !== '');
@@ -638,6 +638,8 @@
      CLINIC
      ========================================================= */
   PAGES.clinic = function (r) {
+    if (r.args[0] === 'symp') return sympPage(r);
+    if (r.args[0] === 'skills') return skillsPage(r);
     var ap = CLI.approaches.filter(function (a) { return a.id === r.args[0]; })[0] || CLI.approaches[0];
     remember({ href: '#/clinic/' + ap.id, title: ap.title, crumb: 'Clinic › ตามอาการนำ', c: '#5C7F3A' });
     var books = CLI.wards.map(function (w, i) {
@@ -655,19 +657,430 @@
     return {
       title: 'Clinic', html:
         '<section class="wrap phead" style="padding-bottom:28px"><div style="display:flex;flex-direction:column;gap:16px"><span class="label">02 · ลำต้น · ปี 4–6</span><h1>Clinic</h1>' +
-        '<p class="lede">เข้าได้สามทาง: ตามวอร์ดที่วนอยู่ ตามอาการนำของคนไข้ หรือตามงานที่ต้องทำบนวอร์ด — ทุกทางกดต่อไปหาแผ่นตัวอย่างใน 1000 MAIได้</p></div></section>' +
+        '<p class="lede">เข้าได้สามทาง: ตามวอร์ดที่วนอยู่ ตามอาการนำของคนไข้ หรือตามงานที่ต้องทำบนวอร์ด — ทุกทางกดต่อไปหาแผ่นตัวอย่างใน 1000 MAIได้</p>' + clinicTabs('') + '</div></section>' +
         '<section style="padding-bottom:48px"><div class="wrap" style="display:flex;flex-direction:column;gap:14px"><span class="label">ชั้นหนังสือ · สมุดวอร์ด</span><div style="overflow-x:auto;padding:12px 2px 0"><div class="shelf">' + books + '</div></div>' +
         '<p class="muted" style="font-size:15px">ตอนนี้แต่ละเล่มเปิดไปคลังข้อสอบเก่า MDCU · เนื้อหาในสมุดวอร์ดจะทยอยเพิ่ม</p></div></section>' +
         '<section class="band" style="padding:40px 0 80px"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 48px;align-items:flex-start">' +
         '<article class="sheet" style="flex:999 1 600px;min-width:0;padding:clamp(22px,4vw,44px);display:flex;flex-direction:column;gap:26px"><div style="display:flex;flex-direction:column;gap:10px"><span class="muted" style="font-size:14px">Clinic › ตามอาการนำ › ' + esc(ap.group) + '</span><h2 style="font-size:36px">' + esc(ap.title) + '</h2><p class="muted">' + esc(ap.sub) + '</p></div><div style="display:flex;flex-direction:column">' + steps + '</div></article>' +
-        '<aside style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">อาการนำอื่น · ยังไม่มีเนื้อหา</span><div style="display:flex;flex-wrap:wrap;gap:8px">' +
-        CLI.more.map(function (m) { return '<span class="chip" style="cursor:default;opacity:.75">' + esc(m) + '</span>'; }).join('') + '</div>' +
+        '<aside style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">อาการนำอื่น · Symptomatology &amp; Approach</span><div style="display:flex;flex-wrap:wrap;gap:8px">' +
+        (SY.chapters.length ? SY.chapters.filter(function (c) { return c.g !== 'base'; }).map(function (c) { return '<a class="pill" href="#/clinic/symp/' + c.id + '"><span class="sw" style="background:' + syGroup(c).c + '"></span>' + esc(c.th) + '</a>'; }).join('') :
+          CLI.more.map(function (m) { return '<span class="chip" style="cursor:default;opacity:.75">' + esc(m) + '</span>'; }).join('')) + '</div>' +
+        '<a class="chip" href="#/clinic/symp" style="align-self:flex-start">ดูทุกบท →</a>' +
         '<span class="label" style="margin-top:12px">ทักษะบนวอร์ด</span><div class="sheet" style="display:flex;flex-direction:column">' +
         CLI.tools.map(function (t, i) { return '<div class="tool"' + (i < CLI.tools.length - 1 ? ' style="border-bottom:1px dashed var(--rule)"' : '') + '><span class="k" style="font-size:17px;font-weight:500">' + esc(t[0]) + '</span><span class="muted" style="font-size:14px">' + esc(t[1]) + '</span></div>'; }).join('') + '</div>' +
         '<a class="sheet tool" href="' + esc(C.acUrl) + '" target="_blank" rel="noopener" style="margin-top:8px;border:1.5px solid var(--ink)"><span class="label">เชื่อมกับ</span><span class="k" style="font-size:18px;font-weight:500">คลังข้อสอบเก่า MDCU ↗</span></a>' +
         '</aside></div></section>'
     };
   };
+
+  /* =========================================================
+     CLINIC › Clinical skills · Symptomatology & Approach
+     ตำราอายุรศาสตร์ อาการวิทยา (ศิริราช) — เนื้อหาแต่ละบทอยู่ใน docs/symp/chNN.json
+     ========================================================= */
+  var SY = window.POY_SYMP || { v: 1, groups: [], chapters: [], book: {} };
+  var SYD = {}, SYS_SEARCH = { d: null, L: false, E: '' };
+  function syCh(key) { key = String(key || ''); return SY.chapters.filter(function (c) { return c.id === key || String(c.no) === key; })[0] || null; }
+  function syGroup(c) { return SY.groups.filter(function (g) { return g.id === c.g; })[0] || { c: '#5C7F3A', t: '' }; }
+  function syLoad(c) {
+    var s = SYD[c.no] || (SYD[c.no] = {});
+    if (s.d || s.L || s.E) return s.d || null;
+    s.L = true;
+    fetch('symp/' + c.file + '?v=' + SY.v).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) { s.d = j; }).catch(function (e) { s.E = e.message || String(e); }).then(function () {
+        s.L = false; var r = route(); if (r.name === 'clinic' && r.args[0] === 'symp' && r.args[1] === c.id) render(true);
+      });
+    return null;
+  }
+  function sySearchLoad(cb) {
+    if (SYS_SEARCH.d) return cb();
+    if (SYS_SEARCH.L) return;
+    SYS_SEARCH.L = true;
+    fetch('symp/search.json?v=' + SY.v).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) { SYS_SEARCH.d = j; }).catch(function (e) { SYS_SEARCH.E = e.message || String(e); }).then(function () { SYS_SEARCH.L = false; cb(); });
+  }
+  function clinicTabs(cur) {
+    return '<div class="subtabs" aria-label="ส่วนของ Clinic">' + [['', 'ภาพรวม · สมุดวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach']].map(function (x) {
+      return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/clinic' + (x[0] ? '/' + x[0] : '') + '">' + x[1] + '</a>';
+    }).join('') + '</div>';
+  }
+  function clinicHead(cur, crumb, h1, lede) {
+    return '<section class="wrap phead" style="padding-bottom:24px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0;max-width:100%">' +
+      (crumb ? '<nav aria-label="ตำแหน่ง" style="font-size:15px">' + crumb + '</nav>' : '<span class="label">02 · ลำต้น · ปี 4–6</span>') +
+      '<h1 style="font-size:clamp(36px,5vw,64px);overflow-wrap:anywhere">' + h1 + '</h1>' + (lede ? '<p class="lede">' + lede + '</p>' : '') + clinicTabs(cur) + '</div></section>';
+  }
+  var SY_SRC = '<span class="src si">ศิริราช</span>';
+  function syBookLine() { return esc(SY.book.title || '') + ' · ' + esc(SY.book.by || '') + ' · ' + esc(SY.book.ed || ''); }
+
+  /* ---------- Clinical skills ---------- */
+  function skillsPage() {
+    remember({ href: '#/clinic/skills', title: 'Clinical skills', crumb: 'Clinic', c: '#5C7F3A' });
+    var rel = SY.chapters.filter(function (c) { return c.g === 'base'; });
+    return {
+      title: 'Clinical skills', html: clinicHead('skills', '<a href="#/clinic">Clinic</a><span class="muted"> › </span><span>Clinical skills</span>', 'Clinical skills',
+        'ทักษะทางคลินิก — ซักประวัติ ตรวจร่างกาย หัตถการ การสื่อสาร และงานบนวอร์ด') +
+        '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' +
+        '<div class="empty" style="text-align:left"><span class="label">ยังไม่มีเนื้อหา</span><p class="k" style="font-size:22px;margin:6px 0">แท็บนี้เตรียมไว้แล้ว</p><p class="muted" style="max-width:640px">ส่งไฟล์สรุปทักษะทางคลินิกมาในแชทกับ Claude แล้วจะจัดเป็นหัวข้อให้อ่านที่นี่</p></div>' +
+        (rel.length ? '<div style="display:flex;flex-direction:column;gap:12px"><span class="label">ที่เกี่ยวข้องใน Symptomatology &amp; Approach</span><div class="sxcards">' + rel.map(syCard).join('') + '</div></div>' : '') +
+        '</section>'
+    };
+  }
+
+  /* ---------- หน้ารวมบท ---------- */
+  function syCard(c) {
+    var g = syGroup(c);
+    return '<a class="sheet sxcard" href="#/clinic/symp/' + c.id + '" style="--g:' + g.c + '"><span class="sxno">บทที่ ' + c.no + '</span><h3>' + esc(c.th) + '</h3><span class="sxen">' + esc(c.en) + '</span>' +
+      '<span class="sxmeta">' + c.n + ' หัวข้อ' + (c.f ? ' · ' + c.f + ' algorithm' : '') + (c.i ? ' · ' + c.i + ' รูป' : '') + '</span></a>';
+  }
+  function sympHub(r) {
+    remember({ href: '#/clinic/symp', title: 'Symptomatology & Approach', crumb: 'Clinic', c: '#5C7F3A' });
+    var view = r.q.get('v') === 'book' ? 'book' : 'sys', qq = (r.q.get('q') || '').trim();
+    var body;
+    if (!SY.chapters.length) body = '<div class="empty"><p class="muted">ยังไม่มีบท</p></div>';
+    else if (view === 'book') body = '<div class="sxcards">' + SY.chapters.map(syCard).join('') + '</div>';
+    else body = SY.groups.map(function (g) {
+      var cs = SY.chapters.filter(function (c) { return c.g === g.id; });
+      if (!cs.length) return '';
+      return '<section class="sxgrp"><div class="sxgh"><span class="sw" style="background:' + g.c + '"></span><h2>' + esc(g.t) + '</h2><span class="muted">' + cs.length + ' บท</span></div><div class="sxcards">' + cs.map(syCard).join('') + '</div></section>';
+    }).join('');
+    var nf = 0, ni = 0; SY.chapters.forEach(function (c) { nf += c.f; ni += c.i; });
+    var hq = function (v) { return '#/clinic/symp' + (v === 'book' ? '?v=book' : ''); };
+    return {
+      title: 'Symptomatology & Approach', html: clinicHead('symp', '<a href="#/clinic">Clinic</a><span class="muted"> › </span><span>Symptomatology &amp; Approach</span>', 'Symptomatology &amp; Approach',
+        'สรุป' + esc(SY.book.title || '') + ' ' + SY_SRC + ' ครบทุกบท — กดเปิดทีละหัวข้อ · algorithm กดดูทีละกล่องหรือเดินทีละขั้น<br><span class="muted" style="font-size:15px">' + esc(SY.book.by || '') + ' · ' + esc(SY.book.ed || '') + '</span>') +
+        '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:26px">' +
+        '<div class="sxbar"><form class="search sxsearch" id="sxsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sxq">ค้นทุกบท</label><input id="sxq" type="search" placeholder="ค้นทุกบท เช่น MCV, Rockall, eschar" value="' + esc(qq) + '" autocomplete="off"></form>' +
+        '<div class="filters" role="group" aria-label="เรียงบท"><a class="chip' + (view === 'sys' ? ' on' : '') + '" href="' + hq('sys') + '">ตามระบบ</a><a class="chip' + (view === 'book' ? ' on' : '') + '" href="' + hq('book') + '">ตามเล่ม</a></div>' +
+        '<span class="muted" style="font-size:14px">' + SY.chapters.length + ' / ' + (SY.total || SY.chapters.length) + ' บท · ' + nf + ' algorithm · ' + ni + ' รูป</span></div>' +
+        '<div id="sxres" class="sxres" hidden></div>' + body + '</section>',
+      after: function () {
+        var inp = document.getElementById('sxq'), res = document.getElementById('sxres'), t = null;
+        function run() {
+          var v = inp.value.trim(); setQuery(route(), { q: v });
+          if (v.length < 2) { res.hidden = true; res.innerHTML = ''; return; }
+          res.hidden = false;
+          if (!SYS_SEARCH.d) { res.innerHTML = SYS_SEARCH.E ? '<p class="warn">โหลดดัชนีค้นหาไม่สำเร็จ: ' + esc(SYS_SEARCH.E) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดดัชนีค้นหา…</p>'; sySearchLoad(run); return; }
+          var ql = v.toLowerCase(), hits = SYS_SEARCH.d.filter(function (x) { return (x.h + ' ' + x.x).toLowerCase().indexOf(ql) >= 0; });
+          res.innerHTML = '<span class="label">พบ ' + hits.length + ' หัวข้อ' + (hits.length > 80 ? ' · แสดง 80 แรก' : '') + '</span>' + hits.slice(0, 80).map(function (x) {
+            var c = syCh(x.c); if (!c) return '';
+            var i = x.x.toLowerCase().indexOf(ql), snip = '';
+            if (i >= 0) { var a = Math.max(0, i - 50); snip = (a ? '…' : '') + esc(x.x.slice(a, i)) + '<mark>' + esc(x.x.slice(i, i + v.length)) + '</mark>' + esc(x.x.slice(i + v.length, i + v.length + 70)) + '…'; }
+            return '<a href="#/clinic/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) + '"><span class="pn">' + c.no + '</span><span><b>' + esc(c.th) + ' › ' + esc(x.h) + '</b>' + (snip ? '<small>' + snip.replace(/\n/g, ' ') + '</small>' : '') + '</span></a>';
+          }).join('');
+        }
+        inp.addEventListener('input', function () { clearTimeout(t); t = setTimeout(run, 220); });
+        document.getElementById('sxsf').addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(t); run(); });
+        if (qq) run();
+      }
+    };
+  }
+
+  /* ---------- อ่านบท ---------- */
+  function syOpen(id, v) {
+    var all = LS.get('sxopen', {}) || {};
+    if (v === undefined) return all[id] || [];
+    all[id] = v; LS.set('sxopen', all);
+  }
+  function syFix(h) { return String(h || '').replace(/<img /g, '<img loading="lazy" decoding="async" ').replace(/<table/g, '<table') ; }
+  var CHEV = '<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></svg>';
+  function syIsWide(h) {
+    if (/class="flow"/.test(h)) return true;
+    var m = h.match(/<tr[\s\S]*?<\/tr>/g) || [], mx = 0;
+    m.forEach(function (tr) { var n = (tr.match(/<t[hd][\s>]/g) || []).length; if (n > mx) mx = n; });
+    return mx >= 3;
+  }
+  function syBox(b, opened) {
+    var inner = syFix(b.html) + (b.sub || []).map(function (x) { return '<div class="sxs2" id="s-' + x.id + '"><h4>' + esc(x.h) + '</h4>' + syFix(x.html) + '</div>'; }).join('');
+    var open = opened.indexOf(b.id) < 0 ? ' open' : '';   /* กล่องย่อยเปิดไว้เป็นค่าเริ่มต้น · จำเฉพาะกล่องที่ปิด */
+    return '<details class="sxbox' + (syIsWide(inner) ? ' wide' : '') + '" id="s-' + b.id + '" data-sid="' + b.id + '" data-def="open"' + open + '><summary><h3>' + esc(b.h) + '</h3>' + CHEV + '</summary><div class="sxbb">' + inner + '</div></details>';
+  }
+  function sySec(s, i, st) {
+    var open = st.indexOf(s.id) >= 0 ? ' open' : '';
+    return '<details class="sxsec" id="s-' + s.id + '" data-sid="' + s.id + '"' + open + '><summary><span class="sxn">' + (i + 1) + '</span><h2>' + esc(s.h) + '</h2>' + (s.pg ? '<span class="sxpg">หน้า ' + s.pg + '</span>' : '') + CHEV + '</summary>' +
+      '<div class="sxbody">' + (s.html ? '<div class="sxlead">' + syFix(s.html) + '</div>' : '') + (s.sub && s.sub.length ? '<div class="sxgrid">' + s.sub.map(function (b) { return syBox(b, st); }).join('') + '</div>' : '') + '</div></details>';
+  }
+  function sympChapter(c, r) {
+    var g = syGroup(c), d = syLoad(c), s = SYD[c.no];
+    var crumb = '<a href="#/clinic">Clinic</a><span class="muted"> › </span><a href="#/clinic/symp">Symptomatology &amp; Approach</a><span class="muted"> › </span><span>บทที่ ' + c.no + '</span>';
+    var head = clinicHead('symp', crumb, esc(c.th) + ' <span class="sxh1en">' + esc(c.en) + '</span>', 'บทที่ ' + c.no + ' · หน้า ' + esc(c.pages) + ' ในตำรา · ' + SY_SRC);
+    if (!d) return { title: c.th, html: head + '<section class="wrap" style="padding-bottom:80px">' + (s && s.E ? '<p class="warn">เปิดบทไม่สำเร็จ: ' + esc(s.E) + ' — ลองรีเฟรชหน้า</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดบท…</p>') + '</section>' };
+    remember({ href: '#/clinic/symp/' + c.id, title: c.th + ' · ' + c.en, crumb: 'Clinic › Symptomatology', c: g.c });
+    var st = syOpen(c.id), flows = d.flows || [], FM = {};
+    flows.forEach(function (f) { FM[f.id] = f; });
+    var secs = d.sections.map(function (x, i) { return sySec(x, i, st); }).join('').replace(/<div class="flow" data-flow="([\w-]+)"><\/div>/g, function (m, id) { return FM[id] ? flowShell(FM[id]) : ''; });
+    var toc = d.sections.map(function (x, i) { return '<a href="#/clinic/symp/' + c.id + '?to=s-' + x.id + '" data-go="s-' + x.id + '"><span class="pn">' + (i + 1) + '</span><span>' + esc(x.h) + '</span></a>'; }).join('');
+    var ftoc = flows.length ? '<div class="grp">Algorithm ในบทนี้</div>' + flows.map(function (f) { return '<a href="#/clinic/symp/' + c.id + '?to=f-' + f.id + '" data-go="f-' + f.id + '"><span class="pn fi">⇣</span><span>' + esc(f.title) + '</span></a>'; }).join('') : '';
+    var i = SY.chapters.indexOf(c), prev = SY.chapters[i - 1], next = SY.chapters[i + 1];
+    var nav = '<nav aria-label="บทก่อนหน้าและถัดไป" class="pnav">' +
+      (prev ? '<a href="#/clinic/symp/' + prev.id + '"><span class="muted" style="font-size:13px">← บทที่ ' + prev.no + '</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.th) + '</span></a>' : '<span></span>') +
+      (next ? '<a href="#/clinic/symp/' + next.id + '" style="align-items:flex-end;text-align:right"><span class="muted" style="font-size:13px">บทที่ ' + next.no + ' →</span><span class="k" style="font-size:17px;font-weight:500">' + esc(next.th) + '</span></a>' : '') + '</nav>';
+    return {
+      title: c.th + ' · ' + c.en, html: head +
+        '<section class="band" style="padding:30px 0 80px"><div class="wrap reader sxreader" id="sxr" style="--g:' + g.c + '">' +
+        '<details class="ttree sxtoc" id="sxtoc" open><summary class="k">หัวข้อในบท <span class="muted" style="font-weight:400;font-size:14px">· ' + d.sections.length + ' หัวข้อ</span></summary><nav class="tree" aria-label="หัวข้อในบท ' + esc(c.th) + '">' + toc + ftoc + '</nav></details>' +
+        '<article class="sheet doc sxdoc sx"><div class="sxtools"><button type="button" class="chip" data-all="1">เปิดทั้งหมด</button><button type="button" class="chip" data-all="0">ปิดทั้งหมด</button>' +
+        (flows.length ? '<span class="muted" style="font-size:14px">' + flows.length + ' algorithm — กดกล่องเพื่อดูรายละเอียด หรือเลือก "ทีละขั้น"</span>' : '') + '</div>' +
+        secs + nav + '</article></div></section>',
+      after: function () {
+        var root = document.getElementById('sxr');
+        if (window.innerWidth < 900) { var tt = document.getElementById('sxtoc'); if (tt) tt.open = false; }
+        function save() {
+          var o = [], closed = [];
+          root.querySelectorAll('details.sxsec').forEach(function (x) { if (x.open) o.push(x.getAttribute('data-sid')); });
+          root.querySelectorAll('details.sxbox').forEach(function (x) { if (!x.open) closed.push(x.getAttribute('data-sid')); });
+          syOpen(c.id, o.concat(closed));
+        }
+        function mountIn(el) { el.querySelectorAll('.fbox').forEach(function (fb) { if (fb.offsetParent !== null) flowMount(fb, FM[fb.getAttribute('data-f')]); }); }
+        root.querySelectorAll('details.sxsec,details.sxbox').forEach(function (x) {
+          x.addEventListener('toggle', function () { if (x.open) mountIn(x); if (!x._q) save(); });
+        });
+        root.querySelectorAll('details.sxsec[open]').forEach(mountIn);
+        root.querySelector('.sxtools').addEventListener('click', function (e) {
+          var b = e.target.closest('[data-all]'); if (!b) return;
+          var on = b.getAttribute('data-all') === '1';
+          root.querySelectorAll('details.sxsec,details.sxbox').forEach(function (x) { x._q = true; x.open = on; x._q = false; });
+          save(); if (on) mountIn(root);
+        });
+        function go(id, smooth) {
+          var el = document.getElementById(id); if (!el) return;
+          for (var p = el; p && p !== root; p = p.parentElement) if (p.tagName === 'DETAILS' && !p.open) { p._q = true; p.open = true; p._q = false; }
+          save(); mountIn(root);
+          el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+          el.classList.remove('hl'); void el.offsetWidth; el.classList.add('hl');
+        }
+        root.addEventListener('click', function (e) {
+          var a = e.target.closest('[data-go]'); if (!a) return;
+          e.preventDefault(); setQuery(route(), { to: a.getAttribute('data-go') });
+          if (window.innerWidth < 900) { var tt = document.getElementById('sxtoc'); if (tt) tt.open = false; }
+          go(a.getAttribute('data-go'), true);
+        });
+        bindLightbox(root);
+        var to = r.q.get('to'); if (to) setTimeout(function () { go(to, false); }, 30);
+      }
+    };
+  }
+  function sympPage(r) {
+    if (!r.args[1]) return sympHub(r);
+    var c = syCh(r.args[1]);
+    if (!c) return { title: 'ไม่พบบท', html: clinicHead('symp', '', 'ไม่พบบทนี้', '<a href="#/clinic/symp">กลับไปหน้ารวมบท</a>') };
+    return sympChapter(c, r);
+  }
+
+  /* ---------- ภาพขยาย ---------- */
+  function bindLightbox(root) {
+    root.addEventListener('click', function (e) {
+      var im = e.target.closest('.sx figure img, .forig img'); if (!im) return;
+      var cap = im.closest('figure') && im.closest('figure').querySelector('figcaption');
+      var ov = document.createElement('div'); ov.className = 'lbox'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-label', 'ภาพขยาย');
+      ov.innerHTML = '<button type="button" class="burger lbx" aria-label="ปิดภาพ"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M6 6.3L18 17.6M18 6.2L6.2 17.8"/></svg></button><img src="' + im.getAttribute('src') + '" alt="' + esc(im.getAttribute('alt') || '') + '">' + (cap ? '<p>' + cap.innerHTML + '</p>' : '');
+      document.body.appendChild(ov); document.body.classList.add('lbopen');
+      function close() { ov.remove(); document.body.classList.remove('lbopen'); document.removeEventListener('keydown', k); im.focus && im.focus(); }
+      function k(ev) { if (ev.key === 'Escape') close(); }
+      ov.addEventListener('click', function (ev) { if (ev.target === ov || ev.target.closest('.lbx')) close(); });
+      document.addEventListener('keydown', k);
+      ov.querySelector('.lbx').focus();
+    });
+  }
+
+  /* =========================================================
+     FLOW — algorithm กดโต้ตอบได้ (จัดวางเองแบบ layered, ไม่ใช้ไลบรารีนอก)
+     ========================================================= */
+  var FK = { start: 'จุดเริ่ม', q: 'คำถาม / จุดตัดสินใจ', act: 'สิ่งที่ทำ', dx: 'การวินิจฉัย / ผลลัพธ์', stop: 'เร่งด่วน / ส่งต่อ', note: 'หมายเหตุ' };
+  function flowShell(f) {
+    return '<div class="fbox" id="f-' + f.id + '" data-f="' + f.id + '"><div class="fhd"><div class="fti"><span class="label">ALGORITHM' + (f.src === 'fig' ? ' · จากรูปในหนังสือ' : ' · สร้างจากเนื้อหาในบท') + '</span><b class="k">' + esc(f.title) + '</b>' + (f.note ? '<small>' + esc(f.note) + '</small>' : '') + '</div>' +
+      '<div class="ftools"><div class="seg" role="group" aria-label="มุมมอง"><button type="button" data-m="map" aria-pressed="true">แผนภาพ</button><button type="button" data-m="walk" aria-pressed="false">ทีละขั้น</button></div>' +
+      '<span class="fz"><button type="button" data-a="out" aria-label="ย่อ">−</button><button type="button" data-a="fit" aria-label="พอดีกรอบ">พอดี</button><button type="button" data-a="in" aria-label="ขยาย">+</button></span>' +
+      (f.img ? '<button type="button" class="fbtn" data-a="img" aria-pressed="false">รูปต้นฉบับ</button>' : '') +
+      '<button type="button" class="fbtn" data-a="full" aria-label="เต็มจอ" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div>' +
+      '<div class="fcan"><div class="fsize"><div class="fstage"></div></div></div><div class="fwalk" hidden></div><div class="finfo" aria-live="polite"><p class="muted">กดกล่องเพื่อไฮไลต์เส้นทางและดูรายละเอียด</p></div>' +
+      (f.img ? '<figure class="forig" hidden><img src="symp/img/' + f.img + '" alt="รูปต้นฉบับ: ' + esc(f.title) + '" loading="lazy"></figure>' : '') + '</div>';
+  }
+
+  function flowLayout(N, E) {
+    /* N: [{id,w,h}] · E: [{f,t,lw}] → {nodes:{id:{x,y,w,h}}, edges:[{pts,lab:{x,y}}], W, H} */
+    var GAP = 22, RS = 60, PAD = 16, id2 = {}, out = {}, inn = {};
+    N.forEach(function (n) { id2[n.id] = n; out[n.id] = []; inn[n.id] = []; });
+    E.forEach(function (e, i) { e.i = i; out[e.f].push(e); inn[e.t].push(e); });
+    /* rank = longest path from roots */
+    var rank = {}, indeg = {}, q = [], order = [];
+    N.forEach(function (n) { indeg[n.id] = inn[n.id].length; if (!indeg[n.id]) q.push(n.id); });
+    while (q.length) { var v = q.shift(); order.push(v); out[v].forEach(function (e) { if (--indeg[e.t] === 0) q.push(e.t); }); }
+    N.forEach(function (n) { if (order.indexOf(n.id) < 0) order.push(n.id); });   /* วนวน: กันพัง */
+    order.forEach(function (v) { rank[v] = inn[v].reduce(function (m, e) { return Math.max(m, rank[e.f] == null ? 0 : rank[e.f] + 1); }, 0); });
+    /* ดึง root ที่ไม่ใช่ตัวหลัก (เช่น note) ลงมาใกล้ลูก */
+    order.slice().reverse().forEach(function (v) { if (!inn[v].length && out[v].length && rank[v] === 0) { var m = Math.min.apply(null, out[v].map(function (e) { return rank[e.t]; })); if (m - 1 > 0) rank[v] = m - 1; } });
+    /* dummy nodes */
+    var nodes = N.map(function (n) { return { id: n.id, w: n.w, h: n.h, r: rank[n.id], up: [], dn: [] }; }), NB = {};
+    nodes.forEach(function (n) { NB[n.id] = n; });
+    var chains = [];
+    E.forEach(function (e) {
+      var a = NB[e.f], b = NB[e.t], ch = [a], k = 0;
+      for (var r = a.r + 1; r < b.r; r++) { var dmy = { id: '_' + e.i + '_' + (k++), w: 10, h: 0, r: r, up: [], dn: [], dummy: true }; nodes.push(dmy); NB[dmy.id] = dmy; ch.push(dmy); }
+      ch.push(b);
+      for (var j = 0; j < ch.length - 1; j++) { ch[j].dn.push(ch[j + 1]); ch[j + 1].up.push(ch[j]); }
+      if (e.lw) b.lw = Math.max(b.lw || 0, e.lw);
+      chains.push(ch);
+    });
+    var L = [], maxR = 0; nodes.forEach(function (n) { maxR = Math.max(maxR, n.r); });
+    for (var r = 0; r <= maxR; r++) L.push([]);
+    /* ลำดับเริ่มต้นแบบ DFS */
+    var seen = {};
+    function dfs(n) { if (seen[n.id]) return; seen[n.id] = 1; L[n.r].push(n); n.dn.forEach(dfs); }
+    nodes.filter(function (n) { return !n.up.length; }).forEach(dfs); nodes.forEach(dfs);
+    function idx() { L.forEach(function (l) { l.forEach(function (n, i) { n.o = i; }); }); }
+    idx();
+    function bary(n, dir) { var nb = dir ? n.up : n.dn; if (!nb.length) return n.o; return nb.reduce(function (s, x) { return s + x.o; }, 0) / nb.length; }
+    for (var it = 0; it < 16; it++) {
+      var down = it % 2 === 0;
+      for (var li = down ? 1 : L.length - 2; down ? li < L.length : li >= 0; li += down ? 1 : -1) {
+        L[li].forEach(function (n) { n.b = bary(n, down); });
+        L[li].sort(function (a, b) { return a.b - b.b || a.o - b.o; });
+        L[li].forEach(function (n, i) { n.o = i; });
+      }
+    }
+    /* พิกัด x */
+    function ww(n) { return Math.max(n.w, n.lw || 0); }
+    function pack(l, want) {
+      var a = [], b = [], i;
+      for (i = 0; i < l.length; i++) { a[i] = want[i]; if (i) a[i] = Math.max(a[i], a[i - 1] + (ww(l[i - 1]) + ww(l[i])) / 2 + GAP); }
+      for (i = l.length - 1; i >= 0; i--) { b[i] = want[i]; if (i < l.length - 1) b[i] = Math.min(b[i], b[i + 1] - (ww(l[i + 1]) + ww(l[i])) / 2 - GAP); }
+      var c = a.map(function (x, k) { return (x + b[k]) / 2; });
+      for (i = 1; i < l.length; i++) c[i] = Math.max(c[i], c[i - 1] + (ww(l[i - 1]) + ww(l[i])) / 2 + GAP);
+      l.forEach(function (n, k) { n.x = c[k]; });
+    }
+    L.forEach(function (l) { var x = 0; l.forEach(function (n) { n.x = x + ww(n) / 2; x += ww(n) + GAP; }); });
+    for (it = 0; it < 24; it++) {
+      var dn = it % 2 === 0;
+      for (li = dn ? 1 : L.length - 2; dn ? li < L.length : li >= 0; li += dn ? 1 : -1) {
+        pack(L[li], L[li].map(function (n) { var nb = dn ? n.up : n.dn; if (!nb.length) nb = dn ? n.dn : n.up; return nb.length ? nb.reduce(function (s, x) { return s + x.x; }, 0) / nb.length : n.x; }));
+      }
+    }
+    var minX = Infinity, maxX = -Infinity;
+    nodes.forEach(function (n) { minX = Math.min(minX, n.x - ww(n) / 2); maxX = Math.max(maxX, n.x + ww(n) / 2); });
+    nodes.forEach(function (n) { n.x += PAD - minX; });
+    /* พิกัด y */
+    var y = PAD, LH = [];
+    L.forEach(function (l, k) { var h = l.reduce(function (m, n) { return Math.max(m, n.h); }, 0); LH[k] = { y: y, h: h }; y += h + RS; });
+    nodes.forEach(function (n) { var b = LH[n.r]; n.y = b.y + (b.h - n.h) / 2; });
+    var res = { nodes: {}, edges: [], W: maxX - minX + PAD * 2, H: y - RS + PAD };
+    N.forEach(function (n) { var m = NB[n.id]; res.nodes[n.id] = { x: m.x - m.w / 2, y: m.y, w: m.w, h: m.h, cx: m.x }; });
+    chains.forEach(function (ch, i) {
+      var pts = ch.map(function (n, k) { return k === 0 ? [n.x, n.y + n.h] : k === ch.length - 1 ? [n.x, n.y] : [n.x, n.y]; });
+      var p = pts[pts.length - 2], t = pts[pts.length - 1], e = E[i], many = inn[e.t].filter(function (x) { return x.lw; }).length > 1;
+      /* ป้ายเงื่อนไขวางเหนือกล่องปลายทาง (กล่องถูกเว้นระยะตามความกว้างป้ายแล้ว จึงไม่ทับกัน) · ถ้าปลายทางมีหลายป้ายเข้า (เส้นรวม) วางใต้กล่องต้นทางแทน */
+      var s0 = pts[0], s1 = pts[1];
+      res.edges[i] = { pts: pts, lab: many ? { x: s0[0] + (s1[0] - s0[0]) * 0.3, y: s0[1] + 6 + (e.lh || 20) / 2 } : { x: t[0], y: t[1] - 6 - (e.lh || 20) / 2 } };
+    });
+    return res;
+  }
+  function flowPath(pts) {
+    var d = 'M' + pts[0][0] + ' ' + pts[0][1];
+    for (var i = 1; i < pts.length; i++) {
+      var a = pts[i - 1], b = pts[i], my = (b[1] - a[1]) / 2;
+      d += ' C' + a[0] + ' ' + (a[1] + my) + ' ' + b[0] + ' ' + (b[1] - my) + ' ' + b[0] + ' ' + (b[1] - 6);
+      if (i < pts.length - 1) d += ' L' + b[0] + ' ' + b[1];
+    }
+    return d;
+  }
+  function flowMount(box, f) {
+    if (!f || box._m) return; box._m = true;
+    var stage = box.querySelector('.fstage'), size = box.querySelector('.fsize'), can = box.querySelector('.fcan'), info = box.querySelector('.finfo'), walk = box.querySelector('.fwalk');
+    var NM = {}, OUT = {}, IN = {};
+    f.nodes.forEach(function (n) { NM[n.id] = n; OUT[n.id] = []; IN[n.id] = []; });
+    f.edges.forEach(function (e, i) { e._i = i; if (OUT[e.f] && IN[e.t]) { OUT[e.f].push(e); IN[e.t].push(e); } });
+    var roots = f.nodes.filter(function (n) { return !IN[n.id].length; });
+    stage.innerHTML = f.nodes.map(function (n) {
+      return '<button type="button" class="fn k-' + (n.k || 'act') + (n.d ? ' more' : '') + '" data-id="' + esc(n.id) + '"><span>' + n.t + '</span>' + (n.d ? '<i aria-hidden="true">+</i>' : '') + '</button>';
+    }).join('') + f.edges.map(function (e, i) { return e.l ? '<span class="fel" data-e="' + i + '">' + esc(e.l) + '</span>' : ''; }).join('');
+    var scale = 1, lay = null;
+    function measure() {
+      stage.style.transform = 'none'; stage.style.width = '4000px';
+      var N = f.nodes.map(function (n) { var el = stage.querySelector('.fn[data-id="' + cssq(n.id) + '"]'); var bb = el.getBoundingClientRect(); return { id: n.id, w: Math.ceil(bb.width) + 2, h: Math.ceil(bb.height) }; });
+      var E = f.edges.filter(function (e) { return NM[e.f] && NM[e.t]; }).map(function (e) { var el = stage.querySelector('.fel[data-e="' + e._i + '"]'); return { f: e.f, t: e.t, lw: el ? el.offsetWidth + 8 : 0, lh: el ? el.offsetHeight : 0, _i: e._i }; });
+      lay = flowLayout(N, E);
+      f.nodes.forEach(function (n) { var p = lay.nodes[n.id], el = stage.querySelector('.fn[data-id="' + cssq(n.id) + '"]'); el.style.left = p.x + 'px'; el.style.top = p.y + 'px'; el.style.width = p.w + 'px'; });
+      var svg = '<svg class="fsvg" width="' + lay.W + '" height="' + lay.H + '" aria-hidden="true"><defs><marker id="ah-' + f.id + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>';
+      E.forEach(function (e, k) {
+        var g = lay.edges[k];
+        svg += '<path class="fe" data-e="' + e._i + '" d="' + flowPath(g.pts) + '" marker-end="url(#ah-' + f.id + ')"/>';
+        var lb = stage.querySelector('.fel[data-e="' + e._i + '"]');
+        if (lb) { lb.style.left = (g.lab.x - lb.offsetWidth / 2) + 'px'; lb.style.top = (g.lab.y - lb.offsetHeight / 2) + 'px'; }
+      });
+      var old = stage.querySelector('svg'); if (old) old.remove();
+      stage.insertAdjacentHTML('afterbegin', svg + '</svg>');
+      stage.style.width = lay.W + 'px'; stage.style.height = lay.H + 'px';
+      fit();
+    }
+    function apply() { stage.style.transform = 'scale(' + scale + ')'; size.style.width = Math.ceil(lay.W * scale) + 'px'; size.style.height = Math.ceil(lay.H * scale) + 'px'; }
+    function fit() { var w = can.clientWidth - 4; scale = Math.max(window.innerWidth < 700 ? 0.74 : 0.45, Math.min(1, w / lay.W)); apply(); var r0 = roots[0] && lay.nodes[roots[0].id]; can.scrollLeft = r0 ? Math.max(0, r0.cx * scale - can.clientWidth / 2) : 0; }
+    var sel = null;
+    function anc(id) { var s = {}, st = [id]; while (st.length) { var x = st.pop(); if (s[x]) continue; s[x] = 1; IN[x].forEach(function (e) { st.push(e.f); }); } return s; }
+    function select(id, scroll) {
+      sel = id;
+      var A = id ? anc(id) : null, kids = {};
+      if (id) OUT[id].forEach(function (e) { kids[e.t] = 1; });
+      stage.querySelectorAll('.fn').forEach(function (el) {
+        var k = el.getAttribute('data-id');
+        el.classList.toggle('sel', k === id); el.classList.toggle('dim', !!id && !A[k] && !kids[k]); el.classList.toggle('path', !!id && !!A[k] && k !== id);
+        el.setAttribute('aria-pressed', String(k === id));
+      });
+      stage.querySelectorAll('.fe,.fel').forEach(function (el) {
+        var e = f.edges[+el.getAttribute('data-e')], hot = id && A[e.t] && A[e.f], nx = id && e.f === id;
+        el.classList.toggle('hot', !!hot); el.classList.toggle('nx', !!nx); el.classList.toggle('dim', !!id && !hot && !nx);
+      });
+      if (!id) { info.innerHTML = '<p class="muted">กดกล่องเพื่อไฮไลต์เส้นทางและดูรายละเอียด</p>'; return; }
+      var n = NM[id];
+      info.innerHTML = '<div class="fih"><span class="fk k-' + (n.k || 'act') + '">' + FK[n.k || 'act'] + '</span><b>' + n.t + '</b></div>' + (n.d ? '<div class="fid">' + n.d + '</div>' : '') +
+        (IN[id].length ? '<div class="fopt"><span class="label">มาจาก</span>' + IN[id].map(function (e) { return '<button type="button" class="chip" data-to="' + esc(e.f) + '">← ' + strip(NM[e.f].t) + (e.l ? ' <small>(' + esc(e.l) + ')</small>' : '') + '</button>'; }).join('') + '</div>' : '') +
+        (OUT[id].length ? '<div class="fopt"><span class="label">ไปต่อ</span>' + OUT[id].map(function (e) { return '<button type="button" class="chip" data-to="' + esc(e.t) + '">' + (e.l ? '<b>' + esc(e.l) + '</b> → ' : '→ ') + strip(NM[e.t].t) + '</button>'; }).join('') + '</div>' : '<p class="note">ปลายทางของเส้นนี้</p>') +
+        '<button type="button" class="chip" data-to="">ล้างการเลือก</button>';
+      if (scroll) { var el = stage.querySelector('.fn[data-id="' + cssq(id) + '"]'); if (el) { var p = lay.nodes[id]; can.scrollTo({ left: Math.max(0, (p.cx) * scale - can.clientWidth / 2), behavior: 'smooth' }); } }
+    }
+    function strip(h) { var d = document.createElement('div'); d.innerHTML = h; return esc(d.textContent); }
+    stage.addEventListener('click', function (e) { var b = e.target.closest('.fn'); if (!b) return; var id = b.getAttribute('data-id'); select(sel === id ? null : id); });
+    info.addEventListener('click', function (e) { var b = e.target.closest('[data-to]'); if (!b) return; select(b.getAttribute('data-to') || null, true); });
+    /* ทีละขั้น */
+    var trail = [];
+    function paintWalk() {
+      if (!trail.length) {
+        if (roots.length === 1) trail = [roots[0].id];
+        else { walk.innerHTML = '<p class="label">เริ่มจาก</p><div class="fopt">' + roots.map(function (n) { return '<button type="button" class="fchoice" data-w="' + esc(n.id) + '">' + n.t + '</button>'; }).join('') + '</div>'; return; }
+      }
+      var cur = NM[trail[trail.length - 1]], opts = OUT[cur.id];
+      walk.innerHTML = '<ol class="ftrail">' + trail.map(function (id, i) { return '<li><button type="button" data-back="' + i + '"' + (i === trail.length - 1 ? ' aria-current="step"' : '') + '>' + strip(NM[id].t) + '</button></li>'; }).join('') + '</ol>' +
+        '<div class="fcard k-' + (cur.k || 'act') + '"><span class="fk k-' + (cur.k || 'act') + '">' + FK[cur.k || 'act'] + '</span><p class="fct">' + cur.t + '</p>' + (cur.d ? '<div class="fid">' + cur.d + '</div>' : '') + '</div>' +
+        (opts.length ? '<div class="fopts">' + opts.map(function (e) { return '<button type="button" class="fchoice" data-w="' + esc(e.t) + '">' + (e.l ? '<b>' + esc(e.l) + '</b>' : '<b>ต่อไป</b>') + '<span>' + NM[e.t].t + '</span></button>'; }).join('') + '</div>' : '<p class="note">จบเส้นทาง</p>') +
+        '<div class="filters" style="margin-top:6px">' + (trail.length > 1 ? '<button type="button" class="chip" data-back="' + (trail.length - 2) + '">← ย้อนกลับ</button>' : '') + '<button type="button" class="chip" data-reset="1">เริ่มใหม่</button></div>';
+    }
+    walk.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-w],[data-back],[data-reset]'); if (!b) return;
+      if (b.hasAttribute('data-w')) trail.push(b.getAttribute('data-w'));
+      else if (b.hasAttribute('data-back')) trail = trail.slice(0, +b.getAttribute('data-back') + 1);
+      else trail = [];
+      paintWalk();
+      var top = walk.getBoundingClientRect().top; if (top < 70) window.scrollBy({ top: top - 90, behavior: 'smooth' });
+    });
+    box.querySelector('.ftools').addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      var m = b.getAttribute('data-m'), a = b.getAttribute('data-a');
+      if (m) {
+        box.querySelectorAll('[data-m]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        var w = m === 'walk'; walk.hidden = !w; can.hidden = w; info.hidden = w; box.querySelector('.fz').hidden = w; box.classList.toggle('walking', w);
+        if (w) paintWalk(); else fit();
+      } else if (a === 'in') { scale = Math.min(1.8, scale * 1.2); apply(); }
+      else if (a === 'out') { scale = Math.max(0.3, scale / 1.2); apply(); }
+      else if (a === 'fit') fit();
+      else if (a === 'img') { var fg = box.querySelector('.forig'), on = fg.hidden; fg.hidden = !on; b.setAttribute('aria-pressed', String(on)); }
+      else if (a === 'full') {
+        var full = !box.classList.contains('full'); box.classList.toggle('full', full); document.body.classList.toggle('fopen', full); b.setAttribute('aria-pressed', String(full));
+        if (!can.hidden) fit();
+      }
+    });
+    box.addEventListener('keydown', function (e) { if (e.key === 'Escape' && box.classList.contains('full')) box.querySelector('[data-a="full"]').click(); });
+    var rt = null;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { if (document.body.contains(box) && lay && !can.hidden) fit(); }, 200); });
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(measure);
+  }
+  function cssq(s) { return String(s).replace(/["\\]/g, '\\$&'); }
 
   /* =========================================================
      ห้องสอบ
