@@ -19,15 +19,16 @@
 | `docs/app.js`, `docs/app.css` | ตัวเว็บ |
 
 ## Preclinic + Clinic จาก Google Doc "โพยหมอ" (`#/preclinic`, `#/clinic/skills`, `#/clinic/ward`)
-- Doc โพยหมอ แชร์ Anyone with the link → Viewer แล้ว · หน้าเว็บอ่าน Doc ตรงจาก Google ไม่ได้ (Google ไม่ส่ง CORS) จึงใช้ **GitHub Actions** `.github/workflows/gdoc-sync.yml` ดึง `export?format=zip` → `tools/gdoc/build.py` → commit `docs/gdoc/poymor.json` ทุก ~10 นาที (commit เฉพาะเมื่อ Doc เปลี่ยน) · อยากอัปเดตทันที: แท็บ Actions → Sync Google Doc → Run workflow
-- ถ้า Actions ล้มด้วย "ได้แค่ N แท็บ" = Google ส่งหน้า login มา (Doc ถูกปิดแชร์)
+- Doc โพยหมอ แชร์ Anyone with the link → Viewer แล้ว · หน้าเว็บอ่าน Doc ตรงจาก Google ไม่ได้ (Google ไม่ส่ง CORS) จึงใช้ **GitHub Actions** `.github/workflows/gdoc-sync.yml` ทุก ~10 นาที: `tools/gdoc/build.py --public <docId> poymor` อ่านชื่อ+ชั้นของแท็บจากหน้า `/edit` (DOCS_modelChunk) แล้วดึงทีละแท็บด้วย `export?format=html&tab=<id>` → `docs/gdoc/poymor.json` (มี `d` = ชั้นจริง) + รูปใน `docs/gdoc/img/` → commit เฉพาะเมื่อ Doc เปลี่ยน · อยากอัปเดตทันที: แท็บ Actions → Sync Google Doc → Run workflow
+- ถ้า Actions ล้มด้วย "ได้แค่ N แท็บ" = Doc ถูกปิดแชร์ (Google ส่งหน้า login มา)
 - ทุกแท็บอยู่ Preclinic ยกเว้นแท็บหลักใน `clinic` ของ data/gdoc.js (History Taking, Physical Exam, Lab Procedures → Clinical skills · Symptomatology → การ์ดในหน้า Symptomatology & Approach · Clinic → สรุปวอร์ด) · แท็บ `homework (?)` ไม่ขึ้นเว็บ (ตัดทั้งตอนดึงสดและในฉบับเก็บ)
-- export ของ Google ไม่บอกว่าแท็บไหนเป็นแท็บย่อย → ชั้นของแท็บกำหนดใน `tree` (เว้น 2 ช่อง = ลึกหนึ่งชั้น) · แท็บใหม่ที่ไม่อยู่ในรายการจะอยู่ชั้นเดียวกับแท็บก่อนหน้า · ถ้าย้าย/สร้างแท็บย่อยใหม่ ให้แก้ `tree`
+- `tree` ใน data/gdoc.js ใช้สำรองเฉพาะฉบับเก็บที่ไม่มีข้อมูลชั้น · แท็บ homework ซ่อนพร้อมแท็บย่อย
 - ไฟล์ที่ดึงครั้งเดียว (ไม่อัปเดตเอง) อยู่ใน `extras`: MSK Anatomy Atlas (ชีต MSK ปี 2 → ใต้ MS Anatomy), Tissue Bio Spot Hack (→ ใต้ Histology), DocQ Med Template 2026 (แต่ละแท็บ → เรื่องที่ตรงกัน)
 - สร้างฉบับเก็บใหม่ (ต้องมี zip ที่ export จาก Google: Doc → `application/zip`, Sheet → `application/zip`):
-  - Doc: `python3 tools/gdoc/build.py <โฟลเดอร์ zip ที่แตกแล้ว> poymor --hide "homework (?)"` (DocQ: `... docq --prefix q`)
+  - Doc โพยหมอ: Actions ทำเอง · Doc อื่น (เช่น DocQ) จาก zip ที่ export ผ่าน Drive: `python3 tools/gdoc/build.py <โฟลเดอร์> docq --prefix q`
   - Sheet: `python3 tools/gdoc/sheets.py <โฟลเดอร์> msk-anatomy "<ชีต 1>" "<ชีต 2>" ...` (ใส่ชื่อชีตเรียงตามไฟล์)
   - แล้วเพิ่มเลข `POY_GDOC_V` ใน data/gdoc.js
+- ผู้ใช้สั่งอัปเดตไฟล์ที่ไม่ sync เองด้วยคำสั่งในแชท `//update ggfile <ชื่อไฟล์|all>`
 - ออกข้อสอบจากแท็บใดก็ได้: `#/exam?src=g:<แท็บ>` (รวมแท็บย่อย)
 
 ## Google Sheet 1000 MAI
