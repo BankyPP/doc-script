@@ -10,10 +10,12 @@ jobs:
     steps:
       - run: |
           ID=11lXA1hl_ZiBV_kCget8vxl1RGVGM_7beGwfYX6r2EnE
+          curl -sL "https://docs.google.com/document/d/$ID/export?format=html" -o all.html
+          echo "::notice title=html titles::$(grep -o 'class="title"' all.html | wc -l) / $(grep -oE 'class="[^"]*title[^"]*"' all.html | sort | uniq -c | head -5 | tr '\n' ' ')"
+          echo "::notice title=html near Neuroanatomy::$(grep -oE '.{300}Neuroanatomy.{80}' all.html | head -1 | sed 's/[<>]/ /g' | head -c 600)"
           curl -sL "https://docs.google.com/document/d/$ID/edit" -o edit.html
-          echo "::notice title=edit::size $(wc -c < edit.html) ids $(grep -oE 't\.[a-z0-9]{8,16}' edit.html | sort -u | wc -l): $(grep -oE 't\.[a-z0-9]{8,16}' edit.html | sort -u | head -12 | tr '\n' ' ') neuro=$(grep -c 'Neuroanatomy' edit.html)"
-          curl -sL "https://docs.google.com/document/d/$ID/mobilebasic" -o mb.html
-          echo "::notice title=mobilebasic::size $(wc -c < mb.html) ids $(grep -oE 't\.[a-z0-9]{8,16}' mb.html | sort -u | wc -l) neuro=$(grep -c 'Neuroanatomy' mb.html) lipid=$(grep -c 'HMG-CoA' mb.html)"
-          curl -sL "https://docs.google.com/document/d/$ID/pub" -o pub.html
-          echo "::notice title=pub::size $(wc -c < pub.html)"
-          for f in html txt; do curl -sL "https://docs.google.com/document/d/$ID/export?format=$f" -o all.$f; echo "::notice title=export $f::size $(wc -c < all.$f) lipid=$(grep -c 'HMG-CoA' all.$f)"; done
+          echo "::notice title=edit near Neuroanatomy::$(grep -oE '.{300}Neuroanatomy.{200}' edit.html | head -2 | sed 's/[<>]/ /g' | head -c 900)"
+          T=$(grep -oE 't\.[a-z0-9]{8,16}' edit.html | head -1)
+          echo "::notice title=edit near first id $T::$(grep -oE ".{200}$T.{200}" edit.html | head -1 | sed 's/[<>]/ /g' | head -c 700)"
+          curl -sL "https://docs.google.com/document/d/$ID/export?format=html&tab=$T" -o one.html
+          echo "::notice title=export one tab::size $(wc -c < one.html) $(grep -o 'class="title"' one.html | wc -l) titles"
