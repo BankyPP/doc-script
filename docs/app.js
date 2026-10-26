@@ -1491,9 +1491,9 @@
     if (!sel || !sel.length) return all.filter(function (u) { return u.p < 18; });   /* ค่าเริ่มต้น: ทุกหน้า ยกเว้นหน้าข้อสอบ */
     return all.filter(function (u) { return sel.indexOf(u.key) >= 0; });
   }
-  /* สัดส่วนเรื่องที่ออก (ตั้งต่อหัวข้อใน data/topics.js → mix) — สุ่มทีละข้อ */
+  /* สัดส่วนเรื่องที่ออก — ค่าเริ่มต้นทุกหัวข้อ: POY_TOPIC_DEFAULTS.mix (หัวข้อไหนใส่ mix เองจะใช้ของหัวข้อนั้น) — สุ่มทีละข้อ */
   function aiMix(t, forChat) {
-    var m = t.mix; if (!m) return '';
+    var m = t.mix || (window.POY_TOPIC_DEFAULTS || {}).mix; if (!m) return '';
     if (forChat) return '- สัดส่วนเรื่อง: ประมาณ ' + Math.round(m.p * 100) + '% ของข้อ ' + m.main + ' · ที่เหลือ ' + m.other + '\n';
     return '- ข้อนี้: ' + (Math.random() < m.p ? m.main + ' (ถ้าเนื้อหาด้านล่างไม่ได้พูดถึงตรง ๆ ให้ใช้เนื้อหานี้เป็นบริบทของเคส แล้วให้คำถามจบที่เชื้อ/ยา)' : m.other) + '\n';
   }
