@@ -1,6 +1,7 @@
 # ดึง Google Doc "โพยหมอ" มาอัปเดตเว็บอัตโนมัติ (Doc แชร์ Anyone with the link แล้ว จึงดึงได้โดยไม่ต้องใช้รหัส)
 # - ทุก ~10 นาที (GitHub อาจช้ากว่านี้บ้าง) + กดรันเองได้ที่แท็บ Actions → "Sync Google Doc" → Run workflow
-# - commit เฉพาะเมื่อเนื้อหาใน Doc เปลี่ยน · แท็บ homework ไม่ขึ้นเว็บ
+# - commit เฉพาะเมื่อเนื้อหาใน Doc เปลี่ยน · แท็บ homework (และแท็บย่อยของมัน) ไม่ขึ้นเว็บ
+# - ชื่อ/ชั้นของแท็บอ่านจากหน้า /edit · เนื้อหาทีละแท็บจาก export?format=html&tab=<id>
 name: Sync Google Doc
 on:
   schedule:
@@ -27,21 +28,14 @@ jobs:
         run: |
           pip install playwright
           python -m playwright install --with-deps chromium
-      - name: ดึง Doc โพยหมอ
-        run: |
-          mkdir -p /tmp/gdoc && cd /tmp/gdoc
-          curl -sSfL "https://docs.google.com/document/d/11lXA1hl_ZiBV_kCget8vxl1RGVGM_7beGwfYX6r2EnE/export?format=zip" -o doc.zip
-          file doc.zip
-          unzip -o -q doc.zip
-          ls -la
-          echo "::notice title=ดึง Doc::$(ls | tr '\n' ' ')"
-      - name: แปลงเป็นหน้าเว็บ
+      - name: ดึง Doc โพยหมอ ทุกแท็บ (ชื่อ + ชั้นจริงจาก Doc)
         run: |
           set -o pipefail
-          if ! python3 tools/gdoc/build.py /tmp/gdoc poymor --hide "homework (?)" --min-tabs 20 2>&1 | tee /tmp/build.log; then
-            echo "::error title=แปลง Doc ไม่สำเร็จ::$(tail -c 900 /tmp/build.log | tr '\n' ' ')"
+          if ! python3 tools/gdoc/build.py --public 11lXA1hl_ZiBV_kCget8vxl1RGVGM_7beGwfYX6r2EnE poymor --hide "homework (?)" --min-tabs 20 2>&1 | tee /tmp/build.log; then
+            echo "::error title=ดึง Doc ไม่สำเร็จ::$(tail -c 900 /tmp/build.log | tr '\n' ' ')"
             exit 1
           fi
+          echo "::notice title=ผล::$(tail -n 2 /tmp/build.log | tr '\n' ' ')"
       - name: commit ถ้ามีอะไรเปลี่ยน
         run: |
           if [ -n "$(git status --porcelain docs/gdoc)" ]; then
@@ -49,7 +43,7 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add docs/gdoc
             git commit -m "อัปเดตจาก Google Doc โพยหมอ"
-            git push
+            git pull --rebase -q origin main && git push
           else
             echo "Doc ไม่เปลี่ยน"
           fi

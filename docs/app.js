@@ -874,10 +874,13 @@
     var spec = gSpec(), hide = (GD.main.hide || []), nodes = [], by = {}, byHead = {}, used = {};
     function uniq(s) { var k = s, n = 2; while (used[k]) k = s + '-' + (n++); used[k] = 1; return k; }
     function add(n) { n.slug = uniq(n.slug); nodes.push(n); by[n.slug] = n; (n.heads || []).forEach(function (h) { byHead[h.id] = n; }); return n; }
-    var tops = [], stack = [], prevDepth = 0;
+    var tops = [], stack = [], prevDepth = 0, hideD = -1;
     ((G.main && G.main.tabs) || []).forEach(function (t) {
-      if (hide.indexOf(t.title) >= 0) return;
-      var sp = spec[t.title], d = sp ? sp.d : prevDepth;
+      /* t.d = ชั้นจริงจาก Doc (ฉบับที่ GitHub Actions ดึง) · ไม่มี → ใช้ tree ใน data/gdoc.js */
+      var sp = spec[t.title], d = t.d != null ? t.d : sp ? sp.d : prevDepth;
+      if (hideD >= 0 && d > hideD) return;
+      hideD = -1;
+      if (hide.indexOf(t.title) >= 0) { hideD = d; return; }
       d = Math.min(d, stack.length);
       var n = add({ title: t.title || '(แท็บไม่มีชื่อ)', html: t.html, heads: t.heads || [], kids: [], depth: d, kind: 'doc', src: 'main', slug: gslug(t.title) });
       stack.length = d;

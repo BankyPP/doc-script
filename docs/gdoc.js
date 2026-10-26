@@ -6,11 +6,14 @@
 (function () {
   'use strict';
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  /* สไตล์ของ element = class (export จาก docs.google.com ใช้ .c12{…}) + inline style (export จาก Drive API) */
+  var CLS = {};
+  function decl(s, o) { String(s || '').split(';').forEach(function (d) { var i = d.indexOf(':'); if (i > 0) o[d.slice(0, i).trim().toLowerCase()] = d.slice(i + 1).trim(); }); return o; }
   function sty(el) {
-    var o = {}, s = el.getAttribute && el.getAttribute('style');
-    if (!s) return o;
-    s.split(';').forEach(function (d) { var i = d.indexOf(':'); if (i > 0) o[d.slice(0, i).trim().toLowerCase()] = d.slice(i + 1).trim(); });
-    return o;
+    var o = {};
+    if (!el.getAttribute) return o;
+    (el.getAttribute('class') || '').split(/\s+/).forEach(function (c) { if (CLS[c]) decl(CLS[c], o); });
+    return decl(el.getAttribute('style'), o);
   }
   function isBlack(c) { c = String(c || '').toLowerCase().replace(/\s/g, ''); return !c || c === '#000000' || c === '#000' || c === 'black' || c === 'inherit' || c === 'rgb(0,0,0)'; }
   function isBlankBg(c) { c = String(c || '').toLowerCase().replace(/\s/g, ''); return !c || c === 'transparent' || c === '#ffffff' || c === '#fff' || c === 'white' || c === 'inherit' || c === 'rgba(0,0,0,0)'; }
@@ -37,6 +40,8 @@
     var body = doc.body;
     /* เลขลำดับ list: Google ใช้ counter ใน CSS — อ่านชนิดของแต่ละระดับจาก <style> */
     var css = Array.prototype.map.call(doc.querySelectorAll('style'), function (s) { return s.textContent; }).join('\n');
+    CLS = {};
+    css.replace(/(?:^|(?<=\}))\s*\.(c\d+)\s*\{([^}]*)\}/g, function (m, k, b) { CLS[k] = (CLS[k] ? CLS[k] + ';' : '') + b; return m; });
     var olType = {};
     css.replace(/\.(lst-kix_[a-z0-9]+-\d+)\s*>\s*li:before\s*\{\s*content:\s*"[^"]*"\s*counter\([^,]+,\s*([a-z-]+)\)/g, function (m, k, t) { olType[k] = t; return m; });
     var tabs = [], cur = null, hn = 0;
