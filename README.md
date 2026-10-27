@@ -86,6 +86,27 @@ match /poymor_board/{id} {
 - ต่อหัวข้อใส่ได้: `testPages` (หน้าข้อสอบที่ไม่เอาไปออกโจทย์ AI โดยค่าเริ่มต้น), `mix` ของตัวเอง (+ `hint`), `searchPh` / `focusPh` (ตัวอย่างในช่องค้น/ช่องเน้นเรื่อง)
 - เพิ่มหัวข้อใหม่จาก PDF: สคริปต์ใน `tools/topic-from-pdf/` — `pdftoppm -r 170` → webp, `extract.py` (กล่อง/คอลัมน์ + ข้อความ, แก้สระไทยที่ฟอนต์ map ไม่ได้ใน `cidpatch.py`), `build_data.py` (ชื่อหน้า/กลุ่ม ต้องแก้ตามไฟล์), ตัดภาพแต่ละกล่องเป็นไฟล์ `docs/topics/<id>/c/<หน้า>-<คอลัมน์>-<กล่อง>.webp` (ห้ามใช้ภาพทั้งหน้าเลื่อนกรอบ — Safari บน iPhone วาดไม่ขึ้น), `selftest.py` (ถ้ามีข้อสอบในไฟล์)
 
+### คลังโจทย์ + ห้องฝึกใน Claude (27 ต.ค. 2026)
+- หน้าฝึกของทุกหัวข้อมีแท็บ **คลังโจทย์** (`?m=bank`): **คลังของฉัน** (โจทย์ AI ที่ตอบในเว็บด้วย API key + โจทย์ที่ส่งมาจาก Claude · localStorage `poy-tbank` + บัญชี `poymor/<uid>/tbank/<id>`) และ **🌐 คลังรวมจากทุกคน** (Firestore `poymor_shared/<หัวข้อ>/items/<id>` = `{d, ts, by}`)
+- **ห้องฝึกใน Claude** = artifact `C.ai.room` (ตัวเลือก "Claude" ในหน้า AI เปิดลิงก์นี้) — AI ออกทีละข้อด้วยบัญชี Claude ของผู้ใช้ (capability sample) เก็บในบัญชี Claude (db, ส่วนตัวต่อคน) · ปุ่ม **ส่งไปเว็บ** = เปิดเว็บด้วย `#tbank=z.<deflate-raw base64url ของ {v:1,q:[…]}>` → เก็บเข้าคลังของฉัน · **🌐 Update for all** = ลิงก์เดียวกัน + `s:1` → เว็บเก็บแล้วแชร์ขึ้นคลังรวม (ยังไม่เข้าสู่ระบบ = เก็บรอใน `poy-tbank-pend` แชร์ทันทีที่เข้า) · ลิงก์ละไม่เกิน 40 ข้อ
+- เพิ่ม/แก้หัวข้อเมื่อไร ต้องสร้างห้องฝึกใหม่: `python3 tools/claude-room/build.py <ไฟล์>.html` แล้ว publish ทับ artifact เดิม (URL เดิม, capabilities sample + db + user)
+- Firestore rules ที่ต้องเพิ่ม (วางใน `match /databases/{database}/documents { … }`):
+```
+match /poymor_shared/{topic}/items/{id} {
+  allow read: if true;
+  allow create: if request.auth != null
+    && request.resource.data.keys().hasOnly(['d','ts','by'])
+    && request.resource.data.by == request.auth.uid
+    && request.resource.data.d is string && request.resource.data.d.size() <= 20000
+    && request.resource.data.ts is number;
+  allow update: if request.auth != null && resource.data.by == request.auth.uid
+    && request.resource.data.by == request.auth.uid
+    && request.resource.data.keys().hasOnly(['d','ts','by'])
+    && request.resource.data.d is string && request.resource.data.d.size() <= 20000;
+  allow delete: if request.auth != null && resource.data.by == request.auth.uid;
+}
+```
+
 ## อัปเดตเว็บ
 - ทุกครั้งที่แก้ `app.js` / `app.css` / `data/*.js` ให้เพิ่มเลข `?v=` ใน `docs/index.html` ทุกบรรทัด เพื่อไม่ให้เบราว์เซอร์ใช้ไฟล์เก่าที่จำไว้
 

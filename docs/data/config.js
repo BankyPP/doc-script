@@ -49,7 +49,11 @@ window.POY_CONFIG = {
   acUrl: 'https://bankypp.github.io/ac-mdcu/',
 
   /* ห้องสอบ */
+  /* ที่อยู่เว็บ — ใช้ในลิงก์ที่ห้องฝึกใน Claude ส่งโจทย์กลับมา (#tbank=) */
+  siteUrl: 'https://bankypp.github.io/doc-script/',
   ai: {
+    /* ห้องฝึกโพยหมอใน Claude (artifact) — ตัวเลือก "Claude" ในหน้าฝึกของ Random Topic Summary เปิดลิงก์นี้ · สร้างใหม่ด้วย tools/claude-room/build.py */
+    room: 'https://claude.ai/artifact/3tpAE8e1L2E7WfAyK7BYqg',
     models: [
       { id: 'claude-sonnet-5-5', name: 'Claude Sonnet 5.5 (เร็ว)' },
       { id: 'claude-opus-5-5', name: 'Claude Opus 5.5 (ละเอียด)' }

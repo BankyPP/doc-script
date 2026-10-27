@@ -136,7 +136,7 @@
         var was = FB.user ? FB.user.uid : null; FB.user = u; if (unsub) { unsub(); unsub = null; }
         if ((u ? u.uid : null) !== was && onBoard()) render(true);
         if (!u) { syncState = 'local'; paintAcct(); return; }
-        authErr = ''; syncState = 'saving'; paintAcct();
+        authErr = ''; syncState = 'saving'; paintAcct(); tbPull();
         FB.fs.getDoc(fbRef()).then(function (snap) {
           var need = mergeRemote(snap.exists() ? snap.data() : null);
           syncState = 'cloud'; paintAcct();
@@ -484,7 +484,7 @@
     else if (!keepScroll && path !== lastPath) window.scrollTo(0, 0);
     lastPath = path;
   }
-  window.addEventListener('hashchange', function () { render(false); });
+  window.addEventListener('hashchange', function () { if (/[#&]tbank=/.test(location.hash)) { tbBoot(); return; } render(false); });
   function setQuery(r, patch) {
     var q = new URLSearchParams(r.q.toString());
     Object.keys(patch).forEach(function (k) { if (patch[k] == null || patch[k] === '') q.delete(k); else q.set(k, patch[k]); });
@@ -2405,7 +2405,7 @@
 
   function topicPractice(t, r) {
     var m = r.q.get('m') || 'ai';
-    var modes = [['ai', 'AI ออกโจทย์ทีละข้อ']].concat(t.selftest ? [['test', 'ข้อสอบในสรุป']] : []).concat([['flash', 'Flashcard']]);
+    var modes = [['ai', 'AI ออกโจทย์ทีละข้อ'], ['bank', 'คลังโจทย์']].concat(t.selftest ? [['test', 'ข้อสอบในสรุป']] : []).concat([['flash', 'Flashcard']]);
     var tabs = '<div class="filters" role="tablist" aria-label="วิธีฝึก" style="margin-bottom:6px">' + modes.map(function (x) {
       return '<a class="chip' + (m === x[0] ? ' on' : '') + '" role="tab" aria-selected="' + (m === x[0]) + '" href="#/topics/' + t.id + '/practice?m=' + x[0] + '">' + x[1] + '</a>';
     }).join('') + '</div>';
@@ -2414,6 +2414,7 @@
     var d = tLoad(t, 'data');
     if (!d) return { title: 'ฝึก — ' + t.title, html: head + '<section class="wrap" style="padding-bottom:80px">' + tabs + loadingHTML(TD[t.id], 'data') + '</section>' };
     if (m === 'test') return selfTestPage(t, d, head, tabs);
+    if (m === 'bank') return bankPage(t, d, head, tabs);
     return aiPage(t, d, r, head, tabs);
   }
 
@@ -2569,7 +2570,7 @@
     return callClaude(key, mdl, aiPrompt(t, u, set, recent, false), 2500).then(function (txt) {
       var q = extractJSON(txt);
       if (!q.stem || !q.options || q.options.length < 2) throw new Error('AI ไม่ได้ส่งข้อสอบกลับมา');
-      return { stem: q.stem, options: q.options.slice(0, 5), answer: String(q.answer || '').trim().toUpperCase().charAt(0), explanation: q.explanation || '', tags: q.tags || [], u: u.key, ut: u.title, up: u.p, model: mdl };
+      return { id: tbNewId(), t: t.id, stem: q.stem, options: q.options.slice(0, 5), answer: String(q.answer || '').trim().toUpperCase().charAt(0), explanation: q.explanation || '', tags: q.tags || [], u: u.key, ut: u.title, up: u.p, lv: set.level || 3, model: mdl };
     });
   }
   function aiQHTML(t) {
@@ -2586,7 +2587,8 @@
       }).join('') + '</div>' +
       (done ? '<div class="explain"><p class="k" style="font-weight:500;color:' + (q.pick === ai ? 'var(--moss)' : 'var(--sienna-dk)') + '">' + (q.pick === ai ? 'ถูก' : 'ยังไม่ถูก') + ' · เฉลย ' + esc(L[ai] || q.answer) + '</p>' + rich(q.explanation) +
         '<p style="margin-top:4px"><a class="chip" href="#/topics/' + t.id + '/sum/' + q.up + '?to=u' + q.u + '">ดูสรุปส่วนนี้ (หน้า ' + q.up + ')</a></p></div>' : '') +
-      '</article>' + (done ? '<div class="qnav"><span class="muted" id="aiNx" style="align-self:center;font-size:15px">' + (AIQ.next ? 'ข้อต่อไปพร้อมแล้ว' : '') + '</span><button class="btn" type="button" data-anext>ข้อต่อไป →</button></div>' : '');
+      '</article>' + (done ? '<div class="qnav"><span class="muted" id="aiNx" style="align-self:center;font-size:15px">' + (AIQ.next ? 'ข้อต่อไปพร้อมแล้ว' : '') + '</span><button class="btn" type="button" data-anext>ข้อต่อไป →</button></div>' + ufaHTML(t.id) +
+        '<p class="note">ทุกข้อที่ตอบเก็บไว้ใน <a href="#/topics/' + t.id + '/practice?m=bank">คลังโจทย์</a> ของหัวข้อนี้ ทำซ้ำได้</p>' : '');
   }
   function aiPaint(t) {
     var el = document.getElementById('aiQ'); if (!el || AIQ.t !== t.id) return;
@@ -2644,7 +2646,7 @@
         '<label class="eng"><input type="radio" name="teng" value="api"' + (eng === 'api' ? ' checked' : '') + '><span style="flex:1;min-width:0"><b class="k" style="font-weight:500;font-size:17px">Anthropic API key</b><br><span class="muted" style="font-size:15px">ทำในหน้านี้ทีละข้อ ข้อถัดไปเตรียมไว้ระหว่างอ่านเฉลย · key เก็บในเบราว์เซอร์นี้เท่านั้น (ใช้ร่วมกับห้องสอบ)</span>' +
         '<input id="tkey" type="password" class="field" style="margin-top:10px" placeholder="sk-ant-…" autocomplete="off" aria-label="Anthropic API key" value="' + esc(key) + '">' +
         '<select id="tmodel" class="field" style="margin-top:8px" aria-label="รุ่นของ Claude">' + models + '</select></span></label>' +
-        '<label class="eng"><input type="radio" name="teng" value="claude"' + (eng === 'claude' ? ' checked' : '') + '><span><b class="k" style="font-weight:500;font-size:17px">Claude</b><br><span class="muted" style="font-size:15px">เปิดแชทใหม่ใน claude.ai ด้วยบัญชีของคุณ — Claude ออกทีละข้อต่อเนื่องในแชท (ส่งเนื้อหาไปได้บางส่วนเพราะลิงก์ยาวจำกัด)</span></span></label></div></fieldset></div>' +
+        '<label class="eng"><input type="radio" name="teng" value="claude"' + (eng === 'claude' ? ' checked' : '') + '><span><b class="k" style="font-weight:500;font-size:17px">Claude</b><br><span class="muted" style="font-size:15px">' + (C.ai.room ? 'เปิดห้องฝึกโพยหมอใน Claude ด้วยบัญชีของคุณ ไม่ต้องใช้ key — AI ออกทีละข้อเหมือนหน้านี้ ทำเสร็จกด “ส่งไปเว็บ” (เก็บเข้าคลังของคุณ) หรือ “🌐 Update for all” (แชร์ให้ทุกคน)' : 'เปิดแชทใหม่ใน claude.ai ด้วยบัญชีของคุณ — Claude ออกทีละข้อต่อเนื่องในแชท (ส่งเนื้อหาไปได้บางส่วนเพราะลิงก์ยาวจำกัด)') + '</span></span></label></div></fieldset></div>' +
         '<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--empty);padding-top:22px"><button class="btn" type="button" id="aiGo">' + (running ? 'เริ่มใหม่ด้วยค่านี้' : 'เริ่มฝึก') + '</button><span id="aiSt" class="note" role="status"></span></div></form>' +
         '<div id="aiQ" class="aiq" aria-live="polite">' + (AIQ.t === t.id && (AIQ.cur || AIQ.busy || AIQ.err) ? '<p class="note">ทำในรอบนี้ ' + (AIQ.nq + (AIQ.cur && AIQ.cur.pick != null ? 1 : 0)) + ' ข้อ · ถูก ' + AIQ.ok + '</p>' + aiQHTML(t) : '<div class="empty"><p class="k" style="font-size:20px">ยังไม่ได้เริ่ม</p><p class="muted">เลือกหัวข้อแล้วกด “เริ่มฝึก” — โจทย์จะขึ้นตรงนี้ทีละข้อ</p></div>') + '</div></div></section>',
       after: function () {
@@ -2688,6 +2690,17 @@
         document.getElementById('aiGo').addEventListener('click', function () {
           var s2 = saveSet(), pool = aiScope(t, d, s2);
           if (!s2.units.length) { st.textContent = 'เลือกอย่างน้อย 1 หัวข้อย่อย'; return; }
+          if (s2.eng === 'claude' && C.ai.room) {
+            window.open(C.ai.room, '_blank', 'noopener');
+            st.innerHTML = 'เปิดห้องฝึกโพยหมอใน Claude แล้ว — เลือกหัวข้อ “' + esc(t.title) + '” ในนั้น · ทำเสร็จกด “ส่งไปเว็บ” หรือ “🌐 Update for all” โจทย์จะมาอยู่ใน <a href="#/topics/' + t.id + '/practice?m=bank">คลังโจทย์</a> · <button class="linkbtn" type="button" id="aiChat">เปิดเป็นแชทธรรมดาแทน</button>';
+            document.getElementById('aiChat').addEventListener('click', function () {
+              var pm = aiPrompt(t, null, s2, [], true, pool);
+              try { navigator.clipboard.writeText(pm).catch(function () { }); } catch (er) { }
+              window.open('https://claude.ai/new?q=' + encodeURIComponent(pm), '_blank', 'noopener');
+              st.textContent = 'เปิดแชท Claude แล้ว · คัดลอกคำสั่งไว้ให้ด้วย (โจทย์ในแชทธรรมดาส่งกลับเว็บไม่ได้)';
+            });
+            return;
+          }
           if (s2.eng === 'claude') {
             var pmt = aiPrompt(t, null, s2, [], true, pool);
             try { navigator.clipboard.writeText(pmt).catch(function () { }); } catch (er) { }
@@ -2707,8 +2720,219 @@
             var good = 'ABCDE'.charAt(q.pick) === q.answer; if (good) AIQ.ok++;
             var pr2 = tprog('topicq', t.id); pr2.n = (pr2.n || 0) + 1; pr2.ok = (pr2.ok || 0) + (good ? 1 : 0);
             pr2.h = (pr2.h || []).concat([{ s: q.stem.slice(0, 160), u: q.u, r: good ? 1 : 0 }]).slice(-40); tprogSave('topicq', t.id, pr2);
+            var bx = tbQ(q); bx.via = 'web'; bx.src = 'mine'; bx.at = Date.now(); bx.my = [[q.pick, good ? 1 : 0, Date.now()]]; tbPut(bx);
             aiPaint(t);
+          } else if (b.hasAttribute('data-ufa')) { updateForAll(t.id);
           } else if (b.hasAttribute('data-anext')) { AIQ.nq += AIQ.cur && AIQ.cur.pick != null ? 1 : 0; aiShowNext(t, d); }
+        });
+      }
+    };
+  }
+
+
+  /* =========================================================
+     คลังโจทย์ของ Random Topic Summary
+     - คลังของฉัน: localStorage poy-tbank {id: โจทย์} + บัญชี Firestore poymor/<uid>/tbank/<id> (ทีละข้อ)
+       ได้มาจาก: โจทย์ AI ที่ทำในเว็บด้วย API key · ลิงก์ #tbank= จากห้องฝึกใน Claude (ปุ่ม "ส่งไปเว็บ")
+     - คลังรวมจากทุกคน: Firestore poymor_shared/<หัวข้อ>/items/<id> {d, ts, by} — ปุ่ม 🌐 Update for all
+       (ในเว็บต้องเข้าสู่ระบบ ยังไม่เข้า = เก็บรอใน poy-tbank-pend แล้วแชร์ทันทีที่เข้าสู่ระบบ)
+     ========================================================= */
+  var TBANK_MAX_LINK = 40;
+  function tbAll() { return rawGet('tbank', {}) || {}; }
+  function tbOf(tid) { var a = tbAll(); return Object.keys(a).map(function (k) { return a[k]; }).filter(function (x) { return x && x.t === tid; }).sort(function (p, q) { return (p.at || 0) - (q.at || 0); }); }
+  function tbNewId() { return 'q' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  var tbDirty = {}, tbT = null;
+  function tbPut(x) {
+    var a = tbAll(); x.ts = Date.now(); a[x.id] = x; rawSet('tbank', a);
+    tbDirty[x.id] = 1; clearTimeout(tbT); tbT = setTimeout(tbFlush, 1500);
+  }
+  function tbCol() { return FB.fs.collection(FB.db, 'poymor', FB.user.uid, 'tbank'); }
+  function tbFlush() {
+    if (!FB || !FB.user) return;
+    var a = tbAll(), ids = Object.keys(tbDirty); tbDirty = {};
+    ids.forEach(function (id) {
+      if (!a[id]) return;
+      FB.fs.setDoc(FB.fs.doc(tbCol(), id), { d: JSON.stringify(a[id]), ts: a[id].ts || Date.now() }).catch(function (e) { console.warn('tbank', e); tbDirty[id] = 1; });
+    });
+  }
+  /* เข้าสู่ระบบแล้ว: รวมคลังในบัญชีกับในเครื่อง (ใหม่กว่าชนะ) แล้วแชร์ข้อที่รอแชร์ */
+  function tbPull() {
+    if (!FB || !FB.user) return;
+    FB.fs.getDocs(tbCol()).then(function (snap) {
+      var a = tbAll(), rts = {}, changed = false;
+      snap.forEach(function (doc) {
+        var v; try { v = JSON.parse(doc.data().d); } catch (e) { return; }
+        if (!v || !v.id) return; rts[v.id] = v.ts || 0;
+        if (!a[v.id] || (v.ts || 0) > (a[v.id].ts || 0)) { a[v.id] = v; changed = true; }
+      });
+      rawSet('tbank', a);
+      Object.keys(a).forEach(function (id) { if ((a[id].ts || 0) > (rts[id] || 0)) tbDirty[id] = 1; });
+      tbFlush();
+      tbFlushPend();
+      if (changed && route().name === 'topics') render(true);
+    }).catch(function (e) { console.warn('tbank pull', e); });
+  }
+  function tbQ(x) { return { id: x.id, t: x.t, u: x.u, up: x.up, ut: x.ut, stem: x.stem, options: x.options, answer: x.answer, explanation: x.explanation, tags: x.tags || [], lv: x.lv, via: x.via || '', at: x.at || 0 }; }
+  function tbUnshared(tid) { return tbOf(tid).filter(function (x) { return !x.shared && x.src !== 'shared' && x.stem && x.options; }); }
+
+  /* ----- คลังรวมจากทุกคน ----- */
+  var SH = {};   /* หัวข้อ → { list, t, err, L } */
+  function shLoad(tid, force) {
+    var s = SH[tid] || (SH[tid] = { list: [], t: 0, err: '', L: false });
+    if (s.L || (s.t && !force)) return s;
+    if (!FB) { if (!fbOn() || fbFail) { s.err = fbOn() ? 'เชื่อมต่อฐานข้อมูลไม่ได้' : 'ยังไม่ได้ตั้งค่าบัญชี'; s.t = Date.now(); } return s; }
+    s.L = true;
+    FB.fs.getDocs(FB.fs.collection(FB.db, 'poymor_shared', tid, 'items')).then(function (snap) {
+      var L = [];
+      snap.forEach(function (doc) { var x = doc.data(), v; try { v = JSON.parse(x.d); } catch (e) { return; } if (v && v.stem && v.options) { v.sid = doc.id; v.by = x.by; v.sts = x.ts || 0; L.push(v); } });
+      s.list = L.sort(function (p, q) { return p.sts - q.sts; }); s.err = '';
+    }).catch(function (e) { console.warn('shared', e); s.err = errMsg(e); }).then(function () {
+      s.L = false; s.t = Date.now();
+      var r = route(); if (r.name === 'topics' && r.args[0] === tid && r.args[1] === 'practice') render(true);
+    });
+    return s;
+  }
+  function tbPendGet() { return rawGet('tbank-pend', {}) || {}; }
+  function shareUpload(tid, ids) {
+    var a = tbAll(); ids = ids.filter(function (id) { return a[id]; });
+    if (!ids.length) return Promise.resolve(0);
+    if (!FB || !FB.user) {
+      var p = tbPendGet(); p[tid] = (p[tid] || []).concat(ids).filter(function (v, i, arr) { return arr.indexOf(v) === i; }); rawSet('tbank-pend', p);
+      return Promise.resolve(-ids.length);
+    }
+    var n = 0, err = '';
+    return Promise.all(ids.map(function (id) {
+      var x = a[id];
+      return FB.fs.setDoc(FB.fs.doc(FB.db, 'poymor_shared', tid, 'items', id), { d: JSON.stringify(tbQ(x)), ts: Date.now(), by: FB.user.uid })
+        .then(function () { x.shared = Date.now(); tbPut(x); n++; })
+        .catch(function (e) { console.warn('share', e); err = errMsg(e); });
+    })).then(function () {
+      if (!n && err) toast('แชร์ไม่สำเร็จ: ' + err + (/permission/i.test(err) ? ' — ตรวจ Firestore rules' : ''));
+      if (n) shLoad(tid, true);
+      return n;
+    });
+  }
+  function tbFlushPend() {
+    var p = tbPendGet(), tids = Object.keys(p); if (!tids.length || !FB || !FB.user) return;
+    rawSet('tbank-pend', {});
+    Promise.all(tids.map(function (tid) { return shareUpload(tid, p[tid] || []); })).then(function (ns) {
+      var n = ns.reduce(function (s, v) { return s + Math.max(0, v); }, 0);
+      if (n) toast('แชร์โจทย์ให้ทุกคนแล้ว ' + n + ' ข้อ');
+    });
+  }
+  function updateForAll(tid) {
+    var ids = tbUnshared(tid).map(function (x) { return x.id; });
+    if (!ids.length) { toast('ไม่มีโจทย์ใหม่ที่ยังไม่ได้แชร์'); return; }
+    shareUpload(tid, ids).then(function (n) {
+      if (n < 0) { toast('เข้าสู่ระบบก่อน แล้วระบบจะแชร์ให้ทุกคนทันที'); location.hash = '#/account'; }
+      else if (n) { toast('แชร์โจทย์ให้ทุกคนแล้ว ' + n + ' ข้อ'); render(true); }
+    });
+  }
+  function ufaHTML(tid) {
+    var n = tbUnshared(tid).length; if (!n || !fbOn()) return '';
+    return '<div class="ufa"><button class="btn ghost" type="button" data-ufa="' + esc(tid) + '">🌐 Update for all (' + n + ')</button><span class="note">แชร์โจทย์ที่ AI สร้างในหัวข้อนี้ขึ้นคลังรวม ให้ทุกคน ทุกเครื่อง เห็น — ไม่รวมคำตอบของคุณ</span></div>';
+  }
+
+  /* ----- ลิงก์ #tbank= จากห้องฝึกใน Claude: z.<base64url ของ deflate-raw(JSON)> · {v:1, q:[โจทย์…], s:1 = แชร์ให้ทุกคนด้วย} ----- */
+  function ub64(t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); var s = atob(t), u = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
+  function unpackStr(t) {
+    var k = t.slice(0, 2), u = ub64(t.slice(2));
+    if (k === 'z.') return new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer().then(function (b) { return new TextDecoder().decode(b); });
+    return Promise.resolve(new TextDecoder().decode(u));
+  }
+  function tbBoot() {
+    var m = /[#&]tbank=([zj]\.[A-Za-z0-9_-]+)/.exec(location.hash || ''); if (!m) return;
+    try { history.replaceState(null, '', location.pathname + location.search + '#/topics'); } catch (e) { location.hash = '#/topics'; }
+    unpackStr(m[1]).then(function (s) {
+      var b = JSON.parse(s), qs = (b && b.q) || [], a = tbAll(), byT = {}, n = 0;
+      qs.forEach(function (q) {
+        if (!q || !q.id || !q.t || !q.stem || !Array.isArray(q.options)) return;
+        var old = a[q.id], mine = (old && old.my || []).concat(q.my || []);
+        var seen = {}; mine = mine.filter(function (r) { var k = r.join(','); if (seen[k]) return false; seen[k] = 1; return true; });
+        var x = Object.assign({}, old || {}, tbQ(q), { src: 'mine', via: 'claude', my: mine });
+        if (old && old.shared) x.shared = old.shared;
+        tbPut(x); a[x.id] = x; (byT[q.t] = byT[q.t] || []).push(x.id); n++;
+      });
+      var tids = Object.keys(byT), first = tids[0];
+      if (!n) { toast('ลิงก์นี้ไม่มีโจทย์ที่นำเข้าได้'); return; }
+      if (b.s) {
+        Promise.all(tids.map(function (tid) { return shareUpload(tid, byT[tid]); })).then(function (ns) {
+          var up = ns.reduce(function (s2, v) { return s2 + Math.max(0, v); }, 0), wait = ns.some(function (v) { return v < 0; });
+          toast(wait ? 'เก็บโจทย์ ' + n + ' ข้อแล้ว — เข้าสู่ระบบเพื่อแชร์ให้ทุกคน (แชร์ให้ทันทีที่เข้า)' : 'เก็บโจทย์ ' + n + ' ข้อ และแชร์ให้ทุกคนแล้ว ' + up + ' ข้อ');
+          if (wait) location.hash = '#/account';
+        });
+      } else toast('เก็บโจทย์จาก Claude เข้าคลังของคุณแล้ว ' + n + ' ข้อ');
+      if (!b.s || (FB && FB.user)) location.hash = '#/topics/' + first + '/practice?m=bank';
+    }).catch(function (e) { console.warn('tbank link', e); toast('เปิดลิงก์โจทย์ไม่สำเร็จ — ลองกดส่งจาก Claude ใหม่'); });
+  }
+
+  /* ----- หน้า "คลังโจทย์" ของหัวข้อ + ตัวทำโจทย์ ----- */
+  var BQ = { t: null, list: [], i: 0, ok: 0, label: '' };
+  function bqStart(t, list, label) {
+    var a = list.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; }
+    BQ = { t: t.id, list: a.map(function (x) { return Object.assign({}, x, { pick: null }); }), i: 0, ok: 0, label: label };
+    render(true);
+    setTimeout(function () { var el = document.getElementById('bqQ'); if (el) el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 30);
+  }
+  function lastOk(x) { var m = x.my || []; return m.length ? !!m[m.length - 1][1] : null; }
+  function bqHTML(t) {
+    if (BQ.t !== t.id || !BQ.list.length) return '<div class="empty"><p class="k" style="font-size:20px">เลือกชุดที่จะทำ</p><p class="muted">โจทย์จะขึ้นตรงนี้ทีละข้อ</p></div>';
+    if (BQ.i >= BQ.list.length) return '<div class="sheet q"><p class="k" style="font-size:22px">จบชุดแล้ว</p><p>' + esc(BQ.label) + ' · ถูก ' + BQ.ok + ' / ' + BQ.list.length + ' ข้อ</p></div>';
+    var q = BQ.list[BQ.i], L = 'ABCDE', done = q.pick != null, ai = L.indexOf(q.answer);
+    return '<p class="note">' + esc(BQ.label) + ' · ข้อ ' + (BQ.i + 1) + ' / ' + BQ.list.length + ' · ถูก ' + BQ.ok + '</p>' +
+      '<article class="sheet q"><div style="display:flex;flex-wrap:wrap;gap:6px">' + [q.ut].concat(q.tags || []).filter(Boolean).slice(0, 3).map(function (x) { return '<span class="pill">' + esc(x) + '</span>'; }).join('') + '</div>' +
+      '<p lang="en">' + esc(q.stem) + '</p><div style="display:flex;flex-direction:column;gap:2px" lang="en">' +
+      q.options.map(function (op, j) {
+        var cls = done ? (j === ai ? ' ok' : j === q.pick ? ' bad' : '') : '';
+        return '<button class="choice' + cls + '" type="button" data-bp="' + j + '"' + (done ? ' disabled' : '') + '><b>' + L[j] + '</b><span>' + esc(String(op).replace(/^[A-E][.)]\s*/, '')) + '</span></button>';
+      }).join('') + '</div>' +
+      (done ? '<div class="explain"><p class="k" style="font-weight:500;color:' + (q.pick === ai ? 'var(--moss)' : 'var(--sienna-dk)') + '">' + (q.pick === ai ? 'ถูก' : 'ยังไม่ถูก') + ' · เฉลย ' + esc(L[ai] || q.answer) + '</p>' + rich(q.explanation) +
+        (q.up ? '<p style="margin-top:4px"><a class="chip" href="#/topics/' + t.id + '/sum/' + q.up + '?to=u' + q.u + '">ดูสรุปส่วนนี้ (หน้า ' + q.up + ')</a></p>' : '') + '</div>' : '') +
+      '</article>' + (done ? '<div class="qnav"><span></span><button class="btn" type="button" data-bnext>' + (BQ.i + 1 < BQ.list.length ? 'ข้อต่อไป →' : 'ดูผล') + '</button></div>' : '');
+  }
+  function bqAnswer(t, j) {
+    var q = BQ.list[BQ.i]; if (!q || q.pick != null) return;
+    q.pick = j; var good = 'ABCDE'.charAt(j) === q.answer; if (good) BQ.ok++;
+    var a = tbAll(), x = a[q.id];
+    if (!x) x = Object.assign(tbQ(q), { src: 'shared', shared: q.sts || Date.now(), my: [] });  /* ข้อจากคลังรวม: ตอบแล้วเก็บเข้าคลังของฉัน */
+    x.my = (x.my || []).concat([[j, good ? 1 : 0, Date.now()]]); tbPut(x);
+    var el = document.getElementById('bqQ'); if (el) el.innerHTML = bqHTML(t);
+  }
+  function bankPage(t, d, head, tabs) {
+    var mine = tbOf(t.id), sh = shLoad(t.id), shL = sh.list;
+    var a = tbAll(), shTodo = shL.filter(function (x) { return !a[x.id]; });
+    var wrong = mine.filter(function (x) { return lastOk(x) === false; }), fresh = mine.filter(function (x) { return !(x.my || []).length; });
+    var nWeb = mine.filter(function (x) { return x.via === 'web'; }).length, nCl = mine.filter(function (x) { return x.via === 'claude'; }).length, nSh = mine.filter(function (x) { return x.src === 'shared'; }).length;
+    var shBox = '<div class="sheet bk"><span class="label">ทุกคน</span><h3>🌐 คลังรวมจากทุกคน</h3>' +
+      (!fbOn() ? '<p class="muted">ยังไม่ได้ตั้งค่าบัญชีของเว็บ</p>' :
+        sh.err ? '<p class="warn">โหลดคลังรวมไม่ได้ (' + esc(sh.err) + ')' + (/permission/i.test(sh.err) ? ' — ตรวจ Firestore rules' : '') + '</p>' :
+        !sh.t ? '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดคลังรวม…</p>' :
+        !shL.length ? '<p class="muted">ยังไม่มีโจทย์ในคลังรวม — กด 🌐 Update for all ในห้องฝึกใน Claude หรือในหน้านี้ เพื่อแชร์โจทย์ที่ AI สร้างขึ้นมาที่นี่</p>' :
+        '<p class="muted">โจทย์ที่ AI สร้างและมีคนแชร์ไว้ ' + shL.length + ' ข้อ · ยังไม่เคยทำ ' + shTodo.length + ' ข้อ — ตอบแล้วจะเก็บเข้าคลังของคุณ</p>' +
+        '<div class="bkact"><button class="btn ghost" type="button" data-bs="shall">ทำทั้งหมด</button><button class="btn" type="button" data-bs="shnew"' + (shTodo.length ? '' : ' disabled') + '>ทำข้อที่ยังไม่เคยทำ (' + shTodo.length + ')</button></div>') + '</div>';
+    var myBox = '<div class="sheet bk"><span class="label">เฉพาะคุณ</span><h3>คลังของฉัน</h3>' +
+      (!mine.length ? '<p class="muted">ยังไม่มีโจทย์ — โจทย์ที่ทำในหน้า “AI ออกโจทย์ทีละข้อ” ด้วย API key จะเก็บไว้ที่นี่เอง และโจทย์ที่ทำในห้องฝึกใน Claude ส่งมาได้ด้วยปุ่ม “ส่งไปเว็บ”</p>' :
+        '<p class="muted">' + mine.length + ' ข้อ · ทำในเว็บ ' + nWeb + ' · จาก Claude ' + nCl + (nSh ? ' · จากคลังรวม ' + nSh : '') + ' · ล่าสุดตอบผิด ' + wrong.length + ' · ยังไม่เคยตอบ ' + fresh.length + '</p>' +
+        '<div class="bkact"><button class="btn ghost" type="button" data-bs="all">ทำทั้งหมด</button><button class="btn ghost" type="button" data-bs="wrong"' + (wrong.length ? '' : ' disabled') + '>ทำข้อที่ผิด (' + wrong.length + ')</button>' +
+        (fresh.length ? '<button class="btn ghost" type="button" data-bs="fresh">ข้อที่ยังไม่เคยตอบ (' + fresh.length + ')</button>' : '') + '</div>') +
+      ufaHTML(t.id) + (FB && FB.user ? '' : '<p class="note">เข้าสู่ระบบเพื่อให้คลังของฉันตามไปทุกเครื่อง</p>') + '</div>';
+    return {
+      title: 'คลังโจทย์ — ' + t.title, html: head + '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:20px">' + tabs +
+        '<div class="bkgrid">' + shBox + myBox + '</div><div id="bqQ" class="aiq" aria-live="polite">' + bqHTML(t) + '</div></section>',
+      after: function () {
+        var root = app.querySelector('.bkgrid').parentNode;
+        root.addEventListener('click', function (e) {
+          var b = e.target.closest('button'); if (!b || b.disabled) return;
+          var k = b.getAttribute('data-bs');
+          if (k === 'shall') bqStart(t, shL, 'คลังรวม · ทั้งหมด');
+          else if (k === 'shnew') bqStart(t, shTodo, 'คลังรวม · ข้อที่ยังไม่เคยทำ');
+          else if (k === 'all') bqStart(t, mine, 'คลังของฉัน · ทั้งหมด');
+          else if (k === 'wrong') bqStart(t, wrong, 'คลังของฉัน · ข้อที่ผิด');
+          else if (k === 'fresh') bqStart(t, fresh, 'คลังของฉัน · ข้อที่ยังไม่เคยตอบ');
+          else if (b.hasAttribute('data-ufa')) updateForAll(t.id);
+          else if (b.hasAttribute('data-bp')) bqAnswer(t, +b.getAttribute('data-bp'));
+          else if (b.hasAttribute('data-bnext')) { BQ.i++; var el = document.getElementById('bqQ'); if (el) { el.innerHTML = bqHTML(t); el.scrollIntoView({ block: 'start', behavior: 'smooth' }); } }
         });
       }
     };
@@ -2726,7 +2950,7 @@
     var box = function (inner) { return head + '<section class="wrap" style="padding-bottom:80px"><div class="sheet" style="max-width:560px;padding:clamp(22px,4vw,36px);display:flex;flex-direction:column;gap:16px">' + inner + '</div></section>'; };
     if (!fbOn()) return { title: 'บัญชี', html: box('<p>ยังไม่ได้ตั้งค่า Firebase — ข้อมูลบันทึกในเบราว์เซอร์นี้อย่างเดียว</p>') };
     if (!FB) return { title: 'บัญชี', html: box(fbFail ? '<p>เชื่อมต่อระบบบัญชีไม่ได้ ตรวจอินเทอร์เน็ตแล้วรีเฟรชหน้า ระหว่างนี้ใช้งานได้ตามปกติ (บันทึกในเครื่อง)</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเชื่อมต่อระบบบัญชี…</p>') };
-    var syncList = '<ul class="muted" style="font-size:15px"><li>หน้าที่อ่านค้าง</li><li>ข้อสอบ AI ชุดล่าสุดและคำตอบ</li><li>ค่าที่เลือกในห้องสอบ (ระดับ จำนวนข้อ วิธีใช้ AI รุ่น)</li><li>ตั้งค่าการสอบ NL &amp; Compre (วันสอบ รูปแบบ จำนวน เวลา)</li><li>Random Topic Summary: หัวข้อที่เลือกฝึก คะแนน และคำตอบข้อสอบในสรุป</li></ul><p class="note">API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์ที่ใส่ไว้เท่านั้น</p>';
+    var syncList = '<ul class="muted" style="font-size:15px"><li>หน้าที่อ่านค้าง</li><li>ข้อสอบ AI ชุดล่าสุดและคำตอบ</li><li>ค่าที่เลือกในห้องสอบ (ระดับ จำนวนข้อ วิธีใช้ AI รุ่น)</li><li>ตั้งค่าการสอบ NL &amp; Compre (วันสอบ รูปแบบ จำนวน เวลา)</li><li>Random Topic Summary: หัวข้อที่เลือกฝึก คะแนน คำตอบข้อสอบในสรุป และคลังโจทย์ของฉัน</li></ul><p class="note">API key ไม่ซิงก์ — อยู่ในเบราว์เซอร์ที่ใส่ไว้เท่านั้น</p>';
     if (FB.user) {
       var st = syncState === 'error' ? '<p class="warn">ซิงก์ไม่สำเร็จ: ' + esc(authErr) + ' — ข้อมูลยังบันทึกในเครื่องนี้</p>'
         : syncState === 'saving' ? '<p class="info"><span class="spin" aria-hidden="true"></span> กำลังบันทึก…</p>' : '<p class="info">บันทึกในบัญชีแล้ว · เปิดจากเครื่องไหนก็ได้</p>';
@@ -2788,6 +3012,7 @@
   document.getElementById('built').textContent = isNaN(lm) ? '' : 'อัปเดตเว็บล่าสุด ' + fmtTime(lm);
   initDiseases();
   gLoad();
+  tbBoot();
   render(false);
   initFB();
 })();

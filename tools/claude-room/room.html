@@ -1,0 +1,326 @@
+<title>โพยหมอ ห้องฝึก</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* layout: field-journal sheets on paper — topic strip, then setup sheet beside the question sheet, then the bank ledger */
+:root{
+  --paper:#F3EFE5; --sheet:#FBF9F3; --ink:#1E2620; --ink-2:#3A423B; --muted:#5A6258;
+  --rule:#D8D0BC; --rule-2:#CFC6B0; --hover:#E9E3D3; --tape:#DCCDA6;
+  --moss:#355A3A; --moss-dk:#1F3A24; --moss-bg:#E7EDE2; --sienna:#A44A2A; --sienna-bg:#F4E3DA; --on-moss:#FBF9F3;
+  --font-head:'Kanit',system-ui,sans-serif; --font-body:'Sarabun',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#171C18; --sheet:#1F2620; --ink:#E9E5D8; --ink-2:#CFCABB; --muted:#A3A898;
+  --rule:#364036; --rule-2:#3F4A3F; --hover:#283028; --tape:#5B5340;
+  --moss:#8DBB8F; --moss-dk:#B4D6B2; --moss-bg:#24332A; --sienna:#E39A7A; --sienna-bg:#3A2A22; --on-moss:#14201A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#171C18; --sheet:#1F2620; --ink:#E9E5D8; --ink-2:#CFCABB; --muted:#A3A898;
+  --rule:#364036; --rule-2:#3F4A3F; --hover:#283028; --tape:#5B5340;
+  --moss:#8DBB8F; --moss-dk:#B4D6B2; --moss-bg:#24332A; --sienna:#E39A7A; --sienna-bg:#3A2A22; --on-moss:#14201A; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;margin:0}
+h1,h2,h3,.k{font-family:var(--font-head);font-weight:600;line-height:1.2;margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--moss);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{border-bottom:1px solid var(--rule);background:var(--paper)}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand b{font-family:var(--font-head);font-weight:700;font-size:22px}
+.brand span{font-family:var(--font-head);font-weight:500;font-size:14px;color:var(--muted);letter-spacing:.02em}
+.sync{margin-left:auto;font-size:14px;color:var(--muted)}
+.label{font-family:var(--font-head);font-weight:500;font-size:12.5px;letter-spacing:.06em;color:var(--muted)}
+.muted{color:var(--muted)}
+.note{font-size:14px;color:var(--muted)}
+main{display:flex;flex-direction:column;gap:22px;padding-block:24px 64px}
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:clamp(16px,2.6vw,26px);min-width:0;position:relative}
+.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px}
+.tc{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-left:5px solid var(--c,var(--moss));border-radius:4px;padding:12px 14px;cursor:pointer}
+.tc:hover{background:var(--hover)}
+.tc[aria-pressed="true"]{background:var(--moss-bg);border-color:var(--moss)}
+.tc b{font-family:var(--font-head);font-weight:600;font-size:17px}
+.tc small{color:var(--muted);font-size:13.5px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:22px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.h{font-family:var(--font-head);font-weight:600;font-size:19px;margin-bottom:10px}
+.scope{border:1px solid var(--rule);border-radius:4px;max-height:340px;overflow:auto}
+.scope details{border-bottom:1px solid var(--rule)}
+.scope details:last-child{border-bottom:0}
+.scope summary{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;list-style:none}
+.scope summary::-webkit-details-marker{display:none}
+.scope .pg{padding:4px 12px 8px 30px}
+.scope .un{display:flex;flex-direction:column;padding-left:24px}
+.ck{display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:15px;line-height:1.4;cursor:pointer}
+.ck input{margin-top:3px;accent-color:var(--moss);flex:none}
+.cnt{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.field{width:100%;padding:10px 12px;border:1px solid var(--rule-2);border-radius:4px;background:var(--paper);color:var(--ink);font:inherit}
+.lv{display:flex;flex-wrap:wrap;gap:6px}
+.lv label{display:flex;align-items:center;gap:6px;border:1px solid var(--rule-2);border-radius:999px;padding:6px 12px;cursor:pointer;font-family:var(--font-head);font-size:14px}
+.lv input{accent-color:var(--moss)}
+.lv label:has(input:checked){background:var(--moss-bg);border-color:var(--moss)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:8px 18px;border-radius:4px;border:1px solid var(--moss);background:var(--moss);color:var(--on-moss);font-family:var(--font-head);font-weight:500;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--moss)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.chip{border:1px solid var(--rule-2);background:transparent;border-radius:999px;padding:5px 12px;font-family:var(--font-head);font-size:13.5px;cursor:pointer}
+.pill{display:inline-block;border:1px solid var(--rule-2);border-radius:999px;padding:2px 10px;font-size:13px;color:var(--ink-2)}
+.stem{font-size:16.5px;margin:12px 0}
+.choice{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:4px;padding:9px 10px;cursor:pointer;line-height:1.45}
+.choice:hover:not(:disabled){background:var(--hover)}
+.choice b{font-family:var(--font-head);font-weight:600;min-width:20px}
+.choice.ok{background:var(--moss-bg);border-color:var(--moss)}
+.choice.bad{background:var(--sienna-bg);border-color:var(--sienna)}
+.choice:disabled{cursor:default}
+.explain{border-top:1px dashed var(--rule-2);margin-top:14px;padding-top:12px;display:flex;flex-direction:column;gap:6px}
+.explain .k{font-weight:500}
+.good{color:var(--moss)} .badc{color:var(--sienna)}
+.qnav{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:14px}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--rule-2);border-top-color:var(--moss);border-radius:50%;animation:sp .9s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+.empty{border:1px dashed var(--rule-2);border-radius:4px;padding:28px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.ledger{display:flex;flex-wrap:wrap;gap:8px 24px;font-variant-numeric:tabular-nums}
+.ledger span b{font-family:var(--font-head);font-size:22px;font-weight:600;display:block}
+.sendrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin-top:14px}
+.send{border:1px solid var(--rule);border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.out{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.out textarea{width:100%;min-height:70px;font:12px/1.4 ui-monospace,monospace;background:var(--paper);color:var(--ink);border:1px solid var(--rule-2);border-radius:4px;padding:8px}
+.hist{margin-top:14px;border-top:1px solid var(--rule)}
+.hist details{border-bottom:1px solid var(--rule);padding:8px 0}
+.hist summary{cursor:pointer;display:flex;gap:10px;align-items:baseline}
+.hist summary span:first-child{flex:none;font-family:var(--font-head);font-weight:600;min-width:18px}
+.hist summary .s{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.warn{color:var(--sienna)}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="brand"><svg width="22" height="26" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 27V12"/><path d="M12 15C7 15 4 11 4 7c5 0 8 3 8 8Z"/><path d="M12 12c4 0 8-3 8-8-5 0-8 3-8 8Z"/></svg><b>โพยหมอ</b><span>ห้องฝึกใน Claude</span></div>
+  <span class="sync" id="sync">เก็บในเครื่องนี้</span>
+</div></header>
+
+<main class="wrap">
+  <section aria-labelledby="hTopics" style="display:flex;flex-direction:column;gap:10px">
+    <div class="row" style="justify-content:space-between"><h1 id="hTopics" style="font-size:clamp(24px,3.4vw,34px)">เลือกหัวข้อ Random Topic Summary</h1><span class="note" id="ver"></span></div>
+    <div class="topics" id="topics"></div>
+  </section>
+
+  <div class="grid">
+    <form class="sheet" id="setup">
+      <h2 class="h" id="tTitle">—</h2>
+      <p class="note" id="tSub"></p>
+      <div style="margin-top:14px"><div class="row" style="justify-content:space-between;margin-bottom:6px"><span class="k" style="font-size:16px">หัวข้อที่จะออก</span><span class="cnt" id="selCnt"></span></div>
+        <div class="row" style="margin-bottom:8px"><button class="chip" type="button" data-all="1">ทั้งหัวข้อ</button><button class="chip" type="button" data-all="0">ไม่เลือกเลย</button></div>
+        <div class="scope" id="scope"></div></div>
+      <label class="k" for="focus" style="display:block;font-size:16px;margin:16px 0 6px">เน้นเรื่อง (ไม่ใส่ก็ได้)</label>
+      <input class="field" id="focus" maxlength="120" autocomplete="off">
+      <fieldset style="border:0;padding:0;margin:16px 0 0"><legend class="k" style="font-size:16px;margin-bottom:6px">ระดับความยาก</legend><div class="lv" id="levels"></div></fieldset>
+      <div class="row" style="margin-top:18px"><button class="btn" type="button" id="go">เริ่มฝึก</button><span class="note" id="st" role="status"></span></div>
+    </form>
+    <section class="sheet" id="qbox" aria-live="polite"></section>
+  </div>
+
+  <section class="sheet" aria-labelledby="hBank">
+    <span class="label">ส่งออกจาก Claude</span>
+    <h2 class="h" id="hBank" style="margin-top:4px">คลังใน Claude — <span id="bankT"></span></h2>
+    <div class="ledger" id="ledger"></div>
+    <div class="sendrow">
+      <div class="send"><span class="k" style="font-size:17px">ส่งไปเว็บ</span><p class="note">เปิดโพยหมอบนเว็บพร้อมโจทย์ เก็บเข้าคลังโจทย์ของคุณ (เครื่องนั้น และบัญชีถ้าเข้าสู่ระบบ) — คนอื่นไม่เห็น</p><button class="btn ghost" type="button" id="sendWeb">ส่งไปเว็บ</button><div class="out" id="outWeb" hidden></div></div>
+      <div class="send"><span class="k" style="font-size:17px">🌐 Update for all</span><p class="note">ส่งไปเว็บและแชร์ขึ้นคลังรวม ให้ทุกคนที่เปิดโพยหมอเห็น — ไม่รวมคำตอบของคุณ · บนเว็บต้องเข้าสู่ระบบ (ยังไม่เข้า เว็บจะเก็บรอแล้วแชร์ทันทีที่เข้า)</p><button class="btn" type="button" id="sendAll">🌐 Update for all</button><div class="out" id="outAll" hidden></div></div>
+    </div>
+    <div class="hist" id="hist"></div>
+  </section>
+</main>
+
+<script id="room-data" type="application/json">/*DATA*/</script>
+<script>
+(function(){
+'use strict';
+var D=JSON.parse(document.getElementById('room-data').textContent);
+var $=function(id){return document.getElementById(id);};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function rich(v){return String(v||'').split(/\r?\n/).map(function(l){return l.trim();}).filter(Boolean).map(function(l){var m=l.match(/^(?:[-•·]|\*(?!\*))\s*(.*)$/);return '<p>'+(m?'• ':'')+esc(m?m[1]:l).replace(/\*\*([^*]+?)\*\*/g,'<b>$1</b>')+'</p>';}).join('');}
+function lsGet(k,d){try{var v=localStorage.getItem('poyroom-'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem('poyroom-'+k,JSON.stringify(v));}catch(e){}}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x;}return a;}
+var L='ABCDE';
+
+/* ---------- storage: Claude account (db, private per viewer) → fallback this browser ---------- */
+var BANK=lsGet('bank',{}),SET=lsGet('set',{}),CL=null;
+function saveLocal(){lsSet('bank',BANK);lsSet('set',SET);}
+function putQ(x){x.ts=Date.now();BANK[x.id]=x;saveLocal();if(CL)CL.col.doc(x.id).set({d:JSON.stringify(x),ts:x.ts}).catch(function(e){console.warn(e);setSync('err');});}
+function putSet(){saveLocal();if(CL)CL.col.doc('_settings').set({d:JSON.stringify(SET),ts:Date.now()}).catch(function(){});}
+function setSync(s){$('sync').textContent=s==='cloud'?'☁️ บันทึกในบัญชี Claude · ใช้ได้ทุกเครื่อง':s==='err'?'บันทึกในบัญชี Claude ไม่สำเร็จ — ยังเก็บในเครื่องนี้':'เก็บในเครื่องนี้';}
+async function initCloud(){
+  if(!window.claude||typeof window.claude.use!=='function')return;
+  try{
+    var r=await Promise.all([window.claude.use('db'),window.claude.use('user')]),db=r[0],user=r[1];
+    if(!db||!user)return;var uid=await user.id();if(!uid)return;
+    CL={col:db.collection('data/users/'+uid)};
+    var snap=await CL.col.limit(2000).get(),rts={};
+    snap.docs.forEach(function(d){var x=d.data()||{},v;try{v=JSON.parse(x.d);}catch(e){return;}
+      if(d.id==='_settings'){if(v&&typeof v==='object'&&(x.ts||0)>(SET._ts||0)){SET=v;}return;}
+      if(!v||!v.id)return;rts[v.id]=v.ts||0;if(!BANK[v.id]||(v.ts||0)>(BANK[v.id].ts||0))BANK[v.id]=v;});
+    saveLocal();
+    Object.keys(BANK).forEach(function(id){if((BANK[id].ts||0)>(rts[id]||0))CL.col.doc(id).set({d:JSON.stringify(BANK[id]),ts:BANK[id].ts||Date.now()}).catch(function(){});});
+    setSync('cloud');renderAll();
+  }catch(e){console.warn('cloud',e);setSync('err');}
+}
+
+/* ---------- topics ---------- */
+var T=null;
+function topic(id){return D.topics.filter(function(t){return t.id===id;})[0];}
+function mineOf(tid){return Object.keys(BANK).map(function(k){return BANK[k];}).filter(function(x){return x.t===tid;}).sort(function(a,b){return (a.at||0)-(b.at||0);});}
+function tset(){var s=SET[T.id]||{};return s;}
+function defaultUnits(t){return t.units.filter(function(u){return (t.testPages||[]).indexOf(u.p)<0;}).map(function(u){return u.k;});}
+function renderTopics(){
+  $('topics').innerHTML=D.topics.map(function(t){var n=mineOf(t.id).length;
+    return '<button class="tc" type="button" data-t="'+esc(t.id)+'" aria-pressed="'+(T&&T.id===t.id)+'" style="--c:'+esc(t.c)+'"><b>'+esc(t.title)+'</b><small>'+esc(t.th)+'</small><small>'+t.units.length+' หัวข้อย่อย'+(n?' · ทำไปแล้ว '+n+' ข้อ':'')+'</small></button>';}).join('');
+}
+function renderSetup(){
+  var t=T,s=tset(),sel=s.units&&s.units.length?s.units:defaultUnits(t);
+  $('tTitle').textContent=t.title;$('tSub').textContent=t.th+' · '+t.source;
+  $('focus').value=s.focus||'';$('focus').placeholder=t.focusPh||'เช่น เรื่องที่อยากเน้น';
+  var lv=s.level||3;
+  $('levels').innerHTML=D.levels.map(function(l,i){return '<label><input type="radio" name="lv" value="'+(i+1)+'"'+(lv===i+1?' checked':'')+'>'+(i+1)+' · '+esc(l[0])+'</label>';}).join('');
+  $('scope').innerHTML=t.groups.map(function(g){
+    var gu=t.units.filter(function(u){return g.pages.indexOf(u.p)>=0;});
+    return '<details><summary><label class="ck"><input type="checkbox" data-g="'+esc(g.id)+'"><span class="k" style="font-weight:500">'+esc(g.t)+'</span></label><span class="cnt" data-gc="'+esc(g.id)+'"></span></summary>'+
+      g.pages.map(function(pn){var pu=gu.filter(function(u){return u.p===pn;});
+        return '<div class="pg"><label class="ck"><input type="checkbox" data-p="'+pn+'"><span>หน้า '+pn+' · '+esc(pu.length?pu[0].pt:'')+'</span></label><div class="un">'+
+          pu.map(function(u){return '<label class="ck"><input type="checkbox" data-u="'+esc(u.k)+'"'+(sel.indexOf(u.k)>=0?' checked':'')+'><span>'+esc(u.t)+'</span></label>';}).join('')+'</div></div>';}).join('')+'</details>';}).join('');
+  syncBoxes();
+}
+function readSel(){return Array.prototype.map.call($('scope').querySelectorAll('input[data-u]:checked'),function(x){return x.getAttribute('data-u');});}
+function syncBoxes(){
+  var sc=$('scope');
+  sc.querySelectorAll('[data-p]').forEach(function(p){var bx=p.closest('.pg').querySelectorAll('input[data-u]'),k=Array.prototype.filter.call(bx,function(x){return x.checked;}).length;p.checked=k===bx.length;p.indeterminate=k>0&&k<bx.length;});
+  sc.querySelectorAll('[data-g]').forEach(function(g){var bx=g.closest('details').querySelectorAll('input[data-u]'),k=Array.prototype.filter.call(bx,function(x){return x.checked;}).length;g.checked=k===bx.length;g.indeterminate=k>0&&k<bx.length;sc.querySelector('[data-gc="'+g.getAttribute('data-g')+'"]').textContent=k+'/'+bx.length;});
+  $('selCnt').textContent=readSel().length+' / '+T.units.length+' หัวข้อย่อย';
+}
+function saveSetup(){var lv=document.querySelector('input[name=lv]:checked');SET[T.id]={units:readSel(),focus:$('focus').value.trim(),level:lv?+lv.value:3};SET._ts=Date.now();putSet();return SET[T.id];}
+
+/* ---------- prompt (เหมือนหน้า "AI ออกโจทย์ทีละข้อ" บนเว็บ) ---------- */
+function mixLine(t){var m=t.mix||D.mix;if(!m)return '';return '- ข้อนี้: '+(Math.random()<m.p?m.main+(m.hint?' '+m.hint:''):m.other)+'\n';}
+function prompt(t,u,s,recent){
+  var lv=D.levels[(s.level||3)-1];
+  var rules='กติกา\n- โจทย์เป็น clinical vignette (case-based) ภาษาอังกฤษแบบข้อสอบทางการ ตัวเลือก 5 ข้อ A–E เป็นภาษาอังกฤษ คำตอบถูกข้อเดียว\n'+
+    '- ใส่ข้อมูลเท่าที่จำเป็นให้ได้คำตอบเดียว ห้ามใบ้คำตอบในโจทย์ (เช่นใส่ชื่อโรคในวงเล็บหลังค่าแลป) ตัวเลือกที่ถูกห้ามยาวหรือละเอียดกว่าตัวเลือกอื่น\n'+
+    '- ระดับความยาก '+(s.level||3)+'/5 ('+lv[0]+'): '+lv[1]+'\n'+(s.focus?'- เน้นเรื่อง: '+s.focus+'\n':'')+mixLine(t)+
+    '- คำอธิบายเป็นภาษาไทย: ทำไมข้อถูกถึงถูก ทำไมแต่ละตัวเลือกที่เหลือผิด และสรุปความรู้ของข้อนี้ให้ครบในตัว\n'+
+    '- เนื้อหาหลักต้องมาจากสรุปด้านล่าง ถ้าต้องใช้ความรู้นอกสรุปให้ใช้ความรู้มาตรฐานที่ถูกต้อง (guideline ล่าสุด) และบอกไว้ในคำอธิบาย ห้ามแต่งข้อมูล\n'+
+    '- ข้อความสรุปสกัดมาจาก PDF อาจมีสระ/วรรณยุกต์ไทยเพี้ยนหรือสัญลักษณ์หายบางจุด (เช่น ⊕ ⊖ ★ = ดอกจัน/ออกสอบ) ให้ตีความตามความหมายทางการแพทย์\n';
+  var ctx=u.x||'';
+  if(ctx.length<450)t.units.forEach(function(x){if(x.p===u.p&&x.h===u.h&&x.k!==u.k&&ctx.length<1400)ctx+='\n\n'+x.t+'\n'+x.x;});
+  return 'คุณเป็นอาจารย์แพทย์ที่ออกข้อสอบ MCQ ให้นักศึกษาแพทย์ไทยชั้นปีที่ '+D.year+' (เตรียม Compre และ NL) หัวข้อ "'+t.title+'" ('+t.th+')\nออกข้อสอบ 1 ข้อ จากหัวข้อย่อยด้านล่าง\n\n'+rules+
+    (recent.length?'- ห้ามซ้ำหรือคล้ายข้อที่ออกไปแล้ว:\n'+recent.map(function(r){return '  · '+r;}).join('\n')+'\n':'')+
+    '\nตอบเป็น JSON อย่างเดียว ไม่มีข้อความอื่น รูปแบบ:\n{"stem":"...","options":["...","...","...","...","..."],"answer":"A","explanation":"...","tags":["หัวข้อย่อย 1–3 คำ"]}\n'+
+    '\nเนื้อหา ('+u.pt+' › '+u.t+')\n<<<\n'+ctx+'\n>>>';
+}
+
+/* ---------- runner ---------- */
+var R={run:0,t:null,cur:null,next:null,nextP:null,busy:false,err:'',n:0,ok:0,lastU:[]};
+var SAMPLE=null;
+function pick(t,s){var pool=t.units.filter(function(u){return s.units.indexOf(u.k)>=0&&u.x&&u.x.length>40;});if(!pool.length)pool=t.units.filter(function(u){return s.units.indexOf(u.k)>=0;});
+  var p2=pool.filter(function(u){return R.lastU.indexOf(u.k)<0;});if(p2.length)pool=p2;return pool[Math.floor(Math.random()*pool.length)];}
+async function fetchQ(t,s){
+  var u=pick(t,s);R.lastU=R.lastU.concat([u.k]).slice(-4);
+  var recent=mineOf(t.id).slice(-10).map(function(x){return x.stem.slice(0,160);});
+  if(R.cur&&R.cur.stem)recent.push(R.cur.stem.slice(0,160));
+  var q=await SAMPLE.json(prompt(t,u,s,recent),{modelTier:'default',cache:false});
+  if(!q||!q.stem||!Array.isArray(q.options)||q.options.length<2)throw {code:'bad_shape'};
+  return {id:'q'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),t:t.id,u:u.k,up:u.p,ut:u.t,stem:String(q.stem),options:q.options.slice(0,5).map(String),
+    answer:String(q.answer||'').trim().toUpperCase().charAt(0),explanation:String(q.explanation||''),tags:(q.tags||[]).slice(0,3).map(String),lv:s.level||3,via:'claude'};
+}
+function errText(e){var c=e&&e.code;return c==='not_granted'?'ยังไม่ได้อนุญาตให้หน้านี้ใช้ Claude':c==='rate_limited'?'ใช้ Claude ถี่เกินไปหรือถึงขีดจำกัด — รอสักครู่แล้วกดลองใหม่':c==='invalid_json'||c==='bad_shape'?'Claude ส่งโจทย์กลับมาไม่ครบรูปแบบ — กดลองใหม่':c==='sampling_disabled'?'บัญชีนี้ใช้ Claude ในหน้าเว็บไม่ได้':'ออกโจทย์ไม่สำเร็จ ('+(c||'error')+') — กดลองใหม่';}
+function prefetch(t,s){var mine=R.run;R.next=null;R.nextP=fetchQ(t,s).then(function(q){if(R.run===mine){R.next=q;var el=$('nx');if(el)el.textContent='ข้อต่อไปพร้อมแล้ว';}return q;});R.nextP.catch(function(){});}
+function showNext(){
+  var t=R.t,s=tset(),mine=R.run;R.err='';R.cur=null;R.busy=true;paintQ();
+  var p=R.next?Promise.resolve(R.next):(R.nextP||fetchQ(t,s));R.next=null;R.nextP=null;
+  p.then(function(q){if(R.run!==mine)return;R.cur=q;R.busy=false;paintQ();prefetch(t,s);})
+   .catch(function(e){if(R.run!==mine)return;R.busy=false;R.err=errText(e);paintQ();});
+}
+function paintQ(){
+  var el=$('qbox');
+  if(!R.t||R.t.id!==T.id){el.innerHTML='<div class="empty"><p class="k" style="font-size:19px">ยังไม่ได้เริ่ม</p><p class="muted">เลือกหัวข้อย่อยแล้วกด “เริ่มฝึก” — Claude จะออกโจทย์ case-based ทีละข้อ เฉลยทันที แล้วเตรียมข้อต่อไประหว่างอ่านเฉลย</p>'+(SAMPLE===null?'<p class="note">กำลังเชื่อมต่อ Claude…</p>':'')+'</div>';return;}
+  var q=R.cur,head='<p class="note">ทำในรอบนี้ '+(R.n+(q&&q.pick!=null?1:0))+' ข้อ · ถูก '+R.ok+'</p>';
+  if(!q){el.innerHTML=head+(R.err?'<p class="warn" style="margin:10px 0">'+esc(R.err)+'</p><button class="btn ghost" type="button" data-next>ลองใหม่</button>':'<p style="margin-top:12px"><span class="spin" aria-hidden="true"></span>Claude กำลังออกข้อ '+(R.n+1)+'… (ข้อแรกอาจใช้เวลาครึ่งนาที)</p>');return;}
+  var done=q.pick!=null,ai=L.indexOf(q.answer);
+  el.innerHTML=head+'<div class="row" style="gap:6px;margin-top:6px">'+[q.ut].concat(q.tags||[]).slice(0,3).map(function(x){return '<span class="pill">'+esc(x)+'</span>';}).join('')+'</div>'+
+    '<p class="stem" lang="en">'+esc(q.stem)+'</p><div lang="en">'+q.options.map(function(op,j){var c=done?(j===ai?' ok':j===q.pick?' bad':''):'';
+      return '<button class="choice'+c+'" type="button" data-a="'+j+'"'+(done?' disabled':'')+'><b>'+L[j]+'</b><span>'+esc(String(op).replace(/^[A-E][.)]\s*/,''))+'</span></button>';}).join('')+'</div>'+
+    (done?'<div class="explain"><p class="k '+(q.pick===ai?'good':'badc')+'">'+(q.pick===ai?'ถูก':'ยังไม่ถูก')+' · เฉลย '+esc(L[ai]||q.answer)+'</p>'+rich(q.explanation)+'</div>'+
+      '<div class="qnav"><span class="note" id="nx">'+(R.next?'ข้อต่อไปพร้อมแล้ว':'')+'</span><button class="btn" type="button" data-next>ข้อต่อไป →</button></div>':'');
+}
+$('qbox').addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.disabled)return;
+  if(b.hasAttribute('data-a')&&R.cur&&R.cur.pick==null){var q=R.cur;q.pick=+b.getAttribute('data-a');var good=L.charAt(q.pick)===q.answer;if(good)R.ok++;
+    var x=Object.assign({},q);delete x.pick;x.at=Date.now();x.my=[[q.pick,good?1:0,Date.now()]];putQ(x);paintQ();renderBank();renderTopics();}
+  else if(b.hasAttribute('data-next')){R.n+=R.cur&&R.cur.pick!=null?1:0;showNext();}});
+
+/* ---------- send to the website: #tbank=z.<base64url(deflate-raw(JSON))> ---------- */
+function b64u(u8){var s='';for(var i=0;i<u8.length;i+=0x8000)s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+async function pack(str){var u=new TextEncoder().encode(str);if(typeof CompressionStream==='function'){try{var b=await new Response(new Blob([u]).stream().pipeThrough(new CompressionStream('deflate-raw'))).arrayBuffer();return 'z.'+b64u(new Uint8Array(b));}catch(e){}}return 'j.'+b64u(u);}
+function unsent(x){return !x.sent||(x.ts||0)>x.sent+5000;}
+async function sendWeb(share){
+  var mine=mineOf(T.id),out=$(share?'outAll':'outWeb');
+  var list=share?mine.filter(function(x){return !x.shared;}):mine.filter(unsent);
+  if(!list.length&&!share)list=mine;
+  if(!list.length){out.hidden=false;out.innerHTML='<p class="note">'+(share?'ทุกข้อในหัวข้อนี้แชร์ให้ทุกคนแล้ว':'ยังไม่มีโจทย์ในหัวข้อนี้')+'</p>';return;}
+  var cut=list.slice(0,D.maxLink),left=list.length-cut.length;
+  var body={v:1,q:cut.map(function(x){return {id:x.id,t:x.t,u:x.u,up:x.up,ut:x.ut,stem:x.stem,options:x.options,answer:x.answer,explanation:x.explanation,tags:x.tags,lv:x.lv,at:x.at,my:x.my||[]};})};
+  if(share)body.s=1;
+  var url=D.site.replace(/#.*$/,'')+'#tbank='+await pack(JSON.stringify(body)),now=Date.now()+10000;
+  cut.forEach(function(x){x.sent=now;if(share)x.shared=now;putQ(x);});
+  out.hidden=false;
+  out.innerHTML='<a class="btn" href="'+esc(url)+'" target="_blank" rel="noopener">เปิดโพยหมอบนเว็บ ↗</a>'+
+    '<p class="note">'+cut.length+' ข้อ'+(left?' · เหลืออีก '+left+' ข้อ กดอีกครั้งหลังเปิดเว็บ':'')+(share?' · บนเว็บต้องเข้าสู่ระบบจึงจะแชร์':'')+' · ลิงก์ยาว '+Math.max(1,Math.round(url.length/1024))+' KB</p>'+
+    '<button class="chip" type="button" data-copy>คัดลอกลิงก์ (ถ้าปุ่มเปิดไม่ขึ้น)</button><textarea readonly hidden aria-label="ลิงก์ไปโพยหมอ"></textarea>';
+  var ta=out.querySelector('textarea');ta.value=url;
+  out.querySelector('[data-copy]').onclick=function(){var ok=function(){out.querySelector('[data-copy]').textContent='คัดลอกแล้ว — ไปวางในเบราว์เซอร์';};
+    try{navigator.clipboard.writeText(url).then(ok,function(){ta.hidden=false;ta.select();});}catch(e){ta.hidden=false;ta.select();}};
+  renderBank();
+}
+$('sendWeb').onclick=function(){sendWeb(false);};
+$('sendAll').onclick=function(){sendWeb(true);};
+
+function renderBank(){
+  var mine=mineOf(T.id),wrong=mine.filter(function(x){var m=x.my||[];return m.length&&!m[m.length-1][1];}).length;
+  $('bankT').textContent=T.title;
+  $('ledger').innerHTML='<span><b>'+mine.length+'</b><span class="note">ข้อที่ทำในหัวข้อนี้</span></span><span><b>'+wrong+'</b><span class="note">ตอบผิด</span></span><span><b>'+mine.filter(unsent).length+'</b><span class="note">ยังไม่ส่งไปเว็บ</span></span><span><b>'+mine.filter(function(x){return !x.shared;}).length+'</b><span class="note">ยังไม่แชร์ให้ทุกคน</span></span>';
+  $('sendWeb').disabled=!mine.length;$('sendAll').disabled=!mine.filter(function(x){return !x.shared;}).length;
+  $('hist').innerHTML=mine.length?mine.slice().reverse().slice(0,60).map(function(x,i){var m=x.my||[],last=m[m.length-1],ai=L.indexOf(x.answer);
+    return '<details><summary><span class="'+(last&&last[1]?'good':'badc')+'">'+(last&&last[1]?'✓':'✗')+'</span><span class="s" lang="en">'+esc(x.stem)+'</span></summary>'+
+      '<div style="padding:8px 0 4px 28px;display:flex;flex-direction:column;gap:6px"><p class="note">'+esc(x.ut)+(x.shared?' · แชร์แล้ว':x.sent?' · ส่งไปเว็บแล้ว':'')+'</p><p lang="en">'+esc(x.stem)+'</p>'+
+      x.options.map(function(op,j){return '<p lang="en" class="'+(j===ai?'good':last&&j===last[0]?'badc':'')+'"><b>'+L[j]+'.</b> '+esc(String(op).replace(/^[A-E][.)]\s*/,''))+'</p>';}).join('')+rich(x.explanation)+'</div></details>';}).join(''):'<p class="note" style="padding-top:12px">ยังไม่มีโจทย์ในหัวข้อนี้ — ตอบข้อแรกแล้วจะเก็บไว้ที่นี่</p>';
+}
+function renderAll(){renderTopics();renderSetup();paintQ();renderBank();}
+
+/* ---------- events ---------- */
+$('setup').addEventListener('submit',function(e){e.preventDefault();});
+$('scope').addEventListener('click',function(e){if(e.target.closest('summary label'))e.stopPropagation();});
+$('topics').addEventListener('click',function(e){var b=e.target.closest('[data-t]');if(!b)return;var t=topic(b.getAttribute('data-t'));if(!t||(T&&T.id===t.id))return;T=t;SET._last=t.id;putSet();renderAll();
+  $('setup').scrollIntoView({block:'start',behavior:'smooth'});});
+$('scope').addEventListener('change',function(e){var x=e.target;
+  if(x.hasAttribute('data-g'))x.closest('details').querySelectorAll('input[data-u]').forEach(function(y){y.checked=x.checked;});
+  if(x.hasAttribute('data-p'))x.closest('.pg').querySelectorAll('input[data-u]').forEach(function(y){y.checked=x.checked;});
+  syncBoxes();saveSetup();});
+$('setup').addEventListener('click',function(e){var b=e.target.closest('[data-all]');if(!b)return;$('scope').querySelectorAll('input[data-u]').forEach(function(x){x.checked=b.getAttribute('data-all')==='1';});syncBoxes();saveSetup();});
+$('levels').addEventListener('change',saveSetup);$('focus').addEventListener('change',saveSetup);
+$('go').onclick=function(){var s=saveSetup();
+  if(!s.units.length){$('st').textContent='เลือกอย่างน้อย 1 หัวข้อย่อย';return;}
+  if(!SAMPLE){$('st').textContent=SAMPLE===null?'กำลังเชื่อมต่อ Claude… ลองอีกครั้งในไม่กี่วินาที':'หน้านี้ใช้ Claude ไม่ได้ — เปิดลิงก์นี้ใน claude.ai';return;}
+  $('st').textContent='';R={run:Date.now(),t:T,cur:null,next:null,nextP:null,busy:false,err:'',n:0,ok:0,lastU:[]};showNext();
+  $('qbox').scrollIntoView({block:'start',behavior:'smooth'});};
+
+/* ---------- boot ---------- */
+T=topic(SET._last)||D.topics[0];
+$('ver').textContent='ข้อมูล '+D.built;
+renderAll();
+if(window.claude&&typeof window.claude.use==='function'){
+  window.claude.use('sample').then(function(s){SAMPLE=s||false;paintQ();}).catch(function(){SAMPLE=false;paintQ();});
+  initCloud();
+}else{SAMPLE=false;paintQ();}
+})();
+</script>
