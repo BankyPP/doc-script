@@ -29,10 +29,18 @@ function spcPick(wid){const A=spcA(wid),pool=spcPool(wid);if(!pool.length)return
   let L_=(A.bag.sig===sig?A.bag.list:[]).filter(k=>by[k]);
   if(!L_.length){L_=shuffle(pool.map(u=>u.key));if(L_.length>1&&L_[0]===A.bag.last)L_.push(L_.shift());}
   const k=L_.shift();A.bag={sig,list:L_,last:k};save();return by[k];}
-function spcPrompt(src,A){const pts=(A.pts[src.key]||[]).slice(-12),ob=/^obgyn/.test(ward);
+/* question rules = Unit round (user, 27 Oct 2026 — Project doc kit/กติกาสร้างโจทย์จาก-lecture-resource.md): ~85–90% of questions answerable from the
+   source alone, ~10–15% may go slightly beyond it (still needing the source, same topic, outside knowledge only supplementing, explanation says what is
+   beyond); cover the whole source weighted by its emphasis; printed text / figures : handwritten notes ≈ 80 : 20 */
+const SPC_BEYOND=0.125;
+function spcPrompt(src,A){const pts=(A.pts[src.key]||[]).slice(-12),ob=/^obgyn/.test(ward),beyond=Math.random()<SPC_BEYOND;
   return `
-STRICT CONTENT RULE (Specialty round): this question must be built ONLY on the source below, which comes from this ward's own files (${SPC_KN[src.kind]||"file"} ${spcLabel(src)}).
-- The key fact tested and the correct answer MUST be stated in, or follow directly from, the source. Do not test anything the source does not cover.
+CONTENT RULE (Specialty round, same rules as the Unit round): this question is built on the source below, which comes from this ward's own files (${SPC_KN[src.kind]||"file"} ${spcLabel(src)}).
+${beyond?`- THIS question (about 1 in 8) may go slightly beyond the source: it must still require knowledge from the source, stay within a topic the source covers, and use outside knowledge (newest guideline / textbook) only as a small supplement. In "why" say plainly which part goes beyond the source ("นอกไฟล์: …").`
+:`- The key fact tested and the correct answer MUST be stated in, or follow directly from, the source (answerable from the source alone). Do not test anything the source does not cover.`}
+- Over many questions, cover every part of the source, weighting what it emphasises (stars, must-know marks, repeated points); never the parts it marks as nice-to-know / not needed.
+- If the source separates handwritten notes from printed slide text or figures, base about 80% of questions on the printed text / figures and about 20% on the handwritten notes.
+- Normal anatomy / physiology may be tested as a case; if the source has formulas, numbers, scores or staging, a calculation question is fine (explain step by step).
 - The case details and the distractors may use general medical knowledge, but every distractor must be clearly wrong for this case according to the source or standard knowledge.
 - Where the source marks a correction, use the corrected statement.
 - If the source disagrees with the newest guideline or textbook${ob?" (for this OB-GYN ward: RTCOG, ACOG and Williams, newest editions, rank first)":""}, still test what is correct per that guideline, and explain the difference in "conflict".
