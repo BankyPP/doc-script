@@ -1010,12 +1010,30 @@
         var hs = n.heads.filter(function (h) { return h.l <= 2 && h.t; }).slice(0, 80);
         if (hs.length) s += '<div class="gtoc" style="--d:' + (n.depth - top.depth) + '">' + hs.map(function (h) { return '<a href="' + gHref(n, h.id) + '" class="l' + h.l + '">' + esc(h.t) + '</a>'; }).join('') + '</div>';
       }
-      if (n.kids.length && (open || n.depth - top.depth < 1 || n.kind !== 'sheets')) s += n.kids.map(item).join('');
+      if (n.kids.length && (open || n.depth - top.depth < 1 || n.kind !== 'sheets')) {
+        if (n === top) s += n.kids.map(item).join('');
+        else {
+          /* หัวข้อที่มีแท็บย่อย: ปุ่มเปิด/ปิดแท็บย่อยทั้งหมด (จำค่าไว้ในเครื่อง) · ค่าเริ่มต้นเปิดเฉพาะสายที่กำลังอ่าน */
+          var sv = gTogState()[n.slug], ex = sv != null ? !!sv : open;
+          s = '<div class="gtrow">' + s + '<button type="button" class="gtt" data-gtt="' + esc(n.slug) + '" aria-expanded="' + ex + '" aria-label="เปิด/ปิดหัวข้อย่อยของ ' + esc(n.title) + '" title="' + n.kids.length + ' หัวข้อย่อย"><span class="gttn">' + n.kids.length + '</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></svg></button></div>' +
+            '<div class="gtk" data-gtk="' + esc(n.slug) + '"' + (ex ? '' : ' hidden') + '>' + n.kids.map(item).join('') + '</div>';
+        }
+      }
       return s;
     }
     var lk = gLook(top);
+    var hasTog = top.kids.some(function (k) { return k.kids.length; });
     return '<details class="gtree" open><summary><span class="sw" style="background:' + lk.c + ';width:18px;height:18px"></span><span class="k" style="font-size:19px">' + esc(top.title) + '</span>' + (top.kids.length ? '<span class="muted gtc">' + top.kids.length + ' หัวข้อย่อย</span>' : '') + '<span class="gchev" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 9.5l5.5 5.5 5.5-5.5"/></svg></span><span class="sr">สารบัญ</span></summary>' +
+      (hasTog ? '<div class="gtall"><button type="button" class="chip" data-gtall="1">ขยายทั้งหมด</button><button type="button" class="chip" data-gtall="0">ย่อทั้งหมด</button></div>' : '') +
       '<nav class="tree" aria-label="แท็บใน ' + esc(top.title) + '">' + item(top) + '</nav></details>';
+  }
+  function gTogState() { try { return JSON.parse(localStorage.getItem('poy.gtt') || '{}') || {}; } catch (e) { return {}; } }
+  function gTogSave(m) { try { localStorage.setItem('poy.gtt', JSON.stringify(m)); } catch (e) { } }
+  function gTogSet(btn, ex, m) {
+    var k = btn.getAttribute('data-gtt'), box = btn.parentNode.nextElementSibling;
+    btn.setAttribute('aria-expanded', String(ex));
+    if (box && box.classList.contains('gtk')) box.hidden = !ex;
+    m[k] = ex ? 1 : 0;
   }
   function gKidCards(n) {
     if (!n.kids.length) return '';
@@ -1058,6 +1076,11 @@
   function gAfter() {
     var t = document.querySelector('.gtree');
     if (t && window.matchMedia('(max-width: 899px)').matches) t.open = false;
+    if (t) t.addEventListener('click', function (e) {
+      var b = e.target.closest('.gtt'), all = e.target.closest('[data-gtall]'), m;
+      if (b) { e.preventDefault(); m = gTogState(); gTogSet(b, b.getAttribute('aria-expanded') !== 'true', m); gTogSave(m); }
+      else if (all) { e.preventDefault(); m = gTogState(); var ex = all.getAttribute('data-gtall') === '1'; t.querySelectorAll('.gtt').forEach(function (x) { gTogSet(x, ex, m); }); gTogSave(m); }
+    });
     document.querySelectorAll('.gdoc [data-anchor]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
