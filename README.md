@@ -31,6 +31,13 @@
 - ผู้ใช้สั่งอัปเดตไฟล์ที่ไม่ sync เองด้วยคำสั่งในแชท `//update ggfile <ชื่อไฟล์|all>`
 - ออกข้อสอบจากแท็บใดก็ได้: `#/exam?src=g:<แท็บ>` (รวมแท็บย่อย)
 
+## Preclinic › Neuro — CNS & PNS Tutorial 2026 (B03)
+- ไฟล์ต้นฉบับ 76 หน้า (สไลด์ + ลายมือ) + ไฟล์สรุป 10 หน้า → `docs/gdoc/neuro-tut.json` แขวนใต้แท็บ Neuro และแท็บย่อยของ Neuro ผ่าน `extras` ใน data/gdoc.js (badge "Tutorial") — **ไม่แตะ Google Doc** และไม่ถูกทับตอน Doc sync
+- 62 แท็บ: ใต้ Neuro = แท็บรวม "CNS & PNS Tutorial 2026" (Localization, Neuro exam, High-yield, Mnemonics, Quiz 145 ข้อ, สไลด์ต้นฉบับ 76 หน้า, ไฟล์สรุป PDF) · ที่เหลือกระจายใต้ Neuroanatomy / Neurophysiology / Neuro Disorders / Neuropharm & Abx / Neuro Investigation / Neuro Congenital Disorders
+- แต่ละแท็บ = กล่องหลายคอลัมน์ตามหัวข้อย่อย (สารบัญซ้าย) + ภาพสไลด์ต้นฉบับหน้าที่เกี่ยวข้องท้ายแท็บ · CSS อยู่ท้าย app.css (`.nx`)
+- แก้เนื้อหา: `tools/neuro-tut/src/` (p1–p8.html = ไฟล์สรุป, extra.html = กล่องเสริมจากต้นฉบับ, qa.py = คำถาม) · ย้าย/เพิ่มแท็บ: `TABS` ใน `tools/neuro-tut/build.py` → `python3 tools/neuro-tut/build.py` → ถ้าชื่อแท็บเปลี่ยน copy `tools/neuro-tut/tabs.js.txt` ไปแทนรายการใน data/gdoc.js → เพิ่ม `POY_GDOC_V`
+- ภาพ: `docs/gdoc/img/neuro-tut/` (pNN = สไลด์ต้นฉบับ, sNN = ไฟล์สรุป, fig-* = รูปที่ตัดมา) · PDF สรุป: `docs/gdoc/files/neuro-cnspns-summary.pdf`
+
 ## Google Sheet 1000 MAI
 - แชร์ชีตเป็น Anyone with the link → Viewer แล้วใส่ `sheet.id` / `sheet.gid` ใน config.js
 - แถวแรกคือหัวคอลัมน์ · คอลัมน์ชื่อโรค / ชื่อไทย / ระบบ / No. ถูกจับอัตโนมัติจากชื่อหัว ที่เหลือแสดงเป็นหัวข้อในหน้าโรคตามลำดับในชีต
