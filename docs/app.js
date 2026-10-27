@@ -2206,8 +2206,8 @@
     var out = [];
     d.pages.forEach(function (p) {
       p.cols.forEach(function (c, ci) {
-        if (c.boxes.length) c.boxes.forEach(function (b, bi) { out.push({ key: p.n + '-' + ci + '-' + bi, p: p.n, pt: p.t, head: c.h, title: b.t || c.h || ('คอลัมน์ ' + (ci + 1)), text: b.x, bb: b.bb }); });
-        else out.push({ key: p.n + '-' + ci, p: p.n, pt: p.t, head: c.h, title: c.h || ('คอลัมน์ ' + (ci + 1)), text: c.x || '', bb: c.bb });
+        if (c.boxes.length) c.boxes.forEach(function (b, bi) { out.push({ key: p.n + '-' + ci + '-' + bi, p: p.n, pt: p.t, head: c.h, hc: c.c, title: b.t || c.h || ('คอลัมน์ ' + (ci + 1)), text: b.x, bb: b.bb, sz: b.sz, cells: b.cells }); });
+        else out.push({ key: p.n + '-' + ci, p: p.n, pt: p.t, head: c.h, hc: c.c, title: c.h || ('คอลัมน์ ' + (ci + 1)), text: c.x || '', bb: c.bb });
       });
     });
     return out;
@@ -2215,11 +2215,32 @@
   function tUnitsCached(t, d) { var s = TD[t.id]; if (!s.units) s.units = tUnits(d); return s.units; }
   function uLink(t, u) { return '#/topics/' + t.id + '/sum/' + u.p + '?to=u' + u.key; }
   function groupOf(d, n) { return d.groups.filter(function (g) { return g.pages.indexOf(n) >= 0; })[0]; }
-  /* ภาพตัดเฉพาะกล่อง (ใช้ภาพหน้าเดียวกัน แค่เลื่อนกรอบ) */
+  /* ขนาดภาพหน้า (px) — หน้าไหนไม่ระบุ img ใช้ A4 แนวนอน 2813 px */
+  function pageWH(t, n) {
+    var s = TD[t.id], p = s && s.data && s.data.pages[n - 1];
+    return p && p.img ? p.img : [IMG_W, Math.round(IMG_W / PAGE_R)];
+  }
+  /* ภาพตัดเฉพาะกล่อง (ไฟล์ภาพแยกของแต่ละกล่อง) */
   function cropHTML(t, u) {
-    var bb = u.bb, w = Math.round(bb[2] * IMG_W), h = Math.round(bb[3] * IMG_W / PAGE_R);
+    if (u.cells) return rowHTML(t, u);
+    var wh = pageWH(t, u.p), bb = u.bb, w = u.sz ? u.sz[0] : Math.round(bb[2] * wh[0]), h = u.sz ? u.sz[1] : Math.round(bb[3] * wh[1]);
     return '<figure class="crop" id="u' + u.key + '"><button type="button" class="cimg" data-zoom="' + u.p + '" data-bb="' + bb.join(',') + '" style="max-width:' + Math.round(w * 1.15) + 'px;min-width:' + Math.round(w * 0.6) + 'px" aria-label="ขยายภาพ: ' + esc(u.title) + '">' +
       '<img src="' + t.dir + 'c/' + u.key + '.webp?v=' + (t.v || 1) + '" width="' + w + '" height="' + h + '" alt="" loading="lazy" decoding="async"></button></figure>';
+  }
+  /* แถวของตาราง: ช่องแรก (ชื่อ) เป็นหัวการ์ด ช่องที่เหลือเรียงเป็นกล่องพร้อมชื่อคอลัมน์ — ทุกช่องเป็นภาพตัดจากต้นฉบับ */
+  function rowHTML(t, u) {
+    var wh = pageWH(t, u.p), p = TD[t.id].data.pages[u.p - 1], heads = p.heads || [], hcol = p.hcol || [];
+    function cimg(k, cls) {
+      var bb = u.cells[k], w = Math.round(bb[2] * wh[0]) + 5, h = Math.round(bb[3] * wh[1]) + 5;
+      return '<button type="button" class="cimg ' + (cls || '') + '" data-zoom="' + u.p + '" data-bb="' + bb.join(',') + '" aria-label="ขยายภาพ: ' + esc(u.title + (k ? ' · ' + (heads[k] || '') : '')) + '">' +
+        '<img src="' + t.dir + 'c/' + u.key + '-' + k + '.webp?v=' + (t.v || 1) + '" width="' + w + '" height="' + h + '" alt="" loading="lazy" decoding="async"></button>';
+    }
+    var cells = '';
+    for (var k = 1; k < u.cells.length; k++) {
+      cells += '<div class="rcell' + (u.cells[k][2] * wh[0] > 420 ? ' wide' : '') + '"><span class="rlab" style="color:' + (hcol[k] || 'var(--muted)') + '">' + esc(heads[k] || '') + '</span>' + cimg(k) + '</div>';
+    }
+    return '<figure class="crop rcard" id="u' + u.key + '"' + (u.hc ? ' style="border-left-color:' + u.hc + '"' : '') + '><div class="rhead">' + cimg(0, 'rname') +
+      '<button type="button" class="chip" data-zoom="' + u.p + '" data-bb="' + u.bb.join(',') + '">ดูทั้งแถวในหน้า</button></div><div class="rcells">' + cells + '</div></figure>';
   }
   /* ดูภาพเต็ม ซูมได้ */
   function openZoom(t, n, bb) {
@@ -2230,14 +2251,15 @@
       '<div class="zsc"><img src="' + tImg(t, n) + '" alt="หน้า ' + n + ' ของสรุป ' + esc(t.title) + '"></div>';
     document.body.appendChild(o); document.body.classList.add('zopen');
     var sc = o.querySelector('.zsc'), img = o.querySelector('img');
-    var w = Math.round(Math.min(IMG_W, Math.max(1900, window.innerWidth * 1.6)));
+    var wh = pageWH(t, n), IW = wh[0], R = wh[0] / wh[1];
+    var w = Math.round(Math.min(IW, Math.max(Math.min(1900, IW), window.innerWidth * 1.6)));
     function setW(nw) {
-      var cx = (sc.scrollLeft + sc.clientWidth / 2) / w, cy = (sc.scrollTop + sc.clientHeight / 2) / (w / PAGE_R);
-      w = Math.round(Math.max(sc.clientWidth, Math.min(IMG_W * 1.6, nw))); img.style.width = w + 'px'; img.style.height = Math.round(w / PAGE_R) + 'px';
-      sc.scrollLeft = cx * w - sc.clientWidth / 2; sc.scrollTop = cy * (w / PAGE_R) - sc.clientHeight / 2;
+      var cx = (sc.scrollLeft + sc.clientWidth / 2) / w, cy = (sc.scrollTop + sc.clientHeight / 2) / (w / R);
+      w = Math.round(Math.max(sc.clientWidth, Math.min(IW * 1.6, nw))); img.style.width = w + 'px'; img.style.height = Math.round(w / R) + 'px';
+      sc.scrollLeft = cx * w - sc.clientWidth / 2; sc.scrollTop = cy * (w / R) - sc.clientHeight / 2;
     }
-    img.style.width = w + 'px'; img.style.height = Math.round(w / PAGE_R) + 'px';
-    if (bb) { sc.scrollLeft = bb[0] * w - 12; sc.scrollTop = bb[1] * (w / PAGE_R) - 12; }
+    img.style.width = w + 'px'; img.style.height = Math.round(w / R) + 'px';
+    if (bb) { sc.scrollLeft = bb[0] * w - 12; sc.scrollTop = bb[1] * (w / R) - 12; }
     function close() { o.remove(); document.body.classList.remove('zopen'); document.removeEventListener('keydown', key); if (back && back.focus) back.focus(); }
     function key(e) { if (e.key === 'Escape') close(); }
     document.addEventListener('keydown', key);
@@ -2310,13 +2332,16 @@
       }).join('');
     }).join('');
     var body;
-    if (full) body = '<button type="button" class="cimg fullp" data-zoom="' + n + '" aria-label="ขยายภาพหน้า ' + n + '"><img src="' + tImg(t, n) + '" width="' + IMG_W + '" height="' + Math.round(IMG_W / PAGE_R) + '" alt=""></button><p class="note">แตะที่ภาพเพื่อขยาย</p>';
+    var pwh = pageWH(t, n);
+    if (full) body = '<button type="button" class="cimg fullp" data-zoom="' + n + '" aria-label="ขยายภาพหน้า ' + n + '"><img src="' + tImg(t, n) + '" width="' + pwh[0] + '" height="' + pwh[1] + '" alt=""' + (pwh[0] < pwh[1] ? ' style="max-width:720px"' : '') + '></button><p class="note">แตะที่ภาพเพื่อขยาย</p>';
     else {
       var lastHead = null;
       body = '<div class="crops">' + mine.map(function (u) {
-        var h = u.head && u.head !== lastHead && !/^\s*$/.test(u.head) ? '<div class="chead label">' + esc(u.head.replace(/\s*\(ต่อ\)\s*$/, '')) + '</div>' : '';
+        var h = u.head && u.head !== lastHead && !/^\s*$/.test(u.head) ? '<div class="chead label"' + (u.hc ? ' style="color:' + u.hc + '"' : '') + '>' + esc(u.head.replace(/\s*\(ต่อ\)\s*$/, '')) + '</div>' : '';
         lastHead = u.head; return h + cropHTML(t, u);
       }).join('') + '</div>';
+      if (p.heads || p.lay) body = body.replace('<div class="crops">', '<div class="crops trows">');
+      if (p.note) body = '<p class="note">' + esc(p.note) + '</p>' + body;
     }
     var prev = d.pages[n - 2], next = d.pages[n];
     var nav = '<nav aria-label="หน้าก่อนหน้าและถัดไป" class="pnav">' +
@@ -2332,7 +2357,7 @@
       title: t.title + ' · หน้า ' + n, html: topicHead(t, 'sum', dl) +
         '<section class="band" style="padding:36px 0 80px"><div class="wrap reader" id="treader">' +
         '<details class="ttree" id="ttree" open><summary class="k">หัวข้อย่อย <span class="muted" style="font-weight:400;font-size:14px">· หน้า ' + n + ' / ' + d.pages.length + '</span></summary>' +
-        '<form class="search tsearch" id="tsrch" role="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="tq">ค้นในหัวข้อนี้</label><input id="tq" type="search" placeholder="ค้นในหัวข้อนี้ เช่น CRAB, PID" value="' + esc(qq) + '"></form>' +
+        '<form class="search tsearch" id="tsrch" role="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="tq">ค้นในหัวข้อนี้</label><input id="tq" type="search" placeholder="ค้นในหัวข้อนี้ ' + esc(t.searchPh || 'เช่น CRAB, PID') + '" value="' + esc(qq) + '"></form>' +
         hits + '<nav class="tree" aria-label="หัวข้อย่อยของ ' + esc(t.title) + '">' + tree + '</nav></details>' +
         '<article class="sheet doc tdoc"><div style="display:flex;flex-direction:column;gap:8px"><span class="muted" style="font-size:14px">' + esc(g ? g.t : '') + ' · หน้า ' + n + ' / ' + d.pages.length + '</span><h2 style="font-size:clamp(24px,3vw,32px)">' + esc(p.t) + '</h2>' +
         '<div class="filters" role="group" aria-label="มุมมอง"><a class="chip' + (full ? '' : ' on') + '" href="' + pageQ(false) + '">อ่านทีละกล่อง</a><a class="chip' + (full ? ' on' : '') + '" href="' + pageQ(true) + '">ทั้งหน้า</a>' +
@@ -2461,16 +2486,17 @@
 
   /* ----- AI ออกโจทย์ทีละข้อ (เหมือน Admission round: ออกต่อไปเรื่อย ๆ) ----- */
   var AIQ = { t: null, cur: null, next: null, busy: false, err: '', units: null, nq: 0, ok: 0 };
+  function tDefU(t, u) { return (t.testPages || []).indexOf(u.p) < 0; }
   function aiScope(t, d, set) {
     var all = tUnitsCached(t, d), sel = set.units;
-    if (!sel || !sel.length) return all.filter(function (u) { return u.p < 18; });   /* ค่าเริ่มต้น: ทุกหน้า ยกเว้นหน้าข้อสอบ */
+    if (!sel || !sel.length) return all.filter(function (u) { return tDefU(t, u); });   /* ค่าเริ่มต้น: ทุกหน้า ยกเว้นหน้าข้อสอบ */
     return all.filter(function (u) { return sel.indexOf(u.key) >= 0; });
   }
   /* สัดส่วนเรื่องที่ออก — ค่าเริ่มต้นทุกหัวข้อ: POY_TOPIC_DEFAULTS.mix (หัวข้อไหนใส่ mix เองจะใช้ของหัวข้อนั้น) — สุ่มทีละข้อ */
   function aiMix(t, forChat) {
     var m = t.mix || (window.POY_TOPIC_DEFAULTS || {}).mix; if (!m) return '';
     if (forChat) return '- สัดส่วนเรื่อง: ประมาณ ' + Math.round(m.p * 100) + '% ของข้อ ' + m.main + ' · ที่เหลือ ' + m.other + '\n';
-    return '- ข้อนี้: ' + (Math.random() < m.p ? m.main + ' (ถ้าเนื้อหาด้านล่างไม่ได้พูดถึงตรง ๆ ให้ใช้เนื้อหานี้เป็นบริบทของเคส แล้วให้คำถามจบที่เชื้อ/ยา)' : m.other) + '\n';
+    return '- ข้อนี้: ' + (Math.random() < m.p ? m.main + (m.hint ? ' ' + m.hint : '') : m.other) + '\n';
   }
   function aiPrompt(t, u, set, recent, forChat, pool) {
     var lv = LEVELS[(set.level || 3) - 1];
@@ -2565,7 +2591,7 @@
   function aiPage(t, d, r, head, tabs) {
     var set = tset(t.id), units = tUnitsCached(t, d);
     if (r.q.get('p')) { var pn = +r.q.get('p'); set = Object.assign({}, set, { units: units.filter(function (u) { return u.p === pn; }).map(function (u) { return u.key; }) }); tsetSave(t.id, set); history.replaceState(null, '', '#/topics/' + t.id + '/practice?m=ai'); }
-    var sel = set.units && set.units.length ? set.units : units.filter(function (u) { return u.p < 18; }).map(function (u) { return u.key; });
+    var sel = set.units && set.units.length ? set.units : units.filter(function (u) { return tDefU(t, u); }).map(function (u) { return u.key; });
     var on = function (k) { return sel.indexOf(k) >= 0; };
     var key = LS.get('apikey', ''), model = LS.get('model', C.ai.models[0].id), eng = set.eng || (key ? 'api' : 'claude'), lvl = set.level || 3;
     var scope = d.groups.map(function (g) {
@@ -2589,7 +2615,7 @@
         '<div class="aiwrap"><form id="aiset" class="sheet" style="padding:clamp(20px,3vw,32px)" onsubmit="return false">' +
         '<div class="step"><span class="n">1</span><fieldset><legend class="h">หัวข้อที่จะออก <span class="muted" style="font-size:15px;font-weight:400" id="aiCnt">' + sel.length + ' / ' + units.length + ' หัวข้อย่อย</span></legend>' +
         '<div class="filters" style="margin-bottom:10px"><button type="button" class="chip" data-sall="1">ทั้งหัวข้อ</button><button type="button" class="chip" data-sall="0">ไม่เลือกเลย</button></div><div class="scope">' + scope + '</div>' +
-        '<label class="h" for="aiFocus" style="font-size:16px;margin:14px 0 8px">เน้นเรื่อง (ไม่ใส่ก็ได้)</label><input class="field" id="aiFocus" maxlength="120" placeholder="เช่น CRAB, เลือกยาในคนท้อง, dose เด็ก" value="' + esc(set.focus || '') + '"></fieldset></div>' +
+        '<label class="h" for="aiFocus" style="font-size:16px;margin:14px 0 8px">เน้นเรื่อง (ไม่ใส่ก็ได้)</label><input class="field" id="aiFocus" maxlength="120" placeholder="' + esc(t.focusPh || 'เช่น CRAB, เลือกยาในคนท้อง, dose เด็ก') + '" value="' + esc(set.focus || '') + '"></fieldset></div>' +
         '<div class="step"><span class="n">2</span><fieldset><legend class="h">ระดับความยาก</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' + levelHTML + '</div></fieldset></div>' +
         '<div class="step"><span class="n">3</span><fieldset><legend class="h">ใช้ AI ผ่าน</legend><div style="display:flex;flex-direction:column;gap:10px">' +
         '<label class="eng"><input type="radio" name="teng" value="api"' + (eng === 'api' ? ' checked' : '') + '><span style="flex:1;min-width:0"><b class="k" style="font-weight:500;font-size:17px">Anthropic API key</b><br><span class="muted" style="font-size:15px">ทำในหน้านี้ทีละข้อ ข้อถัดไปเตรียมไว้ระหว่างอ่านเฉลย · key เก็บในเบราว์เซอร์นี้เท่านั้น (ใช้ร่วมกับห้องสอบ)</span>' +
