@@ -67,7 +67,7 @@
 - ทุกการสอบ `noExam:["MEQ"]` (หน้า MEQ ขึ้นว่าไม่มีสอบ) · OSCE มีทุกการสอบ หัวข้อ (`osceTopics`) รอผู้ใช้ส่ง
 - ข้อสอบ: `bank/<nl|compre>/data_<ward>/data_bN.js` (รูปแบบเดียวกับ ac-mdcu) · แท็ก = blueprint ของการสอบนั้น (`tags.js`, คำศัพท์ `TAGS_VOCAB.md`; NL part 1 ใช้แท็กเดียวกับ `docs/data/blueprint.js`) · topics.js · สรุป High-yield `sum_mcq_*.js` · รูป `bank/<inst>/img/`
 - ทุกข้อมีช่อง `inst:"MDCU"|"SI"` + ที่มาใน ro (เช่น "ติวจุฬาฯ Neonatology") · ตรวจด้วย tools ของ ac-mdcu: `DIR=<path จาก ac-mdcu ไป data_nl1> node tools/validate.js` (error เรื่องรูปไม่ต้องสน — ตรวจรูปแยก), `node tools/sumcheck.js <data dir> MCQ`
-- build: `python3 bank/build.py` (+ `docs/bank/stats.js`) · artifact ใน Claude ยังไม่ได้ทำ (`python3 bank/build.py --pack <dir>` ถ้าจะทำ)
+- build: `python3 bank/build.py` (+ `docs/bank/stats.js`) · **ไม่ทำ artifact ใน Claude ของคลังนี้** (ผู้ใช้สั่ง 27 ต.ค. 2026: artifact ใช้แค่ห้องฝึก/ออกโจทย์ ไม่ทำคลังหรือทั้งเว็บ)
 
 ### บอร์ดประกาศ
 - แท็ก: เรื่อง (`tag`: nl / compre / both) + สถาบัน (`inst`: ["MDCU","SI"]) · ตัวกรองทั้งสองแบบ · **ใครเข้าสู่ระบบแล้วแก้ประกาศไหนก็ได้** — ทุกการแก้เก็บฉบับเดิมใน `poymor_board/<id>/hist` (ปุ่ม "ประวัติ" → "ใช้ฉบับนี้" ย้อนกลับ) · ลบได้เฉพาะเจ้าของ
