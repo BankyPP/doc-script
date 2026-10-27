@@ -1,6 +1,6 @@
 (function(){
 /* NL part 1 · ชุด "NL2 เก่า" — ข้อสอบเก่า (recall) ที่อยู่ในไฟล์ติวสอบ NL2 Neonatology ของจุฬาฯ (Thaninee Chitsinchayakul, MD.)
-   ไฟล์ "NL2_Neonatology.pdf" (โค้ด NL2NEO, 17 หน้า สไลด์ 4 ช่อง/หน้า + ลายมือผู้จด) — 15 ข้อ (ข้อ 2, 6, 8, 10, 12, 13, 14, 15, 17, 18 + ไม่มีเลข 5 ข้อ)
+   ไฟล์ "NL2_Neonatology.pdf" (โค้ดเลคเชอร์ L02_Neonatology — แสดงผ่าน config files; ค่า file ภายในยังเป็น NL2NEO เพราะเป็นส่วนของ uid, 17 หน้า สไลด์ 4 ช่อง/หน้า + ลายมือผู้จด) — 15 ข้อ (ข้อ 2, 6, 8, 10, 12, 13, 14, 15, 17, 18 + ไม่มีเลข 5 ข้อ)
    ไม่มีไฟล์เฉลยแยก: คีย์ = ตัวเลือกที่ผู้จดวง/ไฮไลต์ในไฟล์ (page2 = หน้าเดียวกับโจทย์) · ปีที่ออกไม่ระบุในไฟล์ · ที่มา จุฬาฯ (โลโก้ Chula ทุกสไลด์)
    เฉลยเขียนตามมาตรฐานเว็บข้อสอบเก่า (ac-mdcu kit/PROMPT.md ข้อ 3–4): interp · why · wrong ครบ 4 · trap · summary · notes (ลายมือ+สไลด์ที่เกี่ยว) · kimg · mnemonic · opinion · variants
    แท็ก = blueprint NLE Part I ใหม่ (tags.js) · ห้ามแก้ set/ro/file/page/orig/stem 48 ตัวแรก (เป็น uid ของความคืบหน้าผู้ใช้) */
