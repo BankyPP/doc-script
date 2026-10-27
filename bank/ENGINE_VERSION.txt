@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 18e3458 2026-10-27 Service/Quality/Advisor set chips: group by q.set exactly (set names with spaces showed no chips)
+BankyPP/ac-mdcu 2f68594 2026-10-27 Variants rule: old exams always show 'โจทย์แบบใหม่ที่อาจออก', AI-written questions never (prompts no longer ask, render hides for adm/unit) · build loads <ward>/variants.js overlay · tools/mkvariants.py · kit/PROMPT.md

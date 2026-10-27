@@ -80,6 +80,8 @@ for w in cfg.get('wards',[]):
     js.append(f'WARDS[{wid}].OS=[];')
     for f in sorted(glob.glob(os.path.join(d,'osce_b*.js')),key=lambda f:int(re.sub(r'\D','',os.path.basename(f)) or 0)):   # OSCE banks: QB.push(station) → W.OS (same shape as a MEQ case, one Part)
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OS);')
+    vfx=os.path.join(d,'variants.js')   # "โจทย์แนวใหม่ที่อาจออก" for old-exam MCQ/MEQ/OSCE that lack them (user 27 Oct 2026: every old exam has them) — VAR={MCQ:{key:[…]},MEQ:{…},OSCE:{…}}, key set|ro|orig (+@p<page> / ~n like meq_fixes)
+    if os.path.exists(vfx): js.append('(function(W){\n'+open(vfx,encoding='utf-8').read()+'\n})(WARDS['+wid+']);')
     js.append(f'WARDS[{wid}].SUMM={{MCQ:[],MEQ:[],OSCE:[]}};')
     for f in sorted(glob.glob(os.path.join(d,'sum_*.js'))):     # สรุป High-yield Phase 2: sum_<mcq|meq|osce>_<slug>.js → SUMM.push({tag,title,intro,groups})
         T=os.path.basename(f).split('_')[1].upper()

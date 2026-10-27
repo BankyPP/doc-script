@@ -842,7 +842,8 @@ function explain(q,done,R,p){
   h+=sec("ช่วยจำ",q.mnemonic?`<p>${q.mnemonic}</p>`:"");
   {const rs=resFor(q);if(rs.length)h+=sec("อ่านเพิ่มจาก resource ที่แนบไว้",rs.map(r=>`<div class="resitem"><b>${esc(resLabel(r))}</b>${r.url?` · <a href="${esc(r.url)}" target="_blank" rel="noopener">เปิด</a>`:""}${resPts(r,6).length?`<ul>${resPts(r,6).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:r.note?`<p>${esc(r.note)}</p>`:""}</div>`).join(""));}
   h+=sec("ความเห็นของผม",q.opinion?`<div class="box">${R(q.opinion)}</div>`:"","opinion");
-  h+=sec("โจทย์แบบใหม่ที่อาจออก",`<ul>${(q.variants||[]).map(s=>`<li>${R(s)}</li>`).join("")}</ul>`);
+  /* "โจทย์แบบใหม่ที่อาจออก" = old exams only (user 27 Oct 2026); AI-written questions (Unit / Admission / Specialty / Legendary AI) never show it */
+  if(!q.adm&&!q.unit&&(q.variants||[]).length)h+=sec("โจทย์แบบใหม่ที่อาจออก",`<ul>${q.variants.map(s=>`<li>${R(s)}</li>`).join("")}</ul>`);
   h+=`<div class="sec mine"><h3>สรุปของฉันจากข้อนี้</h3><p class="hint" style="margin:0 0 6px">เขียนสรุปด้วยคำของตัวเองช่วยให้จำได้นานกว่าอ่านผ่าน ๆ (บันทึกอัตโนมัติ)</p>${noteHTML("post",0,q)}</div>`;
   h+=`<div class="sec ask"><h3>ถาม Claude เพิ่มเติม</h3>
     <div class="qchips">${ASKQ.map((t,i)=>`<button class="chip" type="button" data-aq="${i}">${t}</button>`).join("")}</div>
@@ -1187,8 +1188,7 @@ Reply with only a JSON object with exactly these keys:
  "trap": "the common trap (Thai), or empty string",
  "summary": ["4–7 Thai bullet points of high-yield knowledge on this topic, each complete on its own"],
  "guide": "guideline or textbook (with year) the answer is based on, or empty string if it is general knowledge",
- "mnemonic": "short memory aid, or empty string",
- "variants": ["2–3 Thai bullets: other ways this topic could be asked"]${spc?`,
+ "mnemonic": "short memory aid, or empty string"${spc?`,
  "point": "the one key fact this question tests, short English, at most 15 words",
  "quote": "the part(s) of the source that give the answer, copied or closely condensed in the source's own language, at most 70 words",
  "conflict": "Thai: if the source disagrees with the newest guideline or textbook, say what differs and which you followed; else empty string"`:""}}`;}
@@ -1198,7 +1198,7 @@ function admCheck(o,m){
   if(opts.length!==5||opts.some(x=>!x)||!o.stem||!(ans>=0&&ans<5))throw {code:"bad"};
   const W0=o.wrong||{},wrong={};let j=0;for(let i=0;i<5;i++){if(i===ans)continue;const k=L[i];wrong[k]=san(Array.isArray(W0)?W0[j]:(W0[k]||W0[k.toLowerCase()]||""));j++;}
   const ts=now(),arr=x=>(Array.isArray(x)?x:[]).map(san).filter(Boolean);
-  return {adm:1,...(m==="spc"?{spc:1}:{}),uid:(m==="spc"?"SPC|":"ADM|")+ts.toString(36),set:"Case",ro:wYear(),topic:String(o.topic||"").slice(0,80),tags:cleanTags(W_(),o.tags,(o.topic||"")+" "+(o.stem||"")),stem:san(o.stem),opts,ans,interp:san(o.interp),why:san(o.why),wrong,trap:san(o.trap),summary:arr(o.summary),guide:String(o.guide||"").slice(0,300),mnemonic:san(o.mnemonic),variants:arr(o.variants),ts};}
+  return {adm:1,...(m==="spc"?{spc:1}:{}),uid:(m==="spc"?"SPC|":"ADM|")+ts.toString(36),set:"Case",ro:wYear(),topic:String(o.topic||"").slice(0,80),tags:cleanTags(W_(),o.tags,(o.topic||"")+" "+(o.stem||"")),stem:san(o.stem),opts,ans,interp:san(o.interp),why:san(o.why),wrong,trap:san(o.trap),summary:arr(o.summary),guide:String(o.guide||"").slice(0,300),mnemonic:san(o.mnemonic),ts};}
 /* one AI call that must answer with a JSON object — through Claude (inside Claude) or the viewer's own API key */
 async function aiJSON(pr,maxTok){
   const mode=await aiMode();if(!mode)throw {code:"no_ai"};
@@ -1542,8 +1542,7 @@ Reply with only a JSON object {"questions": [ … ]} holding ${specs.length} obj
  "trap": "the common trap (Thai), or empty string",
  "summary": ["4–7 Thai bullet points of high-yield knowledge on this topic, each complete on its own"],
  "guide": "guideline or textbook (with year) the answer is based on, or empty string",
- "mnemonic": "short memory aid, or empty string",
- "variants": ["2–3 Thai bullets: other ways this topic could be asked"]}`;}
+ "mnemonic": "short memory aid, or empty string"}`;}
 const pastBrief=q=>{const t=x=>String(x||"").replace(/<[^>]+>/g,"").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&").replace(/\s+/g," ").trim();return `${t(q.stem).slice(0,420)} | Correct answer: ${t(q.opts[q.ans])}${Array.isArray(q.summary)&&q.summary.length?" | Key points: "+q.summary.slice(0,4).map(t).join("; ").slice(0,500):""}`;};
 let LG=null;   /* AI questions being written before a Legendary paper starts: {k,done,wid,stop} */
 function paintLG(){const el=$("lgAIn");if(el&&LG)el.textContent=LG.done+"/"+LG.k;}
