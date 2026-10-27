@@ -1961,11 +1961,11 @@
       }).join('');
       var rows = x.parts.map(function (p) {
         var f = function (k, lab, type, attrs) { return '<label class="pf"><span class="label">' + lab + '</span><input class="field" type="' + type + '" data-k="' + k + '" value="' + esc(p[k]) + '"' + (attrs || '') + '></label>'; };
-        return '<div class="prow" data-t="' + p.type + '"><span class="k ptype">' + p.type + '</span>' +
+        return '<div class="prow" data-t="' + p.type + '"><span class="k ptype">' + p.type + '</span><div class="pfs">' +
           '<label class="pf"><span class="label">วันสอบ</span><input class="field" type="date" data-k="date" value="' + esc(p.date) + '"><span class="note" data-days' + (p.date ? '' : ' hidden') + '>' + (p.date ? daysText(p.date) : '') + '</span></label>' +
           f('time', 'เวลาเริ่ม', 'time') +
           f('n', p.type === 'OSCE' ? 'จำนวนสถานี' : 'จำนวนข้อ', 'number', ' min="0" inputmode="numeric"') +
-          f('min', 'เวลาสอบ (นาที)', 'number', ' min="0" inputmode="numeric"') + '</div>';
+          f('min', 'เวลาสอบ (นาที)', 'number', ' min="0" inputmode="numeric"') + '</div></div>';
       }).join('');
       return '<fieldset class="sheet xset" data-x="' + x.id + '"><legend class="sr">' + esc(x.name) + '</legend>' +
         '<div class="xhead"><span class="label">' + KIND[x.kind] + '</span><h2 class="k" style="font-size:26px">' + esc(x.name) + '</h2></div>' +

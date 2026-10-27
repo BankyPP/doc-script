@@ -239,9 +239,9 @@ body.gated .burger,body.gated .search,body.gated #acct,body.gated footer,body.ga
 .src.si{color:#1F4E6E;border-color:#B4CADB;background:#E6EFF5}
 .grp-h{padding:22px 0 4px;border-bottom:1px solid var(--rule)}
 .nlset{display:flex;flex-direction:column;gap:26px}
-.xset{margin:0;padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:18px}
+.xset{margin:0;min-width:0;max-width:100%;padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:18px}
 .xhead{display:flex;flex-direction:column;gap:2px}
-.prow{display:grid;grid-template-columns:72px repeat(4,minmax(0,1fr));gap:12px 16px;align-items:start;padding-top:16px;border-top:1px dashed var(--rule)}
+.prow{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px 16px;align-items:start;padding-top:16px;border-top:1px dashed var(--rule)}
 .ptype{font-size:18px;font-weight:600;color:var(--moss);padding-top:26px}
 .pf{display:flex;flex-direction:column;gap:6px;min-width:0}
 .plots.four{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
@@ -349,7 +349,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 
   #acct{max-width:46vw;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;line-height:42px}
   #acct[hidden]{display:none}
   .brand small{display:none}
-  .prow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .prow{grid-template-columns:minmax(0,1fr)}
   .ptype{grid-column:1/-1;padding-top:0}
   .phead{padding-top:36px}
   .hero{padding-top:40px}
@@ -794,3 +794,10 @@ body.lbopen,body.fopen{overflow:hidden}
 .nbg a{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--muted);font-size:13px}
 .nbg img{width:100%;height:auto;border:1px solid var(--rule-2);border-radius:4px;background:#fff}
 @media (max-width:560px){.bpstack{flex-direction:column;min-height:0}.bpstack .seg{flex:none!important;padding:10px 12px}.bprow.emerg{margin:0}}
+
+/* ตั้งค่าการสอบ: ช่องวัน/เวลาบน iPad/iPhone (Safari) ไม่หดตามคอลัมน์และสูงไม่เท่าช่องอื่น → ทับกัน (แก้ 27 ต.ค.) */
+.pfs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px 16px;min-width:0}
+.pf .field{min-width:0;max-width:100%;box-sizing:border-box}
+input.field[type=date],input.field[type=time]{-webkit-appearance:none;appearance:none;height:44px;line-height:42px;text-align:left}
+input.field::-webkit-date-and-time-value{text-align:left;min-height:1.2em}
+input.field::-webkit-datetime-edit{padding:0}
