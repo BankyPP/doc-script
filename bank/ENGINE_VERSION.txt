@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu f118f01 2026-10-27 Specialty round: printed:handwriting 80:20 is flexible — more handwriting where a slide/page has little printed text
+BankyPP/ac-mdcu 18e3458 2026-10-27 Service/Quality/Advisor set chips: group by q.set exactly (set names with spaces showed no chips)
