@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 12e2217 2026-10-27 Specialty round: กติกาโจทย์แบบ Unit round (~85–90% จากไฟล์ล้วน · ~10–15% เกินไฟล์ได้ · ครอบคลุมทั้งไฟล์ · ตัวพิมพ์/รูป : ลายมือ ≈ 80:20) — MDCU + SI
+BankyPP/ac-mdcu f118f01 2026-10-27 Specialty round: printed:handwriting 80:20 is flexible — more handwriting where a slide/page has little printed text
