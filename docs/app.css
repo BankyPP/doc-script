@@ -622,3 +622,61 @@ body.lbopen,body.fopen{overflow:hidden}
 /* ห้องสอบ: จำนวนข้อแบบพิมพ์เอง */
 .cntw{display:inline-flex;align-items:center;gap:8px}
 .cntin{width:96px;min-height:44px;text-align:center}
+
+/* Preclinic › Neuro — CNS & PNS Tutorial (docs/gdoc/neuro-tut.json · tools/neuro-tut/build.py)
+   กล่องหลายคอลัมน์ตามหัวข้อย่อย · แดง = ดอกจัน/เน้น · ฟ้าเอียง = ลายมือ */
+.gdoc .nx{--red:#B3261E;--fs:15px;--nxh:#3D4A56;display:flex;flex-direction:column;gap:16px;font-size:15px;line-height:1.55}
+.gdoc .nx p,.gdoc .nx li{white-space:normal}
+.nx .nxlead{color:var(--muted);font-size:14px}
+.nx .nxgrid{column-width:330px;column-gap:14px}
+.nx .nxb{break-inside:avoid;display:block;margin:0 0 14px;background:var(--sheet-hi);border:1px solid var(--rule-2);border-radius:6px;padding:12px 14px 10px;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.nx .nxb>*+*{margin-top:6px}
+.nx .nxintro{border-left:6px solid #4A5560}
+.nx h4.nxh{font-family:'Kanit',sans-serif;font-weight:600;font-size:17px;line-height:1.3;color:var(--nxh);display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;margin:0 0 4px;scroll-margin-top:90px}
+.nx h4.nxsec{font-size:20px;border-bottom:1px solid var(--rule);padding-bottom:6px;margin-top:10px}
+.nx h3{font-family:'Kanit',sans-serif;font-weight:500;font-size:15px;color:var(--moss-dk);margin:8px 0 2px}
+.nx .ref{font-family:'Kanit',sans-serif;font-weight:400;font-size:11px;color:#fff;background:#6B7A86;border-radius:5px;padding:0 6px;margin-left:auto;white-space:nowrap}
+.nx .r{color:var(--red);font-weight:700}
+.nx .star:before{content:"★ ";color:var(--red)}
+.nx .hl{background:#F6E7A6;padding:0 2px}
+.nx .hw{color:#1F5FA8;font-style:italic}
+.nx .mut,.nx .note,.nx .cap,.nx .legend{color:var(--muted)}
+.nx .note{font-size:13px}
+.nx .cap{font-size:12.5px}
+.nx .nxsrc{font-size:11.5px;color:var(--muted);border-top:1px dashed var(--rule);padding-top:4px;margin-top:8px}
+.nx .see{display:inline-block;font-family:'Kanit',sans-serif;font-size:12px;color:#fff;background:var(--red);border-radius:5px;padding:1px 7px}
+.nx .mn{border:1.5px dashed var(--red);background:#FCF1EE;border-radius:6px;padding:6px 9px;font-size:14px}
+.nx .mn:before{content:"Mnemonic";font-family:'Kanit',sans-serif;font-weight:600;font-size:11px;color:#fff;background:var(--red);border-radius:4px;padding:0 6px;margin-right:6px}
+.nx ul{padding-left:20px;margin:4px 0}.nx li{margin:2px 0}
+.nx ul.t{list-style:none;padding-left:0}
+.nx ul.t>li{padding-left:16px;position:relative}
+.nx ul.t>li:before{content:"▸";position:absolute;left:0;color:#7C8792}
+.nx table{border-collapse:collapse;width:100%;font-size:13.5px;line-height:1.4;margin:4px 0;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nx table tbody,.nx table thead{display:table;width:100%;border-collapse:collapse}
+.nx th{font-family:'Kanit',sans-serif;font-weight:500;background:var(--nxh);color:#fff;padding:4px 7px;text-align:left;font-size:13px}
+.nx td{border:1px solid var(--rule-2);padding:4px 7px;vertical-align:top}
+.nx tr:nth-child(even) td{background:#F6F2E8}
+.nx td.k{font-family:'Kanit',sans-serif;font-weight:500;color:var(--nxh)}
+.nx .flow{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:4px 0}
+.nx .nd{border:1px solid #8A96A3;background:#EEF1F4;border-radius:5px;padding:2px 7px;font-size:13.5px;line-height:1.35}
+.nx .nd.red{border-color:var(--red);background:#FBECE9}
+.nx .nd.grn{border-color:var(--moss);background:var(--moss-bg)}
+.nx .ar{color:#4A5560;font-weight:700}
+.nx .tag{display:inline-block;font-family:'Kanit',sans-serif;font-size:12px;color:#fff;background:#4A5560;border-radius:5px;padding:0 6px;margin:2px 2px 0 0}
+.nx .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nx img.fig{display:block;width:100%;height:auto;border:1px solid var(--rule-2);border-radius:4px;background:#fff}
+.nx .nxorig{border:1px solid var(--rule-2);border-radius:6px;background:var(--sheet);padding:10px 14px}
+.nx .nxorig>summary{cursor:pointer;font-family:'Kanit',sans-serif;font-weight:500;color:var(--nxh)}
+.nx .nxpages{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr));gap:12px;margin-top:10px}
+.nx .nxpg{margin:0;display:flex;flex-direction:column;gap:4px}
+.nx .nxpg img{width:100%;height:auto;border:1px solid var(--rule-2);border-radius:4px;background:#fff}
+.nx .nxpg figcaption{font-size:12.5px;color:var(--muted)}
+.nx .nxsum{gap:6px}.nx .nxsum figcaption{font-size:15px;color:var(--ink)}
+.nx .nxqgrid{column-width:360px;column-gap:14px}
+.nx details.nxq{break-inside:avoid;margin:0 0 8px;background:var(--sheet-hi);border:1px solid var(--rule-2);border-radius:6px;padding:8px 10px}
+.nx details.nxq>summary{cursor:pointer;display:flex;gap:8px;align-items:flex-start;list-style:none}
+.nx details.nxq>summary::-webkit-details-marker{display:none}
+.nx .nxqn{flex:none;font-family:'Kanit',sans-serif;font-weight:600;font-size:12px;color:#fff;background:var(--nxh);border-radius:5px;min-width:26px;text-align:center;padding:1px 4px;margin-top:2px}
+.nx .nxqa{color:#1F5E3A;margin-top:6px;padding-left:34px}
+.nx details.nxq[open]{border-color:#9DB49F}
+@media (max-width:640px){.nx .nxgrid,.nx .nxqgrid{column-width:auto;columns:1}.nx .two{grid-template-columns:1fr}}

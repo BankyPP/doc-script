@@ -1,5 +1,5 @@
 /* เลขรุ่นของไฟล์ใน docs/gdoc/ — เพิ่มทุกครั้งที่สร้างฉบับเก็บใหม่ (กันเบราว์เซอร์ใช้ไฟล์เก่า) */
-window.POY_GDOC_V = 2;
+window.POY_GDOC_V = 3;
 
 /* Preclinic + Clinic จาก Google Docs / Sheets
    - main: Doc "โพยหมอ" (แชร์ Anyone with the link → Viewer) — GitHub Actions ดึงมาอัปเดต snap ทุก ~10 นาที
@@ -86,6 +86,73 @@ window.POY_GDOC = {
       { tab: 'DKA', under: 'MEQ Approach' },
       { tab: 'OSCE Note', under: 'Lab Procedures' },
       { tab: 'CXR Interpretation', under: 'OSCE Note' }
+    ] },
+    /* CNS & PNS Comprehensive Tutorial 2026 (B03) + สรุป 10 หน้า — แขวนใต้ Neuro และแท็บย่อยของ Neuro
+       สร้างด้วย tools/neuro-tut/build.py (ไม่แตะ Google Doc) */
+    { kind: 'doc', snap: 'gdoc/neuro-tut.json', badge: 'Tutorial', from: 'CNS & PNS Comprehensive Tutorial 2026 (B03) + สรุป 10 หน้า', tabs: [
+      { tab: "CNS & PNS Tutorial 2026", under: "Neuro" },
+      { tab: "Localization approach", under: "CNS & PNS Tutorial 2026" },
+      { tab: "Neuro examination", under: "CNS & PNS Tutorial 2026" },
+      { tab: "High-yield tables", under: "CNS & PNS Tutorial 2026" },
+      { tab: "Mnemonics & red flags", under: "CNS & PNS Tutorial 2026" },
+      { tab: "Quiz 145 ข้อ", under: "CNS & PNS Tutorial 2026" },
+      { tab: "สไลด์ต้นฉบับ 76 หน้า", under: "CNS & PNS Tutorial 2026" },
+      { tab: "ไฟล์สรุป 10 หน้า (PDF)", under: "CNS & PNS Tutorial 2026" },
+      { tab: "Peripheral nervous system", under: "Neuroanatomy" },
+      { tab: "Motor & sensory pathways", under: "Neuroanatomy" },
+      { tab: "Brainstem & cranial nerves", under: "Neuroanatomy" },
+      { tab: "Spinal cord", under: "Neuroanatomy" },
+      { tab: "Cerebral cortex & lobes", under: "Neuroanatomy" },
+      { tab: "Cerebral vasculature", under: "Neuroanatomy" },
+      { tab: "Visual pathway & eye movements", under: "Neuroanatomy" },
+      { tab: "Hypothalamus & autonomic", under: "Neuroanatomy" },
+      { tab: "Nerve fibers & action potential", under: "Neurophysiology" },
+      { tab: "Reflex, tone & motor unit", under: "Neurophysiology" },
+      { tab: "NMJ transmission", under: "Neurophysiology" },
+      { tab: "Basal ganglia & dopamine", under: "Neurophysiology" },
+      { tab: "Pain physiology", under: "Neurophysiology" },
+      { tab: "Consciousness & syncope", under: "Neurophysiology" },
+      { tab: "CBF, ICP & autoregulation", under: "Neurophysiology" },
+      { tab: "Bladder control", under: "Neurophysiology" },
+      { tab: "Memory & hearing", under: "Neurophysiology" },
+      { tab: "Peripheral neuropathy & GBS", under: "Neuro Disorders" },
+      { tab: "NMJ disorders", under: "Neuro Disorders" },
+      { tab: "Myopathy", under: "Neuro Disorders" },
+      { tab: "Motor neuron disease", under: "Neuro Disorders" },
+      { tab: "Weakness: เปรียบเทียบทุกระดับ", under: "Neuro Disorders" },
+      { tab: "Ischemic stroke", under: "Neuro Disorders" },
+      { tab: "Hemorrhagic stroke & SAH", under: "Neuro Disorders" },
+      { tab: "↑ICP & herniation", under: "Neuro Disorders" },
+      { tab: "Head injury", under: "Neuro Disorders" },
+      { tab: "Brain tumors", under: "Neuro Disorders" },
+      { tab: "Brainstem syndromes", under: "Neuro Disorders" },
+      { tab: "Spinal cord syndromes", under: "Neuro Disorders" },
+      { tab: "Movement disorders & Parkinson", under: "Neuro Disorders" },
+      { tab: "Headache & neuralgia", under: "Neuro Disorders" },
+      { tab: "CNS infections", under: "Neuro Disorders" },
+      { tab: "Dementia & memory disorders", under: "Neuro Disorders" },
+      { tab: "Altered consciousness & brain death", under: "Neuro Disorders" },
+      { tab: "Toxidromes & withdrawal", under: "Neuro Disorders" },
+      { tab: "Neuropathology: inclusions", under: "Neuro Disorders" },
+      { tab: "Stroke drugs", under: "Neuropharm & Abx" },
+      { tab: "Antiparkinson & dopaminergic drugs", under: "Neuropharm & Abx" },
+      { tab: "Antipsychotics & EPS", under: "Neuropharm & Abx" },
+      { tab: "Antidepressants, BZD & sedatives", under: "Neuropharm & Abx" },
+      { tab: "Opioids & analgesics", under: "Neuropharm & Abx" },
+      { tab: "Anesthetics", under: "Neuropharm & Abx" },
+      { tab: "Anti-seizure medications", under: "Neuropharm & Abx" },
+      { tab: "Migraine drugs", under: "Neuropharm & Abx" },
+      { tab: "Anti-vertigo", under: "Neuropharm & Abx" },
+      { tab: "Antibiotics in CNS infection", under: "Neuropharm & Abx" },
+      { tab: "Drug high-yield (ตาราง)", under: "Neuropharm & Abx" },
+      { tab: "LP & CSF", under: "Neuro Investigation" },
+      { tab: "NCS, EMG & RNS", under: "Neuro Investigation" },
+      { tab: "EEG", under: "Neuro Investigation" },
+      { tab: "Neuroimaging", under: "Neuro Investigation" },
+      { tab: "Lab, antibodies & biomarkers", under: "Neuro Investigation" },
+      { tab: "Neural tube defects", under: "Neuro Congenital Disorders" },
+      { tab: "Neurocutaneous syndromes", under: "Neuro Congenital Disorders" },
+      { tab: "Muscular dystrophy & SMA", under: "Neuro Congenital Disorders" }
     ] }
   ]
 };

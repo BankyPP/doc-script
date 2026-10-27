@@ -909,7 +909,7 @@
           var t = data.tabs.filter(function (x) { return x.title === m.tab; })[0];
           var parent = findTitle(m.under, key);
           if (!t || !parent) return;
-          var n = add({ title: t.title, html: t.html, heads: t.heads || [], kids: [], kind: 'doc', src: key, from: e.from, at: data.at, slug: key + '-' + gslug(t.title) });
+          var n = add({ title: t.title, html: t.html, heads: t.heads || [], kids: [], kind: 'doc', src: key, from: e.from, at: data.at, badge: e.badge, slug: key + '-' + gslug(t.title) });
           n.parent = parent; parent.kids.push(n);
         });
       }
@@ -1005,7 +1005,7 @@
     function item(n) {
       var on = n === cur, open = path.indexOf(n) >= 0;
       var s = '<a href="' + gHref(n) + '" class="gti-a' + (on ? ' on' : '') + (gFull(n) || n.kind === 'sheets' ? '' : ' gempty') + '" style="--d:' + (n.depth - top.depth) + '"' + (on ? ' aria-current="page"' : '') + '>' +
-        (n.kind === 'sheets' ? '<span class="gico" aria-hidden="true">▦</span>' : n.kind === 'sheet' ? '<span class="gico" aria-hidden="true">▤</span>' : '') + '<span>' + esc(n.title) + '</span>' + (n.src !== 'main' && n.kind === 'doc' ? '<span class="gsrc">DocQ</span>' : '') + '</a>';
+        (n.kind === 'sheets' ? '<span class="gico" aria-hidden="true">▦</span>' : n.kind === 'sheet' ? '<span class="gico" aria-hidden="true">▤</span>' : '') + '<span>' + esc(n.title) + '</span>' + (n.src !== 'main' && n.kind === 'doc' ? '<span class="gsrc">' + esc(n.badge || 'DocQ') + '</span>' : '') + '</a>';
       if (on && n.heads && n.heads.length) {
         var hs = n.heads.filter(function (h) { return h.l <= 2 && h.t; }).slice(0, 80);
         if (hs.length) s += '<div class="gtoc" style="--d:' + (n.depth - top.depth) + '">' + hs.map(function (h) { return '<a href="' + gHref(n, h.id) + '" class="l' + h.l + '">' + esc(h.t) + '</a>'; }).join('') + '</div>';
@@ -1022,7 +1022,7 @@
     return '<div class="gkids">' + n.kids.map(function (k) {
       var c = gCount(k);
       return '<a class="sheet gkid" href="' + gHref(k) + '"><span class="k" style="font-size:17px;font-weight:500">' + (k.kind === 'sheets' ? '▦ ' : k.kind === 'sheet' ? '▤ ' : '') + esc(k.title) + '</span>' +
-        '<span class="muted" style="font-size:13px">' + (k.kind === 'sheets' ? (k.kids.length ? k.kids.length + ' ชีต' : 'ตาราง') : k.kind === 'sheet' ? 'ชีต' : (gFull(k) ? 'มีเนื้อหา' : 'ยังว่าง') + (c[1] > 1 ? ' · ' + (c[1] - 1) + ' แท็บย่อย' : '')) + (k.src !== 'main' && k.kind === 'doc' ? ' · DocQ' : '') + '</span></a>';
+        '<span class="muted" style="font-size:13px">' + (k.kind === 'sheets' ? (k.kids.length ? k.kids.length + ' ชีต' : 'ตาราง') : k.kind === 'sheet' ? 'ชีต' : (gFull(k) ? 'มีเนื้อหา' : 'ยังว่าง') + (c[1] > 1 ? ' · ' + (c[1] - 1) + ' แท็บย่อย' : '')) + (k.src !== 'main' && k.kind === 'doc' ? ' · ' + esc(k.badge || 'DocQ') : '') + '</span></a>';
     }).join('') + '</div>';
   }
   function gSheetBody(n) {
