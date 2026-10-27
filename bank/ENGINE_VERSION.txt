@@ -1,0 +1,1 @@
+BankyPP/ac-mdcu 5a552c7 2026-10-27 SI Med: R02 Adrenal insufficiency — Summary 7 pages (R02-1…7, Endocrinology) + resources.js points; Lecture quiz/4-page PDF skipped per SI default

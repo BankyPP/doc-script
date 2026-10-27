@@ -699,3 +699,98 @@ body.lbopen,body.fopen{overflow:hidden}
 .ufa{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:6px}
 .ufa .note{flex:1 1 220px}
 .linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--moss);text-decoration:underline;cursor:pointer}
+
+/* ===== NL & Compre — หน้าการสอบ (#/nl/x/<id>): blueprint · วิเคราะห์ · แผนอ่าน ===== */
+.xact{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding:18px 22px}
+.bpcard{padding:clamp(18px,3vw,30px);display:flex;flex-direction:column;gap:16px;min-width:0}
+.bphead{display:flex;flex-direction:column;gap:6px}
+.bphead h2{font-size:clamp(24px,3vw,32px)}
+.bpstack{display:flex;gap:3px;min-height:76px;border-radius:6px;overflow:hidden}
+.bpstack .seg{display:flex;flex-direction:column;justify-content:center;padding:8px 12px;color:#FBF9F3;min-width:0}
+.bpstack .seg b{font-family:'Kanit',sans-serif;font-size:26px;line-height:1}
+.bpstack .seg small{font-size:13px;line-height:1.25;opacity:.92}
+.code{font-family:'Kanit',sans-serif;font-weight:600;color:var(--moss-dk);white-space:nowrap}
+.tbl td.num,.tbl th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bpt table{min-width:560px}
+.bpt tr.sum td{font-weight:700;background:var(--paper-2)}
+.bpgrps{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.bpg{padding:18px 20px;display:flex;flex-direction:column;gap:8px;border-top:4px solid var(--moss)}
+.bpg.g1{border-top-color:var(--sienna)}.bpg.g3{border-top-color:#8A7A3C}
+.bpg h3{font-size:19px}.bpg ul{font-size:15px}
+.bprow{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:9px 0;border-bottom:1px dashed var(--rule)}
+.bprow:last-child{border-bottom:0}
+.bprow.emerg{background:#F4E2DA;margin:0 -10px;padding:10px;border-radius:6px;border-bottom:0}
+.bpn{flex:1 1 280px;min-width:0;font-size:15.5px}
+.bpv{flex:1 1 300px;display:flex;align-items:center;gap:8px;min-width:0;font-variant-numeric:tabular-nums}
+.bpv b{font-family:'Kanit',sans-serif;font-size:18px}
+.bpv .old{font-size:13px;color:var(--umber);white-space:nowrap}
+.bpbar{flex:1 1 auto;display:flex;height:12px;background:var(--hover);border-radius:6px;overflow:hidden;min-width:60px}
+.bpbar i{display:block;height:100%;background:var(--moss)}
+.bpwrap{flex:1 1 auto;min-width:40px;display:flex}
+.bpwrap .bpbar{flex:none;min-width:6px}
+.bpbar i.g2{background:var(--moss)}.bpbar i.g3{background:#B9A35A}
+.nw{white-space:nowrap}
+.bpbar.e i{background:var(--sienna)}
+.lg{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-left:4px}
+.lg.g2{background:var(--moss)}.lg.g3{background:#B9A35A}
+.bpread{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px 22px}
+.bpread .rd{display:flex;gap:12px;align-items:flex-start}
+.bpread .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--moss-bg);color:var(--moss-dk);font-family:'Kanit',sans-serif;font-weight:600;display:inline-flex;align-items:center;justify-content:center}
+.bpread h3{font-size:17px;margin-bottom:4px}.bpread p{font-size:15px;color:var(--ink-2)}
+.tbl.old table{min-width:980px;font-size:14px}
+.tbl.old td,.tbl.old th{padding:8px 10px}
+.tbl.old th.gh{text-align:center;border-left:1px solid var(--rule-2)}
+.tbl.old tr.top td{background:var(--moss-bg);font-weight:600}
+.tbl th.ck,.tbl td.ck{text-align:center;padding-left:6px;padding-right:6px;white-space:nowrap}
+.tick{color:var(--moss);font-weight:700}
+.pbars{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 18px;width:100%}
+.pbars.big{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.pb{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:2px 8px;align-items:center;min-width:0}
+.pb .pl{font-family:'Kanit',sans-serif;font-size:13px;color:var(--muted);grid-column:1/3}
+.pb .bpbar{height:9px}
+.pb .pv{font-family:'Kanit',sans-serif;font-size:14px;white-space:nowrap}.pb .pv small{color:var(--muted);font-family:'Sarabun',sans-serif;font-size:12px}
+.pbars.big .pv{font-size:18px}
+.pb .bpbar.k1 i{background:#4E7FA0}.pb .bpbar.k2 i{background:#B9A35A}.pb .bpbar.k3 i{background:var(--sienna)}
+.pyear{display:flex;flex-direction:column;gap:14px}
+.pyh{display:flex;flex-direction:column;gap:10px;padding-top:10px;border-top:2px solid var(--ink)}
+.pyh h2{font-size:28px}
+.psem{display:flex;flex-direction:column;gap:10px}
+.psubj{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.pcard{padding:0;min-width:0}
+.pcard.none{padding:12px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;opacity:.7}
+.pcard>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.pcard>summary::-webkit-details-marker{display:none}
+.pcard>summary .k{font-size:18px}
+.pcard>summary .pbars{margin-top:4px}
+.pcard[open]>summary{border-bottom:1px dashed var(--rule)}
+.pcard .tbl{border:0;border-radius:0}
+.ptl table{min-width:0;font-size:14px}.ptl td,.ptl th{padding:7px 8px}
+
+/* บอร์ด: แท็กสถาบัน · ปักหมุด · ไฟล์แนบ · ประวัติ */
+.btags{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.btag.pinl{background:#F3E8CC;color:#6B4E14}
+.bnote.pinned{border-color:var(--rule-3);box-shadow:0 8px 22px -16px rgba(30,38,32,.55)}
+.batt{margin:0}.batt img{border:1px solid var(--rule-2);border-radius:4px;width:100%;height:auto;display:block}
+.batt-f{align-self:flex-start;min-height:38px;font-size:13px}
+.bhist{border-top:1px dashed var(--rule);padding-top:10px;display:flex;flex-direction:column;gap:10px}
+.hitem{display:flex;flex-direction:column;gap:4px;padding:10px 12px;background:var(--paper-2);border-radius:6px}
+.hitem .chip{align-self:flex-start;min-height:34px;font-size:13px}
+
+/* สรุปเนื้อหา NL: กล่องหลายคอลัมน์ + ลายมือ + แกลเลอรีสไลด์ */
+.hw{color:#2D5DA8;font-style:italic}
+.nbintro{font-size:15px;color:var(--ink-2)}
+.nbx{column-width:340px;column-gap:18px}
+.nb{break-inside:avoid;display:block;margin:0 0 18px;padding:16px 18px;background:var(--sheet-hi);border:1px solid var(--rule-2);border-top:4px solid var(--moss);border-radius:6px;font-size:15.5px;line-height:1.55}
+.nb.j{border-top-color:#C9952E}.nb.s{border-top-color:var(--sienna)}.nb.h{border-top-color:#B04A6A}.nb.r{border-top-color:#3E7CA6}.nb.n{border-top-color:#7A5C3E}
+.nb h3{font-size:18px;margin-bottom:8px}
+.nb ul{padding-left:18px}.nb li{margin:3px 0}
+.nb{overflow-x:auto}
+.nb table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0;line-height:1.4}
+.nb td,.nb th{overflow-wrap:anywhere;hyphens:auto}
+.nb th,.nb td{border:1px solid var(--rule-2);padding:5px 7px;vertical-align:top;text-align:left}
+.nb th{background:var(--paper-2);font-family:'Kanit',sans-serif;font-weight:500;font-size:13px}
+.nbg-h{font-size:22px;margin-top:10px}
+.nbg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.nbg a{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--muted);font-size:13px}
+.nbg img{width:100%;height:auto;border:1px solid var(--rule-2);border-radius:4px;background:#fff}
+@media (max-width:560px){.bpstack{flex-direction:column;min-height:0}.bpstack .seg{flex:none!important;padding:10px 12px}.bprow.emerg{margin:0}}

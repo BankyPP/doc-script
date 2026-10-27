@@ -1,0 +1,108 @@
+{
+ "title": "คลังข้อสอบเก่า NL · โพยหมอ",
+ "brand": "Past NL",
+ "sub": "คลังข้อสอบเก่า",
+ "storageKey": "poy-bank-nl-v1",
+ "setLabel": "ชุด",
+ "roLabel": "ที่มา",
+ "chipStrip": "",
+ "files": {
+  "NL2NEO": "NL2_Neonatology (ติวสอบ NL2 จุฬาฯ — Thaninee Chitsinchayakul, MD.)"
+ },
+ "siteUrl": "https://bankypp.github.io/doc-script/bank/nl/",
+ "siteName": "คลังข้อสอบเก่า NL",
+ "firebase": {
+  "apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg",
+  "authDomain": "ac-mdcu.firebaseapp.com",
+  "projectId": "ac-mdcu",
+  "storageBucket": "ac-mdcu.firebasestorage.app",
+  "messagingSenderId": "537236830552",
+  "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d",
+  "measurementId": "G-BYB1HZMHK6"
+ },
+ "fbPath": [
+  "poymor",
+  "{uid}",
+  "bank",
+  "nl"
+ ],
+ "sharedPrefix": "poy_nl_",
+ "homeBrand": "Past {short} by BankyPP",
+ "quizBrand": "Past {short} {type}",
+ "artifactUrl": "",
+ "subjects": [
+  {
+   "id": "nl",
+   "name": "National License (NL)",
+   "wards": [
+    "nl1",
+    "nl2"
+   ]
+  }
+ ],
+ "gate": {
+  "on": true,
+  "salt": "06faf800614125fd",
+  "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b",
+  "r": 0
+ },
+ "roundNames": {
+  "Grand round": "Random",
+  "Service round": "Year by year",
+  "Legendary round": "Real Experience",
+  "Ward staff round": "Redo",
+  "Teaching round": "Guidance",
+  "Advisor round": "Revise",
+  "Unit round": "Lecture quiz",
+  "Quality round": "Timed",
+  "Admission round": "Anything",
+  "Specialty round": "Quiz by topics",
+  "Round I/O": "Summary"
+ },
+ "inst": {
+  "id": "nl",
+  "name": "NL",
+  "th": "NL",
+  "en": "National License Examination",
+  "enShort": "NLE",
+  "stu": "นิสิต/นักศึกษาแพทย์"
+ },
+ "poy": {
+  "exams": {
+   "nl1": "#/nl/x/nl1",
+   "nl2": "#/nl/x/nl2"
+  }
+ },
+ "wards": [
+  {
+   "id": "nl1",
+   "name": "NL part 1",
+   "short": "NL part 1",
+   "sub": "NL",
+   "brand": "Past NL part 1 MCQ",
+   "dir": "data_nl1",
+   "scope": "National License Examination Part I (NLE Part I) — ใช้ blueprint ใหม่ (มีผล 1 ม.ค. 2570): ความรู้วิทยาศาสตร์การแพทย์ + clinical ถึงปี 5 = NL1 เก่า + NL2 เก่า",
+   "dates": [],
+   "meqTopics": [],
+   "osceTopics": [],
+   "noExam": [
+    "MEQ"
+   ]
+  },
+  {
+   "id": "nl2",
+   "name": "NL part 2",
+   "short": "NL part 2",
+   "sub": "NL",
+   "brand": "Past NL part 2 MCQ",
+   "dir": "data_nl2",
+   "scope": "National License Examination Part II (NLE Part II) = NL3 เก่า (clinical ถึงปี 6)",
+   "dates": [],
+   "meqTopics": [],
+   "osceTopics": [],
+   "noExam": [
+    "MEQ"
+   ]
+  }
+ ]
+}

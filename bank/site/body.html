@@ -1,0 +1,49 @@
+<header class="bar">
+  <div class="bar-in">
+    <button class="home-btn" id="homeBtn" aria-label="หน้าหลัก" hidden>⌂</button>
+    <div class="brand" id="brand">/*TITLE*/</div>
+    <button class="sheet-btn" id="openSheet" aria-label="เปิดกระดาษคำตอบ" hidden>
+      <span class="mini-bub" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>กระดาษคำตอบ</span><span class="count" id="count">0/0</span>
+    </button>
+    <button class="acct" id="acctBtn" hidden></button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<div class="legban" id="legban" hidden><span>⏱ กำลังสอบ Legendary round · เหลือ <b id="legbanT"></b></span><button class="btn" id="legbanGo" type="button">ทำต่อ</button><button class="btn primary" id="legbanSub" type="button">Submit</button></div>
+<main id="main"></main>
+<aside class="qbar" id="qbar" aria-label="จับเวลา Quality round" hidden>
+  <div class="qb-main"><span class="qb-t" id="qbT"></span><span class="qb-ph" id="qbPh"></span></div>
+  <div class="qb-meta" id="qbMeta"></div>
+  <div class="qb-btns"><button class="chip" id="qbPause" type="button">⏸ พัก</button><button class="chip" id="qbReset" type="button">⟲ เริ่มใหม่</button><button class="chip" id="qbStop" type="button">■ จบ</button><label class="qb-vol" aria-label="ระดับเสียง"><span>🔊</span><span class="qb-vs"><input type="range" id="qbVol" min="0" max="1" step="0.05"></span></label></div>
+</aside>
+
+<nav class="nav" id="nav" hidden>
+  <div class="exnav" id="exnav" hidden><span class="ext" id="exT"></span><span class="exn" id="exN"></span><button class="btn primary exsub" id="exSub" type="button">Submit</button></div>
+  <div class="nav-in">
+    <button class="btn ghost" id="prev">ข้อก่อน</button>
+    <div class="pos" id="pos"></div>
+    <button class="btn ghost" id="next">ข้อถัดไป</button>
+  </div>
+</nav>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="กระดาษคำตอบ">
+  <div class="panel">
+    <div class="panel-h">
+      <div class="row"><h2 id="sheetTitle">กระดาษคำตอบ</h2><button class="x" id="closeSheet" aria-label="ปิด">×</button></div>
+      <div class="stats">
+        <div class="stat"><div class="n" id="sDone">0</div><div class="k">ทำแล้ว</div></div>
+        <div class="stat"><div class="n" id="sRight">0</div><div class="k">ถูก</div></div>
+        <div class="stat"><div class="n" id="sPct">–</div><div class="k">ความแม่น</div></div>
+      </div>
+      <div class="chips scroll" id="setChips"></div>
+      <div class="chips scroll" id="chChips" hidden></div>
+      <div class="chips" id="statusChips"></div>
+      <div class="ssearch"><input type="search" id="sheetQ" placeholder="🔍 ค้นหาคำ / หัวข้อ" autocomplete="off" aria-label="ค้นหาในกระดาษคำตอบ"><span id="sheetQn"></span></div>
+    </div>
+    <div class="rows" id="rows"></div>
+    <div class="panel-f" id="sheetFoot"></div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>

@@ -49,31 +49,64 @@
 - ซิงก์: หน้าที่อ่านค้าง, ข้อสอบ AI ชุดล่าสุด + คำตอบ, ค่าที่เลือกในห้องสอบ, ตั้งค่าการสอบ NL & Compre · API key ไม่ซิงก์
 
 ## ติว NL & Compre (`#/nl`)
-- หน้าย่อย: บอร์ดประกาศ `#/nl/board` · สรุปเนื้อหา `#/nl/notes` · ข้อสอบ `#/nl/exams` · ตั้งค่า `#/nl/settings`
-- การสอบ: NL1, NL2, Compre 1, Compre 2, Compre 3 — ตั้งรูปแบบ (MCQ/MEQ/OSCE) วันสอบ เวลาเริ่ม จำนวน และเวลาสอบได้ในหน้าตั้งค่า (เก็บต่อคน)
+- หน้าย่อย: บอร์ดประกาศ `#/nl/board` · สรุปเนื้อหา `#/nl/notes` · ข้อสอบ `#/nl/exams` · ตั้งค่า `#/nl/settings` · **หน้าการสอบ `#/nl/x/<id>`**
+- การสอบ (data/config.js `nl.exams`): **NL part 1** (= NL1 + NL2 เก่า, blueprint ใหม่มีผล 1 ม.ค. 2570) · **NL part 2** (= NL3 เก่า) · Compre 1 (จุฬาฯ เท่านั้น, blueprint NL1 เก่า) · Compre 2 · Compre 3 — id เดิม nl1/nl2/c1/c2/c3 · `bank` = ลิงก์คลังข้อสอบเก่า · ตั้งรูปแบบ/วันสอบได้ในหน้าตั้งค่า (เก็บต่อคน)
 - กติกาเนื้อหา: NL เอาเนื้อหาครบจากจุฬาฯ และศิริราช ไม่มีฝั่งไหนเป็นหลัก · Compre เนื้อหาเหมือน NL แต่ข้อสอบเก่าแยกตามสถาบัน · ทุกเรื่องบอกที่มา
 
-### บอร์ดประกาศ — Firestore rules ที่ต้องเพิ่ม (วางใน `match /databases/{database}/documents { … }`)
+### หน้าการสอบ `#/nl/x/<id>`
+- **nl1**: blueprint ใหม่ (`data/blueprint.js` → `POY_BP.nl1`) — ภาพรวม 30/50/170, วิเคราะห์ออกเยอะ-น้อยและควรอ่านอะไร (`read`), กลุ่ม 1/2/3, สัดส่วนภารกิจ (Dx/Lab/Tx/Patho/Prognosis), ฉุกเฉิน + โรคตามระบบ (เรียงตาม blueprint หรือจำนวนข้อ `?s=n`), หมวด 1 · ช่อง 📚 = ข้อสอบเก่าในคลังที่ติดแท็กนั้น (จาก `bank/stats.js` ที่ `bank/build.py` สร้าง) · PDF ต้นฉบับ `nl/files/NLE_Part_I_blueprint_2570.pdf`
+- **c1**: แท็บ แผนอ่าน (Bank = จุฬาฯ · Fye = ศิริราช ว่าง) + Blueprint NL1 เก่า — ข้อมูลจาก Google Sheet "Compre - NL1 Plan" (ของ Bank) **ดึงครั้งเดียว ไม่ live**: `tools/plan/compre1_bank.py` → `data/plan-c1-bank.js` (อัปเดตด้วย `//update ggfile Compre - NL1 Plan` → แก้ข้อมูลในสคริปต์ตามชีตแล้วรันใหม่)
+- nl2 / c2 / c3: ยังไม่มีข้อมูล (หน้าว่างพร้อมคำอธิบาย)
+
+### คลังข้อสอบเก่า NL & Compre (`bank/` → `docs/bank/nl/`, `docs/bank/compre/`)
+- **ใช้โค้ดชุดเดียวกับเว็บข้อสอบเก่า (BankyPP/ac-mdcu) 100%** — หน้า home ของการสอบ, หน้าทำข้อสอบ, ทุก round, Phase 1/2, สรุป High-yield, Teaching, OSCE ฯลฯ ต่างแค่ธีมโพยหมอ
+- `bank/template.html`, `bank/build_site.py`, `bank/site/` = สำเนา engine (ห้ามแก้ตรงนี้) · **ทุกครั้งที่แก้หน้า home / หน้าทำข้อสอบ / round ในเว็บ MDCU หรือ SI ให้ sync มาด้วย**: `python3 bank/sync_engine.py <ac-mdcu checkout>` → `python3 bank/build.py` (บันทึกเวอร์ชันใน `bank/ENGINE_VERSION.txt`)
+- ส่วนที่ต่างจากเว็บข้อสอบเก่า (ทำตอน build ใน `bank/build.py`, engine ไม่ถูกแตะ): ธีม `bank/poy.css` (Kanit + Sarabun, สีโพยหมอ) · gate ใช้คีย์ของโพยหมอ (`poy-trusted` / `poy-pass` — เครื่องที่ยืนยันในโพยหมอผ่านทั้งหมด) · ไม่มีปุ่มเปลี่ยนสถาบัน · `bank/poy.js` = ปุ่ม "โพยหมอ" มุมซ้ายบน + การ์ด "Blueprint · วิเคราะห์ · แผนอ่าน" บนหน้า home ของการสอบ
+- `bank/nl/config.json`: วอร์ด nl1 (NL part 1), nl2 (NL part 2) · **ชื่อ round แบบ SI** (Random, Year by year, Real Experience …) · บัญชี `poymor/{uid}/bank/nl` · คลังรวม `shared/poy_nl_<ward>`
+- `bank/compre/config.json`: c1, c2, c3 · **ชื่อ round แบบ MDCU** · บัญชี `poymor/{uid}/bank/compre` · คลังรวม `shared/poy_compre_<ward>`
+- ทุกการสอบ `noExam:["MEQ"]` (หน้า MEQ ขึ้นว่าไม่มีสอบ) · OSCE มีทุกการสอบ หัวข้อ (`osceTopics`) รอผู้ใช้ส่ง
+- ข้อสอบ: `bank/<nl|compre>/data_<ward>/data_bN.js` (รูปแบบเดียวกับ ac-mdcu) · แท็ก = blueprint ของการสอบนั้น (`tags.js`, คำศัพท์ `TAGS_VOCAB.md`; NL part 1 ใช้แท็กเดียวกับ `docs/data/blueprint.js`) · topics.js · สรุป High-yield `sum_mcq_*.js` · รูป `bank/<inst>/img/`
+- ทุกข้อมีช่อง `inst:"MDCU"|"SI"` + ที่มาใน ro (เช่น "ติวจุฬาฯ Neonatology") · ตรวจด้วย tools ของ ac-mdcu: `DIR=<path จาก ac-mdcu ไป data_nl1> node tools/validate.js` (error เรื่องรูปไม่ต้องสน — ตรวจรูปแยก), `node tools/sumcheck.js <data dir> MCQ`
+- build: `python3 bank/build.py` (+ `docs/bank/stats.js`) · artifact ใน Claude ยังไม่ได้ทำ (`python3 bank/build.py --pack <dir>` ถ้าจะทำ)
+
+### บอร์ดประกาศ
+- แท็ก: เรื่อง (`tag`: nl / compre / both) + สถาบัน (`inst`: ["MDCU","SI"]) · ตัวกรองทั้งสองแบบ · **ใครเข้าสู่ระบบแล้วแก้ประกาศไหนก็ได้** — ทุกการแก้เก็บฉบับเดิมใน `poymor_board/<id>/hist` (ปุ่ม "ประวัติ" → "ใช้ฉบับนี้" ย้อนกลับ) · ลบได้เฉพาะเจ้าของ
+- ประกาศตั้งต้น (ปักหมุด) อยู่ใน `data/nl.js` → `board` (NLE Part 1 — ทั้งสองสถาบัน · Progress Test 25 ม.ค. 2570 — จุฬาฯ) ขึ้นเสมอ · แก้ครั้งแรกสร้างเอกสาร id เดียวกันใน Firestore · ไฟล์แนบ (`att`) อยู่ใน `docs/nl/files/`
+- **Firestore rules ชุดใหม่ (แทนของเดิม — วางใน `match /databases/{database}/documents { … }`)**:
 ```
 match /poymor_board/{id} {
   allow read: if true;
   allow create: if request.auth != null
-    && request.resource.data.keys().hasOnly(['uid','name','tag','title','body','at'])
+    && request.resource.data.keys().hasOnly(['uid','name','tag','inst','title','body','at'])
     && request.resource.data.uid == request.auth.uid
     && request.resource.data.tag in ['nl','compre','both']
+    && (!('inst' in request.resource.data) || (request.resource.data.inst is list && request.resource.data.inst.size() <= 2))
     && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 120
     && request.resource.data.body is string && request.resource.data.body.size() <= 4000
     && request.resource.data.name is string && request.resource.data.name.size() <= 40
     && request.resource.data.at == request.time;
-  allow update: if request.auth != null && resource.data.uid == request.auth.uid
-    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['tag','title','body','ed'])
+  allow update: if request.auth != null
+    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['tag','inst','title','body','ed','edBy','edName'])
     && request.resource.data.tag in ['nl','compre','both']
+    && request.resource.data.inst is list && request.resource.data.inst.size() <= 2
     && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 120
     && request.resource.data.body is string && request.resource.data.body.size() <= 4000
+    && request.resource.data.edBy == request.auth.uid
+    && request.resource.data.edName is string && request.resource.data.edName.size() <= 40
     && request.resource.data.ed == request.time;
   allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
+  match /hist/{h} {
+    allow read: if true;
+    allow create: if request.auth != null
+      && request.resource.data.keys().hasOnly(['tag','inst','title','body','by','name','at'])
+      && request.resource.data.by == request.auth.uid
+      && request.resource.data.title is string && request.resource.data.title.size() <= 120
+      && request.resource.data.body is string && request.resource.data.body.size() <= 4000
+      && request.resource.data.at == request.time;
+  }
 }
 ```
+- คลังรวม (Update for all) ของ NL & Compre ใช้ `shared/poy_nl_<ward>` และ `shared/poy_compre_<ward>` — ใช้ rules `shared/{ward}/items/{id}` เดิมของคลังข้อสอบเก่าได้ถ้าเขียนแบบ wildcard
 
 ## Random Topic Summary (`#/topics`)
 - สรุปแยกตามหัวข้อที่เลือกเอง · แต่ละหัวข้อมี **สรุป** (`#/topics/<id>/sum/<หน้า>`) และ **ฝึก** (`#/topics/<id>/practice?m=ai|test|flash`)

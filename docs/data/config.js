@@ -18,11 +18,13 @@ window.POY_CONFIG = {
      part: { type: 'MCQ'|'MEQ'|'OSCE', date: 'YYYY-MM-DD', time: 'HH:MM', n: จำนวนข้อ/สถานี, min: เวลาสอบ (นาที) } */
   nl: {
     exams: [
-      { id: 'nl1', name: 'NL1', kind: 'nl', parts: [] },
-      { id: 'nl2', name: 'NL2', kind: 'nl', parts: [] },
-      { id: 'c1', name: 'Compre 1', kind: 'compre', parts: [] },
-      { id: 'c2', name: 'Compre 2', kind: 'compre', parts: [] },
-      { id: 'c3', name: 'Compre 3', kind: 'compre', parts: [] }
+      /* NL part 1 = NL1 เก่า + NL2 เก่า (blueprint ใหม่ มีผล 1 ม.ค. 2570) · NL part 2 = NL3 เก่า
+         bank = คลังข้อสอบเก่าของการสอบนั้น (โค้ดชุดเดียวกับเว็บข้อสอบเก่า — bank/build.py) · inst = สถาบันที่มีสอบ (ว่าง = ทุกสถาบัน) */
+      { id: 'nl1', name: 'NL part 1', kind: 'nl', bank: 'bank/nl/#/nl1', parts: [{ type: 'MCQ', date: '2027-05-01', time: '', n: '250', min: '' }] },
+      { id: 'nl2', name: 'NL part 2', kind: 'nl', bank: 'bank/nl/#/nl2', parts: [] },
+      { id: 'c1', name: 'Compre 1', kind: 'compre', inst: ['MDCU'], bank: 'bank/compre/#/c1', parts: [] },
+      { id: 'c2', name: 'Compre 2', kind: 'compre', bank: 'bank/compre/#/c2', parts: [] },
+      { id: 'c3', name: 'Compre 3', kind: 'compre', bank: 'bank/compre/#/c3', parts: [] }
     ],
     /* บอร์ดประกาศ — Firestore คอลเลกชันนี้ (rules ดู README) */
     board: 'poymor_board'

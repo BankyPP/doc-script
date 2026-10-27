@@ -1910,9 +1910,9 @@
   };
   function icon(k, c) { return '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="' + (c || '#355A3A') + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg>'; }
   var NL_SUB = [
-    ['board', 'บอร์ดประกาศ', 'ประกาศเรื่อง NL และ Compre — ใครเข้าสู่ระบบก็มาแปะได้ แยกดูตามเรื่อง', '#A44A2A'],
+    ['board', 'บอร์ดประกาศ', 'ประกาศเรื่อง NL และ Compre — แยกตามเรื่องและสถาบัน เข้าสู่ระบบแล้วแปะ/แก้ได้ทุกประกาศ', '#A44A2A'],
     ['notes', 'สรุปเนื้อหา', 'เลคเชอร์ สรุป และ resource จากทั้งจุฬาฯ และศิริราช — บอกที่มาทุกเรื่อง', '#355A3A'],
-    ['exams', 'ข้อสอบ', 'NL1 · NL2 · Compre 1 · Compre 2 · Compre 3', '#C9952E'],
+    ['exams', 'ข้อสอบ', 'NL part 1 · NL part 2 · Compre 1 · Compre 2 · Compre 3 — blueprint, แผนอ่าน และคลังข้อสอบเก่า', '#C9952E'],
     ['settings', 'ตั้งค่า', 'วันสอบ รูปแบบ จำนวน และเวลาสอบของแต่ละการสอบ', '#4A5560']
   ];
   function nlHead(cur, h1, lede) {
@@ -1929,6 +1929,7 @@
     if (a === 'board') return nlBoard(r);
     if (a === 'notes') return nlNotes(r);
     if (a === 'exams') return nlExams();
+    if (a === 'x') return nlExam(r.args[1], r);
     if (a === 'settings') return nlSettings();
     remember({ href: '#/nl', title: 'ติว NL & Compre', crumb: 'ยอดเขา', c: '#4A5560' });
     var cards = NL_SUB.map(function (x, i) {
@@ -2004,21 +2005,166 @@
     };
   }
 
-  /* ---------- ข้อสอบ ---------- */
+  /* ---------- ข้อสอบ (รายการการสอบ) ---------- */
+  function xBank(x) { var c = NLX().filter(function (y) { return y.id === x.id; })[0]; return c && c.bank; }
+  function xInst(x) { var c = NLX().filter(function (y) { return y.id === x.id; })[0]; return (c && c.inst) || []; }
   function nlExams() {
     var cards = nlSet().map(function (x) {
-      return '<div class="sheet xcard"><div class="xhead"><span class="label">' + KIND[x.kind] + '</span><h2 class="k" style="font-size:28px">' + esc(x.name) + '</h2></div>' +
+      var inst = xInst(x);
+      return '<div class="sheet xcard"><div class="xhead"><span class="label">' + KIND[x.kind] + (inst.length ? ' · ' + inst.map(function (k) { return SRC[k][1] + 'เท่านั้น'; }).join(' ') : '') + '</span><h2 class="k" style="font-size:28px">' + esc(x.name) + '</h2></div>' +
         (x.parts.length ? '<div style="display:flex;flex-direction:column;gap:6px">' + x.parts.map(function (p) { return '<div>' + partLine(p) + '</div>'; }).join('') + '</div>'
           : '<p class="muted">ยังไม่ได้ตั้งรูปแบบ — <a href="#/nl/settings">ไปที่ตั้งค่า</a></p>') +
         '<p class="note" style="border-top:1px dashed var(--rule);padding-top:12px">' + (x.kind === 'compre'
           ? 'ข้อสอบเก่าแยกตามสถาบัน <span class="src mdcu">จุฬาฯ</span> <span class="src si">ศิริราช</span>'
           : 'ข้อสอบเก่ารวมจากทั้งสองฝั่ง กำกับที่มาทุกข้อ <span class="src mdcu">จุฬาฯ</span> <span class="src si">ศิริราช</span>') + '</p>' +
-        '<span class="note">หน้าหลักของการสอบนี้ — ยังไม่เปิด</span></div>';
+        '<div style="display:flex;flex-wrap:wrap;gap:8px"><a class="btn" href="#/nl/x/' + x.id + '">หน้าการสอบ</a>' + (xBank(x) ? '<a class="btn ghost" href="' + esc(xBank(x)) + '">คลังข้อสอบเก่า</a>' : '') + '</div></div>';
     }).join('');
     return {
-      title: 'ข้อสอบ — ติว NL & Compre', html: nlHead('exams', 'ข้อสอบ', 'แต่ละการสอบจะมีหน้าหลักของตัวเอง (MCQ · MEQ · OSCE ตามที่การสอบนั้นมี) — รูปแบบที่แสดงด้านล่างมาจากหน้าตั้งค่า') +
+      title: 'ข้อสอบ — ติว NL & Compre', html: nlHead('exams', 'ข้อสอบ', 'แต่ละการสอบมีหน้าของตัวเอง (blueprint · วิเคราะห์ · แผนอ่าน) และคลังข้อสอบเก่าที่ใช้หน้า home + หน้าทำข้อสอบชุดเดียวกับเว็บข้อสอบเก่า') +
         '<section class="wrap" style="padding-bottom:80px"><div class="xcards">' + cards + '</div></section>'
     };
+  }
+
+  /* ---------- หน้าการสอบ #/nl/x/<id>[?t=bp|plan&who=bank|fye&s=n] ---------- */
+  var BPD = window.POY_BP || {};
+  function pct(n, d) { return d ? Math.round(n * 1000 / d) / 10 : 0; }
+  function bstat(id) { var s = window.POY_BANKSTAT; return (s && s[id]) || null; }
+  function tagN(st, tag) { return st && st.tag && st.tag[tag] || 0; }
+  function bar(v, max, cls) { return '<span class="bpbar' + (cls ? ' ' + cls : '') + '" aria-hidden="true"><i style="width:' + Math.max(0, Math.min(100, max ? v * 100 / max : 0)) + '%"></i></span>'; }
+  function xHead(x, h1, lede) {
+    return '<section class="wrap phead" style="padding-bottom:20px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0">' +
+      '<nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/nl">ติว NL &amp; Compre</a><span class="muted"> › </span><a href="#/nl/exams">ข้อสอบ</a><span class="muted"> › </span><span>' + esc(x.name) + '</span></nav>' +
+      '<h1 style="font-size:clamp(38px,5vw,64px)">' + h1 + '</h1>' + (lede ? '<p class="lede">' + lede + '</p>' : '') + '</div></section>';
+  }
+  function xActions(x) {
+    var p = nextPart(x), b = xBank(x), st = bstat(x.id);
+    return '<div class="xact sheet"><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="label">คลังข้อสอบเก่า</span>' +
+      '<span class="k" style="font-size:20px">' + (st ? st.n + ' ข้อ' : '—') + '</span>' +
+      '<span class="muted" style="font-size:14px">' + (p ? esc(p.type + ' · ' + thDate(p.date) + ' · ' + daysText(p.date)) : 'ยังไม่ได้ใส่วันสอบ — <a href="#/nl/settings">ตั้งค่า</a>') + '</span></div>' +
+      (b ? '<a class="btn" href="' + esc(b) + '">เข้าคลังข้อสอบเก่า →</a>' : '') + '</div>';
+  }
+  function nlExam(id, r) {
+    var x = nlSet().filter(function (y) { return y.id === id; })[0];
+    if (!x) return { title: 'ไม่พบการสอบ', html: xHead({ name: 'ไม่พบ' }, 'ไม่พบการสอบนี้', '') };
+    remember({ href: '#/nl/x/' + id, title: x.name, crumb: 'ติว NL & Compre › ข้อสอบ', c: '#4A5560' });
+    var body;
+    if (id === 'nl1') body = bpNew(x, r);
+    else if (id === 'c1') body = c1Page(x, r);
+    else body = '<div class="empty"><p class="k" style="font-size:20px">' + (x.kind === 'compre' ? 'ยังไม่มีประกาศเรื่อง ' + esc(x.name) : 'ยังไม่มี blueprint ของ ' + esc(x.name)) + '</p><p class="muted" style="max-width:560px;margin:8px auto 0">' +
+      (x.kind === 'compre' ? 'ยังไม่รู้ว่าจะมีสอบจริงไหม และศิริราชจะมี Compre แบบไหน — ได้ข้อมูลเมื่อไรส่งมาในแชท แล้วจะขึ้นหน้านี้' : 'NL part 2 = NL3 เก่า — ส่ง blueprint มาเมื่อไร หน้านี้จะมีสัดส่วนข้อสอบ วิเคราะห์ และสิ่งที่ควรอ่านแบบ NL part 1') + '</p></div>';
+    return {
+      title: x.name + ' — ติว NL & Compre',
+      html: xHead(x, esc(x.name), id === 'nl1' ? 'NL part 1 ใหม่ = NL1 เก่า + NL2 เก่า (ความรู้ถึงปี 5) — ปี 4 สอบได้ ไม่ผ่านสอบใหม่ปี 5 ได้' : id === 'c1' ? 'จุฬาฯ เท่านั้น (ศิริราชไม่มี) · ใช้ blueprint NL1 เก่า' : id === 'nl2' ? 'NL part 2 ใหม่ = NL3 เก่า' : '') +
+        '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' + xActions(x) + body + '</section>'
+    };
+  }
+
+  /* NL part 1 — blueprint ใหม่ + วิเคราะห์ */
+  function bpNew(x, r) {
+    var B = BPD.nl1; if (!B) return '<p class="warn">ไม่พบข้อมูล blueprint</p>';
+    var st = bstat('nl1'), T = B.total, P1 = B.parts[0], P2 = B.parts[1];
+    var emerg = P2.items[0], sys = P2.items.slice(1), sysN = sys.reduce(function (a, i) { return a + i.n; }, 0);
+    var sortN = r.q.get('s') === 'n';
+    var seg = function (n, lab, c) { return '<span class="seg" style="flex:' + n + ';background:' + c + '"><b>' + n + '</b><small>' + lab + ' · ' + pct(n, T) + '%</small></span>'; };
+    var over = '<div class="sheet bpcard"><div class="bphead"><span class="label">ภาพรวม</span><h2 class="k">' + T + ' ข้อ · ' + esc(B.format) + '</h2>' +
+      '<p class="muted">' + esc(B.eff) + ' · ' + esc(B.basis) + '</p></div>' +
+      '<div class="bpstack">' + seg(P1.n, 'หมวด 1 ภาวะปกติ/หลักการดูแล', '#7A5C3E') + seg(emerg.n, 'ฉุกเฉิน (กลุ่ม 1)', '#A44A2A') + seg(sysN, 'โรคตามระบบ (กลุ่ม 2+3)', '#355A3A') + '</div>' +
+      '<p class="note">' + esc(P2.note) + '</p>' +
+      '<p><a class="chip" href="' + esc(B.pdf) + '" target="_blank" rel="noopener">📄 ไฟล์ blueprint ต้นฉบับ (PDF)</a></p></div>';
+    var oldH = st ? '<th>ข้อสอบเก่าในคลัง</th>' : '';
+    var oldC = function (tag) { if (!st) return ''; var n = tagN(st, tag); return '<td class="num">' + (n ? n : '<span class="muted">0</span>') + '</td>'; };
+    var h1 = '<div class="sheet bpcard"><div class="bphead"><span class="label">หมวดที่ 1 · ' + P1.n + ' ข้อ (' + pct(P1.n, T) + '%)</span><h2 class="k">' + esc(P1.t.replace(/^หมวดที่ 1 /, '')) + '</h2><p class="muted">' + esc(P1.en) + '</p></div>' +
+      '<div class="tbl bpt"><table><thead><tr><th>หัวข้อ</th><th>ข้อ</th><th>%</th>' + oldH + '</tr></thead><tbody>' + P1.items.map(function (i) {
+        return '<tr><td><b class="code">' + i.code + '</b> ' + esc(i.t) + (i.ref ? ' <span class="muted">(รายละเอียดในเกณฑ์ฯ ' + esc(i.ref) + ')</span>' : '') + '</td><td class="num">' + i.n + '</td><td class="num">' + pct(i.n, T) + '</td>' + oldC(i.tag) + '</tr>';
+      }).join('') + '</tbody></table></div></div>';
+    var grp = '<div class="bpgrps">' + P2.groups.map(function (g, gi) {
+      return '<div class="sheet bpg g' + (gi + 1) + '"><span class="label">' + g.n + ' ข้อ · ' + pct(g.n, T) + '%</span><h3 class="k">' + esc(g.t) + '</h3><ul>' + g.want.map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul></div>';
+    }).join('') + '</div>';
+    var TK = P2.tasks, tot = [0, 0, 0, 0, 0];
+    TK.rows.forEach(function (rw) { rw.p.forEach(function (v, k) { tot[k] += rw.n * v / 100; }); });
+    var tasks = '<div class="sheet bpcard"><div class="bphead"><span class="label">สัดส่วนตามภารกิจของแพทย์ (โดยประมาณ)</span><h2 class="k">ถามอะไรบ้าง</h2></div>' +
+      '<div class="tbl bpt"><table><thead><tr><th></th>' + TK.short.map(function (s, k) { return '<th title="' + esc(TK.head[k]) + '">' + esc(s) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      TK.rows.map(function (rw) { return '<tr><td><b class="code">' + rw.code + '</b> ' + esc(rw.t) + ' <span class="muted">(' + rw.n + ')</span></td>' + rw.p.map(function (v) { return '<td class="num">' + (v ? v + '% <span class="muted">≈' + (Math.round(rw.n * v / 10) / 10) + '</span>' : '—') + '</td>'; }).join('') + '</tr>'; }).join('') +
+      '<tr class="sum"><td>รวมหมวด 2 (220 ข้อ)</td>' + tot.map(function (v) { return '<td class="num">≈' + Math.round(v) + ' <span class="muted">(' + pct(v, T) + '% ของ 250)</span></td>'; }).join('') + '</tr></tbody></table></div></div>';
+    var list = sys.slice();
+    if (sortN) list.sort(function (a, b) { return b.n - a.n || (b.g2 || 0) - (a.g2 || 0); });
+    var mx = 14;
+    var sysH = '<div class="sheet bpcard"><div class="bphead" style="flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:10px"><div><span class="label">2.2 + 2.3 · ' + (emerg.n + sysN) + ' ข้อ</span><h2 class="k">ฉุกเฉิน + โรคตามระบบ</h2></div>' +
+      '<div class="filters"><a class="chip' + (sortN ? '' : ' on') + '" href="#/nl/x/nl1">เรียงตาม blueprint</a><a class="chip' + (sortN ? ' on' : '') + '" href="#/nl/x/nl1?s=n">เรียงตามจำนวนข้อ</a></div></div>' +
+      '<p class="note"><span class="lg g2"></span> กลุ่ม 2 ดูแลเอง <span class="lg g3"></span> กลุ่ม 3 แยกโรค/ส่งต่อ · ตัวเลขขวา = จำนวนข้อ (% ของ 250)' + (st ? ' · 📚 = ข้อสอบเก่าในคลังที่ติดแท็กนี้' : '') + '</p>' +
+      '<div class="bprow emerg"><span class="bpn"><b class="code">2.2</b> โรค/ภาวะ/กลุ่มอาการฉุกเฉิน (กลุ่มที่ 1)</span><span class="bpv"><span class="bpwrap" aria-hidden="true"><span class="bpbar e" style="width:100%"><i style="width:100%"></i></span></span><b>' + emerg.n + '</b> <span class="muted">' + pct(emerg.n, T) + '%</span>' + (st ? ' <span class="old">📚 ' + tagN(st, emerg.tag) + '</span>' : '') + '</span></div>' +
+      list.map(function (i) {
+        return '<div class="bprow"><span class="bpn"><b class="code">' + i.code + '</b> ' + esc(i.t.charAt(0) + i.t.slice(1).toLowerCase()) + '</span><span class="bpv"><span class="bpwrap" aria-hidden="true"><span class="bpbar" style="width:' + Math.round(i.n * 100 / mx) + '%">' +
+          '<i class="g2" style="width:' + (i.n ? i.g2 * 100 / i.n : 0) + '%"></i><i class="g3" style="width:' + (i.n ? i.g3 * 100 / i.n : 0) + '%"></i></span></span><b>' + i.n + '</b> <span class="muted nw">' + pct(i.n, T) + '% · ' + i.g2 + '/' + i.g3 + '</span>' +
+          (st ? ' <span class="old">📚 ' + tagN(st, i.tag) + '</span>' : '') + '</span></div>';
+      }).join('') + '</div>';
+    var read = '<div class="sheet bpcard"><div class="bphead"><span class="label">วิเคราะห์จาก blueprint</span><h2 class="k">ออกเยอะ-น้อย และควรอ่านอะไร</h2><p class="muted">ตอนนี้วิเคราะห์จากตัวเลขใน blueprint อย่างเดียว — ข้อสอบเก่าที่ส่งมาจะติดแท็กตามหัวข้อด้านบนและนับให้เองในช่อง 📚</p></div>' +
+      '<div class="bpread">' + B.read.map(function (x, i) { return '<div class="rd"><span class="n">' + (i + 1) + '</span><div><h3 class="k">' + esc(x.h) + '</h3><p>' + esc(x.p) + '</p></div></div>'; }).join('') + '</div></div>';
+    var src = '';
+    if (st && st.n) {
+      src = '<div class="sheet bpcard"><div class="bphead"><span class="label">ข้อสอบเก่าในคลัง NL part 1 · ' + st.n + ' ข้อ</span><h2 class="k">มาจากไหน</h2></div><div class="dests">' +
+        Object.keys(st.sets).map(function (k) { return '<div class="dest sheet"><span class="k" style="font-size:20px">' + st.sets[k] + ' ข้อ</span><span class="muted" style="font-size:14px">' + esc(k) + '</span></div>'; }).join('') + '</div></div>';
+    }
+    return over + read + grp + tasks + sysH + h1 + src +
+      '<p class="note">blueprint NL1 เก่า (300 ข้อ) ไม่ใช้กับ NL part 1 — อยู่ที่ <a href="#/nl/x/c1">Compre 1</a> · ที่มา: ' + esc(B.file) + '</p>';
+  }
+
+  /* Compre 1 — blueprint NL1 เก่า + แผนอ่าน (Bank = จุฬาฯ · Fye = ศิริราช) */
+  var PLAN_WHO = [['bank', 'Bank', 'MDCU'], ['fye', 'Fye', 'SI']];
+  function planStat(subjs) {
+    var n = 0, c = [0, 0, 0, 0];
+    subjs.forEach(function (s) { (s.topics || []).forEach(function (t) { n++; t.c.forEach(function (v, k) { if (v) c[k]++; }); }); });
+    return { n: n, c: c };
+  }
+  function planBars(cols, ps, big) {
+    return '<div class="pbars' + (big ? ' big' : '') + '">' + cols.map(function (h, k) {
+      var p = ps.n ? Math.round(ps.c[k] * 100 / ps.n) : 0;
+      return '<div class="pb"><span class="pl">' + esc(h) + '</span>' + bar(ps.c[k], ps.n, 'k' + k) + '<span class="pv">' + p + '%<small> ' + ps.c[k] + '/' + ps.n + '</small></span></div>';
+    }).join('') + '</div>';
+  }
+  function c1Page(x, r) {
+    var t = r.q.get('t') === 'bp' ? 'bp' : 'plan', who = r.q.get('who') === 'fye' ? 'fye' : 'bank';
+    var PL = (window.POY_PLAN && window.POY_PLAN.c1) || {}, D = PL[who];
+    var tabs = '<div class="subtabs" role="tablist"><a class="chip' + (t === 'plan' ? ' on' : '') + '" href="#/nl/x/c1?t=plan&who=' + who + '">แผนอ่าน / progress</a><a class="chip' + (t === 'bp' ? ' on' : '') + '" href="#/nl/x/c1?t=bp">Blueprint NL1 เก่า</a></div>';
+    var B = PL.bank;
+    if (t === 'bp') {
+      if (!B) return tabs + '<p class="warn">ไม่พบข้อมูล</p>';
+      var nchk = B.bpcols.reduce(function (a, g) { return a + g[1].length; }, 0);
+      var head1 = '<tr><th rowspan="2">Code</th><th rowspan="2">Contents</th><th rowspan="2">%</th><th rowspan="2">ข้อ</th><th rowspan="2">Association<br><span style="font-weight:400">AJ\'Bally 2024</span></th>' + B.bpcols.map(function (g) { return '<th colspan="' + g[1].length + '" class="gh">' + esc(g[0]) + '</th>'; }).join('') + '</tr>';
+      var head2 = '<tr>' + B.bpcols.map(function (g) { return g[1].map(function (s) { return '<th class="ck">' + esc(s) + '</th>'; }).join(''); }).join('') + '</tr>';
+      var rows = B.bp.map(function (rw) {
+        var top = /^B\d+$/.test(rw.c);
+        return '<tr class="' + (top ? 'top' : '') + '"><td><b class="code">' + esc(rw.c) + '</b></td><td>' + esc(rw.t) + '</td><td class="num">' + esc(rw.pct) + '</td><td class="num">' + esc(rw.amt) + '</td><td>' + esc(rw.assoc) + '</td>' +
+          (rw.chk.length ? rw.chk.map(function (v) { return '<td class="ck">' + (v ? '<span class="tick" aria-label="ทำแล้ว">✓</span>' : '') + '</td>'; }).join('') : '<td colspan="' + nchk + '"></td>') + '</tr>';
+      }).join('');
+      return tabs + '<div class="sheet bpcard"><div class="bphead"><span class="label">NL1 เก่า · 300 ข้อ · ใช้กับ Compre 1</span><h2 class="k">Blueprint NL1 เก่า</h2>' +
+        '<p class="muted">จาก Google Sheet "Compre - NL1 Plan" แท็บ Blueprint (ของ Bank) · ✓ = ช่องที่ติ๊กไว้ในชีต · ดึงครั้งเดียว ' + esc(thDate(B.pulled)) + ' (ไม่ live — อัปเดตด้วย //update ggfile)</p></div>' +
+        '<div class="tbl bpt old"><table><thead>' + head1 + head2 + '</thead><tbody>' + rows + '</tbody></table></div>' +
+        '<p class="note">* เนื้อหา B1.1–B1.4 อยู่ในระบบที่เกี่ยวข้อง · B1.6 = 5 ข้อ (medical ethics)</p></div>';
+    }
+    var wt = '<div class="subtabs" role="tablist" aria-label="ของใคร">' + PLAN_WHO.map(function (w) {
+      return '<a class="chip' + (who === w[0] ? ' on' : '') + '" href="#/nl/x/c1?t=plan&who=' + w[0] + '">' + w[1] + ' <span class="src ' + SRC[w[2]][0] + '">' + SRC[w[2]][1] + '</span></a>';
+    }).join('') + '</div>';
+    if (!D) return tabs + wt + '<div class="empty"><p class="k" style="font-size:20px">ยังไม่มีแผนอ่านของ Fye</p><p class="muted" style="max-width:560px;margin:8px auto 0">Compre 1 มีแค่จุฬาฯ — ศิริราชไม่มีสอบนี้ แท็บนี้จึงว่างไว้ก่อน ใช้กับการสอบอื่นทีหลัง</p></div>';
+    var all = [];
+    D.years.forEach(function (y) { y.sems.forEach(function (s) { all = all.concat(s.subj); }); });
+    var tot = planStat(all);
+    var yrs = D.years.map(function (y) {
+      var ys = []; y.sems.forEach(function (s) { ys = ys.concat(s.subj); });
+      return '<section class="pyear"><div class="pyh"><h2 class="k">' + esc(y.y) + '</h2>' + planBars(D.cols, planStat(ys)) + '</div>' +
+        y.sems.map(function (s) {
+          return '<div class="psem"><span class="label">ภาค ' + esc(s.s) + '</span><div class="psubj">' + s.subj.map(function (sb) {
+            if (!sb.topics) return '<div class="sheet pcard none"><span class="k">' + esc(sb.name) + '</span><span class="muted" style="font-size:13px">ไม่มีรายการในชีต</span></div>';
+            var ps = planStat([sb]);
+            return '<details class="sheet pcard"><summary><span class="k">' + esc(sb.name) + '</span>' + (sb.bp ? '<span class="pill">' + esc(sb.bp) + '</span>' : '') + '<span class="muted" style="font-size:13px">' + ps.n + ' เรื่อง</span>' + planBars(D.cols, ps) + '</summary>' +
+              '<div class="tbl ptl"><table><thead><tr><th>#</th><th>Topics</th>' + D.cols.map(function (c) { return '<th class="ck">' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+              sb.topics.map(function (tp) { return '<tr><td class="num">' + esc(tp.n) + '</td><td>' + (tp.t ? esc(tp.t) : '<span class="muted">—</span>') + '</td>' + tp.c.map(function (v) { return '<td class="ck">' + (v ? '<span class="tick">✓</span>' : '') + '</td>'; }).join('') + '</tr>'; }).join('') +
+              '</tbody></table></div></details>';
+          }).join('') + '</div></div>';
+        }).join('') + '</section>';
+    }).join('');
+    return tabs + wt + '<div class="sheet bpcard"><div class="bphead"><span class="label">Bank · จุฬาฯ · ' + tot.n + ' เรื่อง (slides) ปี 1–3</span><h2 class="k">อ่านไปถึงไหนแล้ว</h2>' +
+      '<p class="muted">จาก Google Sheet "Compre - NL1 Plan" (แท็บรายวิชา) · ดึงครั้งเดียว ' + esc(thDate(D.pulled)) + ' — ไม่ live · Study / Tutor / Review #1 / Review #2 = ช่องติ๊กในชีต</p></div>' + planBars(D.cols, tot, true) + '</div>' + yrs;
   }
 
   /* ---------- สรุปเนื้อหา ---------- */
@@ -2059,10 +2205,15 @@
     };
   }
 
-  /* ---------- บอร์ดประกาศ (Firestore — ทุกคนอ่านได้, เข้าสู่ระบบแล้วโพสต์ได้, แก้/ลบได้เฉพาะของตัวเอง) ---------- */
+  /* ---------- บอร์ดประกาศ (Firestore — ทุกคนอ่านได้ · เข้าสู่ระบบแล้วโพสต์ได้ · แก้ได้ทุกประกาศ (เก็บประวัติทุกครั้ง) · ลบได้เฉพาะของตัวเอง) ----------
+     แท็ก: เรื่อง (tag: nl / compre / both) + สถาบัน (inst: ['MDCU','SI'] — ว่าง = ไม่ระบุ) · ตัวกรองทุกแท็ก
+     ประกาศตั้งต้น (POY_NL.board) ขึ้นเสมอจนกว่าจะมีคนแก้ — แก้ครั้งแรกจะสร้างเอกสาร id เดียวกันใน Firestore (ประวัติเก็บฉบับตั้งต้นไว้ด้วย) */
   var BTAG = { nl: 'NL', compre: 'Compre', both: 'NL + Compre' };
-  var BOARD = { list: null, err: '', f: '', editing: null, dirty: false };
+  var BINST = { MDCU: 'จุฬาฯ', SI: 'ศิริราช' };
+  var BOARD = { list: null, err: '', f: '', fi: '', editing: null, dirty: false, hist: {} };
   function boardCol() { return FB.fs.collection(FB.db, (C.nl && C.nl.board) || 'poymor_board'); }
+  function seeds() { return (NLD.board || []).map(function (s) { var o = {}; for (var k in s) o[k] = s[k]; o.seed = true; return o; }); }
+  function seedOf(id) { return (NLD.board || []).filter(function (s) { return s.id === id; })[0]; }
   function pubName(u) {
     if (!u) return '';
     if (u.displayName) return u.displayName;
@@ -2087,33 +2238,55 @@
   }
   function pDate(x) { return x && x.toDate ? x.toDate() : x ? new Date(x) : null; }
   function boardErr(e) {
-    return e && e.code === 'permission-denied' ? 'บอร์ดยังเปิดไม่ได้ — Firestore ยังไม่อนุญาต (ต้องเพิ่ม rules ของ poymor_board)' : errMsg(e);
+    return e && e.code === 'permission-denied' ? 'Firestore ยังไม่อนุญาต — ต้องวาง rules ของ poymor_board ชุดใหม่ (อยู่ใน README ของ repo)' : errMsg(e);
   }
   function tagRadios(name, cur) {
     return Object.keys(BTAG).map(function (k) { return '<label class="opt"><input type="radio" name="' + name + '" value="' + k + '"' + (cur === k ? ' checked' : '') + '><span>' + BTAG[k] + '</span></label>'; }).join('');
   }
+  function instChecks(name, cur) {
+    cur = cur || [];
+    return Object.keys(BINST).map(function (k) { return '<label class="opt"><input type="checkbox" name="' + name + '" value="' + k + '"' + (cur.indexOf(k) >= 0 ? ' checked' : '') + '><span>' + BINST[k] + '</span></label>'; }).join('');
+  }
+  function readInst(root, name) { return Array.prototype.map.call(root.querySelectorAll('input[name="' + name + '"]:checked'), function (i) { return i.value; }); }
+  /* รวมของ Firestore กับประกาศตั้งต้น (ตั้งต้นที่ยังไม่มีใครแก้ = ใช้ของในโค้ด) — ปักหมุดตั้งต้นไว้บนสุด */
+  function boardAll() {
+    var L = (BOARD.list || []).slice(), ids = {};
+    L.forEach(function (p) { ids[p.id] = 1; var s = seedOf(p.id); if (s) { p.pin = s.pin; p.att = s.att; } });
+    seeds().forEach(function (s) { if (!ids[s.id]) L.push(s); });
+    return L.sort(function (a, b) { return (b.pin || 0) - (a.pin || 0) || ((pDate(b.at) || 0) - (pDate(a.at) || 0)); });
+  }
+  function bMatch(p, f, fi) { return (!f || p.tag === f || p.tag === 'both') && (!fi || (p.inst || []).indexOf(fi) >= 0); }
   function boardFilters() {
-    var L = BOARD.list || [], n = function (f) { return L.filter(function (p) { return !f || p.tag === f || p.tag === 'both'; }).length; };
-    return [['', 'ทั้งหมด'], ['nl', 'NL'], ['compre', 'Compre']].map(function (x) {
-      return '<button class="chip' + (BOARD.f === x[0] ? ' on' : '') + '" type="button" data-bf="' + x[0] + '" aria-pressed="' + (BOARD.f === x[0]) + '">' + x[1] + (BOARD.list ? ' <span style="opacity:.7">' + n(x[0]) + '</span>' : '') + '</button>';
+    var L = boardAll();
+    var n = function (f, fi) { return L.filter(function (p) { return bMatch(p, f, fi); }).length; };
+    var one = function (key, cur, x, cnt) { return '<button class="chip' + (cur === x[0] ? ' on' : '') + '" type="button" data-' + key + '="' + x[0] + '" aria-pressed="' + (cur === x[0]) + '">' + x[1] + ' <span style="opacity:.7">' + cnt + '</span></button>'; };
+    return '<span class="label">เรื่อง</span>' + [['', 'ทั้งหมด'], ['nl', 'NL'], ['compre', 'Compre']].map(function (x) { return one('bf', BOARD.f, x, n(x[0], BOARD.fi)); }).join('') +
+      '<span class="label" style="margin-left:10px">สถาบัน</span>' + [['', 'ทั้งหมด'], ['MDCU', 'จุฬาฯ'], ['SI', 'ศิริราช']].map(function (x) { return one('bi', BOARD.fi, x, n(BOARD.f, x[0])); }).join('');
+  }
+  function attHTML(att) {
+    return (att || []).map(function (a) {
+      return a.img ? '<figure class="batt"><a href="' + esc(a.img) + '" target="_blank" rel="noopener"><img src="' + esc(a.img) + '" alt="' + esc(a.label) + '" loading="lazy"></a><figcaption class="note">' + esc(a.label) + '</figcaption></figure>'
+        : '<a class="chip batt-f" href="' + esc(a.href) + '" target="_blank" rel="noopener">📄 ' + esc(a.label) + '</a>';
     }).join('');
   }
   function noteHTML(p, i) {
-    var mine = FB && FB.user && FB.user.uid === p.uid, at = pDate(p.at), ed = pDate(p.ed);
+    var mine = FB && FB.user && FB.user.uid === p.uid && !p.seed, at = pDate(p.at), ed = pDate(p.ed), can = !!(FB && FB.user);
     var rot = [-.8, .6, -.4, .9, -.6, .3][i % 6];
-    return '<article class="sheet bnote" data-id="' + esc(p.id) + '" style="transform:rotate(' + rot + 'deg)">' +
+    return '<article class="sheet bnote' + (p.pin ? ' pinned' : '') + '" data-id="' + esc(p.id) + '" style="transform:rotate(' + rot + 'deg)">' +
       '<svg class="pin" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><circle cx="11" cy="9" r="7" fill="' + (p.tag === 'compre' ? '#A44A2A' : p.tag === 'nl' ? '#355A3A' : '#C9952E') + '"/><circle cx="9" cy="7" r="2" fill="#fff" opacity=".45"/><path d="M11 16v10" stroke="#5A6258" stroke-width="1.4" stroke-linecap="round"/></svg>' +
-      '<span class="btag ' + esc(p.tag) + '">' + (BTAG[p.tag] || '') + '</span>' +
-      '<h3>' + esc(p.title) + '</h3>' + (p.body ? '<div class="val">' + boardText(p.body) + '</div>' : '') +
-      '<div class="bfoot"><span class="muted">' + esc(p.name || 'ไม่ระบุชื่อ') + (at ? ' · ' + esc(fmtTime(at)) : '') + (ed ? ' · แก้ไขแล้ว' : '') + '</span>' +
-      (mine ? '<span style="display:inline-flex;gap:6px"><button class="chip" type="button" data-be="' + esc(p.id) + '">แก้ไข</button><button class="chip" type="button" data-bd="' + esc(p.id) + '">ลบ</button></span>' : '') + '</div></article>';
+      '<div class="btags"><span class="btag ' + esc(p.tag) + '">' + (BTAG[p.tag] || '') + '</span>' + (p.inst || []).map(function (k) { return BINST[k] ? '<span class="src ' + SRC[k][0] + '">' + BINST[k] + '</span>' : ''; }).join('') + (p.pin ? '<span class="btag pinl">📌 ปักหมุด</span>' : '') + '</div>' +
+      '<h3>' + esc(p.title) + '</h3>' + (p.body ? '<div class="val">' + boardText(p.body) + '</div>' : '') + attHTML(p.att) +
+      '<div class="bfoot"><span class="muted">' + esc(p.name || 'ไม่ระบุชื่อ') + (at ? ' · ' + esc(fmtTime(at)) : '') + (ed ? ' · แก้ล่าสุด' + (p.edName ? ' โดย ' + esc(p.edName) : '') + ' ' + esc(fmtTime(ed)) : '') + '</span>' +
+      '<span style="display:inline-flex;gap:6px;flex-wrap:wrap">' + (can ? '<button class="chip" type="button" data-be="' + esc(p.id) + '">แก้ไข</button>' : '') +
+      (ed && !p.seed ? '<button class="chip" type="button" data-bh="' + esc(p.id) + '">ประวัติ</button>' : '') +
+      (mine ? '<button class="chip" type="button" data-bd="' + esc(p.id) + '">ลบ</button>' : '') + '</span></div>' +
+      '<div class="bhist" data-hist="' + esc(p.id) + '" hidden></div></article>';
   }
   function boardListHTML() {
-    if (BOARD.err) return '<p class="warn">' + esc(BOARD.err) + '</p>';
-    if (!BOARD.list) return '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดประกาศ…</p>';
-    var f = BOARD.f, list = BOARD.list.filter(function (p) { return !f || p.tag === f || p.tag === 'both'; });
-    if (!list.length) return '<div class="empty"><p class="k" style="font-size:20px">ยังไม่มีประกาศ' + (f ? 'เรื่อง ' + BTAG[f] : '') + '</p><p class="muted">ประกาศแรกแปะได้จากกล่องด้านบน</p></div>';
-    return '<div class="bnotes">' + list.map(noteHTML).join('') + '</div>';
+    var f = BOARD.f, fi = BOARD.fi, list = boardAll().filter(function (p) { return bMatch(p, f, fi); });
+    var top = BOARD.err ? '<p class="warn">' + esc(BOARD.err) + '</p>' : !BOARD.list && fbOn() && !fbFail ? '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดประกาศ…</p>' : '';
+    if (!list.length) return top + '<div class="empty"><p class="k" style="font-size:20px">ไม่มีประกาศที่ตรงกับตัวกรอง</p><p class="muted">ประกาศใหม่แปะได้จากกล่องด้านบน</p></div>';
+    return top + '<div class="bnotes">' + list.map(noteHTML).join('') + '</div>';
   }
   function paintBoard() {
     if (BOARD.editing) { BOARD.dirty = true; return; }
@@ -2122,26 +2295,46 @@
     if (b) b.innerHTML = boardFilters();
   }
   function bDraft(v) { try { if (v === undefined) return JSON.parse(sessionStorage.getItem('poy-bdraft') || '{}'); sessionStorage.setItem('poy-bdraft', JSON.stringify(v)); } catch (e) { return {}; } }
+  function histHTML(id, items) {
+    if (!items) return '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดประวัติ…</p>';
+    if (!items.length) return '<p class="muted">ยังไม่มีประวัติการแก้ไข</p>';
+    return '<span class="label">ฉบับก่อนหน้า (ใหม่ → เก่า) · กด "ใช้ฉบับนี้" เพื่อย้อนกลับ</span>' + items.map(function (h, k) {
+      var at = pDate(h.at);
+      return '<div class="hitem"><div class="muted" style="font-size:13px">' + esc(h.name || '') + (at ? ' · ' + esc(fmtTime(at)) : '') + ' · ' + (BTAG[h.tag] || '') + ((h.inst || []).length ? ' · ' + h.inst.map(function (x) { return BINST[x]; }).join(', ') : '') + '</div>' +
+        '<b>' + esc(h.title) + '</b><div class="val" style="font-size:14px">' + boardText(h.body) + '</div>' +
+        (FB && FB.user ? '<button class="chip" type="button" data-hr="' + esc(id) + '" data-hk="' + k + '">ใช้ฉบับนี้</button>' : '') + '</div>';
+    }).join('');
+  }
+  /* แก้ไข = เก็บฉบับเดิมเข้า hist ก่อน แล้วค่อยเขียนฉบับใหม่ (ประกาศตั้งต้นที่ยังไม่อยู่ใน Firestore → สร้างเอกสาร id เดิม) */
+  function boardSave(p, v) {
+    var fs = FB.fs, ref = fs.doc(boardCol(), p.id), me = pubName(FB.user) || LS.get('bname', '') || 'ไม่ระบุชื่อ';
+    var old = { tag: p.tag, inst: p.inst || [], title: p.title || '', body: p.body || '', by: FB.user.uid, name: (p.edName || p.name || '').slice(0, 40), at: fs.serverTimestamp() };
+    var upd = { tag: v.tag, inst: v.inst, title: v.title.slice(0, 120), body: v.body.slice(0, 4000), ed: fs.serverTimestamp(), edBy: FB.user.uid, edName: me.slice(0, 40) };
+    var first = p.seed ? fs.setDoc(ref, { uid: FB.user.uid, name: (p.name || '').slice(0, 40), tag: p.tag, inst: p.inst || [], title: p.title.slice(0, 120), body: (p.body || '').slice(0, 4000), at: fs.serverTimestamp() }) : Promise.resolve();
+    return first.then(function () { return fs.addDoc(fs.collection(ref, 'hist'), old); }).then(function () { return fs.updateDoc(ref, upd); }).then(function () { delete BOARD.hist[p.id]; });
+  }
   function nlBoard(r) {
     BOARD.f = r.q.get('f') || ''; if (!BTAG[BOARD.f] || BOARD.f === 'both') BOARD.f = '';
+    BOARD.fi = r.q.get('i') || ''; if (!BINST[BOARD.fi]) BOARD.fi = '';
     BOARD.editing = null; BOARD.dirty = false;
     var form;
     if (!fbOn() || fbFail) form = '<div class="sheet bform"><p class="muted">' + (fbOn() ? 'เชื่อมต่อระบบบัญชีไม่ได้ — ตรวจอินเทอร์เน็ตแล้วรีเฟรชหน้า' : 'ยังไม่ได้ตั้งค่า Firebase') + '</p></div>';
     else if (!FB) form = '<div class="sheet bform"><p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเชื่อมต่อ…</p></div>';
-    else if (!FB.user) form = '<div class="sheet bform"><span class="k" style="font-size:20px">อยากแปะประกาศ?</span><p class="muted">ทุกคนอ่านบอร์ดได้ — เข้าสู่ระบบก่อนถึงจะแปะประกาศได้ (บัญชีเดียวกับคลังข้อสอบเก่า)</p><a class="btn" href="#/account" style="align-self:flex-start">เข้าสู่ระบบ</a></div>';
+    else if (!FB.user) form = '<div class="sheet bform"><span class="k" style="font-size:20px">อยากแปะหรือแก้ประกาศ?</span><p class="muted">ทุกคนอ่านบอร์ดได้ — เข้าสู่ระบบก่อนถึงจะแปะประกาศใหม่หรือแก้ประกาศไหนก็ได้ (บัญชีเดียวกับคลังข้อสอบเก่า)</p><a class="btn" href="#/account" style="align-self:flex-start">เข้าสู่ระบบ</a></div>';
     else {
       var d = bDraft(), nm = LS.get('bname', '') || pubName(FB.user);
       form = '<form class="sheet bform" id="bForm" autocomplete="off"><span class="k" style="font-size:20px">แปะประกาศใหม่</span>' +
         '<fieldset><legend class="label" style="margin-bottom:8px">เรื่องของ</legend><div class="types">' + tagRadios('btag', d.tag || 'nl') + '</div></fieldset>' +
+        '<fieldset><legend class="label" style="margin-bottom:8px">สถาบัน (เลือกได้ทั้งสอง)</legend><div class="types">' + instChecks('binst', d.inst || []) + '</div></fieldset>' +
         '<label class="sr" for="bTitle">หัวข้อ</label><input class="field" id="bTitle" maxlength="120" placeholder="หัวข้อประกาศ" value="' + esc(d.title || '') + '">' +
         '<label class="sr" for="bBody">รายละเอียด</label><textarea class="field" id="bBody" maxlength="4000" rows="5" placeholder="รายละเอียด — ขึ้นบรรทัดด้วย &quot;- &quot; เป็น bullet · ใส่ลิงก์ได้">' + esc(d.body || '') + '</textarea>' +
         '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><label class="sr" for="bName">ชื่อที่แสดง</label><input class="field" id="bName" maxlength="40" placeholder="ชื่อที่แสดง" value="' + esc(nm) + '" style="flex:1 1 200px;width:auto">' +
         '<button class="btn" type="submit" id="bPost">แปะประกาศ</button></div><p class="warn" id="bErr" hidden></p></form>';
     }
     return {
-      title: 'บอร์ดประกาศ — ติว NL & Compre', html: nlHead('board', 'บอร์ดประกาศ', 'ประกาศเรื่อง NL และ Compre — ใครเข้าสู่ระบบก็มาแปะได้ ประกาศที่ติดทั้งสองเรื่องจะขึ้นในทั้งสองหมวด') +
+      title: 'บอร์ดประกาศ — ติว NL & Compre', html: nlHead('board', 'บอร์ดประกาศ', 'ประกาศเรื่อง NL และ Compre แยกตามเรื่องและสถาบัน — ใครเข้าสู่ระบบแล้วแก้ประกาศไหนก็ได้ ทุกการแก้เก็บประวัติไว้ย้อนกลับได้') +
         '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' + form +
-        '<div style="display:flex;flex-direction:column;gap:18px"><div class="filters" id="bFil" role="group" aria-label="แยกตามเรื่อง">' + boardFilters() + '</div><div id="bList" aria-live="polite">' + boardListHTML() + '</div></div></section>',
+        '<div style="display:flex;flex-direction:column;gap:18px"><div class="filters" id="bFil" role="group" aria-label="ตัวกรอง">' + boardFilters() + '</div><div id="bList" aria-live="polite">' + boardListHTML() + '</div></div></section>',
       after: function () {
         var el = function (id) { return document.getElementById(id); };
         if (FB) {
@@ -2150,12 +2343,12 @@
           var un = FB.fs.onSnapshot(q, function (snap) {
             BOARD.list = snap.docs.map(function (dc) { var v = dc.data({ serverTimestamps: 'estimate' }); v.id = dc.id; return v; });
             BOARD.err = ''; paintBoard();
-          }, function (e) { console.warn(e); BOARD.err = boardErr(e); paintBoard(); });
+          }, function (e) { console.warn(e); BOARD.list = BOARD.list || []; BOARD.err = boardErr(e); paintBoard(); });
           pageCleanup = function () { un(); BOARD.editing = null; };
         }
         var f = el('bForm');
         if (f) {
-          var save = function () { var c = f.querySelector('input[name=btag]:checked'); bDraft({ tag: c ? c.value : 'nl', title: el('bTitle').value, body: el('bBody').value }); };
+          var save = function () { var c = f.querySelector('input[name=btag]:checked'); bDraft({ tag: c ? c.value : 'nl', inst: readInst(f, 'binst'), title: el('bTitle').value, body: el('bBody').value }); };
           f.addEventListener('input', save); f.addEventListener('change', save);
           el('bName').addEventListener('change', function () { LS.set('bname', this.value.trim()); });
           f.addEventListener('submit', function (e) {
@@ -2164,28 +2357,42 @@
             var er = el('bErr'); er.hidden = true;
             if (!title) { er.textContent = 'ใส่หัวข้อก่อน'; er.hidden = false; el('bTitle').focus(); return; }
             var btn = el('bPost'); btn.disabled = true;
-            FB.fs.addDoc(boardCol(), { uid: FB.user.uid, name: name.slice(0, 40), tag: c ? c.value : 'nl', title: title.slice(0, 120), body: body.slice(0, 4000), at: FB.fs.serverTimestamp() })
+            FB.fs.addDoc(boardCol(), { uid: FB.user.uid, name: name.slice(0, 40), tag: c ? c.value : 'nl', inst: readInst(f, 'binst'), title: title.slice(0, 120), body: body.slice(0, 4000), at: FB.fs.serverTimestamp() })
               .then(function () { bDraft({}); el('bTitle').value = ''; el('bBody').value = ''; toast('แปะประกาศแล้ว'); })
               .catch(function (x) { er.textContent = boardErr(x); er.hidden = false; })
               .then(function () { btn.disabled = false; });
           });
         }
         el('bFil').addEventListener('click', function (e) {
-          var b = e.target.closest('[data-bf]'); if (!b) return;
-          BOARD.f = b.getAttribute('data-bf'); setQuery(route(), { f: BOARD.f }); paintBoard();
+          var b = e.target.closest('[data-bf],[data-bi]'); if (!b) return;
+          if (b.hasAttribute('data-bf')) BOARD.f = b.getAttribute('data-bf'); else BOARD.fi = b.getAttribute('data-bi');
+          setQuery(route(), { f: BOARD.f, i: BOARD.fi }); paintBoard();
         });
         el('bList').addEventListener('click', function (e) {
-          var del = e.target.closest('[data-bd]'), edt = e.target.closest('[data-be]');
+          var del = e.target.closest('[data-bd]'), edt = e.target.closest('[data-be]'), hb = e.target.closest('[data-bh]'), hr = e.target.closest('[data-hr]');
+          var find = function (id) { return boardAll().filter(function (x) { return x.id === id; })[0]; };
           if (del) {
             if (!confirm('ลบประกาศนี้?')) return;
             FB.fs.deleteDoc(FB.fs.doc(boardCol(), del.getAttribute('data-bd'))).then(function () { toast('ลบแล้ว'); }).catch(function (x) { toast(boardErr(x)); });
+          } else if (hb) {
+            var id0 = hb.getAttribute('data-bh'), box = el('bList').querySelector('[data-hist="' + id0 + '"]');
+            if (!box) return;
+            if (!box.hidden) { box.hidden = true; return; }
+            box.hidden = false; box.innerHTML = histHTML(id0, BOARD.hist[id0]);
+            if (!BOARD.hist[id0]) FB.fs.getDocs(FB.fs.query(FB.fs.collection(FB.fs.doc(boardCol(), id0), 'hist'), FB.fs.orderBy('at', 'desc'), FB.fs.limit(50))).then(function (s) {
+              BOARD.hist[id0] = s.docs.map(function (dc) { return dc.data({ serverTimestamps: 'estimate' }); }); box.innerHTML = histHTML(id0, BOARD.hist[id0]);
+            }).catch(function (x) { box.innerHTML = '<p class="warn">' + esc(boardErr(x)) + '</p>'; });
+          } else if (hr) {
+            var p0 = find(hr.getAttribute('data-hr')), h = (BOARD.hist[hr.getAttribute('data-hr')] || [])[+hr.getAttribute('data-hk')];
+            if (!p0 || !h || !confirm('ย้อนประกาศนี้กลับเป็นฉบับที่เลือก? (ฉบับปัจจุบันจะเก็บในประวัติ)')) return;
+            boardSave(p0, { tag: h.tag, inst: h.inst || [], title: h.title, body: h.body || '' }).then(function () { toast('ย้อนกลับแล้ว'); }).catch(function (x) { toast(boardErr(x)); });
           } else if (edt) {
-            var id = edt.getAttribute('data-be'), p = (BOARD.list || []).filter(function (x) { return x.id === id; })[0], art = edt.closest('.bnote');
+            var id = edt.getAttribute('data-be'), p = find(id), art = edt.closest('.bnote');
             if (!p || !art) return;
             BOARD.editing = id; art.style.transform = 'none';
-            art.innerHTML = '<form class="bform" data-ef style="padding:0;border:0;background:none"><span class="k" style="font-size:18px">แก้ไขประกาศ</span><div class="types">' + tagRadios('etag-' + id, p.tag) + '</div>' +
-              '<input class="field" data-ek="title" maxlength="120" value="' + esc(p.title) + '" aria-label="หัวข้อ"><textarea class="field" data-ek="body" maxlength="4000" rows="5" aria-label="รายละเอียด">' + esc(p.body || '') + '</textarea>' +
-              '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="submit">บันทึก</button><button class="btn ghost" type="button" data-ec>ยกเลิก</button></div></form>';
+            art.innerHTML = '<form class="bform" data-ef style="padding:0;border:0;background:none"><span class="k" style="font-size:18px">แก้ไขประกาศ</span><div class="types">' + tagRadios('etag-' + id, p.tag) + '</div><div class="types">' + instChecks('einst-' + id, p.inst) + '</div>' +
+              '<input class="field" data-ek="title" maxlength="120" value="' + esc(p.title) + '" aria-label="หัวข้อ"><textarea class="field" data-ek="body" maxlength="4000" rows="8" aria-label="รายละเอียด">' + esc(p.body || '') + '</textarea>' +
+              '<p class="note">ฉบับเดิมจะเก็บในประวัติ ย้อนกลับได้</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="submit">บันทึก</button><button class="btn ghost" type="button" data-ec>ยกเลิก</button></div></form>';
             var ef = art.querySelector('form'); ef.querySelector('[data-ek=title]').focus();
             var done = function () { BOARD.editing = null; if (BOARD.dirty) BOARD.dirty = false; paintBoard(); };
             ef.querySelector('[data-ec]').addEventListener('click', done);
@@ -2193,7 +2400,7 @@
               ev.preventDefault();
               var t = ef.querySelector('[data-ek=title]').value.trim(), bd = ef.querySelector('[data-ek=body]').value.trim(), c = ef.querySelector('input[type=radio]:checked');
               if (!t) { ef.querySelector('[data-ek=title]').focus(); return; }
-              FB.fs.updateDoc(FB.fs.doc(boardCol(), id), { tag: c ? c.value : p.tag, title: t.slice(0, 120), body: bd.slice(0, 4000), ed: FB.fs.serverTimestamp() })
+              boardSave(p, { tag: c ? c.value : p.tag, inst: readInst(ef, 'einst-' + id), title: t, body: bd })
                 .then(function () { toast('บันทึกแล้ว'); done(); }).catch(function (x) { toast(boardErr(x)); });
             });
           }

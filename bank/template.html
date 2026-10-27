@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>/*TITLE*/</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EBEFEA; --sheet:#FFFFFF; --ink:#1B2425; --muted:#5A6665; --rule:#D5DCD6;
+  --form:#C2386A; --form-soft:#F6DCE6; --graphite:#2A2E31; --on-graphite:#FFFFFF;
+  --right:#1D7A50; --right-soft:#DDF1E6; --wrong:#B2412A; --wrong-soft:#F8E1DA;
+  --hl:#FFF0A0; --warn:#9A6400; --warn-soft:#FFF1D2;
+  --num:'Chakra Petch', 'IBM Plex Sans Thai', system-ui, sans-serif;
+  --body:'IBM Plex Sans Thai', 'Noto Sans Thai', 'Leelawadee UI', system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121717; --sheet:#1A2121; --ink:#E4EBE9; --muted:#97A4A2; --rule:#2C3636;
+    --form:#E9759F; --form-soft:#3A2230; --graphite:#E4EBE9; --on-graphite:#121717;
+    --right:#4FC48D; --right-soft:#16342A; --wrong:#F2805F; --wrong-soft:#3B211B;
+    --hl:#5A4E16; --warn:#F0BE5A; --warn-soft:#382D14;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121717; --sheet:#1A2121; --ink:#E4EBE9; --muted:#97A4A2; --rule:#2C3636;
+  --form:#E9759F; --form-soft:#3A2230; --graphite:#E4EBE9; --on-graphite:#121717;
+  --right:#4FC48D; --right-soft:#16342A; --wrong:#F2805F; --wrong-soft:#3B211B;
+  --hl:#5A4E16; --warn:#F0BE5A; --warn-soft:#382D14;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink)}
+body{font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+img{max-width:100%;height:auto;display:block}
+:focus-visible{outline:2.5px solid var(--form);outline-offset:2px}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1.5px solid var(--form)}
+.bar-in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:10px 16px}
+.brand{font-family:var(--num);font-weight:700;font-size:17px;letter-spacing:.01em;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{font-family:var(--body);font-weight:500;color:var(--muted);font-size:13px;margin-left:6px}
+.sheet-btn{display:flex;align-items:center;gap:8px;border:1.5px solid var(--form);background:transparent;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;font-weight:500}
+.sheet-btn .count{font-family:var(--num);font-weight:600}
+.mini-bub{display:inline-flex;gap:3px}
+.mini-bub i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--form)}
+.mini-bub i:nth-child(2){background:var(--graphite);border-color:var(--graphite)}
+.progress{height:3px;background:var(--rule)}
+.progress span{display:block;height:100%;background:var(--form);width:0;transition:width .3s}
+
+main{max-width:760px;margin:0 auto;padding:20px 16px 120px}
+
+/* question head */
+.qhead{display:flex;align-items:flex-end;gap:14px;margin-bottom:14px}
+.qnum{font-family:var(--num);font-weight:700;font-size:44px;line-height:.9;color:var(--form)}
+.fields{display:flex;gap:6px;flex-wrap:wrap;padding-bottom:4px}
+.field{border:1.5px solid var(--form);border-radius:3px;padding:1px 8px;font-family:var(--num);font-weight:600;font-size:14px;letter-spacing:.03em}
+.field b{font-weight:500;color:var(--muted);margin-right:5px;font-size:11px}
+.stem{font-size:18px;line-height:1.7;margin:0 0 6px}
+.gray{color:var(--muted);font-size:14.5px;line-height:1.6;margin:6px 0 0;padding-left:12px;border-left:2px solid var(--rule)}
+.stem-img{margin:14px 0 4px;border:1px solid var(--rule);border-radius:4px;background:#fff;max-width:520px}
+.stem-img img{display:block;width:100%;height:auto}
+.stem-img img+img{border-top:1px solid var(--rule)}
+.kimg{display:grid;gap:10px}
+.kimg img{display:block;width:100%;max-width:640px;height:auto;border:1px solid var(--rule);border-radius:4px;background:#fff}
+.img-missing{margin:14px 0 4px;padding:10px 12px;border:1px dashed var(--rule);border-radius:4px;font-size:13px;color:var(--muted)}
+.img-note{font-size:12.5px;line-height:1.5;color:#5A6665;padding:6px 10px;background:#F4F6F3;border-top:1px solid var(--rule)}
+
+/* options = OMR bubbles */
+.opts{list-style:none;margin:22px 0 0;padding:0;border-top:1px solid var(--rule)}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:12px 6px;border-bottom:1px solid var(--rule);cursor:pointer;border-radius:4px;transition:background .15s}
+.opt:hover{background:var(--form-soft)}
+.opt[aria-disabled="true"]{cursor:default}
+.opt[aria-disabled="true"]:hover{background:transparent}
+.bub{flex:none;width:34px;height:34px;border-radius:50%;border:2px solid var(--form);display:grid;place-items:center;font-family:var(--num);font-weight:600;font-size:15px;color:var(--form);position:relative;transition:background .18s,color .18s,border-color .18s}
+.opt .txt{padding-top:4px;flex:1}
+.opt.sel .bub{background:var(--graphite);border-color:var(--graphite);color:var(--on-graphite);animation:fill .22s ease-out}
+@keyframes fill{from{transform:scale(.82)}to{transform:scale(1)}}
+.opt.correct{background:var(--right-soft)}
+.opt.correct .bub{border-color:var(--right);color:var(--right);box-shadow:0 0 0 3px var(--right-soft),0 0 0 5px var(--right)}
+.opt.correct.sel .bub{background:var(--right);color:#fff}
+.opt.wrongpick{background:var(--wrong-soft)}
+.opt.wrongpick .bub{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.wrongpick .txt{text-decoration:line-through;text-decoration-color:var(--wrong)}
+.opt.dim .txt{color:var(--muted)}
+
+.actions{display:flex;gap:10px;margin-top:20px;align-items:center}
+.btn{border:1.5px solid var(--ink);background:transparent;border-radius:6px;padding:10px 16px;cursor:pointer;font-weight:500;font-size:16px}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.ghost{border-color:var(--rule)}
+.spacer{flex:1}
+.hint{font-size:13px;color:var(--muted)}
+
+/* explanation */
+.exp{margin-top:28px;background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--ink);border-radius:2px 2px 6px 6px;padding:20px 18px 8px;animation:reveal .35s ease-out}
+@keyframes reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.verdict{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;margin-bottom:6px}
+.verdict .v{font-family:var(--num);font-weight:700;font-size:24px}
+.verdict .v.ok{color:var(--right)} .verdict .v.no{color:var(--wrong)}
+.verdict .ans{font-size:15.5px}
+.tagline{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.guide{flex-basis:100%;font-size:13px;line-height:1.55;padding:7px 10px;border-radius:4px;background:#EEF3FB;border:1px solid #C9D6EE;color:#26406B}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .guide{background:#1B2638;border-color:#2E4266;color:#BFD0EE}}
+.tag{font-size:13px;border-radius:4px;padding:2px 8px;border:1px solid var(--rule);color:var(--muted)}
+.tag.rep{border-color:var(--form);color:var(--form);font-family:var(--num);font-weight:600;font-size:14px}
+.tag.warn{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.sec{padding:14px 0;border-top:1px dashed var(--rule)}
+.sec:first-of-type{border-top:0}
+.sec h3{font-family:var(--body);font-size:14px;font-weight:600;color:var(--form);margin:0 0 6px;letter-spacing:.01em}
+.sec p{margin:0}
+.sec ul{margin:0;padding-left:20px}
+.sec li{margin:3px 0}
+.wrong-list{list-style:none;padding:0!important}
+.wrong-list li{display:flex;gap:10px;margin:8px 0!important}
+.wrong-list .l{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--muted);display:grid;place-items:center;font-family:var(--num);font-size:12.5px;font-weight:600;color:var(--muted);margin-top:2px}
+.notes{background:linear-gradient(transparent 0, transparent 0);}
+.notes .box{background:var(--sheet);border-left:4px solid var(--hl);padding:2px 0 2px 12px}
+.notes b{background:linear-gradient(transparent 55%,var(--hl) 55%)}
+.notes figure{margin:12px 0 4px;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff;max-width:560px}
+.notes figcaption{font-size:12px;color:#666;padding:4px 8px;background:#f4f4f4}
+.opinion .box{background:var(--warn-soft);border-radius:4px;padding:10px 12px}
+.trap .box{border-left:4px solid var(--wrong);padding-left:12px}
+
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--paper);border-top:1px solid var(--rule);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav-in{max-width:760px;margin:0 auto;display:flex;gap:10px;padding:10px 16px;align-items:center}
+.nav .pos{font-family:var(--num);font-weight:600;font-size:15px;color:var(--muted);flex:1;text-align:center}
+
+/* answer sheet overlay */
+.overlay{position:fixed;inset:0;z-index:40;background:rgba(10,14,14,.45);display:none}
+.overlay.open{display:block}
+.panel{position:absolute;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--paper);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);animation:slide .25s ease-out}
+@keyframes slide{from{transform:translateX(30px);opacity:.6}to{transform:none;opacity:1}}
+.panel-h{padding:10px 16px 8px;border-bottom:1.5px solid var(--form)}
+.panel-h .row{display:flex;align-items:center;gap:10px}
+.panel-h h2{font-family:var(--num);font-size:20px;margin:0;flex:1}
+.x{border:0;background:transparent;font-size:26px;line-height:1;cursor:pointer;padding:4px 8px;color:var(--muted)}
+.stats{display:flex;gap:18px;margin:6px 0 2px}
+.stat .n{font-family:var(--num);font-weight:700;font-size:22px;line-height:1}
+.stat .k{font-size:12.5px;color:var(--muted)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:6px;margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 28px),transparent)}
+.chips.scroll .chip{flex:none;white-space:nowrap}
+.chip{border:1.5px solid var(--rule);background:transparent;border-radius:999px;padding:2px 10px;font-size:13px;line-height:1.5;cursor:pointer;color:var(--ink)}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.rows{overflow:auto;flex:1;padding:6px 8px 16px}
+.srow{display:flex;align-items:center;gap:12px;width:100%;border:0;background:transparent;padding:7px 8px;border-radius:4px;cursor:pointer;text-align:left}
+.srow:hover{background:var(--form-soft)}
+.srow.cur{background:var(--form-soft)}
+.srow .n{font-family:var(--num);font-weight:600;width:40px;flex:none;text-align:right;color:var(--form)}
+.srow .bs{display:flex;gap:7px}
+.srow .b{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--form);font-family:var(--num);font-size:9.5px;display:grid;place-items:center;color:var(--form);opacity:.75}
+.srow .b.f{background:var(--graphite);border-color:var(--graphite);color:var(--on-graphite);opacity:1}
+.srow .b.f.ok{background:var(--right);border-color:var(--right);color:#fff}
+.srow .b.f.no{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.srow .b.k{box-shadow:0 0 0 2px var(--right)}
+.srow .meta{font-size:12px;color:var(--muted);margin-left:auto;font-family:var(--num)}
+.panel-f{padding:6px 16px;border-top:1px solid var(--rule);display:flex;gap:10px;align-items:center}
+.empty{padding:30px 16px;color:var(--muted);text-align:center}
+.panel-f{flex-wrap:wrap;gap:4px}
+.redo{margin-left:auto}
+.optnote{display:block;margin-top:8px;font-size:.92em;color:var(--muted)}
+.link{background:none;border:0;color:var(--wrong);text-decoration:underline;cursor:pointer;font-size:13px;padding:3px 4px}
+
+@media (max-width:520px){
+  body{font-size:16px}
+  .qnum{font-size:38px}
+  .stem{font-size:17px}
+  .exp{padding:16px 14px 6px;margin-left:-4px;margin-right:-4px}
+  .brand small{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="bar-in">
+    <div class="brand">/*BRAND*/ <small>/*SUB*/</small></div>
+    <button class="sheet-btn" id="openSheet" aria-label="เปิดกระดาษคำตอบ">
+      <span class="mini-bub" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>กระดาษคำตอบ</span><span class="count" id="count">0/0</span>
+    </button>
+  </div>
+  <div class="progress"><span id="prog"></span></div>
+</header>
+
+<main id="main"></main>
+
+<nav class="nav">
+  <div class="nav-in">
+    <button class="btn ghost" id="prev">ข้อก่อน</button>
+    <div class="pos" id="pos"></div>
+    <button class="btn ghost" id="next">ข้อถัดไป</button>
+  </div>
+</nav>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="กระดาษคำตอบ">
+  <div class="panel">
+    <div class="panel-h">
+      <div class="row"><h2>กระดาษคำตอบ</h2><button class="x" id="closeSheet" aria-label="ปิด">×</button></div>
+      <div class="stats">
+        <div class="stat"><div class="n" id="sDone">0</div><div class="k">ทำแล้ว</div></div>
+        <div class="stat"><div class="n" id="sRight">0</div><div class="k">ถูก</div></div>
+        <div class="stat"><div class="n" id="sPct">–</div><div class="k">ความแม่น</div></div>
+      </div>
+      <div class="chips scroll" id="setChips"></div>
+      <div class="chips" id="statusChips"></div>
+    </div>
+    <div class="rows" id="rows"></div>
+    <div class="panel-f">
+      <span class="hint">เส้นเขียวรอบวง = เฉลย · แตะเลือกได้หลายชุด</span><span class="spacer"></span><span class="hint" id="syncNote" style="flex-basis:100%"></span>
+      <button class="link" id="redoWrong">ทำข้อที่ผิดใหม่</button>
+      <button class="link" id="backup">สำรองความคืบหน้า</button>
+      <button class="link" id="restore">นำเข้า</button>
+      <button class="link" id="reset">ล้างคำตอบทั้งหมด</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/*DATA*/
+</script>
+<script>
+(function(){
+const L="ABCDE";
+const CFG=(typeof CONFIG!=="undefined"&&CONFIG)||{};
+if(!QB.length){document.getElementById("main").innerHTML=`<div class="empty" style="padding:60px 16px">ยังไม่มีข้อสอบในคลัง<br><span class="hint">ส่งไฟล์ข้อสอบเก่า (PDF/รูป/เอกสาร) ให้ Claude แล้วให้เพิ่มเข้า platform</span></div>`;document.getElementById("pos").textContent="0 / 0";document.getElementById("prev").disabled=true;document.getElementById("next").disabled=true;document.getElementById("openSheet").disabled=true;return;}
+QB.forEach((q,i)=>{q.rid=i+1;});
+/* order: year desc → rotation letters A..D..X (then sub-number, e.g. D1,D2) → numbered rounds R1.. → others (PreMCQ) → creation order */
+const YEAR=q=>parseInt(String(q.set).replace(/\D/g,""))||0;
+const ROK=r=>{r=String(r||"");let m=/^Ro?([A-Z])(\d*)$/.exec(r);if(m)return [0,m[1].charCodeAt(0),+m[2]||0];m=/^Ro?(\d+)$/.exec(r);if(m)return [1,+m[1],0];return [2,0,0];};
+const cmpRo=(a,b)=>{const x=ROK(a.ro),y=ROK(b.ro);return x[0]-y[0]||x[1]-y[1]||x[2]-y[2];};
+QB.sort((a,b)=>YEAR(b)-YEAR(a)||cmpRo(a,b)||a.rid-b.rid);
+QB.forEach((q,i)=>{q.id=i+1;});
+const RID2ID={};QB.forEach(q=>{RID2ID[q.rid]=q.id;});
+const R=s=>String(s==null?"":s).replace(/(ข้อ(?:ถัดไป)?\s*)(\d[\d,\s]*(?:\([^()]*\)[\d,\s]*)*)/g,(m,p,nums)=>p+nums.replace(/\([^()]*\)|\d+/g,t=>t[0]==="("?R(t):((+t>=10&&RID2ID[+t])?RID2ID[+t]:t)));
+const seenU={};QB.forEach(q=>{let u=[q.set,q.ro,q.file,q.page,q.orig,(q.stem||"").slice(0,48)].join("|");if(seenU[u])u+="#"+(++seenU[u]);else seenU[u]=1;q.uid=u;});
+const KEY=CFG.storageKey||"mcq-bank-v1";
+let st={a:{},cur:0,set:"all",status:"all"};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.a)st=Object.assign(st,s);}catch(e){}
+/* migrate old numeric-id answers (v1) to stable per-question keys (v2) */
+if(!st.v2){const na={};Object.keys(st.a||{}).forEach(k=>{const q=QB[(+k)-1];if(q)na[q.uid]=st.a[k];});st.a=na;st.v2=1;}
+if(st.curU){const i=QB.findIndex(q=>q.uid===st.curU);if(i>=0)st.cur=i;}
+function save(){st.t=Date.now();try{st.curU=(QB[st.cur]||{}).uid;localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}scheduleRemote();}
+/* ---- cloud sync: per-viewer private doc via the artifact runtime (survives app restarts / devices) ---- */
+let cloud=null,syncTimer=null,writing=false,again=false;
+function setSync(m){const el=document.getElementById("syncNote");if(!el)return;
+  el.textContent=m==="cloud"?"☁️ บันทึกความคืบหน้าในบัญชีแล้ว":m==="saving"?"☁️ กำลังบันทึก…":m==="wait"?"กำลังเชื่อมต่อที่เก็บข้อมูล…":(SITE?"💾 บันทึกในเบราว์เซอร์นี้ — ย้ายเครื่องได้ด้วยปุ่ม \"ส่งลิงก์ความคืบหน้า\"":"⚠️ บันทึกได้เฉพาะในเบราว์เซอร์นี้ (ใช้ปุ่มสำรองความคืบหน้า)");
+  el.dataset.m=m;}
+function scheduleRemote(){if(!cloud)return;clearTimeout(syncTimer);syncTimer=setTimeout(pushRemote,1200);}
+async function pushRemote(){if(!cloud)return;if(writing){again=true;return;}writing=true;setSync("saving");
+  try{await cloud.set({a:Object.entries(st.a),curU:(QB[st.cur]||{}).uid||"",set:st.set,status:st.status,t:st.t||Date.now(),v:2});setSync("cloud");}
+  catch(e){if(e&&e.code==="unavailable"){setTimeout(pushRemote,1500+Math.random()*1500);}else{setSync("local");}}
+  writing=false;if(again){again=false;pushRemote();}}
+async function initCloud(){
+  setSync("wait");
+  try{
+    if(!window.claude||typeof window.claude.use!=="function"){setSync("local");return;}
+    const [db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);
+    if(!db||!user){setSync("local");return;}
+    const uid=await user.id(); if(!uid){setSync("local");return;}
+    const ref=db.doc("data/users/"+uid+"/progress");
+    const snap=await ref.get();
+    const d=snap.exists?snap.data():null;
+    if(d&&Array.isArray(d.a)&&(d.t||0)>(st.t||0)){
+      st.a=Object.fromEntries(d.a);st.t=d.t;
+      if(d.curU){const i=QB.findIndex(q=>q.uid===d.curU);if(i>=0)st.cur=i;}
+      if(d.set)st.set=d.set; if(d.status)st.status=d.status;
+      try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}
+      pick=null;render();if(document.getElementById("overlay").classList.contains("open"))sheet();
+    }
+    cloud=ref;setSync("cloud");
+    if(!d||(d.t||0)<(st.t||0))pushRemote();
+  }catch(e){setSync("local");}
+}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"&&cloud){clearTimeout(syncTimer);pushRemote();}});
+let pick=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const img=(k)=>IMGS[k]?`<figure><img src="${IMGS[k]}" alt="ภาพจากไฟล์ต้นฉบับ"><figcaption>จากไฟล์ต้นฉบับ</figcaption></figure>`:"";
+const rich=s=>(s||"").replace(/\{\{IMG:(\w+)\}\}/g,(m,k)=>img(k));
+const setKey=q=>q.set+" "+q.ro;
+const selSets=()=>st.set==="all"?[]:String(st.set).split("|").filter(Boolean);
+const inSet=q=>st.set==="all"||selSets().includes(setKey(q));
+function visible(){
+  return QB.filter(q=>{
+    if(!inSet(q))return false;
+    const a=st.a[q.uid];
+    if(st.status==="todo")return a===undefined;
+    if(st.status==="wrong")return a!==undefined&&a!==q.ans;
+    return true;
+  });
+}
+function render(){
+  if(st.cur>=QB.length)st.cur=0;
+  const q=QB[st.cur]; const done=st.a[q.uid]; pick=done!==undefined?done:pick;
+  const locked=done!==undefined;
+  let h=`<div class="qhead"><div class="qnum">${q.id}.</div><div class="fields"><span class="field"><b>${CFG.setLabel||"ปี"}</b>${q.set}</span><span class="field"><b>${CFG.roLabel||"Rotation"}</b>${q.ro}</span></div></div>`;
+  h+=`<p class="stem">${q.stem}</p>`;
+  if(!q.img&&q.imgNote)h+=`<div class="img-missing">🖼 ${q.imgNote}</div>`;
+  if(q.img){const L=Array.isArray(q.img)?q.img:[q.img]; h+=`<div class="stem-img">${L.map(k=>`<img src="${IMGS[k]}" alt="ภาพประกอบโจทย์">`).join("")}${q.imgNote?`<div class="img-note">${q.imgNote}</div>`:""}</div>`;}
+  const gi=(q.gray||"").indexOf(" — "); const g1=gi>=0?q.gray.slice(0,gi):q.gray; if(g1)h+=`<p class="gray">${esc(g1)}</p>`;
+  h+=`<ul class="opts" role="radiogroup" aria-label="ตัวเลือก">`;
+  q.opts.forEach((o,i)=>{
+    let c="opt";
+    if(pick===i)c+=" sel";
+    if(locked){ if(i===q.ans)c+=" correct"; else if(i===done)c+=" wrongpick"; else c+=" dim"; }
+    h+=`<li class="${c}" role="radio" tabindex="0" aria-checked="${pick===i}" aria-disabled="${locked}" data-i="${i}"><span class="bub">${L[i]}</span><span class="txt">${esc(o)}</span></li>`;
+  });
+  h+=`</ul>`;
+  if(!locked){
+    h+=`<div class="actions"><button class="btn primary" id="confirm" ${pick===null?"disabled":""}>ยืนยันคำตอบ</button><span class="hint">กด A–E แล้ว Enter ได้</span></div>`;
+  }else{
+    h+=explain(q,done);
+  }
+  $("main").innerHTML=h;
+  const rb=$("redo"); if(rb)rb.onclick=()=>{delete st.a[q.uid];pick=null;save();render();window.scrollTo(0,0);};
+  document.querySelectorAll(".opt").forEach(el=>{
+    const f=()=>{ if(locked)return; pick=+el.dataset.i; render(); };
+    el.addEventListener("click",f);
+    el.addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();f();}});
+  });
+  const c=$("confirm"); if(c)c.addEventListener("click",confirmAns);
+  $("pos").textContent=`${st.cur+1} / ${QB.length}`;
+  $("prev").disabled=st.cur===0; $("next").disabled=st.cur===QB.length-1;
+  const n=Object.keys(st.a).length;
+  $("count").textContent=`${n}/${QB.length}`;
+  $("prog").style.width=(n/QB.length*100)+"%";
+}
+function explain(q,done){
+  const ok=done===q.ans;
+  let h=`<section class="exp" aria-live="polite"><div class="verdict"><span class="v ${ok?"ok":"no"}">${ok?"ถูก":"ผิด"}</span><span class="ans">${ok?"":`คุณตอบ ${L[done]} · `}เฉลย <b>${L[q.ans]}. ${esc(q.opts[q.ans])}</b></span></div>`;
+  h+=`<div class="tagline">`;
+  if(q.rep)h+=`<span class="tag rep">repeated x${q.rep}</span>`;
+  h+=`<button class="link redo" id="redo" type="button">ทำข้อนี้ใหม่</button>`;
+  {const FN=CFG.files||{};
+  const src=`${FN[q.file]||q.file} หน้า ${q.page}`+(q.kfile?` (โจทย์) + ${FN[q.kfile]||q.kfile}`+(q.page2?` หน้า ${q.page2}`:"")+" (เฉลย)":(q.page2?` + หน้า ${q.page2} (เฉลย)`:""));
+  h+=`<span class="tag">ไฟล์ ${src} · ข้อ ${q.orig} ในต้นฉบับ</span>`;}
+  if(q.guide)h+=`<div class="guide">📘 <b>อ้างอิง guideline:</b> ${q.guide}</div>`;
+  if(q.flag)h+=`<span class="tag warn">⚠ คีย์ไม่ชัวร์ / โจทย์ต้นฉบับไม่ครบ</span>`;
+  h+=`</div>`;
+  h+=`<div class="tagline"><span class="tag">คีย์ในไฟล์: ${q.key}</span></div>`;
+  {const gi=(q.gray||"").indexOf(" — "); if(gi>=0) h+=`<div class="tagline"><span class="tag">ส่วนที่เหลือของโจทย์ต้นฉบับ: ${esc(q.gray.slice(gi+3))}</span></div>`;}
+  const sec=(t,b,cls="")=>b?`<div class="sec ${cls}"><h3>${t}</h3>${b}</div>`:"";
+  h+=sec("ตีความโจทย์",`<p>${R(q.interp)}</p>`);
+  h+=sec(`ทำไม ${L[q.ans]} ถูก`,`<p>${R(q.why)}</p>`);
+  let w=`<ul class="wrong-list">`;
+  Object.keys(q.wrong).sort().forEach(k=>{w+=`<li><span class="l">${k}</span><span>${R(q.wrong[k])}</span></li>`;});
+  w+=`</ul>`;
+  h+=sec("ทำไมข้ออื่นผิด",w);
+  h+=sec("ระวังกับดัก",q.trap?`<div class="box">${R(q.trap)}</div>`:"","trap");
+  h+=sec("สรุปความรู้จากข้อนี้",`<ul>${q.summary.map(s=>`<li>${R(s)}</li>`).join("")}</ul>`);
+  h+=sec(q.unit?"สไลด์/ลายมือใน lecture เขียนไว้ว่า":"สิ่งที่เขียนไว้ในไฟล์",q.notes?`<div class="box">${rich(q.notes)}</div>`:"","notes");
+  if(q.kimg){const KL=Array.isArray(q.kimg)?q.kimg:[q.kimg]; h+=sec("สไลด์/รูปอ้างอิงจากไฟล์เฉลย",`<div class="kimg">${KL.map(k=>`<img loading="lazy" src="${IMGS[k]}" alt="สไลด์อ้างอิงจากไฟล์เฉลย">`).join("")}</div>`);}
+  h+=sec("ช่วยจำ",q.mnemonic?`<p>${q.mnemonic}</p>`:"");
+  h+=sec("ความเห็นของผม",q.opinion?`<div class="box">${R(q.opinion)}</div>`:"","opinion");
+  h+=sec("โจทย์แบบใหม่ที่อาจออก",`<ul>${q.variants.map(s=>`<li>${R(s)}</li>`).join("")}</ul>`);
+  h+=`</section>`;
+  return h;
+}
+function confirmAns(){
+  if(pick===null)return;
+  const q=QB[st.cur]; st.a[q.uid]=pick; save(); render();
+  const e=document.querySelector(".exp"); if(e)setTimeout(()=>e.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}),60);
+}
+function go(i){ if(i<0||i>=QB.length)return; st.cur=i; pick=null; save(); render(); window.scrollTo(0,0); }
+function step(d){
+  const filt=st.set!=="all"||st.status!=="all";
+  if(!filt)return go(st.cur+d);
+  const v=visible().map(q=>q.id-1);
+  if(!v.length)return;
+  const nx=d>0?v.find(i=>i>st.cur):[...v].reverse().find(i=>i<st.cur);
+  const tgt=nx!==undefined?nx:(d>0?v[0]:v[v.length-1]);
+  if(tgt!==st.cur)go(tgt);
+}
+$("prev").onclick=()=>step(-1);
+$("next").onclick=()=>step(1);
+document.addEventListener("keydown",e=>{
+  if($("overlay").classList.contains("open")){ if(e.key==="Escape")closeS(); return; }
+  if(e.target.tagName==="INPUT")return;
+  const q=QB[st.cur]; const locked=st.a[q.uid]!==undefined;
+  const k=e.key.toUpperCase(); const idx="ABCDE".indexOf(k); const nidx="12345".indexOf(e.key);
+  if(!locked&&(idx>=0||nidx>=0)){pick=idx>=0?idx:nidx;render();return;}
+  if(e.key==="Enter"&&!locked&&pick!==null&&!e.target.classList.contains("opt")){confirmAns();return;}
+  if(e.key==="ArrowRight")step(1);
+  if(e.key==="ArrowLeft")step(-1);
+});
+/* sheet */
+function sheet(){
+  const sets=[...new Set(QB.map(setKey))];
+  $("setChips").innerHTML=[["all",st.set==="all"?"ทุกชุด":`ทุกชุด (เลือก ${selSets().length})`],...sets.map(s=>[s,(CFG.chipStrip?s.replace(CFG.chipStrip,""):s)])].map(([v,t])=>`<button class="chip" aria-pressed="${v==="all"?st.set==="all":selSets().includes(v)}" data-set="${v}">${t}</button>`).join("");
+  $("statusChips").innerHTML=[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["wrong","ตอบผิด"]].map(([v,t])=>`<button class="chip" aria-pressed="${st.status===v}" data-st="${v}">${t}</button>`).join("");
+  {const sc=$("setChips"),on=sc.querySelector('[aria-pressed="true"]');if(sheet._ok)sc.scrollLeft=sheet._x||0;if(on){const l=on.offsetLeft-sc.offsetLeft,r=l+on.offsetWidth;if(!sheet._ok||l<sc.scrollLeft||r>sc.scrollLeft+sc.clientWidth)sc.scrollLeft=l-sc.clientWidth/2+on.offsetWidth/2;}sheet._ok=1;sheet._x=sc.scrollLeft;sc.onscroll=()=>{sheet._x=sc.scrollLeft;};sc.onwheel=e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){sc.scrollLeft+=e.deltaY;e.preventDefault();}};}
+  document.querySelectorAll("[data-set]").forEach(b=>b.onclick=()=>{const v=b.dataset.set;if(v==="all")st.set="all";else{const c=selSets(),i=c.indexOf(v);if(i<0)c.push(v);else c.splice(i,1);const order=[...new Set(QB.map(setKey))];c.sort((x,y)=>order.indexOf(x)-order.indexOf(y));st.set=c.length?c.join("|"):"all";}save();sheet();});
+  document.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{st.status=b.dataset.st;save();sheet();});
+  const pool=QB.filter(inSet);
+  const done=pool.filter(q=>st.a[q.uid]!==undefined); const right=done.filter(q=>st.a[q.uid]===q.ans);
+  $("sDone").textContent=`${done.length}/${pool.length}`; $("sRight").textContent=right.length;
+  $("sPct").textContent=done.length?Math.round(right.length/done.length*100)+"%":"–";
+  const v=visible();
+  if(!v.length){$("rows").innerHTML=`<div class="empty">${st.status==="wrong"?"ยังไม่มีข้อที่ตอบผิดในชุดนี้":"ทำครบทุกข้อในชุดนี้แล้ว"}</div>`;return;}
+  $("rows").innerHTML=v.map(q=>{
+    const a=st.a[q.uid];
+    const bs=[0,1,2,3,4].map(i=>{let c="b";if(a===i)c+=" f "+(i===q.ans?"ok":"no");else if(a!==undefined&&i===q.ans)c+=" k";return `<span class="${c}">${L[i]}</span>`;}).join("");
+    return `<button class="srow ${q.id-1===st.cur?"cur":""}" data-go="${q.id-1}"><span class="n">${q.id}</span><span class="bs">${bs}</span><span class="meta">${q.set} ${q.ro}</span></button>`;
+  }).join("");
+  document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{closeS();go(+b.dataset.go);});
+}
+function openS(){sheet._ok=0;sheet();$("overlay").classList.add("open");const c=document.querySelector(".srow.cur");if(c)c.scrollIntoView({block:"center"});$("closeSheet").focus();}
+function closeS(){$("overlay").classList.remove("open");$("openSheet").focus();}
+$("openSheet").onclick=openS; $("closeSheet").onclick=closeS;
+$("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeS();});
+$("redoWrong").onclick=()=>{const w=QB.filter(q=>inSet(q)&&st.a[q.uid]!==undefined&&st.a[q.uid]!==q.ans);
+  if(!w.length){alert("ยังไม่มีข้อที่ตอบผิดในชุดนี้");return;}
+  if(confirm(`ล้างคำตอบของข้อที่ตอบผิด ${w.length} ข้อ เพื่อทำใหม่? (ข้อที่ถูกยังเก็บไว้)`)){w.forEach(q=>delete st.a[q.uid]);st.status="todo";save();sheet();render();}};
+/* progress link: compact "#p=<7-char hash of uid><answer digit>…" — works on any static host */
+const H7=s=>{let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h.toString(36).padStart(7,"0");};
+const encP=a=>Object.keys(a).map(u=>H7(u)+a[u]).join("");
+function decP(p){const m={};QB.forEach(q=>{m[H7(q.uid)]=q.uid;});const o={};p=String(p).replace(/[^0-9a-z]/g,"");
+  for(let i=0;i+8<=p.length;i+=8){const u=m[p.slice(i,i+7)],v=+p[i+7];if(u&&v>=0&&v<5)o[u]=v;}return o;}
+const SITE=(()=>{if(CFG.siteUrl)return CFG.siteUrl;try{if(window.top===window&&/^https?:$/.test(location.protocol))return location.origin+location.pathname;}catch(e){}return "";})();
+function importObj(o,ask){const n=Object.keys(o).length;if(!n){alert("ไม่พบความคืบหน้าที่ตรงกับข้อในคลังนี้");return;}
+  const mode=confirm(`${ask} ${n} ข้อ\n\nกด OK = รวมกับคำตอบที่มีอยู่ในเครื่องนี้\nกด Cancel = แทนที่คำตอบในเครื่องนี้ทั้งหมด`);
+  st.a=mode?Object.assign({},st.a,o):o;st.v2=1;save();sheet();render();alert("นำเข้าเรียบร้อย");}
+{const m=/[#&]p=([0-9a-z]*)/.exec(location.hash||"");if(m){try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}
+  setTimeout(()=>{const o=decP(m[1]);if(Object.keys(o).length&&confirm(`ลิงก์นี้มีความคืบหน้า ${Object.keys(o).length} ข้อ — นำเข้าในเครื่องนี้ไหม?`))importObj(o,"ยืนยันนำเข้า");},300);}}
+$("backup").onclick=async()=>{
+  if(!Object.keys(st.a).length){alert("ยังไม่มีคำตอบให้สำรอง");return;}
+  if(SITE){const link=SITE+"#p="+encP(st.a);
+    if(navigator.share){try{await navigator.share({title:document.title+" — ความคืบหน้า",url:link});return;}catch(e){if(e&&e.name==="AbortError")return;}}
+    try{await navigator.clipboard.writeText(link);alert("คัดลอกลิงก์ความคืบหน้าแล้ว — เปิดลิงก์นี้บนเครื่องใหม่เพื่อนำความคืบหน้าไปด้วย");}
+    catch(e){prompt("คัดลอกลิงก์นี้ไปเปิดบนเครื่องใหม่:",link);}return;}
+  const code=btoa(unescape(encodeURIComponent(JSON.stringify({a:st.a,v2:1}))));
+  try{await navigator.clipboard.writeText(code);alert("คัดลอกรหัสความคืบหน้าแล้ว — เก็บไว้ในโน้ต แล้วกด \"นำเข้า\" บนเครื่องอื่นเพื่อวางรหัสนี้");}
+  catch(e){prompt("คัดลอกรหัสนี้เก็บไว้:",code);}};
+$("restore").onclick=()=>{const c=prompt("วางลิงก์หรือรหัสความคืบหน้าที่สำรองไว้:");if(!c)return;
+  const m=/[#&]p=(?:[a-z0-9_-]+\.)?([0-9a-z]+)/.exec(c);if(m){importObj(decP(m[1]),"นำเข้าความคืบหน้า");return;}
+  try{const o=JSON.parse(decodeURIComponent(escape(atob(c.trim()))));if(!o.a)throw 0;importObj(o.a,"นำเข้าความคืบหน้า");}
+  catch(e){alert("ลิงก์หรือรหัสไม่ถูกต้อง");}};
+if(SITE)$("backup").textContent="ส่งลิงก์ความคืบหน้า";
+$("reset").onclick=()=>{ if(confirm("ล้างคำตอบทั้งหมด? เริ่มทำใหม่ตั้งแต่ข้อแรก")){st.a={};st.cur=0;pick=null;save();sheet();render();} };
+render();
+initCloud();
+})();
+</script>
+</body>
+</html>
