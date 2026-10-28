@@ -700,7 +700,7 @@
       vis.map(function (p) { return li(p, false); }).join('') + '</ul>' + (hidPart ? '<div class="mai-dupfoot">' + hidPart + '</div>' : '') + '</details></section>';
   }
   function letterOf(d) { var c = d.name.trim().charAt(0); c = ({ 'α': 'A', 'β': 'B', 'γ': 'G', 'δ': 'D' })[c] || c.toUpperCase(); return /[A-Z]/.test(c) ? c : '#'; }
-  function rowHTML(d) {
+  function maiRowHTML(d) {
     var ck = (D.people || []).map(function (p) { var on = d.seen.indexOf(p) >= 0; return '<span class="mai-cb' + (on ? ' on' : '') + '" role="img" aria-label="' + esc(p) + (on ? ' เคยดูคนไข้แล้ว' : ' ยังไม่เคยดู') + '">' + (on ? '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2 5 8.6 9.6 3.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '') + '</span>'; }).join('');
     return '<a class="mai-row' + (d.filled ? '' : ' blank') + '" href="' + dHref(d) + '">' + (ck ? '<span class="mai-ck">' + ck + '</span>' : '') + '<span class="mai-no">' + esc(d.no) + '</span><span class="mai-main"><span class="mai-name">' + esc(d.name) + '</span>' +
       '<span class="mai-tags">' + tagsHTML(d) + '</span></span>' + (d.filled ? '' : '<span class="sr">ยังไม่ได้เขียนรายละเอียด</span>') + '</a>';
@@ -741,7 +741,7 @@
     var az = groups.length > 3 ? '<nav class="mai-az" aria-label="ไปที่ตัวอักษร">' + groups.map(function (g) { return '<button type="button" data-jump="' + g.L + '">' + g.L + '</button>'; }).join('') + '</nav>' : '';
     var body = !list.length ? '<div class="empty"><p class="k" style="font-size:20px">ไม่พบโรคที่ตรงกับตัวกรอง</p><p class="muted">ลองล้างคำค้นหรือตัวกรอง</p></div>' :
       ((D.people || []).length ? '<div class="mai-ckhead" aria-hidden="true">' + D.people.map(function (p) { return '<span>' + esc(p) + '</span>'; }).join('') + '</div>' : '') +
-      groups.map(function (g) { return '<h2 class="mai-letter" id="mai-L-' + (g.L === '#' ? 'x' : g.L) + '">' + g.L + '</h2>' + g.items.map(rowHTML).join(''); }).join('');
+      groups.map(function (g) { return '<h2 class="mai-letter" id="mai-L-' + (g.L === '#' ? 'x' : g.L) + '">' + g.L + '</h2>' + g.items.map(maiRowHTML).join(''); }).join('');
     var nBlank = list.filter(function (d) { return !d.filled; }).length;
     return { top: dupBox(st) +
       '<section class="wrap mai-tools"><div class="mai-fbar">' + bar + (nSel ? '<button class="linkbtn" type="button" data-clear>ล้างตัวกรอง</button>' : '') + '</div>' + panel +
