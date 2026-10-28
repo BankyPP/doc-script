@@ -906,3 +906,15 @@ mark{background:#FFF176;color:#1a1a1a;border-radius:2px}mark.pk{background:#F8BB
 .spcsrc .spch{font-size:14px;margin-bottom:6px}
 .spcsrc .spcq{background:var(--paper);border-radius:8px;padding:8px 10px;font-size:14.5px;line-height:1.6;white-space:pre-wrap;margin-bottom:6px}
 .spcsrc .spcwarn{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:6px 10px;font-size:14px;margin-bottom:6px}
+
+/* 📝 โน้ตของฉัน — the after-answer note shown above the question (MCQ · MEQ · OSCE, every round, both Phases) */
+.mynote-top{margin:0 0 12px;padding:10px 12px 12px;border:1.5px solid var(--warn);border-left-width:5px;border-radius:8px;background:var(--warn-soft)}
+.mynote-top[hidden]{display:none}
+.mynote-top .mn-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:4px}
+.mynote-top .mn-h>span:first-child{font-family:var(--num);font-weight:700;font-size:15px;color:var(--warn)}
+.mynote-top .mn-h .hint{font-size:12.5px;margin:0}
+.mynote-top .mn-go{margin-left:auto;font-size:13.5px;padding:0}
+.mynote-top .mn-t{white-space:pre-wrap;overflow-wrap:anywhere;font-size:16px;line-height:1.6;color:var(--ink)}
+.mynote-top .mn-ink{margin-top:6px;background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:4px}
+.mynote-top .mn-ink svg{display:block;width:100%;height:auto;max-height:60vh}
+.mynote-top .mn-t+.mn-ink{margin-top:8px}

@@ -691,6 +691,7 @@ function rQuiz(){
   const lab=q.lai?["โจทย์","Legendary"]:q.spc?["เคส","Specialty"]:q.adm?["เคส","Admission"]:q.unit?["Lecture","Unit"]:[CFG.setLabel||"ปี",CFG.roLabel||"Rotation"];
   h+=`<div class="qhead"><div class="qnum">${view==="lrev"?legIdx()+1:q.adm?"A":q.id}.</div><div class="fields"><span class="field"><b>${lab[0]}</b>${esc(q.set)}</span><span class="field"><b>${lab[1]}</b>${esc(q.ro)}</span>${view==="lrev"?legPreFields(legPaper(),q.uid):seenFields(q,curRK())}</div>${q.adm?"":`<button class="flag" id="flagBtn" aria-pressed="${flagged(P,q.uid)}" title="ทำเครื่องหมายข้อที่ยังไม่มั่นใจ">⚑ ไม่มั่นใจ</button>`}</div>`;
   h+=tagRow(q);
+  if(locked)h+=myNoteTop(q);   /* my after-answer note, above the question — only once the answer is shown */
   h+=`<p class="stem">${q.stem}</p>`;
   if(!q.img&&q.imgNote)h+=`<div class="img-missing">🖼 ${q.imgNote}</div>`;
   if(q.img){const IL=Array.isArray(q.img)?q.img:[q.img];h+=`<div class="stem-img">${IL.map(k=>imgHTML(k,"ภาพประกอบโจทย์")).join("")}${q.imgNote?`<div class="img-note">${q.imgNote}</div>`:""}</div>`;}
@@ -844,7 +845,7 @@ function explain(q,done,R,p){
   h+=sec("ความเห็นของผม",q.opinion?`<div class="box">${R(q.opinion)}</div>`:"","opinion");
   /* "โจทย์แบบใหม่ที่อาจออก" = old exams only (user 27 Oct 2026); AI-written questions (Unit / Admission / Specialty / Legendary AI) never show it */
   if(!q.adm&&!q.unit&&(q.variants||[]).length)h+=sec("โจทย์แบบใหม่ที่อาจออก",`<ul>${q.variants.map(s=>`<li>${R(s)}</li>`).join("")}</ul>`);
-  h+=`<div class="sec mine"><h3>สรุปของฉันจากข้อนี้</h3><p class="hint" style="margin:0 0 6px">เขียนสรุปด้วยคำของตัวเองช่วยให้จำได้นานกว่าอ่านผ่าน ๆ (บันทึกอัตโนมัติ)</p>${noteHTML("post",0,q)}</div>`;
+  h+=myNoteSec(q);
   h+=`<div class="sec ask"><h3>ถาม Claude เพิ่มเติม</h3>
     <div class="qchips">${ASKQ.map((t,i)=>`<button class="chip" type="button" data-aq="${i}">${t}</button>`).join("")}</div>
     <textarea class="ntext" id="askTxt" placeholder="พิมพ์สิ่งที่อยากถามเกี่ยวกับข้อนี้ เช่น ทำไม C ถึงไม่ใช่คำตอบ"></textarea>
@@ -887,6 +888,22 @@ function bindAsk(q){
 }
 
 /* ---------------- notes: typed + handwriting ---------------- */
+/* "📝 โน้ตของฉัน" box above the question (user 28 Oct 2026): shows what was written in "สรุปของฉันจากข้อนี้" (typed + handwriting) —
+   never the pre-answer scratch (✎ ทด). One note per question per ward (P.post), so it is the same in Phase 1 and Phase 2 and in every round;
+   shown only after the answer / key is revealed (MCQ explanation, MEQ / OSCE case done, OSCE result page). Updates live while writing below. */
+function inkSVG(k){const d=ink[k];if(!d||!d.s||!d.s.length)return "";let y0=1e9,y1=0;
+  d.s.forEach(s=>{for(let i=1;i<s.p.length;i+=2){if(s.p[i]<y0)y0=s.p[i];if(s.p[i]>y1)y1=s.p[i];}});
+  y0=Math.max(0,y0-14);y1=y1+14;const C={ink:"var(--ink)",red:"var(--wrong)",blue:"#2F6BD8"};
+  return `<svg viewBox="0 ${y0} 1000 ${Math.max(40,y1-y0)}" preserveAspectRatio="xMinYMin meet" role="img" aria-label="ที่เขียนไว้">${d.s.map(s=>{const p=s.p.length===2?s.p.concat([s.p[0]+0.5,s.p[1]]):s.p;
+    return `<polyline points="${p.join(" ")}" style="fill:none;stroke:${C[s.c]||C.ink};stroke-width:${s.w||3};stroke-linecap:round;stroke-linejoin:round"/>`;}).join("")}</svg>`;}
+function myNoteBody(u){if(!u)return "";const n=P_().post[u]||{},t=(n.t||"").trim(),sv=inkSVG(inkK("post",0,u));if(!t&&!sv)return "";
+  return `<div class="mn-h"><span>📝 โน้ตของฉัน</span><span class="hint">จดไว้ตอนดูเฉลย · ใช้ร่วมกันทั้ง 2 Phase</span><button type="button" class="link mn-go">แก้ไข ↓</button></div>${t?`<div class="mn-t">${esc(t)}</div>`:""}${sv?`<div class="mn-ink">${sv}</div>`:""}`;}
+function myNoteTop(q){if(!q||!q.uid)return "";const b=myNoteBody(q.uid);return `<div class="mynote-top" data-mnu="${esc(q.uid)}"${b?"":" hidden"}>${b}</div>`;}
+function myNoteRefresh(u){document.querySelectorAll(".mynote-top").forEach(el=>{if(el.dataset.mnu!==u)return;const b=myNoteBody(u);el.innerHTML=b;el.hidden=!b;});}
+document.addEventListener("click",e=>{const g=e.target.closest&&e.target.closest(".mn-go");if(!g)return;const u=g.closest(".mynote-top").dataset.mnu;
+  const ed=[...document.querySelectorAll('.note[data-kind="post"]')].find(n=>n.dataset.u===u);if(!ed)return;const d=ed.closest("details");if(d&&!d.open)d.open=true;
+  ed.scrollIntoView({behavior:"smooth",block:"center"});const ta=ed.querySelector(".ntext");if(ta&&!ta.hidden)setTimeout(()=>ta.focus({preventScroll:true}),350);});
+const myNoteSec=q=>q&&q.uid?`<div class="sec mine"><h3>สรุปของฉันจากข้อนี้</h3><p class="hint" style="margin:0 0 6px">พิมพ์หรือเขียนก็ได้ · ขึ้นเป็นกล่อง “📝 โน้ตของฉัน” เหนือโจทย์ทุกครั้งที่กลับมาดูเฉลยข้อนี้ (ทั้ง 2 Phase · บันทึกอัตโนมัติ)</p>${noteHTML("post",0,q)}</div>`:"";
 const inkK=(kind,p,u)=>`${ward}|${kind==="pre"?"pre"+p:"post"}|${u}`;
 const noteStore=(kind,p)=>kind==="pre"?P_().pre[p]:P_().post;
 function noteHas(kind,p,u){const t=(noteStore(kind,p)[u]||{}).t,k=ink[inkK(kind,p,u)];return !!((t&&t.trim())||(k&&k.s&&k.s.length));}
@@ -905,9 +922,9 @@ function mountNotes(root){
     n.dataset.bound=1;
     const kind=n.dataset.kind,p=+n.dataset.ph,u=n.dataset.u,ta=n.querySelector(".ntext"),box=n.querySelector(".inkbox"),saved=n.querySelector(".nsaved");
     let t0=null;const fit=()=>{ta.style.height="auto";ta.style.height=Math.max(96,ta.scrollHeight+4)+"px";};
-    ta.addEventListener("input",()=>{fit();saved.textContent="กำลังบันทึก…";clearTimeout(t0);t0=setTimeout(()=>{noteStore(kind,p)[u]={t:ta.value,ts:now()};save();saved.textContent="บันทึกแล้ว";n.querySelector('[data-nm="type"]').classList.toggle("has",!!ta.value.trim());},500);});
+    ta.addEventListener("input",()=>{fit();saved.textContent="กำลังบันทึก…";clearTimeout(t0);t0=setTimeout(()=>{noteStore(kind,p)[u]={t:ta.value,ts:now()};save();saved.textContent="บันทึกแล้ว";if(kind==="post")myNoteRefresh(u);n.querySelector('[data-nm="type"]').classList.toggle("has",!!ta.value.trim());},500);});
     if(!ta.hidden)fit();
-    let pad=null;const ensure=()=>{if(!pad)pad=inkPad(box,inkK(kind,p,u),()=>{saved.textContent="บันทึกแล้ว";const k=ink[inkK(kind,p,u)];n.querySelector('[data-nm="draw"]').classList.toggle("has",!!(k&&k.s.length));});};
+    let pad=null;const ensure=()=>{if(!pad)pad=inkPad(box,inkK(kind,p,u),()=>{saved.textContent="บันทึกแล้ว";const k=ink[inkK(kind,p,u)];n.querySelector('[data-nm="draw"]').classList.toggle("has",!!(k&&k.s.length));if(kind==="post")myNoteRefresh(u);});};
     if(!box.hidden)ensure();
     n.querySelectorAll("[data-nm]").forEach(b=>b.onclick=()=>{const m=b.dataset.nm;st.noteMode=m;persist();n.dataset.m=m;n.querySelectorAll("[data-nm]").forEach(x=>x.setAttribute("aria-pressed",x===b));ta.hidden=m!=="type";box.hidden=m!=="draw";if(m==="draw")ensure();else fit();});
   });

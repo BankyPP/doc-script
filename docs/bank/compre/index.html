@@ -1086,6 +1086,18 @@ mark{background:#FFF176;color:#1a1a1a;border-radius:2px}mark.pk{background:#F8BB
 .spcsrc .spch{font-size:14px;margin-bottom:6px}
 .spcsrc .spcq{background:var(--paper);border-radius:8px;padding:8px 10px;font-size:14.5px;line-height:1.6;white-space:pre-wrap;margin-bottom:6px}
 .spcsrc .spcwarn{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:6px 10px;font-size:14px;margin-bottom:6px}
+
+/* 📝 โน้ตของฉัน — the after-answer note shown above the question (MCQ · MEQ · OSCE, every round, both Phases) */
+.mynote-top{margin:0 0 12px;padding:10px 12px 12px;border:1.5px solid var(--warn);border-left-width:5px;border-radius:8px;background:var(--warn-soft)}
+.mynote-top[hidden]{display:none}
+.mynote-top .mn-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:4px}
+.mynote-top .mn-h>span:first-child{font-family:var(--num);font-weight:700;font-size:15px;color:var(--warn)}
+.mynote-top .mn-h .hint{font-size:12.5px;margin:0}
+.mynote-top .mn-go{margin-left:auto;font-size:13.5px;padding:0}
+.mynote-top .mn-t{white-space:pre-wrap;overflow-wrap:anywhere;font-size:16px;line-height:1.6;color:var(--ink)}
+.mynote-top .mn-ink{margin-top:6px;background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:4px}
+.mynote-top .mn-ink svg{display:block;width:100%;height:auto;max-height:60vh}
+.mynote-top .mn-t+.mn-ink{margin-top:8px}
 </style>
 <style>
 /* โพยหมอ theme for the old-exam engine (NL & Compre banks) — only colours/fonts change; every feature stays the engine's own.
@@ -1189,7 +1201,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 <script>
 const IMGS={};const WARDS={};
 const CONFIG={"title": "คลังข้อสอบเก่า Compre · โพยหมอ", "brand": "AC Compre", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-compre-v1", "setLabel": "ปี", "roLabel": "สถาบัน", "chipStrip": "", "files": {}, "siteUrl": "https://bankypp.github.io/doc-script/bank/compre/", "siteName": "คลังข้อสอบเก่า Compre", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "compre"], "sharedPrefix": "poy_compre_", "homeBrand": "AC {short} MDCU79 by BankyPP", "quizBrand": "AC {short} {type}", "artifactUrl": "", "subjects": [{"id": "compre", "name": "Comprehensive (Compre)", "wards": ["c1", "c2", "c3"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "inst": {"id": "compre", "name": "Compre", "th": "Compre", "en": "Comprehensive examination", "enShort": "Compre", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"c1": "#/nl/x/c1", "c2": "#/nl/x/c2", "c3": "#/nl/x/c3"}}, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "brand": "AC Compre 1 MCQ", "dir": "data_c1", "scope": "Comprehensive 1 (จุฬาฯ เท่านั้น — ศิริราชไม่มี) ใช้ blueprint NL1 เก่า", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "brand": "AC Compre 2 MCQ", "dir": "data_c2", "scope": "Comprehensive 2 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "brand": "AC Compre 3 MCQ", "dir": "data_c3", "scope": "Comprehensive 3 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="27/10/2026 17:40";
+const BUILD="28/10/2026 16:14";
 WARDS["c1"]={QB:[],HY:null};
 WARDS["c1"].MQ=[];
 WARDS["c1"].OS=[];
@@ -1514,6 +1526,7 @@ function mqView(){const c=mqCur();if(!c){go(ward);return;}const {q}=c;let pi=c.p
   h+=`<div class="qtools">${(!mqCaseDone(q)||ans)&&!mqIsOS()?`<span class="timer" id="mqTimer"></span>`:""}${ans&&!mqIsOS()?`<button class="tbtn${mqPaused()?" on":""}" id="mqPause" type="button">${mqPaused()?"▶ เดินต่อ":"⏸ หยุดเวลา"}</button><button class="tbtn" id="mqTRes" type="button">↺ เริ่มจับเวลาใหม่</button>`:""}<button class="starbtn" id="mqStar" aria-pressed="${mqStar(q)}" title="ติดดาวไว้ทบทวน">${mqStar(q)?"★":"☆"}</button></div></div>`;
   if(tm){if(TP.length>1)h+=`<div class="psteps">${TP.map(j=>{const d=mqTDone(q,j);return `<button class="pstep ${d?"done":"open"}${j===pi?" on":""}" data-mpart="${j}">${d?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;}
   else if(NP>1)h+=`<div class="psteps">${q.parts.map((p,j)=>{const lock=j>ps;return `<button class="pstep ${j<ps?"done":j===ps?"open":"lock"}${j===pi?" on":""}" data-mpart="${j}" ${lock?'disabled title="ส่งคำตอบ Part ก่อนหน้าก่อน"':""}>${lock?"🔒 ":j<ps?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;
+  if(mqCaseDone(q))h+=myNoteTop(q);   /* 📝 my after-answer note above the question — only once the whole case has been answered (user 28 Oct 2026) */
   if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">ข้อ ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?`<p class="gray">${esc(q.gray)}</p>`:""}</section>`;
     const prev=q.parts.slice(0,pi).filter(p=>p.info||p.img);
     if(prev.length)h+=`<details class="prev old" open><summary>ข้อมูลเพิ่มเติมจาก Part ก่อนหน้า <span class="oldtag">ข้อมูลเดิม</span></summary>${prev.map(p=>`<div class="pinfo"><span class="pn">${esc(mqGL(q,p.i).replace("Part ","P"))}</span><div>${p.info?`<div>${p.info}</div>`:""}${p.info&&(p.igray||p.gray)?`<p class="gray">${esc(p.igray||p.gray)}</p>`:""}${mqImgs(p.img,p.imgNote)}</div></div>`).join("")}</details>`;}
@@ -1597,6 +1610,7 @@ function mqExplain(q,r){const tm=mqTM(),S=tm?q.subs.filter(s=>mqTmatch(s)&&mqSub
   h+=sec("ช่วยจำ",q.mnemonic?`<p>${q.mnemonic}</p>`:"");
   h+=sec("ความเห็นของผม",q.opinion?`<div class="box">${q.opinion}</div>`:"","opinion");
   h+=sec("คำถามต่อยอดที่อาจออก",(q.variants||[]).length?`<ul>${q.variants.map(s=>`<li>${s}</li>`).join("")}</ul>`:"");
+  h+=myNoteSec(q);   /* same note store as MCQ (P.post, shared by both Phases) */
   return h+`</section>`;}
 function mqRe(){const y=scrollY;mqView();scrollTo(0,y);}
 function mqClearSub(x,i){["t","g","gm","c","cs","ai","kg"].forEach(k=>{if(x[k])delete x[k][i];});}
@@ -1617,6 +1631,7 @@ async function mqRedoCase(q){if(!await uiAsk(mqTM()?"ล้างคำตอบ
   if(mqTM()){const x=mqEns(q);x.reo=x.reo||{};q.subs.filter(mqTmatch).forEach(s=>{const was=mqSubDone(q,s,x);mqClearSub(x,s._i);if(x.sd)delete x.sd[s._i];if(was&&s._p<(x.ps||0))x.reo[s._i]=1;});x.sub=0;x.ts=now();}
   else A[q.uid]={t:{},g:{},gm:{},c:{},cs:{},ps:0,sd:{},ts:now()};mqS().v.pi=mqDefPart(q);save();mqView();scrollTo(0,0);}
 function mqBindView(q,pi){const r=()=>mqRec(q)||{};
+  mountNotes(document);
   {const b=$("mqPause");if(b)b.onclick=mqTogglePause;}{const b=$("mqTRes");if(b)b.onclick=mqTReset;}
   $("mqStar").onclick=()=>{const S=mqS().star;S[q.uid]=[mqStar(q)?0:1,now()];save();mqRe();};
   document.querySelectorAll("[data-mpart]").forEach(b=>b.onclick=()=>mqOpen(q.uid,+b.dataset.mpart,mqS().v.r));
@@ -1734,7 +1749,7 @@ const osFmt=sec=>{sec=Math.max(0,Math.ceil(sec));return Math.floor(sec/60)+":"+S
 /* station lookup: old-exam station (W.OS) or an AI station kept inside the run */
 function osNorm(q){if(q._n)return q;q._n=1;if(!Array.isArray(q.parts)||!q.parts.length)q.parts=[{subs:q.subs||[]}];q.subs=[];
   q.parts.forEach((p,pi)=>{p.i=pi;p.subs=p.subs||[];p.subs.forEach((s,k)=>{s._p=pi;s._k=k;s._i=q.subs.length;if(!(s.tags||[]).length&&q.topic)s.tags=[q.topic];q.subs.push(s);});});return q;}
-function osSt(run,u){if(!u)return null;if(run.gen&&run.gen[u])return osNorm(run.gen[u]);return mqL(ward,"OSCE").find(q=>q.uid===u)||null;}
+function osSt(run,u){if(!u)return null;if(run.gen&&run.gen[u]){const g=osNorm(run.gen[u]);if(!g.uid)g.uid=u;return g;}return mqL(ward,"OSCE").find(q=>q.uid===u)||null;}
 const osSlotType=(run,sl)=>{if(sl.k==="rest")return "rest";const q=osSt(run,sl.u);const t=q?{ex:!!q.ex,proc:!!q.proc}:osTopicEx(sl.topic);return t.proc?"proc":t.ex?"ex":"noex";};
 const OS_TI={noex:"📝",ex:"👨‍⚕️",proc:"🩺",rest:"☕"},OS_TT={noex:"ไม่มีอาจารย์",ex:"มีอาจารย์",proc:"หัตถการ (มีอาจารย์ ไม่มีข้อพักตามหลัง)",rest:"ข้อพัก"};
 const osA=()=>mqInitP(P_(),"OSCE")["a"+ph()];
@@ -2006,6 +2021,7 @@ function osResView(){const P=P_(),rs=osLastRes();if(!rs)return go(ward+"/osl");c
   rs.seq.forEach((sl,ix)=>{if(sl.k==="rest"){h+=`<div class="osslot rest"><span class="on">${ix+1}</span><span class="oi">☕</span><span class="ot">ข้อพัก</span></div>`;return;}
     const q=osSt(rs,sl.u),sc=osStScore(rs,ix),reached=O.indexOf(ix)<(rs.reached||O.length);if(!q)return;
     h+=`<details class="osr"${P.osOpen===ix?" open":""} data-osr="${ix}"><summary><span class="on">${ix+1}</span><span class="oi">${OS_TI[osSlotType(rs,sl)]}</span><span class="ot">${esc(osTN(q.topic))} · ${esc(q.title||"")}${q.ai?' <span class="tag">AI</span>':""}${reached?"":' <span class="tag warn">ไม่ได้ทำ</span>'}</span><b class="osp" style="color:${mqPct(Math.round(sc.pct))}">${sc.pct.toFixed(0)}%</b></summary><div class="osrb">`;
+    h+=myNoteTop(q);   /* 📝 my note above the station (result page = answers revealed) */
     h+=`<div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${osAiImgHTML(q,true)}`;
     q.subs.forEach(s=>{const i=s._i,t=(((rs.ans||{})[ix]||{})[i]||"").trim(),f=osSubFrac(rs,ix,s),gm=((rs.gm||{})[ix]||{})[i],ai=((rs.ai||{})[ix]||{})[i];
       h+=`<div class="subq"><div class="sh"><div class="sq">${osQ(s,ix)}</div><span class="mk">${f===null?"–":+(mqMk(s)*f).toFixed(1)}/${mqMk(s)}</span></div>`;
@@ -2020,11 +2036,13 @@ function osResView(){const P=P_(),rs=osLastRes();if(!rs)return go(ward+"/osl");c
     if((q.summary||[]).length)h+=`<div class="sec"><h3>สรุป</h3><ul>${q.summary.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
     if(q.opinion)h+=`<div class="sec opinion"><h3>ความเห็นของผม</h3><div class="box">${q.opinion}</div></div>`;
     if(q.flag)h+=`<div class="sub-meta"><span class="tag warn">${esc(q.flag)}</span></div>`;
+    h+=myNoteSec(q);
     h+=`<div class="row2">${!q.ai?`<button class="link" type="button" data-osgo="${esc(q.uid)}">เปิดข้อนี้ใน Service round ↗</button>`:""}${rs.mode==="sim"&&mqAiAvail()&&q.subs.some(s=>(((rs.ans||{})[ix]||{})[s._i]||"").trim())?(OSAI.busy===ix+1?`<span class="hint">⏳ AI กำลังตรวจ…</span>`:`<button class="link ailink" type="button" data-osai="${ix}">🤖 ให้ AI ตรวจข้อนี้</button>`):""}</div></div></details>`;});
   h+=`</div><div class="stack"><a class="btn primary" href="#/${esc(ward)}/${Q?"osq":"osl"}">ทำใหม่</a><a class="btn" href="#/${esc(ward)}/osh">ประวัติทั้งหมด</a></div></div>`;
   $("main").innerHTML=h;
   const re=()=>{const y=scrollY;osResView();scrollTo(0,y);};
   document.querySelectorAll("details.osr").forEach(d=>d.addEventListener("toggle",()=>{if(d.open)P.osOpen=+d.dataset.osr;}));
+  mountNotes(document);document.querySelectorAll("details.osr").forEach(d=>d.addEventListener("toggle",()=>{if(d.open)mountNotes(d);}));
   osBindChk(rs,re);
   document.querySelectorAll("[data-osg]").forEach(b=>b.onclick=()=>{const ix=+b.dataset.osg,i=+b.dataset.ss,x=+b.dataset.g;rs.gm=rs.gm||{};const G=rs.gm[ix]=rs.gm[ix]||{};if(G[i]===x)delete G[i];else G[i]=x;P.osOpen=ix;save();re();});
   document.querySelectorAll("[data-osgo]").forEach(b=>b.onclick=()=>{P_().type="OSCE";mqVset({r:"service",set:"all",style:"all",status:"all"});save();mqOpen(b.dataset.osgo,undefined,"service");});
@@ -3502,6 +3520,7 @@ function rQuiz(){
   const lab=q.lai?["โจทย์","Legendary"]:q.spc?["เคส","Specialty"]:q.adm?["เคส","Admission"]:q.unit?["Lecture","Unit"]:[CFG.setLabel||"ปี",CFG.roLabel||"Rotation"];
   h+=`<div class="qhead"><div class="qnum">${view==="lrev"?legIdx()+1:q.adm?"A":q.id}.</div><div class="fields"><span class="field"><b>${lab[0]}</b>${esc(q.set)}</span><span class="field"><b>${lab[1]}</b>${esc(q.ro)}</span>${view==="lrev"?legPreFields(legPaper(),q.uid):seenFields(q,curRK())}</div>${q.adm?"":`<button class="flag" id="flagBtn" aria-pressed="${flagged(P,q.uid)}" title="ทำเครื่องหมายข้อที่ยังไม่มั่นใจ">⚑ ไม่มั่นใจ</button>`}</div>`;
   h+=tagRow(q);
+  if(locked)h+=myNoteTop(q);   /* my after-answer note, above the question — only once the answer is shown */
   h+=`<p class="stem">${q.stem}</p>`;
   if(!q.img&&q.imgNote)h+=`<div class="img-missing">🖼 ${q.imgNote}</div>`;
   if(q.img){const IL=Array.isArray(q.img)?q.img:[q.img];h+=`<div class="stem-img">${IL.map(k=>imgHTML(k,"ภาพประกอบโจทย์")).join("")}${q.imgNote?`<div class="img-note">${q.imgNote}</div>`:""}</div>`;}
@@ -3655,7 +3674,7 @@ function explain(q,done,R,p){
   h+=sec("ความเห็นของผม",q.opinion?`<div class="box">${R(q.opinion)}</div>`:"","opinion");
   /* "โจทย์แบบใหม่ที่อาจออก" = old exams only (user 27 Oct 2026); AI-written questions (Unit / Admission / Specialty / Legendary AI) never show it */
   if(!q.adm&&!q.unit&&(q.variants||[]).length)h+=sec("โจทย์แบบใหม่ที่อาจออก",`<ul>${q.variants.map(s=>`<li>${R(s)}</li>`).join("")}</ul>`);
-  h+=`<div class="sec mine"><h3>สรุปของฉันจากข้อนี้</h3><p class="hint" style="margin:0 0 6px">เขียนสรุปด้วยคำของตัวเองช่วยให้จำได้นานกว่าอ่านผ่าน ๆ (บันทึกอัตโนมัติ)</p>${noteHTML("post",0,q)}</div>`;
+  h+=myNoteSec(q);
   h+=`<div class="sec ask"><h3>ถาม Claude เพิ่มเติม</h3>
     <div class="qchips">${ASKQ.map((t,i)=>`<button class="chip" type="button" data-aq="${i}">${t}</button>`).join("")}</div>
     <textarea class="ntext" id="askTxt" placeholder="พิมพ์สิ่งที่อยากถามเกี่ยวกับข้อนี้ เช่น ทำไม C ถึงไม่ใช่คำตอบ"></textarea>
@@ -3698,6 +3717,22 @@ function bindAsk(q){
 }
 
 /* ---------------- notes: typed + handwriting ---------------- */
+/* "📝 โน้ตของฉัน" box above the question (user 28 Oct 2026): shows what was written in "สรุปของฉันจากข้อนี้" (typed + handwriting) —
+   never the pre-answer scratch (✎ ทด). One note per question per ward (P.post), so it is the same in Phase 1 and Phase 2 and in every round;
+   shown only after the answer / key is revealed (MCQ explanation, MEQ / OSCE case done, OSCE result page). Updates live while writing below. */
+function inkSVG(k){const d=ink[k];if(!d||!d.s||!d.s.length)return "";let y0=1e9,y1=0;
+  d.s.forEach(s=>{for(let i=1;i<s.p.length;i+=2){if(s.p[i]<y0)y0=s.p[i];if(s.p[i]>y1)y1=s.p[i];}});
+  y0=Math.max(0,y0-14);y1=y1+14;const C={ink:"var(--ink)",red:"var(--wrong)",blue:"#2F6BD8"};
+  return `<svg viewBox="0 ${y0} 1000 ${Math.max(40,y1-y0)}" preserveAspectRatio="xMinYMin meet" role="img" aria-label="ที่เขียนไว้">${d.s.map(s=>{const p=s.p.length===2?s.p.concat([s.p[0]+0.5,s.p[1]]):s.p;
+    return `<polyline points="${p.join(" ")}" style="fill:none;stroke:${C[s.c]||C.ink};stroke-width:${s.w||3};stroke-linecap:round;stroke-linejoin:round"/>`;}).join("")}</svg>`;}
+function myNoteBody(u){if(!u)return "";const n=P_().post[u]||{},t=(n.t||"").trim(),sv=inkSVG(inkK("post",0,u));if(!t&&!sv)return "";
+  return `<div class="mn-h"><span>📝 โน้ตของฉัน</span><span class="hint">จดไว้ตอนดูเฉลย · ใช้ร่วมกันทั้ง 2 Phase</span><button type="button" class="link mn-go">แก้ไข ↓</button></div>${t?`<div class="mn-t">${esc(t)}</div>`:""}${sv?`<div class="mn-ink">${sv}</div>`:""}`;}
+function myNoteTop(q){if(!q||!q.uid)return "";const b=myNoteBody(q.uid);return `<div class="mynote-top" data-mnu="${esc(q.uid)}"${b?"":" hidden"}>${b}</div>`;}
+function myNoteRefresh(u){document.querySelectorAll(".mynote-top").forEach(el=>{if(el.dataset.mnu!==u)return;const b=myNoteBody(u);el.innerHTML=b;el.hidden=!b;});}
+document.addEventListener("click",e=>{const g=e.target.closest&&e.target.closest(".mn-go");if(!g)return;const u=g.closest(".mynote-top").dataset.mnu;
+  const ed=[...document.querySelectorAll('.note[data-kind="post"]')].find(n=>n.dataset.u===u);if(!ed)return;const d=ed.closest("details");if(d&&!d.open)d.open=true;
+  ed.scrollIntoView({behavior:"smooth",block:"center"});const ta=ed.querySelector(".ntext");if(ta&&!ta.hidden)setTimeout(()=>ta.focus({preventScroll:true}),350);});
+const myNoteSec=q=>q&&q.uid?`<div class="sec mine"><h3>สรุปของฉันจากข้อนี้</h3><p class="hint" style="margin:0 0 6px">พิมพ์หรือเขียนก็ได้ · ขึ้นเป็นกล่อง “📝 โน้ตของฉัน” เหนือโจทย์ทุกครั้งที่กลับมาดูเฉลยข้อนี้ (ทั้ง 2 Phase · บันทึกอัตโนมัติ)</p>${noteHTML("post",0,q)}</div>`:"";
 const inkK=(kind,p,u)=>`${ward}|${kind==="pre"?"pre"+p:"post"}|${u}`;
 const noteStore=(kind,p)=>kind==="pre"?P_().pre[p]:P_().post;
 function noteHas(kind,p,u){const t=(noteStore(kind,p)[u]||{}).t,k=ink[inkK(kind,p,u)];return !!((t&&t.trim())||(k&&k.s&&k.s.length));}
@@ -3716,9 +3751,9 @@ function mountNotes(root){
     n.dataset.bound=1;
     const kind=n.dataset.kind,p=+n.dataset.ph,u=n.dataset.u,ta=n.querySelector(".ntext"),box=n.querySelector(".inkbox"),saved=n.querySelector(".nsaved");
     let t0=null;const fit=()=>{ta.style.height="auto";ta.style.height=Math.max(96,ta.scrollHeight+4)+"px";};
-    ta.addEventListener("input",()=>{fit();saved.textContent="กำลังบันทึก…";clearTimeout(t0);t0=setTimeout(()=>{noteStore(kind,p)[u]={t:ta.value,ts:now()};save();saved.textContent="บันทึกแล้ว";n.querySelector('[data-nm="type"]').classList.toggle("has",!!ta.value.trim());},500);});
+    ta.addEventListener("input",()=>{fit();saved.textContent="กำลังบันทึก…";clearTimeout(t0);t0=setTimeout(()=>{noteStore(kind,p)[u]={t:ta.value,ts:now()};save();saved.textContent="บันทึกแล้ว";if(kind==="post")myNoteRefresh(u);n.querySelector('[data-nm="type"]').classList.toggle("has",!!ta.value.trim());},500);});
     if(!ta.hidden)fit();
-    let pad=null;const ensure=()=>{if(!pad)pad=inkPad(box,inkK(kind,p,u),()=>{saved.textContent="บันทึกแล้ว";const k=ink[inkK(kind,p,u)];n.querySelector('[data-nm="draw"]').classList.toggle("has",!!(k&&k.s.length));});};
+    let pad=null;const ensure=()=>{if(!pad)pad=inkPad(box,inkK(kind,p,u),()=>{saved.textContent="บันทึกแล้ว";const k=ink[inkK(kind,p,u)];n.querySelector('[data-nm="draw"]').classList.toggle("has",!!(k&&k.s.length));if(kind==="post")myNoteRefresh(u);});};
     if(!box.hidden)ensure();
     n.querySelectorAll("[data-nm]").forEach(b=>b.onclick=()=>{const m=b.dataset.nm;st.noteMode=m;persist();n.dataset.m=m;n.querySelectorAll("[data-nm]").forEach(x=>x.setAttribute("aria-pressed",x===b));ta.hidden=m!=="type";box.hidden=m!=="draw";if(m==="draw")ensure();else fit();});
   });

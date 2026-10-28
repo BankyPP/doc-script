@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 33212fe 2026-10-27 Variants: MCQ old exams only (MEQ/OSCE don't need them — user 27 Oct 2026 17:39); drop unused variants.js overlay + tools/mkvariants.py
+BankyPP/ac-mdcu 40c5953 2026-10-28 📝 โน้ตของฉัน above every question once its answer is shown (MCQ all rounds, MEQ, OSCE; MDCU + SI)
