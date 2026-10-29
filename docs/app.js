@@ -3431,19 +3431,19 @@
     [['preclinic', 'pre-clinic', 'พรีคลินิก'], ['preclinic']],
     [['clinic', 'คลินิก'], ['clinic']],
     [['โน้ต', 'note', 'notes'], ['โน้ต']],
-    [['ศัลย', 'ศัลยกรรม', 'surgery', 'gen sx', 'subspe'], ['sx y4']],
-    [['อายุร', 'อายุรกรรม', 'medicine', 'internal med'], ['med y4']],
-    [['กุมาร', 'pediatrics'], ['ped y4']],
-    [['สูติ', 'นรีเวช', 'obstetrics'], ['ob-gyn y4']],
-    [['ออร์โธ', 'orthopedics'], ['ortho y5']],
-    [['จักษุ', 'ophthalmology'], ['eye y5']],
-    [['โสต', 'otolaryngology'], ['ent y5']],
-    [['จิตเวช', 'psychiatry'], ['psych y5']],
-    [['วิสัญญี', 'anesthesia'], ['anes y5']],
+    [['ศัลย', 'ศัลย์', 'ศัลยกรรม', 'เซิร์จ', 'เซิจ', 'surgery', 'surg', 'gen sx', 'subspe'], ['sx y4']],
+    [['เมด', 'เม็ด', 'อายุร', 'อายุรกรรม', 'medicine', 'internal med'], ['med y4']],
+    [['เพด', 'เพดส์', 'กุมาร', 'กุมารเวช', 'กุมารเวชศาสตร์', 'pediatrics', 'peds'], ['ped y4']],
+    [['ออบ', 'สูติ', 'นรีเวช', 'สูตินรี', 'สูติศาสตร์', 'obstetrics', 'ob', 'gyn', 'obgyn'], ['ob-gyn y4']],
+    [['ออร์โธ', 'ออโธ', 'orthopedics'], ['ortho y5']],
+    [['จักษุ', 'ตา', 'ophthalmology', 'ophthal'], ['eye y5']],
+    [['โสต', 'หูคอจมูก', 'otolaryngology'], ['ent y5']],
+    [['จิตเวช', 'ไซค์', 'psychiatry'], ['psych y5']],
+    [['วิสัญญี', 'อะเนส', 'anesthesia', 'anesthesiology'], ['anes y5']],
     [['นิติเวช', 'forensic'], ['forensic y5']],
     [['ผิวหนัง', 'dermatology'], ['derm y5']],
     [['รังสี', 'radiology'], ['radio y5']],
-    [['ฉุกเฉิน', 'emergency'], ['em y5']]
+    [['ฉุกเฉิน', 'emergency', 'er'], ['em y5']]
   ];
   var annVer = 0;
   function annAllNotes() {
