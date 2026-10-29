@@ -1,6 +1,6 @@
 # โพยหมอ
 
-คลังความรู้ตั้งแต่ปี 1 ถึงใบประกอบวิชาชีพ — คลังความรู้ (preclinic + clinic รวมกัน), 1000 MAI และห้องสอบ
+คลังความรู้ตั้งแต่ปี 1 ถึงใบประกอบวิชาชีพ — Medical Soil (preclinic + clinic รวมกัน), 1000 MAI และห้องสอบ
 
 เว็บอยู่ในโฟลเดอร์ `docs/` (GitHub Pages: branch `main`, folder `/docs`) ไม่ต้อง build
 
@@ -18,7 +18,7 @@
 | `docs/data/topics.js` | Random Topic Summary — รายการหัวข้อ (ไฟล์ของแต่ละหัวข้ออยู่ใน `docs/topics/<id>/`) |
 | `docs/app.js`, `docs/app.css` | ตัวเว็บ |
 
-## คลังความรู้ (`#/kb`) — Preclinic + Clinic รวมเป็นคลังเดียว (29 ต.ค. 2026)
+## Medical Soil (`#/kb`) — Preclinic + Clinic รวมเป็นคลังเดียว (29 ต.ค. 2026)
 - **ที่เก็บหลัก = แท็บตาม system ใน Doc โพยหมอ** ไม่ว่าจะเรียนตอน preclinic หรือ clinic · วอร์ดเป็นแค่ **ป้าย/มุมมอง** ไม่ใช่ที่เก็บ
 - มุมมอง (แถบบนสุดของทุกหน้า): **ตาม system** `#/kb` · **ตามวอร์ด** `#/kb/ward[/<med|gensx|subspe|ped|obgyn>]` · **Clinical skills** `#/kb/skills` · **Symptomatology & Approach** `#/kb/symp[/<บท>]` · Approach `#/kb/approach/<id>` · หน้าแท็บใดก็ได้ `#/kb/<แท็บ>`
 - หน้าวอร์ด = แท็บจากทุก system ที่ติดป้ายวอร์ดนั้น (จัดกลุ่มตาม system) + โรคใน 1000 MAI ที่คอลัมน์ Ward ตรงกัน (`mai` ใน data/clinic.js) + ลิงก์คลังข้อสอบเก่า
@@ -33,7 +33,7 @@
 - เก็บต่อคน: localStorage `poy-ann:<key>` + Firestore `poymor/<uid>/ann/<key>` (`{v, ts}` ฉบับใหม่กว่าชนะ) — อยู่ใต้ rules `poymor/{uid}/{doc=**}` เดิม ไม่ต้องเพิ่ม rules
 - โค้ด: ส่วน "โน้ต + แก้เนื้อหา" ท้าย app.js (`annMount`, `ANN_HOOK` สำหรับหน้าที่มีของ interactive) · CSS `.ann*` ท้าย app.css
 
-## Doc "โพยหมอ" → คลังความรู้
+## Doc "โพยหมอ" → Medical Soil
 - Doc โพยหมอ แชร์ Anyone with the link → Viewer แล้ว · หน้าเว็บอ่าน Doc ตรงจาก Google ไม่ได้ (Google ไม่ส่ง CORS) จึงใช้ **GitHub Actions** `.github/workflows/gdoc-sync.yml` ทุก ~10 นาที: `tools/gdoc/build.py --public <docId> poymor` อ่านชื่อ+ชั้นของแท็บจากหน้า `/edit` (DOCS_modelChunk) แล้วดึงทีละแท็บด้วย `export?format=html&tab=<id>` → `docs/gdoc/poymor.json` (มี `d` = ชั้นจริง) + รูปใน `docs/gdoc/img/` → commit เฉพาะเมื่อ Doc เปลี่ยน · อยากอัปเดตทันที: แท็บ Actions → Sync Google Doc → Run workflow
 - ถ้า Actions ล้มด้วย "ได้แค่ N แท็บ" = Doc ถูกปิดแชร์ (Google ส่งหน้า login มา)
 - ทุกแท็บอยู่ "ตาม system" ยกเว้นแท็บหลักใน `clinic` ของ data/gdoc.js (History Taking, Physical Exam, Lab Procedures → Clinical skills · Symptomatology → การ์ดในหน้า Symptomatology & Approach · Clinic → ตามวอร์ด) · แท็บ `homework (?)` ไม่ขึ้นเว็บ (ตัดทั้งตอนดึงสดและในฉบับเก็บ)
@@ -46,7 +46,7 @@
 - ผู้ใช้สั่งอัปเดตไฟล์ที่ไม่ sync เองด้วยคำสั่งในแชท `//update ggfile <ชื่อไฟล์|all>`
 - ออกข้อสอบจากแท็บใดก็ได้: `#/exam?src=g:<แท็บ>` (รวมแท็บย่อย)
 
-## คลังความรู้ › Neuro — CNS & PNS Tutorial 2026 (B03)
+## Medical Soil › Neuro — CNS & PNS Tutorial 2026 (B03)
 - ไฟล์ต้นฉบับ 76 หน้า (สไลด์ + ลายมือ) + ไฟล์สรุป 10 หน้า → `docs/gdoc/neuro-tut.json` แขวนใต้แท็บ Neuro และแท็บย่อยของ Neuro ผ่าน `extras` ใน data/gdoc.js (badge "Tutorial") — **ไม่แตะ Google Doc** และไม่ถูกทับตอน Doc sync
 - 62 แท็บ: ใต้ Neuro = แท็บรวม "CNS & PNS Tutorial 2026" (Localization, Neuro exam, High-yield, Mnemonics, Quiz 145 ข้อ, สไลด์ต้นฉบับ 76 หน้า, ไฟล์สรุป PDF) · ที่เหลือกระจายใต้ Neuroanatomy / Neurophysiology / Neuro Disorders / Neuropharm & Abx / Neuro Investigation / Neuro Congenital Disorders
 - แต่ละแท็บ = กล่องหลายคอลัมน์ตามหัวข้อย่อย (สารบัญซ้าย) + ภาพสไลด์ต้นฉบับหน้าที่เกี่ยวข้องท้ายแท็บ · CSS อยู่ท้าย app.css (`.nx`)
@@ -158,7 +158,7 @@ match /poymor_shared/{topic}/items/{id} {
 ## อัปเดตเว็บ
 - ทุกครั้งที่แก้ `app.js` / `app.css` / `data/*.js` ให้เพิ่มเลข `?v=` ใน `docs/index.html` ทุกบรรทัด เพื่อไม่ให้เบราว์เซอร์ใช้ไฟล์เก่าที่จำไว้
 
-## คลังความรู้ › Symptomatology & Approach (`#/kb/symp`)
+## Medical Soil › Symptomatology & Approach (`#/kb/symp`)
 - ที่มา: ตำราอายุรศาสตร์ อาการวิทยา ภาควิชาอายุรศาสตร์ ศิริราช พิมพ์ครั้งที่ 3 (2559) — 44 บท
 - แต่ละบท: หัวข้อเป็น toggle, หัวข้อย่อยเป็นกล่องหลายคอลัมน์, algorithm กดกล่องดูรายละเอียด/ไฮไลต์เส้นทาง หรือโหมดทีละขั้น, รูปต้นฉบับ, ออกข้อสอบจากบท (`#/exam?src=y:<id>`)
 - แก้เนื้อหา: แก้ `/home/claude/symp/out/chNN.json` (หรือ `docs/symp/chNN.json` แล้ว copy กลับ) → `python3 tools/symp/validate.py NN` → `python3 tools/symp/build.py <โฟลเดอร์>`

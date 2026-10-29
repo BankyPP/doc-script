@@ -802,7 +802,7 @@ input.field[type=date],input.field[type=time]{-webkit-appearance:none;appearance
 input.field::-webkit-date-and-time-value{text-align:left;min-height:1.2em}
 input.field::-webkit-datetime-edit{padding:0}
 
-/* ===== คลังความรู้ (รวม Preclinic + Clinic) ===== */
+/* ===== Medical Soil (รวม Preclinic + Clinic) ===== */
 .dsgrp{font-family:'Kanit',sans-serif;font-weight:500;font-size:12px;letter-spacing:.06em;color:var(--muted);padding:10px 12px 2px}
 .kbtags{display:flex;flex-wrap:wrap;gap:6px}
 .kbtag{font-family:'Kanit',sans-serif;font-weight:500;font-size:13px;display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:999px;border:1px solid var(--rule-3);color:var(--ink);text-decoration:none;background:var(--sheet)}

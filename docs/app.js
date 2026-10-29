@@ -579,7 +579,7 @@
     var n = D.src === 'sample' ? 0 : D.list.length;
     var pct = Math.min(100, n / 10);
     var plots = [
-      ['#/kb', '#355A3A', '01 · ราก + ลำต้น', 'คลังความรู้', 'ทุกอย่างที่เรียนตั้งแต่ปี 1 เก็บตาม system ที่เดียว — ดูตามวอร์ดก็ได้ พร้อม Clinical skills และ Symptomatology' + (G.st === 'ready' ? ' — ' + G.top.pre.length + ' หมวด' : ''), G.st === 'ready' ? gLiveHTML() : '<span class="muted">ดึงจาก Google Docs</span>'],
+      ['#/kb', '#355A3A', '01 · ราก + ลำต้น', 'Medical Soil', 'ทุกอย่างที่เรียนตั้งแต่ปี 1 เก็บตาม system ที่เดียว — ดูตามวอร์ดก็ได้ พร้อม Clinical skills และ Symptomatology' + (G.st === 'ready' ? ' — ' + G.top.pre.length + ' หมวด' : ''), G.st === 'ready' ? gLiveHTML() : '<span class="muted">ดึงจาก Google Docs</span>'],
       ['#/diseases', '#9B4F2E', '03 · พรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
         '<span class="live' + (D.src === 'sample' ? ' off' : '') + '"><i></i>' + (D.src === 'sample' ? 'ยังไม่ได้เชื่อม Google Sheet' : 'ซิงก์จาก Google Sheet') + '</span>',
         '<div style="display:flex;flex-direction:column;gap:6px"><div style="height:6px;background:#E4DDCB;border-radius:3px"><div style="width:' + pct + '%;height:6px;background:#9B4F2E;border-radius:3px"></div></div><span class="muted" style="font-size:14px">เก็บแล้ว ' + n + ' / 1000</span></div>'],
@@ -1082,7 +1082,7 @@
   function gNodePage(n, r) {
     var top = n.topN || n, lk = gLook(top), path = gPath(n);
     gNeedSheets(gFlat(top));
-    remember({ href: gHref(n), title: n.title, crumb: 'คลังความรู้ › ' + path.slice(0, -1).map(function (x) { return x.title; }).join(' › '), c: lk.c });
+    remember({ href: gHref(n), title: n.title, crumb: 'Medical Soil › ' + path.slice(0, -1).map(function (x) { return x.title; }).join(' › '), c: lk.c });
     var flat = gFlat(top).filter(function (x) { return x.kind !== 'sheets' || true; }), i = flat.indexOf(n), prev = flat[i - 1], next = flat[i + 1];
     var crumb = path.map(function (x, k) { return k === path.length - 1 ? '<span>' + esc(x.title) + '</span>' : '<a href="' + gHref(x) + '">' + esc(x.title) + '</a>'; }).join('<span class="muted"> › </span>');
     var body;
@@ -1093,7 +1093,7 @@
       (n.kids.length ? '<div class="gsub"><span class="label">แท็บย่อยใน ' + esc(n.title) + '</span>' + gKidCards(n) + '</div>' : '');
     var tools = (gFull(n) ? '<a class="chip" href="#/exam?src=' + encodeURIComponent('g:' + n.slug) + '">สร้างข้อสอบจากหน้านี้</a>' : '') +
       (n.src === 'main' ? '<a class="chip" href="https://docs.google.com/document/d/' + esc(GD.main.id) + '/edit" target="_blank" rel="noopener">เปิด Doc ต้นฉบับ ↗</a>' : '');
-    var art = '<article class="sheet doc gdocart"><div style="display:flex;flex-direction:column;gap:10px"><nav class="muted" aria-label="ตำแหน่ง" style="font-size:14px">' + '<a href="#/kb">คลังความรู้</a>' + (n.ck === 'ward' ? '<span class="muted"> › </span><a href="#/kb/ward">ตามวอร์ด</a>' : n.ck === 'skills' ? '<span class="muted"> › </span><a href="#/kb/skills">Clinical skills</a>' : '') + '<span class="muted"> › </span>' + crumb + '</nav>' +
+    var art = '<article class="sheet doc gdocart"><div style="display:flex;flex-direction:column;gap:10px"><nav class="muted" aria-label="ตำแหน่ง" style="font-size:14px">' + '<a href="#/kb">Medical Soil</a>' + (n.ck === 'ward' ? '<span class="muted"> › </span><a href="#/kb/ward">ตามวอร์ด</a>' : n.ck === 'skills' ? '<span class="muted"> › </span><a href="#/kb/skills">Clinical skills</a>' : '') + '<span class="muted"> › </span>' + crumb + '</nav>' +
       '<h2 style="overflow-wrap:anywhere">' + esc(n.title) + '</h2>' + gTagLine(n) + gSrcLine(n) + (tools ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + tools + '</div>' : '') + '</div>' + body +
       '<nav aria-label="หน้าก่อนหน้าและถัดไป" class="gpn">' +
       (prev ? '<a href="' + gHref(prev) + '"><span class="muted" style="font-size:13px">← ก่อนหน้า</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.title) + '</span></a>' : '<span></span>') +
@@ -1161,7 +1161,7 @@
   }
 
   /* =========================================================
-     คลังความรู้ (#/kb) — รวม Preclinic + Clinic เป็นคลังเดียว
+     Medical Soil (#/kb) — รวม Preclinic + Clinic เป็นคลังเดียว
      ที่เก็บหลัก = แท็บตาม system ใน Doc โพยหมอ (ไม่ว่าจะเรียนตอนปีไหน)
      วอร์ด = ป้าย/มุมมอง (#/kb/ward/<id>) ไม่ใช่ที่เก็บ · Clinical skills + Symptomatology = ทักษะที่ข้าม system
      ========================================================= */
@@ -1185,10 +1185,10 @@
     if (a === 'ward') return wardPage(r);
     if (a === 'approach') return approachPage(r);
     if (a) {
-      if (G.st !== 'ready') return { title: 'คลังความรู้', html: clinicHead('', '', 'คลังความรู้', '') + gWaiting('') };
+      if (G.st !== 'ready') return { title: 'Medical Soil', html: clinicHead('', '', 'Medical Soil', '') + gWaiting('') };
       var n = G.by[a];
       if (n) return gNodePage(n, r);
-      if (gPendingSheets()) return { title: 'คลังความรู้', html: clinicHead('', '', 'คลังความรู้', '') + gWaiting('') };
+      if (gPendingSheets()) return { title: 'Medical Soil', html: clinicHead('', '', 'Medical Soil', '') + gWaiting('') };
     }
     return kbHub(r, a);
   };
@@ -1200,12 +1200,12 @@
     }).join('') + '<span class="book add" style="height:180px"><span class="k" style="font-size:20px;color:var(--ink)">+ วอร์ดถัดไป</span><span style="font-size:13px">ปี 5–6</span></span>';
   }
   function kbHub(r, missing) {
-    remember({ href: '#/kb', title: 'คลังความรู้', crumb: 'หน้าหลัก', c: '#355A3A' });
-    var head = clinicHead('', '', 'คลังความรู้', 'ทุกเรื่องเก็บตาม system ที่เดียว ไม่ว่าจะเรียนตอน preclinic หรือ clinic — อยากดูเฉพาะวอร์ดที่วนอยู่ กด <b>ตามวอร์ด</b>');
-    if (G.st !== 'ready') return { title: 'คลังความรู้', html: head + gWaiting('') };
+    remember({ href: '#/kb', title: 'Medical Soil', crumb: 'หน้าหลัก', c: '#355A3A' });
+    var head = clinicHead('', '', 'Medical Soil', 'ทุกเรื่องเก็บตาม system ที่เดียว ไม่ว่าจะเรียนตอน preclinic หรือ clinic — อยากดูเฉพาะวอร์ดที่วนอยู่ กด <b>ตามวอร์ด</b>');
+    if (G.st !== 'ready') return { title: 'Medical Soil', html: head + gWaiting('') };
     var aps = CLI.approaches.map(function (x) { return '<a class="pill" href="#/kb/approach/' + x.id + '"><span class="sw" style="background:#5C7F3A"></span>' + esc(x.title) + '</a>'; }).join('');
     return {
-      title: 'คลังความรู้', html: head +
+      title: 'Medical Soil', html: head +
         '<section class="wrap" style="padding-bottom:22px;display:flex;flex-direction:column;gap:14px">' + (missing ? '<p class="warn">ไม่พบแท็บนี้ใน Doc แล้ว — อาจถูกเปลี่ยนชื่อ</p>' : '') + gSearchBar('', 'ค้นในสรุปทุกแท็บ…') + '</section>' +
         '<section class="wrap" style="padding-bottom:40px;display:flex;flex-direction:column;gap:12px"><span class="label">ตาม system · จาก Google Doc ' + esc(GD.main.name) + '</span><div class="syss">' + G.top.pre.map(gTopCard).join('') + '</div></section>' +
         '<section class="band" style="padding:36px 0 72px"><div class="wrap" style="display:flex;flex-direction:column;gap:14px"><span class="label">ตามวอร์ด · ดึงหน้าที่ติดป้ายวอร์ดนั้นจากทุก system มารวมให้</span>' +
@@ -1226,9 +1226,9 @@
   }
   function wardPage(r) {
     var w = wardById(r.args[1]);
-    var crumb = '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span>' + (w ? '<a href="#/kb/ward">ตามวอร์ด</a><span class="muted"> › </span><span>' + esc(w.name) + '</span>' : '<span>ตามวอร์ด</span>');
+    var crumb = '<a href="#/kb">Medical Soil</a><span class="muted"> › </span>' + (w ? '<a href="#/kb/ward">ตามวอร์ด</a><span class="muted"> › </span><span>' + esc(w.name) + '</span>' : '<span>ตามวอร์ด</span>');
     if (!w) {
-      remember({ href: '#/kb/ward', title: 'ตามวอร์ด', crumb: 'คลังความรู้', c: '#5C7F3A' });
+      remember({ href: '#/kb/ward', title: 'ตามวอร์ด', crumb: 'Medical Soil', c: '#5C7F3A' });
       var wardTops = G.st === 'ready' ? gClinicTops('ward') : [];
       return {
         title: 'ตามวอร์ด', html: clinicHead('ward', crumb, 'ตามวอร์ด', 'เลือกวอร์ด แล้วเว็บรวมสรุปที่ติดป้ายวอร์ดนั้นจากทุก system + โรคใน 1000 MAI ที่เจอในวอร์ดนั้นมาให้') +
@@ -1236,7 +1236,7 @@
           (G.st !== 'ready' ? gWaiting('') : wardTops.length ? '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:12px"><span class="label">สรุปวอร์ดจาก Google Doc ' + esc(GD.main.name) + '</span><div class="syss">' + wardTops.map(gTopCard).join('') + '</div></section>' : '')
       };
     }
-    remember({ href: '#/kb/ward/' + w.id, title: w.name, crumb: 'คลังความรู้ › ตามวอร์ด', c: w.c });
+    remember({ href: '#/kb/ward/' + w.id, title: w.name, crumb: 'Medical Soil › ตามวอร์ด', c: w.c });
     var head = clinicHead('ward', crumb, esc(w.name) + ' <span class="sxh1en">' + esc(w.full) + '</span>', '');
     if (G.st !== 'ready') return { title: w.name, html: head + gWaiting('') };
     var ns = kbWardNodes(w.id), groups = [], gm = {};
@@ -1263,7 +1263,7 @@
   function approachPage(r) {
     var ap = CLI.approaches.filter(function (a) { return a.id === r.args[1]; })[0] || CLI.approaches[0];
     if (!ap) return kbHub(r, '');
-    remember({ href: '#/kb/approach/' + ap.id, title: ap.title, crumb: 'คลังความรู้ › ตามอาการนำ', c: '#5C7F3A' });
+    remember({ href: '#/kb/approach/' + ap.id, title: ap.title, crumb: 'Medical Soil › ตามอาการนำ', c: '#5C7F3A' });
     var steps = ap.steps.map(function (s, i) {
       var last = i === ap.steps.length - 1;
       var inner = s.links ? '<div style="display:flex;flex-direction:column">' + s.links.map(function (l) {
@@ -1272,7 +1272,7 @@
       }).join('') + '</div>' : s.html;
       return '<div class="st"><div class="mk"><b>' + (i + 1) + '</b>' + (last ? '' : '<i></i>') + '</div><div style="padding-bottom:' + (last ? 0 : 28) + 'px"><h3>' + esc(s.title) + '</h3>' + inner + '</div></div>';
     }).join('');
-    var crumb = '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span><a href="#/kb/symp">ตามอาการนำ</a><span class="muted"> › </span><span>' + esc(ap.group) + '</span>';
+    var crumb = '<a href="#/kb">Medical Soil</a><span class="muted"> › </span><a href="#/kb/symp">ตามอาการนำ</a><span class="muted"> › </span><span>' + esc(ap.group) + '</span>';
     return {
       title: ap.title, html: clinicHead('symp', crumb, esc(ap.title), esc(ap.sub)) +
         '<section class="band" style="padding:36px 0 80px"><div class="wrap"><article class="sheet" style="padding:clamp(22px,4vw,44px)"><div style="display:flex;flex-direction:column" data-ann="c:' + esc(ap.id) + '">' + steps + '</div></article>' +
@@ -1306,7 +1306,7 @@
       .then(function (j) { SYS_SEARCH.d = j; }).catch(function (e) { SYS_SEARCH.E = e.message || String(e); }).then(function () { SYS_SEARCH.L = false; cb(); });
   }
   function clinicTabs(cur) {
-    return '<div class="subtabs" aria-label="มุมมองของคลังความรู้">' + [['', 'ตาม system'], ['ward', 'ตามวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach']].map(function (x) {
+    return '<div class="subtabs" aria-label="มุมมองของ Medical Soil">' + [['', 'ตาม system'], ['ward', 'ตามวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach']].map(function (x) {
       return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/kb' + (x[0] ? '/' + x[0] : '') + '">' + x[1] + '</a>';
     }).join('') + '</div>';
   }
@@ -1330,10 +1330,10 @@
   }
   function skillsPage() {
     gLoad();
-    remember({ href: '#/kb/skills', title: 'Clinical skills', crumb: 'คลังความรู้', c: '#5C7F3A' });
+    remember({ href: '#/kb/skills', title: 'Clinical skills', crumb: 'Medical Soil', c: '#5C7F3A' });
     var rel = SY.chapters.filter(function (c) { return c.g === 'base'; });
     return {
-      title: 'Clinical skills', html: clinicHead('skills', '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span><span>Clinical skills</span>', 'Clinical skills',
+      title: 'Clinical skills', html: clinicHead('skills', '<a href="#/kb">Medical Soil</a><span class="muted"> › </span><span>Clinical skills</span>', 'Clinical skills',
         'ทักษะทางคลินิก — ซักประวัติ ตรวจร่างกาย หัตถการ จาก Google Doc ' + esc(GD ? GD.main.name : '') + ' (แยกตามแท็บเดิม อัปเดตเองเมื่อแก้ Doc)') +
         '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' +
         (G.st === 'ready' ? gSearchBar('', 'ค้นในสรุปทุกแท็บ…') : '') +
@@ -1361,7 +1361,7 @@
       '<span class="muted" style="font-size:14px">' + esc((n.heads || []).filter(function (h) { return h.l === 1 && h.t; }).slice(0, 12).map(function (h) { return h.t; }).join(' · ')) + '</span><span class="muted" style="font-size:13px">' + c[0] + ' / ' + c[1] + ' หน้ามีเนื้อหา · อัปเดตเองเมื่อแก้ Doc</span></a>';
   }
   function sympHub(r) {
-    remember({ href: '#/kb/symp', title: 'Symptomatology & Approach', crumb: 'คลังความรู้', c: '#5C7F3A' });
+    remember({ href: '#/kb/symp', title: 'Symptomatology & Approach', crumb: 'Medical Soil', c: '#5C7F3A' });
     var view = r.q.get('v') === 'book' ? 'book' : 'sys', qq = (r.q.get('q') || '').trim();
     var body;
     if (!SY.chapters.length) body = '<div class="empty"><p class="muted">ยังไม่มีบท</p></div>';
@@ -1374,7 +1374,7 @@
     var nf = 0, ni = 0; SY.chapters.forEach(function (c) { nf += c.f; ni += c.i; });
     var hq = function (v) { return '#/kb/symp' + (v === 'book' ? '?v=book' : ''); };
     return {
-      title: 'Symptomatology & Approach', html: clinicHead('symp', '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span><span>Symptomatology &amp; Approach</span>', 'Symptomatology &amp; Approach',
+      title: 'Symptomatology & Approach', html: clinicHead('symp', '<a href="#/kb">Medical Soil</a><span class="muted"> › </span><span>Symptomatology &amp; Approach</span>', 'Symptomatology &amp; Approach',
         'สรุป' + esc(SY.book.title || '') + ' ' + SY_SRC + ' ครบทุกบท — กดเปิดทีละหัวข้อ · algorithm กดดูทีละกล่องหรือเดินทีละขั้น<br><span class="muted" style="font-size:15px">' + esc(SY.book.by || '') + ' · ' + esc(SY.book.ed || '') + '</span>') +
         '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:26px">' +
         '<div class="sxbar"><form class="search sxsearch" id="sxsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sxq">ค้นทุกบท</label><input id="sxq" type="search" placeholder="ค้นทุกบท เช่น MCV, Rockall, eschar" value="' + esc(qq) + '" autocomplete="off"></form>' +
@@ -1429,10 +1429,10 @@
   }
   function sympChapter(c, r) {
     var g = syGroup(c), d = syLoad(c), s = SYD[c.no];
-    var crumb = '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span><a href="#/kb/symp">Symptomatology &amp; Approach</a><span class="muted"> › </span><span>บทที่ ' + c.no + '</span>';
+    var crumb = '<a href="#/kb">Medical Soil</a><span class="muted"> › </span><a href="#/kb/symp">Symptomatology &amp; Approach</a><span class="muted"> › </span><span>บทที่ ' + c.no + '</span>';
     var head = clinicHead('symp', crumb, esc(c.th) + ' <span class="sxh1en">' + esc(c.en) + '</span>', 'บทที่ ' + c.no + ' · หน้า ' + esc(c.pages) + ' ในตำรา · ' + SY_SRC);
     if (!d) return { title: c.th, html: head + '<section class="wrap" style="padding-bottom:80px">' + (s && s.E ? '<p class="warn">เปิดบทไม่สำเร็จ: ' + esc(s.E) + ' — ลองรีเฟรชหน้า</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดบท…</p>') + '</section>' };
-    remember({ href: '#/kb/symp/' + c.id, title: c.th + ' · ' + c.en, crumb: 'คลังความรู้ › Symptomatology', c: g.c });
+    remember({ href: '#/kb/symp/' + c.id, title: c.th + ' · ' + c.en, crumb: 'Medical Soil › Symptomatology', c: g.c });
     var st = syOpen(c.id), flows = d.flows || [], FM = {};
     flows.forEach(function (f) { FM[f.id] = f; });
     ANN_HOOK.y = sxAnnHook(c, FM);
@@ -1732,11 +1732,11 @@
     o += '</optgroup><optgroup label="1000 MAI · รายโรค">' + D.list.map(function (d) { return '<option value="d:' + esc(d.id) + '">' + esc(d.name) + '</option>'; }).join('') + '</optgroup>';
     if (G.st === 'ready') ['pre', 'clinic'].forEach(function (ar) {
       var opts = G.nodes.filter(function (n) { return n.area === ar && (gFull(n) || (n.kids.length && gCount(n)[0])); });
-      if (opts.length) o += '<optgroup label="คลังความรู้ · ' + (ar === 'pre' ? 'ตาม system' : 'Clinical skills · Symptomatology · สรุปวอร์ด') + '">' + opts.map(function (n) {
+      if (opts.length) o += '<optgroup label="Medical Soil · ' + (ar === 'pre' ? 'ตาม system' : 'Clinical skills · Symptomatology · สรุปวอร์ด') + '">' + opts.map(function (n) {
         return '<option value="g:' + esc(n.slug) + '">' + esc(gPath(n).map(function (x) { return x.title; }).join(' › ') + (n.kids.length ? ' (รวมแท็บย่อย)' : '')) + '</option>';
       }).join('') + '</optgroup>';
     });
-    o += '<optgroup label="คลังความรู้ · Approach ตามอาการนำ">' + CLI.approaches.map(function (a) { return '<option value="c:' + a.id + '">' + esc('Approach › ' + a.title) + '</option>'; }).join('') + '</optgroup>';
+    o += '<optgroup label="Medical Soil · Approach ตามอาการนำ">' + CLI.approaches.map(function (a) { return '<option value="c:' + a.id + '">' + esc('Approach › ' + a.title) + '</option>'; }).join('') + '</optgroup>';
     if (SY.chapters.length) o += '<optgroup label="Symptomatology &amp; Approach (ศิริราช)">' + SY.chapters.map(function (c) { return '<option value="y:' + c.id + '">' + esc('บทที่ ' + c.no + ' ' + c.th + ' · ' + c.en) + '</option>'; }).join('') + '</optgroup>';
     if (sel) o = o.replace('value="' + esc(sel) + '"', 'value="' + esc(sel) + '" selected');
     return o;
