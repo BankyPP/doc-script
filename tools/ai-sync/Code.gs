@@ -40,14 +40,14 @@ function doGet(e) {
       /* export ของ Google สวยกว่า (มี dropdown/ชิป สีครบ) แต่บางครั้งได้ฉบับเก่า (แคช) → ลองสูงสุด 3 ครั้งพร้อมตัวกันแคช
          ใช้ export เฉพาะเมื่อข้อความตรงกับตัว Doc ทุกย่อหน้า ไม่งั้นสร้าง HTML จากตัว Doc เอง (+ แนบ export ไว้เติมชิปในช่องตาราง) */
       var P0 = [];
-      paras_(body).forEach(function (pp) { var t = squash_(pp.getText()); if (t) P0.push(t); });
+      paras_(body).forEach(function (pp) { var t = cmp_(pp.getText()); if (t) P0.push(t); });
       var ex = '';
       for (var tr = 0; tr < 3; tr++) {
         try {
           var url = 'https://docs.google.com/document/d/' + encodeURIComponent(p.id) + '/export?format=html&tab=' + encodeURIComponent(p.tab) + '&nc=' + Date.now() + tr;
           var rs = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } });
           if (rs.getResponseCode() !== 200) continue;
-          var eh = rs.getContentText(), et = squash_(eh.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, '')), pos = 0, fresh = true;
+          var eh = rs.getContentText(), et = cmp_(eh.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, '')), pos = 0, fresh = true;
           for (var q = 0; q < P0.length && fresh; q++) { var k = et.indexOf(P0[q], pos); if (k < 0) fresh = false; else pos = k + P0[q].length; }
           if (fresh) return out_({ ok: true, fmt: 'export', html: eh, at: new Date().toISOString() });
           ex = eh;
@@ -379,6 +379,8 @@ function tabHtml_(body) {
   return '<html><body>' + container(body) + '</body></html>';
 }
 
+/* เทียบว่า export ทันตัว Doc ไหม: เหลือแค่ตัวอักษร/ตัวเลข (export ใส่ &ldquo; &rsquo; ฯลฯ ที่ squash_ ไม่ถอด) */
+function cmp_(t) { return squash_(t).replace(/&[a-zA-Z]+;/g, '').replace(/[^\p{L}\p{N}\p{M}]/gu, ''); }
 /* ข้อความไว้เทียบ: ถอด entity, ตัดช่องว่างทุกชนิด */
 function squash_(t) {
   return String(t || '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
