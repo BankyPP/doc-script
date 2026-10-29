@@ -132,6 +132,9 @@ def main_public():
                 j = json.loads(get(ai + '?op=tab&id=' + doc_id + '&tab=' + tid).decode('utf-8'))
                 if not j.get('ok'): sys.exit('Apps Script แท็บ %s: %s' % (title, j.get('error')))
                 h = j['html']
+                if j.get('fmt') == 'dom':   # สคริปต์สร้าง HTML จากตัว Doc ให้แล้ว ไม่ต้องแปลงอีก
+                    out['tabs'].append({'title': title, 'html': save_imgs(h, name, imgs), 'heads': j.get('heads') or [], 'd': d})
+                    continue
             else:
                 h = get('https://docs.google.com/document/d/%s/export?format=html&tab=%s' % (doc_id, tid)).decode('utf-8', 'replace')
             h = save_imgs(h, name, imgs)

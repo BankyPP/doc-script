@@ -33,12 +33,11 @@ function doGet(e) {
       return out_({ ok: true, tabs: tabs, at: new Date().toISOString() });
     }
     if (p.op === 'tab') {
-      var url = 'https://docs.google.com/document/d/' + encodeURIComponent(p.id) + '/export?format=html&tab=' + encodeURIComponent(p.tab);
-      /* ต้องอ่านด้วยสิทธิ์เจ้าของ (scope drive.readonly) — export แบบไม่ล็อกอินของ Google ค้างฉบับเก่าได้เป็นวัน */
-      var r = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } }), auth = true;
-      if (r.getResponseCode() !== 200) { r = UrlFetchApp.fetch(url, { muteHttpExceptions: true }); auth = false; }
-      if (r.getResponseCode() !== 200) return out_({ ok: false, error: 'export HTTP ' + r.getResponseCode() });
-      return out_({ ok: true, html: r.getContentText(), auth: auth, at: new Date().toISOString() });
+      /* อ่านจากตัว Doc โดยตรง (DocumentApp = ฉบับล่าสุดเสมอ) — export ของ Google มีแคชฉบับเก่า */
+      var tab = findById_(doc.getTabs(), p.tab);
+      if (!tab) return out_({ ok: false, error: 'ไม่พบแท็บ ' + p.tab });
+      var r = tabHtml_(tab.asDocumentTab().getBody());
+      return out_({ ok: true, fmt: 'dom', html: r.html, heads: r.heads, at: new Date().toISOString() });
     }
     return out_({ ok: false, error: 'op?' });
   } catch (err) {
@@ -245,4 +244,94 @@ function insertAt_(parent, idx, it, like) {
 function insertAfter_(prev, it) {
   var parent = prev.getParent();
   return insertAt_(parent, parent.getChildIndex(prev) + 1, it, prev);
+}
+
+/* ---------- Doc → HTML (สำหรับหน้าเว็บ) ---------- */
+function findById_(tabs, id) {
+  for (var i = 0; i < tabs.length; i++) {
+    if (tabs[i].getId() === id) return tabs[i];
+    var c = findById_(tabs[i].getChildTabs(), id); if (c) return c;
+  }
+  return null;
+}
+function esc_(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+var ET_ = DocumentApp.ElementType;
+function textHtml_(t) {
+  var s = t.getText(); if (!s.length) return '';
+  var idx = t.getTextAttributeIndices(), out = '';
+  for (var i = 0; i < idx.length; i++) {
+    var a = idx[i], b = i + 1 < idx.length ? idx[i + 1] : s.length, seg = s.slice(a, b); if (!seg) continue;
+    var h = esc_(seg).replace(/\r|\n/g, '<br>').replace(/\u000b/g, '<br>'), st = [];
+    var fg = t.getForegroundColor(a), bg = t.getBackgroundColor(a), url = t.getLinkUrl(a);
+    if (fg && !/^#0{6}$/i.test(fg)) st.push('color:' + fg);
+    if (bg && !/^#f{6}$/i.test(bg)) st.push('background-color:' + bg);
+    if (t.isStrikethrough(a)) st.push('text-decoration:line-through');
+    if (t.isUnderline(a) && !url) st.push('text-decoration:underline');
+    if (t.isBold(a)) h = '<b>' + h + '</b>';
+    if (t.isItalic(a)) h = '<i>' + h + '</i>';
+    if (st.length) h = '<span style="' + st.join(';') + '">' + h + '</span>';
+    if (url) h = '<a href="' + esc_(url) + '" target="_blank" rel="noopener">' + h + '</a>';
+    out += h;
+  }
+  return out;
+}
+function inlineHtml_(el) {
+  var out = '';
+  for (var i = 0; i < el.getNumChildren(); i++) {
+    var c = el.getChild(i), t = c.getType();
+    if (t === ET_.TEXT) out += textHtml_(c.asText());
+    else if (t === ET_.INLINE_IMAGE) {
+      try { var bl = c.asInlineImage().getBlob(); out += '<img src="data:' + bl.getContentType() + ';base64,' + Utilities.base64Encode(bl.getBytes()) + '" alt="">'; } catch (e) { }
+    } else if (t === ET_.HORIZONTAL_RULE) out += '<hr>';
+    else if (c.getText) out += esc_(c.getText());
+  }
+  return out;
+}
+var HN_ = {};
+function tabHtml_(body) {
+  var heads = [], n = 0;
+  HN_[DocumentApp.ParagraphHeading.HEADING1] = 1; HN_[DocumentApp.ParagraphHeading.HEADING2] = 2; HN_[DocumentApp.ParagraphHeading.HEADING3] = 3;
+  HN_[DocumentApp.ParagraphHeading.HEADING4] = 4; HN_[DocumentApp.ParagraphHeading.HEADING5] = 5; HN_[DocumentApp.ParagraphHeading.HEADING6] = 6;
+  HN_[DocumentApp.ParagraphHeading.TITLE] = 1; HN_[DocumentApp.ParagraphHeading.SUBTITLE] = 2;
+  function block(el) {
+    var t = el.getType();
+    if (t === ET_.PARAGRAPH) {
+      var p = el.asParagraph(), inner = inlineHtml_(p), lv = HN_[p.getHeading()];
+      var al = p.getAlignment(), sty = al === DocumentApp.HorizontalAlignment.CENTER ? ' style="text-align:center"' : al === DocumentApp.HorizontalAlignment.RIGHT ? ' style="text-align:right"' : '';
+      if (lv) { var id = 'gl-' + (++n), txt = p.getText().trim(); if (txt) heads.push({ id: id, l: lv, t: txt }); return '<h' + lv + ' id="' + id + '"' + sty + '>' + inner + '</h' + lv + '>'; }
+      return '<p' + sty + '>' + (inner || '<br>') + '</p>';
+    }
+    if (t === ET_.TABLE) {
+      var tb = el.asTable(), rows = '';
+      for (var r = 0; r < tb.getNumRows(); r++) {
+        var row = tb.getRow(r), cells = '';
+        for (var c = 0; c < row.getNumCells(); c++) {
+          var cell = row.getCell(c), bg = cell.getBackgroundColor();
+          cells += '<td' + (bg && !/^#f{6}$/i.test(bg) ? ' style="background-color:' + bg + '"' : '') + '>' + container(cell) + '</td>';
+        }
+        rows += '<tr>' + cells + '</tr>';
+      }
+      return '<table><tbody>' + rows + '</tbody></table>';
+    }
+    if (t === ET_.HORIZONTAL_RULE) return '<hr>';
+    return '';
+  }
+  /* รายการ (ListItem) ต่อกัน → ul/ol ซ้อนตามระดับ */
+  function container(el) {
+    var out = '', stack = [];
+    function close(to) { while (stack.length > to) out += '</li></' + stack.pop() + '>'; }
+    for (var i = 0; i < el.getNumChildren(); i++) {
+      var c = el.getChild(i);
+      if (c.getType() === ET_.LIST_ITEM) {
+        var li = c.asListItem(), lvl = li.getNestingLevel() + 1, g = li.getGlyphType();
+        var tag = (g === DocumentApp.GlyphType.NUMBER || g === DocumentApp.GlyphType.LATIN_LOWER || g === DocumentApp.GlyphType.LATIN_UPPER || g === DocumentApp.GlyphType.ROMAN_LOWER || g === DocumentApp.GlyphType.ROMAN_UPPER) ? 'ol' : 'ul';
+        if (stack.length >= lvl) { close(lvl); out += '</li>'; }
+        while (stack.length < lvl) { out += '<' + tag + '>'; stack.push(tag); }
+        out += '<li>' + inlineHtml_(li);
+      } else { close(0); out += block(c); }
+    }
+    close(0);
+    return out;
+  }
+  return { html: container(body), heads: heads };
 }
