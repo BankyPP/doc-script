@@ -37,18 +37,23 @@ function doGet(e) {
       var tab = findById_(doc.getTabs(), p.tab);
       if (!tab) return out_({ ok: false, error: 'ไม่พบแท็บ ' + p.tab });
       var body = tab.asDocumentTab().getBody();
-      /* export ของ Google สวยกว่า (มี dropdown/ชิป สีครบ) แต่บางทีค้างฉบับเก่า → ใช้ export เฉพาะเมื่อข้อความตรงกับตัว Doc ทุกย่อหน้า */
-      try {
-        var url = 'https://docs.google.com/document/d/' + encodeURIComponent(p.id) + '/export?format=html&tab=' + encodeURIComponent(p.tab);
-        var ex = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } });
-        if (ex.getResponseCode() === 200) {
-          var eh = ex.getContentText(), et = squash_(eh.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, '')), pos = 0, fresh = true;
-          paras_(body).forEach(function (pp) { if (!fresh) return; var t = squash_(pp.getText()); if (!t) return; var k = et.indexOf(t, pos); if (k < 0) fresh = false; else pos = k + t.length; });
+      /* export ของ Google สวยกว่า (มี dropdown/ชิป สีครบ) แต่บางครั้งได้ฉบับเก่า (แคช) → ลองสูงสุด 3 ครั้งพร้อมตัวกันแคช
+         ใช้ export เฉพาะเมื่อข้อความตรงกับตัว Doc ทุกย่อหน้า ไม่งั้นสร้าง HTML จากตัว Doc เอง (+ แนบ export ไว้เติมชิปในช่องตาราง) */
+      var P0 = [];
+      paras_(body).forEach(function (pp) { var t = squash_(pp.getText()); if (t) P0.push(t); });
+      var ex = '';
+      for (var tr = 0; tr < 3; tr++) {
+        try {
+          var url = 'https://docs.google.com/document/d/' + encodeURIComponent(p.id) + '/export?format=html&tab=' + encodeURIComponent(p.tab) + '&nc=' + Date.now() + tr;
+          var rs = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } });
+          if (rs.getResponseCode() !== 200) continue;
+          var eh = rs.getContentText(), et = squash_(eh.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, '')), pos = 0, fresh = true;
+          for (var q = 0; q < P0.length && fresh; q++) { var k = et.indexOf(P0[q], pos); if (k < 0) fresh = false; else pos = k + P0[q].length; }
           if (fresh) return out_({ ok: true, fmt: 'export', html: eh, at: new Date().toISOString() });
-        }
-      } catch (x) { }
-      var r = tabHtml_(body);
-      return out_({ ok: true, fmt: 'dom', html: r.html, heads: r.heads, at: new Date().toISOString() });
+          ex = eh;
+        } catch (x) { }
+      }
+      return out_({ ok: true, fmt: 'dom', html: tabHtml_(body), ex: ex, at: new Date().toISOString() });
     }
     return out_({ ok: false, error: 'op?' });
   } catch (err) {
@@ -274,21 +279,26 @@ function findById_(tabs, id) {
 }
 function esc_(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 var ET_ = DocumentApp.ElementType;
+/* HTML แบบเดียวกับ export ของ Google (สไตล์ inline) → หน้าเว็บ/snapshot แปลงต่อด้วย gdoc.js ตัวเดียวกัน หน้าตาจึงเหมือนกัน */
 function textHtml_(t) {
   var s = t.getText(); if (!s.length) return '';
   var idx = t.getTextAttributeIndices(), out = '';
   for (var i = 0; i < idx.length; i++) {
     var a = idx[i], b = i + 1 < idx.length ? idx[i + 1] : s.length, seg = s.slice(a, b); if (!seg) continue;
-    var h = esc_(seg).replace(/\r|\n/g, '<br>').replace(/\u000b/g, '<br>'), st = [];
-    var fg = t.getForegroundColor(a), bg = t.getBackgroundColor(a), url = t.getLinkUrl(a);
-    if (fg && !/^#0{6}$/i.test(fg)) st.push('color:' + fg);
-    if (bg && !/^#f{6}$/i.test(bg)) st.push('background-color:' + bg);
-    if (t.isStrikethrough(a)) st.push('text-decoration:line-through');
-    if (t.isUnderline(a) && !url) st.push('text-decoration:underline');
-    if (t.isBold(a)) h = '<b>' + h + '</b>';
-    if (t.isItalic(a)) h = '<i>' + h + '</i>';
-    if (st.length) h = '<span style="' + st.join(';') + '">' + h + '</span>';
-    if (url) h = '<a href="' + esc_(url) + '" target="_blank" rel="noopener">' + h + '</a>';
+    var h = esc_(seg).replace(/\r|\n|\u000b/g, '<br>'), st = [];
+    var fg = t.getForegroundColor(a), bg = t.getBackgroundColor(a), url = t.getLinkUrl(a), dec = [];
+    if (fg) st.push('color:' + fg);
+    if (bg) st.push('background-color:' + bg);
+    if (t.isBold(a)) st.push('font-weight:700');
+    if (t.isItalic(a)) st.push('font-style:italic');
+    if (t.isUnderline(a) && !url) dec.push('underline');
+    if (t.isStrikethrough(a)) dec.push('line-through');
+    if (dec.length) st.push('text-decoration:' + dec.join(' '));
+    var va = t.getTextAlignment(a);
+    if (va === DocumentApp.TextAlignment.SUPERSCRIPT) st.push('vertical-align:super');
+    else if (va === DocumentApp.TextAlignment.SUBSCRIPT) st.push('vertical-align:sub');
+    h = '<span style="' + st.join(';') + '">' + h + '</span>';
+    if (url) h = '<a href="' + esc_(url) + '">' + h + '</a>';
     out += h;
   }
   return out;
@@ -297,61 +307,76 @@ function inlineHtml_(el) {
   var out = '';
   for (var i = 0; i < el.getNumChildren(); i++) {
     var c = el.getChild(i), t = c.getType();
-    if (t === ET_.TEXT) out += textHtml_(c.asText());
-    else if (t === ET_.INLINE_IMAGE) {
-      try { var bl = c.asInlineImage().getBlob(); out += '<img src="data:' + bl.getContentType() + ';base64,' + Utilities.base64Encode(bl.getBytes()) + '" alt="">'; } catch (e) { }
-    } else if (t === ET_.HORIZONTAL_RULE) out += '<hr>';
-    else if (c.getText) out += esc_(c.getText());
+    try {
+      if (t === ET_.TEXT) out += textHtml_(c.asText());
+      else if (t === ET_.INLINE_IMAGE) {
+        var im = c.asInlineImage(), bl = im.getBlob();
+        out += '<img src="data:' + bl.getContentType() + ';base64,' + Utilities.base64Encode(bl.getBytes()) + '" style="width:' + (im.getWidth() || 0) + 'px;height:' + (im.getHeight() || 0) + 'px" alt="">';
+      } else if (t === ET_.HORIZONTAL_RULE) out += '<hr>';
+      else if (ET_.DATE && t === ET_.DATE) out += esc_(c.getDisplayText());
+      else if (ET_.PERSON && t === ET_.PERSON) out += esc_(c.getName() || c.getEmail());
+      else if (ET_.RICH_LINK && t === ET_.RICH_LINK) out += '<a href="' + esc_(c.getUrl()) + '">' + esc_(c.getTitle() || c.getUrl()) + '</a>';
+      else if (c.getText) out += esc_(c.getText());
+    } catch (e) { }
   }
   return out;
 }
-var HN_ = {};
+var HN_ = null;
+function alignCss_(p) {
+  var al = p.getAlignment(), H = DocumentApp.HorizontalAlignment;
+  return al === H.CENTER ? 'text-align:center' : al === H.RIGHT ? 'text-align:right' : al === H.JUSTIFY ? 'text-align:justify' : '';
+}
 function tabHtml_(body) {
-  var heads = [], n = 0;
-  HN_[DocumentApp.ParagraphHeading.HEADING1] = 1; HN_[DocumentApp.ParagraphHeading.HEADING2] = 2; HN_[DocumentApp.ParagraphHeading.HEADING3] = 3;
-  HN_[DocumentApp.ParagraphHeading.HEADING4] = 4; HN_[DocumentApp.ParagraphHeading.HEADING5] = 5; HN_[DocumentApp.ParagraphHeading.HEADING6] = 6;
-  HN_[DocumentApp.ParagraphHeading.TITLE] = 1; HN_[DocumentApp.ParagraphHeading.SUBTITLE] = 2;
-  function block(el) {
-    var t = el.getType();
-    if (t === ET_.PARAGRAPH) {
-      var p = el.asParagraph(), inner = inlineHtml_(p), lv = HN_[p.getHeading()];
-      var al = p.getAlignment(), sty = al === DocumentApp.HorizontalAlignment.CENTER ? ' style="text-align:center"' : al === DocumentApp.HorizontalAlignment.RIGHT ? ' style="text-align:right"' : '';
-      if (lv) { var id = 'gl-' + (++n), txt = p.getText().trim(); if (txt) heads.push({ id: id, l: lv, t: txt }); return '<h' + lv + ' id="' + id + '"' + sty + '>' + inner + '</h' + lv + '>'; }
-      return '<p' + sty + '>' + (inner || '<br>') + '</p>';
-    }
-    if (t === ET_.TABLE) {
-      var tb = el.asTable(), rows = '';
-      for (var r = 0; r < tb.getNumRows(); r++) {
-        var row = tb.getRow(r), cells = '';
-        for (var c = 0; c < row.getNumCells(); c++) {
-          var cell = row.getCell(c), bg = cell.getBackgroundColor();
-          cells += '<td' + (bg && !/^#f{6}$/i.test(bg) ? ' style="background-color:' + bg + '"' : '') + '>' + container(cell) + '</td>';
-        }
-        rows += '<tr>' + cells + '</tr>';
-      }
-      return '<table><tbody>' + rows + '</tbody></table>';
-    }
-    if (t === ET_.HORIZONTAL_RULE) return '<hr>';
-    return '';
+  if (!HN_) {
+    var PH = DocumentApp.ParagraphHeading; HN_ = {};
+    HN_[PH.HEADING1] = 1; HN_[PH.HEADING2] = 2; HN_[PH.HEADING3] = 3; HN_[PH.HEADING4] = 4; HN_[PH.HEADING5] = 5; HN_[PH.HEADING6] = 6;
   }
-  /* รายการ (ListItem) ต่อกัน → ul/ol ซ้อนตามระดับ */
-  function container(el) {
-    var out = '', stack = [];
-    function close(to) { while (stack.length > to) out += '</li></' + stack.pop() + '>'; }
-    for (var i = 0; i < el.getNumChildren(); i++) {
-      var c = el.getChild(i);
-      if (c.getType() === ET_.LIST_ITEM) {
-        var li = c.asListItem(), lvl = li.getNestingLevel() + 1, g = li.getGlyphType();
-        var tag = (g === DocumentApp.GlyphType.NUMBER || g === DocumentApp.GlyphType.LATIN_LOWER || g === DocumentApp.GlyphType.LATIN_UPPER || g === DocumentApp.GlyphType.ROMAN_LOWER || g === DocumentApp.GlyphType.ROMAN_UPPER) ? 'ol' : 'ul';
-        if (stack.length >= lvl) { close(lvl); out += '</li>'; }
-        while (stack.length < lvl) { out += '<' + tag + '>'; stack.push(tag); }
-        out += '<li>' + inlineHtml_(li);
-      } else { close(0); out += block(c); }
+  var OL = {}; ['NUMBER', 'LATIN_LOWER', 'LATIN_UPPER', 'ROMAN_LOWER', 'ROMAN_UPPER'].forEach(function (k) { OL[DocumentApp.GlyphType[k]] = 1; });
+  function para(p) {
+    var inner = inlineHtml_(p), hd = p.getHeading(), lv = HN_[hd], a = alignCss_(p), st = a ? ' style="' + a + '"' : '';
+    if (lv) return '<h' + lv + st + '>' + inner + '</h' + lv + '>';
+    var cls = hd === DocumentApp.ParagraphHeading.TITLE ? ' class="title"' : hd === DocumentApp.ParagraphHeading.SUBTITLE ? ' class="subtitle"' : '';
+    return '<p' + cls + st + '>' + inner + '</p>';
+  }
+  function table(tb) {
+    var rows = '', W = [];
+    try { for (var c0 = 0; c0 < tb.getRow(0).getNumCells(); c0++) W.push(tb.getColumnWidth(c0) || 0); } catch (e) { }
+    for (var r = 0; r < tb.getNumRows(); r++) {
+      var row = tb.getRow(r), cells = '';
+      for (var c = 0; c < row.getNumCells(); c++) {
+        var cell = row.getCell(c), bg = cell.getBackgroundColor(), st = [];
+        if (W[c]) st.push('width:' + Math.round(W[c]) + 'pt');
+        if (bg) st.push('background-color:' + bg);
+        var va = cell.getVerticalAlignment();
+        if (va === DocumentApp.VerticalAlignment.CENTER) st.push('vertical-align:middle'); else if (va === DocumentApp.VerticalAlignment.BOTTOM) st.push('vertical-align:bottom');
+        cells += '<td style="' + st.join(';') + '">' + container(cell) + '</td>';
+      }
+      rows += '<tr>' + cells + '</tr>';
     }
-    close(0);
+    return '<table><tbody>' + rows + '</tbody></table>';
+  }
+  /* รายการต่อกันที่ list เดียวกัน+ระดับเดียวกัน → ul/ol หนึ่งก้อน (class lst-kix_<id>-<ระดับ> แบบ export) */
+  function container(el) {
+    var out = '', open = '', tag = '';
+    function close() { if (open) { out += '</' + tag + '>'; open = ''; } }
+    for (var i = 0; i < el.getNumChildren(); i++) {
+      var c = el.getChild(i), t = c.getType();
+      if (t === ET_.LIST_ITEM) {
+        var li = c.asListItem(), lvl = li.getNestingLevel(), key = 'lst-kix_' + String(li.getListId()).replace(/[^a-z0-9]/gi, '').toLowerCase() + '-' + lvl;
+        var tg = OL[li.getGlyphType()] ? 'ol' : 'ul';
+        if (open !== key || tag !== tg) { close(); tag = tg; open = key; out += '<' + tg + ' class="' + key + '">'; }
+        out += '<li' + (alignCss_(li) ? ' style="' + alignCss_(li) + '"' : '') + '>' + inlineHtml_(li) + '</li>';
+        continue;
+      }
+      close();
+      if (t === ET_.PARAGRAPH) out += para(c.asParagraph());
+      else if (t === ET_.TABLE) out += table(c.asTable());
+      else if (t === ET_.HORIZONTAL_RULE) out += '<hr>';
+    }
+    close();
     return out;
   }
-  return { html: container(body), heads: heads };
+  return '<html><body>' + container(body) + '</body></html>';
 }
 
 /* ข้อความไว้เทียบ: ถอด entity, ตัดช่องว่างทุกชนิด */

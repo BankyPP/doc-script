@@ -189,6 +189,33 @@
       })
     };
   }
+  /* ช่องตารางที่ว่างในฉบับที่สร้างจากตัว Doc (dropdown/ชิปที่ Apps Script อ่านไม่ได้) → เติมจากช่องเดียวกันใน export
+     a, b = html ที่ parse แล้ว (ตัว Doc, export) · เติมเฉพาะเมื่อจำนวนตาราง/แถว/ช่องตรงกัน */
+  function fill(a, b) {
+    if (!b) return a;
+    var P = new DOMParser(), A = P.parseFromString('<div>' + a + '</div>', 'text/html').body.firstChild, B = P.parseFromString('<div>' + b + '</div>', 'text/html').body.firstChild;
+    var ta = A.querySelectorAll('table.gt'), tb = B.querySelectorAll('table.gt'), n = 0;
+    if (!ta.length || ta.length !== tb.length) return a;
+    Array.prototype.forEach.call(ta, function (t, i) {
+      var ra = t.rows, rb = tb[i].rows;
+      if (ra.length !== rb.length) return;
+      for (var r = 0; r < ra.length; r++) {
+        var ca = ra[r].cells, cb = rb[r].cells;
+        if (ca.length !== cb.length) continue;
+        for (var c = 0; c < ca.length; c++) {
+          if (textOf(ca[c]) || hasMedia(ca[c]) || !textOf(cb[c])) continue;
+          ca[c].innerHTML = cb[c].innerHTML; n++;
+        }
+      }
+    });
+    return n ? A.innerHTML : a;
+  }
+  /* ผลจาก Apps Script (op=tab) → { html, heads } */
+  function fromScript(j, opts) {
+    var r = parse(j.html, opts), html = r.tabs.map(function (t) { return t.html; }).join(''), heads = [].concat.apply([], r.tabs.map(function (t) { return t.heads; }));
+    if (j.fmt === 'dom' && j.ex) { try { html = fill(html, parse(j.ex, opts).tabs.map(function (t) { return t.html; }).join('')); } catch (e) { } }
+    return { html: html, heads: heads };
+  }
   var root = typeof window !== 'undefined' ? window : this;
-  root.POY_GDOC_LIB = { parse: parse, unwrap: unwrap };
+  root.POY_GDOC_LIB = { parse: parse, unwrap: unwrap, fill: fill, fromScript: fromScript };
 })();

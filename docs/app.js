@@ -1181,9 +1181,8 @@
     if (s.L || (s.at && Date.now() - s.at < 60000)) return;
     s.L = true; glPaint(n);
     glGet('op=tab&id=' + encodeURIComponent(GD.main.id) + '&tab=' + encodeURIComponent(n.tid)).then(function (j) {
-      var html, heads;
-      if (j.fmt === 'dom') { html = j.html; heads = j.heads || []; }   /* สร้างจากตัว Doc โดยตรง (ฉบับล่าสุดเสมอ) */
-      else { var r = GLIB.parse(j.html, { prefix: 'g' }); html = r.tabs.map(function (t) { return t.html; }).join(''); heads = [].concat.apply([], r.tabs.map(function (t) { return t.heads; })); }
+      if (!j.ok) throw new Error(j.error || 'อ่านแท็บไม่ได้');
+      var r = GLIB.fromScript(j, { prefix: 'g' }), html = r.html, heads = r.heads;   /* export หรือ HTML ที่สร้างจากตัว Doc — แปลงด้วยตัวเดียวกัน หน้าตาเหมือนกัน */
       s.at = Date.now(); s.err = '';
       if (glText(html) !== glText(n.html)) {
         G.main.tabs.forEach(function (t) { if (t.tid === n.tid) { t.html = html; t.heads = heads; } });
