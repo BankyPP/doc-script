@@ -1010,6 +1010,7 @@
     return p.length > 0;
   }
   function gLiveHTML() {
+    if (glOn()) return GL.treeAt ? '<span class="live" data-glive><i></i>อ่านสดจาก Google Doc · เช็กเมื่อ ' + esc(fmtTime(new Date(GL.treeAt))) + '</span>' : '<span class="live off" data-glive><i></i>กำลังเช็กกับ Google Doc…</span>';
     if (!GD || !GD.main.live) return '<span class="live" data-glive title="GitHub Actions ดึง Doc มาอัปเดตเว็บทุก ~10 นาที"><i></i>อัปเดตจาก Google Doc อัตโนมัติ · ล่าสุด ' + esc(G.snapAt) + '</span>';
     if (G.live === 'ok') return '<span class="live" data-glive><i></i>ดึงสดจาก Google Doc · ' + esc(fmtTime(new Date(G.liveAt))) + '</span>';
     if (G.live === 'fail') return '<span class="live err" data-glive title="' + esc(G.liveErr || '') + '"><i></i>ดึง Doc สดไม่ได้ · ใช้ฉบับวันที่ ' + esc(G.snapAt) + '</span>';
@@ -1023,7 +1024,7 @@
     return h ? '<div class="kbtags">' + h + '</div>' : '';
   }
   function gSrcLine(n) {
-    if (n.src === 'main') return '<span class="gsrcw" data-gsrc="' + esc(n.slug) + '">' + glLine(n) + '</span>';
+    if (n.src === 'main') return '<span class="gsrcrow"><span class="gsrcw" data-gsrc="' + esc(n.slug) + '">' + glLine(n) + '</span>' + glBtn() + '</span>';
     return '<span class="muted" style="font-size:14px">จาก ' + esc(n.from || '') + ' · ดึงไว้เมื่อ ' + esc(n.at || '') + ' (ไม่อัปเดตเอง)</span>';
   }
   function gPaintDrawer() {
@@ -1145,8 +1146,10 @@
       });
       G.main = { tabs: out, at: G.main.at };
       gBuild();
+      gPaintLive();
       if (changed && !annEditing()) gRefresh(true);
       glMaybeTab();
+      if (!changed && route().name === 'kb' && !route().args[0]) toast('ตรงกับ Google Doc แล้ว');
     }).catch(function (e) { console.warn('live tree', e); }).then(function () { GL.treeL = false; });
   }
   function glText(h) { var d = document.createElement('div'); d.innerHTML = String(h || '').replace(/<style[\s\S]*?<\/style>/g, ''); return d.textContent.replace(/\s+/g, ' ').trim() + '|' + d.querySelectorAll('img').length; }
@@ -1158,6 +1161,17 @@
     if (s && s.at) return '<span class="live"><i></i>ตรงกับ Google Doc · เช็กเมื่อ ' + esc(fmtTime(new Date(s.at))) + '</span>';
     return '<span class="live off"><i></i>กำลังเช็กกับ Google Doc…</span>';
   }
+  /* ปุ่ม "ดึงใหม่" แบบ 1000 MAI — ถาม Google Doc ใหม่ทันที (โครงแท็บ + แท็บที่เปิดอยู่) */
+  function glBtn() { return glOn() ? '<button class="chip glre" type="button" data-glreload>ดึงใหม่</button>' : ''; }
+  function glReload() {
+    GL.treeAt = 0; GL.tree = null;
+    var r = route(), n = r.name === 'kb' && G.by[r.args[0]];
+    if (n && n.tid && GL.tab[n.tid]) GL.tab[n.tid].at = 0;
+    if (n) glPaint(n);
+    glTree();
+    toast('กำลังดึงจาก Google Doc…');
+  }
+  document.addEventListener('click', function (e) { if (e.target.closest('[data-glreload]')) { e.preventDefault(); glReload(); } });
   function glPaint(n) { document.querySelectorAll('[data-gsrc="' + n.slug + '"]').forEach(function (el) { el.innerHTML = glLine(n); }); }
   function glMaybeTab() { var r = route(); if (r.name === 'kb' && G.by[r.args[0]]) glTab(G.by[r.args[0]]); }
   function glTab(n) {
@@ -1215,7 +1229,7 @@
   }
   function gSearchBar(area, ph) {
     return '<div class="sxbar"><form class="search sxsearch" id="gsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
-      '<label class="sr" for="gq3">ค้นในสรุป</label><input id="gq3" type="search" placeholder="' + esc(ph) + '" data-area="' + area + '"></form>' + gLiveHTML() + '</div><div id="gres" class="sxres" hidden></div>';
+      '<label class="sr" for="gq3">ค้นในสรุป</label><input id="gq3" type="search" placeholder="' + esc(ph) + '" data-area="' + area + '"></form>' + gLiveHTML() + glBtn() + '</div><div id="gres" class="sxres" hidden></div>';
   }
   function gSearchAfter() {
     var inp = document.getElementById('gq3'), res = document.getElementById('gres'), t = null;

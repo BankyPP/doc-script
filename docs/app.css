@@ -892,3 +892,6 @@ a.kbtag:hover{background:var(--hover);color:var(--ink)}
 .sxres .rtype{font-size:11px}
 .gdoc[data-ann]:empty{min-height:0}.annediting.gdoc:empty{min-height:120px}
 .annediting[data-ph]:empty::before{content:attr(data-ph);color:var(--muted);font-style:italic}
+
+.gsrcrow{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.glre{min-height:34px;padding:0 12px;font-size:13px}
