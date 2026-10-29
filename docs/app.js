@@ -900,7 +900,7 @@
       hideD = -1;
       if (hide.indexOf(t.title) >= 0) { hideD = d; return; }
       d = Math.min(d, stack.length);
-      var n = add({ title: t.title || '(แท็บไม่มีชื่อ)', dtitle: t.title, html: t.html, heads: t.heads || [], kids: [], depth: d, kind: 'doc', src: 'main', slug: gslug(t.title) });
+      var n = add({ title: t.title || '(แท็บไม่มีชื่อ)', dtitle: t.title, html: t.html, heads: t.heads || [], kids: [], depth: d, kind: 'doc', src: 'main', slug: gslug(t.title), tid: t.tid || '' });
       stack.length = d;
       if (d === 0) tops.push(n); else { n.parent = stack[d - 1]; n.parent.kids.push(n); }
       stack.push(n); prevDepth = d;
@@ -972,7 +972,7 @@
     G.st = 'loading';
     var docExtras = (GD.extras || []).filter(function (e) { return e.kind !== 'sheet'; });
     Promise.all([gFetchJSON(GD.main.snap)].concat(docExtras.map(function (e) { return gFetchJSON(e.snap).then(function (j) { G.ex[e.snap] = j; }, function (x) { console.warn('gdoc extra', e.snap, x); }); })))
-      .then(function (res) { G.main = res[0]; G.snapAt = res[0].at || ''; G.st = 'ready'; gBuild(); })
+      .then(function (res) { G.main = res[0]; G.snapAt = res[0].at || ''; G.st = 'ready'; gBuild(); setTimeout(glTree, 0); })
       .catch(function (e) { G.st = 'err'; G.err = e.message || String(e); })
       .then(function () { gRefresh(false); gLive(); });
   }
@@ -1023,7 +1023,7 @@
     return h ? '<div class="kbtags">' + h + '</div>' : '';
   }
   function gSrcLine(n) {
-    if (n.src === 'main') return gLiveHTML();
+    if (n.src === 'main') return '<span class="gsrcw" data-gsrc="' + esc(n.slug) + '">' + glLine(n) + '</span>';
     return '<span class="muted" style="font-size:14px">จาก ' + esc(n.from || '') + ' · ดึงไว้เมื่อ ' + esc(n.at || '') + ' (ไม่อัปเดตเอง)</span>';
   }
   function gPaintDrawer() {
@@ -1118,7 +1118,69 @@
       after: gAfter
     };
   }
+  /* ---------- อ่าน Doc สดผ่าน Apps Script (ไม่ต้องรอ GitHub Actions ซึ่งจริง ๆ รันราวชั่วโมงละครั้ง) ----------
+     โครงแท็บ: ?op=tree ทุกครั้งที่เปิดเว็บ (แท็บใหม่/เปลี่ยนชื่อ/ย้ายขึ้นทันที) · เนื้อหา: ?op=tab เฉพาะแท็บที่กำลังเปิดอ่าน
+     ข้อความเหมือนฉบับเก็บ = ใช้ฉบับเก็บต่อ (รูปเป็นไฟล์ในเว็บ) · ต่าง = ใช้ฉบับสด */
+  var GL = { tree: null, treeL: false, treeAt: 0, tab: {} };
+  function glOn() { return !!(aiUrl() && GD && GD.main.id && GLIB); }
+  function glGet(q) {
+    return fetch(aiUrl() + '?' + q, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) { if (!j.ok) throw new Error(j.error || (j.notai ? 'ไฟล์ไม่ใช่ [AI]' : 'อ่านไม่ได้')); return j; });
+  }
+  function glTree() {
+    if (!glOn() || GL.treeL || G.st !== 'ready' || (GL.tree && Date.now() - GL.treeAt < 120000)) return;
+    GL.treeL = true;
+    glGet('op=tree&id=' + encodeURIComponent(GD.main.id)).then(function (j) {
+      GL.tree = j.tabs; GL.treeAt = Date.now();
+      var hide = GD.main.hide || [], keep = [], skip = null;
+      j.tabs.forEach(function (t) { if (skip != null && t.d > skip) return; skip = hide.indexOf(t.title) >= 0 ? t.d : null; if (skip == null) keep.push(t); });
+      var old = G.main.tabs || [], snap = {}, st = [];
+      old.forEach(function (t) { st.length = t.d || 0; st.push(t.title); snap[st.join('\u0001')] = t; });
+      var out = [], st2 = [], changed = keep.length !== old.length;
+      keep.forEach(function (t, i) {
+        st2.length = t.d; st2.push(t.title);
+        var o = snap[st2.join('\u0001')];
+        if (!o || !old[i] || old[i].title !== t.title || (old[i].d || 0) !== t.d) changed = true;
+        out.push({ title: t.title, d: t.d, tid: t.id, html: o ? o.html : '', heads: o ? o.heads || [] : [] });
+      });
+      G.main = { tabs: out, at: G.main.at };
+      gBuild();
+      if (changed && !annEditing()) gRefresh(true);
+      glMaybeTab();
+    }).catch(function (e) { console.warn('live tree', e); }).then(function () { GL.treeL = false; });
+  }
+  function glText(h) { var d = document.createElement('div'); d.innerHTML = String(h || '').replace(/<style[\s\S]*?<\/style>/g, ''); return d.textContent.replace(/\s+/g, ' ').trim() + '|' + d.querySelectorAll('img').length; }
+  function glLine(n) {
+    var s = n.tid && GL.tab[n.tid];
+    if (!glOn()) return gLiveHTML();
+    if (s && s.L) return '<span class="live off"><i></i>กำลังดึงฉบับล่าสุดจาก Google Doc…</span>';
+    if (s && s.err) return '<span class="live err" title="' + esc(s.err) + '"><i></i>ดึงสดไม่ได้ · ใช้ฉบับวันที่ ' + esc(G.snapAt) + '</span>';
+    if (s && s.at) return '<span class="live"><i></i>ตรงกับ Google Doc · ' + esc(fmtTime(new Date(s.at))) + '</span>';
+    return gLiveHTML();
+  }
+  function glPaint(n) { document.querySelectorAll('[data-gsrc="' + n.slug + '"]').forEach(function (el) { el.innerHTML = glLine(n); }); }
+  function glMaybeTab() { var r = route(); if (r.name === 'kb' && G.by[r.args[0]]) glTab(G.by[r.args[0]]); }
+  function glTab(n) {
+    if (!glOn() || !n || n.src !== 'main') return;
+    if (!n.tid) { glTree(); return; }
+    var s = GL.tab[n.tid] || (GL.tab[n.tid] = {});
+    if (s.L || (s.at && Date.now() - s.at < 60000)) return;
+    s.L = true; glPaint(n);
+    glGet('op=tab&id=' + encodeURIComponent(GD.main.id) + '&tab=' + encodeURIComponent(n.tid)).then(function (j) {
+      var r = GLIB.parse(j.html, { prefix: 'g' });
+      var html = r.tabs.map(function (t) { return t.html; }).join(''), heads = [].concat.apply([], r.tabs.map(function (t) { return t.heads; }));
+      s.at = Date.now(); s.err = '';
+      if (glText(html) !== glText(n.html)) {
+        G.main.tabs.forEach(function (t) { if (t.tid === n.tid) { t.html = html; t.heads = heads; } });
+        n.html = html; n.heads = heads; n._t = null;
+        var cur = route();
+        if (cur.name === 'kb' && G.by[cur.args[0]] === n && !annEditing()) { s.L = false; render(true); return; }
+      }
+    }).catch(function (e) { s.err = e.message || String(e); s.at = Date.now(); }).then(function () { s.L = false; glPaint(n); });
+  }
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') { glTree(); glMaybeTab(); } });
   function gAfter() {
+    setTimeout(glMaybeTab, 0);
     var t = document.querySelector('.gtree');
     if (t && window.matchMedia('(max-width: 899px)').matches) t.open = false;
     if (t) t.addEventListener('click', function (e) {
@@ -4206,7 +4268,7 @@
     el._annSync = sy ? sy.st : ''; el._annSyncMsg = sy ? sy.msg || '' : '';
     if (!sy) return false;
     /* ไฟล์มีของที่แก้แล้ว (สคริปต์หรือ Claude ลอกให้) → เลิกใช้ฉบับในเว็บ */
-    if (sy.st !== 'notai' && annSame(sy.tg, el._annOrig, e.h)) {
+    if (sy.st !== 'notai' && (annSame(sy.tg, el._annOrig, e.h) || (sy.st === 'ok' && e.b && e.b !== el._annBase))) {
       SH[k] = null; shCache(k, null); el._annSync = '';
       if (FB && FB.user) FB.fs.setDoc(shRef(k), { k: k, h: null, b: '', by: FB.user.uid, name: who(FB.user), at: FB.fs.serverTimestamp(), sync: null }).catch(function () { });
       return true;

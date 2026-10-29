@@ -18,7 +18,32 @@
 var ALLOW = ['*'];
 var FIREBASE_API_KEY = 'AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg';
 
-function doGet() { return out_({ ok: true, hello: 'poymor ai-sync' }); }
+/* อ่านสด (ให้เว็บเห็นที่แก้ใน Doc ทันที ไม่ต้องรอ GitHub) — อ่านได้เฉพาะไฟล์ที่ชื่อขึ้นต้น [AI]
+   ?op=tree&id=<docId>              → รายชื่อแท็บ { id, title, d (ชั้น) } ตามลำดับใน Doc
+   ?op=tab&id=<docId>&tab=<tabId>   → HTML ของแท็บนั้น (แบบเดียวกับ export ของ Google) */
+function doGet(e) {
+  var p = (e && e.parameter) || {};
+  try {
+    if (!p.op) return out_({ ok: true, hello: 'poymor ai-sync' });
+    var doc = DocumentApp.openById(p.id);
+    if (doc.getName().indexOf('[AI]') !== 0) return out_({ ok: false, notai: true });
+    if (p.op === 'tree') {
+      var tabs = [];
+      (function walk(list, d) { list.forEach(function (t) { tabs.push({ id: t.getId(), title: t.getTitle(), d: d }); walk(t.getChildTabs(), d + 1); }); })(doc.getTabs(), 0);
+      return out_({ ok: true, tabs: tabs, at: new Date().toISOString() });
+    }
+    if (p.op === 'tab') {
+      var url = 'https://docs.google.com/document/d/' + encodeURIComponent(p.id) + '/export?format=html&tab=' + encodeURIComponent(p.tab);
+      var r = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } });
+      if (r.getResponseCode() !== 200) r = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+      if (r.getResponseCode() !== 200) return out_({ ok: false, error: 'export HTTP ' + r.getResponseCode() });
+      return out_({ ok: true, html: r.getContentText(), at: new Date().toISOString() });
+    }
+    return out_({ ok: false, error: 'op?' });
+  } catch (err) {
+    return out_({ ok: false, error: String(err && err.message || err) });
+  }
+}
 
 function doPost(e) {
   var lock = LockService.getScriptLock();

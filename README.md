@@ -33,12 +33,16 @@
 - **เพิ่ม/ลบ/เปลี่ยนชื่อ = แชร์ทุกคน**: Firestore `poymor_struct/<id>` — `addtab` (หมวดใหม่ / แท็บย่อย) · `rentab` · `deltab` · `adddis` (หน้า `#/disease/new`) · `deldis` · แท็บที่สร้างในเว็บ slug = `w-<id>` · เมื่อไฟล์มีของนั้นแล้วและเว็บดึงฉบับใหม่มา รายการลบตัวเอง
 - โค้ด: ส่วน "โน้ต + แก้เนื้อหา" + "เขียนกลับเข้าไฟล์ [AI]" + "โครงสร้าง" ท้าย app.js
 
+### อ่าน Doc โพยหมอสด (ไม่ต้องรอ GitHub)
+- GitHub Actions ที่ตั้งไว้ "ทุก 10 นาที" จริง ๆ GitHub รันให้ราวชั่วโมงละครั้ง → เว็บถาม Apps Script เอง: `?op=tree` (โครงแท็บ ทุกครั้งที่เปิดเว็บ) + `?op=tab&tab=<id>` (เนื้อหาเฉพาะแท็บที่เปิดอ่าน) — ข้อความเหมือนฉบับเก็บใช้ฉบับเก็บต่อ ต่างเมื่อไรใช้ฉบับสด · บรรทัดใต้ชื่อแท็บขึ้น "ตรงกับ Google Doc · เวลา"
+- สคริปต์อ่านได้เฉพาะไฟล์ชื่อขึ้นต้น [AI] · ฉบับเก็บ (snapshot) ยังอัปเดตโดย Actions ให้ช่องค้นและการโหลดครั้งแรกเร็ว · สั่งรันทันที: `gh api -X POST repos/BankyPP/doc-script/actions/workflows/gdoc-sync.yml/dispatches -f ref=main`
+
 ### เขียนกลับเข้าไฟล์ Google ที่ชื่อขึ้นต้น `[AI]` (ตอนนี้: [AI] โพยหมอ, [AI] DocQ Med Template 2026, [AI] 1000 โรค)
 - ไม่ใช้ AI: เว็บคำนวณว่าย่อหน้า/ช่องไหนเปลี่ยน แล้วส่งให้ **Google Apps Script** (`tools/ai-sync/Code.gs` + `appsscript.json`) ลอกเข้าไฟล์ตรงตัวอักษร (แตะเฉพาะช่วงที่ต่าง ตัวหนา/สีส่วนอื่นอยู่เหมือนเดิม)
 - สคริปต์ตรวจ token ของ Firebase (`ALLOW = ['*']` = ทุกคนที่เข้าสู่ระบบ) และชื่อไฟล์ขึ้นต้น `[AI]` ทุกครั้ง — ไฟล์อื่นไม่แตะ (เว็บขึ้นว่า "ไม่ใช่ [AI] — แก้แค่ในเว็บ")
 - ตั้ง: ดูวิธีบนหัว Code.gs → ได้ URL `/exec` → ใส่ `aiSync.url` ใน `docs/data/config.js` · ยังไม่ตั้ง = เก็บรอไว้ ตั้งแล้วส่งให้เอง (ใครเข้าสู่ระบบเปิดเว็บก็ส่งของที่ค้างทั้งหมด) · กันส่งซ้ำด้วย transaction (`claim`)
 - แท็บ: สคริปต์ลองสร้าง/เปลี่ยนชื่อ/ลบแท็บผ่าน Docs API ถ้า Google ไม่ยอม → สถานะ `manual` ให้คำสั่ง reverse บอกว่าต้องทำอะไร
-- **คำสั่ง `//update ggfile reverse all`** (Claude ทำ — กิน usage): `gh workflow run edits-export.yml -R BankyPP/doc-script` → รอเสร็จ → `git pull` → อ่าน `edits/pending.json` (`edits` = เนื้อหาที่ยังไม่เข้าไฟล์ พร้อม ops · `struct` = แท็บ/โรคที่ยังไม่เข้า) → ลอกเข้าไฟล์ [AI] ผ่าน Google connector ตามกฎ (เช็กชื่อไฟล์ก่อน) → **บอกผู้ใช้ว่าต้องสร้าง/ลบ/เปลี่ยนชื่อแท็บไหน ใต้แท็บอะไร** สำหรับที่ทำผ่าน connector ไม่ได้ · พอไฟล์มีของแล้วและเว็บดึงฉบับใหม่ เว็บล้างรายการเอง
+- **คำสั่ง `//update ggfile reverse all`** (Claude ทำ — กิน usage): `gh api -X POST repos/BankyPP/doc-script/actions/workflows/edits-export.yml/dispatches -f ref=main` (gh workflow run ใช้ไม่ได้ในเซสชัน Claude) → รอเสร็จ → `git pull` → อ่าน `edits/pending.json` (`edits` = เนื้อหาที่ยังไม่เข้าไฟล์ พร้อม ops · `struct` = แท็บ/โรคที่ยังไม่เข้า) → ลอกเข้าไฟล์ [AI] ผ่าน Google connector ตามกฎ (เช็กชื่อไฟล์ก่อน) → **บอกผู้ใช้ว่าต้องสร้าง/ลบ/เปลี่ยนชื่อแท็บไหน ใต้แท็บอะไร** สำหรับที่ทำผ่าน connector ไม่ได้ · พอไฟล์มีของแล้วและเว็บดึงฉบับใหม่ เว็บล้างรายการเอง
 - Firestore rules ที่ต้องเพิ่ม (วางใน `match /databases/{database}/documents { … }`):
 ```
 match /poymor_edit/{id} {
