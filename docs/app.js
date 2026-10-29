@@ -129,6 +129,7 @@
     Promise.all([import(b + 'firebase-app.js'), import(b + 'firebase-auth.js'), import(b + 'firebase-firestore.js')]).then(function (m) {
       var fapp = m[0].initializeApp(window.POY_CONFIG.firebase);
       FB = { au: m[1], fs: m[2], auth: m[1].getAuth(fapp), db: m[2].getFirestore(fapp), user: null };
+      shFlushFB(); stInit();
       if (onBoard()) render(true);
       m[1].setPersistence(FB.auth, m[1].browserLocalPersistence).catch(function () { });
       m[1].getRedirectResult(FB.auth).then(function (r) { if (r && r.user) markTrusted(); }).catch(function (e) { authErr = errMsg(e); paintAcct(); });
@@ -292,7 +293,7 @@
       content.forEach(function (c) {
         var v = val(r, c);
         if (!gmap[c.group]) { gmap[c.group] = { label: c.group, cols: [] }; groups.push(gmap[c.group]); }
-        gmap[c.group].cols.push({ label: c.label, sub: c.sub, value: v, role: c.role });
+        gmap[c.group].cols.push({ label: c.label, sub: c.sub, value: v, role: c.role, j: c.j });
         fields.push({ label: c.label, value: v });
         if (v && c.role !== 'onset' && c.role !== 'prog') filled++;
       });
@@ -305,12 +306,13 @@
         systems: systems, sysRaw: systems.join(', '), sys: sysOf(systems[0] || ''),
         ward: val(r, role.ward), type: val(r, role.type), gen: val(r, role.gen), onset: val(r, role.onset), prog: splitMulti(val(r, role.prog)),
         seen: (role.seen || []).filter(function (c) { return isTrue(val(r, c)); }).map(function (c) { return c.sub || c.group; }),
-        icd: val(r, role.icd), brief: val(r, role.brief), aliases: aliases,
+        icd: val(r, role.icd), brief: val(r, role.brief), briefJ: role.brief ? role.brief.j : -1, aliases: aliases,
         groups: groups, fields: fields, filled: filled, total: total
       });
     });
     Object.keys(exact).forEach(function (k) { if (exact[k].length > 1) exact[k].forEach(function (i) { out[i].star = true; }); });
     D.people = (role.seen || []).map(function (c) { return c.sub || c.group; });
+    D.layout = { cols: cols, role: role, width: W };   /* ใช้ตอนเพิ่มโรคใหม่ (เขียนแถวใหม่ลงชีต) */
     return out;
   }
 
@@ -328,9 +330,9 @@
     return rows.slice(0, n).map(function (r) { var m = r.length; while (m && !String(r[m - 1]).trim()) m--; return r.slice(0, m); });
   }
   function initDiseases() {
-    if (!hasSheet()) { D.list = build(window.POY_SAMPLE || []); D.src = 'sample'; return; }
+    if (!hasSheet()) { D.list = maiStruct(window.POY_SAMPLE || []); D.src = 'sample'; return; }
     var cache = LS.get('dcache', null);
-    if (cache && cache.id === (C.sheet.id || C.sheet.csvUrl) && cache.rows) { D.list = build(cache.rows); D.src = 'cache'; D.at = cache.at; }
+    if (cache && cache.id === (C.sheet.id || C.sheet.csvUrl) && cache.rows) { D.list = maiStruct(cache.rows); D.src = 'cache'; D.at = cache.at; }
     loadSheet();
     /* กลับมาที่แท็บหลังไปแก้ชีต → ดึงใหม่ (ห่างครั้งก่อนเกิน 30 วิ) */
     document.addEventListener('visibilitychange', function () {
@@ -352,11 +354,11 @@
     D.loading = true; D.err = null; refreshLive();
     fetchCSV(sheetUrls()).then(function (txt) {
       var rows = trimRows(parseCSV(txt));
-      D.list = build(rows); D.src = 'sheet'; D.at = Date.now();
+      D.list = maiStruct(rows); D.src = 'sheet'; D.at = Date.now();
       LS.set('dcache', { id: C.sheet.id || C.sheet.csvUrl, at: D.at, rows: rows });
     }).catch(function (e) {
       D.err = e.message || String(e);
-      if (!D.list.length) { D.list = build(window.POY_SAMPLE || []); D.src = 'sample'; }
+      if (!D.list.length) { D.list = maiStruct(window.POY_SAMPLE || []); D.src = 'sample'; }
     }).then(function () {
       D.loading = false; DUPS = null;
       var r = route();
@@ -486,6 +488,7 @@
     annMountAll(app);   /* ฉบับที่แก้เอง + ขีดเส้นใต้โน้ต — ก่อน after() เพื่อให้ปุ่ม/ลิงก์ในเนื้อหาผูกกับ DOM ชุดสุดท้าย */
     if (res.after) res.after();
     annRestore(keepNotes);
+    if (r.q.get('note')) annGoto(r.q.get('note'));
     var to = r.q.get('to'), tel = to && document.getElementById(to);
     if (tel) tel.scrollIntoView();
     else if (!keepScroll && path !== lastPath) window.scrollTo(0, 0);
@@ -505,7 +508,7 @@
       e.preventDefault();
       var v = this.querySelector('input').value.trim();
       closeDrawer(false);
-      location.hash = '#/diseases' + (v ? '?q=' + encodeURIComponent(v) : '');
+      location.hash = '#/search' + (v ? '?q=' + encodeURIComponent(v) : '');
     });
   });
 
@@ -579,8 +582,8 @@
     var n = D.src === 'sample' ? 0 : D.list.length;
     var pct = Math.min(100, n / 10);
     var plots = [
-      ['#/kb', '#355A3A', '01 · ราก + ลำต้น', 'Medical Soil', 'ทุกอย่างที่เรียนตั้งแต่ปี 1 เก็บตาม system ที่เดียว — ดูตามวอร์ดก็ได้ พร้อม Clinical skills และ Symptomatology' + (G.st === 'ready' ? ' — ' + G.top.pre.length + ' หมวด' : ''), G.st === 'ready' ? gLiveHTML() : '<span class="muted">ดึงจาก Google Docs</span>'],
-      ['#/diseases', '#9B4F2E', '03 · พรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
+      ['#/kb', '#355A3A', '01 · ปี 1 → License', 'Medical Soil', 'ทุกอย่างที่เรียนตั้งแต่ปี 1 เก็บตาม system ที่เดียว — ดูตามวอร์ดก็ได้ พร้อม Clinical skills และ Symptomatology' + (G.st === 'ready' ? ' — ' + G.top.pre.length + ' หมวด' : ''), G.st === 'ready' ? gLiveHTML() : '<span class="muted">ดึงจาก Google Docs</span>'],
+      ['#/diseases', '#9B4F2E', '03 · หอพรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
         '<span class="live' + (D.src === 'sample' ? ' off' : '') + '"><i></i>' + (D.src === 'sample' ? 'ยังไม่ได้เชื่อม Google Sheet' : 'ซิงก์จาก Google Sheet') + '</span>',
         '<div style="display:flex;flex-direction:column;gap:6px"><div style="height:6px;background:#E4DDCB;border-radius:3px"><div style="width:' + pct + '%;height:6px;background:#9B4F2E;border-radius:3px"></div></div><span class="muted" style="font-size:14px">เก็บแล้ว ' + n + ' / 1000</span></div>'],
       ['#/exam', '#C9952E', '04 · ห้องสอบ', 'ข้อสอบจาก AI', 'เลือกโรค ระบบ หรือเอกสาร แล้วให้ AI ออกข้อสอบ case-based พร้อมเฉลย', '<span class="muted">ใช้ Claude หรือ API key</span>'],
@@ -669,7 +672,10 @@
   function textHit(d, q) {
     if (!q) return true;
     if (!d._hay) d._hay = (d.name + ' ' + d.aliases.join(' ') + ' ' + d.icd + ' ' + d.systems.join(' ') + ' ' + d.fields.map(function (f) { return f.value; }).join(' ')).toLowerCase();
-    return q.split(/\s+/).every(function (w) { return d._hay.indexOf(w) >= 0; });
+    /* + โน้ตของฉันในหน้าโรคนั้น */
+    if (textHit.v !== annVer) { textHit.v = annVer; textHit.m = {}; annAllNotes().forEach(function (x) { if (x.k.indexOf('d:') === 0) textHit.m[x.k.slice(2)] = (textHit.m[x.k.slice(2)] || '') + ' ' + (x.nt.t + ' ' + (x.nt.q || '')).toLowerCase(); }); }
+    var hay = d._hay + (textHit.m[d.id] || '');
+    return q.split(/\s+/).every(function (w) { return hay.indexOf(w) >= 0; });
   }
   function filterDiseases(st) {
     var q = (st.q || '').toLowerCase().trim();
@@ -709,7 +715,7 @@
   function maiRowHTML(d) {
     var ck = (D.people || []).map(function (p) { var on = d.seen.indexOf(p) >= 0; return '<span class="mai-cb' + (on ? ' on' : '') + '" role="img" aria-label="' + esc(p) + (on ? ' เคยดูคนไข้แล้ว' : ' ยังไม่เคยดู') + '">' + (on ? '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2 5 8.6 9.6 3.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '') + '</span>'; }).join('');
     return '<a class="mai-row' + (d.filled ? '' : ' blank') + '" href="' + dHref(d) + '">' + (ck ? '<span class="mai-ck">' + ck + '</span>' : '') + '<span class="mai-no">' + esc(d.no) + '</span><span class="mai-main"><span class="mai-name">' + esc(d.name) + '</span>' +
-      '<span class="mai-tags">' + tagsHTML(d) + '</span></span>' + (d.filled ? '' : '<span class="sr">ยังไม่ได้เขียนรายละเอียด</span>') + '</a>';
+      '<span class="mai-tags">' + (d.pend ? '<span class="annflag stale">เพิ่มจากเว็บ · ' + ({ wait: 'รอเข้าชีต', send: 'กำลังส่ง', ok: 'เข้าชีตแล้ว', err: 'ส่งไม่สำเร็จ', manual: 'ต้องเพิ่มในชีตเอง', web: 'อยู่แค่ในเว็บ' }[d.pend.st] || '') + '</span>' : '') + tagsHTML(d) + '</span></span>' + (d.filled ? '' : '<span class="sr">ยังไม่ได้เขียนรายละเอียด</span>') + '</a>';
   }
   function diseasesView(st) {
     var q = (st.q || '').toLowerCase().trim();
@@ -765,9 +771,9 @@
     for (var i = 1; i < 10; i++) ticks += 'M' + (1 + i * 37.8).toFixed(1) + ' 23v' + (i === 5 ? -12 : i % 2 ? -6 : -10);
     return {
       title: '1000 MAI', html:
-        '<section class="wrap phead" style="padding-bottom:28px"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">04 · พรรณไม้</span><h1>1000 MAI</h1>' +
+        '<section class="wrap phead" style="padding-bottom:28px"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · หอพรรณไม้</span><h1>1000 MAI</h1>' +
         '<p class="lede">หอพรรณไม้ของโรค — รู้จักให้พอจะ diag ได้ รู้ว่าต้องส่ง lab อะไร และเริ่ม initial management ได้</p>' +
-        '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px">' + liveHTML() + (hasSheet() ? '<button class="chip" type="button" id="reload" style="min-height:40px">ดึงใหม่</button>' : '') + '</div></div>' +
+        '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px">' + liveHTML() + (hasSheet() ? '<button class="chip" type="button" id="reload" style="min-height:40px">ดึงใหม่</button><a class="chip on" href="#/disease/new" style="min-height:40px">+ เพิ่มโรค</a>' : '') + '</div></div>' +
         '<div style="flex:0 1 380px;min-width:240px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:baseline;gap:10px"><span class="k" style="font-size:64px;line-height:1">' + n + '</span><span class="muted" style="font-size:18px">/ 1000 โรค</span></div>' +
         '<svg viewBox="0 0 380 34" width="100%" aria-hidden="true"><rect x="1" y="1" width="378" height="22" rx="3" fill="#FBF9F3" stroke="#BDB39B"/><rect x="1" y="1" width="' + Math.max(0, Math.min(378, n * 0.378)) + '" height="22" rx="3" fill="#9B4F2E" opacity=".85"/><path d="' + ticks + '" stroke="#7A6E58" stroke-width="1"/><g font-family="Sarabun, sans-serif" font-size="10" fill="#5A6258"><text x="2" y="33">0</text><text x="182" y="33">500</text><text x="358" y="33">1000</text></g></svg></div></section>' +
         '<div id="dwrap"><div id="dtop">' + v0.top + '</div>' +
@@ -803,6 +809,7 @@
      แผ่นตัวอย่างโรค
      ========================================================= */
   PAGES.disease = function (r) {
+    if (r.args[0] === 'new') return maiNewPage();
     var d = findDisease(r.args[0]);
     if (!d) return {
       title: 'ไม่พบโรค', html: '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><span class="label">1000 MAI</span><h1 style="font-size:44px">ไม่พบโรคนี้</h1><p class="muted">' + (D.loading ? 'กำลังดึงข้อมูลจาก Google Sheet…' : 'อาจถูกลบหรือเปลี่ยนชื่อในชีต') + '</p><a class="btn ghost" href="#/diseases" style="align-self:flex-start">กลับไป 1000 MAI</a></div></section>'
@@ -812,21 +819,24 @@
     var idx = D.list.indexOf(d), prev = D.list[idx - 1], next = D.list[idx + 1];
     var rel = s0 ? D.list.filter(function (x) { return x !== d && x.systems.indexOf(s0) >= 0; }).sort(function (a, b) { return (b.filled ? 1 : 0) - (a.filled ? 1 : 0); }).slice(0, 8) : [];
     var sheetLink = C.sheet && C.sheet.id ? 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(C.sheet.id) + '/edit#gid=' + encodeURIComponent(C.sheet.gid || '0') + '&range=B' + d.row : '';
+    /* ทุกช่องเนื้อหาอยู่ในหน้า (data-col = คอลัมน์ในชีต) — ช่องว่างซ่อนไว้ โผล่ตอนกด "แก้เนื้อหา" ให้พิมพ์เติมได้ */
     var shown = [], empty = [], num = 0;
+    function vbox(c) { return '<div class="val' + (c.value ? '' : ' annempty') + '" data-col="' + c.j + '" data-ph="ยังว่าง — พิมพ์เพิ่มได้">' + rich(c.value) + '</div>'; }
     d.groups.forEach(function (g) {
       var cols = g.cols.filter(function (c) { return c.role !== 'brief' && c.role !== 'alias'; });
       if (!cols.length) return;
       var full = cols.filter(function (c) { return c.value; });
       cols.forEach(function (c) { if (!c.value && c.role !== 'onset' && c.role !== 'prog') empty.push(c.sub ? g.label + ' › ' + c.sub : g.label); });
-      if (!full.length) return;
       var one = cols.length === 1 && !cols[0].sub;
-      shown.push('<section class="entry"><span class="num">' + roman(num++) + '</span><div><h2>' + esc(g.label) + '</h2>' +
-        (one ? '<div class="val">' + rich(full[0].value) + '</div>' :
-          full.map(function (c) {
-            var v = c.role === 'onset' ? [c.value] : c.role === 'prog' ? splitMulti(c.value) : null;
-            return '<div class="mai-sub"><h3>' + esc(c.sub || g.label) + '</h3>' + (v ? '<div class="mai-tags">' + v.map(function (x) { return tagHTML(c.role, x); }).join('') + '</div>' : '<div class="val">' + rich(c.value) + '</div>') + '</div>';
+      shown.push('<section class="entry' + (full.length ? '' : ' annempty') + '"><span class="num">' + (full.length ? roman(num++) : '+') + '</span><div><h2>' + esc(g.label) + '</h2>' +
+        (one ? vbox(cols[0]) :
+          cols.map(function (c) {
+            var v = c.role === 'onset' ? (c.value ? [c.value] : []) : c.role === 'prog' ? splitMulti(c.value) : null;
+            if (v && !v.length) return '';
+            return '<div class="mai-sub' + (c.value ? '' : ' annempty') + '"><h3>' + esc(c.sub || g.label) + '</h3>' + (v ? '<div class="mai-tags" contenteditable="false">' + v.map(function (x) { return tagHTML(c.role, x); }).join('') + '</div>' : vbox(c)) + '</div>';
           }).join('')) + '</div></section>');
     });
+    var briefBox = d.briefJ >= 0 ? '<div class="lede mai-brief val' + (d.brief ? '' : ' annempty') + '" data-col="' + d.briefJ + '" data-ph="คำอธิบายสั้น — ยังว่าง">' + rich(d.brief) + '</div>' : '';
     function lbl(k, v) { return v ? '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>' : ''; }
     var tags = tagsHTML(d);
     return {
@@ -844,13 +854,15 @@
         lbl('เขียนแล้ว', d.filled + ' / ' + d.total + ' ช่อง') + lbl('แหล่งข้อมูล', D.src === 'sample' ? 'ข้อมูลตัวอย่าง' : 'Google Sheet แถว ' + d.row) +
         '</dl></div>' +
         '<div style="display:flex;flex-direction:column;gap:10px">' + (d.filled ? '<a class="btn" href="#/exam?src=' + encodeURIComponent('d:' + d.id) + '">สร้างข้อสอบจากโรคนี้</a>' : '') +
-        (sheetLink ? '<a class="btn ghost" href="' + sheetLink + '" target="_blank" rel="noopener">แก้ข้อมูลใน Google Sheet ↗</a>' : '') + '</div></aside>' +
+        (sheetLink ? '<a class="btn ghost" href="' + sheetLink + '" target="_blank" rel="noopener">แก้ข้อมูลใน Google Sheet ↗</a>' : '') + maiDelBtn(d) + '</div></aside>' +
         '<article><div style="display:flex;flex-direction:column;gap:14px;padding-bottom:24px"><span class="label">No. ' + esc(d.no) + (d.ward ? ' · ' + esc(d.ward) : '') + '</span>' +
         '<h1 style="font-size:clamp(34px,5vw,60px)">' + esc(d.name) + '</h1>' +
         (tags ? '<div class="mai-tags">' + tags + '</div>' : '') +
-        (d.brief ? '<div class="lede mai-brief">' + rich(d.brief) + '</div>' : '') + '</div>' +
-        (shown.length ? '<div data-ann="d:' + esc(d.id) + '">' + shown.join('') + '</div>' : '<div class="empty" style="margin:8px 0 24px"><p class="k" style="font-size:20px">ยังไม่ได้เขียนรายละเอียดของโรคนี้</p><p class="muted">เพิ่มในชีตแล้วกลับมาหน้านี้ เว็บจะดึงให้เอง</p></div>') +
-        (shown.length && empty.length ? '<details class="mai-empty"><summary class="muted">ช่องที่ยังไม่ได้เขียน (' + empty.length + ')</summary><div>' + empty.map(function (x) { return '<span class="pill">' + esc(x) + '</span>'; }).join('') + '</div></details>' : '') +
+        '</div>' +
+        (d.pend ? '<p class="warn" style="margin-bottom:14px">โรคนี้เพิ่งเพิ่มจากเว็บ — ' + ({ wait: 'รอเขียนลง Google Sheet', send: 'กำลังเขียนลงชีต', ok: 'เขียนลงชีตแล้ว รอเว็บดึง', err: 'เขียนลงชีตไม่สำเร็จ: ' + esc(d.pend.msg || ''), manual: 'ต้องเพิ่มในชีตเอง', web: 'อยู่แค่ในเว็บ' }[d.pend.st] || '') + ' · แก้เนื้อหาได้หลังเข้าชีตแล้ว</p>' : '') +
+        '<div class="mai-body" data-ann="d:' + esc(d.id) + '"' + (d.pend ? ' data-ann-mode="note"' : '') + '>' + briefBox + shown.join('') + '</div>' +
+        (!d.filled ? '<div class="empty" style="margin:8px 0 24px"><p class="k" style="font-size:20px">ยังไม่ได้เขียนรายละเอียดของโรคนี้</p><p class="muted">กด "แก้เนื้อหา" แล้วพิมพ์ในช่องที่ว่างได้เลย หรือเพิ่มในชีต</p></div>' : '') +
+        (d.filled && empty.length ? '<details class="mai-empty"><summary class="muted">ช่องที่ยังไม่ได้เขียน (' + empty.length + ')</summary><div>' + empty.map(function (x) { return '<span class="pill">' + esc(x) + '</span>'; }).join('') + '</div></details>' : '') +
         (rel.length ? '<section style="border-top:1px solid var(--empty);padding-top:28px;margin-top:12px;display:flex;flex-direction:column;gap:10px"><span class="label">ระบบเดียวกัน · ' + esc(s0) + '</span><div style="display:flex;flex-wrap:wrap;gap:8px">' +
           rel.map(function (x) { return '<a class="pill' + (x.filled ? '' : ' mai-dim') + '" href="' + dHref(x) + '">' + esc(x.name) + '</a>'; }).join('') + '</div></section>' : '') +
         '<nav class="mai-pn" aria-label="โรคก่อนหน้าและถัดไป">' +
@@ -888,7 +900,7 @@
       hideD = -1;
       if (hide.indexOf(t.title) >= 0) { hideD = d; return; }
       d = Math.min(d, stack.length);
-      var n = add({ title: t.title || '(แท็บไม่มีชื่อ)', html: t.html, heads: t.heads || [], kids: [], depth: d, kind: 'doc', src: 'main', slug: gslug(t.title) });
+      var n = add({ title: t.title || '(แท็บไม่มีชื่อ)', dtitle: t.title, html: t.html, heads: t.heads || [], kids: [], depth: d, kind: 'doc', src: 'main', slug: gslug(t.title) });
       stack.length = d;
       if (d === 0) tops.push(n); else { n.parent = stack[d - 1]; n.parent.kids.push(n); }
       stack.push(n); prevDepth = d;
@@ -924,6 +936,8 @@
        lv / wards = ป้ายระดับและวอร์ด — จาก tags ใน data/gdoc.js (แท็บย่อยได้ป้ายตามแท็บแม่)
        แท็บใต้ "สรุปวอร์ด" ได้วอร์ดจากชื่อแท็บเอง (เช่น Surgery → Gen Sx + Subspe Sx) */
     var TAGS = GD.tags || {};
+    var gone = gStructApply(tops, add, by);
+    if (Object.keys(gone).length) { var rm = {}; nodes.forEach(function (n) { for (var p = n; p; p = p.parent) if (gone[p.slug]) { rm[n.slug] = 1; break; } }); nodes = nodes.filter(function (n) { return !rm[n.slug]; }); }
     function fill(n, area, ck, top, d, lv, wards) {
       var t = TAGS[n.title] || {};
       n.area = area; n.ck = ck; n.topN = top; n.depth = d;
@@ -1018,7 +1032,7 @@
     box.innerHTML = '<span class="dsgrp">ตาม system</span>' + G.top.pre.map(function (n) { return '<a href="' + gHref(n) + '" data-r="kb/' + esc(n.slug) + '">' + esc(n.title) + '</a>'; }).join('');
   }
   function gText(n) {
-    var ed = annGet('g:' + n.slug).e, own = ed && ed.h != null;   /* หน้าที่แก้เองในเว็บ → ใช้ฉบับที่แก้ (เช่นตอนออกข้อสอบ) */
+    var ed = shPeek('g:' + n.slug), own = !!ed;   /* หน้าที่แก้เองในเว็บ → ใช้ฉบับที่แก้ (เช่นตอนออกข้อสอบ) */
     if (n._t != null && !own) return n._t;
     var h = String(own ? ed.h : n.html || '').replace(/<\/(p|h\d|li|tr|figure)>/g, '$&\n').replace(/<br>/g, '\n').replace(/<\/td>/g, ' | ');
     var div = document.createElement('div'); div.innerHTML = h.replace(/<style[\s\S]*?<\/style>/g, '');
@@ -1089,12 +1103,12 @@
     if (n.kind === 'sheet') body = gSheetBody(n);
     else if (n.kind === 'sheets') body = n.pending ? (n.err ? '<p class="warn">โหลดตารางไม่สำเร็จ: ' + esc(n.err) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดตาราง…</p>') :
       '<p class="muted">แยกตามชีตเหมือนในไฟล์เดิม — เลือกชีตด้านล่าง</p>' + gKidCards(n);
-    else body = (gFull(n) ? '<div class="gdoc" data-ann="g:' + esc(n.slug) + '">' + n.html + '</div>' : '<div class="empty" style="text-align:left"><p class="muted">แท็บนี้ยังไม่มีเนื้อหาใน Doc' + (n.kids.length ? ' — มีแท็บย่อยด้านล่าง' : '') + '</p></div>') +
+    else body = '<div class="gdoc" data-ann="g:' + esc(n.slug) + '" data-ph="ยังว่าง — พิมพ์เนื้อหาได้เลย">' + (gFull(n) ? n.html : '') + '</div>' + (gFull(n) || shPeek('g:' + n.slug) ? '' : '<div class="empty" style="text-align:left"><p class="muted">แท็บนี้ยังไม่มีเนื้อหา — กด "แก้เนื้อหา" แล้วพิมพ์ได้เลย' + (n.kids.length ? ' — มีแท็บย่อยด้านล่าง' : '') + '</p></div>') +
       (n.kids.length ? '<div class="gsub"><span class="label">แท็บย่อยใน ' + esc(n.title) + '</span>' + gKidCards(n) + '</div>' : '');
     var tools = (gFull(n) ? '<a class="chip" href="#/exam?src=' + encodeURIComponent('g:' + n.slug) + '">สร้างข้อสอบจากหน้านี้</a>' : '') +
       (n.src === 'main' ? '<a class="chip" href="https://docs.google.com/document/d/' + esc(GD.main.id) + '/edit" target="_blank" rel="noopener">เปิด Doc ต้นฉบับ ↗</a>' : '');
     var art = '<article class="sheet doc gdocart"><div style="display:flex;flex-direction:column;gap:10px"><nav class="muted" aria-label="ตำแหน่ง" style="font-size:14px">' + '<a href="#/kb">Medical Soil</a>' + (n.ck === 'ward' ? '<span class="muted"> › </span><a href="#/kb/ward">ตามวอร์ด</a>' : n.ck === 'skills' ? '<span class="muted"> › </span><a href="#/kb/skills">Clinical skills</a>' : '') + '<span class="muted"> › </span>' + crumb + '</nav>' +
-      '<h2 style="overflow-wrap:anywhere">' + esc(n.title) + '</h2>' + gTagLine(n) + gSrcLine(n) + (tools ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + tools + '</div>' : '') + '</div>' + body +
+      '<h2 style="overflow-wrap:anywhere">' + esc(n.title) + '</h2>' + gTagLine(n) + (n.src === 'web' ? '<span class="muted" style="font-size:14px">แท็บที่สร้างในเว็บ' + (n.web.byName ? ' โดย ' + esc(n.web.byName) : '') + '</span>' : gSrcLine(n)) + gTabTools(n) + (tools ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + tools + '</div>' : '') + '</div>' + body +
       '<nav aria-label="หน้าก่อนหน้าและถัดไป" class="gpn">' +
       (prev ? '<a href="' + gHref(prev) + '"><span class="muted" style="font-size:13px">← ก่อนหน้า</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.title) + '</span></a>' : '<span></span>') +
       (next ? '<a href="' + gHref(next) + '" style="align-items:flex-end;text-align:right"><span class="muted" style="font-size:13px">ถัดไป →</span><span class="k" style="font-size:17px;font-weight:500">' + esc(next.title) + '</span></a>' : '') + '</nav></article>';
@@ -1133,7 +1147,8 @@
       if (i >= 0) { var a = Math.max(0, i - 50); snip = (a ? '…' : '') + esc(t.slice(a, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length, i + q.length + 70)) + '…'; }
       hits.push('<a href="' + gHref(n) + '"><span class="pn"><span class="sw" style="background:' + gLook(n).c + '"></span></span><span><b>' + esc(gPath(n).map(function (x) { return x.title; }).join(' › ')) + '</b>' + (snip ? '<small>' + snip.replace(/\n/g, ' ') + '</small>' : '') + '</span></a>');
     });
-    return '<span class="label">พบ ' + hits.length + ' หน้า' + (hits.length > 80 ? ' · แสดง 80 แรก' : '') + '</span>' + hits.slice(0, 80).join('');
+    var nh = noteHits(function (k) { if (k.indexOf('g:') !== 0) return false; var n = G.by[k.slice(2)]; return n && (!area || n.area === area); }, q);
+    return '<span class="label">พบ ' + hits.length + ' หน้า' + (nh.length ? ' · โน้ต ' + nh.length : '') + (hits.length > 80 ? ' · แสดง 80 แรก' : '') + '</span>' + noteHitLinks(nh, q) + hits.slice(0, 80).join('');
   }
   function gSearchBar(area, ph) {
     return '<div class="sxbar"><form class="search sxsearch" id="gsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
@@ -1207,7 +1222,7 @@
     return {
       title: 'Medical Soil', html: head +
         '<section class="wrap" style="padding-bottom:22px;display:flex;flex-direction:column;gap:14px">' + (missing ? '<p class="warn">ไม่พบแท็บนี้ใน Doc แล้ว — อาจถูกเปลี่ยนชื่อ</p>' : '') + gSearchBar('', 'ค้นในสรุปทุกแท็บ…') + '</section>' +
-        '<section class="wrap" style="padding-bottom:40px;display:flex;flex-direction:column;gap:12px"><span class="label">ตาม system · จาก Google Doc ' + esc(GD.main.name) + '</span><div class="syss">' + G.top.pre.map(gTopCard).join('') + '</div></section>' +
+        '<section class="wrap" style="padding-bottom:40px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px"><span class="label">ตาม system · จาก Google Doc ' + esc(GD.main.name) + '</span><button type="button" class="chip" data-stact="top">+ หมวดใหม่</button></div><div class="syss">' + G.top.pre.map(gTopCard).join('') + '</div></section>' +
         '<section class="band" style="padding:36px 0 72px"><div class="wrap" style="display:flex;flex-direction:column;gap:14px"><span class="label">ตามวอร์ด · ดึงหน้าที่ติดป้ายวอร์ดนั้นจากทุก system มารวมให้</span>' +
         '<div style="overflow-x:auto;padding:12px 2px 0"><div class="shelf">' + kbBooks(function (w) { return '#/kb/ward/' + w.id; }) + '</div></div>' +
         (aps ? '<span class="label" style="margin-top:18px">Approach ตามอาการนำ</span><div style="display:flex;flex-wrap:wrap;gap:8px">' + aps + '<a class="chip" href="#/kb/symp">Symptomatology &amp; Approach ทุกบท →</a></div>' : '') +
@@ -1312,7 +1327,7 @@
   }
   function clinicHead(cur, crumb, h1, lede) {
     return '<section class="wrap phead" style="padding-bottom:24px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0;max-width:100%">' +
-      (crumb ? '<nav aria-label="ตำแหน่ง" style="font-size:15px">' + crumb + '</nav>' : '<span class="label">01 · ราก + ลำต้น · ปี 1 → License</span>') +
+      (crumb ? '<nav aria-label="ตำแหน่ง" style="font-size:15px">' + crumb + '</nav>' : '<span class="label">01 · ปี 1 → License</span>') +
       '<h1 style="font-size:clamp(36px,5vw,64px);overflow-wrap:anywhere">' + h1 + '</h1>' + (lede ? '<p class="lede">' + lede + '</p>' : '') + clinicTabs(cur) + '</div></section>';
   }
   var SY_SRC = '<span class="src si">ศิริราช</span>';
@@ -1389,7 +1404,8 @@
           res.hidden = false;
           if (!SYS_SEARCH.d) { res.innerHTML = SYS_SEARCH.E ? '<p class="warn">โหลดดัชนีค้นหาไม่สำเร็จ: ' + esc(SYS_SEARCH.E) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดดัชนีค้นหา…</p>'; sySearchLoad(run); return; }
           var ql = v.toLowerCase(), hits = SYS_SEARCH.d.filter(function (x) { return (x.h + ' ' + x.x).toLowerCase().indexOf(ql) >= 0; });
-          res.innerHTML = '<span class="label">พบ ' + hits.length + ' หัวข้อ' + (hits.length > 80 ? ' · แสดง 80 แรก' : '') + '</span>' + hits.slice(0, 80).map(function (x) {
+          var nh = noteHits(function (k) { return k.indexOf('y:') === 0; }, v);
+          res.innerHTML = '<span class="label">พบ ' + hits.length + ' หัวข้อ' + (nh.length ? ' · โน้ต ' + nh.length : '') + (hits.length > 80 ? ' · แสดง 80 แรก' : '') + '</span>' + noteHitLinks(nh, v) + hits.slice(0, 80).map(function (x) {
             var c = syCh(x.c); if (!c) return '';
             var i = x.x.toLowerCase().indexOf(ql), snip = '';
             if (i >= 0) { var a = Math.max(0, i - 50); snip = (a ? '…' : '') + esc(x.x.slice(a, i)) + '<mark>' + esc(x.x.slice(i, i + v.length)) + '</mark>' + esc(x.x.slice(i + v.length, i + v.length + 70)) + '…'; }
@@ -2131,7 +2147,7 @@
     return {
       title: x.name + ' — ติว NL & Compre',
       html: xHead(x, esc(x.name), id === 'nl1' ? 'NL part 1 ใหม่ = NL1 เก่า + NL2 เก่า (ความรู้ถึงปี 5) — ปี 4 สอบได้ ไม่ผ่านสอบใหม่ปี 5 ได้' : id === 'c1' ? 'จุฬาฯ เท่านั้น (ศิริราชไม่มี) · ใช้ blueprint NL1 เก่า' : id === 'nl2' ? 'NL part 2 ใหม่ = NL3 เก่า' : '') +
-        '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' + xActions(x) + body + '</section>'
+        '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' + xActions(x) + '<div data-ann="x:' + esc(id) + '">' + body + '</div></section>'
     };
   }
 
@@ -2351,7 +2367,7 @@
     return '<article class="sheet bnote' + (p.pin ? ' pinned' : '') + '" data-id="' + esc(p.id) + '" style="transform:rotate(' + rot + 'deg)">' +
       '<svg class="pin" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><circle cx="11" cy="9" r="7" fill="' + (p.tag === 'compre' ? '#A44A2A' : p.tag === 'nl' ? '#355A3A' : '#C9952E') + '"/><circle cx="9" cy="7" r="2" fill="#fff" opacity=".45"/><path d="M11 16v10" stroke="#5A6258" stroke-width="1.4" stroke-linecap="round"/></svg>' +
       '<div class="btags"><span class="btag ' + esc(p.tag) + '">' + (BTAG[p.tag] || '') + '</span>' + (p.inst || []).map(function (k) { return BINST[k] ? '<span class="src ' + SRC[k][0] + '">' + BINST[k] + '</span>' : ''; }).join('') + (p.pin ? '<span class="btag pinl">📌 ปักหมุด</span>' : '') + '</div>' +
-      '<h3>' + esc(p.title) + '</h3>' + (p.body ? '<div class="val">' + boardText(p.body) + '</div>' : '') + attHTML(p.att) +
+      '<h3>' + esc(p.title) + '</h3>' + (p.body ? '<div class="val" data-ann="b:' + esc(p.id) + '" data-ann-mode="note">' + boardText(p.body) + '</div>' : '') + attHTML(p.att) +
       '<div class="bfoot"><span class="muted">' + esc(p.name || 'ไม่ระบุชื่อ') + (at ? ' · ' + esc(fmtTime(at)) : '') + (ed ? ' · แก้ล่าสุด' + (p.edName ? ' โดย ' + esc(p.edName) : '') + ' ' + esc(fmtTime(ed)) : '') + '</span>' +
       '<span style="display:inline-flex;gap:6px;flex-wrap:wrap">' + (can ? '<button class="chip" type="button" data-be="' + esc(p.id) + '">แก้ไข</button>' : '') +
       (ed && !p.seed ? '<button class="chip" type="button" data-bh="' + esc(p.id) + '">ประวัติ</button>' : '') +
@@ -2367,7 +2383,7 @@
   function paintBoard() {
     if (BOARD.editing) { BOARD.dirty = true; return; }
     var a = document.getElementById('bList'), b = document.getElementById('bFil');
-    if (a) a.innerHTML = boardListHTML();
+    if (a) { a.innerHTML = boardListHTML(); annMountAll(a); }
     if (b) b.innerHTML = boardFilters();
   }
   function bDraft(v) { try { if (v === undefined) return JSON.parse(sessionStorage.getItem('poy-bdraft') || '{}'); sessionStorage.setItem('poy-bdraft', JSON.stringify(v)); } catch (e) { return {}; } }
@@ -2642,11 +2658,11 @@
     if (full) body = '<button type="button" class="cimg fullp" data-zoom="' + n + '" aria-label="ขยายภาพหน้า ' + n + '"><img src="' + tImg(t, n) + '" width="' + pwh[0] + '" height="' + pwh[1] + '" alt=""' + (pwh[0] < pwh[1] ? ' style="max-width:720px"' : '') + '></button><p class="note">แตะที่ภาพเพื่อขยาย</p>';
     else {
       var lastHead = null;
-      body = '<div class="crops">' + mine.map(function (u) {
+      body = '<div class="crops" data-ann="t:' + esc(t.id) + ':' + n + '" data-ann-mode="box">' + mine.map(function (u) {
         var h = u.head && u.head !== lastHead && !/^\s*$/.test(u.head) ? '<div class="chead label"' + (u.hc ? ' style="color:' + u.hc + '"' : '') + '>' + esc(u.head.replace(/\s*\(ต่อ\)\s*$/, '')) + '</div>' : '';
         lastHead = u.head; return h + cropHTML(t, u);
       }).join('') + '</div>';
-      if (p.heads || p.lay) body = body.replace('<div class="crops">', '<div class="crops trows">');
+      if (p.heads || p.lay) body = body.replace('<div class="crops" ', '<div class="crops trows" ');
       if (p.note) body = '<p class="note">' + esc(p.note) + '</p>' + body;
     }
     var prev = d.pages[n - 2], next = d.pages[n];
@@ -2656,7 +2672,8 @@
     var hits = '';
     if (qq) {
       var ql = qq.toLowerCase(), hs = units.filter(function (u) { return (u.title + ' ' + u.text).toLowerCase().indexOf(ql) >= 0; });
-      hits = '<div class="thits"><span class="label">พบ ' + hs.length + ' ส่วน</span>' + hs.slice(0, 40).map(function (u) { return '<a href="' + uLink(t, u) + '&q=' + encodeURIComponent(qq) + '"><span class="pn">' + u.p + '</span><span>' + esc(u.title) + '</span></a>'; }).join('') + '</div>';
+      var nh = noteHits(function (k) { return k.indexOf('t:' + t.id + ':') === 0; }, qq);
+      hits = '<div class="thits"><span class="label">พบ ' + hs.length + ' ส่วน' + (nh.length ? ' · โน้ต ' + nh.length : '') + '</span>' + noteHitLinks(nh, qq) + hs.slice(0, 40).map(function (u) { return '<a href="' + uLink(t, u) + '&q=' + encodeURIComponent(qq) + '"><span class="pn">' + u.p + '</span><span>' + esc(u.title) + '</span></a>'; }).join('') + '</div>';
     }
     var pageQ = function (v) { return '#/topics/' + t.id + '/sum/' + n + (v ? '?v=page' : ''); };
     return {
@@ -3300,23 +3317,259 @@
   };
 
   /* =========================================================
+     ค้นทั้งเว็บ (#/search?q=) — ช่องค้นบนสุด
+     ค้นใน: Medical Soil (ทุกแท็บ รวมฉบับที่แก้ในเว็บ) · Symptomatology · 1000 MAI · ติว NL (สรุป, blueprint, บอร์ด) ·
+            ข้อสอบเก่า NL/Compre · Random Topic Summary · Approach · โน้ตของฉัน
+     เรียงตามความเกี่ยวข้อง: ชื่อเรื่อง > แท็ก > เนื้อหา (นับจำนวนครั้ง) + ครบทุกคำ + ตรงทั้งวลี
+     คำที่เกี่ยวข้อง: แท็กสถาบัน (จุฬา = MDCU …) · สะกดใกล้เคียง · AI (ถ้าใส่ API key ไว้) ขยายเป็นคำที่เกี่ยวข้องทางการแพทย์
+     ========================================================= */
+  var SRCH = { bank: null, bankL: false, ai: {} };
+  var TAG_ALIAS = [
+    [['จุฬา', 'จุฬาฯ', 'จุฬาลงกรณ์', 'chula', 'mdcu', 'cu'], ['mdcu', 'จุฬาฯ']],
+    [['ศิริราช', 'si', 'siriraj', 'sirirat', 'มหิดล'], ['si', 'ศิริราช']],
+    [['preclinic', 'pre-clinic', 'พรีคลินิก'], ['preclinic']],
+    [['clinic', 'คลินิก'], ['clinic']],
+    [['โน้ต', 'note', 'notes'], ['โน้ต']]
+  ];
+  var annVer = 0;
+  function annAllNotes() {
+    if (annAllNotes.v === annVer && annAllNotes.c) return annAllNotes.c;
+    var out = [];
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key && key.indexOf('poy-ann:') === 0) { var k = key.slice(8); annGet(k).n.forEach(function (nt) { out.push({ k: k, nt: nt }); }); }
+      }
+    } catch (e) { }
+    annAllNotes.c = out; annAllNotes.v = annVer;
+    return out;
+  }
+  /* key ของกล่องเนื้อหา → ชื่อที่อ่านรู้เรื่อง + ลิงก์ */
+  function annKeyInfo(k) {
+    var i = k.indexOf(':'), p = k.slice(0, i), r = k.slice(i + 1), n, x;
+    if (p === 'g' && (n = G.by[r])) return { label: 'Medical Soil › ' + gPath(n).map(function (y) { return y.title; }).join(' › '), href: gHref(n), c: gLook(n).c };
+    if (p === 'y' && (x = syCh(r))) return { label: 'Symptomatology › บทที่ ' + x.no + ' ' + x.th, href: '#/kb/symp/' + x.id, c: syGroup(x).c };
+    if (p === 'd' && (x = findDisease(r))) return { label: '1000 MAI › ' + x.name, href: dHref(x), c: x.sys.c };
+    if (p === 'n') { x = (NLD.notes || []).filter(function (y) { return y.id === r; })[0]; return { label: 'ติว NL › สรุปเนื้อหา › ' + (x ? x.title : r), href: '#/nl/notes/' + encodeURIComponent(r), c: '#4A5560' }; }
+    if (p === 'x') return { label: 'ติว NL › ' + r.toUpperCase(), href: '#/nl/x/' + r, c: '#4A5560' };
+    if (p === 'b') return { label: 'ติว NL › บอร์ดประกาศ', href: '#/nl/board', c: '#4A5560' };
+    if (p === 'c') { x = CLI.approaches.filter(function (y) { return y.id === r; })[0]; return { label: 'Medical Soil › Approach › ' + (x ? x.title : r), href: '#/kb/approach/' + r, c: '#5C7F3A' }; }
+    if (p === 't') { var q = r.split(':'), t = (window.POY_TOPICS || []).filter(function (y) { return y.id === q[0]; })[0]; return { label: 'Random Topic Summary › ' + (t ? t.title : q[0]) + ' · หน้า ' + q[1], href: '#/topics/' + q[0] + '/sum/' + q[1], c: t ? t.c : '#2F7466' }; }
+    return { label: k, href: '#/', c: '#8A8F86' };
+  }
+  function noteHref(k, id) { var h = annKeyInfo(k).href; return h + (h.indexOf('?') >= 0 ? '&' : '?') + 'note=' + encodeURIComponent(id); }
+  /* โน้ตในขอบเขตของช่องค้นนั้น (test = เลือก key ที่อยู่ในขอบเขต) */
+  function noteHits(test, q) {
+    var ql = q.toLowerCase();
+    return annAllNotes().filter(function (x) { return test(x.k) && (x.nt.t + ' ' + (x.nt.q || '')).toLowerCase().indexOf(ql) >= 0; });
+  }
+  function snipOf(text, words) {
+    var tl = text.toLowerCase(), i = -1, w = '';
+    words.some(function (x) { var j = tl.indexOf(x); if (j >= 0) { i = j; w = x; return true; } return false; });
+    if (i < 0) return esc(text.slice(0, 140)) + (text.length > 140 ? '…' : '');
+    var a = Math.max(0, i - 60);
+    return (a ? '…' : '') + esc(text.slice(a, i)) + '<mark>' + esc(text.slice(i, i + w.length)) + '</mark>' + esc(text.slice(i + w.length, i + w.length + 90)) + '…';
+  }
+  function noteHitLinks(hits, q) {
+    return hits.slice(0, 40).map(function (x) {
+      var inf = annKeyInfo(x.k);
+      return '<a href="' + noteHref(x.k, x.nt.id) + '"><span class="pn"><span class="rtype note">โน้ต</span></span><span><b>' + esc(inf.label) + '</b><small>' + snipOf(x.nt.t, [q.toLowerCase()]).replace(/\n/g, ' ') + (x.nt.q ? ' · <i>“' + esc(x.nt.q.slice(0, 60)) + '”</i>' : '') + '</small></span></a>';
+    }).join('');
+  }
+
+  /* ---------- ดัชนี ---------- */
+  function srchDocs() {
+    var L = [];
+    if (G.st === 'ready') G.nodes.forEach(function (n) {
+      if (n.kind === 'sheets') return;
+      var top = n.topN || n, lk = gLook(n);
+      L.push({ type: 'content', title: n.title, path: 'Medical Soil › ' + gPath(n).slice(0, -1).map(function (y) { return y.title; }).join(' › '), text: gText(n), c: lk.c,
+        tags: [top.title, lk.th, n.lv === 'clinic' ? 'clinic' : n.lv === 'pre' ? 'preclinic' : ''].concat((n.wards || []).map(function (w) { var x = wardById(w); return x ? x.name : w; })).filter(Boolean), href: gHref(n), node: n });
+    });
+    (SYS_SEARCH.d || []).forEach(function (x) {
+      var c = syCh(x.c); if (!c) return;
+      L.push({ type: 'content', title: x.h, path: 'Symptomatology › บทที่ ' + c.no + ' ' + c.th, text: x.x, c: syGroup(c).c, tags: ['ศิริราช', 'SI', syGroup(c).t, c.en], href: '#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) });
+    });
+    D.list.forEach(function (d) {
+      var e = shPeek('d:' + d.id);
+      L.push({ type: 'disease', title: d.name, path: '1000 MAI' + (d.no ? ' · No. ' + d.no : ''), c: d.sys.c,
+        text: (d.aliases.join(' · ') + '\n' + (e ? htmlText(e.h) : d.brief + '\n' + d.fields.map(function (f) { return f.value ? f.label + ': ' + f.value : ''; }).join('\n'))),
+        tags: d.systems.concat([d.ward, d.type, d.gen, d.icd]).filter(Boolean), href: dHref(d) });
+    });
+    (NLD.notes || []).forEach(function (x) {
+      var e = shPeek('n:' + x.id);
+      L.push({ type: 'content', title: x.title, path: 'ติว NL & Compre › สรุปเนื้อหา' + (x.topic ? ' › ' + x.topic : ''), text: htmlText(e ? e.h : x.html || ''), c: '#4A5560',
+        tags: (x.src || []).concat((x.src || []).map(function (s) { return s === 'MDCU' ? 'จุฬาฯ' : s === 'SI' ? 'ศิริราช' : s; })).concat((x.exams || []).map(function (s) { return s === 'nl' ? 'NL' : 'Compre'; })), href: '#/nl/notes/' + encodeURIComponent(x.id) });
+    });
+    ((BOARD && BOARD.list) || NLD.board || []).forEach(function (p) {
+      L.push({ type: 'post', title: p.title, path: 'ติว NL & Compre › บอร์ดประกาศ', text: String(p.body || ''), c: '#4A5560',
+        tags: (p.inst || []).concat((p.inst || []).map(function (s) { return s === 'MDCU' ? 'จุฬาฯ' : 'ศิริราช'; })).concat([p.tag === 'nl' ? 'NL' : p.tag === 'compre' ? 'Compre' : '']).filter(Boolean), href: '#/nl/board' });
+    });
+    (SRCH.bank || []).forEach(function (q, i) {
+      var ex = ((C.nl && C.nl.exams) || []).filter(function (x) { return x.id === q.w; })[0];
+      L.push({ type: 'exam', title: q.stem.slice(0, 110) + (q.stem.length > 110 ? '…' : ''), path: 'ข้อสอบเก่า ' + q.wn + ' · ' + q.set + (q.ro ? ' · ' + q.ro : ''), c: '#C9952E',
+        text: q.stem + '\n' + q.opts + '\nเฉลย ' + q.key + '\n' + q.why, tags: [q.inst, q.inst === 'MDCU' ? 'จุฬาฯ' : q.inst === 'SI' ? 'ศิริราช' : '', q.wn, q.set].filter(Boolean), href: ex && ex.bank ? ex.bank : 'bank/' + q.b + '/', ext: true });
+    });
+    (window.POY_TOPICS || []).forEach(function (t) {
+      var s = TD[t.id];
+      if (!s || !s.data) return;
+      tUnitsCached(t, s.data).forEach(function (u) {
+        L.push({ type: 'content', title: u.title, path: 'Random Topic Summary › ' + t.title + ' · หน้า ' + u.p, text: u.text, c: t.c, tags: [t.title], href: uLink(t, u) });
+      });
+    });
+    CLI.approaches.forEach(function (a) {
+      var e = shPeek('c:' + a.id);
+      L.push({ type: 'content', title: a.title, path: 'Medical Soil › Approach ตามอาการนำ', c: '#5C7F3A', tags: [a.group],
+        text: e ? htmlText(e.h) : a.sub + '\n' + a.steps.map(function (s) { return s.title + ' ' + (s.html ? htmlText(s.html) : (s.links || []).map(function (l) { return l.join(' '); }).join(' ')); }).join('\n'), href: '#/kb/approach/' + a.id });
+    });
+    annAllNotes().forEach(function (x) {
+      var inf = annKeyInfo(x.k);
+      L.push({ type: 'note', title: x.nt.t.split('\n')[0].slice(0, 90), path: inf.label, text: x.nt.t + '\n' + (x.nt.q || ''), c: inf.c, tags: ['โน้ต'], href: noteHref(x.k, x.nt.id), quote: x.nt.q });
+    });
+    return L;
+  }
+  function srchLoadAll() {
+    var wait = [];
+    gLoad(); if (G.st !== 'ready' && G.st !== 'err') wait.push('สรุปจาก Doc');
+    if (!SYS_SEARCH.d && !SYS_SEARCH.E) { wait.push('Symptomatology'); sySearchLoad(srchKick); }
+    (window.POY_TOPICS || []).forEach(function (t) { var s = TD[t.id] || {}; if (!s.data && !s.dataE) { tLoad(t, 'data'); wait.push(t.title); } });
+    if (!SRCH.bank && !SRCH.bankL) {
+      SRCH.bankL = true;
+      fetch('bank/qs.json?v=' + (window.POY_GDOC_V || 1), { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (j) { SRCH.bank = j; }, function () { SRCH.bank = []; }).then(srchKick);
+    }
+    if (!SRCH.bank) wait.push('ข้อสอบเก่า');
+    if (D.loading) wait.push('1000 MAI');
+    return wait;
+  }
+  function srchKick() { clearTimeout(srchKick.t); srchKick.t = setTimeout(function () { if (route().name === 'search') render(true); }, 150); }
+  /* คำที่ใช้ค้น: คำเดิม + แท็กสถาบัน + สะกดใกล้เคียง + AI */
+  function srchTerms(q, docs) {
+    var words = q.toLowerCase().split(/\s+/).filter(Boolean), out = [];
+    words.forEach(function (w) {
+      var ex = [{ w: w, k: 1 }];
+      TAG_ALIAS.forEach(function (a) { if (a[0].indexOf(w) >= 0) a[1].forEach(function (t) { if (t !== w) ex.push({ w: t, k: 1, tag: true }); }); });
+      out.push({ q: w, ex: ex });
+    });
+    /* สะกดใกล้เคียง — เฉพาะคำภาษาอังกฤษที่ไม่เจอเลย */
+    var vocab = null;
+    out.forEach(function (o) {
+      if (!/^[a-z][a-z0-9-]{3,}$/.test(o.q)) return;
+      if (docs.some(function (d) { return d._t.indexOf(o.q) >= 0; })) return;
+      if (!vocab) { vocab = {}; docs.forEach(function (d) { (d._t.match(/[a-z][a-z0-9-]{3,}/g) || []).forEach(function (v) { vocab[v] = 1; }); }); }
+      var lim = o.q.length >= 7 ? 2 : 1, near = [];
+      Object.keys(vocab).forEach(function (v) { if (Math.abs(v.length - o.q.length) <= lim && lev(v, o.q) <= lim) near.push(v); });
+      near.slice(0, 6).forEach(function (v) { o.ex.push({ w: v, k: 0.7, near: true }); });
+    });
+    var ai = SRCH.ai[q.toLowerCase()];
+    if (ai && ai.terms) ai.terms.forEach(function (t) { out.push({ q: t, ex: [{ w: t.toLowerCase(), k: 0.45, rel: true }], rel: true }); });
+    return out;
+  }
+  function srchScore(d, terms, phrase) {
+    var sc = 0, all = true, hitW = [], rel = [];
+    terms.forEach(function (o) {
+      var best = 0;
+      o.ex.forEach(function (x) {
+        var s = 0, w = x.w;
+        if (d._ti.indexOf(w) >= 0) s += d._ti === w ? 30 : 12;
+        if (d._tg.some(function (t) { return t === w; })) s += 10; else if (d._tg.some(function (t) { return t.indexOf(w) >= 0; })) s += 5;
+        var c = 0, i = d._x.indexOf(w); while (i >= 0 && c < 8) { c++; i = d._x.indexOf(w, i + w.length); }
+        if (c) s += 2 + c * 1.5;
+        s *= x.k;
+        if (s > 0) { hitW.push(w); if (o.rel) rel.push(o.q); }
+        if (s > best) best = s;
+      });
+      if (!best && !o.rel) all = false;
+      sc += best;
+    });
+    if (!sc) return null;
+    if (all && terms.filter(function (o) { return !o.rel; }).length > 1) sc *= 1.5;
+    if (phrase && phrase.indexOf(' ') > 0) { if (d._ti.indexOf(phrase) >= 0) sc += 15; else if (d._x.indexOf(phrase) >= 0) sc += 6; }
+    if (!all && !rel.length) sc *= 0.5;
+    return { s: sc, w: hitW, rel: rel, only: !terms.some(function (o) { return !o.rel && o.ex.some(function (x) { return hitW.indexOf(x.w) >= 0; }); }) };
+  }
+  function srchAI(q) {
+    var key = LS.get('apikey', ''), ql = q.toLowerCase();
+    if (!key || SRCH.ai[ql]) return;
+    try { var c = JSON.parse(sessionStorage.getItem('poy-srai:' + ql) || 'null'); if (c) { SRCH.ai[ql] = c; return; } } catch (e) { }
+    SRCH.ai[ql] = { L: true };
+    var prompt = 'คำค้นในคลังความรู้แพทย์: "' + q + '"\nให้คำค้นที่เกี่ยวข้องทางการแพทย์ไม่เกิน 12 คำ (อังกฤษและไทย) เช่น คำพ้อง ตัวย่อ ชื่อเต็ม โรค/ภาวะที่มีสิ่งนี้เป็นลักษณะสำคัญ ยา/lab ที่เกี่ยวโดยตรง — คำสั้น ๆ ที่น่าจะพิมพ์อยู่ในเนื้อหาจริง ไม่ซ้ำกับคำค้นเดิม\nตอบเป็น JSON array ของ string อย่างเดียว';
+    callClaude(key, LS.get('model', C.ai.models[0].id), prompt, 300).then(function (t) {
+      var m = t.match(/\[[\s\S]*\]/), arr = m ? JSON.parse(m[0]) : [];
+      SRCH.ai[ql] = { terms: arr.filter(function (x) { return typeof x === 'string' && x.trim().length > 1 && x.toLowerCase() !== ql; }).slice(0, 12) };
+      try { sessionStorage.setItem('poy-srai:' + ql, JSON.stringify(SRCH.ai[ql])); } catch (e) { }
+    }).catch(function (e) { SRCH.ai[ql] = { err: e.message || String(e) }; }).then(srchKick);
+  }
+  var RTYPE = { content: 'เนื้อหา', note: 'โน้ต', disease: '1000 MAI', exam: 'ข้อสอบเก่า', post: 'ประกาศ' };
+  PAGES.search = function (r) {
+    var q = (r.q.get('q') || '').trim(), ft = r.q.get('t') || '';
+    var head = '<section class="wrap phead" style="padding-bottom:20px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0;width:100%"><span class="label">ค้นทั้งเว็บ</span>' +
+      '<form class="search" id="sform" role="search" style="flex:none;width:100%;max-width:720px;min-height:54px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sq">ค้นทั้งเว็บ</label><input id="sq" type="search" value="' + esc(q) + '" placeholder="โรค อาการ ยา lab แท็ก เช่น จุฬา, ศิริราช…" style="font-size:18px"></form></div></section>';
+    if (!q) return { title: 'ค้นทั้งเว็บ', html: head + '<section class="wrap" style="padding-bottom:80px"><p class="muted">พิมพ์คำที่อยากค้น — ค้นได้ทุกส่วนของเว็บ รวมโน้ตของคุณและแท็ก เช่น <b>จุฬา</b> / <b>MDCU</b> / <b>ศิริราช</b></p></section>', after: srchAfter };
+    var wait = srchLoadAll();
+    srchAI(q);
+    var docs = srchDocs();
+    docs.forEach(function (d) { d._ti = d.title.toLowerCase(); d._x = String(d.text || '').toLowerCase(); d._tg = (d.tags || []).map(function (t) { return String(t).toLowerCase(); }); d._t = d._ti + '\n' + d._x; });
+    var terms = srchTerms(q, docs), phrase = q.toLowerCase(), res = [];
+    docs.forEach(function (d) { var s = srchScore(d, terms, phrase); if (s) { d.sc = s; res.push(d); } });
+    res.sort(function (a, b) { return b.sc.s - a.sc.s; });
+    var cnt = {}; res.forEach(function (d) { cnt[d.type] = (cnt[d.type] || 0) + 1; });
+    var shown = ft ? res.filter(function (d) { return d.type === ft; }) : res;
+    var near = [], tagx = [];
+    terms.forEach(function (o) { o.ex.forEach(function (x) { if (x.near && near.indexOf(x.w) < 0) near.push(x.w); if (x.tag && tagx.indexOf(x.w) < 0) tagx.push(x.w); }); });
+    var ai = SRCH.ai[q.toLowerCase()], key = LS.get('apikey', '');
+    var info = (tagx.length ? '<span>รวมแท็ก: ' + tagx.map(esc).join(', ') + '</span>' : '') + (near.length ? '<span>สะกดใกล้เคียง: ' + near.map(esc).join(', ') + '</span>' : '') +
+      (ai && ai.L ? '<span><span class="spin" aria-hidden="true"></span> AI กำลังหาคำที่เกี่ยวข้อง…</span>' : ai && ai.terms && ai.terms.length ? '<span>คำที่เกี่ยวข้อง (AI): ' + ai.terms.map(esc).join(', ') + '</span>' : '') +
+      (!key ? '<span>อยากให้ขึ้นเรื่องที่เกี่ยวข้องแม้ไม่มีคำนี้ — ใส่ API key ใน <a href="#/exam">ห้องสอบ</a></span>' : '') +
+      (wait.length ? '<span><span class="spin" aria-hidden="true"></span> กำลังโหลด: ' + wait.map(esc).join(', ') + '</span>' : '');
+    var chips = '<div class="filters" role="group" aria-label="ประเภท"><a class="chip' + (ft ? '' : ' on') + '" href="#/search?q=' + encodeURIComponent(q) + '">ทั้งหมด ' + res.length + '</a>' +
+      Object.keys(RTYPE).filter(function (k) { return cnt[k]; }).map(function (k) { return '<a class="chip' + (ft === k ? ' on' : '') + '" href="#/search?q=' + encodeURIComponent(q) + '&t=' + k + '">' + RTYPE[k] + ' ' + cnt[k] + '</a>'; }).join('') + '</div>';
+    var list = shown.slice(0, 150).map(function (d) {
+      var ws = d.sc.w.length ? d.sc.w : [phrase];
+      return '<a class="sheet sres" href="' + esc(d.href) + '"' + (d.ext ? ' target="_blank" rel="noopener"' : '') + ' style="--c:' + esc(d.c || '#8A8F86') + '">' +
+        '<div class="srh"><span class="rtype ' + d.type + '">' + RTYPE[d.type] + '</span><span class="muted srp">' + esc(d.path) + '</span></div>' +
+        '<span class="k srt">' + esc(d.title) + '</span>' +
+        '<span class="srs">' + snipOf(String(d.text || '').replace(/\s+/g, ' '), ws) + '</span>' +
+        ((d.tags || []).length || d.sc.only ? '<span class="srtags">' + (d.sc.only ? '<span class="pill rel">เกี่ยวข้อง: ' + esc(d.sc.rel.slice(0, 2).join(', ')) + '</span>' : '') + d.tags.slice(0, 5).map(function (t) { return '<span class="pill">' + esc(t) + '</span>'; }).join('') + '</span>' : '') + '</a>';
+    }).join('');
+    return {
+      title: 'ค้น: ' + q, html: head + '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:14px">' +
+        (info ? '<p class="sinfo muted">' + info + '</p>' : '') + chips +
+        (shown.length ? '<div class="sresults">' + list + '</div>' + (shown.length > 150 ? '<p class="muted">แสดง 150 อันดับแรก จาก ' + shown.length + '</p>' : '') :
+          '<div class="empty"><p class="k" style="font-size:20px">ไม่พบ "' + esc(q) + '"</p><p class="muted">' + (wait.length ? 'ยังโหลดไม่ครบ รอสักครู่' : 'ลองคำอื่น สะกดแบบอื่น หรือคำภาษาไทย/อังกฤษ') + '</p></div>') + '</section>',
+      after: srchAfter
+    };
+  };
+  function srchAfter() {
+    var f = document.getElementById('sform');
+    f.addEventListener('submit', function (e) { e.preventDefault(); var v = document.getElementById('sq').value.trim(); location.hash = '#/search' + (v ? '?q=' + encodeURIComponent(v) : ''); });
+  }
+  /* เปิดหน้าจากผลค้นโน้ต: ?note=<id> → ไปที่โน้ตนั้นแล้วเปิดกล่อง */
+  function annGoto(id) {
+    var sp = app.querySelector('[data-n="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]');
+    if (!sp) return;
+    var el = sp.closest('[data-ann]');
+    annOpenAncestors(sp, el.parentElement);
+    setTimeout(function () { sp.scrollIntoView({ block: 'center' }); annOpen(el, id, false); }, 60);
+  }
+
+  /* =========================================================
      โน้ต + แก้เนื้อหา — ใช้ได้กับทุกกล่องเนื้อหาที่มี data-ann="<key>"
      (สรุปจาก Doc g:<แท็บ> · Symptomatology y:<บท> · 1000 MAI d:<โรค> · NL n:<เรื่อง> · Approach c:<id>)
-     - เลือกข้อความ → ปุ่ม "Add note" → พิมพ์โน้ต → ตรงนั้นขีดเส้นใต้ · กดเส้นใต้ = เปิดกล่องโน้ต
-       กล่องปิดเมื่อกด ✕ หรือออกจากหน้า
-     - "แก้เนื้อหา" = พิมพ์แก้ตรงไหนก็ได้ เก็บเป็นฉบับของเราเอง — ต้นฉบับใน Google Doc / Sheet ไม่ถูกแตะ
-     - เก็บในเครื่อง localStorage poy-ann:<key> = { n:[{id,q,pre,suf,s,t,at}], e:{h,b,at}|null, ts }
-       + บัญชี Firestore poymor/<uid>/ann/<key> = { v:<JSON>, ts } (ฉบับที่ใหม่กว่าชนะ ทั้งหน้า)
+     - เลือกข้อความ → ปุ่ม "Add note" → พิมพ์โน้ต → ตรงนั้นขีดเส้นใต้ · กดเส้นใต้ = เปิดกล่องโน้ต (ปิดเมื่อกด ✕ หรือออกจากหน้า)
+       โน้ต = ของแต่ละคน: localStorage poy-ann:<key> = { n:[{id,q,pre,suf,s,t,at,box?}], ts } + Firestore poymor/<uid>/ann/<key>
+     - "แก้เนื้อหา" = ทุกคนที่เข้าสู่ระบบแก้ได้ และทุกคนเห็นฉบับเดียวกัน (มีประวัติ ย้อนได้)
+       Firestore poymor_edit/<key> = { k, h, b, by, name, at, sync } + hist/ (ฉบับก่อนหน้า) · cache ในเครื่อง poy-sh:<key>
+     - เนื้อหาที่มาจากไฟล์ Google ชื่อขึ้นต้น [AI] → ลอกที่แก้เข้าไฟล์ผ่าน Apps Script (ดูส่วนถัดไป)
      - โน้ตผูกกับ "ข้อความที่เลือก + ข้อความรอบ ๆ" ไม่ใช่ตำแหน่งตายตัว → ต้นฉบับเปลี่ยนก็ยังหาเจอถ้าข้อความนั้นยังอยู่
      ========================================================= */
   var ANN_HOOK = {}, annPulled = {}, annOrigView = {}, annForce = false;
   function annLKey(k) { return 'poy-ann:' + k; }
   function annGet(k) {
-    try { var v = JSON.parse(localStorage.getItem(annLKey(k)) || 'null'); if (v && typeof v === 'object') return { n: v.n || [], e: v.e || null, ts: v.ts || 0 }; } catch (e) { }
-    return { n: [], e: null, ts: 0 };
+    try { var v = JSON.parse(localStorage.getItem(annLKey(k)) || 'null'); if (v && typeof v === 'object') return { n: v.n || [], ts: v.ts || 0 }; } catch (e) { }
+    return { n: [], ts: 0 };
   }
   function annPut(k, o) {
-    o.ts = Date.now();
+    o.ts = Date.now(); annVer++;
     try { localStorage.setItem(annLKey(k), JSON.stringify(o)); } catch (e) { toast('เก็บในเครื่องไม่ได้ — พื้นที่ในเบราว์เซอร์เต็ม'); }
     annPush(k, o);
   }
@@ -3344,6 +3597,77 @@
   function annOnAuth() {
     annPulled = {};
     document.querySelectorAll('[data-ann]').forEach(function (el) { annPull(el.getAttribute('data-ann')); });
+    if (FB && FB.user) setTimeout(annSyncAllPending, 800);
+    /* โน้ตทุกหน้าจากบัญชี (ให้ช่องค้นเจอโน้ตที่จดจากเครื่องอื่น แม้ยังไม่เคยเปิดหน้านั้นในเครื่องนี้) */
+    if (FB && FB.user) FB.fs.getDocs(FB.fs.collection(FB.db, 'poymor', FB.user.uid, 'ann')).then(function (qs) {
+      qs.forEach(function (d) {
+        var k = decodeURIComponent(d.id), x = d.data(), loc = annGet(k), rem = null;
+        try { rem = JSON.parse(x.v); } catch (e) { }
+        if (rem && (x.ts || 0) > loc.ts) { try { localStorage.setItem(annLKey(k), JSON.stringify({ n: rem.n || [], ts: x.ts })); } catch (e) { } annVer++; annPulled[k] = 1; }
+      });
+    }).catch(function (e) { console.warn('ann all', e); });
+  }
+  /* ---------- ฉบับที่แก้ (แชร์ทุกคน) ---------- */
+  var SH = {}, shFetched = {}, shWaitFB = [], shAt = 0;
+  function shId(k) { return encodeURIComponent(k).replace(/\./g, '%2E').slice(0, 700); }
+  function shRef(k) { return FB.fs.doc(FB.db, 'poymor_edit', shId(k)); }
+  function shCache(k, v) {
+    try {
+      if (arguments.length < 2) { var x = localStorage.getItem('poy-sh:' + k); return x == null ? undefined : JSON.parse(x); }
+      localStorage.setItem('poy-sh:' + k, JSON.stringify(v));
+    } catch (e) { }
+  }
+  function shPeek(k) { if (k in SH) return SH[k] || null; var c = shCache(k); return c || null; }
+  function shGet(k) {
+    if (!(k in SH)) { var c = shCache(k); if (c !== undefined) SH[k] = c; }
+    shFetch(k);
+    return SH[k] || null;
+  }
+  function shRec(d) {
+    if (!d || d.h == null) return null;
+    return { h: d.h, b: d.b || '', by: d.by || '', name: d.name || '', at: tsMs(d.at), sync: d.sync || null };
+  }
+  function shFetch(k) {
+    if (shFetched[k]) return;
+    if (!FB) { if (shWaitFB.indexOf(k) < 0) shWaitFB.push(k); return; }
+    shFetched[k] = 1;
+    FB.fs.getDoc(shRef(k)).then(function (snap) {
+      var before = JSON.stringify(SH[k] || null), rec = shRec(snap.exists() ? snap.data() : null);
+      SH[k] = rec; shCache(k, rec);
+      if (JSON.stringify(rec) !== before && document.querySelector(annSel$(k)) && !annEditing()) annRerender();
+    }).catch(function (e) { console.warn('poymor_edit', e); shFetched[k] = 0; });
+  }
+  function shFlushFB() { var q = shWaitFB; shWaitFB = []; q.forEach(shFetch); }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && Date.now() - shAt > 5 * 60 * 1000) {
+      shAt = Date.now(); shFetched = {};
+      document.querySelectorAll('[data-ann]').forEach(function (el) { if (!annMode(el)) shFetch(el.getAttribute('data-ann')); });
+    }
+  });
+  /* บันทึกฉบับใหม่ (h = null = กลับไปใช้ต้นฉบับ) — ฉบับเดิมเก็บใน hist */
+  function shSave(k, h, b, sync) {
+    var prev = SH[k] || null;
+    var rec = h == null ? null : { h: h, b: b || '', by: FB.user.uid, name: who(FB.user), at: Date.now(), sync: sync || null };
+    SH[k] = rec; shCache(k, rec);
+    var data = { k: k, h: h == null ? null : h, b: b || '', by: FB.user.uid, name: who(FB.user), at: FB.fs.serverTimestamp(), sync: sync || null };
+    return FB.fs.setDoc(shRef(k), data).then(function () {
+      if (prev) return FB.fs.addDoc(FB.fs.collection(FB.db, 'poymor_edit', shId(k), 'hist'), { h: prev.h, by: prev.by, name: prev.name, at: FB.fs.serverTimestamp() });
+    }).catch(function (e) { console.warn(e); toast('บันทึกขึ้นเว็บไม่สำเร็จ: ' + errMsg(e)); });
+  }
+  function shHistHTML(k, box) {
+    box.innerHTML = '<p class="muted" style="padding:10px 14px"><span class="spin" aria-hidden="true"></span> กำลังเปิดประวัติ…</p>';
+    var col = FB.fs.collection(FB.db, 'poymor_edit', shId(k), 'hist');
+    FB.fs.getDocs(FB.fs.query(col, FB.fs.orderBy('at', 'desc'), FB.fs.limit(30))).then(function (qs) {
+      var rows = [], cur = SH[k];
+      rows.push('<div class="annli"><span class="annq" style="padding:10px 14px;flex:1">ตอนนี้ · ' + (cur ? esc(cur.name || '') + ' · ' + esc(fmtTime(new Date(cur.at || Date.now()))) : 'ต้นฉบับ') + '</span></div>');
+      qs.forEach(function (d) {
+        var x = d.data();
+        rows.push('<div class="annli"><span class="annq" style="padding:10px 14px;flex:1">' + esc(x.name || '') + ' · ' + esc(fmtTime(new Date(tsMs(x.at) || Date.now()))) + '</span><button type="button" class="chip" data-annuse="' + esc(d.id) + '">ใช้ฉบับนี้</button></div>');
+        box['_h' + d.id] = x.h;
+      });
+      rows.push('<div class="annli"><span class="annq" style="padding:10px 14px;flex:1">ต้นฉบับจากไฟล์</span><button type="button" class="chip" data-annuse="orig">ใช้ฉบับนี้</button></div>');
+      box.innerHTML = rows.join('');
+    }).catch(function (e) { box.innerHTML = '<p class="warn">' + esc(errMsg(e)) + '</p>'; });
   }
   function annHash(s) { s = String(s || ''); var h = 5381; for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36) + '.' + s.length; }
   function annEditing() { return !!document.querySelector('.annediting'); }
@@ -3407,13 +3731,42 @@
 
   /* ---------- ติดตั้งในแต่ละกล่อง ---------- */
   function annMountAll(root) { root.querySelectorAll('[data-ann]').forEach(annMount); }
+  /* data-ann-mode: (ไม่ใส่) = เลือกข้อความ + แก้ได้ · "note" = จดโน้ตได้อย่างเดียว (เนื้อหาที่มีระบบแก้ของตัวเอง เช่นบอร์ดประกาศ)
+     · "box" = เนื้อหาเป็นภาพ (Random Topic Summary) — จดโน้ตทั้งกล่อง: ปุ่ม "+ โน้ต" ใต้กล่องที่มี id="u…" */
+  function annMode(el) { return el.getAttribute('data-ann-mode') || ''; }
+  function annRefresh(el) { if (annMode(el) === 'box') annBoxApply(el); else { annUnwrap(el); annApply(el); } annPaintBar(el); annPlaceAll(); }
+  function annBoxApply(el) {
+    var o = annGet(el.getAttribute('data-ann'));
+    el.querySelectorAll('.annbb').forEach(function (x) { x.remove(); });
+    el._annLost = [];
+    var by = {};
+    o.n.forEach(function (nt) { (by[nt.box] = by[nt.box] || []).push(nt); });
+    el.querySelectorAll('[id^="u"]').forEach(function (bx) {
+      var k = bx.id.slice(1), list = by[k] || [];
+      delete by[k];
+      var d = document.createElement('div'); d.className = 'annbb';
+      d.innerHTML = list.map(function (nt) { return '<button type="button" class="annchip" data-n="' + esc(nt.id) + '">' + ANN_NOTE + '<span>' + esc(nt.t.length > 60 ? nt.t.slice(0, 60) + '…' : nt.t) + '</span></button>'; }).join('') +
+        '<button type="button" class="annplus" data-annbadd="' + esc(k) + '">+ โน้ต</button>';
+      bx.parentNode.insertBefore(d, bx.nextSibling);
+    });
+    Object.keys(by).forEach(function (k) { by[k].forEach(function (nt) { el._annLost.push(nt.id); }); });
+  }
   function annMount(el) {
     var k = el.getAttribute('data-ann'), o = annGet(k), hook = ANN_HOOK[k.split(':')[0]];
+    if (annMode(el) === 'box') {
+      var bar0 = document.createElement('div'); bar0.className = 'annbar'; bar0.setAttribute('data-annbar', k);
+      el.parentNode.insertBefore(bar0, el); el._annBar = bar0;
+      annBoxApply(el); annPaintBar(el); annPull(k);
+      return;
+    }
     el._annOrig = el.innerHTML;
     el._annBase = annHash(el._annOrig);
-    el._annHasEdit = !!(o.e && o.e.h != null);
-    el._annView = el._annHasEdit && !annOrigView[k] ? 'mine' : 'orig';
-    if (el._annView === 'mine') { el.innerHTML = o.e.h; if (hook && hook.thaw) hook.thaw(el); }
+    var e = annMode(el) === 'note' ? null : shGet(k);
+    el._annSync = '';
+    if (e && annSyncOnMount(el, k, e)) e = null;
+    el._annHasEdit = !!e;
+    el._annView = e && !annOrigView[k] ? 'mine' : 'orig';
+    if (el._annView === 'mine') { el.innerHTML = e.h; if (hook && hook.thaw) hook.thaw(el); }
     var bar = document.createElement('div'); bar.className = 'annbar'; bar.setAttribute('data-annbar', k);
     el.parentNode.insertBefore(bar, el); el._annBar = bar;
     annApply(el);
@@ -3429,19 +3782,21 @@
       bar.innerHTML = '<span class="annstate">' + ANN_PEN + ' กำลังแก้ — พิมพ์แก้ตรงไหนก็ได้</span><button type="button" class="chip on" data-annact="save">บันทึก</button><button type="button" class="chip" data-annact="cancel">ยกเลิก</button>';
       return;
     }
-    var lost = el._annLost || [], cnt = o.n.length;
-    var stale = el._annHasEdit && o.e.b && o.e.b !== el._annBase;
-    bar.innerHTML = '<button type="button" class="chip" data-annact="edit"' + (el._annView === 'orig' && el._annHasEdit ? ' disabled title="กลับไปฉบับที่แก้ก่อน"' : '') + '>' + ANN_PEN + ' แก้เนื้อหา</button>' +
-      (cnt ? '<button type="button" class="chip" data-annact="list" aria-expanded="false">' + ANN_NOTE + ' โน้ต ' + cnt + (lost.length ? ' · หาไม่เจอ ' + lost.length : '') + '</button>' : '<span class="annhint">เลือกข้อความเพื่อ Add note</span>') +
-      (el._annHasEdit ? '<span class="annflag' + (stale ? ' stale' : '') + '">' + (el._annView === 'orig' ? 'กำลังดูต้นฉบับ' : 'ฉบับที่แก้เอง') + (stale ? ' · ต้นฉบับเปลี่ยนหลังจากที่แก้' : '') + '</span>' +
+    var lost = el._annLost || [], cnt = o.n.length, md = annMode(el), e = md ? null : SH[k] || null;
+    var stale = e && e.b && e.b !== el._annBase && !(e.sync && e.sync.st === 'ok');
+    bar.innerHTML = (md ? '' : '<button type="button" class="chip" data-annact="edit"' + (el._annView === 'orig' && el._annHasEdit ? ' disabled title="กลับไปฉบับที่แก้ก่อน"' : '') + '>' + ANN_PEN + ' แก้เนื้อหา</button>') +
+      (cnt ? '<button type="button" class="chip" data-annact="list" aria-expanded="false">' + ANN_NOTE + ' โน้ต ' + cnt + (lost.length ? ' · หาไม่เจอ ' + lost.length : '') + '</button>' : '<span class="annhint">' + (md === 'box' ? 'กด "+ โน้ต" ใต้กล่องเพื่อจด' : 'เลือกข้อความเพื่อ Add note') + '</span>') +
+      (md || !el._annSync ? '' : '<span class="annflag' + (el._annSync === 'err' || el._annSync === 'wait' ? ' stale' : '') + '" title="' + esc(el._annSyncMsg || '') + '">' + ANN_SYNC_TXT[el._annSync] + '</span>') +
+      (el._annHasEdit && e ? '<span class="annflag' + (stale ? ' stale' : '') + '">' + (el._annView === 'orig' ? 'กำลังดูต้นฉบับ' : 'แก้ในเว็บ' + (e.name ? ' · ' + esc(e.name) : '') + (e.at ? ' · ' + esc(fmtTime(new Date(e.at))) : '')) + (stale ? ' · ต้นฉบับเปลี่ยนหลังจากที่แก้' : '') + '</span>' +
         '<button type="button" class="chip" data-annact="view">' + (el._annView === 'orig' ? 'กลับไปฉบับที่แก้' : 'ดูต้นฉบับ') + '</button><button type="button" class="chip" data-annact="reset">คืนค่าต้นฉบับ</button>' : '') +
-      '<div class="annlist" hidden></div>';
+      (!md && FB ? '<button type="button" class="chip" data-annact="hist" aria-expanded="false">ประวัติ</button>' : '') +
+      '<div class="annlist" hidden></div><div class="annlist annhist" hidden></div>';
   }
   function annListHTML(el) {
     var k = el.getAttribute('data-ann'), o = annGet(k), lost = el._annLost || [];
     return o.n.map(function (nt) {
       var miss = lost.indexOf(nt.id) >= 0;
-      return '<div class="annli' + (miss ? ' miss' : '') + '"><button type="button" data-anngo="' + esc(nt.id) + '"' + (miss ? ' disabled' : '') + '><span class="annq">“' + esc(nt.q.length > 70 ? nt.q.slice(0, 70) + '…' : nt.q) + '”</span><span class="annt1">' + esc(nt.t) + '</span>' +
+      return '<div class="annli' + (miss ? ' miss' : '') + '"><button type="button" data-anngo="' + esc(nt.id) + '"' + (miss ? ' disabled' : '') + '><span class="annq">' + (nt.box ? '' : '“') + esc(nt.q.length > 70 ? nt.q.slice(0, 70) + '…' : nt.q) + (nt.box ? '' : '”') + '</span><span class="annt1">' + esc(nt.t) + '</span>' +
         (miss ? '<span class="annmiss">หาข้อความนี้ในหน้าไม่เจอแล้ว</span>' : '') + '</button>' + (miss ? '<button type="button" class="chip" data-anndel="' + esc(nt.id) + '">ลบ</button>' : '') + '</div>';
     }).join('');
   }
@@ -3458,6 +3813,7 @@
   }
   function annStartEdit(el) {
     if (annEditing()) { toast('บันทึกหรือยกเลิกการแก้อีกกล่องก่อน'); return; }
+    if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อนถึงจะแก้ได้ — แก้แล้วทุกคนเห็นฉบับเดียวกัน'); return; }
     annCloseAll();
     annUnwrap(el);
     el.classList.add('annediting');
@@ -3469,7 +3825,8 @@
     el.focus({ preventScroll: true });
   }
   function annSaveEdit(el) {
-    var k = el.getAttribute('data-ann'), o = annGet(k), hook = ANN_HOOK[k.split(':')[0]];
+    var k = el.getAttribute('data-ann'), hook = ANN_HOOK[k.split(':')[0]];
+    if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน'); return; }
     var c = el.cloneNode(true);
     annUnwrap(c);
     c.querySelectorAll('[contenteditable]').forEach(function (x) { x.removeAttribute('contenteditable'); });
@@ -3477,19 +3834,26 @@
     annClean(c);
     var h = c.innerHTML;
     var oc = document.createElement('div'); oc.innerHTML = el._annOrig; if (hook && hook.freeze) hook.freeze(oc); annClean(oc);
-    if (h === oc.innerHTML) o.e = null;   /* แก้แล้วเหมือนต้นฉบับทุกตัว = ไม่เก็บ */
-    else o.e = { h: h, b: el._annBase, at: Date.now() };
-    annPut(k, o);
-    delete annOrigView[k];
-    toast(o.e ? 'บันทึกฉบับที่แก้แล้ว — ต้นฉบับใน Doc ไม่ถูกแตะ' : 'ไม่มีอะไรเปลี่ยนจากต้นฉบับ');
-    annRerender();
+    annCommit(k, el, oc.innerHTML, h);
   }
 
+  /* บันทึกฉบับ h (ตอนแก้เสร็จ และตอนเลือกฉบับจากประวัติ) — oc = ต้นฉบับ (แช่แข็งแล้ว) */
+  function annCommit(k, el, oc, h) {
+    var prev = SH[k] || null, sync = annPlanSync(el, k, prev, oc, h);
+    var same = h === oc && !(sync && sync.st === 'wait');
+    if (same && !prev) { toast('ไม่มีอะไรเปลี่ยนจากต้นฉบับ'); annRerender(); return; }
+    shSave(k, same ? null : h, el._annBase, sync).then(function () {
+      if (sync && sync.st === 'wait') { annSyncTried[k] = 1; annSyncSend(k); }
+    });
+    delete annOrigView[k];
+    toast(same ? 'กลับไปใช้ต้นฉบับแล้ว' : sync ? 'บันทึกแล้ว — ทุกคนเห็น · กำลังลอกเข้าไฟล์ [AI] ใน Google' : 'บันทึกแล้ว — ทุกคนเห็นฉบับนี้');
+    annRerender();
+  }
   /* ---------- กล่องโน้ต ---------- */
   var annLayer = null;
   function annLayerEl() { if (!annLayer || !annLayer.isConnected) { annLayer = document.createElement('div'); annLayer.className = 'annlayer'; document.body.appendChild(annLayer); } return annLayer; }
   function annAnchorRect(el, id) {
-    var sp = el.querySelector('.annu[data-n="' + id + '"]');
+    var sp = el.querySelector('[data-n="' + id + '"]');
     if (!sp) return null;
     var rs = sp.getClientRects(); return rs.length ? rs[rs.length - 1] : null;
   }
@@ -3514,7 +3878,7 @@
   function annOpen(el, id, focus) {
     var k = el.getAttribute('data-ann'), o = annGet(k), nt = o.n.filter(function (x) { return x.id === id; })[0];
     if (!nt) return;
-    var sp = el.querySelector('.annu[data-n="' + id + '"]');
+    var sp = el.querySelector('[data-n="' + id + '"]');
     if (sp) annOpenAncestors(sp, el.parentElement);
     var L = annLayerEl(), box = L.querySelector('.annbox[data-box="' + id + '"]');
     if (!box) {
@@ -3529,7 +3893,7 @@
     if (focus) { var c = box.querySelector('.annx'); if (c) c.focus({ preventScroll: true }); }
   }
   function annBoxView(box, nt) {
-    box.innerHTML = '<div class="annbh"><span class="k">โน้ต</span><span class="annq">“' + esc(nt.q.length > 90 ? nt.q.slice(0, 90) + '…' : nt.q) + '”</span><button type="button" class="annx" data-annbox="close" aria-label="ปิดโน้ต">' +
+    box.innerHTML = '<div class="annbh"><span class="k">โน้ต</span><span class="annq">' + (nt.box ? '' : '“') + esc(nt.q.length > 90 ? nt.q.slice(0, 90) + '…' : nt.q) + (nt.box ? '' : '”') + '</span><button type="button" class="annx" data-annbox="close" aria-label="ปิดโน้ต">' +
       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6.3L18 17.6M18 6.2L6.2 17.8"/></svg></button></div>' +
       '<div class="annbody">' + esc(nt.t) + '</div>' +
       '<div class="annbf"><span class="muted">' + esc(fmtTime(new Date(nt.at || Date.now()))) + '</span><button type="button" class="chip" data-annbox="edit">แก้โน้ต</button><button type="button" class="chip" data-annbox="del">ลบ</button></div>';
@@ -3563,7 +3927,7 @@
     var sel = window.getSelection();
     if (!sel || sel.isCollapsed || !sel.rangeCount) { if (add && !add._busy) { add.remove(); annSelNow = null; } return; }
     var rg = sel.getRangeAt(0), el = annBoxOf(rg.startContainer);
-    if (!el || el !== annBoxOf(rg.endContainer) || el.classList.contains('annediting')) { if (add) add.remove(); annSelNow = null; return; }
+    if (!el || el !== annBoxOf(rg.endContainer) || el.classList.contains('annediting') || annMode(el) === 'box') { if (add) add.remove(); annSelNow = null; return; }
     var T = annTexts(el), s = annPos(T, rg.startContainer, rg.startOffset), e = annPos(T, rg.endContainer, rg.endOffset);
     while (s < e && /\s/.test(T.text.charAt(s))) s++;
     while (e > s && /\s/.test(T.text.charAt(e - 1))) e--;
@@ -3593,12 +3957,25 @@
       o.n.push(nt); annPut(k, o);
       box.remove(); annSelNow = null;
       try { window.getSelection().removeAllRanges(); } catch (e) { }
-      annUnwrap(S.el); annApply(S.el); annPaintBar(S.el); annPlaceAll();
+      annRefresh(S.el);
       toast('เพิ่มโน้ตแล้ว');
     });
     box._annCancel = function () { box.remove(); };
   }
 
+  function annBoxCompose(btn) {
+    var el = btn.closest('[data-ann]'), k = el.getAttribute('data-ann'), ukey = btn.getAttribute('data-annbadd');
+    var bx = el.querySelector('#u' + (window.CSS && CSS.escape ? CSS.escape(ukey) : ukey)), lab = bx && bx.querySelector('[aria-label]');
+    var title = lab ? lab.getAttribute('aria-label').replace(/^ขยายภาพ:\s*/, '') : ukey;
+    var L = annLayerEl(), box = document.createElement('div'); box.className = 'annbox compose'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Add note');
+    L.appendChild(box); annPlace(box, btn.getBoundingClientRect());
+    annComposer(box, title, '', function (v) {
+      var o = annGet(k);
+      o.n.push({ id: 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), box: ukey, q: title, t: v, at: Date.now() });
+      annPut(k, o); box.remove(); annRefresh(el); toast('เพิ่มโน้ตแล้ว');
+    });
+    box._annCancel = function () { box.remove(); };
+  }
   /* ---------- ปุ่มทั้งหมด (delegate) ---------- */
   document.addEventListener('click', function (e) {
     var t = e.target;
@@ -3615,22 +3992,33 @@
         box._annCancel = function () { annBoxView(box, nt); };
       } else if (act === 'del' && confirm('ลบโน้ตนี้?')) {
         o.n = o.n.filter(function (x) { return x.id !== id; }); annPut(k, o); box.remove();
-        if (el) { annUnwrap(el); annApply(el); annPaintBar(el); }
+        if (el) annRefresh(el);
       }
       return;
     }
-    var u = t.closest('.annu');
+    var u = t.closest('.annu,.annchip');
     if (u && !u.closest('.annediting')) { e.preventDefault(); annOpen(u.closest('[data-ann]'), u.getAttribute('data-n'), true); return; }
+    var ba = t.closest('[data-annbadd]');
+    if (ba) { annBoxCompose(ba); return; }
     var go = t.closest('[data-anngo]');
     if (go) {
       var bar0 = go.closest('.annbar'), el0 = bar0 && bar0.nextElementSibling;
-      if (el0) { var sp = el0.querySelector('.annu[data-n="' + go.getAttribute('data-anngo') + '"]'); if (sp) { annOpenAncestors(sp, el0.parentElement); sp.scrollIntoView({ block: 'center' }); annOpen(el0, go.getAttribute('data-anngo'), true); } }
+      if (el0) { var sp = el0.querySelector('[data-n="' + go.getAttribute('data-anngo') + '"]'); if (sp) { annOpenAncestors(sp, el0.parentElement); sp.scrollIntoView({ block: 'center' }); annOpen(el0, go.getAttribute('data-anngo'), true); } }
       return;
     }
     var dl = t.closest('[data-anndel]');
     if (dl) {
       var bar1 = dl.closest('.annbar'), el1 = bar1 && bar1.nextElementSibling;
-      if (el1 && confirm('ลบโน้ตนี้?')) { var k1 = el1.getAttribute('data-ann'), o1 = annGet(k1); o1.n = o1.n.filter(function (x) { return x.id !== dl.getAttribute('data-anndel'); }); annPut(k1, o1); annUnwrap(el1); annApply(el1); annPaintBar(el1); }
+      if (el1 && confirm('ลบโน้ตนี้?')) { var k1 = el1.getAttribute('data-ann'), o1 = annGet(k1); o1.n = o1.n.filter(function (x) { return x.id !== dl.getAttribute('data-anndel'); }); annPut(k1, o1); annRefresh(el1); }
+      return;
+    }
+    var use = t.closest('[data-annuse]');
+    if (use) {
+      if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน'); return; }
+      var hbx = use.closest('.annhist'), elU = hbx.closest('.annbar').nextElementSibling, kU = elU.getAttribute('data-ann'), hk = ANN_HOOK[kU.split(':')[0]];
+      var ocU = document.createElement('div'); ocU.innerHTML = elU._annOrig; if (hk && hk.freeze) hk.freeze(ocU); annClean(ocU);
+      var hv = hbx['_h' + use.getAttribute('data-annuse')];
+      if (confirm('ใช้ฉบับนี้แทนฉบับปัจจุบัน?')) annCommit(kU, elU, ocU.innerHTML, hv == null ? ocU.innerHTML : hv);
       return;
     }
     var a = t.closest('[data-annact]');
@@ -3642,7 +4030,15 @@
     else if (w === 'save') annSaveEdit(box2);
     else if (w === 'cancel') annRerender();
     else if (w === 'view') { if (annOrigView[key]) delete annOrigView[key]; else annOrigView[key] = 1; annRerender(); }
-    else if (w === 'reset') { if (confirm('คืนค่าต้นฉบับ? ที่แก้ไว้ในหน้านี้จะหาย (โน้ตยังอยู่)')) { var o2 = annGet(key); o2.e = null; annPut(key, o2); delete annOrigView[key]; annRerender(); } }
+    else if (w === 'reset') {
+      if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน'); return; }
+      if (confirm('คืนค่าต้นฉบับ? ทุกคนจะเห็นต้นฉบับ (ฉบับที่แก้ยังอยู่ในประวัติ · โน้ตยังอยู่)')) { shSave(key, null, ''); delete annOrigView[key]; annRerender(); }
+    }
+    else if (w === 'hist') {
+      var hb = bar.querySelector('.annhist'), op = hb.hidden;
+      if (op) shHistHTML(key, hb);
+      hb.hidden = !op; a.setAttribute('aria-expanded', String(op));
+    }
     else if (w === 'list') {
       var lst = bar.querySelector('.annlist'), open = lst.hidden;
       if (open) lst.innerHTML = annListHTML(box2);
@@ -3651,6 +4047,390 @@
   });
   document.addEventListener('keydown', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('annu')) { e.preventDefault(); e.target.click(); }
+  });
+
+  /* =========================================================
+     เขียนกลับเข้าไฟล์ Google ชื่อขึ้นต้น "[AI]" — ผ่าน Google Apps Script ของเจ้าของ (tools/ai-sync/Code.gs)
+     - แก้เนื้อหาบนเว็บ → คำนวณว่าข้อความย่อหน้าไหนเปลี่ยน/เพิ่ม/ลบ → ส่งไปให้สคริปต์ลอกเข้าไฟล์ตรงตัว
+     - สคริปต์ตรวจเองว่าคนส่งเป็นเจ้าของ (บัญชีที่อนุญาต) และไฟล์ชื่อขึ้นต้น [AI] จริง — ไฟล์อื่นไม่แตะ
+     - ยังส่งไม่ได้ (ยังไม่ตั้ง url / ยังไม่เข้าสู่ระบบ / เน็ตหลุด) → เก็บรอไว้ ส่งให้เองครั้งถัดไปที่เปิดหน้า
+     - ไฟล์อัปเดตแล้วและเว็บดึงฉบับใหม่มา (Doc ~10 นาที · ชีต 1000 โรค ทันที) → ฉบับที่แก้ในเว็บหายไปเอง เหลือต้นฉบับที่มีของที่แก้อยู่แล้ว
+     ========================================================= */
+  var ANN_SYNC_TXT = { wait: 'รอส่งเข้า Google', send: 'กำลังส่งเข้า Google…', ok: 'ส่งเข้า Google แล้ว', err: 'ส่งเข้า Google ไม่สำเร็จ', notai: 'ไฟล์ต้นทางไม่ใช่ [AI] — แก้แค่ในเว็บ' };
+  var annSyncTried = {};
+  function aiUrl() { return (C.aiSync && C.aiSync.url) || ''; }
+  function annTarget(k) {
+    var i = k.indexOf(':'), pre = k.slice(0, i), rest = k.slice(i + 1);
+    if (pre === 'g' && G.st === 'ready') {
+      var n = G.by[rest];
+      if (!n || n.kind !== 'doc') return null;
+      if (gNodeFile(n)) return { kind: 'doc', id: GD.main.id, path: gPath(n).map(function (x) { return x.dtitle || x.title; }) };
+      var ex = (GD.extras || []).filter(function (e) { return e.id && e.snap.replace(/^.*\/|\.json$/g, '') === n.src; })[0];
+      return ex ? { kind: 'doc', id: ex.id, path: [n.title] } : null;
+    }
+    if (pre === 'd' && C.sheet && C.sheet.id) {
+      var d = findDisease(rest);
+      return d && d.row && !d.pend ? { kind: 'sheet', id: C.sheet.id, gid: String(C.sheet.gid || '0'), row: d.row } : null;
+    }
+    return null;
+  }
+  function annNorm(t) { return String(t || '').replace(/[ ​ ]/g, ' ').replace(/\s+/g, ' ').trim(); }
+  var ANN_BLK = 'p,h1,h2,h3,h4,h5,h6,li,td,th,dt,dd,div';
+  function annBlocks(html) {
+    var div = document.createElement('div'); div.innerHTML = html;
+    div.querySelectorAll('style,script,.annbb').forEach(function (x) { x.remove(); });
+    var out = [];
+    div.querySelectorAll(ANN_BLK).forEach(function (b) {
+      if (b.querySelector(ANN_BLK)) return;
+      if (b.tagName === 'DIV' && !annNorm(b.textContent)) return;
+      out.push({ k: b.tagName.toLowerCase(), t: annNorm(b.textContent), raw: b.textContent.replace(/[  ]/g, ' ').replace(/​/g, '').replace(/\n+/g, ' ').trim() });
+    });
+    return out;
+  }
+  /* diff ระดับย่อหน้า (LCS หลังตัดหัวท้ายที่ตรงกัน) → [['=',i,j] | ['-',i] | ['+',j]] */
+  function annDiff(A, B) {
+    var s = 0, ea = A.length, eb = B.length, out = [], i, j;
+    while (s < ea && s < eb && A[s] === B[s]) s++;
+    while (ea > s && eb > s && A[ea - 1] === B[eb - 1]) { ea--; eb--; }
+    for (i = 0; i < s; i++) out.push(['=', i, i]);
+    var n = ea - s, m = eb - s;
+    if (n * m > 4e6) { for (i = s; i < ea; i++) out.push(['-', i]); for (j = s; j < eb; j++) out.push(['+', j]); }
+    else {
+      var L = []; for (i = 0; i <= n; i++) L.push(new Uint16Array(m + 1));
+      for (i = n - 1; i >= 0; i--) for (j = m - 1; j >= 0; j--) L[i][j] = A[s + i] === B[s + j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+      i = 0; j = 0;
+      while (i < n && j < m) {
+        if (A[s + i] === B[s + j]) { out.push(['=', s + i, s + j]); i++; j++; }
+        else if (L[i + 1][j] >= L[i][j + 1]) { out.push(['-', s + i]); i++; }
+        else { out.push(['+', s + j]); j++; }
+      }
+      for (; i < n; i++) out.push(['-', s + i]);
+      for (; j < m; j++) out.push(['+', s + j]);
+    }
+    for (i = 0; ea + i < A.length; i++) out.push(['=', ea + i, eb + i]);
+    return out;
+  }
+  function annDocOps(oldHTML, newHTML) {
+    var A = annBlocks(oldHTML), B = annBlocks(newHTML), ops = [];
+    var At = A.map(function (x) { return x.t; }), Bt = B.map(function (x) { return x.t; });
+    function ref(i) { var c = 0; for (var x = 0; x < i; x++) if (At[x] === At[i]) c++; return { old: At[i], n: c }; }
+    var sc = annDiff(At, Bt), last = -1, k = 0;
+    while (k < sc.length) {
+      if (sc[k][0] === '=') { last = sc[k][1]; k++; continue; }
+      var dels = [], adds = [];
+      while (k < sc.length && sc[k][0] !== '=') { (sc[k][0] === '-' ? dels : adds).push(sc[k][1]); k++; }
+      var pair = Math.min(dels.length, adds.length), q;
+      for (q = 0; q < pair; q++) ops.push({ t: 'mod', at: ref(dels[q]), text: B[adds[q]].raw });
+      for (q = pair; q < dels.length; q++) ops.push({ t: 'del', at: ref(dels[q]) });
+      if (adds.length > pair) {
+        var anchor = pair ? dels[pair - 1] : last, next = k < sc.length ? sc[k][1] : -1;
+        ops.push({ t: 'ins', after: anchor >= 0 ? ref(anchor) : null, before: anchor < 0 && next >= 0 ? ref(next) : null,
+          items: adds.slice(pair).map(function (j2) { return { text: B[j2].raw, k: B[j2].k }; }) });
+      }
+      if (dels.length) last = dels[dels.length - 1];
+    }
+    return ops;
+  }
+  /* ช่องในชีต: html ของกล่อง data-col → ค่าในช่อง (บรรทัด, "- " = bullet, ตัวหนา = **…**) */
+  function annCellText(box) {
+    var lines = [];
+    function inl(n) {
+      if (n.nodeType === 3) return n.data;
+      if (n.nodeType !== 1 || n.classList.contains('annbb')) return '';
+      if (n.tagName === 'BR') return '\n';
+      var t = Array.prototype.map.call(n.childNodes, inl).join('');
+      return /^(B|STRONG)$/.test(n.tagName) && t.trim() ? '**' + t + '**' : t;
+    }
+    Array.prototype.forEach.call(box.childNodes, function (n) {
+      if (n.nodeType === 1 && /^(UL|OL)$/.test(n.tagName)) Array.prototype.forEach.call(n.children, function (li) { lines.push('- ' + inl(li)); });
+      else inl(n).split('\n').forEach(function (l) { lines.push(l); });
+    });
+    return lines.map(function (l) { return l.replace(/[ ​]/g, ' ').replace(/[ \t]+/g, ' ').trim(); }).filter(function (l) { return l && l !== '-'; }).join('\n');
+  }
+  function annCells(html) {
+    var div = document.createElement('div'); div.innerHTML = html; annUnwrap(div);
+    var m = {}; div.querySelectorAll('[data-col]').forEach(function (b) { m[b.getAttribute('data-col')] = annCellText(b); });
+    return m;
+  }
+  function annCellOps(oldHTML, newHTML) {
+    var a = annCells(oldHTML), b = annCells(newHTML), ops = [];
+    Object.keys(b).forEach(function (j) { if (a[j] !== b[j]) ops.push({ t: 'cell', col: +j, value: b[j] }); });
+    return ops;
+  }
+  function annSame(tg, h1, h2) {
+    if (tg.kind === 'sheet') return JSON.stringify(annCells(h1)) === JSON.stringify(annCells(h2));
+    return annBlocks(h1).map(function (x) { return x.t; }).join('\n') === annBlocks(h2).map(function (x) { return x.t; }).join('\n');
+  }
+  /* ตอนบันทึกฉบับที่แก้: เตรียมสิ่งที่ต้องส่งเข้าไฟล์ (เทียบกับสิ่งที่ไฟล์มีอยู่ตอนนี้) */
+  function annPlanSync(el, k, prevE, origClean, h) {
+    var tg = annTarget(k);
+    if (!tg) return null;
+    var ps = prevE && prevE.sync;
+    var base = ps && ps.st === 'ok' ? prevE.h : origClean;   /* ส่งรอบก่อนเข้าไฟล์แล้ว → ไฟล์ตอนนี้ = ฉบับที่แก้ครั้งก่อน */
+    var ops = tg.kind === 'sheet' ? annCellOps(base, h) : annDocOps(base, h);
+    if (!ops.length) return ps && ps.st !== 'ok' ? null : ps || null;
+    return { st: 'wait', tg: tg, ops: ops, at: Date.now() };
+  }
+  function annSyncMark(k, st, msg, local) {
+    var e = SH[k]; if (!e || !e.sync) return;
+    e.sync.st = st; e.sync.msg = msg || '';
+    if (st === 'ok') { delete e.sync.ops; e.sync.done = Date.now(); }
+    shCache(k, e);
+    if (!local && FB && FB.user) FB.fs.updateDoc(shRef(k), { sync: e.sync }).catch(function (x) { console.warn('sync mark', x); });
+    document.querySelectorAll(annSel$(k)).forEach(function (el) { el._annSync = st; el._annSyncMsg = msg || ''; annPaintBar(el); });
+  }
+  function aiPost(body) {
+    return FB.user.getIdToken().then(function (tok) {
+      body.token = tok;
+      return fetch(aiUrl(), { method: 'POST', body: JSON.stringify(body) });   /* text/plain = ไม่มี preflight — Apps Script รับได้ */
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+  }
+  function annSyncSend(k) {
+    var sy = SH[k] && SH[k].sync;
+    if (!sy || !sy.ops || !(sy.st === 'wait' || sy.st === 'err' || sy.st === 'send')) return;
+    if (!aiUrl()) { annSyncMark(k, 'wait', 'ยังไม่ได้ตั้งตัวเชื่อม Google (Apps Script) — ตั้งแล้วจะส่งให้เอง', true); return; }
+    if (!FB || !FB.user) { annSyncMark(k, sy.st, 'รอคนที่เข้าสู่ระบบเปิดหน้านี้ แล้วจะส่งให้เอง', true); return; }
+    claim(shRef(k), 'sync.st').then(function () {
+      annSyncMark(k, 'send', '', true);
+      return aiPost({ target: sy.tg, ops: sy.ops });
+    }).then(function (res) {
+      if (res.notai) annSyncMark(k, 'notai', 'ชื่อไฟล์ไม่ขึ้นต้น [AI] — สคริปต์ไม่แตะไฟล์นี้');
+      else if (res.ok && !(res.miss || []).length) annSyncMark(k, 'ok');
+      else annSyncMark(k, 'err', res.error || ('หาตำแหน่งในไฟล์ไม่เจอ ' + (res.miss || []).length + ' จุด: ' + (res.miss || []).slice(0, 3).join(' · ')));
+    }).catch(function (e) { if (e && /taken|gone/.test(e.message)) return; annSyncMark(k, 'err', e.message || String(e)); });
+  }
+
+  /* ตอนเปิดหน้า: ส่งของที่ค้าง · ไฟล์มีของที่แก้แล้ว → เลิกใช้ฉบับในเว็บ */
+  function annSyncOnMount(el, k, e) {
+    var sy = e.sync;
+    el._annSync = sy ? sy.st : ''; el._annSyncMsg = sy ? sy.msg || '' : '';
+    if (!sy) return false;
+    /* ไฟล์มีของที่แก้แล้ว (สคริปต์หรือ Claude ลอกให้) → เลิกใช้ฉบับในเว็บ */
+    if (sy.st !== 'notai' && annSame(sy.tg, el._annOrig, e.h)) {
+      SH[k] = null; shCache(k, null); el._annSync = '';
+      if (FB && FB.user) FB.fs.setDoc(shRef(k), { k: k, h: null, b: '', by: FB.user.uid, name: who(FB.user), at: FB.fs.serverTimestamp(), sync: null }).catch(function () { });
+      return true;
+    }
+    if ((sy.st === 'wait' || sy.st === 'err' || sy.st === 'send') && !annSyncTried[k]) { annSyncTried[k] = 1; setTimeout(function () { annSyncSend(k); }, 600); }
+    return false;
+  }
+
+  /* เข้าสู่ระบบแล้ว: ส่งทุกอย่างที่ค้าง (ของทุกคน ทุกหน้า — ไม่ต้องเปิดหน้านั้น) */
+  function annSyncAllPending() {
+    if (!FB || !FB.user || !aiUrl()) return;
+    FB.fs.getDocs(FB.fs.query(FB.fs.collection(FB.db, 'poymor_edit'), FB.fs.where('sync.st', 'in', ['wait', 'err', 'send']))).then(function (qs) {
+      qs.forEach(function (d) { var x = d.data(), k = x.k; if (!k) return; var rec = shRec(x); if (!rec) return; SH[k] = rec; shCache(k, rec); if (!annSyncTried[k]) { annSyncTried[k] = 1; annSyncSend(k); } });
+    }).catch(function (e) { console.warn('pending edits', e); });
+    stFlush();
+  }
+
+
+  /* =========================================================
+     โครงสร้างที่ทุกคนเพิ่ม/ลบ/เปลี่ยนชื่อได้ (แชร์) — Firestore poymor_struct/<id>
+     act: addtab {title, parent:<slug แม่>|'', ppath:[ชื่อแท็บแม่ในไฟล์…]} · rentab {slug, path, title} · deltab {slug, path}
+          adddis {name, vals:[ค่าต่อคอลัมน์ของชีต]} · deldis {name, row}
+     st:  wait → ok (ลอกเข้าไฟล์แล้ว) · manual (สคริปต์ทำไม่ได้ — คำสั่ง //update ggfile reverse all บอกว่าต้องทำอะไร) · err · notai · web (แก้แค่ในเว็บ)
+     เมื่อไฟล์มีของนั้นแล้วและเว็บดึงฉบับใหม่มา รายการนี้ลบตัวเองทิ้ง
+     ========================================================= */
+  var STRUCT = [], stUnsub = null, stSending = {};
+  try { STRUCT = JSON.parse(localStorage.getItem('poy-struct') || '[]') || []; } catch (e) { STRUCT = []; }
+  function tsMs(x) { return x && x.toMillis ? x.toMillis() : x && x.seconds ? x.seconds * 1000 : +x || 0; }
+  function stInit() {
+    if (stUnsub || !FB) return;
+    stUnsub = FB.fs.onSnapshot(FB.fs.collection(FB.db, 'poymor_struct'), function (qs) {
+      var l = [];
+      qs.forEach(function (d) { var x = d.data({ serverTimestamps: 'estimate' }); x.id = d.id; x.at = tsMs(x.at); l.push(x); });
+      l.sort(function (a, b) { return a.at - b.at; });
+      STRUCT = l;
+      try { localStorage.setItem('poy-struct', JSON.stringify(l)); } catch (e) { }
+      stChanged();
+    }, function (e) { console.warn('poymor_struct', e); });
+  }
+  function stChanged() {
+    if (G.st === 'ready') gBuild();
+    if (D.rows) D.list = maiMerge();
+    stClean();
+    var n = route().name;
+    if (!annEditing() && (n === 'kb' || n === 'diseases' || n === 'disease' || n === '' || n === 'search')) render(true);
+    stFlush();
+  }
+  function stOf(act) { return STRUCT.filter(function (x) { return x.act === act; }); }
+  function stAdd(rec, then) {
+    if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน — เพิ่ม/ลบ/เปลี่ยนชื่อแล้วทุกคนเห็น'); return; }
+    rec.by = FB.user.uid; rec.byName = who(FB.user); rec.at = FB.fs.serverTimestamp();
+    rec.st = rec.st || 'wait'; rec.msg = '';
+    FB.fs.addDoc(FB.fs.collection(FB.db, 'poymor_struct'), rec).then(function (ref) { if (then) then(ref.id); })
+      .catch(function (e) { toast('บันทึกไม่สำเร็จ: ' + errMsg(e)); });
+  }
+  function stRef(id) { return FB.fs.doc(FB.db, 'poymor_struct', id); }
+  function stDel(id) { if (FB && FB.user) FB.fs.deleteDoc(stRef(id)).catch(function () { }); }
+  /* จองงาน (กันสองเครื่องส่งซ้ำ) — สำเร็จ = เครื่องนี้เป็นคนส่ง */
+  function claim(ref, field) {
+    return FB.fs.runTransaction(FB.db, function (tx) {
+      return tx.get(ref).then(function (d) {
+        if (!d.exists()) throw new Error('gone');
+        var v = d.data(), cur = field === 'sync.st' ? (v.sync || {}).st : v.st, at = tsMs(field === 'sync.st' ? (v.sync || {}).claimAt : v.claimAt);
+        if (!(cur === 'wait' || cur === 'err' || (cur === 'send' && Date.now() - at > 120000))) throw new Error('taken');
+        var up = {}; up[field] = 'send'; up[field === 'sync.st' ? 'sync.claimAt' : 'claimAt'] = Date.now();
+        tx.update(ref, up);
+      });
+    });
+  }
+  function stOp(x) {
+    var sheetT = { kind: 'sheet', id: C.sheet && C.sheet.id, gid: String((C.sheet && C.sheet.gid) || '0') };
+    var docT = { kind: 'doc', id: GD && GD.main.id };
+    if (x.act === 'addtab') return { target: docT, ops: [{ t: 'addtab', path: x.ppath || [], title: x.title }] };
+    if (x.act === 'rentab') return { target: docT, ops: [{ t: 'rentab', path: x.path, title: x.title }] };
+    if (x.act === 'deltab') return { target: docT, ops: [{ t: 'deltab', path: x.path }] };
+    if (x.act === 'adddis') return { target: sheetT, ops: [{ t: 'append', values: x.vals, nameCol: D.layout ? D.layout.role.name.j : 1 }] };
+    if (x.act === 'deldis') return { target: sheetT, ops: [{ t: 'delrow', row: x.row, name: x.name, nameCol: D.layout ? D.layout.role.name.j : 1 }] };
+    return null;
+  }
+  function stFlush() {
+    if (!FB || !FB.user || !aiUrl()) return;
+    STRUCT.forEach(function (x) {
+      if (!(x.st === 'wait' || x.st === 'err' || (x.st === 'send' && Date.now() - tsMs(x.claimAt) > 120000)) || stSending[x.id]) return;
+      var body = stOp(x); if (!body || !body.target.id) return;
+      stSending[x.id] = 1;
+      claim(stRef(x.id), 'st').then(function () { return aiPost(body); }).then(function (res) {
+        var st = res.notai ? 'notai' : res.manual ? 'manual' : res.ok && !(res.miss || []).length ? 'ok' : 'err';
+        return FB.fs.updateDoc(stRef(x.id), { st: st, msg: res.error || res.note || (res.miss || []).join(' · ') || '' });
+      }).catch(function (e) {
+        if (e && /taken|gone/.test(e.message)) return;
+        FB.fs.updateDoc(stRef(x.id), { st: 'err', msg: e.message || String(e) }).catch(function () { });
+      }).then(function () { delete stSending[x.id]; });
+    });
+  }
+  /* ไฟล์มีของนั้นแล้ว (เว็บดึงฉบับใหม่มา) → ลบรายการทิ้ง */
+  function gMainByPath(path) {
+    if (G.st !== 'ready' || !path) return null;
+    var level = G.nodes.filter(function (n) { return n.src === 'main' && !n.parent; }), hit = null;
+    path.forEach(function (t, i) {
+      hit = level.filter(function (n) { return (n.dtitle || n.title) === t; })[0] || null;
+      level = hit ? hit.kids.filter(function (k) { return k.src === 'main'; }) : [];
+      if (!hit) path = [];
+    });
+    return hit;
+  }
+  function stClean() {
+    if (!FB || !FB.user) return;
+    var gOk = G.st === 'ready' && G.main && G.main.at, mOk = D.src === 'sheet' && D.base;
+    STRUCT.forEach(function (x) {
+      if (x.st === 'web') return;
+      if (gOk && x.act === 'addtab' && gMainByPath((x.ppath || []).concat([x.title]))) stDel(x.id);
+      else if (gOk && x.act === 'rentab' && !gMainByPath(x.path) && gMainByPath(x.path.slice(0, -1).concat([x.title]))) stDel(x.id);
+      else if (gOk && x.act === 'deltab' && !gMainByPath(x.path)) stDel(x.id);
+      else if (mOk && x.act === 'adddis' && D.base.some(function (d) { return d.name.trim().toLowerCase() === x.name.trim().toLowerCase(); })) stDel(x.id);
+      else if (mOk && x.act === 'deldis' && !D.base.some(function (d) { return d.name.trim().toLowerCase() === x.name.trim().toLowerCase(); })) stDel(x.id);
+    });
+  }
+  /* แท็บที่สร้าง/เปลี่ยนชื่อ/ลบในเว็บ → ใส่ลงต้นไม้ของ Medical Soil (เรียกจาก gBuild) */
+  function gStructApply(tops, add, by) {
+    var gone = {};
+    STRUCT.forEach(function (x) {
+      if (x.act === 'addtab') {
+        var parent = x.parent ? by[x.parent] : null;
+        if (x.parent && !parent) return;
+        var sibs = parent ? parent.kids : tops;
+        if (sibs.some(function (k) { return (k.dtitle || k.title) === x.title && !k.web; })) return;   /* ไฟล์มีแท็บนี้แล้ว */
+        var n = add({ title: x.title, dtitle: x.title, html: '', heads: [], kids: [], kind: 'doc', src: parent && parent.src !== 'main' && parent.src !== 'web' ? parent.src : 'web', slug: 'w-' + x.id, web: x });
+        if (parent) { n.parent = parent; parent.kids.push(n); } else tops.push(n);
+      } else if (x.act === 'rentab') {
+        var r = by[x.slug]; if (r && r.title !== x.title) { r.title = x.title; r.ren = x; }
+      } else if (x.act === 'deltab') {
+        var d = by[x.slug]; if (d) gone[d.slug] = 1;
+      }
+    });
+    function drop(list) { for (var i = list.length - 1; i >= 0; i--) { if (gone[list[i].slug]) list.splice(i, 1); else drop(list[i].kids); } }
+    drop(tops);
+    return gone;
+  }
+  /* ปุ่มเพิ่ม/เปลี่ยนชื่อ/ลบแท็บ */
+  function gTabTools(n) {
+    var st = n.web ? n.web.st : n.ren ? n.ren.st : '';
+    var T = { wait: 'รอสร้างในไฟล์', send: 'กำลังส่ง…', manual: 'ต้องสร้างในไฟล์เอง', err: 'ส่งไม่สำเร็จ', ok: 'สร้างในไฟล์แล้ว รออัปเดต', notai: 'ไฟล์ไม่ใช่ [AI]', web: 'อยู่แค่ในเว็บ' };
+    return '<div class="tabtools"><button type="button" class="chip" data-stact="sub" data-slug="' + esc(n.slug) + '">+ แท็บย่อย</button>' +
+      '<button type="button" class="chip" data-stact="ren" data-slug="' + esc(n.slug) + '">เปลี่ยนชื่อ</button>' +
+      '<button type="button" class="chip" data-stact="del" data-slug="' + esc(n.slug) + '">ลบแท็บ</button>' +
+      (n.web ? '<span class="annflag' + (st === 'ok' ? '' : ' stale') + '" title="' + esc(n.web.msg || '') + '">แท็บใหม่ · ' + (T[st] || st) + '</span>' : '') +
+      (n.ren ? '<span class="annflag stale" title="' + esc(n.ren.msg || '') + '">เปลี่ยนชื่อ · ' + (T[st] || st) + '</span>' : '') + '</div>';
+  }
+  function gNodeFile(n) { var p = gPath(n); return p.every(function (x) { return x.src === 'main' || x.src === 'web'; }); }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-stact]'); if (!b) return;
+    if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน — เพิ่ม/ลบ/เปลี่ยนชื่อแล้วทุกคนเห็น'); return; }
+    var act = b.getAttribute('data-stact'), n = G.by[b.getAttribute('data-slug')], title;
+    var dpath = function (x) { return gPath(x).map(function (y) { return y.dtitle || y.title; }); };
+    if (act === 'top' || act === 'sub') {
+      title = (prompt(act === 'top' ? 'ชื่อหมวดใหม่ (แท็บใหญ่)' : 'ชื่อแท็บย่อยใหม่ใต้ "' + n.title + '"') || '').trim();
+      if (!title) return;
+      var inFile = act === 'top' || gNodeFile(n);
+      stAdd({ act: 'addtab', title: title, parent: act === 'top' ? '' : n.slug, ppath: act === 'top' ? [] : dpath(n), st: inFile ? 'wait' : 'web' }, function (id) { toast('เพิ่มแท็บ "' + title + '" แล้ว'); location.hash = '#/kb/w-' + id; });
+    } else if (act === 'ren' && n) {
+      title = (prompt('ชื่อใหม่ของแท็บ "' + n.title + '"', n.title) || '').trim();
+      if (!title || title === n.title) return;
+      if (n.web && n.web.st !== 'ok') { FB.fs.updateDoc(stRef(n.web.id), { title: title }).catch(function (x) { toast(errMsg(x)); }); return; }
+      stAdd({ act: 'rentab', slug: n.slug, path: dpath(n), title: title, st: gNodeFile(n) ? 'wait' : 'web' });
+    } else if (act === 'del' && n) {
+      if (!confirm('ลบแท็บ "' + n.title + '"' + (n.kids.length ? ' และแท็บย่อยทั้งหมด (' + n.kids.length + ')' : '') + '? ' + (gNodeFile(n) && !n.web ? 'แท็บในไฟล์ [AI] จะถูกลบด้วย' : ''))) return;
+      if (n.web && n.web.st !== 'ok') { stDel(n.web.id); gFlat(n).forEach(function (k) { if (k.web) stDel(k.web.id); }); location.hash = n.parent ? gHref(n.parent) : '#/kb'; return; }
+      stAdd({ act: 'deltab', slug: n.slug, path: dpath(n), st: gNodeFile(n) ? 'wait' : 'web' }, function () { location.hash = n.parent ? gHref(n.parent) : '#/kb'; });
+    }
+  });
+
+  /* ---------- 1000 MAI: โรคที่เพิ่ม/ลบในเว็บ ---------- */
+  function maiStruct(rows) { D.rows = rows; return maiMerge(); }
+  function maiMerge() {
+    var base = build(D.rows), names = {};
+    D.base = base;
+    base.forEach(function (d) { names[d.name.trim().toLowerCase()] = 1; });
+    var adds = stOf('adddis').filter(function (x) { return !names[x.name.trim().toLowerCase()]; });
+    var list = adds.length ? build(D.rows.concat(adds.map(function (x) { return x.vals; }))) : base;
+    var pend = {}; adds.forEach(function (x) { pend[x.name.trim().toLowerCase()] = x; });
+    var del = {}; stOf('deldis').forEach(function (x) { del[x.name.trim().toLowerCase()] = x; });
+    list.forEach(function (d) { var k = d.name.trim().toLowerCase(); if (pend[k] && d.row > D.rows.length) d.pend = pend[k]; });
+    return list.filter(function (d) { return !del[d.name.trim().toLowerCase()]; });
+  }
+  function maiNewPage() {
+    var Lx = D.layout;
+    var head = '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/diseases">1000 MAI</a><span class="muted"> › </span><span>เพิ่มโรค</span></nav><h1 style="font-size:clamp(36px,5vw,56px)">เพิ่มโรคใหม่</h1>' +
+      '<p class="lede">กรอกเท่าที่มี — บันทึกแล้วทุกคนเห็น และเขียนเป็นแถวใหม่ใน Google Sheet "[AI] 1000 โรค" ให้เอง</p></div></section>';
+    if (!Lx) return { title: 'เพิ่มโรค', html: head + '<section class="wrap" style="padding-bottom:80px"><p class="muted">' + (D.loading ? '<span class="spin" aria-hidden="true"></span> กำลังดึงชีต…' : 'ยังอ่านหัวตารางของชีตไม่ได้') + '</p></section>' };
+    var opts = {}; ['ward', 'type', 'gen', 'onset'].forEach(function (k) { opts[k] = optsOf(k); });
+    var f = Lx.cols.filter(function (c) { return c.role !== 'seen' && c.role !== 'no'; }).map(function (c) {
+      var id = 'nf' + c.j, lab = '<label for="' + id + '" class="k" style="font-size:15px;font-weight:500">' + esc(c.label) + (c.role === 'name' ? ' *' : '') + '</label>';
+      if (opts[c.role]) return '<div class="nfr">' + lab + '<select id="' + id + '" data-j="' + c.j + '"><option value="">—</option>' + opts[c.role].map(function (v) { return '<option>' + esc(v) + '</option>'; }).join('') + '</select></div>';
+      if (c.role === 'name' || c.role === 'icd' || c.role === 'sys' || c.role === 'prog') return '<div class="nfr">' + lab + '<input id="' + id + '" data-j="' + c.j + '"' + (c.role === 'name' ? ' required' : '') + (c.role === 'sys' || c.role === 'prog' ? ' placeholder="หลายค่าคั่นด้วย ,"' : '') + '></div>';
+      return '<div class="nfr">' + lab + '<textarea id="' + id + '" data-j="' + c.j + '" rows="3" placeholder="ขึ้นบรรทัดใหม่ด้วย - = bullet"></textarea></div>';
+    }).join('');
+    return {
+      title: 'เพิ่มโรค', html: head + '<section class="wrap" style="padding-bottom:80px"><form class="sheet nform" id="nform">' + f +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="submit">บันทึกโรคนี้</button><a class="btn ghost" href="#/diseases">ยกเลิก</a></div></form></section>',
+      after: function () {
+        document.getElementById('nform').addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน'); return; }
+          var vals = [];
+          for (var j = 0; j < Lx.width; j++) vals.push('');
+          this.querySelectorAll('[data-j]').forEach(function (x) { vals[+x.getAttribute('data-j')] = x.value.trim(); });
+          var name = vals[Lx.role.name.j];
+          if (!name) { toast('ใส่ชื่อโรคก่อน'); return; }
+          if (D.list.some(function (d) { return d.name.trim().toLowerCase() === name.toLowerCase(); }) && !confirm('มี "' + name + '" อยู่แล้ว — เพิ่มซ้ำอีกแถว?')) return;
+          stAdd({ act: 'adddis', name: name, vals: vals, st: C.sheet && C.sheet.id ? 'wait' : 'web' }, function () { toast('เพิ่ม ' + name + ' แล้ว'); location.hash = '#/diseases'; });
+        });
+      }
+    };
+  }
+  function maiDelBtn(d) {
+    return '<button type="button" class="btn ghost" data-maidel="' + esc(d.name) + '" data-row="' + d.row + '">ลบโรคนี้</button>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-maidel]'); if (!b) return;
+    var name = b.getAttribute('data-maidel'), d = D.list.filter(function (x) { return x.name === name; })[0];
+    if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน'); return; }
+    if (!confirm('ลบ "' + name + '" ออกจาก 1000 MAI? (แถวในชีต [AI] 1000 โรค จะถูกลบด้วย)')) return;
+    if (d && d.pend) { stDel(d.pend.id); location.hash = '#/diseases'; return; }
+    stAdd({ act: 'deldis', name: name, row: +b.getAttribute('data-row') }, function () { toast('ลบ ' + name + ' แล้ว'); location.hash = '#/diseases'; });
   });
 
   /* Symptomatology: algorithm ในบทเป็นของ interactive — ตอนแก้ล็อกไว้ และเก็บเป็นตัวแทน แล้วสร้างใหม่ตอนเปิด */

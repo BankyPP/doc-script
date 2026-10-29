@@ -852,3 +852,43 @@ a.kbtag:hover{background:var(--hover);color:var(--ink)}
 .annbox textarea:focus{outline:2px solid var(--moss);outline-offset:1px}
 .annadd{position:absolute;min-height:40px;padding:0 14px;font-size:14px;box-shadow:0 10px 24px -12px rgba(30,38,32,.6);white-space:nowrap}
 @media print{.annbar,.annlayer{display:none!important}.annu{text-decoration:none}}
+
+/* ===== แก้/เพิ่ม/ลบได้ทุกคน · ช่องว่างใน 1000 MAI ===== */
+.annempty{display:none}
+.annediting .annempty{display:block}
+.annediting section.entry.annempty{display:grid}
+.annediting [data-ph]:empty::before{content:attr(data-ph);color:var(--muted);font-style:italic}
+.annediting [data-col]{min-height:1.6em;border-bottom:1px dashed var(--rule-3)}
+.annhist .annli{min-height:46px}
+.tabtools{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.tabtools .chip{min-height:34px;padding:0 12px;font-size:13px}
+.nform{padding:clamp(18px,3vw,32px);display:flex;flex-direction:column;gap:16px;max-width:820px}
+.nfr{display:flex;flex-direction:column;gap:6px}
+.nfr input,.nfr select,.nfr textarea{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--rule-3);border-radius:8px;background:var(--sheet-hi);color:var(--ink);width:100%}
+/* โน้ตทั้งกล่อง (Random Topic Summary) */
+.annbb{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 14px}
+.annchip,.annplus{font-family:'Sarabun',sans-serif;font-size:14px;display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:4px 12px;border-radius:999px;border:1px solid var(--rule-3);background:var(--sheet);color:var(--ink);cursor:pointer;max-width:100%}
+.annchip{border-color:var(--sienna);background:#F7E9E2}
+.annchip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.annplus{font-family:'Kanit',sans-serif;font-weight:500;font-size:13px;color:var(--muted);border-style:dashed}
+.annchip:hover,.annplus:hover{background:var(--hover)}
+/* ===== ค้นทั้งเว็บ ===== */
+.rtype{font-family:'Kanit',sans-serif;font-weight:500;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--moss-bg);color:var(--moss-dk);white-space:nowrap}
+.rtype.note{background:#F4E2DA;color:var(--sienna-dk)}
+.rtype.disease{background:#F1E1D6;color:#7A3A20}
+.rtype.exam{background:#F3E8C9;color:#6E5214}
+.rtype.post{background:#E3E6EA;color:#3A4450}
+.sinfo{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px}
+.sresults{display:flex;flex-direction:column;gap:10px}
+.sres{display:flex;flex-direction:column;gap:6px;padding:14px 18px;text-decoration:none;color:var(--ink);border-left:4px solid var(--c)}
+.sres:hover{background:var(--sheet-hi);color:var(--ink)}
+.srh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.srp{font-size:13px;overflow-wrap:anywhere}
+.srt{font-size:18px;font-weight:500;overflow-wrap:anywhere}
+.srs{font-size:15px;color:var(--ink-2);overflow-wrap:anywhere}
+.srs mark,.sxres mark{background:#F3E2A9;color:inherit;border-radius:2px}
+.srtags{display:flex;flex-wrap:wrap;gap:6px}
+.pill.rel{border-color:var(--sienna);color:var(--sienna-dk)}
+.sxres .rtype{font-size:11px}
+.gdoc[data-ann]:empty{min-height:0}.annediting.gdoc:empty{min-height:120px}
+.annediting[data-ph]:empty::before{content:attr(data-ph);color:var(--muted);font-style:italic}

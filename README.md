@@ -26,12 +26,40 @@
 - **กฎอัปไฟล์:** ไม่ถามว่า pre-clinic หรือ clinic — ถามว่าเรื่องนี้ system อะไร → ใส่แท็บ system นั้น แล้วติดป้ายวอร์ดถ้ามาจากวอร์ด · ไฟล์ที่ครอบหลาย system (สรุปทั้งวอร์ด) → ใต้แท็บ "Clinic"
 - ลิงก์เก่า `#/preclinic/…` และ `#/clinic/…` ส่งต่อมาที่ `#/kb/…` เอง
 
-## โน้ต + แก้เนื้อหา (ทุกหน้าที่เป็นเนื้อหา)
-- กล่องเนื้อหาที่มี `data-ann="<key>"`: แท็บจาก Doc/ชีต `g:<แท็บ>` · บท Symptomatology `y:<บท>` · โรคใน 1000 MAI `d:<id>` · สรุป NL `n:<id>` · Approach `c:<id>` (สรุปใน Random Topic Summary เป็นภาพ — เลือกข้อความไม่ได้)
-- **Add note:** เลือกข้อความ → ปุ่ม Add note → พิมพ์ → ตรงนั้นขีดเส้นใต้ · กดเส้นใต้ = กล่องโน้ต (แก้/ลบได้) ปิดเมื่อกด ✕ หรือออกจากหน้า · ปุ่ม "โน้ต n" = รายการโน้ตทั้งหน้า (กดแล้วไปที่ตำแหน่ง) · โน้ตผูกกับข้อความ + ข้อความรอบ ๆ ถ้าต้นฉบับเปลี่ยนจนหาไม่เจอจะขึ้นว่า "หาไม่เจอ"
-- **แก้เนื้อหา:** พิมพ์แก้ตรงไหนก็ได้ → บันทึกเป็นฉบับของเราเอง **Google Doc / Sheet ไม่ถูกแตะ** · "ดูต้นฉบับ" สลับดู · "คืนค่าต้นฉบับ" ทิ้งที่แก้ · ถ้า Doc เปลี่ยนหลังจากแก้ จะขึ้นป้ายเตือน (ฉบับที่แก้ยังทับอยู่จนกดคืนค่า) · ห้องสอบ/ค้นหาใช้ฉบับที่แก้ · algorithm ใน Symptomatology ล็อกไว้ตอนแก้
-- เก็บต่อคน: localStorage `poy-ann:<key>` + Firestore `poymor/<uid>/ann/<key>` (`{v, ts}` ฉบับใหม่กว่าชนะ) — อยู่ใต้ rules `poymor/{uid}/{doc=**}` เดิม ไม่ต้องเพิ่ม rules
-- โค้ด: ส่วน "โน้ต + แก้เนื้อหา" ท้าย app.js (`annMount`, `ANN_HOOK` สำหรับหน้าที่มีของ interactive) · CSS `.ann*` ท้าย app.css
+## โน้ต + แก้/เพิ่ม/ลบ (ทุกหน้าที่เป็นเนื้อหา)
+- กล่องเนื้อหาที่มี `data-ann="<key>"`: แท็บจาก Doc/ชีต `g:<แท็บ>` · บท Symptomatology `y:<บท>` · โรค 1000 MAI `d:<id>` (ทุกช่อง `data-col` = คอลัมน์ในชีต ช่องว่างโผล่ตอนแก้) · สรุป NL `n:<id>` · หน้าการสอบ NL `x:<id>` · Approach `c:<id>` · บอร์ด `b:<id>` (`data-ann-mode="note"` = จดโน้ตอย่างเดียว) · Random Topic Summary `t:<หัวข้อ>:<หน้า>` (`data-ann-mode="box"` = เนื้อหาเป็นภาพ → โน้ตทั้งกล่อง ปุ่ม "+ โน้ต")
+- **โน้ต = ของแต่ละคน**: localStorage `poy-ann:<key>` + Firestore `poymor/<uid>/ann/<key>` (เข้าสู่ระบบแล้วดึงโน้ตทุกหน้ามาให้ค้นได้)
+- **แก้เนื้อหา = แชร์ทุกคน** (ต้องเข้าสู่ระบบ): Firestore `poymor_edit/<key>` `{k,h,b,by,name,at,sync}` + `hist/` (ฉบับก่อนหน้า — ปุ่ม "ประวัติ" → "ใช้ฉบับนี้") · cache `poy-sh:<key>`
+- **เพิ่ม/ลบ/เปลี่ยนชื่อ = แชร์ทุกคน**: Firestore `poymor_struct/<id>` — `addtab` (หมวดใหม่ / แท็บย่อย) · `rentab` · `deltab` · `adddis` (หน้า `#/disease/new`) · `deldis` · แท็บที่สร้างในเว็บ slug = `w-<id>` · เมื่อไฟล์มีของนั้นแล้วและเว็บดึงฉบับใหม่มา รายการลบตัวเอง
+- โค้ด: ส่วน "โน้ต + แก้เนื้อหา" + "เขียนกลับเข้าไฟล์ [AI]" + "โครงสร้าง" ท้าย app.js
+
+### เขียนกลับเข้าไฟล์ Google ที่ชื่อขึ้นต้น `[AI]` (ตอนนี้: [AI] โพยหมอ, [AI] DocQ Med Template 2026, [AI] 1000 โรค)
+- ไม่ใช้ AI: เว็บคำนวณว่าย่อหน้า/ช่องไหนเปลี่ยน แล้วส่งให้ **Google Apps Script** (`tools/ai-sync/Code.gs` + `appsscript.json`) ลอกเข้าไฟล์ตรงตัวอักษร (แตะเฉพาะช่วงที่ต่าง ตัวหนา/สีส่วนอื่นอยู่เหมือนเดิม)
+- สคริปต์ตรวจ token ของ Firebase (`ALLOW = ['*']` = ทุกคนที่เข้าสู่ระบบ) และชื่อไฟล์ขึ้นต้น `[AI]` ทุกครั้ง — ไฟล์อื่นไม่แตะ (เว็บขึ้นว่า "ไม่ใช่ [AI] — แก้แค่ในเว็บ")
+- ตั้ง: ดูวิธีบนหัว Code.gs → ได้ URL `/exec` → ใส่ `aiSync.url` ใน `docs/data/config.js` · ยังไม่ตั้ง = เก็บรอไว้ ตั้งแล้วส่งให้เอง (ใครเข้าสู่ระบบเปิดเว็บก็ส่งของที่ค้างทั้งหมด) · กันส่งซ้ำด้วย transaction (`claim`)
+- แท็บ: สคริปต์ลองสร้าง/เปลี่ยนชื่อ/ลบแท็บผ่าน Docs API ถ้า Google ไม่ยอม → สถานะ `manual` ให้คำสั่ง reverse บอกว่าต้องทำอะไร
+- **คำสั่ง `//update ggfile reverse all`** (Claude ทำ — กิน usage): `gh workflow run edits-export.yml -R BankyPP/doc-script` → รอเสร็จ → `git pull` → อ่าน `edits/pending.json` (`edits` = เนื้อหาที่ยังไม่เข้าไฟล์ พร้อม ops · `struct` = แท็บ/โรคที่ยังไม่เข้า) → ลอกเข้าไฟล์ [AI] ผ่าน Google connector ตามกฎ (เช็กชื่อไฟล์ก่อน) → **บอกผู้ใช้ว่าต้องสร้าง/ลบ/เปลี่ยนชื่อแท็บไหน ใต้แท็บอะไร** สำหรับที่ทำผ่าน connector ไม่ได้ · พอไฟล์มีของแล้วและเว็บดึงฉบับใหม่ เว็บล้างรายการเอง
+- Firestore rules ที่ต้องเพิ่ม (วางใน `match /databases/{database}/documents { … }`):
+```
+match /poymor_edit/{id} {
+  allow read: if true;
+  allow create, update: if request.auth != null
+    && request.resource.data.keys().hasOnly(['k','h','b','by','name','at','sync'])
+    && (request.resource.data.h == null || (request.resource.data.h is string && request.resource.data.h.size() < 900000));
+  allow delete: if request.auth != null;
+  match /hist/{h} { allow read: if true; allow create: if request.auth != null; }
+}
+match /poymor_struct/{id} {
+  allow read: if true;
+  allow create, update, delete: if request.auth != null;
+}
+```
+
+## ค้นทั้งเว็บ (`#/search?q=` — ช่องค้นบนสุด)
+- ค้น: Medical Soil (รวมฉบับที่แก้ในเว็บ) · Symptomatology · 1000 MAI · สรุป/บอร์ด NL · ข้อสอบเก่า NL/Compre (`docs/bank/qs.json` สร้างโดย `bank/build.py`) · Random Topic Summary · Approach · โน้ตของฉัน
+- เรียงตามความเกี่ยวข้อง (ชื่อเรื่อง > แท็ก > เนื้อหา, ครบทุกคำ, ตรงทั้งวลี) · บอกประเภท (เนื้อหา / โน้ต / 1000 MAI / ข้อสอบเก่า / ประกาศ) + มาจากไหน · ตัวกรองตามประเภท
+- แท็ก: จุฬา/จุฬาฯ/chula/MDCU → MDCU · ศิริราช/SI → SI · ชื่อวอร์ด ระบบ ฯลฯ · สะกดใกล้เคียง (คำอังกฤษ) · ถ้าใส่ API key (ห้องสอบ) AI ขยายเป็นคำที่เกี่ยวข้องทางการแพทย์
+- ช่องค้นอื่นทุกช่องขึ้นโน้ตในขอบเขตของช่องนั้นด้วย (Medical Soil, Symptomatology, 1000 MAI, ค้นในหัวข้อของ Random Topic)
 
 ## Doc "โพยหมอ" → Medical Soil
 - Doc โพยหมอ แชร์ Anyone with the link → Viewer แล้ว · หน้าเว็บอ่าน Doc ตรงจาก Google ไม่ได้ (Google ไม่ส่ง CORS) จึงใช้ **GitHub Actions** `.github/workflows/gdoc-sync.yml` ทุก ~10 นาที: `tools/gdoc/build.py --public <docId> poymor` อ่านชื่อ+ชั้นของแท็บจากหน้า `/edit` (DOCS_modelChunk) แล้วดึงทีละแท็บด้วย `export?format=html&tab=<id>` → `docs/gdoc/poymor.json` (มี `d` = ชั้นจริง) + รูปใน `docs/gdoc/img/` → commit เฉพาะเมื่อ Doc เปลี่ยน · อยากอัปเดตทันที: แท็บ Actions → Sync Google Doc → Run workflow

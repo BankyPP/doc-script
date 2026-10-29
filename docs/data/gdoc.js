@@ -80,7 +80,7 @@ window.POY_GDOC = {
     { under: 'Histology', kind: 'sheet', snap: 'gdoc/tissue-bio.json', title: 'Tissue Bio Spot Hack',
       from: 'Google Sheet "Tissue Bio Spot Hack"' },
     /* DocQ Med Template 2026 — แต่ละแท็บแขวนไว้ใต้เรื่องที่ตรงกัน (ชื่อแท็บเดิม) */
-    { kind: 'doc', snap: 'gdoc/docq.json', from: 'Google Doc "DocQ Med Template 2026"', tabs: [
+    { kind: 'doc', snap: 'gdoc/docq.json', id: '15kN0TE6ZRFJCnN-baFPTTVOgsa-lxp7T9NtwWdIPaZk', from: 'Google Doc "[AI] DocQ Med Template 2026"', tabs: [
       { tab: 'DocQ Med Template', under: 'Clinic' },
       { tab: 'DocQ Example MED 2026', under: 'Clinic' },
       { tab: 'Hx Sum OSCE', under: 'History Taking (General)' },

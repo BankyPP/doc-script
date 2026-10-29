@@ -1,0 +1,26 @@
+# ส่งออกรายการที่แก้/เพิ่ม/ลบในเว็บแต่ยังไม่เข้าไฟล์ Google [AI] → edits/pending.json
+# ใช้กับคำสั่งในแชท "//update ggfile reverse all" (Claude สั่งรันด้วย gh workflow run แล้วอ่านไฟล์นี้)
+name: Export web edits
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: edits-export
+  cancel-in-progress: false
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node tools/ai-sync/export.mjs
+      - name: commit ถ้ามีอะไรเปลี่ยน
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add edits/pending.json
+          git diff --cached --quiet || (git commit -m "export web edits" && git pull --rebase && git push)

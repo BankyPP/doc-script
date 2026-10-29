@@ -62,5 +62,22 @@ process.stdout.write(JSON.stringify(out));"""
     open(p, 'w', encoding='utf-8').write('/* สร้างโดย bank/build.py — จำนวนข้อสอบเก่าในคลัง NL & Compre ต่อแท็ก blueprint */\nwindow.POY_BANKSTAT=' + r.stdout + ';\n')
     print('stats →', p, r.stdout[:200])
 
+def qindex():
+    """ข้อสอบเก่าทุกข้อแบบย่อ — ให้ช่องค้นบนสุดของโพยหมอค้นเจอ (ค้นตามคำ + แท็กสถาบัน จุฬาฯ/ศิริราช)"""
+    import subprocess
+    js = r"""
+const fs=require('fs'),path=require('path'),vm=require('vm');const out=[];
+for(const inst of ['nl','compre']){const cfg=JSON.parse(fs.readFileSync(path.join(process.argv[1],inst,'config.json'),'utf8'));
+ for(const w of cfg.wards){const QB=[];const d=path.join(process.argv[1],inst,w.dir);
+  const files=fs.existsSync(d)?fs.readdirSync(d):[];
+  files.filter(f=>/^data_b\d+\.js$/.test(f)).forEach(f=>vm.runInNewContext(fs.readFileSync(path.join(d,f),'utf8'),{QB,console}));
+  QB.forEach((q,i)=>out.push({b:inst,w:w.id,wn:w.name||w.id,set:q.set||'',ro:q.ro||'',inst:q.inst||'',stem:q.stem||'',opts:(q.opts||[]).join(' · '),key:q.key||q.ans||'',why:String(q.summary||q.why||'').replace(/<[^>]+>/g,' ').slice(0,600)}));}}
+process.stdout.write(JSON.stringify(out));"""
+    r = subprocess.run(['node', '-e', js, HERE], capture_output=True, text=True)
+    if r.returncode: print(r.stderr); raise SystemExit('qindex failed')
+    p = os.path.join(REPO, 'docs', 'bank', 'qs.json')
+    open(p, 'w', encoding='utf-8').write(r.stdout)
+    print('qs →', p, len(r.stdout), 'bytes')
+
 for inst in ('nl', 'compre'): build(inst)
-if not PACK: stats()
+if not PACK: stats(); qindex()
