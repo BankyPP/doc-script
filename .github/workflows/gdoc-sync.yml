@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/gdoc-sync.yml', 'tools/gdoc/build.py', 'docs/gdoc.js']
+    paths: ['.github/workflows/gdoc-sync.yml', 'tools/gdoc/build.py', 'docs/gdoc.js', 'docs/data/config.js']
 permissions:
   contents: write
 concurrency:
@@ -31,6 +31,7 @@ jobs:
       - name: ดึง Doc โพยหมอ ทุกแท็บ (ชื่อ + ชั้นจริงจาก Doc)
         run: |
           set -o pipefail
+          export AISYNC_URL="$(grep -o "https://script.google.com/macros/s/[A-Za-z0-9_-]*/exec" docs/data/config.js | head -1)"
           if ! python3 tools/gdoc/build.py --public 11lXA1hl_ZiBV_kCget8vxl1RGVGM_7beGwfYX6r2EnE poymor --hide "homework (?)" --min-tabs 20 2>&1 | tee /tmp/build.log; then
             echo "::error title=ดึง Doc ไม่สำเร็จ::$(tail -c 900 /tmp/build.log | tr '\n' ' ')"
             exit 1

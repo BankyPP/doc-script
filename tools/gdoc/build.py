@@ -103,8 +103,15 @@ def main_public():
     hide = [sys.argv[i + 1] for i, a in enumerate(sys.argv) if a == '--hide']
     min_tabs = int(sys.argv[sys.argv.index('--min-tabs') + 1]) if '--min-tabs' in sys.argv else 0
     prefix = sys.argv[sys.argv.index('--prefix') + 1] if '--prefix' in sys.argv else 'g'
-    tabs = public_tabs(doc_id)
-    print('พบ', len(tabs), 'แท็บใน Doc')
+    ai = os.environ.get('AISYNC_URL', '')   # Apps Script (tools/ai-sync) — อ่านด้วยสิทธิ์เจ้าของ ได้ฉบับล่าสุดจริง (export แบบไม่ล็อกอินของ Google ค้างฉบับเก่าได้เป็นวัน)
+    if ai:
+        try: tree = json.loads(get(ai + '?op=tree&id=' + doc_id).decode('utf-8'))
+        except Exception as x: tree = {'error': str(x)}
+        if tree.get('ok') and 'tabs' in tree: tabs = [(t['id'], t['title'], t['d']) for t in tree['tabs']]
+        else: print('Apps Script ใช้ไม่ได้ (' + str(tree.get('error') or 'ยังไม่ได้อัปเดตสคริปต์') + ') — ดึงแบบสาธารณะแทน'); ai = ''
+    if not ai:
+        tabs = public_tabs(doc_id)
+    print('พบ', len(tabs), 'แท็บใน Doc', '(ผ่าน Apps Script)' if ai else '')
     if len(tabs) < min_tabs:
         sys.exit('ได้แค่ %d แท็บ (น้อยกว่า %d) — Doc อาจยังไม่ได้แชร์ Anyone with the link' % (len(tabs), min_tabs))
     keep, skip_depth = [], None
@@ -121,7 +128,12 @@ def main_public():
         pg.set_content('<!doctype html><meta charset="utf-8"><body></body>')
         pg.add_script_tag(content=lib)
         for tid, title, d in keep:
-            h = get('https://docs.google.com/document/d/%s/export?format=html&tab=%s' % (doc_id, tid)).decode('utf-8', 'replace')
+            if ai:
+                j = json.loads(get(ai + '?op=tab&id=' + doc_id + '&tab=' + tid).decode('utf-8'))
+                if not j.get('ok'): sys.exit('Apps Script แท็บ %s: %s' % (title, j.get('error')))
+                h = j['html']
+            else:
+                h = get('https://docs.google.com/document/d/%s/export?format=html&tab=%s' % (doc_id, tid)).decode('utf-8', 'replace')
             h = save_imgs(h, name, imgs)
             r = pg.evaluate('([h, pre]) => POY_GDOC_LIB.parse(h, { prefix: pre })', [h, prefix])
             html = ''.join(t['html'] for t in r['tabs']); heads = [x for t in r['tabs'] for x in t['heads']]
