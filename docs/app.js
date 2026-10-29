@@ -1193,6 +1193,8 @@
     }).catch(function (e) { s.err = e.message || String(e); s.at = Date.now(); }).then(function () { s.L = false; glPaint(n); });
   }
   document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') { glTree(); glMaybeTab(); } });
+  /* เปิดค้างไว้ก็ตามเอง: เช็กกับ Google Doc ทุก 2 นาทีตอนหน้าเปิดอยู่ (ไม่ทำตอนกำลังแก้) */
+  setInterval(function () { if (document.visibilityState === 'visible' && !annEditing()) { glTree(); glMaybeTab(); } }, 120000);
   function gAfter() {
     setTimeout(glMaybeTab, 0);
     var t = document.querySelector('.gtree');
