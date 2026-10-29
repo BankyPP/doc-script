@@ -3644,7 +3644,7 @@
     if (ft === 'tag') shown = tagRes;
     var chips = '<div class="filters" role="group" aria-label="ประเภท"><a class="chip' + (ft ? '' : ' on') + '" href="#/search?q=' + encodeURIComponent(q) + '">ทั้งหมด ' + res.length + '</a>' +
       Object.keys(RTYPE).filter(function (k) { return cnt[k]; }).map(function (k) { return '<a class="chip' + (ft === k ? ' on' : '') + '" href="#/search?q=' + encodeURIComponent(q) + '&t=' + k + '">' + RTYPE[k] + ' ' + cnt[k] + '</a>'; }).join('') +
-      '<a class="chip' + (ft === 'tag' ? ' on' : '') + '" href="#/search?q=' + encodeURIComponent(q) + '&t=tag">tag ' + tagRes.length + '</a></div>';
+      '<a class="chip' + (ft === 'tag' ? ' on' : '') + '" href="#/search?q=' + encodeURIComponent(q) + '&t=tag">Tag ' + tagRes.length + '</a></div>';
     var list = shown.slice(0, 150).map(function (d) {
       var ws = d.sc.w.length ? d.sc.w : [phrase];
       return '<a class="sheet sres" href="' + esc(d.href) + '"' + (d.ext ? ' target="_blank" rel="noopener"' : '') + ' style="--c:' + esc(d.c || '#8A8F86') + '">' +
