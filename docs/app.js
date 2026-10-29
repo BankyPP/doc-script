@@ -338,8 +338,8 @@
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'visible' && !D.loading && (!D.at || Date.now() - D.at > 30000)) loadSheet();
     });
-    /* เปิดค้างไว้ก็ตามเอง: ดึงชีตใหม่ทุก 2 นาที (ไม่ทำตอนกำลังแก้) */
-    setInterval(function () { if (document.visibilityState === 'visible' && !D.loading && !annEditing()) loadSheet(); }, 120000);
+    /* เปิดค้างไว้ก็ตามเอง: ดึงชีตใหม่ทุก 30 วิ (ไม่ทำตอนกำลังแก้) */
+    setInterval(function () { if (document.visibilityState === 'visible' && !D.loading && !annEditing()) loadSheet(); }, 30000);
   }
   function fetchCSV(urls) {
     var u = urls[0];
