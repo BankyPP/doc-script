@@ -1848,6 +1848,27 @@
       if (G.st === 'ready') o.opts.push({ go: 'kb', label: 'Medical Soil', sub: 'แท็บจาก Google Doc ' + GD.main.name + ' · เลือกแท็บย่อยต่อได้' });
       if (SY.chapters.length) o.opts.push({ go: 'sy', label: 'Symptomatology & Approach (ศิริราช)', sub: 'เลือกกลุ่ม แล้วเลือกบท' });
       if (CLI.approaches.length) o.opts.push({ go: 'ap', label: 'Approach ตามอาการนำ', sub: CLI.approaches.length + ' เรื่อง' });
+      if ((NLD.notes || []).length) o.opts.push({ go: 'nl', label: 'ติว NL & Compre', sub: 'สรุปเนื้อหา ' + NLD.notes.length + ' เรื่อง · เลือกสาขา แล้วเลือกเรื่อง' });
+      if ((window.POY_TOPICS || []).length) o.opts.push({ go: 'tp', label: 'Random Topic Summary', sub: 'ไปหน้าฝึกของหัวข้อ (AI ออกทีละข้อ เลือกหัวข้อย่อยได้)' });
+      return o;
+    }
+    if (last === 'nl') {
+      o.title = 'ติว NL & Compre';
+      var gm = {}, order = [];
+      NLD.notes.forEach(function (x) { var g = spNlGroup(x); if (!gm[g]) { gm[g] = 0; order.push(g); } gm[g]++; });
+      o.opts = order.map(function (g) { return { go: 'nlg:' + g, label: g, sub: gm[g] + ' เรื่อง' }; });
+      return o;
+    }
+    if (last.indexOf('nlg:') === 0) {
+      var gg = last.slice(4); o.title = gg;
+      o.opts = NLD.notes.filter(function (x) { return spNlGroup(x) === gg; }).map(function (x) {
+        return { val: 'n:' + x.id, label: x.title, sub: [(x.topic || '').split('›').slice(1).join('›').trim(), (x.exams || []).map(function (e) { return e === 'nl' ? 'NL' : 'Compre'; }).join(' · '), (x.src || []).join(' · ')].filter(Boolean).join(' · ') };
+      });
+      return o;
+    }
+    if (last === 'tp') {
+      o.title = 'Random Topic Summary';
+      o.opts = (window.POY_TOPICS || []).map(function (t) { return { href: '#/topics/' + t.id + '/practice?m=ai', label: t.title, sub: (t.th ? t.th + ' · ' : '') + 'เปิดหน้าฝึกของหัวข้อนี้ ↗', c: t.c }; });
       return o;
     }
     if (last === 'mai') {
@@ -1890,6 +1911,7 @@
     }
     return o;
   }
+  function spNlGroup(x) { return String(x.topic || 'อื่น ๆ').split('›')[0].trim() || 'อื่น ๆ'; }
   function spNodeOpt(n) {
     var kids = n.kids.filter(spNodeOk);
     return kids.length ? { go: 'n:' + n.slug, label: n.title, sub: kids.length + ' แท็บย่อย', c: gLook(n).c } : { val: 'g:' + n.slug, label: n.title, c: gLook(n).c };
@@ -1902,6 +1924,7 @@
     if (src.indexOf('g:') === 0 && G.st === 'ready' && G.by[k]) { var n = G.by[k], ps = gPath(n); if (!n.kids.filter(spNodeOk).length) ps = ps.slice(0, -1); return ['kb'].concat(ps.map(function (x) { return 'n:' + x.slug; })); }
     if (src.indexOf('y:') === 0) { var c = syCh(k); return c ? ['sy', 'grp:' + c.g] : ['sy']; }
     if (src.indexOf('c:') === 0) return ['ap'];
+    if (src.indexOf('n:') === 0) { var nx = NLD.notes.filter(function (x) { return x.id === k; })[0]; return nx ? ['nl', 'nlg:' + spNlGroup(nx)] : ['nl']; }
     return [];
   }
   function spLabel(src) {
@@ -1912,10 +1935,11 @@
     if (src.indexOf('g:') === 0) { var n = G.by[k]; return n ? gPath(n).map(function (x) { return x.title; }).join(' › ') + (n.kids.length ? ' (รวมแท็บย่อย)' : '') : k; }
     if (src.indexOf('y:') === 0) { var c = syCh(k); return c ? 'Symptomatology › บทที่ ' + c.no + ' ' + c.th : k; }
     if (src.indexOf('c:') === 0) { var a = CLI.approaches.filter(function (x) { return x.id === k; })[0]; return a ? 'Approach › ' + a.title : k; }
+    if (src.indexOf('n:') === 0) { var nx = NLD.notes.filter(function (x) { return x.id === k; })[0]; return nx ? 'ติว NL & Compre › ' + nx.title : k; }
     return src;
   }
   function spCrumb(x) {
-    if (x === 'mai') return '1000 MAI'; if (x === 'kb') return 'Medical Soil'; if (x === 'sy') return 'Symptomatology'; if (x === 'ap') return 'Approach';
+    if (x === 'mai') return '1000 MAI'; if (x === 'kb') return 'Medical Soil'; if (x === 'sy') return 'Symptomatology'; if (x === 'ap') return 'Approach'; if (x === 'nl') return 'NL & Compre'; if (x === 'tp') return 'Random Topic Summary';
     return spLevel([x]).title;
   }
   function spPaint() {
@@ -1928,6 +1952,7 @@
       (L.opts.length > 12 ? '<input class="field spq" type="search" placeholder="กรองรายการในขั้นนี้…" value="' + esc(SP.q) + '" aria-label="กรองรายการ">' : '') +
       '<div class="spopts">' + (L.use ? '<button type="button" class="spo use' + (cur === L.use.val ? ' on' : '') + '" data-spval="' + esc(L.use.val) + '"><span>' + esc(L.use.label) + '</span></button>' : '') +
       opts.map(function (o) {
+        if (o.href) return '<a class="spo" href="' + esc(o.href) + '"' + (o.c ? ' style="--c:' + esc(o.c) + '"' : '') + '><span>' + esc(o.label) + (o.sub ? '<small>' + esc(o.sub) + '</small>' : '') + '</span><span class="spgo" aria-hidden="true">↗</span></a>';
         return '<button type="button" class="spo' + (o.val && o.val === cur ? ' on' : '') + (o.dim ? ' dim' : '') + '"' + (o.go ? ' data-spgo="' + esc(o.go) + '"' : ' data-spval="' + esc(o.val) + '"') + (o.c ? ' style="--c:' + esc(o.c) + '"' : '') + '>' +
           '<span>' + esc(o.label) + (o.sub ? '<small>' + esc(o.sub) + '</small>' : '') + '</span>' + (o.go ? '<span class="spgo" aria-hidden="true">›</span>' : '') + '</button>';
       }).join('') + (!opts.length ? '<p class="muted">ไม่มีรายการ</p>' : '') + '</div>';
@@ -1982,6 +2007,9 @@
         label = gPath(gn).map(function (x) { return x.title; }).join(' › ');
         text = gFlat(gn).filter(gFull).map(function (x) { return '## ' + gPath(x).map(function (y) { return y.title; }).join(' › ') + '\n' + gText(x); }).join('\n\n');
       }
+    } else if (src.indexOf('n:') === 0) {
+      var nn = NLD.notes.filter(function (x) { return x.id === src.slice(2); })[0];
+      if (nn) { var ne = shPeek('n:' + nn.id); label = 'ติว NL & Compre › ' + nn.title; text = '## ' + nn.title + (nn.topic ? ' (' + nn.topic + ')' : '') + '\n' + htmlText(ne ? ne.h : nn.html || ''); }
     } else if (src.indexOf('c:') === 0) {
       var a = CLI.approaches.filter(function (x) { return x.id === src.slice(2); })[0];
       if (a) { label = 'Approach ' + a.title; text = '## ' + a.title + '\n' + a.steps.map(function (s, i) { return (i + 1) + '. ' + s.title + ': ' + (s.links ? s.links.map(function (l) { return l[0] + ' → ' + l[1]; }).join('; ') : htmlText(s.html)); }).join('\n'); }
@@ -2482,7 +2510,7 @@
         title: note.title, html: nlHead('notes', esc(note.title), '') +
           '<section class="wrap" style="padding-bottom:80px"><article class="sheet doc"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">' + srcBadges(note.src) +
           (note.exams || []).map(function (k) { return '<span class="pill">' + (KIND[k] || esc(k)) + '</span>'; }).join('') +
-          (note.topic ? '<span class="muted" style="font-size:14px">' + esc(note.topic) + '</span>' : '') + '</div>' +
+          (note.topic ? '<span class="muted" style="font-size:14px">' + esc(note.topic) + '</span>' : '') + '<a class="chip" style="margin-left:auto" href="#/exam?src=' + encodeURIComponent('n:' + note.id) + '">สร้างข้อสอบจากเรื่องนี้</a></div>' +
           '<div class="val" data-ann="n:' + esc(note.id) + '">' + (note.html || '') + '</div>' +
           ((note.files && note.files.length) || note.updated ? '<p class="note" style="border-top:1px dashed var(--rule);padding-top:12px">' + (note.files && note.files.length ? 'ไฟล์ต้นทาง: ' + esc(note.files.join(', ')) : '') + (note.updated ? ' · อัปเดต ' + esc(note.updated) : '') + '</p>' : '') +
           '</article><p style="margin-top:20px"><a class="btn ghost" href="#/nl/notes">กลับไปสรุปทั้งหมด</a></p></section>'

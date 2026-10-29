@@ -931,3 +931,4 @@ button.kbtag{cursor:pointer;font:inherit;font-family:'Kanit',sans-serif;font-wei
 .spo.use{border-style:dashed;border-left-style:solid}
 .spo.dim{opacity:.6}
 .spgo{font-size:20px;color:var(--ink-2)}
+a.spo{text-decoration:none}
