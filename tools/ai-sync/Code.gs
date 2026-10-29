@@ -106,7 +106,7 @@ function sheet_(tg, ops) {
 function norm_(t) { return String(t || '').replace(/[ ​ ]/g, ' ').replace(/\s+/g, ' ').trim(); }
 
 function findTab_(tabs, path) {
-  if (!path || !path.length) return null;
+  if (!path || !path.length) return tabs[0] || null;   /* ไม่ระบุแท็บ = แท็บแรก */
   if (path.length === 1) {                                   /* ชื่อเดียว → หาทุกชั้น */
     for (var i = 0; i < tabs.length; i++) {
       if (tabs[i].getTitle() === path[0]) return tabs[i];
@@ -169,6 +169,12 @@ function doc_(tg, ops) {
     var hits = [];
     for (var i = 0; i < T.length; i++) if (T[i] === ref.old) hits.push(i);
     if (!hits.length) return null;
+    /* ข้อความซ้ำหลายที่ → เลือกที่ย่อหน้าก่อน/หลังตรงกัน ก่อนใช้ลำดับที่ */
+    if (hits.length > 1 && (ref.prev != null || ref.next != null)) {
+      var best = null, bs = -1;
+      hits.forEach(function (h) { var sc = (ref.prev != null && T[h - 1] === ref.prev ? 1 : 0) + (ref.next != null && T[h + 1] === ref.next ? 1 : 0); if (sc > bs) { bs = sc; best = h; } });
+      if (bs > 0) return P[best];
+    }
     return P[hits[Math.min(ref.n || 0, hits.length - 1)]];
   }
   /* หาตำแหน่งให้ครบก่อน แล้วค่อยแก้ (แก้แล้วข้อความเปลี่ยน จะหาไม่เจอ) */

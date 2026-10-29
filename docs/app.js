@@ -4175,7 +4175,7 @@
   function annDocOps(oldHTML, newHTML) {
     var A = annBlocks(oldHTML), B = annBlocks(newHTML), ops = [];
     var At = A.map(function (x) { return x.t; }), Bt = B.map(function (x) { return x.t; });
-    function ref(i) { var c = 0; for (var x = 0; x < i; x++) if (At[x] === At[i]) c++; return { old: At[i], n: c }; }
+    function ref(i) { var c = 0; for (var x = 0; x < i; x++) if (At[x] === At[i]) c++; return { old: At[i], n: c, prev: i > 0 ? At[i - 1] : null, next: i < At.length - 1 ? At[i + 1] : null }; }
     var sc = annDiff(At, Bt), last = -1, k = 0;
     while (k < sc.length) {
       if (sc[k][0] === '=') { last = sc[k][1]; k++; continue; }
