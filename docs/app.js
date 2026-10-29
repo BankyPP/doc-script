@@ -2590,6 +2590,11 @@
      #/topics · #/topics/<id>[/sum[/<หน้า>]] · #/topics/<id>/practice?m=ai|test|flash
      ========================================================= */
   var TOPICS = window.POY_TOPICS || [];
+  /* เมนูซ้าย: หัวข้อของ Random Topic Summary ดึงจาก data/topics.js (เพิ่มหัวข้อแล้วขึ้นเอง) */
+  (function () {
+    var box = document.getElementById('dsub-topics');
+    if (box) box.innerHTML = TOPICS.map(function (t) { return '<a href="#/topics/' + esc(t.id) + '" data-r="topics/' + esc(t.id) + '">' + esc(t.title) + '</a>'; }).join('');
+  })();
   var TD = {};               /* id → { data, st, ...L (กำลังโหลด), ...E (ผิดพลาด) } */
   var PAGE_R = 1191.12 / 841.92, IMG_W = 2813;
   function topicById(id) { return TOPICS.filter(function (t) { return t.id === id; })[0]; }
