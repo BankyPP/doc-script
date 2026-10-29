@@ -1837,6 +1837,122 @@
   /* จำนวนข้อ: ปุ่ม 1 / 5 / 10 / 20 + พิมพ์เอง (1–100) */
   var CNT_PRESET = [1, 5, 10, 20], CNT_MAX = 100;
   function cntOf(v) { var n = Math.floor(+v); return n >= 1 && n <= CNT_MAX ? n : 0; }
+  /* ---------- ห้องสอบ: เลือกแหล่งทีละขั้น (แหล่ง → หมวด → หัวข้อย่อย… ลึกเท่าที่อยาก) ----------
+     ค่าเดิมยังเป็น src แบบเดิม: all · s:<ระบบ> · d:<โรค> · g:<แท็บ> · y:<บท> · c:<approach> */
+  var SP = { path: [], q: '' };
+  function spNodeOk(n) { return gFull(n) || (n.kids.length && gCount(n)[0]); }
+  function spLevel(path) {
+    var last = path[path.length - 1] || '', o = { title: 'เลือกแหล่ง', use: null, opts: [] };
+    if (!path.length) {
+      o.opts = [{ go: 'mai', label: '1000 MAI', sub: 'โรคทั้งหมด · ตามระบบ · รายโรค' }];
+      if (G.st === 'ready') o.opts.push({ go: 'kb', label: 'Medical Soil', sub: 'แท็บจาก Google Doc ' + GD.main.name + ' · เลือกแท็บย่อยต่อได้' });
+      if (SY.chapters.length) o.opts.push({ go: 'sy', label: 'Symptomatology & Approach (ศิริราช)', sub: 'เลือกกลุ่ม แล้วเลือกบท' });
+      if (CLI.approaches.length) o.opts.push({ go: 'ap', label: 'Approach ตามอาการนำ', sub: CLI.approaches.length + ' เรื่อง' });
+      return o;
+    }
+    if (last === 'mai') {
+      o.title = '1000 MAI'; o.use = { val: 'all', label: 'สุ่มจากทุกโรค' };
+      var used = {}, cnt = {}; D.list.forEach(function (d) { used[d.sys.id] = d.sys; cnt[d.sys.id] = (cnt[d.sys.id] || 0) + 1; });
+      o.opts = Object.keys(used).map(function (k) { return { go: 'sys:' + k, label: used[k].name, sub: cnt[k] + ' โรค', c: used[k].c }; });
+      return o;
+    }
+    if (last.indexOf('sys:') === 0) {
+      var sid = last.slice(4), ds = D.list.filter(function (d) { return d.sys.id === sid; });
+      o.title = ds[0] ? ds[0].sys.name : sid; o.use = { val: 's:' + sid, label: 'สุ่มจากทั้งระบบ ' + o.title };
+      o.opts = ds.map(function (d) { return { val: 'd:' + d.id, label: d.name, dim: !d.filled }; });
+      return o;
+    }
+    if (last === 'kb') {
+      o.title = 'Medical Soil';
+      o.opts = (G.top.pre || []).concat(G.top.clinic || []).filter(spNodeOk).map(function (n) { return spNodeOpt(n); });
+      return o;
+    }
+    if (last.indexOf('n:') === 0) {
+      var n = G.by[last.slice(2)]; if (!n) return o;
+      o.title = n.title; o.use = { val: 'g:' + n.slug, label: n.kids.length ? 'ใช้ ' + n.title + ' ทั้งหมด (รวมแท็บย่อย)' : 'ใช้ ' + n.title };
+      o.opts = n.kids.filter(spNodeOk).map(function (k) { return spNodeOpt(k); });
+      return o;
+    }
+    if (last === 'sy') {
+      o.title = 'Symptomatology & Approach';
+      o.opts = SY.groups.map(function (g) { var cs = SY.chapters.filter(function (c) { return c.g === g.id; }); return cs.length ? { go: 'grp:' + g.id, label: g.t, sub: cs.length + ' บท', c: g.c } : null; }).filter(Boolean);
+      return o;
+    }
+    if (last.indexOf('grp:') === 0) {
+      var gid = last.slice(4), gr = SY.groups.filter(function (g) { return g.id === gid; })[0];
+      o.title = gr ? gr.t : gid;
+      o.opts = SY.chapters.filter(function (c) { return c.g === gid; }).map(function (c) { return { val: 'y:' + c.id, label: 'บทที่ ' + c.no + ' ' + c.th, sub: c.en }; });
+      return o;
+    }
+    if (last === 'ap') {
+      o.title = 'Approach ตามอาการนำ';
+      o.opts = CLI.approaches.map(function (a) { return { val: 'c:' + a.id, label: a.title }; });
+    }
+    return o;
+  }
+  function spNodeOpt(n) {
+    var kids = n.kids.filter(spNodeOk);
+    return kids.length ? { go: 'n:' + n.slug, label: n.title, sub: kids.length + ' แท็บย่อย', c: gLook(n).c } : { val: 'g:' + n.slug, label: n.title, c: gLook(n).c };
+  }
+  function spPathOf(src) {
+    if (!src || src === 'all') return ['mai'];
+    var k = src.slice(2);
+    if (src.indexOf('s:') === 0) return ['mai', 'sys:' + k];
+    if (src.indexOf('d:') === 0) { var d = findDisease(k); return d ? ['mai', 'sys:' + d.sys.id] : ['mai']; }
+    if (src.indexOf('g:') === 0 && G.st === 'ready' && G.by[k]) { var n = G.by[k], ps = gPath(n); if (!n.kids.filter(spNodeOk).length) ps = ps.slice(0, -1); return ['kb'].concat(ps.map(function (x) { return 'n:' + x.slug; })); }
+    if (src.indexOf('y:') === 0) { var c = syCh(k); return c ? ['sy', 'grp:' + c.g] : ['sy']; }
+    if (src.indexOf('c:') === 0) return ['ap'];
+    return [];
+  }
+  function spLabel(src) {
+    var k = (src || '').slice(2);
+    if (!src || src === 'all') return 'สุ่มจากทุกโรค (1000 MAI)';
+    if (src.indexOf('s:') === 0) { var d0 = D.list.filter(function (d) { return d.sys.id === k; })[0]; return 'สุ่มจากระบบ ' + (d0 ? d0.sys.name : k) + ' (1000 MAI)'; }
+    if (src.indexOf('d:') === 0) { var d = findDisease(k); return d ? d.name + ' (1000 MAI)' : k; }
+    if (src.indexOf('g:') === 0) { var n = G.by[k]; return n ? gPath(n).map(function (x) { return x.title; }).join(' › ') + (n.kids.length ? ' (รวมแท็บย่อย)' : '') : k; }
+    if (src.indexOf('y:') === 0) { var c = syCh(k); return c ? 'Symptomatology › บทที่ ' + c.no + ' ' + c.th : k; }
+    if (src.indexOf('c:') === 0) { var a = CLI.approaches.filter(function (x) { return x.id === k; })[0]; return a ? 'Approach › ' + a.title : k; }
+    return src;
+  }
+  function spCrumb(x) {
+    if (x === 'mai') return '1000 MAI'; if (x === 'kb') return 'Medical Soil'; if (x === 'sy') return 'Symptomatology'; if (x === 'ap') return 'Approach';
+    return spLevel([x]).title;
+  }
+  function spPaint() {
+    var box = document.getElementById('spick'); if (!box) return;
+    var cur = document.getElementById('src').value, L = spLevel(SP.path), q = SP.q.trim().toLowerCase();
+    var opts = q ? L.opts.filter(function (o) { return (o.label + ' ' + (o.sub || '')).toLowerCase().indexOf(q) >= 0; }) : L.opts;
+    var crumbs = '<button type="button" class="spc" data-spback="0">เริ่มใหม่</button>' + SP.path.map(function (x, i) { return '<span class="muted" aria-hidden="true">›</span><button type="button" class="spc' + (i === SP.path.length - 1 ? ' on' : '') + '" data-spback="' + (i + 1) + '">' + esc(spCrumb(x)) + '</button>'; }).join('');
+    box.innerHTML = '<div class="spsel"><span class="muted">ตอนนี้เลือก</span> <b>' + esc(spLabel(cur)) + '</b></div>' +
+      '<nav class="spcrumbs" aria-label="ขั้นที่เลือก">' + crumbs + '</nav>' +
+      (L.opts.length > 12 ? '<input class="field spq" type="search" placeholder="กรองรายการในขั้นนี้…" value="' + esc(SP.q) + '" aria-label="กรองรายการ">' : '') +
+      '<div class="spopts">' + (L.use ? '<button type="button" class="spo use' + (cur === L.use.val ? ' on' : '') + '" data-spval="' + esc(L.use.val) + '"><span>' + esc(L.use.label) + '</span></button>' : '') +
+      opts.map(function (o) {
+        return '<button type="button" class="spo' + (o.val && o.val === cur ? ' on' : '') + (o.dim ? ' dim' : '') + '"' + (o.go ? ' data-spgo="' + esc(o.go) + '"' : ' data-spval="' + esc(o.val) + '"') + (o.c ? ' style="--c:' + esc(o.c) + '"' : '') + '>' +
+          '<span>' + esc(o.label) + (o.sub ? '<small>' + esc(o.sub) + '</small>' : '') + '</span>' + (o.go ? '<span class="spgo" aria-hidden="true">›</span>' : '') + '</button>';
+      }).join('') + (!opts.length ? '<p class="muted">ไม่มีรายการ</p>' : '') + '</div>';
+    var qi = box.querySelector('.spq');
+    if (qi) qi.addEventListener('input', function () { SP.q = qi.value; var pos = qi.selectionStart; spPaint(); var n2 = document.querySelector('#spick .spq'); if (n2) { n2.focus(); n2.setSelectionRange(pos, pos); } });
+  }
+  function spSet(val) {
+    document.getElementById('src').value = val; SP.src = val;
+    setQuery(route(), { src: val });
+    if (val.indexOf('y:') === 0 && syCh(val.slice(2))) syLoad(syCh(val.slice(2)));
+    spPaint();
+  }
+  function spInit(src) {
+    if (SP.src !== src || !SP.path.length) { SP.path = spPathOf(src); SP.q = ''; }   /* วาดหน้าใหม่ (เช่นชีตอัปเดต) ไม่ทำให้ขั้นที่เลือกค้างไว้หาย */
+    SP.src = src;
+    var box = document.getElementById('spick'); if (!box) return;
+    spPaint();
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-spgo],[data-spval],[data-spback]'); if (!b) return;
+      e.preventDefault();
+      if (b.hasAttribute('data-spback')) { SP.path = SP.path.slice(0, +b.getAttribute('data-spback')); SP.q = ''; spPaint(); }
+      else if (b.hasAttribute('data-spgo')) { SP.path = SP.path.concat([b.getAttribute('data-spgo')]); SP.q = ''; spPaint(); box.scrollIntoView({ block: 'nearest' }); }
+      else spSet(b.getAttribute('data-spval'));
+    });
+  }
   function sourceOptions(sel) {
     var o = '<optgroup label="1000 MAI"><option value="all">สุ่มจากทุกโรค</option>';
     var used = {}; D.list.forEach(function (d) { used[d.sys.id] = d.sys; });
@@ -1957,7 +2073,7 @@
       title: 'ห้องสอบ', html: head +
         '<section class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 48px;align-items:flex-start;padding-bottom:80px">' +
         '<form id="gen" class="sheet" style="flex:1 1 480px;min-width:0;padding:clamp(22px,3.5vw,40px)">' +
-        '<div class="step"><span class="n">1</span><div><label class="h" for="src">ออกข้อสอบจาก</label><select id="src" class="field">' + sourceOptions(src) + '</select>' +
+        '<div class="step"><span class="n">1</span><div style="min-width:0"><span class="h">ออกข้อสอบจาก</span><input type="hidden" id="src" value="' + esc(src) + '"><div id="spick" class="spick"></div>' +
         (D.src === 'sample' ? '<p class="note" style="margin-top:8px">ตอนนี้ 1000 MAIยังเป็นข้อมูลตัวอย่าง (เต็มแค่ Melioidosis)</p>' : '') + '</div></div>' +
         '<div class="step"><span class="n">2</span><fieldset><legend class="h">จำนวนข้อ</legend><div style="display:flex;flex-wrap:wrap;gap:8px">' +
         CNT_PRESET.map(function (n) { return '<label class="opt"><input type="radio" name="cnt" value="' + n + '"' + (cnt === n ? ' checked' : '') + '><span>' + n + ' ข้อ</span></label>'; }).join('') +
@@ -1982,6 +2098,7 @@
         function showLv() { var l = LEVELS[lvNow() - 1]; document.getElementById('lvdesc').textContent = 'ระดับ ' + lvNow() + ' ' + l[0] + ': ' + l[1] + ' (นิยามชั่วคราว)'; }
         showLv();
         (function () { var sv = document.getElementById('src').value; if (sv.indexOf('y:') === 0 && syCh(sv.slice(2))) syLoad(syCh(sv.slice(2))); })();
+        spInit(document.getElementById('src').value);
         document.getElementById('cntIn').addEventListener('input', function () { form.querySelector('input[name=cnt][value=c]').checked = true; if (cntOf(this.value)) LS.set('count', cntOf(this.value)); });
         form.addEventListener('change', function (e) {
           if (e.target.name === 'lv') { LS.set('level', lvNow()); showLv(); }
