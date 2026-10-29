@@ -11,7 +11,7 @@ window.POY_CONFIG = {
      - gid = เลขหลัง #gid= ของแท็บที่ใช้ (แท็บแรกมักเป็น 0)
      ถ้ายังว่าง เว็บจะใช้ข้อมูลตัวอย่างใน data/sample-diseases.js */
   /* เขียนสิ่งที่แก้ในเว็บกลับเข้าไฟล์ Google ที่ชื่อขึ้นต้น [AI] — url = Web app ของ tools/ai-sync/Code.gs (ว่าง = เก็บรอไว้ในเครื่อง) */
-  aiSync: { url: '' },
+  aiSync: { url: 'https://script.google.com/macros/s/AKfycbxO-_hmNAoFR8QOlM4IgRt03km6MYr72boi0x6eHtMTKoAq5QTFCVjqI-0ck9D49Udz/exec' },
   sheet: { id: '10Gv4qlYArhsEE3VH1aWhuyBjdoLy-oyUAtxuD4QLzBI', gid: '0' },   /* "1000 โรค" แท็บ 1000 Diseases — วิธีอ่านคอลัมน์ดู data/mai.js */
 
   /* ติว NL & Compre — รายการการสอบ
