@@ -36,7 +36,18 @@ function doGet(e) {
       /* อ่านจากตัว Doc โดยตรง (DocumentApp = ฉบับล่าสุดเสมอ) — export ของ Google มีแคชฉบับเก่า */
       var tab = findById_(doc.getTabs(), p.tab);
       if (!tab) return out_({ ok: false, error: 'ไม่พบแท็บ ' + p.tab });
-      var r = tabHtml_(tab.asDocumentTab().getBody());
+      var body = tab.asDocumentTab().getBody();
+      /* export ของ Google สวยกว่า (มี dropdown/ชิป สีครบ) แต่บางทีค้างฉบับเก่า → ใช้ export เฉพาะเมื่อข้อความตรงกับตัว Doc ทุกย่อหน้า */
+      try {
+        var url = 'https://docs.google.com/document/d/' + encodeURIComponent(p.id) + '/export?format=html&tab=' + encodeURIComponent(p.tab);
+        var ex = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } });
+        if (ex.getResponseCode() === 200) {
+          var eh = ex.getContentText(), et = squash_(eh.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, '')), pos = 0, fresh = true;
+          paras_(body).forEach(function (pp) { if (!fresh) return; var t = squash_(pp.getText()); if (!t) return; var k = et.indexOf(t, pos); if (k < 0) fresh = false; else pos = k + t.length; });
+          if (fresh) return out_({ ok: true, fmt: 'export', html: eh, at: new Date().toISOString() });
+        }
+      } catch (x) { }
+      var r = tabHtml_(body);
       return out_({ ok: true, fmt: 'dom', html: r.html, heads: r.heads, at: new Date().toISOString() });
     }
     return out_({ ok: false, error: 'op?' });
@@ -163,16 +174,17 @@ function doc_(tg, ops) {
   var tab = findTab_(doc.getTabs(), tg.path);
   if (!tab) throw new Error('ไม่พบแท็บ "' + (tg.path || []).join(' › ') + '" ในไฟล์');
   var body = tab.asDocumentTab().getBody(), P = paras_(body);
-  var T = P.map(function (p) { return norm_(p.getText()); });
+  var T = P.map(function (p) { return squash_(p.getText()); });
   function find(ref) {
     if (!ref) return null;
     var hits = [];
-    for (var i = 0; i < T.length; i++) if (T[i] === ref.old) hits.push(i);
+    var want = squash_(ref.old), pv = ref.prev != null ? squash_(ref.prev) : null, nx = ref.next != null ? squash_(ref.next) : null;
+    for (var i = 0; i < T.length; i++) if (T[i] === want) hits.push(i);
     if (!hits.length) return null;
     /* ข้อความซ้ำหลายที่ → เลือกที่ย่อหน้าก่อน/หลังตรงกัน ก่อนใช้ลำดับที่ */
-    if (hits.length > 1 && (ref.prev != null || ref.next != null)) {
+    if (hits.length > 1 && (pv != null || nx != null)) {
       var best = null, bs = -1;
-      hits.forEach(function (h) { var sc = (ref.prev != null && T[h - 1] === ref.prev ? 1 : 0) + (ref.next != null && T[h + 1] === ref.next ? 1 : 0); if (sc > bs) { bs = sc; best = h; } });
+      hits.forEach(function (h) { var sc = (pv != null && T[h - 1] === pv ? 1 : 0) + (nx != null && T[h + 1] === nx ? 1 : 0); if (sc > bs) { bs = sc; best = h; } });
       if (bs > 0) return P[best];
     }
     return P[hits[Math.min(ref.n || 0, hits.length - 1)]];
@@ -183,7 +195,7 @@ function doc_(tg, ops) {
     if (op.t === 'mod' || op.t === 'del') {
       var p = find(op.at);
       if (p) jobs.push({ op: op, p: p });
-      else if (op.t === 'mod' && T.indexOf(norm_(op.text)) >= 0) { /* แก้ไว้แล้ว */ }
+      else if (op.t === 'mod' && T.indexOf(squash_(op.text)) >= 0) { /* แก้ไว้แล้ว */ }
       else miss.push(op.at.old.slice(0, 40));
     } else if (op.t === 'ins') {
       var a = find(op.after), b = a ? null : find(op.before);
@@ -210,7 +222,13 @@ function doc_(tg, ops) {
       });
     }
   });
-  return { applied: n, miss: miss };
+  /* ตรวจซ้ำว่าเขียนลงจริง — ไม่เจอ = แจ้งว่าไม่สำเร็จ (ไม่ขึ้น "ส่งแล้ว" ทั้งที่ไฟล์ไม่เปลี่ยน) */
+  var T2 = paras_(body).map(function (p) { return squash_(p.getText()); }), all = T2.join('\n');
+  ops.forEach(function (op) {
+    if (op.t === 'mod' && squash_(op.text) && T2.indexOf(squash_(op.text)) < 0) miss.push('เขียนแล้วแต่ไม่พบ: ' + op.text.slice(0, 40));
+    if (op.t === 'ins') op.items.forEach(function (it) { if (squash_(it.text) && all.indexOf(squash_(it.text)) < 0) miss.push('เพิ่มแล้วแต่ไม่พบ: ' + it.text.slice(0, 40)); });
+  });
+  return { applied: n, miss: miss, tab: tab.getTitle() };
 }
 
 /* แก้ข้อความทั้งย่อหน้า โดยแตะเฉพาะช่วงที่ต่าง — ตัวหนา/สีของส่วนที่ไม่เปลี่ยนอยู่เหมือนเดิม */
@@ -218,7 +236,7 @@ function setText_(p, txt) {
   var t = p.editAsText(), old = t.getText();
   if (old === txt) return;
   if (!old.length) { t.setText(txt); return; }
-  var eq = function (a, b) { return a === b || (/[  ]/.test(a) && /[  ]/.test(b)); };
+  var eq = function (a, b) { return a === b || (/[\u00a0 ]/.test(a) && /[\u00a0 ]/.test(b)) || (/[\u000b\r\n]/.test(a) && /[\u000b\r\n]/.test(b)); };
   var s = 0; while (s < old.length && s < txt.length && eq(old[s], txt[s])) s++;
   var eo = old.length, en = txt.length;
   while (eo > s && en > s && eq(old[eo - 1], txt[en - 1])) { eo--; en--; }
@@ -334,4 +352,11 @@ function tabHtml_(body) {
     return out;
   }
   return { html: container(body), heads: heads };
+}
+
+/* ข้อความไว้เทียบ: ถอด entity, ตัดช่องว่างทุกชนิด */
+function squash_(t) {
+  return String(t || '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&#(\d+);/g, function (m, d) { return String.fromCharCode(+d); }).replace(/&#x([0-9a-f]+);/gi, function (m, h) { return String.fromCharCode(parseInt(h, 16)); })
+    .replace(/[\s ​ \u000b]+/g, '');
 }

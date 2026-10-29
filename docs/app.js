@@ -4160,7 +4160,8 @@
     div.querySelectorAll(ANN_BLK).forEach(function (b) {
       if (b.querySelector(ANN_BLK)) return;
       if (b.tagName === 'DIV' && !annNorm(b.textContent)) return;
-      out.push({ k: b.tagName.toLowerCase(), t: annNorm(b.textContent), raw: b.textContent.replace(/[  ]/g, ' ').replace(/​/g, '').replace(/\n+/g, ' ').trim() });
+      var rc = b.cloneNode(true); rc.querySelectorAll('br').forEach(function (x) { x.replaceWith('\u000b'); });   /* ขึ้นบรรทัดในย่อหน้า = soft line break ของ Google Doc */
+      out.push({ k: b.tagName.toLowerCase(), t: annNorm(b.textContent), raw: rc.textContent.replace(/[\u00a0\u2009]/g, ' ').replace(/\u200b/g, '').replace(/\n+/g, ' ').replace(/^[ \u000b]+|[ \u000b]+$/g, '') });
     });
     return out;
   }
