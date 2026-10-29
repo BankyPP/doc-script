@@ -1186,7 +1186,7 @@
       if (!j.ok) throw new Error(j.error || 'อ่านแท็บไม่ได้');
       var r = GLIB.fromScript(j, { prefix: 'g' }), html = r.html, heads = r.heads;   /* export หรือ HTML ที่สร้างจากตัว Doc — แปลงด้วยตัวเดียวกัน หน้าตาเหมือนกัน */
       s.at = Date.now(); s.err = '';
-      if (glText(html) !== glText(n.html)) {
+      if (glText(html) !== glText(n.html) || annOverlayOld('g:' + n.slug)) {
         G.main.tabs.forEach(function (t) { if (t.tid === n.tid) { t.html = html; t.heads = heads; } });
         n.html = html; n.heads = heads; n._t = null;
         var cur = route();
@@ -4282,12 +4282,24 @@
   }
 
   /* ตอนเปิดหน้า: ส่งของที่ค้าง · ไฟล์มีของที่แก้แล้ว → เลิกใช้ฉบับในเว็บ */
+  /* เวลาที่เนื้อหาในหน้านี้ดึงสดจากไฟล์ล่าสุด (0 = ไม่รู้/ใช้ snapshot) */
+  function annFreshAt(k) {
+    var i = k.indexOf(':'), pre = k.slice(0, i), rest = k.slice(i + 1);
+    if (pre === 'g' && G.st === 'ready') { var n = G.by[rest], t = n && n.src === 'main' && n.tid && GL.tab[n.tid]; return t && !t.err && t.at || 0; }
+    if (pre === 'd') return D.src === 'sheet' ? D.at || 0 : 0;
+    return 0;
+  }
+  /* ส่งเข้าไฟล์สำเร็จแล้ว และเว็บดึงไฟล์มาใหม่หลังจากนั้น → ฉบับในเว็บหมดหน้าที่ (ถ้าใครแก้/ลบในไฟล์ต่อ ให้ตามไฟล์) */
+  function annOverlayOld(k) {
+    var e = SH[k], sy = e && e.sync;
+    return !!(sy && sy.st === 'ok' && sy.done && annFreshAt(k) > sy.done + 5000);
+  }
   function annSyncOnMount(el, k, e) {
     var sy = e.sync;
     el._annSync = sy ? sy.st : ''; el._annSyncMsg = sy ? sy.msg || '' : '';
     if (!sy) return false;
-    /* ไฟล์มีของที่แก้แล้ว (สคริปต์หรือ Claude ลอกให้) → เลิกใช้ฉบับในเว็บ */
-    if (sy.st !== 'notai' && (annSame(sy.tg, el._annOrig, e.h) || (sy.st === 'ok' && e.b && e.b !== el._annBase))) {
+    /* ไฟล์มีของที่แก้แล้ว (สคริปต์หรือ Claude ลอกให้) หรือมีคนแก้ในไฟล์หลังจากนั้น → เลิกใช้ฉบับในเว็บ ไฟล์เป็นตัวจริง */
+    if (sy.st !== 'notai' && (annSame(sy.tg, el._annOrig, e.h) || annOverlayOld(k) || (sy.st === 'ok' && e.b && e.b !== el._annBase))) {
       SH[k] = null; shCache(k, null); el._annSync = '';
       if (FB && FB.user) FB.fs.setDoc(shRef(k), { k: k, h: null, b: '', by: FB.user.uid, name: who(FB.user), at: FB.fs.serverTimestamp(), sync: null }).catch(function () { });
       return true;
