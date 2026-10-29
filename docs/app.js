@@ -1,5 +1,5 @@
 /* โพยหมอ — single-page app (hash routes)
-   #/ · #/preclinic[/<แท็บ>?to=] · #/clinic[/approach|/skills|/ward|/doc/<แท็บ>|/symp[/<บท>?to=]] · #/diseases?q=&ward=&sys=&type=&gen=&onset=&prog=&seen=&e= · #/disease/<id> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
+   #/ · #/kb[/<แท็บ>?to=|/ward[/<วอร์ด>]|/skills|/symp[/<บท>?to=]|/approach/<id>] (ลิงก์เก่า #/preclinic, #/clinic ส่งต่อมาที่นี่) · #/diseases?q=&ward=&sys=&type=&gen=&onset=&prog=&seen=&e= · #/disease/<id> · #/exam?t=&src= · #/nl[/board|notes|exams|settings] · #/topics[/<id>/sum/<หน้า>|/<id>/practice?m=] · #/account */
 (function () {
   'use strict';
   var C = window.POY_CONFIG, SYS = window.POY_SYSTEMS, OTHER = window.POY_OTHER;
@@ -134,6 +134,7 @@
       m[1].getRedirectResult(FB.auth).then(function (r) { if (r && r.user) markTrusted(); }).catch(function (e) { authErr = errMsg(e); paintAcct(); });
       m[1].onAuthStateChanged(FB.auth, function (u) {
         var was = FB.user ? FB.user.uid : null; FB.user = u; if (unsub) { unsub(); unsub = null; }
+        if ((u ? u.uid : null) !== was) annOnAuth();
         if ((u ? u.uid : null) !== was && onBoard()) render(true);
         if (!u) { syncState = 'local'; paintAcct(); return; }
         authErr = ''; syncState = 'saving'; paintAcct(); tbPull();
@@ -460,13 +461,18 @@
   function onBoard() { var r = route(); return r.name === 'nl' && r.args[0] === 'board'; }
   function render(keepScroll) {
     if (gateOn()) { renderGate(); return; }
+    if (keepScroll && !annForce && annEditing()) return;   /* กำลังแก้เนื้อหาอยู่ — ไม่วาดหน้าซ้ำจากการซิงก์เบื้องหลัง */
     document.body.classList.remove('gated');
     var r = route();
     var page = PAGES[r.name] || PAGES._404;
     if (pageCleanup) { try { pageCleanup(); } catch (e) { } pageCleanup = null; }
-    var here = r.name === 'disease' ? 'diseases' : r.name, sub = (r.name === 'nl' || r.name === 'topics' || (r.name === 'clinic' && (r.args[0] === 'symp' || r.args[0] === 'skills'))) && r.args[0] ? r.name + '/' + r.args[0] : '';
-    if (r.name === 'clinic' && (r.args[0] === 'ward' || r.args[0] === 'doc')) { var gn = r.args[0] === 'doc' && G.by[r.args[1]]; sub = 'clinic/' + (gn && gn.ck && gn.ck !== 'ward' ? gn.ck : 'ward'); }
-    if (r.name === 'preclinic' && r.args[0] && G.by[r.args[0]]) sub = 'preclinic/' + (G.by[r.args[0]].topN || G.by[r.args[0]]).slug;
+    var path = r.name + '/' + r.args.join('/');
+    var keepNotes = annReset(path === lastPath);   /* กล่องโน้ตที่เปิดค้าง: วาดหน้าเดิมซ้ำ = เปิดไว้เหมือนเดิม · ออกจากหน้า = ปิดหมด */
+    var here = r.name === 'disease' ? 'diseases' : r.name, sub = (r.name === 'nl' || r.name === 'topics') && r.args[0] ? r.name + '/' + r.args[0] : '';
+    if (r.name === 'kb' && r.args[0]) {
+      var gn = G.by[r.args[0]];
+      sub = KB_SUB[r.args[0]] ? 'kb/' + r.args[0] : gn ? (gn.ck === 'skills' ? 'kb/skills' : gn.ck === 'symp' ? 'kb/symp' : gn.ck === 'ward' ? 'kb/ward' : 'kb/' + (gn.topN || gn).slug) : '';
+    }
     document.querySelectorAll('#drawer [data-r]').forEach(function (a) {
       var k = a.getAttribute('data-r');
       var on = k === here || (k === sub && sub !== '');
@@ -477,8 +483,9 @@
     var res = page(r);
     app.innerHTML = res.html;
     document.title = (res.title ? res.title + ' — ' : '') + C.title;
+    annMountAll(app);   /* ฉบับที่แก้เอง + ขีดเส้นใต้โน้ต — ก่อน after() เพื่อให้ปุ่ม/ลิงก์ในเนื้อหาผูกกับ DOM ชุดสุดท้าย */
     if (res.after) res.after();
-    var path = r.name + '/' + r.args.join('/');
+    annRestore(keepNotes);
     var to = r.q.get('to'), tel = to && document.getElementById(to);
     if (tel) tel.scrollIntoView();
     else if (!keepScroll && path !== lastPath) window.scrollTo(0, 0);
@@ -572,22 +579,21 @@
     var n = D.src === 'sample' ? 0 : D.list.length;
     var pct = Math.min(100, n / 10);
     var plots = [
-      ['#/preclinic', '#3E7CA6', '01 · ราก', 'Preclinic แยกตาม system', 'สรุปปี 1–3 จาก Google Doc โพยหมอ แยกตามแท็บเดิมทุกแท็บ' + (G.st === 'ready' ? ' — ' + G.top.pre.length + ' หมวด' : ''), G.st === 'ready' ? gLiveHTML() : '<span class="muted">ดึงจาก Google Docs</span>'],
-      ['#/clinic', '#5C7F3A', '02 · ลำต้น', 'Clinic', 'สมุดวอร์ดของแต่ละ rotation และ approach ตามอาการนำ ที่กดต่อไปหาโรคได้ทันที', '<span class="muted">เขียนในเว็บ + คลังข้อสอบเก่า</span>'],
-      ['#/diseases', '#9B4F2E', '04 · พรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
+      ['#/kb', '#355A3A', '01 · ราก + ลำต้น', 'คลังความรู้', 'ทุกอย่างที่เรียนตั้งแต่ปี 1 เก็บตาม system ที่เดียว — ดูตามวอร์ดก็ได้ พร้อม Clinical skills และ Symptomatology' + (G.st === 'ready' ? ' — ' + G.top.pre.length + ' หมวด' : ''), G.st === 'ready' ? gLiveHTML() : '<span class="muted">ดึงจาก Google Docs</span>'],
+      ['#/diseases', '#9B4F2E', '03 · พรรณไม้', '1000 MAI', 'หนึ่งโรค หนึ่งแผ่นตัวอย่าง — diag, lab, initial management ครบในหน้าเดียว',
         '<span class="live' + (D.src === 'sample' ? ' off' : '') + '"><i></i>' + (D.src === 'sample' ? 'ยังไม่ได้เชื่อม Google Sheet' : 'ซิงก์จาก Google Sheet') + '</span>',
         '<div style="display:flex;flex-direction:column;gap:6px"><div style="height:6px;background:#E4DDCB;border-radius:3px"><div style="width:' + pct + '%;height:6px;background:#9B4F2E;border-radius:3px"></div></div><span class="muted" style="font-size:14px">เก็บแล้ว ' + n + ' / 1000</span></div>'],
-      ['#/exam', '#C9952E', '05 · ห้องสอบ', 'ข้อสอบจาก AI', 'เลือกโรค ระบบ หรือเอกสาร แล้วให้ AI ออกข้อสอบ case-based พร้อมเฉลย', '<span class="muted">ใช้ Claude หรือ API key</span>'],
-      ['#/exam?t=mock', '#A33A3A', '06 · เก็งข้อสอบ', 'Mock exam ตาม blueprint', 'จัดชุดตาม blueprint ของ Compre และ NL กำหนดระดับความยากได้ 5 ระดับ', '<span class="muted">รอ blueprint และนิยามความยาก</span>']
+      ['#/exam', '#C9952E', '04 · ห้องสอบ', 'ข้อสอบจาก AI', 'เลือกโรค ระบบ หรือเอกสาร แล้วให้ AI ออกข้อสอบ case-based พร้อมเฉลย', '<span class="muted">ใช้ Claude หรือ API key</span>'],
+      ['#/exam?t=mock', '#A33A3A', '05 · เก็งข้อสอบ', 'Mock exam ตาม blueprint', 'จัดชุดตาม blueprint ของ Compre และ NL กำหนดระดับความยากได้ 5 ระดับ', '<span class="muted">รอ blueprint และนิยามความยาก</span>']
     ];
     var rot = [-2.5, 2, -4, 1, -1.5];
     var plotsHTML = plots.map(function (p, i) {
       return '<a class="sheet plot" href="' + p[0] + '"><div class="tape" style="transform:rotate(' + rot[i] + 'deg)"></div>' + brush(p[1]) +
         '<span class="label">' + p[2] + '</span><h3>' + p[3] + '</h3><p class="muted">' + p[4] + '</p>' + (p[6] || '') +
         '<div class="foot">' + p[5] + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>' +
-        (i === 1 ? '<a class="sheet plot" href="#/topics"><div class="tape" style="transform:rotate(-1.8deg)"></div>' + brush('#2F7466') + '<span class="label">03 · เมล็ดพันธุ์</span><h3>Random Topic Summary</h3><p class="muted">สรุปแยกเป็นเรื่อง ๆ ตามหัวข้อที่เลือกเอง พร้อมโจทย์ AI ที่ออกทีละข้อจากหัวข้อใหญ่หรือย่อย</p><div class="foot"><span class="muted">' + (window.POY_TOPICS || []).map(function (x) { return esc(x.title); }).join(' · ') + '</span><span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>' : '');
+        (i === 0 ? '<a class="sheet plot" href="#/topics"><div class="tape" style="transform:rotate(-1.8deg)"></div>' + brush('#2F7466') + '<span class="label">02 · เมล็ดพันธุ์</span><h3>Random Topic Summary</h3><p class="muted">สรุปแยกเป็นเรื่อง ๆ ตามหัวข้อที่เลือกเอง พร้อมโจทย์ AI ที่ออกทีละข้อจากหัวข้อใหญ่หรือย่อย</p><div class="foot"><span class="muted">' + (window.POY_TOPICS || []).map(function (x) { return esc(x.title); }).join(' · ') + '</span><span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>' : '');
     }).join('') +
-      '<a class="sheet plot" href="#/nl"><div class="tape" style="transform:rotate(2.5deg)"></div>' + brush('#4A5560') + '<span class="label">07 · ยอดเขา</span><h3>ติว NL &amp; Compre</h3><p class="muted">บอร์ดประกาศ สรุปเนื้อหาจากจุฬาฯ และศิริราช ข้อสอบเก่า NL1–2 และ Compre 1–3</p><div class="foot">' + nlNextHTML() + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
+      '<a class="sheet plot" href="#/nl"><div class="tape" style="transform:rotate(2.5deg)"></div>' + brush('#4A5560') + '<span class="label">06 · ยอดเขา</span><h3>ติว NL &amp; Compre</h3><p class="muted">บอร์ดประกาศ สรุปเนื้อหาจากจุฬาฯ และศิริราช ข้อสอบเก่า NL1–2 และ Compre 1–3</p><div class="foot">' + nlNextHTML() + '<span class="k" style="font-size:20px" aria-hidden="true">→</span></div></a>';
 
     var recent = LS.get('recent', []);
     var recentHTML = recent.length ? recent.slice(0, 4).map(function (x) {
@@ -843,7 +849,7 @@
         '<h1 style="font-size:clamp(34px,5vw,60px)">' + esc(d.name) + '</h1>' +
         (tags ? '<div class="mai-tags">' + tags + '</div>' : '') +
         (d.brief ? '<div class="lede mai-brief">' + rich(d.brief) + '</div>' : '') + '</div>' +
-        (shown.length ? shown.join('') : '<div class="empty" style="margin:8px 0 24px"><p class="k" style="font-size:20px">ยังไม่ได้เขียนรายละเอียดของโรคนี้</p><p class="muted">เพิ่มในชีตแล้วกลับมาหน้านี้ เว็บจะดึงให้เอง</p></div>') +
+        (shown.length ? '<div data-ann="d:' + esc(d.id) + '">' + shown.join('') + '</div>' : '<div class="empty" style="margin:8px 0 24px"><p class="k" style="font-size:20px">ยังไม่ได้เขียนรายละเอียดของโรคนี้</p><p class="muted">เพิ่มในชีตแล้วกลับมาหน้านี้ เว็บจะดึงให้เอง</p></div>') +
         (shown.length && empty.length ? '<details class="mai-empty"><summary class="muted">ช่องที่ยังไม่ได้เขียน (' + empty.length + ')</summary><div>' + empty.map(function (x) { return '<span class="pill">' + esc(x) + '</span>'; }).join('') + '</div></details>' : '') +
         (rel.length ? '<section style="border-top:1px solid var(--empty);padding-top:28px;margin-top:12px;display:flex;flex-direction:column;gap:10px"><span class="label">ระบบเดียวกัน · ' + esc(s0) + '</span><div style="display:flex;flex-wrap:wrap;gap:8px">' +
           rel.map(function (x) { return '<a class="pill' + (x.filled ? '' : ' mai-dim') + '" href="' + dHref(x) + '">' + esc(x.name) + '</a>'; }).join('') + '</div></section>' : '') +
@@ -914,21 +920,38 @@
         });
       }
     });
-    function fill(n, area, ck, top, d) { n.area = area; n.ck = ck; n.topN = top; n.depth = d; n.kids.forEach(function (k) { fill(k, area, ck, top, d + 1); }); }
+    /* area = ฝั่งเดิมของแท็บ (pre = หมวดตาม system · clinic = Clinical skills / Symptomatology / สรุปวอร์ด)
+       lv / wards = ป้ายระดับและวอร์ด — จาก tags ใน data/gdoc.js (แท็บย่อยได้ป้ายตามแท็บแม่)
+       แท็บใต้ "สรุปวอร์ด" ได้วอร์ดจากชื่อแท็บเอง (เช่น Surgery → Gen Sx + Subspe Sx) */
+    var TAGS = GD.tags || {};
+    function fill(n, area, ck, top, d, lv, wards) {
+      var t = TAGS[n.title] || {};
+      n.area = area; n.ck = ck; n.topN = top; n.depth = d;
+      n.lv = t.lv || lv;
+      n.wards = t.ward ? t.ward.slice() : wards.slice();
+      if (ck === 'ward' && d === 1 && !t.ward) n.wards = wardsByName(n.title);
+      n.kids.forEach(function (k) { fill(k, area, ck, top, d + 1, n.lv, n.wards); });
+    }
     var T = { pre: [], clinic: [] };
-    tops.forEach(function (n) { var ck = (GD.clinic || {})[n.title] || ''; fill(n, ck ? 'clinic' : 'pre', ck, n, 0); T[ck ? 'clinic' : 'pre'].push(n); });
+    tops.forEach(function (n) { var ck = (GD.clinic || {})[n.title] || ''; fill(n, ck ? 'clinic' : 'pre', ck, n, 0, ck ? 'clinic' : '', []); T[ck ? 'clinic' : 'pre'].push(n); });
     G.nodes = nodes; G.by = by; G.byHead = byHead; G.top = T;
     gPaintDrawer();
   }
   function gLook(n) { var t = n.topN || n, l = (GD.look || {})[t.title]; return l ? { c: l[0], pig: l[1], th: l[2] } : { c: '#5A6258', pig: '', th: '' }; }
-  function gHref(n, to) { return (n.area === 'clinic' ? '#/clinic/doc/' : '#/preclinic/') + encodeURIComponent(n.slug) + (to ? '?to=' + encodeURIComponent(to) : ''); }
+  function gHref(n, to) { return '#/kb/' + encodeURIComponent(n.slug) + (to ? '?to=' + encodeURIComponent(to) : ''); }
+  /* วอร์ด (data/clinic.js) ที่ชื่อแท็บตรงกับคำใน match */
+  function wardsByName(title) {
+    var t = String(title || '').toLowerCase();
+    return CLI.wards.filter(function (w) { return (w.match || []).some(function (m) { return t.indexOf(m) >= 0; }); }).map(function (w) { return w.id; });
+  }
+  function wardById(id) { return CLI.wards.filter(function (w) { return w.id === id; })[0] || null; }
   function gFull(n) { return !!(n.html && n.html.replace(/<[^>]+>/g, '').trim()) || (n.kind === 'sheet' && n.html); }
   function gCount(n) { var a = 0, b = 0; (function w(x) { b++; if (gFull(x)) a++; x.kids.forEach(w); })(n); return [a, b]; }
   function gFlat(n) { var o = []; (function w(x) { o.push(x); x.kids.forEach(w); })(n); return o; }
   function gPath(n) { var p = []; while (n) { p.unshift(n); n = n.parent; } return p; }
   function gRefresh(liveOnly) {
     var r = route();
-    if (r.name === 'preclinic' || r.name === 'clinic' || r.name === '' || (!liveOnly && r.name === 'exam')) render(true);
+    if (r.name === 'kb' || r.name === '' || (!liveOnly && r.name === 'exam')) render(true);
   }
   function gLoad() {
     if (!GD || G.st !== 'idle') return;
@@ -979,21 +1002,29 @@
     return '<span class="live off" data-glive><i></i>กำลังดึง Doc สด… (ระหว่างนี้ใช้ฉบับวันที่ ' + esc(G.snapAt) + ')</span>';
   }
   function gPaintLive() { document.querySelectorAll('[data-glive]').forEach(function (el) { el.outerHTML = gLiveHTML(); }); }
+  /* ป้ายระดับ + วอร์ดของแท็บ (กดวอร์ดไปหน้ารวมของวอร์ดนั้น) */
+  function gTagLine(n) {
+    var h = (n.lv === 'clinic' ? '<span class="kbtag lv">Clinic</span>' : n.lv === 'pre' ? '<span class="kbtag lv">Preclinic</span>' : '') +
+      (n.wards || []).map(function (id) { var w = wardById(id); return w ? '<a class="kbtag" href="#/kb/ward/' + w.id + '" style="--w:' + w.c + '">' + esc(w.name) + '</a>' : ''; }).join('');
+    return h ? '<div class="kbtags">' + h + '</div>' : '';
+  }
   function gSrcLine(n) {
     if (n.src === 'main') return gLiveHTML();
     return '<span class="muted" style="font-size:14px">จาก ' + esc(n.from || '') + ' · ดึงไว้เมื่อ ' + esc(n.at || '') + ' (ไม่อัปเดตเอง)</span>';
   }
   function gPaintDrawer() {
-    var box = document.getElementById('dsub-preclinic');
+    var box = document.getElementById('dsub-kb-sys');
     if (!box) return;
-    box.innerHTML = G.top.pre.map(function (n) { return '<a href="' + gHref(n) + '" data-r="preclinic/' + esc(n.slug) + '">' + esc(n.title) + '</a>'; }).join('');
+    box.innerHTML = '<span class="dsgrp">ตาม system</span>' + G.top.pre.map(function (n) { return '<a href="' + gHref(n) + '" data-r="kb/' + esc(n.slug) + '">' + esc(n.title) + '</a>'; }).join('');
   }
   function gText(n) {
-    if (n._t != null) return n._t;
-    var h = String(n.html || '').replace(/<\/(p|h\d|li|tr|figure)>/g, '$&\n').replace(/<br>/g, '\n').replace(/<\/td>/g, ' | ');
+    var ed = annGet('g:' + n.slug).e, own = ed && ed.h != null;   /* หน้าที่แก้เองในเว็บ → ใช้ฉบับที่แก้ (เช่นตอนออกข้อสอบ) */
+    if (n._t != null && !own) return n._t;
+    var h = String(own ? ed.h : n.html || '').replace(/<\/(p|h\d|li|tr|figure)>/g, '$&\n').replace(/<br>/g, '\n').replace(/<\/td>/g, ' | ');
     var div = document.createElement('div'); div.innerHTML = h.replace(/<style[\s\S]*?<\/style>/g, '');
-    n._t = div.textContent.replace(/[ \t ]+/g, ' ').replace(/ ?\| ?\n/g, '\n').replace(/\n\s*\n+/g, '\n').trim();
-    return n._t;
+    var t = div.textContent.replace(/[ \t ]+/g, ' ').replace(/ ?\| ?\n/g, '\n').replace(/\n\s*\n+/g, '\n').trim();
+    if (!own) n._t = t;
+    return t;
   }
   function gWaiting(area) {
     var msg = G.st === 'err' ? '<p class="warn">โหลดสรุปจาก Google Doc ไม่สำเร็จ: ' + esc(G.err) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดสรุปจาก Google Doc…</p>';
@@ -1046,24 +1077,24 @@
   function gSheetBody(n) {
     var sibs = n.parent ? n.parent.kids : [n];
     return '<div class="gsheets"><nav class="gstabs" aria-label="ชีต">' + sibs.map(function (s) { return '<a class="chip' + (s === n ? ' on" aria-current="page' : '') + '" href="' + gHref(s) + '">' + esc(s.title) + '</a>'; }).join('') + '</nav>' +
-      (n.html ? '<style>' + n.css + '</style><div class="gsheet ' + esc(n.scope) + '"><div class="gsw">' + n.html + '</div></div>' : '<div class="empty"><p class="muted">ชีตนี้ว่าง</p></div>') + '</div>';
+      (n.html ? '<style>' + n.css + '</style><div class="gsheet ' + esc(n.scope) + '"><div class="gsw" data-ann="g:' + esc(n.slug) + '">' + n.html + '</div></div>' : '<div class="empty"><p class="muted">ชีตนี้ว่าง</p></div>') + '</div>';
   }
   function gNodePage(n, r) {
     var top = n.topN || n, lk = gLook(top), path = gPath(n);
     gNeedSheets(gFlat(top));
-    remember({ href: gHref(n), title: n.title, crumb: (n.area === 'clinic' ? 'Clinic › ' : 'Preclinic › ') + path.slice(0, -1).map(function (x) { return x.title; }).join(' › '), c: lk.c });
+    remember({ href: gHref(n), title: n.title, crumb: 'คลังความรู้ › ' + path.slice(0, -1).map(function (x) { return x.title; }).join(' › '), c: lk.c });
     var flat = gFlat(top).filter(function (x) { return x.kind !== 'sheets' || true; }), i = flat.indexOf(n), prev = flat[i - 1], next = flat[i + 1];
     var crumb = path.map(function (x, k) { return k === path.length - 1 ? '<span>' + esc(x.title) + '</span>' : '<a href="' + gHref(x) + '">' + esc(x.title) + '</a>'; }).join('<span class="muted"> › </span>');
     var body;
     if (n.kind === 'sheet') body = gSheetBody(n);
     else if (n.kind === 'sheets') body = n.pending ? (n.err ? '<p class="warn">โหลดตารางไม่สำเร็จ: ' + esc(n.err) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดตาราง…</p>') :
       '<p class="muted">แยกตามชีตเหมือนในไฟล์เดิม — เลือกชีตด้านล่าง</p>' + gKidCards(n);
-    else body = (gFull(n) ? '<div class="gdoc">' + n.html + '</div>' : '<div class="empty" style="text-align:left"><p class="muted">แท็บนี้ยังไม่มีเนื้อหาใน Doc' + (n.kids.length ? ' — มีแท็บย่อยด้านล่าง' : '') + '</p></div>') +
+    else body = (gFull(n) ? '<div class="gdoc" data-ann="g:' + esc(n.slug) + '">' + n.html + '</div>' : '<div class="empty" style="text-align:left"><p class="muted">แท็บนี้ยังไม่มีเนื้อหาใน Doc' + (n.kids.length ? ' — มีแท็บย่อยด้านล่าง' : '') + '</p></div>') +
       (n.kids.length ? '<div class="gsub"><span class="label">แท็บย่อยใน ' + esc(n.title) + '</span>' + gKidCards(n) + '</div>' : '');
     var tools = (gFull(n) ? '<a class="chip" href="#/exam?src=' + encodeURIComponent('g:' + n.slug) + '">สร้างข้อสอบจากหน้านี้</a>' : '') +
       (n.src === 'main' ? '<a class="chip" href="https://docs.google.com/document/d/' + esc(GD.main.id) + '/edit" target="_blank" rel="noopener">เปิด Doc ต้นฉบับ ↗</a>' : '');
-    var art = '<article class="sheet doc gdocart"><div style="display:flex;flex-direction:column;gap:10px"><nav class="muted" aria-label="ตำแหน่ง" style="font-size:14px">' + (n.area === 'clinic' ? '<a href="#/clinic">Clinic</a>' : '<a href="#/preclinic">Preclinic</a>') + '<span class="muted"> › </span>' + crumb + '</nav>' +
-      '<h2 style="overflow-wrap:anywhere">' + esc(n.title) + '</h2>' + gSrcLine(n) + (tools ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + tools + '</div>' : '') + '</div>' + body +
+    var art = '<article class="sheet doc gdocart"><div style="display:flex;flex-direction:column;gap:10px"><nav class="muted" aria-label="ตำแหน่ง" style="font-size:14px">' + '<a href="#/kb">คลังความรู้</a>' + (n.ck === 'ward' ? '<span class="muted"> › </span><a href="#/kb/ward">ตามวอร์ด</a>' : n.ck === 'skills' ? '<span class="muted"> › </span><a href="#/kb/skills">Clinical skills</a>' : '') + '<span class="muted"> › </span>' + crumb + '</nav>' +
+      '<h2 style="overflow-wrap:anywhere">' + esc(n.title) + '</h2>' + gTagLine(n) + gSrcLine(n) + (tools ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + tools + '</div>' : '') + '</div>' + body +
       '<nav aria-label="หน้าก่อนหน้าและถัดไป" class="gpn">' +
       (prev ? '<a href="' + gHref(prev) + '"><span class="muted" style="font-size:13px">← ก่อนหน้า</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.title) + '</span></a>' : '<span></span>') +
       (next ? '<a href="' + gHref(next) + '" style="align-items:flex-end;text-align:right"><span class="muted" style="font-size:13px">ถัดไป →</span><span class="k" style="font-size:17px;font-weight:500">' + esc(next.title) + '</span></a>' : '') + '</nav></article>';
@@ -1130,41 +1161,109 @@
   }
 
   /* =========================================================
-     PRECLINIC
+     คลังความรู้ (#/kb) — รวม Preclinic + Clinic เป็นคลังเดียว
+     ที่เก็บหลัก = แท็บตาม system ใน Doc โพยหมอ (ไม่ว่าจะเรียนตอนปีไหน)
+     วอร์ด = ป้าย/มุมมอง (#/kb/ward/<id>) ไม่ใช่ที่เก็บ · Clinical skills + Symptomatology = ทักษะที่ข้าม system
      ========================================================= */
-  PAGES.preclinic = function (r) {
+  var KB_SUB = { symp: 1, skills: 1, ward: 1, approach: 1 };
+  /* ลิงก์เก่า #/preclinic/… และ #/clinic/… → ที่ใหม่ */
+  function kbGo(to, r) { var q = r.q.toString(); location.replace(to + (q ? '?' + q : '')); return { title: '', html: '' }; }
+  PAGES.preclinic = function (r) { return kbGo('#/kb' + (r.args[0] ? '/' + encodeURIComponent(r.args[0]) : ''), r); };
+  PAGES.clinic = function (r) {
+    var a = r.args[0] || '';
+    if (a === 'symp') return kbGo('#/kb/symp' + (r.args[1] ? '/' + encodeURIComponent(r.args[1]) : ''), r);
+    if (a === 'skills' || a === 'ward') return kbGo('#/kb/' + a, r);
+    if (a === 'doc') return kbGo('#/kb' + (r.args[1] ? '/' + encodeURIComponent(r.args[1]) : ''), r);
+    if (a && CLI.approaches.some(function (x) { return x.id === a; })) return kbGo('#/kb/approach/' + a, r);
+    return kbGo('#/kb', r);
+  };
+  PAGES.kb = function (r) {
     gLoad();
-    var head = '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">01 · ราก · ปี 1–3</span><h1>Preclinic</h1>' +
-      '<p class="lede">สรุปจาก Google Doc <b>' + esc(GD ? GD.main.name : '') + '</b> — แยกตามแท็บเดิมของ Doc ทุกแท็บ แก้ใน Doc แล้วหน้านี้เปลี่ยนตามเอง</p></div></section>';
-    if (G.st !== 'ready') return { title: 'Preclinic', html: head + gWaiting('pre') };
-    if (r.args[0]) {
-      var n = G.by[r.args[0]];
-      if (n && n.area === 'clinic') { location.replace(gHref(n)); return { title: n.title, html: '' }; }
+    var a = r.args[0] || '';
+    if (a === 'symp') return sympPage(r);
+    if (a === 'skills') return skillsPage(r);
+    if (a === 'ward') return wardPage(r);
+    if (a === 'approach') return approachPage(r);
+    if (a) {
+      if (G.st !== 'ready') return { title: 'คลังความรู้', html: clinicHead('', '', 'คลังความรู้', '') + gWaiting('') };
+      var n = G.by[a];
       if (n) return gNodePage(n, r);
-      if (gPendingSheets()) return { title: 'Preclinic', html: head + gWaiting('pre') };
+      if (gPendingSheets()) return { title: 'คลังความรู้', html: clinicHead('', '', 'คลังความรู้', '') + gWaiting('') };
     }
-    remember({ href: '#/preclinic', title: 'Preclinic', crumb: 'หน้าหลัก', c: '#3E7CA6' });
+    return kbHub(r, a);
+  };
+  function kbBooks(href) {
+    return CLI.wards.map(function (w, i) {
+      var h = [200, 200, 186, 194, 204][i % 5], k = kbWardNodes(w.id).length;
+      return '<a class="book" href="' + href(w) + '" style="background:' + w.c + ';height:' + h + 'px"><span class="k" style="font-size:22px">' + esc(w.name) + '</span><span style="font-size:13px;opacity:.9">' + esc(w.full) + '</span>' +
+        (G.st === 'ready' ? '<span style="font-size:13px;opacity:.9;margin-top:auto">' + (k ? k + ' หน้าสรุป' : 'ยังไม่มีสรุป') + '</span>' : '') + '</a>';
+    }).join('') + '<span class="book add" style="height:180px"><span class="k" style="font-size:20px;color:var(--ink)">+ วอร์ดถัดไป</span><span style="font-size:13px">ปี 5–6</span></span>';
+  }
+  function kbHub(r, missing) {
+    remember({ href: '#/kb', title: 'คลังความรู้', crumb: 'หน้าหลัก', c: '#355A3A' });
+    var head = clinicHead('', '', 'คลังความรู้', 'ทุกเรื่องเก็บตาม system ที่เดียว ไม่ว่าจะเรียนตอน preclinic หรือ clinic — อยากดูเฉพาะวอร์ดที่วนอยู่ กด <b>ตามวอร์ด</b>');
+    if (G.st !== 'ready') return { title: 'คลังความรู้', html: head + gWaiting('') };
+    var aps = CLI.approaches.map(function (x) { return '<a class="pill" href="#/kb/approach/' + x.id + '"><span class="sw" style="background:#5C7F3A"></span>' + esc(x.title) + '</a>'; }).join('');
     return {
-      title: 'Preclinic', html: head +
-        '<section class="wrap" style="padding-bottom:22px;display:flex;flex-direction:column;gap:14px">' + (r.args[0] ? '<p class="warn">ไม่พบแท็บนี้ใน Doc แล้ว — อาจถูกเปลี่ยนชื่อ</p>' : '') + gSearchBar('pre', 'ค้นในสรุป preclinic ทุกแท็บ…') + '</section>' +
-        '<section class="wrap" style="padding-bottom:72px"><div class="syss">' + G.top.pre.map(gTopCard).join('') + '</div></section>',
+      title: 'คลังความรู้', html: head +
+        '<section class="wrap" style="padding-bottom:22px;display:flex;flex-direction:column;gap:14px">' + (missing ? '<p class="warn">ไม่พบแท็บนี้ใน Doc แล้ว — อาจถูกเปลี่ยนชื่อ</p>' : '') + gSearchBar('', 'ค้นในสรุปทุกแท็บ…') + '</section>' +
+        '<section class="wrap" style="padding-bottom:40px;display:flex;flex-direction:column;gap:12px"><span class="label">ตาม system · จาก Google Doc ' + esc(GD.main.name) + '</span><div class="syss">' + G.top.pre.map(gTopCard).join('') + '</div></section>' +
+        '<section class="band" style="padding:36px 0 72px"><div class="wrap" style="display:flex;flex-direction:column;gap:14px"><span class="label">ตามวอร์ด · ดึงหน้าที่ติดป้ายวอร์ดนั้นจากทุก system มารวมให้</span>' +
+        '<div style="overflow-x:auto;padding:12px 2px 0"><div class="shelf">' + kbBooks(function (w) { return '#/kb/ward/' + w.id; }) + '</div></div>' +
+        (aps ? '<span class="label" style="margin-top:18px">Approach ตามอาการนำ</span><div style="display:flex;flex-wrap:wrap;gap:8px">' + aps + '<a class="chip" href="#/kb/symp">Symptomatology &amp; Approach ทุกบท →</a></div>' : '') +
+        '</div></section>',
       after: gSearchAfter
     };
-  };
-
-  /* =========================================================
-     CLINIC
-     ========================================================= */
-  PAGES.clinic = function (r) {
-    if (r.args[0] === 'symp') return sympPage(r);
-    if (r.args[0] === 'skills') return skillsPage(r);
-    if (r.args[0] === 'doc' || r.args[0] === 'ward') return gClinicDoc(r);
-    var ap = CLI.approaches.filter(function (a) { return a.id === r.args[0]; })[0] || CLI.approaches[0];
-    remember({ href: '#/clinic/' + ap.id, title: ap.title, crumb: 'Clinic › ตามอาการนำ', c: '#5C7F3A' });
-    var books = CLI.wards.map(function (w, i) {
-      var h = [200, 200, 186, 194, 204][i % 5];
-      return '<a class="book" href="' + esc(C.acUrl) + '" target="_blank" rel="noopener" style="background:' + w.c + ';height:' + h + 'px"><span class="k" style="font-size:22px">' + esc(w.name) + '</span><span style="font-size:13px;opacity:.9">' + esc(w.full) + '</span></a>';
-    }).join('') + '<span class="book add" style="height:180px"><span class="k" style="font-size:20px;color:var(--ink)">+ วอร์ดถัดไป</span><span style="font-size:13px">ปี 5–6</span></span>';
+  }
+  /* หน้าที่ติดป้ายวอร์ดนี้ — เอาเฉพาะชั้นบนสุดของแต่ละสาย (แท็บย่อยตามไปเอง) */
+  function kbWardNodes(id) {
+    if (G.st !== 'ready') return [];
+    return G.nodes.filter(function (n) { return (n.wards || []).indexOf(id) >= 0 && !(n.parent && (n.parent.wards || []).indexOf(id) >= 0); });
+  }
+  function maiWardList(w) {
+    if (!w.mai) return [];
+    return D.list.filter(function (d) { return dVals(d, 'ward').indexOf(w.mai) >= 0; });
+  }
+  function wardPage(r) {
+    var w = wardById(r.args[1]);
+    var crumb = '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span>' + (w ? '<a href="#/kb/ward">ตามวอร์ด</a><span class="muted"> › </span><span>' + esc(w.name) + '</span>' : '<span>ตามวอร์ด</span>');
+    if (!w) {
+      remember({ href: '#/kb/ward', title: 'ตามวอร์ด', crumb: 'คลังความรู้', c: '#5C7F3A' });
+      var wardTops = G.st === 'ready' ? gClinicTops('ward') : [];
+      return {
+        title: 'ตามวอร์ด', html: clinicHead('ward', crumb, 'ตามวอร์ด', 'เลือกวอร์ด แล้วเว็บรวมสรุปที่ติดป้ายวอร์ดนั้นจากทุก system + โรคใน 1000 MAI ที่เจอในวอร์ดนั้นมาให้') +
+          '<section style="padding-bottom:40px"><div class="wrap"><div style="overflow-x:auto;padding:12px 2px 0"><div class="shelf">' + kbBooks(function (x) { return '#/kb/ward/' + x.id; }) + '</div></div></div></section>' +
+          (G.st !== 'ready' ? gWaiting('') : wardTops.length ? '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:12px"><span class="label">สรุปวอร์ดจาก Google Doc ' + esc(GD.main.name) + '</span><div class="syss">' + wardTops.map(gTopCard).join('') + '</div></section>' : '')
+      };
+    }
+    remember({ href: '#/kb/ward/' + w.id, title: w.name, crumb: 'คลังความรู้ › ตามวอร์ด', c: w.c });
+    var head = clinicHead('ward', crumb, esc(w.name) + ' <span class="sxh1en">' + esc(w.full) + '</span>', '');
+    if (G.st !== 'ready') return { title: w.name, html: head + gWaiting('') };
+    var ns = kbWardNodes(w.id), groups = [], gm = {};
+    ns.forEach(function (n) { var t = n.topN || n; if (!gm[t.slug]) { gm[t.slug] = { t: t, items: [] }; groups.push(gm[t.slug]); } gm[t.slug].items.push(n); });
+    var docHTML = groups.length ? groups.map(function (g) {
+      var lk = gLook(g.t);
+      return '<div class="kbwg"><div class="sxgh"><span class="sw" style="background:' + lk.c + '"></span><h3 class="k" style="font-size:19px">' + esc(g.t.ck === 'ward' ? 'สรุปวอร์ด' : g.t.title) + '</h3>' + (lk.th && g.t.ck !== 'ward' ? '<span class="muted" style="font-size:14px">' + esc(lk.th) + '</span>' : '') + '</div>' +
+        '<div class="gkids">' + g.items.map(function (n) {
+          var c = gCount(n);
+          return '<a class="sheet gkid" href="' + gHref(n) + '"><span class="k" style="font-size:17px;font-weight:500">' + esc(n.title) + '</span><span class="muted" style="font-size:13px">' + esc(gPath(n).slice(0, -1).map(function (x) { return x.title; }).join(' › ') || 'แท็บหลัก') + ' · ' + (gFull(n) ? 'มีเนื้อหา' : 'ยังว่าง') + (c[1] > 1 ? ' · ' + (c[1] - 1) + ' แท็บย่อย' : '') + '</span></a>';
+        }).join('') + '</div></div>';
+    }).join('') : '<div class="empty" style="text-align:left"><p class="muted">ยังไม่มีสรุปที่ติดป้าย ' + esc(w.name) + ' — สรุปที่เรียนจากวอร์ดนี้ใส่ไว้ในแท็บ system ของเรื่องนั้นใน Doc แล้วบอกให้ติดป้ายวอร์ด หน้าจะมาขึ้นตรงนี้เอง</p></div>';
+    var ml = maiWardList(w);
+    var maiHTML = w.mai ? '<section class="wrap" style="padding-bottom:28px;display:flex;flex-direction:column;gap:12px"><span class="label">โรคใน 1000 MAI ที่เจอในวอร์ดนี้ · ' + ml.length + ' โรค</span>' +
+      (ml.length ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + ml.slice(0, 40).map(function (d) { return '<a class="pill' + (d.filled ? '' : ' mai-dim') + '" href="' + dHref(d) + '">' + esc(d.name) + '</a>'; }).join('') + '</div>' : '<p class="muted">' + (D.loading ? 'กำลังดึงชีต…' : 'ยังไม่มีโรคที่ติด Ward ' + esc(w.mai) + ' ในชีต') + '</p>') +
+      '<a class="chip" style="align-self:flex-start" href="#/diseases?ward=' + encodeURIComponent(w.mai) + '">ดูทั้งหมดใน 1000 MAI →</a></section>' : '';
+    return {
+      title: w.name, html: head +
+        '<section class="wrap" style="padding-bottom:36px;display:flex;flex-direction:column;gap:18px"><span class="label">สรุปจากทุก system ที่ติดป้าย ' + esc(w.name) + '</span>' + docHTML + '</section>' + maiHTML +
+        '<section class="wrap" style="padding-bottom:80px"><a class="sheet tool" href="' + esc(C.acUrl) + '" target="_blank" rel="noopener" style="border:1.5px solid var(--ink);max-width:420px"><span class="label">เชื่อมกับ</span><span class="k" style="font-size:18px;font-weight:500">คลังข้อสอบเก่า MDCU ↗</span></a></section>'
+    };
+  }
+  /* Approach ตามอาการนำ (data/clinic.js → approaches) */
+  function approachPage(r) {
+    var ap = CLI.approaches.filter(function (a) { return a.id === r.args[1]; })[0] || CLI.approaches[0];
+    if (!ap) return kbHub(r, '');
+    remember({ href: '#/kb/approach/' + ap.id, title: ap.title, crumb: 'คลังความรู้ › ตามอาการนำ', c: '#5C7F3A' });
     var steps = ap.steps.map(function (s, i) {
       var last = i === ap.steps.length - 1;
       var inner = s.links ? '<div style="display:flex;flex-direction:column">' + s.links.map(function (l) {
@@ -1173,24 +1272,13 @@
       }).join('') + '</div>' : s.html;
       return '<div class="st"><div class="mk"><b>' + (i + 1) + '</b>' + (last ? '' : '<i></i>') + '</div><div style="padding-bottom:' + (last ? 0 : 28) + 'px"><h3>' + esc(s.title) + '</h3>' + inner + '</div></div>';
     }).join('');
+    var crumb = '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span><a href="#/kb/symp">ตามอาการนำ</a><span class="muted"> › </span><span>' + esc(ap.group) + '</span>';
     return {
-      title: 'Clinic', html:
-        '<section class="wrap phead" style="padding-bottom:28px"><div style="display:flex;flex-direction:column;gap:16px"><span class="label">02 · ลำต้น · ปี 4–6</span><h1>Clinic</h1>' +
-        '<p class="lede">เข้าได้สามทาง: ตามวอร์ดที่วนอยู่ ตามอาการนำของคนไข้ หรือตามงานที่ต้องทำบนวอร์ด — ทุกทางกดต่อไปหาแผ่นตัวอย่างใน 1000 MAIได้</p>' + clinicTabs('') + '</div></section>' +
-        '<section style="padding-bottom:48px"><div class="wrap" style="display:flex;flex-direction:column;gap:14px"><span class="label">ชั้นหนังสือ · สมุดวอร์ด</span><div style="overflow-x:auto;padding:12px 2px 0"><div class="shelf">' + books + '</div></div>' +
-        '<p class="muted" style="font-size:15px">ตอนนี้แต่ละเล่มเปิดไปคลังข้อสอบเก่า MDCU · เนื้อหาในสมุดวอร์ดจะทยอยเพิ่ม</p></div></section>' +
-        '<section class="band" style="padding:40px 0 80px"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:40px 48px;align-items:flex-start">' +
-        '<article class="sheet" style="flex:999 1 600px;min-width:0;padding:clamp(22px,4vw,44px);display:flex;flex-direction:column;gap:26px"><div style="display:flex;flex-direction:column;gap:10px"><span class="muted" style="font-size:14px">Clinic › ตามอาการนำ › ' + esc(ap.group) + '</span><h2 style="font-size:36px">' + esc(ap.title) + '</h2><p class="muted">' + esc(ap.sub) + '</p></div><div style="display:flex;flex-direction:column">' + steps + '</div></article>' +
-        '<aside style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">อาการนำอื่น · Symptomatology &amp; Approach</span><div style="display:flex;flex-wrap:wrap;gap:8px">' +
-        (SY.chapters.length ? SY.chapters.filter(function (c) { return c.g !== 'base'; }).map(function (c) { return '<a class="pill" href="#/clinic/symp/' + c.id + '"><span class="sw" style="background:' + syGroup(c).c + '"></span>' + esc(c.th) + '</a>'; }).join('') :
-          CLI.more.map(function (m) { return '<span class="chip" style="cursor:default;opacity:.75">' + esc(m) + '</span>'; }).join('')) + '</div>' +
-        '<a class="chip" href="#/clinic/symp" style="align-self:flex-start">ดูทุกบท →</a>' +
-        '<span class="label" style="margin-top:12px">ทักษะบนวอร์ด</span><div class="sheet" style="display:flex;flex-direction:column">' +
-        CLI.tools.map(function (t, i) { return '<div class="tool"' + (i < CLI.tools.length - 1 ? ' style="border-bottom:1px dashed var(--rule)"' : '') + '><span class="k" style="font-size:17px;font-weight:500">' + esc(t[0]) + '</span><span class="muted" style="font-size:14px">' + esc(t[1]) + '</span></div>'; }).join('') + '</div>' +
-        '<a class="sheet tool" href="' + esc(C.acUrl) + '" target="_blank" rel="noopener" style="margin-top:8px;border:1.5px solid var(--ink)"><span class="label">เชื่อมกับ</span><span class="k" style="font-size:18px;font-weight:500">คลังข้อสอบเก่า MDCU ↗</span></a>' +
-        '</aside></div></section>'
+      title: ap.title, html: clinicHead('symp', crumb, esc(ap.title), esc(ap.sub)) +
+        '<section class="band" style="padding:36px 0 80px"><div class="wrap"><article class="sheet" style="padding:clamp(22px,4vw,44px)"><div style="display:flex;flex-direction:column" data-ann="c:' + esc(ap.id) + '">' + steps + '</div></article>' +
+        '<p style="margin-top:20px"><a class="chip" href="#/exam?src=' + encodeURIComponent('c:' + ap.id) + '">สร้างข้อสอบจาก approach นี้</a></p></div></section>'
     };
-  };
+  }
 
   /* =========================================================
      CLINIC › Clinical skills · Symptomatology & Approach
@@ -1206,7 +1294,7 @@
     s.L = true;
     fetch('symp/' + c.file + '?v=' + SY.v).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (j) { s.d = j; }).catch(function (e) { s.E = e.message || String(e); }).then(function () {
-        s.L = false; var r = route(); if (r.name === 'clinic' && r.args[0] === 'symp' && r.args[1] === c.id) render(true);
+        s.L = false; var r = route(); if (r.name === 'kb' && r.args[0] === 'symp' && r.args[1] === c.id) render(true);
       });
     return null;
   }
@@ -1218,13 +1306,13 @@
       .then(function (j) { SYS_SEARCH.d = j; }).catch(function (e) { SYS_SEARCH.E = e.message || String(e); }).then(function () { SYS_SEARCH.L = false; cb(); });
   }
   function clinicTabs(cur) {
-    return '<div class="subtabs" aria-label="ส่วนของ Clinic">' + [['', 'ภาพรวม · สมุดวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach'], ['ward', 'สรุปวอร์ด']].map(function (x) {
-      return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/clinic' + (x[0] ? '/' + x[0] : '') + '">' + x[1] + '</a>';
+    return '<div class="subtabs" aria-label="มุมมองของคลังความรู้">' + [['', 'ตาม system'], ['ward', 'ตามวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach']].map(function (x) {
+      return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/kb' + (x[0] ? '/' + x[0] : '') + '">' + x[1] + '</a>';
     }).join('') + '</div>';
   }
   function clinicHead(cur, crumb, h1, lede) {
     return '<section class="wrap phead" style="padding-bottom:24px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0;max-width:100%">' +
-      (crumb ? '<nav aria-label="ตำแหน่ง" style="font-size:15px">' + crumb + '</nav>' : '<span class="label">02 · ลำต้น · ปี 4–6</span>') +
+      (crumb ? '<nav aria-label="ตำแหน่ง" style="font-size:15px">' + crumb + '</nav>' : '<span class="label">01 · ราก + ลำต้น · ปี 1 → License</span>') +
       '<h1 style="font-size:clamp(36px,5vw,64px);overflow-wrap:anywhere">' + h1 + '</h1>' + (lede ? '<p class="lede">' + lede + '</p>' : '') + clinicTabs(cur) + '</div></section>';
   }
   var SY_SRC = '<span class="src si">ศิริราช</span>';
@@ -1242,38 +1330,25 @@
   }
   function skillsPage() {
     gLoad();
-    remember({ href: '#/clinic/skills', title: 'Clinical skills', crumb: 'Clinic', c: '#5C7F3A' });
+    remember({ href: '#/kb/skills', title: 'Clinical skills', crumb: 'คลังความรู้', c: '#5C7F3A' });
     var rel = SY.chapters.filter(function (c) { return c.g === 'base'; });
     return {
-      title: 'Clinical skills', html: clinicHead('skills', '<a href="#/clinic">Clinic</a><span class="muted"> › </span><span>Clinical skills</span>', 'Clinical skills',
+      title: 'Clinical skills', html: clinicHead('skills', '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span><span>Clinical skills</span>', 'Clinical skills',
         'ทักษะทางคลินิก — ซักประวัติ ตรวจร่างกาย หัตถการ จาก Google Doc ' + esc(GD ? GD.main.name : '') + ' (แยกตามแท็บเดิม อัปเดตเองเมื่อแก้ Doc)') +
         '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:28px">' +
-        (G.st === 'ready' ? gSearchBar('clinic', 'ค้นในสรุปฝั่ง clinic…') : '') +
+        (G.st === 'ready' ? gSearchBar('', 'ค้นในสรุปทุกแท็บ…') : '') +
         gClinicBlock('skills', 'จาก Google Doc ' + esc(GD ? GD.main.name : '')) +
         (rel.length ? '<div style="display:flex;flex-direction:column;gap:12px"><span class="label">ที่เกี่ยวข้องใน Symptomatology &amp; Approach</span><div class="sxcards">' + rel.map(syCard).join('') + '</div></div>' : '') +
         '</section>',
       after: gSearchAfter
     };
   }
-  /* #/clinic/ward = แท็บ Clinic ของ Doc · #/clinic/doc/<แท็บ> = แท็บใดก็ได้ฝั่ง clinic */
-  function gClinicDoc(r) {
-    gLoad();
-    var crumb = '<a href="#/clinic">Clinic</a><span class="muted"> › </span><span>สรุปวอร์ด</span>';
-    if (G.st !== 'ready') return { title: 'Clinic', html: clinicHead(r.args[0] === 'ward' ? 'ward' : '', crumb, 'สรุปวอร์ด', '') + gWaiting('clinic') };
-    var n = r.args[0] === 'ward' ? gClinicTops('ward')[0] : G.by[r.args[1]];
-    if (!n && gPendingSheets()) return { title: 'Clinic', html: clinicHead('', crumb, 'สรุปวอร์ด', '') + gWaiting('clinic') };
-    if (n && n.area === 'pre') { location.replace(gHref(n)); return { title: n.title, html: '' }; }
-    if (!n) return { title: 'ไม่พบแท็บ', html: clinicHead('', crumb, 'ไม่พบแท็บนี้', 'อาจถูกเปลี่ยนชื่อใน Doc แล้ว — <a href="#/clinic/skills">ไป Clinical skills</a>') };
-    var res = gNodePage(n, r);
-    var cur = n.ck === 'skills' ? 'skills' : n.ck === 'symp' ? 'symp' : 'ward';
-    res.html = '<div style="padding-top:8px">' + '<div class="wrap" style="padding-top:20px;padding-bottom:18px">' + clinicTabs(cur) + '</div>' + res.html + '</div>';
-    return res;
-  }
+
 
   /* ---------- หน้ารวมบท ---------- */
   function syCard(c) {
     var g = syGroup(c);
-    return '<a class="sheet sxcard" href="#/clinic/symp/' + c.id + '" style="--g:' + g.c + '"><span class="sxno">บทที่ ' + c.no + '</span><h3>' + esc(c.th) + '</h3><span class="sxen">' + esc(c.en) + '</span>' +
+    return '<a class="sheet sxcard" href="#/kb/symp/' + c.id + '" style="--g:' + g.c + '"><span class="sxno">บทที่ ' + c.no + '</span><h3>' + esc(c.th) + '</h3><span class="sxen">' + esc(c.en) + '</span>' +
       '<span class="sxmeta">' + c.n + ' หัวข้อ' + (c.f ? ' · ' + c.f + ' algorithm' : '') + (c.i ? ' · ' + c.i + ' รูป' : '') + '</span></a>';
   }
   function gSympCard() {
@@ -1286,7 +1361,7 @@
       '<span class="muted" style="font-size:14px">' + esc((n.heads || []).filter(function (h) { return h.l === 1 && h.t; }).slice(0, 12).map(function (h) { return h.t; }).join(' · ')) + '</span><span class="muted" style="font-size:13px">' + c[0] + ' / ' + c[1] + ' หน้ามีเนื้อหา · อัปเดตเองเมื่อแก้ Doc</span></a>';
   }
   function sympHub(r) {
-    remember({ href: '#/clinic/symp', title: 'Symptomatology & Approach', crumb: 'Clinic', c: '#5C7F3A' });
+    remember({ href: '#/kb/symp', title: 'Symptomatology & Approach', crumb: 'คลังความรู้', c: '#5C7F3A' });
     var view = r.q.get('v') === 'book' ? 'book' : 'sys', qq = (r.q.get('q') || '').trim();
     var body;
     if (!SY.chapters.length) body = '<div class="empty"><p class="muted">ยังไม่มีบท</p></div>';
@@ -1297,9 +1372,9 @@
       return '<section class="sxgrp"><div class="sxgh"><span class="sw" style="background:' + g.c + '"></span><h2>' + esc(g.t) + '</h2><span class="muted">' + cs.length + ' บท</span></div><div class="sxcards">' + cs.map(syCard).join('') + '</div></section>';
     }).join('');
     var nf = 0, ni = 0; SY.chapters.forEach(function (c) { nf += c.f; ni += c.i; });
-    var hq = function (v) { return '#/clinic/symp' + (v === 'book' ? '?v=book' : ''); };
+    var hq = function (v) { return '#/kb/symp' + (v === 'book' ? '?v=book' : ''); };
     return {
-      title: 'Symptomatology & Approach', html: clinicHead('symp', '<a href="#/clinic">Clinic</a><span class="muted"> › </span><span>Symptomatology &amp; Approach</span>', 'Symptomatology &amp; Approach',
+      title: 'Symptomatology & Approach', html: clinicHead('symp', '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span><span>Symptomatology &amp; Approach</span>', 'Symptomatology &amp; Approach',
         'สรุป' + esc(SY.book.title || '') + ' ' + SY_SRC + ' ครบทุกบท — กดเปิดทีละหัวข้อ · algorithm กดดูทีละกล่องหรือเดินทีละขั้น<br><span class="muted" style="font-size:15px">' + esc(SY.book.by || '') + ' · ' + esc(SY.book.ed || '') + '</span>') +
         '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:26px">' +
         '<div class="sxbar"><form class="search sxsearch" id="sxsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sxq">ค้นทุกบท</label><input id="sxq" type="search" placeholder="ค้นทุกบท เช่น MCV, Rockall, eschar" value="' + esc(qq) + '" autocomplete="off"></form>' +
@@ -1318,7 +1393,7 @@
             var c = syCh(x.c); if (!c) return '';
             var i = x.x.toLowerCase().indexOf(ql), snip = '';
             if (i >= 0) { var a = Math.max(0, i - 50); snip = (a ? '…' : '') + esc(x.x.slice(a, i)) + '<mark>' + esc(x.x.slice(i, i + v.length)) + '</mark>' + esc(x.x.slice(i + v.length, i + v.length + 70)) + '…'; }
-            return '<a href="#/clinic/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) + '"><span class="pn">' + c.no + '</span><span><b>' + esc(c.th) + ' › ' + esc(x.h) + '</b>' + (snip ? '<small>' + snip.replace(/\n/g, ' ') + '</small>' : '') + '</span></a>';
+            return '<a href="#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) + '"><span class="pn">' + c.no + '</span><span><b>' + esc(c.th) + ' › ' + esc(x.h) + '</b>' + (snip ? '<small>' + snip.replace(/\n/g, ' ') + '</small>' : '') + '</span></a>';
           }).join('');
         }
         inp.addEventListener('input', function () { clearTimeout(t); t = setTimeout(run, 220); });
@@ -1354,26 +1429,27 @@
   }
   function sympChapter(c, r) {
     var g = syGroup(c), d = syLoad(c), s = SYD[c.no];
-    var crumb = '<a href="#/clinic">Clinic</a><span class="muted"> › </span><a href="#/clinic/symp">Symptomatology &amp; Approach</a><span class="muted"> › </span><span>บทที่ ' + c.no + '</span>';
+    var crumb = '<a href="#/kb">คลังความรู้</a><span class="muted"> › </span><a href="#/kb/symp">Symptomatology &amp; Approach</a><span class="muted"> › </span><span>บทที่ ' + c.no + '</span>';
     var head = clinicHead('symp', crumb, esc(c.th) + ' <span class="sxh1en">' + esc(c.en) + '</span>', 'บทที่ ' + c.no + ' · หน้า ' + esc(c.pages) + ' ในตำรา · ' + SY_SRC);
     if (!d) return { title: c.th, html: head + '<section class="wrap" style="padding-bottom:80px">' + (s && s.E ? '<p class="warn">เปิดบทไม่สำเร็จ: ' + esc(s.E) + ' — ลองรีเฟรชหน้า</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังเปิดบท…</p>') + '</section>' };
-    remember({ href: '#/clinic/symp/' + c.id, title: c.th + ' · ' + c.en, crumb: 'Clinic › Symptomatology', c: g.c });
+    remember({ href: '#/kb/symp/' + c.id, title: c.th + ' · ' + c.en, crumb: 'คลังความรู้ › Symptomatology', c: g.c });
     var st = syOpen(c.id), flows = d.flows || [], FM = {};
     flows.forEach(function (f) { FM[f.id] = f; });
+    ANN_HOOK.y = sxAnnHook(c, FM);
     var secs = d.sections.map(function (x, i) { return sySec(x, i, st); }).join('').replace(/<div class="flow" data-flow="([\w-]+)"><\/div>/g, function (m, id) { return FM[id] ? flowShell(FM[id]) : ''; });
-    var toc = d.sections.map(function (x, i) { return '<a href="#/clinic/symp/' + c.id + '?to=s-' + x.id + '" data-go="s-' + x.id + '"><span class="pn">' + (i + 1) + '</span><span>' + esc(x.h) + '</span></a>'; }).join('');
-    var ftoc = flows.length ? '<div class="grp">Algorithm ในบทนี้</div>' + flows.map(function (f) { return '<a href="#/clinic/symp/' + c.id + '?to=f-' + f.id + '" data-go="f-' + f.id + '"><span class="pn fi">⇣</span><span>' + esc(f.title) + '</span></a>'; }).join('') : '';
+    var toc = d.sections.map(function (x, i) { return '<a href="#/kb/symp/' + c.id + '?to=s-' + x.id + '" data-go="s-' + x.id + '"><span class="pn">' + (i + 1) + '</span><span>' + esc(x.h) + '</span></a>'; }).join('');
+    var ftoc = flows.length ? '<div class="grp">Algorithm ในบทนี้</div>' + flows.map(function (f) { return '<a href="#/kb/symp/' + c.id + '?to=f-' + f.id + '" data-go="f-' + f.id + '"><span class="pn fi">⇣</span><span>' + esc(f.title) + '</span></a>'; }).join('') : '';
     var i = SY.chapters.indexOf(c), prev = SY.chapters[i - 1], next = SY.chapters[i + 1];
     var nav = '<nav aria-label="บทก่อนหน้าและถัดไป" class="pnav">' +
-      (prev ? '<a href="#/clinic/symp/' + prev.id + '"><span class="muted" style="font-size:13px">← บทที่ ' + prev.no + '</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.th) + '</span></a>' : '<span></span>') +
-      (next ? '<a href="#/clinic/symp/' + next.id + '" style="align-items:flex-end;text-align:right"><span class="muted" style="font-size:13px">บทที่ ' + next.no + ' →</span><span class="k" style="font-size:17px;font-weight:500">' + esc(next.th) + '</span></a>' : '') + '</nav>';
+      (prev ? '<a href="#/kb/symp/' + prev.id + '"><span class="muted" style="font-size:13px">← บทที่ ' + prev.no + '</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.th) + '</span></a>' : '<span></span>') +
+      (next ? '<a href="#/kb/symp/' + next.id + '" style="align-items:flex-end;text-align:right"><span class="muted" style="font-size:13px">บทที่ ' + next.no + ' →</span><span class="k" style="font-size:17px;font-weight:500">' + esc(next.th) + '</span></a>' : '') + '</nav>';
     return {
       title: c.th + ' · ' + c.en, html: head +
         '<section class="band" style="padding:30px 0 80px"><div class="wrap reader sxreader" id="sxr" style="--g:' + g.c + '">' +
         '<details class="ttree sxtoc" id="sxtoc" open><summary class="k">หัวข้อในบท <span class="muted" style="font-weight:400;font-size:14px">· ' + d.sections.length + ' หัวข้อ</span></summary><nav class="tree" aria-label="หัวข้อในบท ' + esc(c.th) + '">' + toc + ftoc + '</nav></details>' +
         '<article class="sheet doc sxdoc sx"><div class="sxtools"><button type="button" class="chip" data-all="1">เปิดทั้งหมด</button><button type="button" class="chip" data-all="0">ปิดทั้งหมด</button><a class="chip" href="#/exam?src=' + encodeURIComponent('y:' + c.id) + '">ออกข้อสอบจากบทนี้</a>' +
         (flows.length ? '<span class="muted" style="font-size:14px">' + flows.length + ' algorithm — กดกล่องเพื่อดูรายละเอียด หรือเลือก "ทีละขั้น"</span>' : '') + '</div>' +
-        secs + nav + '</article></div></section>',
+        '<div class="sxsecs" data-ann="y:' + esc(c.id) + '">' + secs + '</div>' + nav + '</article></div></section>',
       after: function () {
         var root = document.getElementById('sxr');
         if (window.innerWidth < 900) { var tt = document.getElementById('sxtoc'); if (tt) tt.open = false; }
@@ -1415,7 +1491,7 @@
   function sympPage(r) {
     if (!r.args[1]) return sympHub(r);
     var c = syCh(r.args[1]);
-    if (!c) return { title: 'ไม่พบบท', html: clinicHead('symp', '', 'ไม่พบบทนี้', '<a href="#/clinic/symp">กลับไปหน้ารวมบท</a>') };
+    if (!c) return { title: 'ไม่พบบท', html: clinicHead('symp', '', 'ไม่พบบทนี้', '<a href="#/kb/symp">กลับไปหน้ารวมบท</a>') };
     return sympChapter(c, r);
   }
 
@@ -1656,11 +1732,11 @@
     o += '</optgroup><optgroup label="1000 MAI · รายโรค">' + D.list.map(function (d) { return '<option value="d:' + esc(d.id) + '">' + esc(d.name) + '</option>'; }).join('') + '</optgroup>';
     if (G.st === 'ready') ['pre', 'clinic'].forEach(function (ar) {
       var opts = G.nodes.filter(function (n) { return n.area === ar && (gFull(n) || (n.kids.length && gCount(n)[0])); });
-      if (opts.length) o += '<optgroup label="' + (ar === 'pre' ? 'Preclinic' : 'Clinic') + ' · สรุปจาก Google Doc">' + opts.map(function (n) {
+      if (opts.length) o += '<optgroup label="คลังความรู้ · ' + (ar === 'pre' ? 'ตาม system' : 'Clinical skills · Symptomatology · สรุปวอร์ด') + '">' + opts.map(function (n) {
         return '<option value="g:' + esc(n.slug) + '">' + esc(gPath(n).map(function (x) { return x.title; }).join(' › ') + (n.kids.length ? ' (รวมแท็บย่อย)' : '')) + '</option>';
       }).join('') + '</optgroup>';
     });
-    o += '<optgroup label="Clinic">' + CLI.approaches.map(function (a) { return '<option value="c:' + a.id + '">' + esc('Approach › ' + a.title) + '</option>'; }).join('') + '</optgroup>';
+    o += '<optgroup label="คลังความรู้ · Approach ตามอาการนำ">' + CLI.approaches.map(function (a) { return '<option value="c:' + a.id + '">' + esc('Approach › ' + a.title) + '</option>'; }).join('') + '</optgroup>';
     if (SY.chapters.length) o += '<optgroup label="Symptomatology &amp; Approach (ศิริราช)">' + SY.chapters.map(function (c) { return '<option value="y:' + c.id + '">' + esc('บทที่ ' + c.no + ' ' + c.th + ' · ' + c.en) + '</option>'; }).join('') + '</optgroup>';
     if (sel) o = o.replace('value="' + esc(sel) + '"', 'value="' + esc(sel) + '" selected');
     return o;
@@ -1919,7 +1995,7 @@
     var me = NL_SUB.filter(function (x) { return x[0] === cur; })[0];
     var tabs = NL_SUB.map(function (x) { return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/nl/' + x[0] + '">' + x[1] + '</a>'; }).join('');
     return '<section class="wrap phead" style="padding-bottom:20px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0">' +
-      (me ? '<nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/nl">ติว NL &amp; Compre</a><span class="muted"> › </span><span>' + me[1] + '</span></nav>' : '<span class="label">07 · ยอดเขา</span>') +
+      (me ? '<nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/nl">ติว NL &amp; Compre</a><span class="muted"> › </span><span>' + me[1] + '</span></nav>' : '<span class="label">06 · ยอดเขา</span>') +
       '<h1 style="font-size:clamp(38px,5vw,64px)">' + h1 + '</h1>' + (lede ? '<p class="lede">' + lede + '</p>' : '') +
       (me ? '<div class="subtabs" aria-label="หน้าย่อย">' + tabs + '</div>' : '') + '</div></section>';
   }
@@ -2178,7 +2254,7 @@
           '<section class="wrap" style="padding-bottom:80px"><article class="sheet doc"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">' + srcBadges(note.src) +
           (note.exams || []).map(function (k) { return '<span class="pill">' + (KIND[k] || esc(k)) + '</span>'; }).join('') +
           (note.topic ? '<span class="muted" style="font-size:14px">' + esc(note.topic) + '</span>' : '') + '</div>' +
-          '<div class="val">' + (note.html || '') + '</div>' +
+          '<div class="val" data-ann="n:' + esc(note.id) + '">' + (note.html || '') + '</div>' +
           ((note.files && note.files.length) || note.updated ? '<p class="note" style="border-top:1px dashed var(--rule);padding-top:12px">' + (note.files && note.files.length ? 'ไฟล์ต้นทาง: ' + esc(note.files.join(', ')) : '') + (note.updated ? ' · อัปเดต ' + esc(note.updated) : '') + '</p>' : '') +
           '</article><p style="margin-top:20px"><a class="btn ghost" href="#/nl/notes">กลับไปสรุปทั้งหมด</a></p></section>'
       };
@@ -2539,7 +2615,7 @@
       '<div class="plot soon" style="justify-content:center"><span class="label">หัวข้อถัดไป</span><h3 style="font-size:22px">+ เพิ่มหัวข้อ</h3><p class="muted">ส่งไฟล์สรุปมาในแชทกับ Claude พร้อมบอกชื่อหัวข้อ แล้วจะขึ้นเป็นการ์ดใหม่ที่นี่ แยกส่วนสรุปกับส่วนฝึก</p></div>';
     return {
       title: 'Random Topic Summary', html:
-        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · เมล็ดพันธุ์</span><h1 style="font-size:clamp(40px,5.4vw,72px)">Random Topic Summary</h1>' +
+        '<section class="wrap phead"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">02 · เมล็ดพันธุ์</span><h1 style="font-size:clamp(40px,5.4vw,72px)">Random Topic Summary</h1>' +
         '<p class="lede">สรุปแยกเป็นเรื่อง ๆ ตามหัวข้อที่เลือกเอง — แต่ละหัวข้อมีส่วนสรุป (แบ่งหัวข้อย่อย) และส่วนฝึก: AI ออกโจทย์ทีละข้อต่อเนื่องจากหัวข้อใหญ่หรือย่อยที่เลือก</p></div></section>' +
         '<section class="wrap" style="padding-bottom:80px"><div class="plots">' + cards + '</div></section>'
     };
@@ -3222,6 +3298,377 @@
       }
     };
   };
+
+  /* =========================================================
+     โน้ต + แก้เนื้อหา — ใช้ได้กับทุกกล่องเนื้อหาที่มี data-ann="<key>"
+     (สรุปจาก Doc g:<แท็บ> · Symptomatology y:<บท> · 1000 MAI d:<โรค> · NL n:<เรื่อง> · Approach c:<id>)
+     - เลือกข้อความ → ปุ่ม "Add note" → พิมพ์โน้ต → ตรงนั้นขีดเส้นใต้ · กดเส้นใต้ = เปิดกล่องโน้ต
+       กล่องปิดเมื่อกด ✕ หรือออกจากหน้า
+     - "แก้เนื้อหา" = พิมพ์แก้ตรงไหนก็ได้ เก็บเป็นฉบับของเราเอง — ต้นฉบับใน Google Doc / Sheet ไม่ถูกแตะ
+     - เก็บในเครื่อง localStorage poy-ann:<key> = { n:[{id,q,pre,suf,s,t,at}], e:{h,b,at}|null, ts }
+       + บัญชี Firestore poymor/<uid>/ann/<key> = { v:<JSON>, ts } (ฉบับที่ใหม่กว่าชนะ ทั้งหน้า)
+     - โน้ตผูกกับ "ข้อความที่เลือก + ข้อความรอบ ๆ" ไม่ใช่ตำแหน่งตายตัว → ต้นฉบับเปลี่ยนก็ยังหาเจอถ้าข้อความนั้นยังอยู่
+     ========================================================= */
+  var ANN_HOOK = {}, annPulled = {}, annOrigView = {}, annForce = false;
+  function annLKey(k) { return 'poy-ann:' + k; }
+  function annGet(k) {
+    try { var v = JSON.parse(localStorage.getItem(annLKey(k)) || 'null'); if (v && typeof v === 'object') return { n: v.n || [], e: v.e || null, ts: v.ts || 0 }; } catch (e) { }
+    return { n: [], e: null, ts: 0 };
+  }
+  function annPut(k, o) {
+    o.ts = Date.now();
+    try { localStorage.setItem(annLKey(k), JSON.stringify(o)); } catch (e) { toast('เก็บในเครื่องไม่ได้ — พื้นที่ในเบราว์เซอร์เต็ม'); }
+    annPush(k, o);
+  }
+  function annRef(k) { return FB.fs.doc(FB.db, 'poymor', FB.user.uid, 'ann', encodeURIComponent(k).replace(/\./g, '%2E').slice(0, 700)); }
+  function annPush(k, o) {
+    if (!FB || !FB.user) return;
+    FB.fs.setDoc(annRef(k), { v: JSON.stringify(o), ts: o.ts }).catch(function (e) { console.warn('ann push', e); toast('บันทึกขึ้นบัญชีไม่สำเร็จ — เก็บไว้ในเครื่องนี้แล้ว'); });
+  }
+  function annSel$(k) { return '[data-ann="' + (window.CSS && CSS.escape ? CSS.escape(k) : String(k).replace(/["\\]/g, '\\$&')) + '"]'; }
+  function annPull(k) {
+    if (!FB || !FB.user || annPulled[k]) return;
+    annPulled[k] = 1;
+    FB.fs.getDoc(annRef(k)).then(function (snap) {
+      var loc = annGet(k);
+      if (!snap.exists()) { if (loc.ts) annPush(k, loc); return; }
+      var d = snap.data(), rem = null;
+      try { rem = JSON.parse(d.v); } catch (e) { }
+      if (!rem) return;
+      if ((d.ts || 0) > loc.ts) {
+        try { localStorage.setItem(annLKey(k), JSON.stringify(rem)); } catch (e) { }
+        if (document.querySelector(annSel$(k))) render(true);
+      } else if (loc.ts > (d.ts || 0)) annPush(k, loc);
+    }).catch(function (e) { console.warn('ann pull', e); annPulled[k] = 0; });
+  }
+  function annOnAuth() {
+    annPulled = {};
+    document.querySelectorAll('[data-ann]').forEach(function (el) { annPull(el.getAttribute('data-ann')); });
+  }
+  function annHash(s) { s = String(s || ''); var h = 5381; for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36) + '.' + s.length; }
+  function annEditing() { return !!document.querySelector('.annediting'); }
+  window.addEventListener('beforeunload', function (e) { if (annEditing()) { e.preventDefault(); e.returnValue = ''; } });
+
+  /* ---------- ข้อความในกล่อง: รายการ text node + ตำแหน่งสะสม ---------- */
+  function annTexts(root) {
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { return /^(STYLE|SCRIPT)$/.test(n.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } });
+    var list = [], pos = 0, n;
+    while ((n = w.nextNode())) { list.push({ n: n, a: pos }); pos += n.data.length; }
+    return { list: list, text: list.map(function (x) { return x.n.data; }).join(''), len: pos };
+  }
+  function annPos(T, node, off) {
+    var i;
+    if (node.nodeType === 3) { for (i = 0; i < T.list.length; i++) if (T.list[i].n === node) return T.list[i].a + off; }
+    var r = document.createRange(); r.setStart(node, off); r.collapse(true);
+    for (i = 0; i < T.list.length; i++) if (r.comparePoint(T.list[i].n, 0) >= 0) return T.list[i].a;
+    return T.len;
+  }
+  function annFind(text, nt) {
+    var q = nt.q || '', best = -1, bs = -Infinity, i = q ? text.indexOf(q) : -1;
+    while (i >= 0) {
+      var sc = 0, k, pre = nt.pre || '', suf = nt.suf || '';
+      for (k = 1; k <= pre.length && text.charAt(i - k) === pre.charAt(pre.length - k); k++) sc++;
+      for (k = 0; k < suf.length && text.charAt(i + q.length + k) === suf.charAt(k); k++) sc++;
+      sc -= Math.abs(i - (nt.s || 0)) / 1e7;
+      if (sc > bs) { bs = sc; best = i; }
+      i = text.indexOf(q, i + 1);
+    }
+    return best;
+  }
+  var ANN_NOWRAP = /^(TABLE|TBODY|THEAD|TFOOT|TR|UL|OL|DL|SELECT|COLGROUP)$/;
+  function annWrap(root, s, e, id) {
+    var T = annTexts(root), segs = [];
+    T.list.forEach(function (x) { var a = x.a, b = a + x.n.data.length; if (b > s && a < e) segs.push({ n: x.n, from: Math.max(s, a) - a, to: Math.min(e, b) - a }); });
+    var first = null;
+    segs.forEach(function (g) {
+      var n = g.n;
+      if (ANN_NOWRAP.test(n.parentNode.nodeName)) return;
+      if (g.to < n.data.length) n.splitText(g.to);
+      if (g.from > 0) n = n.splitText(g.from);
+      var sp = document.createElement('span'); sp.className = 'annu'; sp.setAttribute('data-n', id);
+      if (!first) { sp.tabIndex = 0; sp.setAttribute('role', 'button'); sp.setAttribute('aria-label', 'เปิดโน้ต'); first = sp; }
+      n.parentNode.insertBefore(sp, n); sp.appendChild(n);
+    });
+    return first;
+  }
+  function annUnwrap(root) {
+    root.querySelectorAll('.annu').forEach(function (sp) { var p = sp.parentNode; while (sp.firstChild) p.insertBefore(sp.firstChild, sp); p.removeChild(sp); });
+    root.normalize();
+  }
+  function annApply(el) {
+    var o = annGet(el.getAttribute('data-ann'));
+    el._annLost = [];
+    if (el._annView === 'orig' && el._annHasEdit) { /* ดูต้นฉบับชั่วคราว — โน้ตยังขีดได้ถ้าข้อความตรง */ }
+    o.n.forEach(function (nt) {
+      var T = annTexts(el), i = annFind(T.text, nt);
+      if (i < 0 || !annWrap(el, i, i + nt.q.length, nt.id)) el._annLost.push(nt.id);
+    });
+  }
+
+  /* ---------- ติดตั้งในแต่ละกล่อง ---------- */
+  function annMountAll(root) { root.querySelectorAll('[data-ann]').forEach(annMount); }
+  function annMount(el) {
+    var k = el.getAttribute('data-ann'), o = annGet(k), hook = ANN_HOOK[k.split(':')[0]];
+    el._annOrig = el.innerHTML;
+    el._annBase = annHash(el._annOrig);
+    el._annHasEdit = !!(o.e && o.e.h != null);
+    el._annView = el._annHasEdit && !annOrigView[k] ? 'mine' : 'orig';
+    if (el._annView === 'mine') { el.innerHTML = o.e.h; if (hook && hook.thaw) hook.thaw(el); }
+    var bar = document.createElement('div'); bar.className = 'annbar'; bar.setAttribute('data-annbar', k);
+    el.parentNode.insertBefore(bar, el); el._annBar = bar;
+    annApply(el);
+    annPaintBar(el);
+    annPull(k);
+  }
+  var ANN_PEN = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4.2-1 10.4-10.4a2.1 2.1 0 0 0-3-3L5.2 16 4 20z"/><path d="M14 7l3 3"/></svg>';
+  var ANN_NOTE = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/><path d="M8.5 9h7M8.5 12.5h4"/></svg>';
+  function annPaintBar(el) {
+    var k = el.getAttribute('data-ann'), o = annGet(k), bar = el._annBar;
+    if (!bar) return;
+    if (el.classList.contains('annediting')) {
+      bar.innerHTML = '<span class="annstate">' + ANN_PEN + ' กำลังแก้ — พิมพ์แก้ตรงไหนก็ได้</span><button type="button" class="chip on" data-annact="save">บันทึก</button><button type="button" class="chip" data-annact="cancel">ยกเลิก</button>';
+      return;
+    }
+    var lost = el._annLost || [], cnt = o.n.length;
+    var stale = el._annHasEdit && o.e.b && o.e.b !== el._annBase;
+    bar.innerHTML = '<button type="button" class="chip" data-annact="edit"' + (el._annView === 'orig' && el._annHasEdit ? ' disabled title="กลับไปฉบับที่แก้ก่อน"' : '') + '>' + ANN_PEN + ' แก้เนื้อหา</button>' +
+      (cnt ? '<button type="button" class="chip" data-annact="list" aria-expanded="false">' + ANN_NOTE + ' โน้ต ' + cnt + (lost.length ? ' · หาไม่เจอ ' + lost.length : '') + '</button>' : '<span class="annhint">เลือกข้อความเพื่อ Add note</span>') +
+      (el._annHasEdit ? '<span class="annflag' + (stale ? ' stale' : '') + '">' + (el._annView === 'orig' ? 'กำลังดูต้นฉบับ' : 'ฉบับที่แก้เอง') + (stale ? ' · ต้นฉบับเปลี่ยนหลังจากที่แก้' : '') + '</span>' +
+        '<button type="button" class="chip" data-annact="view">' + (el._annView === 'orig' ? 'กลับไปฉบับที่แก้' : 'ดูต้นฉบับ') + '</button><button type="button" class="chip" data-annact="reset">คืนค่าต้นฉบับ</button>' : '') +
+      '<div class="annlist" hidden></div>';
+  }
+  function annListHTML(el) {
+    var k = el.getAttribute('data-ann'), o = annGet(k), lost = el._annLost || [];
+    return o.n.map(function (nt) {
+      var miss = lost.indexOf(nt.id) >= 0;
+      return '<div class="annli' + (miss ? ' miss' : '') + '"><button type="button" data-anngo="' + esc(nt.id) + '"' + (miss ? ' disabled' : '') + '><span class="annq">“' + esc(nt.q.length > 70 ? nt.q.slice(0, 70) + '…' : nt.q) + '”</span><span class="annt1">' + esc(nt.t) + '</span>' +
+        (miss ? '<span class="annmiss">หาข้อความนี้ในหน้าไม่เจอแล้ว</span>' : '') + '</button>' + (miss ? '<button type="button" class="chip" data-anndel="' + esc(nt.id) + '">ลบ</button>' : '') + '</div>';
+    }).join('');
+  }
+  function annRerender() { annForce = true; render(true); annForce = false; }
+
+  /* ---------- แก้เนื้อหา ---------- */
+  function annClean(root) {
+    root.querySelectorAll('script,iframe,object,embed').forEach(function (x) { x.remove(); });
+    root.querySelectorAll('*').forEach(function (x) {
+      Array.prototype.slice.call(x.attributes).forEach(function (a) {
+        if (/^on/i.test(a.name) || (/^(href|src)$/i.test(a.name) && /^\s*javascript:/i.test(a.value)) || a.name === 'contenteditable') x.removeAttribute(a.name);
+      });
+    });
+  }
+  function annStartEdit(el) {
+    if (annEditing()) { toast('บันทึกหรือยกเลิกการแก้อีกกล่องก่อน'); return; }
+    annCloseAll();
+    annUnwrap(el);
+    el.classList.add('annediting');
+    var hook = ANN_HOOK[el.getAttribute('data-ann').split(':')[0]];
+    if (hook && hook.lock) hook.lock(el);
+    el.contentEditable = 'true';
+    el.setAttribute('spellcheck', 'false');
+    annPaintBar(el);
+    el.focus({ preventScroll: true });
+  }
+  function annSaveEdit(el) {
+    var k = el.getAttribute('data-ann'), o = annGet(k), hook = ANN_HOOK[k.split(':')[0]];
+    var c = el.cloneNode(true);
+    annUnwrap(c);
+    c.querySelectorAll('[contenteditable]').forEach(function (x) { x.removeAttribute('contenteditable'); });
+    if (hook && hook.freeze) hook.freeze(c);
+    annClean(c);
+    var h = c.innerHTML;
+    var oc = document.createElement('div'); oc.innerHTML = el._annOrig; if (hook && hook.freeze) hook.freeze(oc); annClean(oc);
+    if (h === oc.innerHTML) o.e = null;   /* แก้แล้วเหมือนต้นฉบับทุกตัว = ไม่เก็บ */
+    else o.e = { h: h, b: el._annBase, at: Date.now() };
+    annPut(k, o);
+    delete annOrigView[k];
+    toast(o.e ? 'บันทึกฉบับที่แก้แล้ว — ต้นฉบับใน Doc ไม่ถูกแตะ' : 'ไม่มีอะไรเปลี่ยนจากต้นฉบับ');
+    annRerender();
+  }
+
+  /* ---------- กล่องโน้ต ---------- */
+  var annLayer = null;
+  function annLayerEl() { if (!annLayer || !annLayer.isConnected) { annLayer = document.createElement('div'); annLayer.className = 'annlayer'; document.body.appendChild(annLayer); } return annLayer; }
+  function annAnchorRect(el, id) {
+    var sp = el.querySelector('.annu[data-n="' + id + '"]');
+    if (!sp) return null;
+    var rs = sp.getClientRects(); return rs.length ? rs[rs.length - 1] : null;
+  }
+  function annPlace(box, rc) {
+    var w = Math.min(340, window.innerWidth - 24);
+    box.style.width = w + 'px';
+    var x = Math.max(12, Math.min(rc.left + window.scrollX, window.scrollX + window.innerWidth - w - 12));
+    box.style.left = x + 'px'; box.style.top = (rc.bottom + window.scrollY + 8) + 'px';
+  }
+  function annPlaceAll() {
+    if (!annLayer) return;
+    annLayer.querySelectorAll('.annbox[data-box]').forEach(function (b) {
+      var el = document.querySelector(annSel$(b.getAttribute('data-k')));
+      var rc = el && annAnchorRect(el, b.getAttribute('data-box'));
+      if (rc && (rc.width || rc.height)) { b.hidden = false; annPlace(b, rc); } else b.hidden = true;
+    });
+    var add = annLayer.querySelector('.annadd');
+    if (add && annSelNow) { var r2 = annSelNow.rect(); if (r2) annPlace(add, r2); }
+  }
+  window.addEventListener('resize', function () { clearTimeout(annPlaceAll._t); annPlaceAll._t = setTimeout(annPlaceAll, 120); });
+  function annOpenAncestors(node, stop) { for (var p = node; p && p !== stop; p = p.parentElement) if (p.tagName === 'DETAILS' && !p.open) p.open = true; }
+  function annOpen(el, id, focus) {
+    var k = el.getAttribute('data-ann'), o = annGet(k), nt = o.n.filter(function (x) { return x.id === id; })[0];
+    if (!nt) return;
+    var sp = el.querySelector('.annu[data-n="' + id + '"]');
+    if (sp) annOpenAncestors(sp, el.parentElement);
+    var L = annLayerEl(), box = L.querySelector('.annbox[data-box="' + id + '"]');
+    if (!box) {
+      box = document.createElement('div'); box.className = 'annbox'; box.setAttribute('data-box', id); box.setAttribute('data-k', k);
+      box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'โน้ต');
+      L.appendChild(box);
+    }
+    annBoxView(box, nt);
+    L.appendChild(box);   /* ขึ้นมาบนสุด */
+    var rc = annAnchorRect(el, id);
+    if (rc) annPlace(box, rc);
+    if (focus) { var c = box.querySelector('.annx'); if (c) c.focus({ preventScroll: true }); }
+  }
+  function annBoxView(box, nt) {
+    box.innerHTML = '<div class="annbh"><span class="k">โน้ต</span><span class="annq">“' + esc(nt.q.length > 90 ? nt.q.slice(0, 90) + '…' : nt.q) + '”</span><button type="button" class="annx" data-annbox="close" aria-label="ปิดโน้ต">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6.3L18 17.6M18 6.2L6.2 17.8"/></svg></button></div>' +
+      '<div class="annbody">' + esc(nt.t) + '</div>' +
+      '<div class="annbf"><span class="muted">' + esc(fmtTime(new Date(nt.at || Date.now()))) + '</span><button type="button" class="chip" data-annbox="edit">แก้โน้ต</button><button type="button" class="chip" data-annbox="del">ลบ</button></div>';
+  }
+  function annComposer(box, quote, text, onSave) {
+    box.innerHTML = '<div class="annbh"><span class="k">' + (text ? 'แก้โน้ต' : 'Add note') + '</span><span class="annq">“' + esc(quote.length > 90 ? quote.slice(0, 90) + '…' : quote) + '”</span></div>' +
+      '<label class="sr" for="annta">โน้ต</label><textarea id="annta" rows="4" placeholder="จดอะไรไว้ตรงนี้…">' + esc(text || '') + '</textarea>' +
+      '<div class="annbf"><button type="button" class="chip on" data-annc="ok">บันทึก</button><button type="button" class="chip" data-annc="no">ยกเลิก</button></div>';
+    var ta = box.querySelector('textarea');
+    setTimeout(function () { ta.focus({ preventScroll: true }); ta.setSelectionRange(ta.value.length, ta.value.length); }, 30);
+    box._annSave = function () { var v = ta.value.trim(); if (!v) { ta.focus(); return; } onSave(v); };
+    ta.addEventListener('keydown', function (e) { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); box._annSave(); } });
+  }
+  function annCloseAll() { if (annLayer) annLayer.innerHTML = ''; annSelNow = null; }
+  /* render(): เก็บกล่องที่เปิดอยู่ (ถ้าวาดหน้าเดิมซ้ำ) แล้วล้างทิ้ง */
+  function annReset(same) {
+    var keep = [];
+    if (same && annLayer) annLayer.querySelectorAll('.annbox[data-box]').forEach(function (b) { keep.push([b.getAttribute('data-k'), b.getAttribute('data-box')]); });
+    annCloseAll();
+    return keep;
+  }
+  function annRestore(keep) {
+    (keep || []).forEach(function (x) { var el = document.querySelector(annSel$(x[0])); if (el && !el.classList.contains('annediting')) annOpen(el, x[1], false); });
+  }
+
+  /* ---------- เลือกข้อความ → ปุ่ม Add note ---------- */
+  var annSelNow = null, annSelT = null;
+  function annBoxOf(node) { var e = node && (node.nodeType === 1 ? node : node.parentElement); return e && e.closest('[data-ann]'); }
+  function annCheckSel() {
+    var L = annLayer, add = L && L.querySelector('.annadd');
+    var sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) { if (add && !add._busy) { add.remove(); annSelNow = null; } return; }
+    var rg = sel.getRangeAt(0), el = annBoxOf(rg.startContainer);
+    if (!el || el !== annBoxOf(rg.endContainer) || el.classList.contains('annediting')) { if (add) add.remove(); annSelNow = null; return; }
+    var T = annTexts(el), s = annPos(T, rg.startContainer, rg.startOffset), e = annPos(T, rg.endContainer, rg.endOffset);
+    while (s < e && /\s/.test(T.text.charAt(s))) s++;
+    while (e > s && /\s/.test(T.text.charAt(e - 1))) e--;
+    if (e <= s) { if (add) add.remove(); annSelNow = null; return; }
+    var rr = rg.cloneRange();
+    annSelNow = { el: el, s: s, e: e, q: T.text.slice(s, e), pre: T.text.slice(Math.max(0, s - 40), s), suf: T.text.slice(e, e + 40),
+      rect: function () { var rs = rr.getClientRects(); return rs.length ? rs[rs.length - 1] : rr.getBoundingClientRect(); } };
+    if (!add) {
+      add = document.createElement('button'); add.type = 'button'; add.className = 'annadd chip on';
+      add.innerHTML = ANN_NOTE + ' Add note';
+      add.addEventListener('mousedown', function (ev) { ev.preventDefault(); });
+      annLayerEl().appendChild(add);
+    }
+    annPlace(add, annSelNow.rect());
+    add.style.width = 'auto';
+  }
+  document.addEventListener('selectionchange', function () { clearTimeout(annSelT); annSelT = setTimeout(annCheckSel, 200); });
+  function annAddFromSel() {
+    var S = annSelNow; if (!S) return;
+    var L = annLayerEl(), add = L.querySelector('.annadd'); if (add) add.remove();
+    var box = document.createElement('div'); box.className = 'annbox compose'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Add note');
+    L.appendChild(box);
+    annPlace(box, S.rect());
+    annComposer(box, S.q, '', function (v) {
+      var k = S.el.getAttribute('data-ann'), o = annGet(k);
+      var nt = { id: 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), q: S.q, pre: S.pre, suf: S.suf, s: S.s, t: v, at: Date.now() };
+      o.n.push(nt); annPut(k, o);
+      box.remove(); annSelNow = null;
+      try { window.getSelection().removeAllRanges(); } catch (e) { }
+      annUnwrap(S.el); annApply(S.el); annPaintBar(S.el); annPlaceAll();
+      toast('เพิ่มโน้ตแล้ว');
+    });
+    box._annCancel = function () { box.remove(); };
+  }
+
+  /* ---------- ปุ่มทั้งหมด (delegate) ---------- */
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t.closest('.annadd')) { e.preventDefault(); annAddFromSel(); return; }
+    var c = t.closest('[data-annc]');
+    if (c) { var bx = c.closest('.annbox'); if (c.getAttribute('data-annc') === 'ok') bx._annSave(); else if (bx._annCancel) bx._annCancel(); return; }
+    var bb = t.closest('[data-annbox]');
+    if (bb) {
+      var box = bb.closest('.annbox'), k = box.getAttribute('data-k'), id = box.getAttribute('data-box'), el = document.querySelector(annSel$(k)), act = bb.getAttribute('data-annbox');
+      var o = annGet(k), nt = o.n.filter(function (x) { return x.id === id; })[0];
+      if (act === 'close' || !nt) { box.remove(); return; }
+      if (act === 'edit') {
+        annComposer(box, nt.q, nt.t, function (v) { nt.t = v; nt.at = Date.now(); annPut(k, o); annBoxView(box, nt); });
+        box._annCancel = function () { annBoxView(box, nt); };
+      } else if (act === 'del' && confirm('ลบโน้ตนี้?')) {
+        o.n = o.n.filter(function (x) { return x.id !== id; }); annPut(k, o); box.remove();
+        if (el) { annUnwrap(el); annApply(el); annPaintBar(el); }
+      }
+      return;
+    }
+    var u = t.closest('.annu');
+    if (u && !u.closest('.annediting')) { e.preventDefault(); annOpen(u.closest('[data-ann]'), u.getAttribute('data-n'), true); return; }
+    var go = t.closest('[data-anngo]');
+    if (go) {
+      var bar0 = go.closest('.annbar'), el0 = bar0 && bar0.nextElementSibling;
+      if (el0) { var sp = el0.querySelector('.annu[data-n="' + go.getAttribute('data-anngo') + '"]'); if (sp) { annOpenAncestors(sp, el0.parentElement); sp.scrollIntoView({ block: 'center' }); annOpen(el0, go.getAttribute('data-anngo'), true); } }
+      return;
+    }
+    var dl = t.closest('[data-anndel]');
+    if (dl) {
+      var bar1 = dl.closest('.annbar'), el1 = bar1 && bar1.nextElementSibling;
+      if (el1 && confirm('ลบโน้ตนี้?')) { var k1 = el1.getAttribute('data-ann'), o1 = annGet(k1); o1.n = o1.n.filter(function (x) { return x.id !== dl.getAttribute('data-anndel'); }); annPut(k1, o1); annUnwrap(el1); annApply(el1); annPaintBar(el1); }
+      return;
+    }
+    var a = t.closest('[data-annact]');
+    if (!a) return;
+    var bar = a.closest('.annbar'), box2 = bar && bar.nextElementSibling;
+    if (!box2 || !box2.hasAttribute('data-ann')) return;
+    var key = box2.getAttribute('data-ann'), w = a.getAttribute('data-annact');
+    if (w === 'edit') annStartEdit(box2);
+    else if (w === 'save') annSaveEdit(box2);
+    else if (w === 'cancel') annRerender();
+    else if (w === 'view') { if (annOrigView[key]) delete annOrigView[key]; else annOrigView[key] = 1; annRerender(); }
+    else if (w === 'reset') { if (confirm('คืนค่าต้นฉบับ? ที่แก้ไว้ในหน้านี้จะหาย (โน้ตยังอยู่)')) { var o2 = annGet(key); o2.e = null; annPut(key, o2); delete annOrigView[key]; annRerender(); } }
+    else if (w === 'list') {
+      var lst = bar.querySelector('.annlist'), open = lst.hidden;
+      if (open) lst.innerHTML = annListHTML(box2);
+      lst.hidden = !open; a.setAttribute('aria-expanded', String(open));
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('annu')) { e.preventDefault(); e.target.click(); }
+  });
+
+  /* Symptomatology: algorithm ในบทเป็นของ interactive — ตอนแก้ล็อกไว้ และเก็บเป็นตัวแทน แล้วสร้างใหม่ตอนเปิด */
+  function sxAnnHook(c, FM) {
+    return {
+      lock: function (el) { el.querySelectorAll('.fbox').forEach(function (f) { f.contentEditable = 'false'; }); },
+      freeze: function (el) {
+        el.querySelectorAll('.fbox').forEach(function (f) { var p = document.createElement('div'); p.className = 'flow'; p.setAttribute('data-flow', f.getAttribute('data-f')); f.parentNode.replaceChild(p, f); });
+        el.querySelectorAll('details').forEach(function (d) { d.removeAttribute('open'); });
+      },
+      thaw: function (el) {
+        el.innerHTML = el.innerHTML.replace(/<div class="flow" data-flow="([\w-]+)"><\/div>/g, function (m, id) { return FM[id] ? flowShell(FM[id]) : ''; });
+        var st = syOpen(c.id);
+        el.querySelectorAll('details.sxsec').forEach(function (d) { d.open = st.indexOf(d.getAttribute('data-sid')) >= 0; });
+        el.querySelectorAll('details.sxbox').forEach(function (d) { d.open = st.indexOf(d.getAttribute('data-sid')) < 0; });
+      }
+    };
+  }
 
   /* ---------- boot ---------- */
   var lm = new Date(document.lastModified);

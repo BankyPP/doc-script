@@ -25,6 +25,12 @@ window.POY_GDOC = {
     'Symptomatology': 'symp',
     'Clinic': 'ward'
   },
+  /* ป้ายของแท็บ (คลังความรู้เก็บตาม system — วอร์ดเป็นแค่ป้าย):
+       'ชื่อแท็บ': { lv: 'pre' | 'clinic', ward: ['med','gensx','subspe','ped','obgyn'] }
+     แท็บย่อยได้ป้ายตามแท็บแม่ · แท็บใต้ "Clinic" ได้วอร์ดจากชื่อแท็บเองอยู่แล้ว (เช่น Surgery → Gen Sx + Subspe Sx)
+     ไฟล์ที่เรียนจากวอร์ด: ใส่ในแท็บ system ของเรื่องนั้นใน Doc แล้วเพิ่มป้ายตรงนี้ → ขึ้นในหน้า "ตามวอร์ด" เอง */
+  tags: {
+  },
   /* ชั้นของแท็บ — ใช้เฉพาะตอนฉบับเก็บไม่มีข้อมูลชั้น (ฉบับที่ GitHub Actions ดึงมีชั้นจริงจาก Doc อยู่แล้ว) */
   tree: [
     'Study Plan', 'law เพราะ ป.อ.มาตรา64', 'Normal values & approaches', 'homework (?)',

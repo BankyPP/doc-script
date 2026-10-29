@@ -801,3 +801,54 @@ body.lbopen,body.fopen{overflow:hidden}
 input.field[type=date],input.field[type=time]{-webkit-appearance:none;appearance:none;height:44px;line-height:42px;text-align:left}
 input.field::-webkit-date-and-time-value{text-align:left;min-height:1.2em}
 input.field::-webkit-datetime-edit{padding:0}
+
+/* ===== คลังความรู้ (รวม Preclinic + Clinic) ===== */
+.dsgrp{font-family:'Kanit',sans-serif;font-weight:500;font-size:12px;letter-spacing:.06em;color:var(--muted);padding:10px 12px 2px}
+.kbtags{display:flex;flex-wrap:wrap;gap:6px}
+.kbtag{font-family:'Kanit',sans-serif;font-weight:500;font-size:13px;display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:999px;border:1px solid var(--rule-3);color:var(--ink);text-decoration:none;background:var(--sheet)}
+a.kbtag::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--w,#5C7F3A)}
+a.kbtag:hover{background:var(--hover);color:var(--ink)}
+.kbtag.lv{background:var(--paper-2);color:var(--ink-2)}
+.kbwg{display:flex;flex-direction:column;gap:10px}
+.kbwg .sxgh h3{flex:0 1 auto}
+.sxsecs{display:flex;flex-direction:column;gap:14px}
+
+/* ===== โน้ต + แก้เนื้อหา ===== */
+.annbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px;position:relative}
+.annbar .chip{min-height:36px;padding:0 13px;font-size:13px;background:var(--sheet)}
+.annbar .chip.on{background:var(--ink)}
+.annbar .chip[disabled]{opacity:.45;cursor:not-allowed}
+.annhint{font-size:13px;color:var(--muted)}
+.annstate{font-family:'Kanit',sans-serif;font-weight:500;font-size:14px;color:var(--sienna-dk);display:inline-flex;align-items:center;gap:6px;margin-right:4px}
+.annflag{font-family:'Kanit',sans-serif;font-weight:500;font-size:12px;padding:4px 10px;border-radius:999px;background:var(--moss-bg);color:var(--moss-dk)}
+.annflag.stale{background:#F4E2DA;color:var(--sienna-dk)}
+.annlist{flex-basis:100%;display:flex;flex-direction:column;border:1px solid var(--rule-2);border-radius:10px;background:var(--sheet-hi);max-height:340px;overflow:auto}
+.annli{display:flex;align-items:center;gap:8px;border-bottom:1px dashed var(--rule)}
+.annli:last-child{border-bottom:0}
+.annli>button:first-child{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;text-align:left;background:none;border:0;padding:10px 14px;cursor:pointer}
+.annli>button:first-child:hover{background:var(--hover)}
+.annli .chip{margin-right:10px}
+.annq{font-style:italic;color:var(--muted);font-size:14px;overflow-wrap:anywhere}
+.annt1{font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere}
+.annmiss{font-family:'Kanit',sans-serif;font-size:12px;color:var(--sienna-dk)}
+.annli.miss .annq{text-decoration:line-through}
+.annu{text-decoration:underline;text-decoration-color:var(--sienna);text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-skip-ink:none;cursor:pointer;border-radius:2px}
+.annu:hover,.annu:focus-visible{background:#F1DDD3}
+.annediting{outline:2px dashed var(--sienna);outline-offset:6px;border-radius:4px;cursor:text;caret-color:var(--sienna)}
+.annediting:focus{outline-style:solid}
+.annlayer{position:absolute;left:0;top:0;width:0;height:0;z-index:35}
+.annbox{position:absolute;background:var(--sheet-hi);border:1px solid var(--rule-3);border-radius:12px;box-shadow:0 14px 34px -16px rgba(30,38,32,.55);padding:12px 14px;display:flex;flex-direction:column;gap:10px;font-size:16px}
+.annbox::before{content:"";position:absolute;top:-1px;left:14px;width:46px;height:4px;border-radius:0 0 4px 4px;background:var(--sienna)}
+.annbh{display:flex;align-items:flex-start;gap:8px}
+.annbh .k{font-size:14px;font-weight:600;color:var(--sienna-dk);flex:none;padding-top:2px}
+.annbh .annq{flex:1;min-width:0;font-size:13px;line-height:1.45}
+.annx{flex:none;width:36px;height:36px;margin:-6px -6px 0 0;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:10px;background:none;cursor:pointer;color:var(--ink-2)}
+.annx:hover{background:var(--hover)}
+.annbody{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}
+.annbf{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.annbf .muted{font-size:12px;margin-right:auto}
+.annbf .chip{min-height:34px;padding:0 12px;font-size:13px}
+.annbox textarea{font:inherit;font-size:16px;width:100%;min-height:96px;resize:vertical;padding:10px 12px;border:1px solid var(--rule-3);border-radius:8px;background:var(--sheet);color:var(--ink)}
+.annbox textarea:focus{outline:2px solid var(--moss);outline-offset:1px}
+.annadd{position:absolute;min-height:40px;padding:0 14px;font-size:14px;box-shadow:0 10px 24px -12px rgba(30,38,32,.6);white-space:nowrap}
+@media print{.annbar,.annlayer{display:none!important}.annu{text-decoration:none}}

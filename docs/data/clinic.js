@@ -1,12 +1,13 @@
-/* Clinic — สมุดวอร์ด + approach ตามอาการนำ
+/* คลังความรู้ › ตามวอร์ด + approach ตามอาการนำ
+   wards: mai = ค่าในคอลัมน์ Ward ของชีต 1000 MAI · match = คำในชื่อแท็บ (ใต้ "Clinic" ใน Doc) ที่นับเป็นวอร์ดนี้
    ชื่อโรคใน {{ }} จะกลายเป็นลิงก์ไปหน้าโรคใน 1000 MAIเอง (ถ้ามีในชีต) */
 window.POY_CLINIC = {
   wards: [
-    { id: 'med', name: 'Med Y4', full: 'Internal medicine', c: '#3C4A7A' },
-    { id: 'gensx', name: 'Gen Sx Y4', full: 'General surgery', c: '#355A3A' },
-    { id: 'subspe', name: 'Subspe Sx Y4', full: 'Subspecialty surgery', c: '#2F7466' },
-    { id: 'ped', name: 'Ped Y4', full: 'Pediatrics', c: '#9B4F2E' },
-    { id: 'obgyn', name: 'OB-GYN Y4', full: 'Obstetrics & gynecology', c: '#A33A3A' }
+    { id: 'med', name: 'Med Y4', full: 'Internal medicine', c: '#3C4A7A', mai: 'MEDICINE', match: ['med', 'internal', 'อายุร'] },
+    { id: 'gensx', name: 'Gen Sx Y4', full: 'General surgery', c: '#355A3A', mai: 'SURGERY', match: ['surg', 'gen sx', 'ศัลย'] },
+    { id: 'subspe', name: 'Subspe Sx Y4', full: 'Subspecialty surgery', c: '#2F7466', mai: 'SURGERY', match: ['surg', 'subspe', 'ศัลย'] },
+    { id: 'ped', name: 'Ped Y4', full: 'Pediatrics', c: '#9B4F2E', mai: 'PEDIATRIC', match: ['ped', 'กุมาร'] },
+    { id: 'obgyn', name: 'OB-GYN Y4', full: 'Obstetrics & gynecology', c: '#A33A3A', mai: 'OB-GYN', match: ['ob', 'gyn', 'สูติ', 'นรีเวช'] }
   ],
   approaches: [
     { id: 'fever', group: 'Fever', title: 'ไข้เฉียบพลันในผู้ใหญ่', sub: 'Acute undifferentiated fever · แผนที่เดินป่า 5 จุดพัก จากคนไข้หน้าห้องถึงยาตัวแรก',

@@ -215,7 +215,7 @@ def main():
             sys.exit('extra.html: ไม่มีแท็บ "%s"' % where)
 
     def tab_link(title):
-        return '#/preclinic/' + slug_of(title)
+        return '#/kb/' + slug_of(title)
 
     for title, under, keys in TABS:
         tslug = slug_of(title)
