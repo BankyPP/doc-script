@@ -355,7 +355,8 @@
     if (!hasSheet() || D.loading) return;
     D.loading = true; D.err = null; refreshLive();
     fetchCSV(sheetUrls()).then(function (txt) {
-      var rows = trimRows(parseCSV(txt));
+      var rows = trimRows(parseCSV(txt)), sig = JSON.stringify(rows);
+      D.same = D.src === 'sheet' && sig === D.sig; D.sig = sig;
       D.list = maiStruct(rows); D.src = 'sheet'; D.at = Date.now();
       LS.set('dcache', { id: C.sheet.id || C.sheet.csvUrl, at: D.at, rows: rows });
     }).catch(function (e) {
@@ -364,7 +365,10 @@
     }).then(function () {
       D.loading = false; DUPS = null;
       var r = route();
-      if (['', 'diseases', 'disease', 'exam'].indexOf(r.name) >= 0) render(true); else refreshLive();
+      /* ชีตไม่เปลี่ยน → ไม่วาดหน้าใหม่ (ดึงทุก 30 วิ หน้าจะได้ไม่กระตุก) เว้นแต่ฉบับที่แก้ในเว็บหมดหน้าที่แล้ว */
+      var keep = D.same && !Object.keys(SH).some(function (k) { return k.indexOf('d:') === 0 && annOverlayOld(k); });
+      D.same = false;
+      if (!keep && ['', 'diseases', 'disease', 'exam'].indexOf(r.name) >= 0) render(true); else refreshLive();
     });
   }
   function liveHTML() {
