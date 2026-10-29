@@ -3615,7 +3615,7 @@
   }
   var RTYPE = { content: 'เนื้อหา', note: 'โน้ต', disease: '1000 MAI', exam: 'ข้อสอบเก่า', post: 'ประกาศ' };
   PAGES.search = function (r) {
-    var q = (r.q.get('q') || '').trim(), ft = r.q.get('t') || '', fg = (r.q.get('g') || '').split('|').filter(Boolean);
+    var q = (r.q.get('q') || '').trim(), ft = r.q.get('t') || '';
     var head = '<section class="wrap phead" style="padding-bottom:20px"><div style="display:flex;flex-direction:column;gap:14px;min-width:0;width:100%"><span class="label">ค้นทั้งเว็บ</span>' +
       '<form class="search" id="sform" role="search" style="flex:none;width:100%;max-width:720px;min-height:54px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sq">ค้นทั้งเว็บ</label><input id="sq" type="search" value="' + esc(q) + '" placeholder="โรค อาการ ยา lab แท็ก เช่น จุฬา, ศิริราช…" style="font-size:18px"></form></div></section>';
     if (!q) return { title: 'ค้นทั้งเว็บ', html: head + '<section class="wrap" style="padding-bottom:80px"><p class="muted">พิมพ์คำที่อยากค้น — ค้นได้ทุกส่วนของเว็บ รวมโน้ตของคุณและแท็ก เช่น <b>จุฬา</b> / <b>MDCU</b> / <b>ศิริราช</b></p></section>', after: srchAfter };
@@ -3627,25 +3627,8 @@
     var terms = srchTerms(q, docs), phrase = q.toLowerCase(), res = [];
     docs.forEach(function (d) { var s = srchScore(d, terms, phrase); if (s) { d.sc = s; res.push(d); } });
     res.sort(function (a, b) { return b.sc.s - a.sc.s; });
-    /* ตัวกรองแท็ก (?g=แท็ก1|แท็ก2 — ต้องมีทุกแท็กที่เลือก) */
-    var hasG = function (d) { var tl = d._tg; return fg.every(function (g) { return tl.indexOf(g.toLowerCase()) >= 0; }); };
-    var resG = fg.length ? res.filter(hasG) : res;
-    var cnt = {}; resG.forEach(function (d) { cnt[d.type] = (cnt[d.type] || 0) + 1; });
-    var shown = ft ? resG.filter(function (d) { return d.type === ft; }) : resG;
-    var tc = {}, tn = {};
-    shown.forEach(function (d) { d.tags.forEach(function (t) { var k = String(t).toLowerCase(); tc[k] = (tc[k] || 0) + 1; tn[k] = tn[k] || String(t); }); });
-    var wardNames = CLI.wards.concat([WARD_NONE]).map(function (w) { return w.name.toLowerCase(); });
-    var tq = function (list) { return '#/search?q=' + encodeURIComponent(q) + (ft ? '&t=' + ft : '') + (list.length ? '&g=' + encodeURIComponent(list.join('|')) : ''); };
-    var tchip = function (k) {
-      var on = fg.some(function (g) { return g.toLowerCase() === k; }), nx = on ? fg.filter(function (g) { return g.toLowerCase() !== k; }) : fg.concat([tn[k]]);
-      return '<a class="chip' + (on ? ' on' : '') + '" href="' + tq(nx) + '">' + esc(tn[k] || k) + (on ? ' ✕' : ' ' + tc[k]) + '</a>';
-    };
-    var selK = fg.map(function (g) { return g.toLowerCase(); });
-    var wk = wardNames.filter(function (k) { return tc[k] && selK.indexOf(k) < 0; });
-    var ok = Object.keys(tc).filter(function (k) { return wardNames.indexOf(k) < 0 && selK.indexOf(k) < 0 && tc[k] < shown.length; }).sort(function (a, b) { return tc[b] - tc[a]; });
-    var tagRow = (fg.length || wk.length || ok.length) ? '<div class="filters tagfil" role="group" aria-label="แท็ก"><span class="label">แท็ก</span>' +
-      selK.map(function (k) { tn[k] = tn[k] || fg[selK.indexOf(k)]; tc[k] = tc[k] || 0; return tchip(k); }).join('') + wk.map(tchip).join('') + ok.slice(0, 10).map(tchip).join('') +
-      (ok.length > 10 ? '<details class="tagmore"><summary class="chip">แท็กอื่น ' + (ok.length - 10) + '</summary><div class="filters">' + ok.slice(10, 80).map(tchip).join('') + '</div></details>' : '') + '</div>' : '';
+    var cnt = {}; res.forEach(function (d) { cnt[d.type] = (cnt[d.type] || 0) + 1; });
+    var shown = ft && ft !== 'tag' ? res.filter(function (d) { return d.type === ft; }) : res;
     var near = [], tagx = [];
     terms.forEach(function (o) { o.ex.forEach(function (x) { if (x.near && near.indexOf(x.w) < 0) near.push(x.w); if (x.tag && tagx.indexOf(x.w) < 0) tagx.push(x.w); }); });
     var ai = SRCH.ai[q.toLowerCase()], key = LS.get('apikey', '');
@@ -3653,8 +3636,15 @@
       (ai && ai.L ? '<span><span class="spin" aria-hidden="true"></span> AI กำลังหาคำที่เกี่ยวข้อง…</span>' : ai && ai.terms && ai.terms.length ? '<span>คำที่เกี่ยวข้อง (AI): ' + ai.terms.map(esc).join(', ') + '</span>' : '') +
       (!key ? '<span>อยากให้ขึ้นเรื่องที่เกี่ยวข้องแม้ไม่มีคำนี้ — ใส่ API key ใน <a href="#/exam">ห้องสอบ</a></span>' : '') +
       (wait.length ? '<span><span class="spin" aria-hidden="true"></span> กำลังโหลด: ' + wait.map(esc).join(', ') + '</span>' : '');
-    var chips = '<div class="filters" role="group" aria-label="ประเภท"><a class="chip' + (ft ? '' : ' on') + '" href="#/search?q=' + encodeURIComponent(q) + (fg.length ? '&g=' + encodeURIComponent(fg.join('|')) : '') + '">ทั้งหมด ' + resG.length + '</a>' +
-      Object.keys(RTYPE).filter(function (k) { return cnt[k]; }).map(function (k) { return '<a class="chip' + (ft === k ? ' on' : '') + '" href="#/search?q=' + encodeURIComponent(q) + '&t=' + k + (fg.length ? '&g=' + encodeURIComponent(fg.join('|')) : '') + '">' + RTYPE[k] + ' ' + cnt[k] + '</a>'; }).join('') + '</div>' + tagRow;
+    /* ตัวกรอง "แท็ก" = เฉพาะสิ่งที่ติดแท็กซึ่งมีคำที่ค้น (รวมชื่อเรียกอื่นของแท็ก เช่น จุฬา → MDCU, ศัลย → Sx Y4) */
+    var tw = [phrase].concat(tagx.map(function (x) { return String(x).toLowerCase(); }));
+    var tagRes = docs.filter(function (d) { return d._tg.some(function (t) { return tw.some(function (w) { return w && t.indexOf(w) >= 0; }); }); });
+    tagRes.sort(function (a, b) { return (b.sc ? b.sc.s : 0) - (a.sc ? a.sc.s : 0); });
+    tagRes.forEach(function (d) { if (!d.sc) d.sc = { s: 0, w: [], rel: [] }; });
+    if (ft === 'tag') shown = tagRes;
+    var chips = '<div class="filters" role="group" aria-label="ประเภท"><a class="chip' + (ft ? '' : ' on') + '" href="#/search?q=' + encodeURIComponent(q) + '">ทั้งหมด ' + res.length + '</a>' +
+      Object.keys(RTYPE).filter(function (k) { return cnt[k]; }).map(function (k) { return '<a class="chip' + (ft === k ? ' on' : '') + '" href="#/search?q=' + encodeURIComponent(q) + '&t=' + k + '">' + RTYPE[k] + ' ' + cnt[k] + '</a>'; }).join('') +
+      '<a class="chip' + (ft === 'tag' ? ' on' : '') + '" href="#/search?q=' + encodeURIComponent(q) + '&t=tag">แท็ก ' + tagRes.length + '</a></div>';
     var list = shown.slice(0, 150).map(function (d) {
       var ws = d.sc.w.length ? d.sc.w : [phrase];
       return '<a class="sheet sres" href="' + esc(d.href) + '"' + (d.ext ? ' target="_blank" rel="noopener"' : '') + ' style="--c:' + esc(d.c || '#8A8F86') + '">' +
