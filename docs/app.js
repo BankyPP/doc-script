@@ -1153,10 +1153,10 @@
   function glLine(n) {
     var s = n.tid && GL.tab[n.tid];
     if (!glOn()) return gLiveHTML();
-    if (s && s.L) return '<span class="live off"><i></i>กำลังดึงฉบับล่าสุดจาก Google Doc…</span>';
+    if (s && s.L) return '<span class="live off"><i></i>กำลังเช็กกับ Google Doc…</span>';
     if (s && s.err) return '<span class="live err" title="' + esc(s.err) + '"><i></i>ดึงสดไม่ได้ · ใช้ฉบับวันที่ ' + esc(G.snapAt) + '</span>';
-    if (s && s.at) return '<span class="live"><i></i>ตรงกับ Google Doc · ' + esc(fmtTime(new Date(s.at))) + '</span>';
-    return gLiveHTML();
+    if (s && s.at) return '<span class="live"><i></i>ตรงกับ Google Doc · เช็กเมื่อ ' + esc(fmtTime(new Date(s.at))) + '</span>';
+    return '<span class="live off"><i></i>กำลังเช็กกับ Google Doc…</span>';
   }
   function glPaint(n) { document.querySelectorAll('[data-gsrc="' + n.slug + '"]').forEach(function (el) { el.innerHTML = glLine(n); }); }
   function glMaybeTab() { var r = route(); if (r.name === 'kb' && G.by[r.args[0]]) glTab(G.by[r.args[0]]); }

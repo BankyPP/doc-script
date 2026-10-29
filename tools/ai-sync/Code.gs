@@ -34,10 +34,11 @@ function doGet(e) {
     }
     if (p.op === 'tab') {
       var url = 'https://docs.google.com/document/d/' + encodeURIComponent(p.id) + '/export?format=html&tab=' + encodeURIComponent(p.tab);
-      var r = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } });
-      if (r.getResponseCode() !== 200) r = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+      /* ต้องอ่านด้วยสิทธิ์เจ้าของ (scope drive.readonly) — export แบบไม่ล็อกอินของ Google ค้างฉบับเก่าได้เป็นวัน */
+      var r = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } }), auth = true;
+      if (r.getResponseCode() !== 200) { r = UrlFetchApp.fetch(url, { muteHttpExceptions: true }); auth = false; }
       if (r.getResponseCode() !== 200) return out_({ ok: false, error: 'export HTTP ' + r.getResponseCode() });
-      return out_({ ok: true, html: r.getContentText(), at: new Date().toISOString() });
+      return out_({ ok: true, html: r.getContentText(), auth: auth, at: new Date().toISOString() });
     }
     return out_({ ok: false, error: 'op?' });
   } catch (err) {
