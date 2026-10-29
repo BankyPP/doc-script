@@ -895,3 +895,14 @@ a.kbtag:hover{background:var(--hover);color:var(--ink)}
 
 .gsrcrow{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
 .glre{min-height:34px;padding:0 12px;font-size:13px}
+
+/* แก้ป้ายวอร์ด */
+button.kbtag{cursor:pointer;font:inherit;font-family:'Kanit',sans-serif;font-weight:500;font-size:13px}
+.kbtagedit{border-style:dashed;color:var(--ink-2)}
+.kbtagedit:hover{background:var(--hover)}
+.tagpick{display:flex;flex-direction:column;gap:12px;padding:14px 16px;border:1px solid var(--rule-3);border-radius:14px;background:var(--sheet);max-width:760px}
+.tagrow{display:flex;flex-direction:column;gap:6px}
+.tagcks{display:flex;flex-wrap:wrap;gap:6px}
+.tagck{display:inline-flex;align-items:center;gap:6px;padding:4px 11px 4px 8px;border-radius:999px;border:1px solid var(--rule-3);font-family:'Kanit',sans-serif;font-size:13px;cursor:pointer;background:var(--paper)}
+.tagck input{accent-color:var(--w);margin:0}
+.tagck:has(input:checked){border-color:var(--w);box-shadow:inset 0 0 0 1px var(--w)}

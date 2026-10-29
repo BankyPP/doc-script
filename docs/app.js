@@ -944,12 +944,15 @@
     var TAGS = GD.tags || {};
     var gone = gStructApply(tops, add, by);
     if (Object.keys(gone).length) { var rm = {}; nodes.forEach(function (n) { for (var p = n; p; p = p.parent) if (gone[p.slug]) { rm[n.slug] = 1; break; } }); nodes = nodes.filter(function (n) { return !rm[n.slug]; }); }
+    var WT = gWebTags();
     function fill(n, area, ck, top, d, lv, wards) {
-      var t = TAGS[n.title] || {};
+      var t = WT[n.slug] || TAGS[n.title] || {};
       n.area = area; n.ck = ck; n.topN = top; n.depth = d;
       n.lv = t.lv || lv;
       n.wards = t.ward ? t.ward.slice() : wards.slice();
       if (ck === 'ward' && d === 1 && !t.ward) n.wards = wardsByName(n.title);
+      n.wards = n.wards.filter(function (id) { return !!wardById(id); });
+      n.ownTag = !!(WT[n.slug] || (TAGS[n.title] || {}).ward);
       n.kids.forEach(function (k) { fill(k, area, ck, top, d + 1, n.lv, n.wards); });
     }
     var T = { pre: [], clinic: [] };
@@ -964,7 +967,15 @@
     var t = String(title || '').toLowerCase();
     return CLI.wards.filter(function (w) { return (w.match || []).some(function (m) { return t.indexOf(m) >= 0; }); }).map(function (w) { return w.id; });
   }
-  function wardById(id) { return CLI.wards.filter(function (w) { return w.id === id; })[0] || null; }
+  function wardById(id) { return CLI.wards.filter(function (w) { return w.id === id; })[0] || (id === 'none' ? WARD_NONE : null); }
+  var WARD_NONE = { id: 'none', y: 0, name: 'ยังไม่มีวอร์ด', full: 'เนื้อหาที่ยังไม่เข้าวอร์ดไหน (เช่น preclinic ล้วน)', c: '#8A8F86' };
+  /* ป้ายวอร์ดที่แก้ในเว็บ (poymor_struct act:'tag') — อันล่าสุดของแต่ละแท็บชนะ */
+  function gWebTags() {
+    var o = {};
+    STRUCT.forEach(function (x) { if (x.act === 'tag' && x.slug) o[x.slug] = x.ward == null ? null : { ward: x.ward }; });
+    Object.keys(o).forEach(function (k) { if (!o[k]) delete o[k]; });
+    return o;
+  }
   function gFull(n) { return !!(n.html && n.html.replace(/<[^>]+>/g, '').trim()) || (n.kind === 'sheet' && n.html); }
   function gCount(n) { var a = 0, b = 0; (function w(x) { b++; if (gFull(x)) a++; x.kids.forEach(w); })(n); return [a, b]; }
   function gFlat(n) { var o = []; (function w(x) { o.push(x); x.kids.forEach(w); })(n); return o; }
@@ -1026,8 +1037,8 @@
   /* ป้ายระดับ + วอร์ดของแท็บ (กดวอร์ดไปหน้ารวมของวอร์ดนั้น) */
   function gTagLine(n) {
     var h = (n.lv === 'clinic' ? '<span class="kbtag lv">Clinic</span>' : n.lv === 'pre' ? '<span class="kbtag lv">Preclinic</span>' : '') +
-      (n.wards || []).map(function (id) { var w = wardById(id); return w ? '<a class="kbtag" href="#/kb/ward/' + w.id + '" style="--w:' + w.c + '">' + esc(w.name) + '</a>' : ''; }).join('');
-    return h ? '<div class="kbtags">' + h + '</div>' : '';
+      ((n.wards || []).length ? (n.wards || []).map(function (id) { var w = wardById(id); return w ? '<a class="kbtag" href="#/kb/ward/' + w.id + '" style="--w:' + w.c + '">' + esc(w.name) + '</a>' : ''; }).join('') : '<a class="kbtag" href="#/kb/ward/none" style="--w:' + WARD_NONE.c + '">ยังไม่มีวอร์ด</a>');
+    return '<div class="kbtags">' + h + '<button type="button" class="kbtag kbtagedit" data-tagedit="' + esc(n.slug) + '" aria-expanded="false">แก้ป้ายวอร์ด</button></div><div class="tagpick" data-tagpick="' + esc(n.slug) + '" hidden></div>';
   }
   function gSrcLine(n) {
     if (n.src === 'main') return '<span class="gsrcrow"><span class="gsrcw" data-gsrc="' + esc(n.slug) + '">' + glLine(n) + '</span>' + glBtn() + '</span>';
@@ -1292,11 +1303,11 @@
     return kbHub(r, a);
   };
   function kbBooks(href) {
-    return CLI.wards.map(function (w, i) {
+    return CLI.wards.concat([WARD_NONE]).map(function (w, i) {
       var h = [200, 200, 186, 194, 204][i % 5], k = kbWardNodes(w.id).length;
       return '<a class="book" href="' + href(w) + '" style="background:' + w.c + ';height:' + h + 'px"><span class="k" style="font-size:22px">' + esc(w.name) + '</span><span style="font-size:13px;opacity:.9">' + esc(w.full) + '</span>' +
         (G.st === 'ready' ? '<span style="font-size:13px;opacity:.9;margin-top:auto">' + (k ? k + ' หน้าสรุป' : 'ยังไม่มีสรุป') + '</span>' : '') + '</a>';
-    }).join('') + '<span class="book add" style="height:180px"><span class="k" style="font-size:20px;color:var(--ink)">+ วอร์ดถัดไป</span><span style="font-size:13px">ปี 5–6</span></span>';
+    }).join('');
   }
   function kbHub(r, missing) {
     remember({ href: '#/kb', title: 'Medical Soil', crumb: 'หน้าหลัก', c: '#355A3A' });
@@ -1317,6 +1328,7 @@
   /* หน้าที่ติดป้ายวอร์ดนี้ — เอาเฉพาะชั้นบนสุดของแต่ละสาย (แท็บย่อยตามไปเอง) */
   function kbWardNodes(id) {
     if (G.st !== 'ready') return [];
+    if (id === 'none') return G.nodes.filter(function (n) { return n.area === 'pre' && !(n.wards || []).length && !(n.parent && !(n.parent.wards || []).length) && (gFull(n) || n.kids.length); });
     return G.nodes.filter(function (n) { return (n.wards || []).indexOf(id) >= 0 && !(n.parent && (n.parent.wards || []).indexOf(id) >= 0); });
   }
   function maiWardList(w) {
@@ -3418,7 +3430,20 @@
     [['ศิริราช', 'si', 'siriraj', 'sirirat', 'มหิดล'], ['si', 'ศิริราช']],
     [['preclinic', 'pre-clinic', 'พรีคลินิก'], ['preclinic']],
     [['clinic', 'คลินิก'], ['clinic']],
-    [['โน้ต', 'note', 'notes'], ['โน้ต']]
+    [['โน้ต', 'note', 'notes'], ['โน้ต']],
+    [['ศัลย', 'ศัลยกรรม', 'surgery', 'gen sx', 'subspe'], ['sx y4']],
+    [['อายุร', 'อายุรกรรม', 'medicine', 'internal med'], ['med y4']],
+    [['กุมาร', 'pediatrics'], ['ped y4']],
+    [['สูติ', 'นรีเวช', 'obstetrics'], ['ob-gyn y4']],
+    [['ออร์โธ', 'orthopedics'], ['ortho y5']],
+    [['จักษุ', 'ophthalmology'], ['eye y5']],
+    [['โสต', 'otolaryngology'], ['ent y5']],
+    [['จิตเวช', 'psychiatry'], ['psych y5']],
+    [['วิสัญญี', 'anesthesia'], ['anes y5']],
+    [['นิติเวช', 'forensic'], ['forensic y5']],
+    [['ผิวหนัง', 'dermatology'], ['derm y5']],
+    [['รังสี', 'radiology'], ['radio y5']],
+    [['ฉุกเฉิน', 'emergency'], ['em y5']]
   ];
   var annVer = 0;
   function annAllNotes() {
@@ -4478,6 +4503,41 @@
       if (n.web && n.web.st !== 'ok') { stDel(n.web.id); gFlat(n).forEach(function (k) { if (k.web) stDel(k.web.id); }); location.hash = n.parent ? gHref(n.parent) : '#/kb'; return; }
       stAdd({ act: 'deltab', slug: n.slug, path: dpath(n), st: gNodeFile(n) ? 'wait' : 'web' }, function () { location.hash = n.parent ? gHref(n.parent) : '#/kb'; });
     }
+  });
+
+  /* ---------- แก้ป้ายวอร์ดของแท็บในเว็บ (ทุกคนเห็น · ไม่เขียนเข้าไฟล์) ---------- */
+  function tagPickHTML(n) {
+    var cur = n.wards || [], par = n.parent ? (n.parent.wards || []) : null;
+    var box = function (w) { return '<label class="tagck" style="--w:' + w.c + '"><input type="checkbox" value="' + w.id + '"' + (cur.indexOf(w.id) >= 0 ? ' checked' : '') + '><span>' + esc(w.name) + '</span></label>'; };
+    var grp = function (y, lab) { var ws = CLI.wards.filter(function (w) { return (w.y || 4) === y; }); return ws.length ? '<div class="tagrow"><span class="label">' + lab + '</span><div class="tagcks">' + ws.map(box).join('') + '</div></div>' : ''; };
+    return grp(4, 'ปี 4') + grp(5, 'ปี 5') +
+      '<p class="muted" style="font-size:13px;margin:0">ไม่ติ๊กเลย = ยังไม่มีวอร์ด · แท็บย่อยได้ป้ายตามแท็บนี้ (เว้นแต่แท็บย่อยตั้งของตัวเอง) · ทุกคนเห็นเหมือนกัน</p>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" class="chip on" data-tagsave="' + esc(n.slug) + '">บันทึกป้าย</button>' +
+      (gWebTags()[n.slug] ? '<button type="button" class="chip" data-tagreset="' + esc(n.slug) + '">คืนค่าเดิม' + (par && !(GD.tags || {})[n.title] ? ' (ตามแท็บแม่)' : '') + '</button>' : '') +
+      '<button type="button" class="chip" data-tagcancel="' + esc(n.slug) + '">ยกเลิก</button></div>';
+  }
+  function tagSave(n, ward) {
+    var old = STRUCT.filter(function (x) { return x.act === 'tag' && x.slug === n.slug; });
+    stAdd({ act: 'tag', slug: n.slug, title: n.title, ward: ward, st: 'web' }, function () {
+      old.forEach(function (x) { stDel(x.id); });
+      toast(ward ? 'บันทึกป้ายแล้ว — ทุกคนเห็น' : 'คืนค่าป้ายเดิมแล้ว');
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tagedit],[data-tagsave],[data-tagreset],[data-tagcancel]'); if (!b) return;
+    var slug = b.getAttribute('data-tagedit') || b.getAttribute('data-tagsave') || b.getAttribute('data-tagreset') || b.getAttribute('data-tagcancel');
+    var n = G.by[slug], pk = document.querySelector('[data-tagpick="' + slug + '"]'), ed = document.querySelector('[data-tagedit="' + slug + '"]');
+    if (!n || !pk) return;
+    if (b.hasAttribute('data-tagcancel')) { pk.hidden = true; if (ed) ed.setAttribute('aria-expanded', 'false'); return; }
+    if (b.hasAttribute('data-tagedit')) {
+      if (!pk.hidden) { pk.hidden = true; b.setAttribute('aria-expanded', 'false'); return; }
+      if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน — แก้ป้ายแล้วทุกคนเห็น'); return; }
+      pk.innerHTML = tagPickHTML(n); pk.hidden = false; b.setAttribute('aria-expanded', 'true'); return;
+    }
+    if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน'); return; }
+    if (b.hasAttribute('data-tagreset')) { tagSave(n, null); return; }
+    var ward = Array.prototype.map.call(pk.querySelectorAll('input:checked'), function (x) { return x.value; });
+    tagSave(n, ward);
   });
 
   /* ---------- 1000 MAI: โรคที่เพิ่ม/ลบในเว็บ ---------- */

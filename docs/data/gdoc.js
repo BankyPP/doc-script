@@ -26,10 +26,51 @@ window.POY_GDOC = {
     'Clinic': 'ward'
   },
   /* ป้ายของแท็บ (Medical Soilเก็บตาม system — วอร์ดเป็นแค่ป้าย):
-       'ชื่อแท็บ': { lv: 'pre' | 'clinic', ward: ['med','gensx','subspe','ped','obgyn'] }
+       'ชื่อแท็บ': { lv: 'pre' | 'clinic', ward: ['med','sx','ped','obgyn', … ดู data/clinic.js] }
      แท็บย่อยได้ป้ายตามแท็บแม่ · แท็บใต้ "Clinic" ได้วอร์ดจากชื่อแท็บเองอยู่แล้ว (เช่น Surgery → Gen Sx + Subspe Sx)
      ไฟล์ที่เรียนจากวอร์ด: ใส่ในแท็บ system ของเรื่องนั้นใน Doc แล้วเพิ่มป้ายตรงนี้ → ขึ้นในหน้า "ตามวอร์ด" เอง */
+  /* Claude เลือกให้ 30 ต.ค. 2026 — แท็บที่ไม่อยู่ในนี้และแท็บแม่ไม่มีป้าย = "ยังไม่มีวอร์ด" (เช่น Cell Biology, Histology, Genetics) */
   tags: {
+    'law เพราะ ป.อ.มาตรา64': { ward: ['forensic'] },
+    'Normal values & approaches': { ward: ['med',  'em'] },
+    'History Taking (General)': { ward: ['med',  'sx',  'ped',  'obgyn'] },
+    'Hx (Pediatrics)': { ward: ['ped'] },
+    'Hx SUM Ped': { ward: ['ped'] },
+    'Physical Exam (GA)': { ward: ['med',  'sx',  'ped',  'obgyn'] },
+    'PE (Pediatrics)': { ward: ['ped'] },
+    'Lab Procedures': { ward: ['med',  'sx',  'ped',  'obgyn',  'em'] },
+    'Symptomatology': { ward: ['med',  'sx',  'ped',  'obgyn',  'em'] },
+    'Hemato': { ward: ['med',  'ped'] },
+    'Neuro': { ward: ['med',  'sx',  'rehab'] },
+    'Neuro Congenital Disorders': { ward: ['ped',  'sx'] },
+    'Skin': { ward: ['derm'] },
+    'Skin Congenital Disorders': { ward: ['derm',  'ped'] },
+    'MS': { ward: ['ortho',  'rehab'] },
+    'MS Disorders': { ward: ['ortho',  'rehab',  'med'] },
+    'MS Investigation': { ward: ['ortho',  'radio'] },
+    'MS Congenital Disorders': { ward: ['ortho',  'ped'] },
+    'RS': { ward: ['med',  'sx',  'ent'] },
+    'RS Congenital Disorders': { ward: ['ped',  'sx'] },
+    'RS Investigation': { ward: ['med',  'radio'] },
+    'CVS': { ward: ['med',  'sx'] },
+    'CVS Congenital Disorders': { ward: ['ped',  'sx'] },
+    'CVS Investigations': { ward: ['med',  'radio'] },
+    'GI': { ward: ['med',  'sx'] },
+    'GI Congenital Disorders': { ward: ['ped',  'sx'] },
+    'GI Investigation': { ward: ['med',  'sx',  'radio'] },
+    'KUB': { ward: ['med',  'sx'] },
+    'KUB Congenital Disoders': { ward: ['ped',  'sx'] },
+    'Repro': { ward: ['obgyn'] },
+    'Repro Congenital Disorders': { ward: ['obgyn',  'ped'] },
+    'Endocrine System': { ward: ['med',  'sx'] },
+    'Endoc Congenital Disorders': { ward: ['ped'] },
+    'Psychopathology': { ward: ['psych'] },
+    'Immune System': { ward: ['med',  'ped'] },
+    'Metabo & Nutrition': { ward: ['med',  'ped'] },
+    'Biostat': { ward: ['comm'] },
+    'Medical Ethics': { ward: ['forensic',  'comm'] },
+    'Medical Safety': { ward: ['med',  'sx',  'ped',  'obgyn',  'anes'] },
+    'Radiology': { ward: ['radio'] }
   },
   /* ชั้นของแท็บ — ใช้เฉพาะตอนฉบับเก็บไม่มีข้อมูลชั้น (ฉบับที่ GitHub Actions ดึงมีชั้นจริงจาก Doc อยู่แล้ว) */
   tree: [
