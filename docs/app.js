@@ -4706,6 +4706,43 @@
     list.forEach(function (d) { var k = d.name.trim().toLowerCase(); if (pend[k] && d.row > D.rows.length) d.pend = pend[k]; });
     return list.filter(function (d) { return !del[d.name.trim().toLowerCase()]; });
   }
+  /* ช่องเลือกหลายค่า (ระบบ / Symptom progression) — ตัวเลือกตาม dropdown ในชีต (data/mai.js) · ค่าในชีตคั่นด้วย ", " แบบ chip ของ Google Sheets */
+  function mselOpts(role) { return role === 'sys' ? Object.keys(MAI.sysColors) : (MAI.order[role] || []); }
+  function mselChip(role, v) { return tagHTML(role === 'sys' ? 'sys' : 'onset', v); }
+  function mselHTML(id, j, role) {
+    var opts = mselOpts(role);
+    return '<div class="msel" data-msel="' + role + '"><input type="hidden" data-j="' + j + '" value="">' +
+      '<button type="button" class="msel-btn" id="' + id + '" aria-haspopup="true" aria-expanded="false"><span class="msel-val"><span class="muted">— เลือกได้หลายอัน —</span></span><svg class="msel-car" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+      '<div class="msel-pop" hidden role="group" aria-label="ตัวเลือก">' +
+      '<div class="msel-list">' + opts.map(function (v) {
+        return '<label class="msel-opt"><input type="checkbox" value="' + esc(v) + '">' + mselChip(role, v) + '</label>';
+      }).join('') + '</div>' +
+      '<div class="msel-foot"><button type="button" class="chip" data-mselclr>ล้าง</button><button type="button" class="chip on" data-mseldone>เสร็จ</button></div></div></div>';
+  }
+  function mselSync(box) {
+    var role = box.getAttribute('data-msel'), vals = Array.prototype.map.call(box.querySelectorAll('.msel-opt input:checked'), function (x) { return x.value; });
+    box.querySelector('input[type=hidden]').value = vals.join(', ');
+    box.querySelector('.msel-val').innerHTML = vals.length ? vals.map(function (v) { return mselChip(role, v); }).join('') : '<span class="muted">— เลือกได้หลายอัน —</span>';
+  }
+  function mselClose(box) { if (!box) return; box.querySelector('.msel-pop').hidden = true; box.querySelector('.msel-btn').setAttribute('aria-expanded', 'false'); }
+  document.addEventListener('click', function (e) {
+    var box = e.target.closest('.msel');
+    document.querySelectorAll('.msel').forEach(function (b) { if (b !== box) mselClose(b); });
+    if (!box) return;
+    if (e.target.closest('.msel-btn')) {
+      var pop = box.querySelector('.msel-pop'), open = pop.hidden;
+      pop.hidden = !open; e.target.closest('.msel-btn').setAttribute('aria-expanded', open ? 'true' : 'false');
+    } else if (e.target.closest('[data-mselclr]')) {
+      box.querySelectorAll('.msel-opt input').forEach(function (x) { x.checked = false; }); mselSync(box);
+    } else if (e.target.closest('[data-mseldone]')) { mselClose(box); box.querySelector('.msel-btn').focus(); }
+  });
+  document.addEventListener('change', function (e) { var box = e.target.closest && e.target.closest('.msel'); if (box) mselSync(box); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var box = e.target.closest && e.target.closest('.msel');
+    if (box && !box.querySelector('.msel-pop').hidden) { mselClose(box); box.querySelector('.msel-btn').focus(); }
+  });
+
   function maiNewPage() {
     var Lx = D.layout;
     var head = '<section class="wrap phead"><div style="display:flex;flex-direction:column;gap:14px"><nav aria-label="ตำแหน่ง" style="font-size:15px"><a href="#/diseases">1000 MAI</a><span class="muted"> › </span><span>เพิ่มโรค</span></nav><h1 style="font-size:clamp(36px,5vw,56px)">เพิ่มโรคใหม่</h1>' +
@@ -4715,7 +4752,8 @@
     var f = Lx.cols.filter(function (c) { return c.role !== 'seen' && c.role !== 'no'; }).map(function (c) {
       var id = 'nf' + c.j, lab = '<label for="' + id + '" class="k" style="font-size:15px;font-weight:500">' + esc(c.label) + (c.role === 'name' ? ' *' : '') + '</label>';
       if (opts[c.role]) return '<div class="nfr">' + lab + '<select id="' + id + '" data-j="' + c.j + '"><option value="">—</option>' + opts[c.role].map(function (v) { return '<option>' + esc(v) + '</option>'; }).join('') + '</select></div>';
-      if (c.role === 'name' || c.role === 'icd' || c.role === 'sys' || c.role === 'prog') return '<div class="nfr">' + lab + '<input id="' + id + '" data-j="' + c.j + '"' + (c.role === 'name' ? ' required' : '') + (c.role === 'sys' || c.role === 'prog' ? ' placeholder="หลายค่าคั่นด้วย ,"' : '') + '></div>';
+      if (c.role === 'sys' || c.role === 'prog') return '<div class="nfr">' + lab + mselHTML(id, c.j, c.role) + '</div>';
+      if (c.role === 'name' || c.role === 'icd') return '<div class="nfr">' + lab + '<input id="' + id + '" data-j="' + c.j + '"' + (c.role === 'name' ? ' required' : '') + '></div>';
       return '<div class="nfr">' + lab + '<textarea id="' + id + '" data-j="' + c.j + '" rows="3" placeholder="ขึ้นบรรทัดใหม่ด้วย - = bullet"></textarea></div>';
     }).join('');
     return {

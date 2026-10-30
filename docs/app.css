@@ -867,6 +867,21 @@ a.kbtag:hover{background:var(--hover);color:var(--ink)}
 .nform{padding:clamp(18px,3vw,32px);display:flex;flex-direction:column;gap:16px;max-width:820px}
 .nfr{display:flex;flex-direction:column;gap:6px}
 .nfr input,.nfr select,.nfr textarea{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--rule-3);border-radius:8px;background:var(--sheet-hi);color:var(--ink);width:100%}
+/* เลือกหลายค่า (ระบบ / Symptom progression) */
+.msel{position:relative}
+.msel-btn{font:inherit;font-size:16px;width:100%;min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;border:1px solid var(--rule-3);border-radius:8px;background:var(--sheet-hi);color:var(--ink);cursor:pointer;text-align:left}
+.msel-btn[aria-expanded="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.msel-val{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
+.msel-car{flex:none;color:var(--muted);transition:transform .15s}
+.msel-btn[aria-expanded="true"] .msel-car{transform:rotate(180deg)}
+.msel-pop{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:15;background:var(--sheet-hi);border:1px solid var(--rule-3);border-radius:10px;box-shadow:0 14px 30px -16px rgba(30,38,32,.55);padding:8px}
+.msel-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;max-height:min(320px,50vh);overflow-y:auto}
+.msel-opt{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:7px;cursor:pointer}
+.msel-opt:hover{background:var(--paper-2)}
+.nfr .msel-opt input{width:18px;height:18px;padding:0;margin:0;flex:none;accent-color:var(--ink)}
+.msel-opt .mtag{font-size:13px;padding:5px 10px}
+.msel-foot{display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--rule-3);margin-top:6px;padding-top:8px}
+.msel-foot .chip{min-height:34px;padding:0 14px;font-size:14px}
 /* โน้ตทั้งกล่อง (Random Topic Summary) */
 .annbb{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 14px}
 .annchip,.annplus{font-family:'Sarabun',sans-serif;font-size:14px;display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:4px 12px;border-radius:999px;border:1px solid var(--rule-3);background:var(--sheet);color:var(--ink);cursor:pointer;max-width:100%}
