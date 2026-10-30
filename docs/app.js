@@ -854,7 +854,7 @@
         brush(col[0], 220) + '<span class="k" style="font-size:28px">' + esc(d.name) + '</span>' +
         (d.aliases.length ? '<span class="muted" style="font-size:15px">ชื่ออื่น: ' + d.aliases.map(esc).join(' · ') + '</span>' : '') + '</div>' +
         '<div class="hlabel"><div class="t">หอพรรณไม้โพยหมอ · HERBARIUM MEDICUM</div><dl>' +
-        lbl('เลขในชีต', 'No. ' + esc(d.no)) + lbl('Ward', esc(d.ward)) +
+        lbl('เลขในชีต', 'No. ' + esc(d.no)) + lbl('Discovering ward', esc(d.ward)) +
         (d.systems.length ? '<div class="full"><dt>ระบบ</dt><dd class="mai-tags" style="padding-top:4px">' + d.systems.map(function (v) { return tagHTML('sys', v); }).join('') + '</dd></div>' : '') +
         lbl('ประเภท', esc(d.type)) + lbl('Genetic', esc(d.gen)) + lbl('ICD-10', esc(d.icd)) + lbl('เคยดูคนไข้', esc(d.seen.join(', '))) +
         lbl('เขียนแล้ว', d.filled + ' / ' + d.total + ' ช่อง') + lbl('แหล่งข้อมูล', D.src === 'sample' ? 'ข้อมูลตัวอย่าง' : 'Google Sheet แถว ' + d.row) +
@@ -863,7 +863,7 @@
         (sheetLink ? '<a class="btn ghost" href="' + sheetLink + '" target="_blank" rel="noopener">แก้ข้อมูลใน Google Sheet ↗</a>' : '') + maiDelBtn(d) + '</div></aside>' +
         '<article><div style="display:flex;flex-direction:column;gap:14px;padding-bottom:24px"><span class="label">No. ' + esc(d.no) + (d.ward ? ' · ' + esc(d.ward) : '') + '</span>' +
         '<h1 style="font-size:clamp(34px,5vw,60px)">' + esc(d.name) + '</h1>' +
-        (tags ? '<div class="mai-tags">' + tags + '</div>' : '') +
+        (tags ? '<div class="mai-tags">' + tags + '</div>' : '') + (d.pend ? '' : dWardLine(d)) +
         '</div>' +
         (d.pend ? '<p class="warn" style="margin-bottom:14px">โรคนี้เพิ่งเพิ่มจากเว็บ — ' + ({ wait: 'รอเขียนลง Google Sheet', send: 'กำลังเขียนลงชีต', ok: 'เขียนลงชีตแล้ว รอเว็บดึง', err: 'เขียนลงชีตไม่สำเร็จ: ' + esc(d.pend.msg || ''), manual: 'ต้องเพิ่มในชีตเอง', web: 'อยู่แค่ในเว็บ' }[d.pend.st] || '') + ' · แก้เนื้อหาได้หลังเข้าชีตแล้ว</p>' : '') +
         '<div class="mai-body" data-ann="d:' + esc(d.id) + '"' + (d.pend ? ' data-ann-mode="note"' : '') + '>' + briefBox + shown.join('') + '</div>' +
@@ -1332,8 +1332,9 @@
     return G.nodes.filter(function (n) { return (n.wards || []).indexOf(id) >= 0 && !(n.parent && (n.parent.wards || []).indexOf(id) >= 0); });
   }
   function maiWardList(w) {
-    if (!w.mai) return [];
-    return D.list.filter(function (d) { return dVals(d, 'ward').indexOf(w.mai) >= 0; });
+    if (w.id === 'none') return [];
+    var L = D.list.filter(function (d) { return dWards(d).indexOf(w.id) >= 0; }), first = function (d) { return dDiscWards(d).indexOf(w.id) >= 0 ? 0 : 1; };
+    return L.sort(function (a, b) { return first(a) - first(b); });
   }
   function wardPage(r) {
     var w = wardById(r.args[1]);
@@ -1361,9 +1362,9 @@
         }).join('') + '</div></div>';
     }).join('') : '<div class="empty" style="text-align:left"><p class="muted">ยังไม่มีสรุปที่ติดป้าย ' + esc(w.name) + ' — สรุปที่เรียนจากวอร์ดนี้ใส่ไว้ในแท็บ system ของเรื่องนั้นใน Doc แล้วบอกให้ติดป้ายวอร์ด หน้าจะมาขึ้นตรงนี้เอง</p></div>';
     var ml = maiWardList(w);
-    var maiHTML = w.mai ? '<section class="wrap" style="padding-bottom:28px;display:flex;flex-direction:column;gap:12px"><span class="label">โรคใน 1000 MAI ที่เจอในวอร์ดนี้ · ' + ml.length + ' โรค</span>' +
-      (ml.length ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + ml.slice(0, 40).map(function (d) { return '<a class="pill' + (d.filled ? '' : ' mai-dim') + '" href="' + dHref(d) + '">' + esc(d.name) + '</a>'; }).join('') + '</div>' : '<p class="muted">' + (D.loading ? 'กำลังดึงชีต…' : 'ยังไม่มีโรคที่ติด Ward ' + esc(w.mai) + ' ในชีต') + '</p>') +
-      '<a class="chip" style="align-self:flex-start" href="#/diseases?ward=' + encodeURIComponent(w.mai) + '">ดูทั้งหมดใน 1000 MAI →</a></section>' : '';
+    var maiHTML = w.id !== 'none' ? '<section class="wrap" style="padding-bottom:28px;display:flex;flex-direction:column;gap:12px"><span class="label">โรคใน 1000 MAI ที่เจอได้ในวอร์ดนี้ · ' + ml.length + ' โรค <span style="text-transform:none;letter-spacing:0">(ตั้งต้นจาก Discovering ward ในชีต · แก้ป้ายได้ในหน้าโรค)</span></span>' +
+      (ml.length ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + ml.slice(0, 40).map(function (d) { return '<a class="pill' + (d.filled ? '' : ' mai-dim') + '" href="' + dHref(d) + '">' + esc(d.name) + '</a>'; }).join('') + '</div>' : '<p class="muted">' + (D.loading ? 'กำลังดึงชีต…' : 'ยังไม่มีโรคที่ติดป้าย ' + esc(w.name)) + '</p>') +
+      (w.mai ? '<a class="chip" style="align-self:flex-start" href="#/diseases?ward=' + encodeURIComponent(w.mai) + '">ดูโรคที่ Discovering ward = ' + esc(w.mai) + ' ใน 1000 MAI →</a>' : '') + '</section>' : '';
     return {
       title: w.name, html: head +
         '<section class="wrap" style="padding-bottom:36px;display:flex;flex-direction:column;gap:18px"><span class="label">สรุปจากทุก system ที่ติดป้าย ' + esc(w.name) + '</span>' + docHTML + '</section>' + maiHTML +
@@ -3653,7 +3654,7 @@
       var e = shPeek('d:' + d.id);
       L.push({ type: 'disease', title: d.name, path: '1000 MAI' + (d.no ? ' · No. ' + d.no : ''), c: d.sys.c,
         text: (d.aliases.join(' · ') + '\n' + (e ? htmlText(e.h) : d.brief + '\n' + d.fields.map(function (f) { return f.value ? f.label + ': ' + f.value : ''; }).join('\n'))),
-        tags: d.systems.concat([d.ward, d.type, d.gen, d.icd]).filter(Boolean), href: dHref(d) });
+        tags: d.systems.concat([d.ward, d.type, d.gen, d.icd]).concat(dWards(d).map(function (id) { return wardById(id).name; })).filter(Boolean), href: dHref(d) });
     });
     (NLD.notes || []).forEach(function (x) {
       var e = shPeek('n:' + x.id);
@@ -4659,38 +4660,63 @@
   });
 
   /* ---------- แก้ป้ายวอร์ดของแท็บในเว็บ (ทุกคนเห็น · ไม่เขียนเข้าไฟล์) ---------- */
-  function tagPickHTML(n) {
-    var cur = n.wards || [], par = n.parent ? (n.parent.wards || []) : null;
-    var box = function (w) { return '<label class="tagck" style="--w:' + w.c + '"><input type="checkbox" value="' + w.id + '"' + (cur.indexOf(w.id) >= 0 ? ' checked' : '') + '><span>' + esc(w.name) + '</span></label>'; };
+  /* เป้าหมายของตัวเลือกป้าย: แท็บใน Medical Soil (key = slug) หรือโรคใน 1000 MAI (key = d:<id>) */
+  function tagTarget(key) {
+    if (key.indexOf('d:') === 0) {
+      var d = findDisease(key.slice(2)); if (!d) return null;
+      var dw = dWebTags()[d.id];
+      return { key: key, cur: dWards(d), web: !!dw, resetLbl: 'คืนค่าเดิม (ตาม Discovering ward)', note: 'ไม่ติ๊กเลย = ไม่ขึ้นในหน้าวอร์ดไหน · Discovering ward ในชีตไม่เปลี่ยน · ทุกคนเห็นเหมือนกัน',
+        save: function (ward) { tagStore('dtag', { did: d.id, name: d.name }, function (x) { return x.did === d.id; }, ward); } };
+    }
+    var n = G.by[key]; if (!n) return null;
+    return { key: key, cur: n.wards || [], web: !!gWebTags()[n.slug], resetLbl: 'คืนค่าเดิม' + (n.parent && !(GD.tags || {})[n.title] ? ' (ตามแท็บแม่)' : ''), note: 'ไม่ติ๊กเลย = ยังไม่มีวอร์ด · แท็บย่อยได้ป้ายตามแท็บนี้ (เว้นแต่แท็บย่อยตั้งของตัวเอง) · ทุกคนเห็นเหมือนกัน',
+      save: function (ward) { tagStore('tag', { slug: n.slug, title: n.title }, function (x) { return x.slug === n.slug; }, ward); } };
+  }
+  function tagPickHTML(t) {
+    var box = function (w) { return '<label class="tagck" style="--w:' + w.c + '"><input type="checkbox" value="' + w.id + '"' + (t.cur.indexOf(w.id) >= 0 ? ' checked' : '') + '><span>' + esc(w.name) + '</span></label>'; };
     var grp = function (y, lab) { var ws = CLI.wards.filter(function (w) { return (w.y || 4) === y; }); return ws.length ? '<div class="tagrow"><span class="label">' + lab + '</span><div class="tagcks">' + ws.map(box).join('') + '</div></div>' : ''; };
     return grp(4, 'ปี 4') + grp(5, 'ปี 5') +
-      '<p class="muted" style="font-size:13px;margin:0">ไม่ติ๊กเลย = ยังไม่มีวอร์ด · แท็บย่อยได้ป้ายตามแท็บนี้ (เว้นแต่แท็บย่อยตั้งของตัวเอง) · ทุกคนเห็นเหมือนกัน</p>' +
-      '<div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" class="chip on" data-tagsave="' + esc(n.slug) + '">บันทึกป้าย</button>' +
-      (gWebTags()[n.slug] ? '<button type="button" class="chip" data-tagreset="' + esc(n.slug) + '">คืนค่าเดิม' + (par && !(GD.tags || {})[n.title] ? ' (ตามแท็บแม่)' : '') + '</button>' : '') +
-      '<button type="button" class="chip" data-tagcancel="' + esc(n.slug) + '">ยกเลิก</button></div>';
+      '<p class="muted" style="font-size:13px;margin:0">' + t.note + '</p>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" class="chip on" data-tagsave="' + esc(t.key) + '">บันทึกป้าย</button>' +
+      (t.web ? '<button type="button" class="chip" data-tagreset="' + esc(t.key) + '">' + esc(t.resetLbl) + '</button>' : '') +
+      '<button type="button" class="chip" data-tagcancel="' + esc(t.key) + '">ยกเลิก</button></div>';
   }
-  function tagSave(n, ward) {
-    var old = STRUCT.filter(function (x) { return x.act === 'tag' && x.slug === n.slug; });
-    stAdd({ act: 'tag', slug: n.slug, title: n.title, ward: ward, st: 'web' }, function () {
+  function tagStore(act, rec, same, ward) {
+    var old = STRUCT.filter(function (x) { return x.act === act && same(x); });
+    stAdd(Object.assign({ act: act, ward: ward, st: 'web' }, rec), function () {
       old.forEach(function (x) { stDel(x.id); });
       toast(ward ? 'บันทึกป้ายแล้ว — ทุกคนเห็น' : 'คืนค่าป้ายเดิมแล้ว');
     });
   }
+  /* วอร์ดของโรค = ป้ายที่แก้ในเว็บ ถ้ามี · ไม่งั้นเริ่มจาก Discovering ward ในชีต (โรคหนึ่งเจอได้หลายวอร์ด) */
+  function dWebTags() {
+    var o = {};
+    STRUCT.forEach(function (x) { if (x.act === 'dtag' && x.did) o[x.did] = x.ward == null ? null : { ward: x.ward }; });
+    Object.keys(o).forEach(function (k) { if (!o[k]) delete o[k]; });
+    return o;
+  }
+  function dDiscWards(d) { var v = dVals(d, 'ward'); return CLI.wards.filter(function (w) { return w.mai && v.indexOf(w.mai) >= 0; }).map(function (w) { return w.id; }); }
+  function dWards(d) { var t = dWebTags()[d.id]; return (t ? t.ward : dDiscWards(d)).filter(function (id) { return !!wardById(id); }); }
+  function dWardLine(d) {
+    var ws = dWards(d), key = 'd:' + d.id;
+    return '<div class="kbtags"><span class="kbtag lv">เจอได้ในวอร์ด</span>' + (ws.length ? ws.map(function (id) { var w = wardById(id); return '<a class="kbtag" href="#/kb/ward/' + w.id + '" style="--w:' + w.c + '">' + esc(w.name) + '</a>'; }).join('') : '<span class="kbtag lv">ยังไม่ได้ติด</span>') +
+      '<button type="button" class="kbtag kbtagedit" data-tagedit="' + esc(key) + '" aria-expanded="false">แก้ป้ายวอร์ด</button></div><div class="tagpick" data-tagpick="' + esc(key) + '" hidden></div>';
+  }
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-tagedit],[data-tagsave],[data-tagreset],[data-tagcancel]'); if (!b) return;
-    var slug = b.getAttribute('data-tagedit') || b.getAttribute('data-tagsave') || b.getAttribute('data-tagreset') || b.getAttribute('data-tagcancel');
-    var n = G.by[slug], pk = document.querySelector('[data-tagpick="' + slug + '"]'), ed = document.querySelector('[data-tagedit="' + slug + '"]');
-    if (!n || !pk) return;
+    var key = b.getAttribute('data-tagedit') || b.getAttribute('data-tagsave') || b.getAttribute('data-tagreset') || b.getAttribute('data-tagcancel');
+    var t = tagTarget(key), sel = window.CSS && CSS.escape ? CSS.escape(key) : key;
+    var pk = document.querySelector('[data-tagpick="' + sel + '"]'), ed = document.querySelector('[data-tagedit="' + sel + '"]');
+    if (!t || !pk) return;
     if (b.hasAttribute('data-tagcancel')) { pk.hidden = true; if (ed) ed.setAttribute('aria-expanded', 'false'); return; }
     if (b.hasAttribute('data-tagedit')) {
       if (!pk.hidden) { pk.hidden = true; b.setAttribute('aria-expanded', 'false'); return; }
       if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน — แก้ป้ายแล้วทุกคนเห็น'); return; }
-      pk.innerHTML = tagPickHTML(n); pk.hidden = false; b.setAttribute('aria-expanded', 'true'); return;
+      pk.innerHTML = tagPickHTML(t); pk.hidden = false; b.setAttribute('aria-expanded', 'true'); return;
     }
     if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน'); return; }
-    if (b.hasAttribute('data-tagreset')) { tagSave(n, null); return; }
-    var ward = Array.prototype.map.call(pk.querySelectorAll('input:checked'), function (x) { return x.value; });
-    tagSave(n, ward);
+    if (b.hasAttribute('data-tagreset')) { t.save(null); return; }
+    t.save(Array.prototype.map.call(pk.querySelectorAll('input:checked'), function (x) { return x.value; }));
   });
 
   /* ---------- 1000 MAI: โรคที่เพิ่ม/ลบในเว็บ ---------- */

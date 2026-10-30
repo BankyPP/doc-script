@@ -23,7 +23,7 @@ window.POY_MAI = {
 
   /* ตัวกรองด้านบนหน้า 1000 MAI (เรียงตามนี้) */
   filters: [
-    { key: 'ward',  label: 'Ward' },
+    { key: 'ward',  label: 'Discovering ward' },
     { key: 'sys',   label: 'ระบบ' },
     { key: 'type',  label: 'ประเภท' },
     { key: 'gen',   label: 'Genetic' },
