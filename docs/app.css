@@ -90,6 +90,8 @@ a.pill:hover{background:var(--hover);color:var(--ink)}
 /* page heads */
 .phead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px 56px;padding-top:56px;padding-bottom:36px}
 .phead h1{font-size:clamp(42px,5.6vw,76px)}
+.h1wrap{display:flex;flex-direction:column;gap:4px}
+.h1sub{margin:0;font-family:'Kanit',sans-serif;font-weight:500;font-size:clamp(17px,1.8vw,22px);letter-spacing:.02em;color:#9B4F2E}
 .phead .lede{font-size:19px;max-width:640px;color:var(--ink-2)}
 .band{background:var(--paper-2);border-top:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2)}
 

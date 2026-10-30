@@ -777,7 +777,7 @@
     for (var i = 1; i < 10; i++) ticks += 'M' + (1 + i * 37.8).toFixed(1) + ' 23v' + (i === 5 ? -12 : i % 2 ? -6 : -10);
     return {
       title: '1000 MAI', html:
-        '<section class="wrap phead" style="padding-bottom:28px"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · หอพรรณไม้</span><h1>1000 MAI</h1>' +
+        '<section class="wrap phead" style="padding-bottom:28px"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · หอพรรณไม้</span><div class="h1wrap"><h1>1000 MAI</h1><p class="h1sub">Medical Archive of Illnesses</p></div>' +
         '<p class="lede">หอพรรณไม้ของโรค — รู้จักให้พอจะ diag ได้ รู้ว่าต้องส่ง lab อะไร และเริ่ม initial management ได้</p>' +
         '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px">' + liveHTML() + (hasSheet() ? '<button class="chip" type="button" id="reload" style="min-height:40px">ดึงใหม่</button><a class="chip on" href="#/disease/new" style="min-height:40px">+ เพิ่มโรค</a>' : '') + '</div></div>' +
         '<div style="flex:0 1 380px;min-width:240px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:baseline;gap:10px"><span class="k" style="font-size:64px;line-height:1">' + n + '</span><span class="muted" style="font-size:18px">/ 1000 โรค</span></div>' +
