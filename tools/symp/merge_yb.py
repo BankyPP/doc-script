@@ -104,6 +104,7 @@ def main():
     nxt = max(chaps) + 1
     yb_order = {t['key']: i + 1 for i, t in enumerate(x for x in tops if x['_book'] == 'yb')}
     newc = {}
+    added = {}
     for t in tops:
         b = t['_book']
         flows = copy.deepcopy(t.get('flows', []))
@@ -136,9 +137,12 @@ def main():
                     a = op.get('after')
                     if a == '^': d['sections'].insert(0, n)
                     elif a is None: d['sections'].append(n)
-                    else:
-                        i = [x['id'] for x in d['sections']].index(a)
-                        d['sections'].insert(i + 1, n)
+                    else:   # วางหลัง a — ถ้ามีหัวข้อที่เพิ่มไว้หลัง a แล้ว ให้ต่อท้ายกลุ่มนั้น (คงลำดับเล่มเหลือง)
+                        ids = [x['id'] for x in d['sections']]
+                        i = ids.index(a) + 1
+                        while i < len(ids) and ids[i] in added.get(t['target'], ()): i += 1
+                        d['sections'].insert(i, n)
+                    added.setdefault(t['target'], set()).add(n['id'])
         else:
             n = t['new']
             secs = copy.deepcopy(t['sections']); mark(secs, b)
