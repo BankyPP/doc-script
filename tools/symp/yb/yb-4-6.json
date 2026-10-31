@@ -1,0 +1,132 @@
+{
+ "key": "4-6",
+ "en": "Red urine",
+ "th": "ปัสสาวะสีแดง",
+ "pdf": "58",
+ "target": 28,
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "ddx",
+   "id": "yb-4-6-red",
+   "h": "Red urine — algorithm (เล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y46a\"></div><ul><li>Red urine → Centrifuge urine result<ul><li><b>Red Sediment</b> → Hematuria (ดูต่อ Hematuria)</li><li><b>Red Supernatent</b> → Heme Dipstick<ul><li>Positive → Plasma color: Clear → <b>Myoglobinuria</b> · Red → <b>Hemoglobinuria</b></li><li>Negative → <b>Heme –ve red urine</b>: Beeturia · Porphyria · Food color · Medication (Rifam, Doxorubicin, CQ, Phenazopyridine)</li></ul></li></ul></li></ul><figure><img src=\"symp/img/yb-4-6-f1.webp\" alt=\"Red urine algorithm และรูปหลอด centrifuge urine\"><figcaption>Centrifuge urine: Supernatent (ส่วนบนสีเหลือง) และ Sediment (ก้นหลอดสีแดง)</figcaption></figure>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y46a",
+   "title": "Red urine",
+   "src": "fig",
+   "img": "yb-4-6-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Red urine"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "Centrifuge urine result",
+     "d": "<p>รูป Centrifuge urine: หลอดปั่น ส่วนบนสีเหลืองคือ Supernatant ก้นหลอดสีแดงคือ Sediment</p>"
+    },
+    {
+     "id": "rs",
+     "k": "q",
+     "t": "Red Sediment"
+    },
+    {
+     "id": "rsu",
+     "k": "q",
+     "t": "Red Supernatent"
+    },
+    {
+     "id": "hem",
+     "k": "dx",
+     "t": "Hematuria",
+     "d": "<p>(ดูต่อ Hematuria — หัวข้อ 4.7)</p>"
+    },
+    {
+     "id": "dip",
+     "k": "act",
+     "t": "Heme Dipstick"
+    },
+    {
+     "id": "pos",
+     "k": "q",
+     "t": "Positive"
+    },
+    {
+     "id": "neg",
+     "k": "dx",
+     "t": "Heme –ve red urine",
+     "d": "<ul><li>Beeturia</li><li>Porphyria</li><li>Food color</li><li>Medication<ul><li>Rifam</li><li>Doxorubicin</li><li>CQ</li><li>Phenazopyridine</li></ul></li></ul>"
+    },
+    {
+     "id": "pl",
+     "k": "act",
+     "t": "Plasma color"
+    },
+    {
+     "id": "myo",
+     "k": "dx",
+     "t": "Myoglobinuria"
+    },
+    {
+     "id": "hgb",
+     "k": "dx",
+     "t": "Hemoglobinuria"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "rs",
+     "l": "Red Sediment"
+    },
+    {
+     "f": "c",
+     "t": "rsu",
+     "l": "Red Supernatent"
+    },
+    {
+     "f": "rs",
+     "t": "hem"
+    },
+    {
+     "f": "rsu",
+     "t": "dip"
+    },
+    {
+     "f": "dip",
+     "t": "pos",
+     "l": "Positive"
+    },
+    {
+     "f": "dip",
+     "t": "neg",
+     "l": "Negative"
+    },
+    {
+     "f": "pos",
+     "t": "pl"
+    },
+    {
+     "f": "pl",
+     "t": "myo",
+     "l": "Clear"
+    },
+    {
+     "f": "pl",
+     "t": "hgb",
+     "l": "Red"
+    }
+   ]
+  }
+ ]
+}

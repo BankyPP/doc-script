@@ -1,0 +1,138 @@
+{
+ "key": "4-2",
+ "en": "Urinary tract obstruction",
+ "th": "การอุดกั้นทางเดินปัสสาวะ",
+ "pdf": "52",
+ "target": 25,
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "cause-post",
+   "id": "yb-4-2-uto",
+   "h": "Urinary tract obstruction — algorithm (เล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y42a\"></div><h5>Lower urinary tract obstruction (ต่ำกว่า vesicoureteral junction) → Acute urinary retention</h5><ul><li><b>Anatomical obstruction</b><ul><li>Bladder: CA bladder, Stone · DM, MS, Parkinson</li><li>Prostate: BPH, CA prostate · Prostatitis</li><li>Urethral stricture: Trauma, instrument · GC urethritis</li></ul></li><li><b>Functional obstruction</b><ul><li>Neurogenic bladder: Spinal cord injury · DM, MS, Parkinson</li><li>Urethral valve: Anticholinergic · Antidepressant · Levodopa</li></ul></li></ul><h5>Upper urinary tract obstruction (เหนือต่อ vesicoureteral junction) → Oliguria/Anuria from upper tract obstruction</h5><ul><li><b>Intrinsic obstruction</b><ul><li>Intraluminal: Stone · Blood clot · Papillary tissue</li><li>Extraluminal: Functional (Ureteral Vesicle Junction dysfunction) · Anatomical (tumor, infection)</li></ul></li><li><b>Extrinsic obstruction</b><ul><li>GU: Preg, CA cervix</li><li>Vascular: Aneurysm</li><li>GI: Tumor</li><li>Retroperitoneum: LN, Fibrosis · Tumor</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y42a",
+   "title": "Urinary tract obstruction",
+   "src": "fig",
+   "img": "yb-4-2-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Urinary tract obstruction"
+    },
+    {
+     "id": "low",
+     "k": "q",
+     "t": "Lower urinary tract obstruction",
+     "d": "<p>ต่ำกว่า vesicoureteral junction</p>"
+    },
+    {
+     "id": "up",
+     "k": "q",
+     "t": "Upper urinary tract obstruction",
+     "d": "<p>เหนือต่อ vesicoureteral junction</p>"
+    },
+    {
+     "id": "aur",
+     "k": "dx",
+     "t": "Acute urinary retention"
+    },
+    {
+     "id": "ana",
+     "k": "dx",
+     "t": "Anatomical obstruction",
+     "d": "<ul><li>Bladder<ul><li>CA bladder, Stone</li><li>DM, MS, Parkinson</li></ul></li><li>Prostate<ul><li>BPH, CA prostate</li><li>Prostatitis</li></ul></li><li>Urethral stricture<ul><li>Trauma, instrument</li><li>GC urethritis</li></ul></li></ul>"
+    },
+    {
+     "id": "fun",
+     "k": "dx",
+     "t": "Functional obstruction",
+     "d": "<ul><li>Neurogenic bladder<ul><li>Spinal cord injury</li><li>DM, MS, Parkinson</li></ul></li><li>Urethral valve<ul><li>Anticholinergic</li><li>Antidepressant</li><li>Levodopa</li></ul></li></ul>"
+    },
+    {
+     "id": "oa",
+     "k": "dx",
+     "t": "Oliguria/Anuria from upper tract obstruction"
+    },
+    {
+     "id": "intr",
+     "k": "q",
+     "t": "Intrinsic obstruction"
+    },
+    {
+     "id": "extr",
+     "k": "dx",
+     "t": "Extrinsic obstruction",
+     "d": "<ul><li>GU<ul><li>Preg, CA cervix</li></ul></li><li>Vascular<ul><li>Aneurysm</li></ul></li><li>GI<ul><li>Tumor</li></ul></li><li>Retroperitoneum<ul><li>LN, Fibrosis</li><li>Tumor</li></ul></li></ul>"
+    },
+    {
+     "id": "intral",
+     "k": "dx",
+     "t": "Intraluminal",
+     "d": "<ul><li>Stone</li><li>Blood clot</li><li>Papillary tissue</li></ul>"
+    },
+    {
+     "id": "extral",
+     "k": "dx",
+     "t": "Extraluminal",
+     "d": "<ul><li>Functional<ul><li>Ureteral Vesicle Junction dysfunction</li></ul></li><li>Anatomical<ul><li>tumor, infection</li></ul></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "low",
+     "l": "Lower (ต่ำกว่า VUJ)"
+    },
+    {
+     "f": "a",
+     "t": "up",
+     "l": "Upper (เหนือ VUJ)"
+    },
+    {
+     "f": "low",
+     "t": "aur"
+    },
+    {
+     "f": "aur",
+     "t": "ana",
+     "l": "Anatomical"
+    },
+    {
+     "f": "aur",
+     "t": "fun",
+     "l": "Functional"
+    },
+    {
+     "f": "up",
+     "t": "oa"
+    },
+    {
+     "f": "oa",
+     "t": "intr",
+     "l": "Intrinsic"
+    },
+    {
+     "f": "oa",
+     "t": "extr",
+     "l": "Extrinsic"
+    },
+    {
+     "f": "intr",
+     "t": "intral",
+     "l": "Intraluminal"
+    },
+    {
+     "f": "intr",
+     "t": "extral",
+     "l": "Extraluminal"
+    }
+   ]
+  }
+ ]
+}

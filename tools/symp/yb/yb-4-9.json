@@ -1,0 +1,140 @@
+{
+ "key": "4-9",
+ "en": "Nephrotic syndrome",
+ "th": "กลุ่มอาการเนโฟรติก (Nephrotic syndrome)",
+ "pdf": "61",
+ "target": null,
+ "new": {
+  "id": "nephrotic-syndrome",
+  "th": "กลุ่มอาการเนโฟรติก",
+  "en": "Nephrotic syndrome",
+  "g": "kub"
+ },
+ "sections": [
+  {
+   "id": "yb-4-9-algo",
+   "h": "Nephrotic syndrome — algorithm",
+   "html": "<div class=\"flow\" data-flow=\"y49a\"></div><ul><li>Proteinuria &gt; 3.5 gm/day</li><li>Albumin &lt; 3.5 gm/dl</li><li>Edema, Hyperchol, lipiduria</li></ul>",
+   "sub": [
+    {
+     "id": "yb-4-9-primary",
+     "h": "Primary Glomerular (Abnormal Glom w/o Systemic dz)",
+     "html": "<div class=\"box\"><p><b>4M + 1F</b></p><ul><li>M: MN</li><li>M: MCD</li><li>M: IgMN</li><li>M: MPGN</li><li>F: FSGS</li></ul></div>"
+    },
+    {
+     "id": "yb-4-9-secondary",
+     "h": "Secondary Glomerular (Systemic dz → abnormal Glom)",
+     "html": "<div class=\"tbl\"><table><thead><tr><th>กลุ่ม</th><th>ตัวอย่าง</th></tr></thead><tbody><tr><td><b>Med/Chemical</b></td><td>Hg, Gold · Heroin · Med: NSAIDs, Captopril, Probenecid, Penicillamine, IFN, Pamidronate</td></tr><tr><td><b>Infection</b></td><td>Virus: HBV, HCV · Bacteria: PSGN, IE, Sy · Malaria</td></tr><tr><td><b>Neoplasm</b></td><td>Solid: Lung, Breast, Colon · Leukemia · Lymphoma</td></tr><tr><td><b>Autoimmune</b></td><td>SLE · MCTD, RA · Vasculitis · Amyloidosis</td></tr><tr><td><b>Metabolic &amp; Miscellaneous</b></td><td>DM*** · Hypothyroid · Pregnancy: Pre-eclampsia</td></tr></tbody></table></div>"
+    },
+    {
+     "id": "yb-4-9-abbr",
+     "h": "คำย่อ",
+     "html": "<ul><li><b>MCD:</b> Minimal change disease</li><li><b>IgMN:</b> IgM nephropathy</li><li><b>MN:</b> Membranous nephropathy</li><li><b>FSGS:</b> Focal segmental glomerulosclerosis</li><li><b>MPGN:</b> Mesangiocapillary glomerulonephritis</li></ul>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "y49a",
+   "title": "Nephrotic syndrome",
+   "src": "fig",
+   "img": "yb-4-9-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Nephrotic syndrome",
+     "d": "<ul><li>Proteinuria &gt; 3.5 gm/day</li><li>Albumin &lt; 3.5 gm/dl</li><li>Edema, Hyperchol, lipiduria</li></ul>"
+    },
+    {
+     "id": "pri",
+     "k": "q",
+     "t": "Primary Glomerular — Abnormal Glom w/o Systemic dz"
+    },
+    {
+     "id": "sec",
+     "k": "q",
+     "t": "Secondary Glomerular — Systemic dz → abnormal Glom"
+    },
+    {
+     "id": "mf",
+     "k": "dx",
+     "t": "4M + 1F",
+     "d": "<ul><li>M: MN</li><li>M: MCD</li><li>M: IgMN</li><li>M: MPGN</li><li>F: FSGS</li></ul>"
+    },
+    {
+     "id": "med",
+     "k": "dx",
+     "t": "Med/Chemical",
+     "d": "<ul><li>Hg, Gold</li><li>Heroin</li><li>Med<ul><li>NSAIDs</li><li>Captopril</li><li>Probenecid</li><li>Penicillamine</li><li>IFN, Pamidronate</li></ul></li></ul>"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Virus<ul><li>HBV, HCV</li></ul></li><li>Bacteria<ul><li>PSGN, IE, Sy</li></ul></li><li>Malaria</li></ul>"
+    },
+    {
+     "id": "neo",
+     "k": "dx",
+     "t": "Neoplasm",
+     "d": "<ul><li>Solid<ul><li>Lung, Breast</li><li>Colon</li></ul></li><li>Leukemia</li><li>Lymphoma</li></ul>"
+    },
+    {
+     "id": "aut",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li>SLE</li><li>MCTD, RA</li><li>Vasculitis</li><li>Amyloidosis</li></ul>"
+    },
+    {
+     "id": "met",
+     "k": "dx",
+     "t": "Metabolic & Miscellaneous",
+     "d": "<ul><li>DM***</li><li>Hypothyroid</li><li>Pregnancy<ul><li>Pre-eclampsia</li></ul></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pri",
+     "l": "Primary Glomerular"
+    },
+    {
+     "f": "a",
+     "t": "sec",
+     "l": "Secondary Glomerular"
+    },
+    {
+     "f": "pri",
+     "t": "mf"
+    },
+    {
+     "f": "sec",
+     "t": "med",
+     "l": "Med/Chemical"
+    },
+    {
+     "f": "sec",
+     "t": "inf",
+     "l": "Infection"
+    },
+    {
+     "f": "sec",
+     "t": "neo",
+     "l": "Neoplasm"
+    },
+    {
+     "f": "sec",
+     "t": "aut",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "sec",
+     "t": "met",
+     "l": "Metabolic & Miscellaneous"
+    }
+   ]
+  }
+ ]
+}

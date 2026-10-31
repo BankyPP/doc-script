@@ -1,0 +1,145 @@
+{
+ "key": "4-10",
+ "en": "Rapidly progressive glomerulonephritis",
+ "th": "ไตอักเสบรุนแรงเร็ว (RPGN)",
+ "pdf": "62",
+ "target": null,
+ "new": {
+  "id": "rpgn",
+  "th": "RPGN (ไตอักเสบรุนแรงเร็ว)",
+  "en": "Rapidly progressive glomerulonephritis",
+  "g": "kub"
+ },
+ "sections": [
+  {
+   "id": "yb-4-10-algo",
+   "h": "Rapidly Progressive Glomerulonephritis (RPGN) — algorithm",
+   "html": "<div class=\"flow\" data-flow=\"y410a\"></div><ul><li>Renal failure over days to weeks</li><li>Hypertension, RBC cast</li><li>Histo: Cresentic GN</li></ul>",
+   "sub": [
+    {
+     "id": "yb-4-10-anca",
+     "h": "ANCA associated",
+     "html": "<p>ANCA +ve · Histo: Pauci immune</p><ul><li><b>P-ANCA: + ve</b> — MPA: Microscopic polyangiitis · CSS: Churg-Strauss syndrome</li><li><b>C-ANCA: + ve</b> — Granulomatous polyangiitis (Wegener)</li></ul>"
+    },
+    {
+     "id": "yb-4-10-gbm",
+     "h": "AntiGBM",
+     "html": "<p>Anti GBM +ve · Histo: Linear IF</p><ul><li><b>+ ve Lung hemorrhage</b> — Goodpasture's syndrome</li><li><b>- ve Lung hemorrhage</b> — Anti-GBM GN</li></ul>"
+    },
+    {
+     "id": "yb-4-10-ic",
+     "h": "Immune complex",
+     "html": "<p>C3: ↓/normal, C4: ↓/normal · Histo: Granular IF</p><p>Mnemonic “CIM FI 3S”</p><ul><li><b>C:</b> Cryoglobulinemia</li><li><b>I:</b> IE</li><li><b>M:</b> MPGN</li><li><b>F:</b> Fibrillary GN</li><li><b>I:</b> IgA nephropathy</li><li><b>S:</b> SLE</li><li><b>S:</b> Shunt nephritis</li><li><b>S:</b> PSGN</li></ul>"
+    }
+   ]
+  },
+  {
+   "id": "yb-4-10-know",
+   "h": "ข้อควรรู้",
+   "html": "<p>ในกลุ่มผู้ป่วยที่เป็น immune complex associated RPGN มีบางกลุ่มโรคที่มีลักษณะพิเศษได้แก่</p><ul><li>กลุ่มโรคที่ C3 ปกติ ได้แก่ IgA nephropathy, Fibrillary GN</li><li>กลุ่มโรคที่ C3 และ C4 ต่ำ mnemonic “CML”: Cryoglobulinemia, MPGN type 2, Lupus nephritis</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y410a",
+   "title": "Rapidly Progressive Glomerulonephritis (RPGN)",
+   "src": "fig",
+   "img": "yb-4-10-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Rapidly Progressive Glomerulonephritis (RPGN)",
+     "d": "<ul><li>Renal failure over <span class=\"hi\">days to weeks</span></li><li><span class=\"hi\">Hypertension</span>, <span class=\"hi\">RBC cast</span></li><li>Histo: <span class=\"hi\">Cresentic GN</span></li></ul>"
+    },
+    {
+     "id": "anca",
+     "k": "q",
+     "t": "ANCA associated",
+     "d": "<ul><li>ANCA +ve</li><li>Histo: Pauci immune</li></ul>"
+    },
+    {
+     "id": "gbm",
+     "k": "q",
+     "t": "AntiGBM",
+     "d": "<ul><li>Anti GBM +ve</li><li>Histo: Linear IF</li></ul>"
+    },
+    {
+     "id": "ic",
+     "k": "q",
+     "t": "Immune complex",
+     "d": "<ul><li>C3: ↓/normal, C4: ↓/normal</li><li>Histo: Granular IF</li></ul>"
+    },
+    {
+     "id": "pa",
+     "k": "dx",
+     "t": "P-ANCA: + ve",
+     "d": "<ul><li><b>MPA:</b> Microscopic polyangiitis</li><li><b>CSS:</b> Churg-Strauss syndrome</li></ul>"
+    },
+    {
+     "id": "ca",
+     "k": "dx",
+     "t": "C-ANCA: + ve",
+     "d": "<ul><li>Granulomatous polyangiitis (Wegener)</li></ul>"
+    },
+    {
+     "id": "good",
+     "k": "dx",
+     "t": "Goodpasture's syndrome"
+    },
+    {
+     "id": "agn",
+     "k": "dx",
+     "t": "Anti-GBM GN"
+    },
+    {
+     "id": "mn",
+     "k": "q",
+     "t": "Mnemonic “CIM FI 3S”",
+     "d": "<ul><li><b>C:</b> Cryoglobulinemia</li><li><b>I:</b> IE</li><li><b>M:</b> MPGN</li><li><b>F:</b> Fibrillary GN</li><li><b>I:</b> IgA nephropathy</li><li><b>S:</b> SLE</li><li><b>S:</b> Shunt nephritis</li><li><b>S:</b> PSGN</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "anca",
+     "l": "ANCA associated"
+    },
+    {
+     "f": "a",
+     "t": "gbm",
+     "l": "AntiGBM"
+    },
+    {
+     "f": "a",
+     "t": "ic",
+     "l": "Immune complex"
+    },
+    {
+     "f": "anca",
+     "t": "pa",
+     "l": "P-ANCA +ve"
+    },
+    {
+     "f": "anca",
+     "t": "ca",
+     "l": "C-ANCA +ve"
+    },
+    {
+     "f": "gbm",
+     "t": "good",
+     "l": "+ve Lung hemorrhage"
+    },
+    {
+     "f": "gbm",
+     "t": "agn",
+     "l": "-ve Lung hemorrhage"
+    },
+    {
+     "f": "ic",
+     "t": "mn"
+    }
+   ]
+  }
+ ]
+}

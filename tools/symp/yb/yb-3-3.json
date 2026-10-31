@@ -1,0 +1,234 @@
+{
+ "key": "3-3",
+ "en": "Vomiting",
+ "th": "อาเจียน",
+ "pdf": "39",
+ "target": 20,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-3-3-approach",
+   "h": "Algorithm Vomiting — intracranial/pericranial vs extracranial",
+   "html": "<figure><img src=\"symp/img/yb-3-3-f1.webp\" alt=\"Algorithm Vomiting แยกสาเหตุ intracranial/pericranial และ extracranial\"><figcaption>3.3 Vomiting — เล่มเหลือง</figcaption></figure><div class=\"flow\" data-flow=\"y33a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>เล่มเหลือง</b> — Vomiting</p><ul><li><b>Intracranial and Pericranial</b><ul><li>Brain — Increase ICP \"น้ำ-เลือด-เนื้อ-หนอง\": <b>น้ำ</b> hydrocephalus · <b>เลือด</b> ICH, SDH, SAH · <b>เนื้อ</b> Tumor · <b>หนอง</b> Meningitis, encephalitis · <b>idiopathic</b> Pseudotumor cerebri</li><li>Vestibular — Labyrinthitis, Motion sickness</li><li>Eye — Glaucoma</li></ul></li><li><b>Extracranial</b><ul><li>GU — Pyelonephritis, Stone, PID, Pregnancy</li><li>Metabolic — Endo: AI, DKA · Nephro: Uremia, Na↓</li><li>Drug & toxin — Drug: Chemo, Opioid, NSAID, ATB · Toxin: Organophosphate</li></ul></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "acute-gi",
+   "html": "<p><b>เล่มเหลือง</b> — GI organic \"Obstruct-Inflam\": <b>Obstruction</b> (Gastric outlet, Small bowel) · <b>Inflammation</b> (Stomach: PU, Food poisoning · Hep-Bili: Hepatitis, Cholecystitis · Pancreas: Pancreatitis · Bowel: AGE, Peritonitis, appendicitis) · Functional: IBS, Gastroparesis</p>"
+  },
+  {
+   "op": "append",
+   "sec": "acute-drug",
+   "html": "<p><b>เล่มเหลือง</b> — Drug & toxin: Chemo, Opioid, NSAID, ATB · Toxin: Organophosphate</p>"
+  },
+  {
+   "op": "append",
+   "sec": "acute-vn",
+   "html": "<p><b>เล่มเหลือง</b> — Vestibular: Labyrinthitis, Motion sickness</p>"
+  },
+  {
+   "op": "append",
+   "sec": "chr-gp",
+   "html": "<p><b>เล่มเหลือง</b> — GI functional: IBS, Gastroparesis</p>"
+  },
+  {
+   "op": "append",
+   "sec": "chr-goo",
+   "html": "<p><b>เล่มเหลือง</b> — GI obstruction: Gastric outlet, Small bowel</p>"
+  },
+  {
+   "op": "append",
+   "sec": "chr-preg",
+   "html": "<p><b>เล่มเหลือง</b> — GU: Pregnancy (อยู่ในกลุ่ม GU ร่วมกับ Pyelonephritis, Stone, PID)</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y33a",
+   "title": "Vomiting",
+   "src": "fig",
+   "img": "yb-3-3-f1.webp",
+   "note": "ไม่มีลายมือในหน้านี้",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vomiting"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Intracranial and Pericranial"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Extracranial"
+    },
+    {
+     "id": "b1",
+     "k": "q",
+     "t": "Brain: Increase ICP — \"น้ำ-เลือด-เนื้อ-หนอง\"",
+     "d": "<ul><li><b>น้ำ:</b> hydrocephalus</li><li><b>เลือด:</b> ICH, SDH, SAH</li><li><b>เนื้อ:</b> Tumor</li><li><b>หนอง:</b> Meningitis, encephalitis</li><li><b>idiopathic:</b> Pseudotumor cerebri</li></ul>"
+    },
+    {
+     "id": "b2",
+     "k": "dx",
+     "t": "Vestibular: Labyrinthitis, Motion sickness",
+     "d": "<ul><li>Labyrinthitis</li><li>Motion sickness</li></ul>"
+    },
+    {
+     "id": "b3",
+     "k": "dx",
+     "t": "Eye: Glaucoma"
+    },
+    {
+     "id": "c1",
+     "k": "q",
+     "t": "GI"
+    },
+    {
+     "id": "c2",
+     "k": "q",
+     "t": "GU"
+    },
+    {
+     "id": "c3",
+     "k": "q",
+     "t": "Metabolic"
+    },
+    {
+     "id": "c4",
+     "k": "q",
+     "t": "Drug & toxin"
+    },
+    {
+     "id": "c1a",
+     "k": "dx",
+     "t": "Functional: IBS, Gastroparesis",
+     "d": "<ul><li>IBS</li><li>Gastroparesis</li></ul>"
+    },
+    {
+     "id": "c1b",
+     "k": "q",
+     "t": "Organic \"Obstruct-Inflam\""
+    },
+    {
+     "id": "c1b1",
+     "k": "dx",
+     "t": "Obstruction: Gastric outlet, Small bowel",
+     "d": "<ul><li>Gastric outlet</li><li>Small bowel</li></ul>"
+    },
+    {
+     "id": "c1b2",
+     "k": "dx",
+     "t": "Inflammation",
+     "d": "<ul><li><b>Stomach:</b> PU, Food poisoning</li><li><b>Hep-Bili:</b> Hepatitis, Cholecystitis</li><li><b>Pancreas:</b> Pancreatitis</li><li><b>Bowel:</b> AGE, Peritonitis, appendicitis</li></ul>"
+    },
+    {
+     "id": "c2a",
+     "k": "dx",
+     "t": "GU: Pyelonephritis, Stone, PID, Pregnancy",
+     "d": "<ul><li>Pyelonephritis</li><li>Stone</li><li>PID</li><li>Pregnancy</li></ul>"
+    },
+    {
+     "id": "c3a",
+     "k": "dx",
+     "t": "Metabolic: Endo (AI, DKA) · Nephro (Uremia, Na↓)",
+     "d": "<ul><li><b>Endo:</b> AI, DKA</li><li><b>Nephro:</b> Uremia, Na↓</li></ul>"
+    },
+    {
+     "id": "c4a",
+     "k": "dx",
+     "t": "Drug: Chemo, Opioid, NSAID, ATB · Toxin: Organophosphate",
+     "d": "<ul><li><b>Drug:</b> Chemo, Opioid, NSAID, ATB</li><li><b>Toxin:</b> Organophosphate</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Intracranial and Pericranial"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Extracranial"
+    },
+    {
+     "f": "b",
+     "t": "b1",
+     "l": "Brain"
+    },
+    {
+     "f": "b",
+     "t": "b2",
+     "l": "Vestibular"
+    },
+    {
+     "f": "b",
+     "t": "b3",
+     "l": "Eye"
+    },
+    {
+     "f": "c",
+     "t": "c1",
+     "l": "GI"
+    },
+    {
+     "f": "c",
+     "t": "c2",
+     "l": "GU"
+    },
+    {
+     "f": "c",
+     "t": "c3",
+     "l": "Metabolic"
+    },
+    {
+     "f": "c",
+     "t": "c4",
+     "l": "Drug & toxin"
+    },
+    {
+     "f": "c1",
+     "t": "c1a",
+     "l": "Functional"
+    },
+    {
+     "f": "c1",
+     "t": "c1b",
+     "l": "Organic"
+    },
+    {
+     "f": "c1b",
+     "t": "c1b1",
+     "l": "Obstruction"
+    },
+    {
+     "f": "c1b",
+     "t": "c1b2",
+     "l": "Inflammation"
+    },
+    {
+     "f": "c2",
+     "t": "c2a"
+    },
+    {
+     "f": "c3",
+     "t": "c3a"
+    },
+    {
+     "f": "c4",
+     "t": "c4a"
+    }
+   ]
+  }
+ ]
+}

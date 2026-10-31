@@ -1,0 +1,1199 @@
+{
+ "key": "9-5",
+ "en": "Approach to weakness",
+ "th": "แนวทางวินิจฉัยอาการกล้ามเนื้ออ่อนแรง",
+ "pdf": "115–121",
+ "target": 33,
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "term",
+   "id": "yb-9-5-nomen",
+   "h": "Weakness nomenclature (รูปแสดงตำแหน่งอ่อนแรง)",
+   "html": "<figure><img src=\"symp/img/yb-9-5-f1.webp\" alt=\"Weakness nomenclature: quadriparesis, paraparesis, hemiparesis, monoparesis, proximal และ distal muscle weakness\"><figcaption>9.5.1 Weakness nomenclature (รูปตำแหน่งที่อ่อนแรงแต่ละแบบ)</figcaption></figure><div class=\"tbl\"><table><thead><tr><th>คำศัพท์</th><th>ความหมาย</th></tr></thead><tbody><tr><td><b>Quadriparesis</b></td><td>มีอาการอ่อนแรงทั้งแขนและขาทั้ง 4 ระยางค์</td></tr><tr><td><b>Paraparesis</b></td><td>มีอาการอ่อนแรงเฉพาะขาทั้ง 2 ข้าง โดยที่แขนมีแรงปกติ</td></tr><tr><td><b>Hemiparesis</b></td><td>มีอาการอ่อนแรงทั้งแขนและขาข้างใดข้างหนึ่ง</td></tr><tr><td><b>Monoparesis</b></td><td>มีอาการอ่อนแรงเพียงรยางค์เดียว เช่น ขาข้างเดียว หรือ แขนข้างเดียว</td></tr><tr><td><b>Proximal muscle weakness</b></td><td>มีอาการอ่อนแรงกล้ามเนื้อส่วนต้น อันได้แก่ หัวไหล่ ต้นแขน ต้นขา โดยที่กล้ามเนื้อส่วนปลาย มีแรงปกติหรืออ่อนแรงน้อยกว่าส่วนต้น</td></tr><tr><td><b>Distal muscle weakness</b></td><td>มีอาการอ่อนแรงกล้ามเนื้อส่วนปลาย อันได้แก่ มือ เท้า โดยที่กล้ามเนื้อส่วนต้น มีแรงปกติหรืออ่อนแรงน้อยกว่าส่วนปลาย</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "sec",
+   "after": "loc",
+   "id": "yb-9-5-approach",
+   "h": "Approach to weakness แยกตามรูปแบบการอ่อนแรง",
+   "html": "<p>algorithm ของเล่มเหลือง แบ่งตามรูปแบบที่อ่อนแรง: hemiparesis · paraparesis · proximal muscle weakness · distal muscle weakness · quadriparesis · wrist drop · foot drop (รายละเอียดตามโรคกระจายอยู่ในหัวข้อ 1–10 ด้านบนด้วย)</p>",
+   "sub": [
+    {
+     "id": "yb-9-5-hemi",
+     "h": "Approach to Hemiparesis",
+     "html": "<div class=\"flow\" data-flow=\"y95a\"></div>"
+    },
+    {
+     "id": "yb-9-5-para",
+     "h": "Approach to paraparesis",
+     "html": "<div class=\"flow\" data-flow=\"y95b\"></div>"
+    },
+    {
+     "id": "yb-9-5-prox",
+     "h": "Approach to proximal muscle weakness",
+     "html": "<div class=\"flow\" data-flow=\"y95c\"></div>"
+    },
+    {
+     "id": "yb-9-5-dist",
+     "h": "Approach to Distal muscle weakness",
+     "html": "<div class=\"flow\" data-flow=\"y95d\"></div>"
+    },
+    {
+     "id": "yb-9-5-quad",
+     "h": "Approach to quadriparesis",
+     "html": "<div class=\"flow\" data-flow=\"y95e\"></div>"
+    },
+    {
+     "id": "yb-9-5-wrist",
+     "h": "Approach to wrist drop",
+     "html": "<div class=\"flow\" data-flow=\"y95f\"></div><p><small>(เล่มพิมพ์เลขหัวข้อ 9.6.7)</small></p>"
+    },
+    {
+     "id": "yb-9-5-foot",
+     "h": "Approach to foot drop",
+     "html": "<div class=\"flow\" data-flow=\"y95g\"></div>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "umn-lmn",
+   "html": "<p><b>หมายเหตุจากเล่มเหลือง</b> — algorithm paraparesis / quadriparesis / foot drop แยก UMN vs LMN ก่อน</p><ul><li>UMN lesion: spastic · hyperreflexia, clonus · Babinski present</li><li>LMN lesion: flaccid, atrophy · hyporeflexia · Babinski absent</li><li><span class=\"hw\">sign upper tract: ↑tone · หลังๆ spastic/hyperreflexia</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-cortex",
+   "html": "<p><b>Hemiparesis จาก cerebrum (เล่มเหลือง)</b></p><div class=\"tbl\"><table><thead><tr><th>Characteristic</th><th>Cortical lesion</th><th>Subcortical lesion</th></tr></thead><tbody><tr><td>Weakness</td><td>แขนขาอ่อนแรงไม่เท่ากัน</td><td>แขนขาอ่อนแรงเท่าๆกัน</td></tr><tr><td>Cortical signs</td><td>Aphasia (Lt hemisphere)<br>Neglect (Rt hemisphere)</td><td>ไม่มี</td></tr></tbody></table></div><p>สาเหตุของ hemiparesis จาก cerebrum: <b>Vascular</b> (ischemic stroke, hemorrhagic stroke) · <b>Trauma</b> (brain contusion, subdural hematoma, epidural hematoma) · <b>Tumor</b> (primary: meningioma, glioma; metastasis) · <b>Infection</b> (brain abscess) · <b>Other</b> (multiple sclerosis, PML, hemiplegic migraine)</p><p>ภาวะที่พบบ่อยใน hemiparesis คือ ischemic stroke โดยเฉพาะ <b>Lacuna infarction</b> ซึ่งอาการและตำแหน่งรอยโรคที่พบได้บ่อยดังตาราง</p><div class=\"tbl\"><table><thead><tr><th>Clinical characteristics</th><th>Lesion</th></tr></thead><tbody><tr><td>Pure-motor hemiweakness</td><td>Subcortical lesion in the contralateral corona radiata, internal capsule, or the pons</td></tr><tr><td>Pure hemisensory loss</td><td>Contralateral ventroposterolateral nucleus of the thalamus</td></tr><tr><td>Ataxic-hemiparesis</td><td>Contralateral posterior limb of the internal capsule or contralateral basis pontis</td></tr><tr><td>Dysarthria-clumsy hand syndrome</td><td>Basis pontis lesion in between its upper third and lower two-thirds</td></tr></tbody></table></div><p><b>Paraparesis จาก cerebral cortex</b> — Parasagittal lesion: Artery (ACA stroke) · Vein (Cerebral venous thrombosis) · Tumor (Parasagittal meningioma); foot drop แบบ UMN จาก parasagittal lesion: ACA infarction, meningioma</p><ul><li><span class=\"hw\">ทก. Vascular (?)</span></li><li><span class=\"hw\">abscess: ไข้ (?) · systemic review ✱</span></li><li><span class=\"hw\">approach 1. anatomy 2. cause</span></li></ul><p><b>Quadriparesis จาก cerebrum:</b> bilateral lesion (bilat. basal ganglion, bilateral cortex) เช่น recurrence stroke</p>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-bs",
+   "html": "<p><b>Hemiparesis จาก brainstem (เล่มเหลือง)</b> — แยกตามระดับ:</p><ul><li>Midbrain: <span class=\"hi\">Oculomotor hemiplegia</span></li><li>Pons: <span class=\"hi\">Abducen hemiplegia</span></li><li>Medulla: <span class=\"hi\">Hypoglossal hemiplegia</span></li></ul><p>สาเหตุ: <b>Stroke</b> (embolic, thrombosis, hemorrhagic) · <b>Demyelination</b> (multiple sclerosis) · <b>Tumor</b> (glioma)</p><p><b>Quadriparesis จาก brainstem:</b> Vascular — Locked-in syndrome (pontine lesion) · Infection — brainstem abscess, brainstem encephalitis · Tumor — glioma · Multiple sclerosis</p>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-cord",
+   "html": "<p><b>Paraparesis / quadriparesis จาก spinal cord (เล่มเหลือง)</b> — UMN lesion ที่ spinal cord → ดูต่อเรื่อง spinal cord disorder · quadriparesis: lesion ที่ cervical level</p><ul><li><span class=\"hw\">epidural abscess : T4-T8 · S. aureus ✱</span></li><li><span class=\"hw\">Hx: ยกของหนัก → ปวดหลัง (progressive) ±ไข้ ; no weak/ชา → ยาแก้ปวดหมดฤทธิ์ก็ปวด → 9 hr PTA อ่อนแรง&amp;ชาร่วมด้วย 2 ข้าง · sudden · X sphincter · L2 → motor grade 0 (ตัวอย่างผู้ป่วยในลายมือ)</span></li><li><span class=\"hw\">เสีย sensory เป็น level / ให้เห็น</span></li><li><span class=\"hw\">ชา T6 ลงมา · ชา nerve root · T6-7 (?) ชอบเป็น 2 ข้างพร้อมกัน</span></li><li><span class=\"hw\">bowel, bladder</span></li></ul><p><b>แยก Conus medullaris vs Cauda equina</b> (LMN lesion ใน paraparesis) <span class=\"hw\">Intrinsic / extrinsic · pain ปวดเด่นมากกว่า ✱ (เขียนเหนือตาราง)</span></p><div class=\"tbl\"><table><thead><tr><th>Characteristic</th><th>Conus medullaris</th><th>Cauda equina</th></tr></thead><tbody><tr><td>Weakness</td><td>Symmetrical</td><td>Asymmetrical</td></tr><tr><td>Sensory loss</td><td>Pain, Temp (dissociated sensory loss)</td><td>Pain, Temp, Touch</td></tr><tr><td>Bowel-Bladder involvement</td><td>Early onset</td><td>Late onset</td></tr><tr><td>Other</td><td></td><td>Radicular pain, Reflex loss</td></tr></tbody></table></div><ul><li><b>Conus medullaris:</b> Tumor · Infiltrative disease · Spina bifida · Myelomeningocele</li><li><b>Cauda equina:</b> Tumor (Meningioma) · Infection (Arachnoiditis, Abscess) · Trauma</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-ahc",
+   "html": "<p><b>Anterior horn cell ในเล่มเหลือง</b> (LMN lesion ใน paraparesis): PE — signs UMN + LMN (UMN: hyperreflexia · LMN: muscle atrophy) · ALS · Motor neuron disease</p><ul><li><span class=\"hw\">Polio ✱ · peripheral nerve ✱</span></li><li><span class=\"hw\">Duchen → ทั่วร่างกาย → ชัดที่ขา · Present กับเด็กที่ (?)</span></li></ul><p>Foot drop: asymmetric distal weakness w/o UMN signs → progressive muscular atrophy, juvenile monomelic atrophy; ดู peripheral neuropathy 9.7</p>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-plexus",
+   "html": "<p><b>Bilateral LS plexopathy (เล่มเหลือง, paraparesis):</b> Malignancy · Radiation · Diabetic amyotrophy</p><p><b>Wrist drop → Posterior cord of brachial plexus</b> เมื่อ brachioradialis, triceps และ deltoid ผิดปกติทั้งหมด · <b>Foot drop → LS plexus</b> เมื่อ plantar flexion ผิดปกติ, hamstring ผิดปกติ และ gluteus ผิดปกติ (hip extension/abduction)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-root",
+   "html": "<p><span class=\"hw\">ชา nerve root · ชา T6 ลงมา (ตำแหน่ง level) — ลายมือในหน้า approach to paraparesis</span></p>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-nerve",
+   "html": "<p><b>Polyneuropathy ในเล่มเหลือง</b> (paraparesis): GBS · Porphyria; (proximal muscle weakness): Guillain-Barre syndrome · CIDP · Porphyria — Hx: อ่อนแรงร่วมกับชา และอาจมี autonomic sx · PE: sensory loss, areflexia</p><ul><li><span class=\"hw\">proximal &gt; distal – GBS ✱ (วงกลม), degenerating polyneuropathy ✱</span></li><li><span class=\"hw\">peripheral – มักเกิดกับขา (?) · nerve ยาวกว่าที่ขา → เป็นขาก่อนแขน (?)</span></li></ul><p><b>Wrist drop:</b> brachioradialis ปกติ → PIN lesion · triceps ปกติ → radial n. at spiral groove (เช่น Saturday night palsy) · deltoid ปกติ → radial n. at axilla · ผิดปกติหมด → posterior cord of brachial plexus</p><p><b>Foot drop (LMN, unilateral):</b> plantar flexion ผิดปกติ → ดู foot eversion (no → common peroneal n. lesion; yes → superficial peroneal n. lesion) · plantar flexion ปกติ → hamstring (yes → distal sciatic n. lesion; no → gluteus: no → LS plexus; yes → proximal sciatic n. lesion) · bilateral: bowel-bladder yes → cauda equina; no → peripheral neuropathy</p><p><b>Distal muscle weakness จาก peripheral neuropathy:</b> Hereditary (Charcot-Marie-Tooth) · Demyelination (CIDP, GBS) · Metabolic (DM, hypothyroid, renal failure) · Drug (INH, ETB, colchicine, hydralazine, phenytoin, paclitaxel) · Toxin (alcohol, lead, arsenic) · Infection (HIV, HBV, HCV) · Other (nutritional def, paraneoplastic, vasculitis, amyloidosis, monoclonal gammopathy)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-nmj",
+   "html": "<p><b>NMJ ในเล่มเหลือง (proximal muscle weakness):</b> Hx ตอนเช้าแรงดี ตอนกลางเย็นไม่มีแรง · PE: + fatigability testing, + enhance/induce ptosis, + axial m weakness</p><ul><li>Pre synaptic: Lambert–Eaton · Botulism · Snake venom</li><li>Postsynaptic: Myasthenia gravis</li></ul><ul><li><span class=\"hw\">NMJ : ms เล็กๆมาก่อน เป็นตอนบ่าย</span></li><li><span class=\"hw\">MG (ขีดเส้นใต้) · weak เป็นส่วนไหนก็ได้ แต่ resp. failure มาตอนหลังๆ</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-muscle",
+   "html": "<p><b>Myopathy ในเล่มเหลือง</b> — Proximal: Hx มีอาการอ่อนแรง ไม่ชา · PE proximal muscle weakness w/o areflexia and fatigability</p><div class=\"tbl\"><table><thead><tr><th>กลุ่ม</th><th>ตัวอย่าง</th></tr></thead><tbody><tr><td>Congenital</td><td>Nemelin, Central core, Centronuclear</td></tr><tr><td>Muscular dystrophy</td><td>Dystrophin def. (Duchene, Becker) · Emery dreifuss · Limb-girdle · Fascioscapulohumeral</td></tr><tr><td>Metabolic disease</td><td>Glycogen storage · Lipid storage</td></tr><tr><td>Inflammation</td><td>Immune: DM, PM (middle age), Inclusion body myositis (old age) · Non-immune: infection</td></tr><tr><td>Drug &amp; Toxin</td><td>Statin, Colchicine · Chloroquine · Steroid · Tetradotoxin</td></tr><tr><td>Elyte + endo</td><td>Electrolyte: Hypo/per K, Hypo/per Ca, P<span class=\"down\">↓</span>, Mg<span class=\"up\">↑</span> · Endocrine: Thyroid<span class=\"up\">↑</span>, PTH<span class=\"up\">↑</span></td></tr></tbody></table></div><p><b>Distal myopathy / myopathy ที่อ่อนแรงส่วนปลาย</b> (ลีบ, ไม่ชา, มักเป็นโรคทางพันธุกรรม): Myotonic dystrophy · Distal myopathy (early adult onset: Type 1 Walander, Type 2 Markesbery-Griggs, Type 3 · late adult onset: Type 1 Nonaka, Type 2 Miyoshi, Type 3 Laing) · Nemaline myopathy · Metabolic disorder (Phosphorylase B kinase def, Debrancher def)</p><ul><li><span class=\"hw\">Muscle disease : Duchenne, Becker · myopathy – (-itis ?) – autoimmune</span></li><li><span class=\"hw\">Mitochondria : chronic · ms เล็กๆก่อน (?)</span></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y95a",
+   "title": "Approach to Hemiparesis",
+   "src": "fig",
+   "img": "yb-9-5-f2.webp",
+   "note": "ตารางแยก cortical/subcortical ยุบเป็นกล่อง 2 กล่องใต้ Cerebrum · เล่มพิมพ์ขีดเส้นใต้/วงสีฟ้าที่ชื่อ hemiplegia ของแต่ละระดับ และกรอบสีฟ้าที่ Stroke, Demyelination, Tumor",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hemiparesis"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Cerebrum",
+     "d": "แยกต่อว่าเป็น Cortical หรือ Subcortical"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Brainstem",
+     "d": "แยกต่อว่า Brain stem level ใด"
+    },
+    {
+     "id": "b1",
+     "k": "dx",
+     "t": "Cortical lesion",
+     "d": "<ul><li>Weakness: แขนขาอ่อนแรงไม่เท่ากัน</li><li>Cortical signs: Aphasia (Lt hemisphere), Neglect (Rt hemisphere)</li></ul>"
+    },
+    {
+     "id": "b2",
+     "k": "dx",
+     "t": "Subcortical lesion",
+     "d": "<ul><li>Weakness: แขนขาอ่อนแรงเท่าๆกัน</li><li>Cortical signs: ไม่มี</li></ul>"
+    },
+    {
+     "id": "v",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Ischemic stroke</li><li>Hemorrhagic stroke</li></ul>"
+    },
+    {
+     "id": "tr",
+     "k": "dx",
+     "t": "Trauma",
+     "d": "<ul><li>Brain contusion</li><li>Subdural hematoma</li><li>Epidural hematoma</li></ul>"
+    },
+    {
+     "id": "tu",
+     "k": "dx",
+     "t": "Tumor",
+     "d": "<ul><li>Primary: Meningioma, Glioma</li><li>Metastasis</li></ul>"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Brain abscess</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Multiple sclerosis</li><li>PML</li><li>Hemiplegic migraine</li></ul>"
+    },
+    {
+     "id": "bl",
+     "k": "q",
+     "t": "Brain stem level: Midbrain / Pons / Medulla",
+     "d": "<ul><li>Midbrain: <span class=\"hi\">Oculomotor hemiplegia</span></li><li>Pons: <span class=\"hi\">Abducen hemiplegia</span></li><li>Medulla: <span class=\"hi\">Hypoglossal hemiplegia</span></li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Stroke",
+     "d": "<ul><li>Embolic</li><li>Thrombosis</li><li>Hemorrhagic</li></ul>"
+    },
+    {
+     "id": "dm",
+     "k": "dx",
+     "t": "Demyelination",
+     "d": "<ul><li>Multiple sclerosis</li></ul>"
+    },
+    {
+     "id": "t2",
+     "k": "dx",
+     "t": "Tumor (brainstem)",
+     "d": "<ul><li>Glioma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cerebrum"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Brainstem"
+    },
+    {
+     "f": "b",
+     "t": "b1",
+     "l": "Cortical lesion"
+    },
+    {
+     "f": "b",
+     "t": "b2",
+     "l": "Subcortical lesion"
+    },
+    {
+     "f": "b",
+     "t": "v",
+     "l": "Vascular"
+    },
+    {
+     "f": "b",
+     "t": "tr",
+     "l": "Trauma"
+    },
+    {
+     "f": "b",
+     "t": "tu",
+     "l": "Tumor"
+    },
+    {
+     "f": "b",
+     "t": "in",
+     "l": "Infection"
+    },
+    {
+     "f": "b",
+     "t": "ot",
+     "l": "Other"
+    },
+    {
+     "f": "c",
+     "t": "bl",
+     "l": "ระบุ level"
+    },
+    {
+     "f": "bl",
+     "t": "s",
+     "l": "Stroke"
+    },
+    {
+     "f": "bl",
+     "t": "dm",
+     "l": "Demyelination"
+    },
+    {
+     "f": "bl",
+     "t": "t2",
+     "l": "Tumor"
+    }
+   ]
+  },
+  {
+   "id": "y95b",
+   "title": "Approach to paraparesis",
+   "src": "fig",
+   "img": "yb-9-5-f3.webp",
+   "note": "ลายมือรอบ algorithm (แดง/ฟ้า/เทา/เขียว) ใส่ใน d ของกล่องที่อยู่ใกล้ที่สุด · ตาราง Conus medullaris vs Cauda equina อยู่ในหัวข้อ Spinal cord lesions",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Paraparesis",
+     "d": "<p><span class=\"hw\">Hx. (ลายมือ — ตัวอย่างผู้ป่วย)</span></p><ul><li><span class=\"hw\">ยกของหนัก → ปวดหลัง (progressive) ±ไข้ ; no weak/ชา</span></li><li><span class=\"hw\">→ ยาแก้ปวดหมดฤทธิ์ก็ปวด → 9 hr PTA อ่อนแรง&amp;ชาร่วมด้วย 2 ข้าง</span></li><li><span class=\"hw\">sudden</span></li><li><span class=\"hw\">X sphincter</span></li><li><span class=\"hw\">100 | h+N [อ่านไม่ออก]</span></li><li><span class=\"hw\">L2 → motor grade 0</span></li><li><span class=\"hw\">approach 1. anatomy 2. cause</span></li></ul>"
+    },
+    {
+     "id": "u",
+     "k": "q",
+     "t": "UMN lesion",
+     "d": "<p><span class=\"hw\">sign upper tract: ↑tone · หลังๆ spastic/hyperreflexia</span></p>"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "LMN lesion",
+     "d": "<ul><li><span class=\"hw\">ขา vs แขน (?)</span></li><li><span class=\"hw\">Duchen → ทั่วร่างกาย → ชัดที่ขา ☺</span></li><li><span class=\"hw\">Present กับเด็กที่ (?)</span></li><li><span class=\"hw\">nerve ยาวกว่าที่ขา → เป็นขาก่อนแขน (?)</span></li><li><span class=\"hw\">Polio ✱ · peripheral nerve ✱ (ขีดเส้นใต้ peripheral)</span></li><li><span class=\"hw\">peripheral – มักเกิดกับขา (?)</span></li><li><span class=\"hw\">เสีย sensory เป็น level / ให้เห็น (เขียนติดกับ Spinal cord)</span></li><li><span class=\"hw\">Mitochondria : chronic · ms เล็กๆก่อน (?)</span></li><li><span class=\"hw\">NMJ : ms เล็กๆมาก่อน เป็นตอนบ่าย · MG (ขีดเส้นใต้) · weak เป็นส่วนไหนก็ได้ แต่ resp. failure มาตอนหลังๆ</span></li><li><span class=\"hw\">Muscle disease : Duchenne, Becker · myopathy – (-itis ?) – autoimmune</span></li></ul>"
+    },
+    {
+     "id": "cc",
+     "k": "q",
+     "t": "Cerebral cortex"
+    },
+    {
+     "id": "sc",
+     "k": "q",
+     "t": "Spinal cord",
+     "d": "<p><span class=\"hw\">เสีย sensory เป็น level / ให้เห็น</span></p>"
+    },
+    {
+     "id": "ps",
+     "k": "dx",
+     "t": "Parasagittal lesion",
+     "d": "<p><span class=\"hw\">ทก. Vascular (?)</span></p><p><span class=\"hw\">abscess: ไข้ (?) · systemic review ✱</span></p>"
+    },
+    {
+     "id": "scd",
+     "k": "dx",
+     "t": "Spinal cord disorder (ดูต่อเรื่อง)",
+     "d": "<p><span class=\"hw\">bowel, bladder</span></p><p><span class=\"hw\">epidural abscess : T4-T8 S. aureus ✱</span></p><p><span class=\"hw\">ชา T6 ลงมา · ชา nerve root · T6-7 (?) ชอบเป็น 2 ข้างพร้อมกัน</span></p>"
+    },
+    {
+     "id": "ar",
+     "k": "dx",
+     "t": "Artery: ACA stroke"
+    },
+    {
+     "id": "ve",
+     "k": "dx",
+     "t": "Vein: Cerebral venous thrombosis"
+    },
+    {
+     "id": "tu",
+     "k": "dx",
+     "t": "Tumor: Parasagittal meningioma"
+    },
+    {
+     "id": "ah",
+     "k": "dx",
+     "t": "Anterior horn cell",
+     "d": "<p>PE: signs UMN + LMN</p><ul><li>UMN: Hyperreflexia</li><li>LMN: m. atrophy</li></ul><ul><li>ALS</li><li>Motor neuron disease</li></ul>"
+    },
+    {
+     "id": "co",
+     "k": "dx",
+     "t": "Conus medullaris",
+     "d": "<ul><li>Tumor</li><li>Infiltrative disease</li><li>Spina bifida</li><li>Myelomeningocele</li></ul>"
+    },
+    {
+     "id": "ca",
+     "k": "dx",
+     "t": "Cauda equina",
+     "d": "<ul><li><b>Tumor</b>: Meningioma</li><li><b>Infection</b>: Arachnoiditis, Abscess</li><li><b>Trauma</b></li></ul><p><span class=\"hw\">Intrinsic/extrinsic · pain ปวดเด่นมากกว่า ✱ (เขียนเหนือตาราง conus vs cauda)</span></p>"
+    },
+    {
+     "id": "pl",
+     "k": "dx",
+     "t": "Bilateral LS plexopathy",
+     "d": "<ul><li>Malignancy</li><li>Radiation</li><li>Diabetic amyotrophy</li></ul>"
+    },
+    {
+     "id": "po",
+     "k": "dx",
+     "t": "Polyneuropathy",
+     "d": "<ul><li>GBS</li><li>Porphyria</li></ul><p><span class=\"hw\">proximal &gt; distal – GBS ✱ (วงกลม) , degenerating polyneuropathy ✱</span></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "u",
+     "l": "UMN lesion"
+    },
+    {
+     "f": "a",
+     "t": "l",
+     "l": "LMN lesion"
+    },
+    {
+     "f": "u",
+     "t": "cc",
+     "l": "Cerebral cortex"
+    },
+    {
+     "f": "u",
+     "t": "sc",
+     "l": "Spinal cord"
+    },
+    {
+     "f": "cc",
+     "t": "ps",
+     "l": "Parasagittal lesion"
+    },
+    {
+     "f": "sc",
+     "t": "scd",
+     "l": "ดูต่อเรื่อง Spinal cord disorder"
+    },
+    {
+     "f": "ps",
+     "t": "ar",
+     "l": "Artery"
+    },
+    {
+     "f": "ps",
+     "t": "ve",
+     "l": "Vein"
+    },
+    {
+     "f": "ps",
+     "t": "tu",
+     "l": "Tumor"
+    },
+    {
+     "f": "l",
+     "t": "ah",
+     "l": "Anterior horn cell"
+    },
+    {
+     "f": "l",
+     "t": "co",
+     "l": "Conus medullaris"
+    },
+    {
+     "f": "l",
+     "t": "ca",
+     "l": "Cauda equina"
+    },
+    {
+     "f": "l",
+     "t": "pl",
+     "l": "Bilateral LS plexopathy"
+    },
+    {
+     "f": "l",
+     "t": "po",
+     "l": "Polyneuropathy"
+    }
+   ]
+  },
+  {
+   "id": "y95c",
+   "title": "Approach to proximal muscle weakness",
+   "src": "fig",
+   "img": "yb-9-5-f4.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Proximal muscle weakness"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Hx: สวมเสื้อลำบาก หวีผมลำบาก เดินขึ้นบันไดลำบาก",
+     "d": "<p><b>PE:</b> Weakness of Deltoid / Bicep / Tricep, Quadricep / Hamstring</p><p>Normal power of wrist F/E, Ankle F/E</p>"
+    },
+    {
+     "id": "n",
+     "k": "q",
+     "t": "NMJ",
+     "d": "<p><b>Hx:</b> ตอนเช้าแรงดี ตอนกลางเย็นไม่มีแรง</p><p><b>PE:</b></p><ul><li>+ Fatigability testing</li><li>+ Enhance/Induce ptosis</li><li>+ Axial m weakness</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "q",
+     "t": "Myopathy",
+     "d": "<p><b>Hx:</b> มีอาการอ่อนแรง ไม่ชา</p><p><b>PE:</b> Proximal muscle weakness w/o Areflexia and fatigability</p>"
+    },
+    {
+     "id": "p",
+     "k": "q",
+     "t": "Polyneuropathy",
+     "d": "<p><b>Hx:</b> มีอาการอ่อนแรงร่วมกับชา และอาจมี autonomic sx</p><p><b>PE:</b> Sensory loss, Areflexia</p>"
+    },
+    {
+     "id": "pr",
+     "k": "dx",
+     "t": "Pre synaptic",
+     "d": "<ul><li>Lambert–Eaton</li><li>Botulism</li><li>Snake venom</li></ul>"
+    },
+    {
+     "id": "po",
+     "k": "dx",
+     "t": "Postsynaptic",
+     "d": "<ul><li>Myasthenia gravis</li></ul>"
+    },
+    {
+     "id": "pd",
+     "k": "dx",
+     "t": "Polyneuropathy: GBS, CIDP, Porphyria",
+     "d": "<ul><li>Guillain-Barre syndrome</li><li>CIDP</li><li>Porphyria</li></ul>"
+    },
+    {
+     "id": "cg",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Nemelin</li><li>Central core</li><li>Centronuclear</li></ul>"
+    },
+    {
+     "id": "md",
+     "k": "dx",
+     "t": "Muscular dystrophy",
+     "d": "<ul><li>Dystrophin def.: Duchene, Becker</li><li>Emery dreifuss</li><li>Limb-girdle</li><li>Fascioscapulohumeral</li></ul>"
+    },
+    {
+     "id": "mt",
+     "k": "dx",
+     "t": "Metabolic disease",
+     "d": "<ul><li>Glycogen storage</li><li>Lipid storage</li></ul>"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Inflammation",
+     "d": "<ul><li><b>Immune</b>: DM, PM (middle age) · Inclusion body myositis (old age)</li><li><b>Non-immune</b>: infection</li></ul>"
+    },
+    {
+     "id": "dt",
+     "k": "dx",
+     "t": "Drug &amp; Toxin",
+     "d": "<ul><li>Statin, Colchicine</li><li>Chloroquine</li><li>Steroid</li><li>Tetradotoxin</li></ul>"
+    },
+    {
+     "id": "ee",
+     "k": "dx",
+     "t": "Elyte + endo",
+     "d": "<ul><li><b>Electrolyte</b>: Hypo/per K · Hypo/per Ca · P<span class=\"down\">↓</span>, Mg<span class=\"up\">↑</span></li><li><b>Endocrine</b>: Thyroid<span class=\"up\">↑</span> · PTH<span class=\"up\">↑</span></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "n",
+     "l": "NMJ"
+    },
+    {
+     "f": "b",
+     "t": "m",
+     "l": "Myopathy"
+    },
+    {
+     "f": "b",
+     "t": "p",
+     "l": "Polyneuropathy"
+    },
+    {
+     "f": "n",
+     "t": "pr",
+     "l": "Pre synaptic"
+    },
+    {
+     "f": "n",
+     "t": "po",
+     "l": "Postsynaptic"
+    },
+    {
+     "f": "p",
+     "t": "pd",
+     "l": "ดูสาเหตุ"
+    },
+    {
+     "f": "m",
+     "t": "cg",
+     "l": "Congenital"
+    },
+    {
+     "f": "m",
+     "t": "md",
+     "l": "Muscular dystrophy"
+    },
+    {
+     "f": "m",
+     "t": "mt",
+     "l": "Metabolic disease"
+    },
+    {
+     "f": "m",
+     "t": "inf",
+     "l": "Inflammation"
+    },
+    {
+     "f": "m",
+     "t": "dt",
+     "l": "Drug & Toxin"
+    },
+    {
+     "f": "m",
+     "t": "ee",
+     "l": "Elyte + endo"
+    }
+   ]
+  },
+  {
+   "id": "y95d",
+   "title": "Approach to Distal muscle weakness",
+   "src": "fig",
+   "img": "yb-9-5-f5.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Distal muscle weakness"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Hx: อ่อนแรงทั่วๆ แต่เด่นกล้ามเนื้อส่วนปลาย",
+     "d": "<p>มีลายมือเปลี่ยน มือสั่นเวลาจับแก้ว เดินแล้วรองเท้าหลุด</p>"
+    },
+    {
+     "id": "pn",
+     "k": "q",
+     "t": "Peripheral neuropathy",
+     "d": "<p>อ่อนแรง <u><i>มีหรือไม่มี</i></u>อาการชาก็ได้ ขึ้นกับสาเหตุที่เป็น</p>"
+    },
+    {
+     "id": "my",
+     "k": "q",
+     "t": "Myopathy",
+     "d": "<p>อ่อนแรง ร่วมกับมีกล้ามเนื้อลีบ <u><i>ไม่มี</i></u>อาการชา มักเป็นโรคทางพันธุกรรม</p>"
+    },
+    {
+     "id": "md",
+     "k": "dx",
+     "t": "Myotonic dystrophy"
+    },
+    {
+     "id": "dm",
+     "k": "q",
+     "t": "Distal myopathy"
+    },
+    {
+     "id": "nm",
+     "k": "dx",
+     "t": "Nemaline myopathy"
+    },
+    {
+     "id": "mb",
+     "k": "dx",
+     "t": "Metabolic disorder",
+     "d": "<ul><li>Phosphorylase B kinase def</li><li>Debrancher def</li></ul>"
+    },
+    {
+     "id": "ea",
+     "k": "dx",
+     "t": "Early adult onset",
+     "d": "<ul><li>Type 1 Walander</li><li>Type 2 Markesbery-Griggs</li><li>Type 3</li></ul>"
+    },
+    {
+     "id": "la",
+     "k": "dx",
+     "t": "Late adult onset",
+     "d": "<ul><li>Type1 Nonaka</li><li>Type2 Miyoshi</li><li>Type3 Laing</li></ul>"
+    },
+    {
+     "id": "he",
+     "k": "dx",
+     "t": "Hereditary",
+     "d": "<ul><li>Charcot-Marie-Tooth</li></ul>"
+    },
+    {
+     "id": "de",
+     "k": "dx",
+     "t": "Demyelination",
+     "d": "<ul><li>CIDP</li><li>GBS</li></ul>"
+    },
+    {
+     "id": "me",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>DM*(common)</li><li>Hypothyroid</li><li>Renal failure</li></ul>"
+    },
+    {
+     "id": "dtx",
+     "k": "q",
+     "t": "Drug/toxin"
+    },
+    {
+     "id": "dr",
+     "k": "dx",
+     "t": "Drug",
+     "d": "<ul><li>INH, ETB</li><li>Colchicine</li><li>Hydralazine</li><li>Phenytoin</li><li>Paclitaxel</li></ul>"
+    },
+    {
+     "id": "tx",
+     "k": "dx",
+     "t": "Toxin",
+     "d": "<ul><li>Alcohol</li><li>Lead</li><li>Arsenic</li></ul>"
+    },
+    {
+     "id": "if",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>HIV</li><li>HBV</li><li>HCV</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Nutritional def</li><li>Paraneoplastic</li><li>Vasculitis</li><li>Amyloidosis</li><li>Monoclonal gammopathy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "pn",
+     "l": "Peripheral neuropathy"
+    },
+    {
+     "f": "b",
+     "t": "my",
+     "l": "Myopathy"
+    },
+    {
+     "f": "my",
+     "t": "md",
+     "l": "Myotonic dystrophy"
+    },
+    {
+     "f": "my",
+     "t": "dm",
+     "l": "Distal myopathy"
+    },
+    {
+     "f": "my",
+     "t": "nm",
+     "l": "Nemaline myopathy"
+    },
+    {
+     "f": "my",
+     "t": "mb",
+     "l": "Metabolic disorder"
+    },
+    {
+     "f": "dm",
+     "t": "ea",
+     "l": "Early adult onset"
+    },
+    {
+     "f": "dm",
+     "t": "la",
+     "l": "Late adult onset"
+    },
+    {
+     "f": "pn",
+     "t": "he",
+     "l": "Hereditary"
+    },
+    {
+     "f": "pn",
+     "t": "de",
+     "l": "Demyelination"
+    },
+    {
+     "f": "pn",
+     "t": "me",
+     "l": "Metabolic"
+    },
+    {
+     "f": "pn",
+     "t": "dtx",
+     "l": "Drug/toxin"
+    },
+    {
+     "f": "pn",
+     "t": "if",
+     "l": "Infection"
+    },
+    {
+     "f": "pn",
+     "t": "ot",
+     "l": "Other"
+    },
+    {
+     "f": "dtx",
+     "t": "dr",
+     "l": "Drug"
+    },
+    {
+     "f": "dtx",
+     "t": "tx",
+     "l": "Toxin"
+    }
+   ]
+  },
+  {
+   "id": "y95e",
+   "title": "Approach to quadriparesis",
+   "src": "fig",
+   "img": "yb-9-5-f6.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Quadriparesis"
+    },
+    {
+     "id": "u",
+     "k": "q",
+     "t": "UMN lesion"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "LMN lesion"
+    },
+    {
+     "id": "ce",
+     "k": "dx",
+     "t": "Cerebrum",
+     "d": "<p><b>Lesion:</b> Bilateral</p><ul><li>Bilat. Basal ganglion</li><li>Bilateral Cortex</li></ul><p><b>Etiology เช่น</b></p><ul><li>Recurrence stroke</li></ul>"
+    },
+    {
+     "id": "bs",
+     "k": "dx",
+     "t": "Brainstem",
+     "d": "<ul><li><b>Vascular</b>: Locked-in syndrome (Pontine lesion)</li><li><b>Infection</b>: Brainstem abscess, Brainstem encephalitis</li><li><b>Tumor</b>: Glioma</li><li><b>Multiple sclerosis</b></li></ul>"
+    },
+    {
+     "id": "sc",
+     "k": "q",
+     "t": "Spinal cord",
+     "d": "<p><b>Lesion:</b> Cervical level</p>"
+    },
+    {
+     "id": "scr",
+     "k": "note",
+     "t": "Etiology: ดูต่อเรื่อง Spinal cord disorder"
+    },
+    {
+     "id": "po",
+     "k": "q",
+     "t": "Polyneuropathy"
+    },
+    {
+     "id": "por",
+     "k": "note",
+     "t": "Etiology: ดูต่อเรื่อง · Distal muscle weakness"
+    },
+    {
+     "id": "my",
+     "k": "q",
+     "t": "Myopathy"
+    },
+    {
+     "id": "myr",
+     "k": "note",
+     "t": "Etiology: ดูต่อเรื่อง · Proximal muscle weakness"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "u",
+     "l": "UMN lesion"
+    },
+    {
+     "f": "a",
+     "t": "l",
+     "l": "LMN lesion"
+    },
+    {
+     "f": "u",
+     "t": "ce",
+     "l": "Cerebrum"
+    },
+    {
+     "f": "u",
+     "t": "bs",
+     "l": "Brainstem"
+    },
+    {
+     "f": "u",
+     "t": "sc",
+     "l": "Spinal cord"
+    },
+    {
+     "f": "sc",
+     "t": "scr"
+    },
+    {
+     "f": "l",
+     "t": "po",
+     "l": "Polyneuropathy"
+    },
+    {
+     "f": "l",
+     "t": "my",
+     "l": "Myopathy"
+    },
+    {
+     "f": "po",
+     "t": "por"
+    },
+    {
+     "f": "my",
+     "t": "myr"
+    }
+   ]
+  },
+  {
+   "id": "y95f",
+   "title": "Approach to wrist drop",
+   "src": "fig",
+   "img": "yb-9-5-f7.webp",
+   "note": "เล่มพิมพ์เลขหัวข้อเป็น 9.6.7 (น่าจะเป็น 9.5.7)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Wrist drop"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Brachioradialis m."
+    },
+    {
+     "id": "pin",
+     "k": "dx",
+     "t": "PIN lesion (Posterior interosseous n.)"
+    },
+    {
+     "id": "t",
+     "k": "q",
+     "t": "Tricep"
+    },
+    {
+     "id": "sp",
+     "k": "dx",
+     "t": "Radial n. at spiral grove",
+     "d": "<p>(เช่น Saturday night palsy)</p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Deltoid"
+    },
+    {
+     "id": "ax",
+     "k": "dx",
+     "t": "Radial n. at axilla"
+    },
+    {
+     "id": "pc",
+     "k": "dx",
+     "t": "Posterior cord of brachial plexus"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "pin",
+     "l": "Normal"
+    },
+    {
+     "f": "b",
+     "t": "t",
+     "l": "Abnormal"
+    },
+    {
+     "f": "t",
+     "t": "sp",
+     "l": "Normal"
+    },
+    {
+     "f": "t",
+     "t": "d",
+     "l": "Abnormal"
+    },
+    {
+     "f": "d",
+     "t": "ax",
+     "l": "Normal"
+    },
+    {
+     "f": "d",
+     "t": "pc",
+     "l": "Abnormal"
+    }
+   ]
+  },
+  {
+   "id": "y95g",
+   "title": "Approach to foot drop",
+   "src": "fig",
+   "img": "yb-9-5-f8.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Foot drop"
+    },
+    {
+     "id": "u",
+     "k": "q",
+     "t": "Upper motor neuron",
+     "d": "<ul><li>Muscle: Spastic</li><li>Reflex: Hyperreflexia, Clonus</li><li>Babinski: Present</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "Lower motor neuron",
+     "d": "<ul><li>Muscle: Flaccid, Atrophy</li><li>Reflex: Hyporeflexia</li><li>Babinski: Absent</li></ul>"
+    },
+    {
+     "id": "cc",
+     "k": "q",
+     "t": "Cerebral cortex"
+    },
+    {
+     "id": "ps",
+     "k": "dx",
+     "t": "Parasagittal lesion",
+     "d": "<ul><li>ACA infarction</li><li>Meningioma</li></ul>"
+    },
+    {
+     "id": "sc",
+     "k": "dx",
+     "t": "Spinal cord: ดูต่อ “spinal cord disorder”"
+    },
+    {
+     "id": "un",
+     "k": "q",
+     "t": "Unilateral"
+    },
+    {
+     "id": "bi",
+     "k": "q",
+     "t": "Bilateral"
+    },
+    {
+     "id": "bb",
+     "k": "q",
+     "t": "Bowel-bladder involvement"
+    },
+    {
+     "id": "ce",
+     "k": "dx",
+     "t": "Cauda equina lesion"
+    },
+    {
+     "id": "pn",
+     "k": "dx",
+     "t": "Peripheral neuropathy: ดูต่อใน distal m weakness"
+    },
+    {
+     "id": "pf",
+     "k": "q",
+     "t": "Plantar flexion (จิกปลายเท้าลง)"
+    },
+    {
+     "id": "fe",
+     "k": "q",
+     "t": "Foot eversion (หมุนปลายเท้าออกนอก)"
+    },
+    {
+     "id": "cp",
+     "k": "dx",
+     "t": "Common peroneal n. lesion"
+    },
+    {
+     "id": "sp",
+     "k": "dx",
+     "t": "Superficial peroneal n. lesion"
+    },
+    {
+     "id": "hs",
+     "k": "q",
+     "t": "Hamstring (Knee flexion)"
+    },
+    {
+     "id": "ds",
+     "k": "dx",
+     "t": "Distal Sciatic n. lesion"
+    },
+    {
+     "id": "gl",
+     "k": "q",
+     "t": "Gluteus (Hip extension/Abduction)"
+    },
+    {
+     "id": "ls",
+     "k": "dx",
+     "t": "LS Plexus"
+    },
+    {
+     "id": "ps2",
+     "k": "dx",
+     "t": "Proximal Sciatic n. lesion"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "u",
+     "l": "Upper motor neuron"
+    },
+    {
+     "f": "a",
+     "t": "l",
+     "l": "Lower motor neuron"
+    },
+    {
+     "f": "u",
+     "t": "cc",
+     "l": "Cerebral cortex"
+    },
+    {
+     "f": "u",
+     "t": "sc",
+     "l": "Spinal cord"
+    },
+    {
+     "f": "cc",
+     "t": "ps",
+     "l": "Parasagittal lesion"
+    },
+    {
+     "f": "l",
+     "t": "un",
+     "l": "Unilateral"
+    },
+    {
+     "f": "l",
+     "t": "bi",
+     "l": "Bilateral"
+    },
+    {
+     "f": "bi",
+     "t": "bb"
+    },
+    {
+     "f": "bb",
+     "t": "ce",
+     "l": "Yes"
+    },
+    {
+     "f": "bb",
+     "t": "pn",
+     "l": "No"
+    },
+    {
+     "f": "un",
+     "t": "pf"
+    },
+    {
+     "f": "pf",
+     "t": "fe",
+     "l": "Yes"
+    },
+    {
+     "f": "pf",
+     "t": "hs",
+     "l": "No"
+    },
+    {
+     "f": "fe",
+     "t": "cp",
+     "l": "No"
+    },
+    {
+     "f": "fe",
+     "t": "sp",
+     "l": "Yes"
+    },
+    {
+     "f": "hs",
+     "t": "ds",
+     "l": "Yes"
+    },
+    {
+     "f": "hs",
+     "t": "gl",
+     "l": "No"
+    },
+    {
+     "f": "gl",
+     "t": "ls",
+     "l": "No"
+    },
+    {
+     "f": "gl",
+     "t": "ps2",
+     "l": "Yes"
+    }
+   ]
+  }
+ ]
+}

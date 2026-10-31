@@ -1,0 +1,878 @@
+{
+ "key": "9-9",
+ "en": "Visual disorder",
+ "th": "ความผิดปกติของการมองเห็น",
+ "pdf": "131–136",
+ "target": null,
+ "new": {
+  "id": "visual-disorder",
+  "th": "ความผิดปกติของการมองเห็น",
+  "en": "Visual disorder",
+  "g": "neuro"
+ },
+ "sections": [
+  {
+   "id": "yb-9-9-blur",
+   "h": "9.9.1 Blurred vision and visual acuity loss",
+   "html": "<p><small>โน้ตลายมือหัวบท 9.9 (ข้างชื่อบท Visual disorder):</small> <span class=\"hw\">stroke ป่าวใช้(?) uptodate แต่ที่ใช้ med scape</span></p><div class=\"flow\" data-flow=\"y99a\"></div><p>เมื่อพบผู้ป่วยที่มีอาการมองไม่ชัด (Blurred vision) สิ่งที่สำคัญที่สุดคือการแยกให้ได้ว่าอาการมองไม่ชัดนั้นมีลักษณะอย่างไร ได้แก่ ภาพมัวลง (Reduce visual acuity), มองเห็นด้านข้างไม่ชัดหรือลานประสาทตาแคบลง (Visual field defect), มองเห็นภาพซ้อนเป็นสองภาพ (Diplopia) หรือมองเห็นภาพสั่นไหว (Oscillopsia) เมื่อเราบ่งบอกได้ชัดเจนเราก็จะสามารถหาสืบค้นหาสาเหตุของอาการได้อย่างเป็นระบบ</p><p>ในแผนภาพด้านบน ได้จำแนกสาเหตุของภาวะ visual acuity ลดลงตามสาเหตุตามกายวิภาคศาสตร์ ส่วนแผนภาพในหน้าถัดไปจะแสดงสาเหตุของภาวะ visual acuity ที่ลดลงตามระยะเวลาของการเกิดอาการดังกล่าว</p>",
+   "sub": [
+    {
+     "id": "yb-9-9-time",
+     "h": "Time based approach to Visual acuity loss",
+     "html": "<div class=\"flow\" data-flow=\"y99b\"></div>"
+    }
+   ]
+  },
+  {
+   "id": "yb-9-9-dip",
+   "h": "9.9.2 Diplopia",
+   "html": "<div class=\"flow\" data-flow=\"y99c\"></div>",
+   "sub": [
+    {
+     "id": "yb-9-9-dipcause",
+     "h": "Common cause of Binocular Diplopia",
+     "html": "<p>จากหน้าที่แล้วจะสังเกตเห็นว่าสาเหตุของ diplopia มีด้วยกันหลายสาเหตุ แผนภาพด้านล่างนี้จะแสดงถึงสาเหตุของภาวะ diplopia ที่พบได้บ่อยในเวชปฏิบัติ</p><div class=\"flow\" data-flow=\"y99d\"></div>"
+    },
+    {
+     "id": "yb-9-9-pain",
+     "h": "Painful ophthalmoplegia",
+     "html": "<p>ส่วนแผนภาพด้านล่างจะแสดงภาวะที่เรียกว่า painful ophthalmoplegia ซึ่งเป็นอีกภาวะหนึ่งที่พบได้ในเวชปฏิบัติเช่นกัน แต่จะมีกลุ่มโรคที่จะต้องให้ความสำคัญเพิ่มขึ้น โดยรายละเอียดดังแสดงในแผนภาพ</p><div class=\"flow\" data-flow=\"y99e\"></div>"
+    }
+   ]
+  },
+  {
+   "id": "yb-9-9-vf",
+   "h": "9.9.3 Visual field defect",
+   "html": "<figure><img src=\"symp/img/yb-9-9-f6.webp\" alt=\"Visual pathway และ visual field defect จุด 1–4 (central scotoma, blindness ตาขวา, right nasal hemianopia, bitemporal hemianopia)\"><figcaption>Visual pathway: Optic nerve, Optic chiasm, Optic tract, Lateral geniculate body, Optic radiation, Occipital lobe — รอยโรคจุด 1–4 และ visual field ของตาซ้าย (Lt) / ขวา (Rt) ที่สัมพันธ์กัน</figcaption></figure><figure><img src=\"symp/img/yb-9-9-f7.webp\" alt=\"Visual pathway และ visual field defect จุด 5–8 (homonymous hemianopia, quadrantanopia, macular sparing)\"><figcaption>รอยโรคจุด 5–8 (optic tract/radiation/occipital lobe) และ visual field ของตาซ้าย (Lt) / ขวา (Rt)</figcaption></figure><h4>สรุป visual field defect ตามตำแหน่งรอยโรค (จากภาพ)</h4><div class=\"tbl\"><table><thead><tr><th>จุด</th><th>ภาพ visual field (Lt / Rt)</th><th>ลักษณะ field defect</th><th>Lesion</th><th>Etiology</th></tr></thead><tbody><tr><td>1</td><td>Lt ปกติ · Rt มีจุดดำตรงกลาง</td><td>Central scotoma Rt eye</td><td>Optic disc/Optic nerve Rt</td><td>Optic neuritis/Retrobulbar neuritis</td></tr><tr><td>2</td><td>Lt ปกติ · Rt มืดทั้งวง</td><td>Total blindness of Rt eye</td><td>Complete lesion of optic nerve</td><td>ดูต่อเรื่อง Visual acuity loss</td></tr><tr><td>3</td><td>Lt ปกติ · Rt มืดครึ่งซ้ายของวง (ด้านจมูก)</td><td>Right nasal hemianopia</td><td>Perichiasmal</td><td>calcified internal carotid artery</td></tr><tr><td>4</td><td>Lt มืดครึ่งซ้าย · Rt มืดครึ่งขวา (ด้านขมับทั้งสองตา)</td><td>Bitemporal hemianopia</td><td>Chiasmatic lesion</td><td><ol><li>Pituitary adenoma<ul><li>Functioning: prolactinoma, Corticotrophic adenoma</li><li>Non-functioning</li></ul></li><li>Craniopharyngioma</li><li>Meningioma</li></ol></td></tr><tr><td>5</td><td>Lt และ Rt มืดครึ่งซ้ายของวงทั้งสองตา</td><td>Left Homonymous hemianopia</td><td>Optic tract Rt or Optic radiation Rt</td><td>Stroke, trauma, tumor of Rt parietal lobe</td></tr><tr><td>6</td><td>Lt และ Rt มืดจตุภาคบนซ้าย</td><td>Left homonymous superior quadrantanopia</td><td>Partial involvement of optic radiation</td><td>Lesion in right temporal lobe</td></tr><tr><td>7</td><td>Lt และ Rt มืดจตุภาคล่างซ้าย</td><td>Left homonymous Inferior quadrantanopia</td><td>Partial involvement of optic radiation</td><td>Lesion in right parietal lobe</td></tr><tr><td>8</td><td>Lt และ Rt มืดครึ่งซ้ายของวง แต่เหลือจุดกลางภาพ (macula) ไว้</td><td>Left homonymous hemianopia with macular sparing</td><td>Occipital lobe lesion</td><td>PCA infarction</td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y99a",
+   "title": "Blurred vision",
+   "src": "fig",
+   "img": "yb-9-9-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Blurred vision",
+     "d": "<p>โน้ตลายมือหัวบท 9.9: <span class=\"hw\">stroke ป่าวใช้(?) uptodate แต่ที่ใช้ med scape</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Clarify patient symptoms to medical terminology"
+    },
+    {
+     "id": "vf",
+     "k": "q",
+     "t": "Visual field defect",
+     "d": "<p><b>Hx:</b> มองบางส่วนของภาพไม่เห็น เช่น ด้านข้าง เป็นต้น มีประวัติเดินชนด้านข้าง</p><p><b>PE:</b> Visual field defect</p>"
+    },
+    {
+     "id": "va",
+     "k": "q",
+     "t": "Visual acuity defect",
+     "d": "<p><b>Hx:</b> มองภาพมัวไม่ชัดเหมือนเคยหรือมองไม่เห็นไปเลย (Blindness)</p><p><b>PE:</b> VA <span class=\"down\">↓</span></p>"
+    },
+    {
+     "id": "dp",
+     "k": "q",
+     "t": "Diplopia",
+     "d": "<p><b>Hx:</b> มองเห็นภาพซ้อน คือ มองเห็นวัตถุสิ่งเดียวเป็นสองภาพซ้อนกัน</p><p><b>PE:</b> Abnormal EOM</p>"
+    },
+    {
+     "id": "os",
+     "k": "q",
+     "t": "Oscillopsia",
+     "d": "<p><b>Hx:</b> มองเห็นวัตถุมีการสั่นไหวแม้วัตถุอยู่นิ่ง</p><p><b>PE:</b> nystagmus</p>"
+    },
+    {
+     "id": "vf2",
+     "k": "note",
+     "t": "ดูต่อเรื่อง Visual field defect",
+     "d": "<p>ดูหัวข้อ 9.9.3 Visual field defect</p>"
+    },
+    {
+     "id": "an",
+     "k": "q",
+     "t": "Anatomical approach"
+    },
+    {
+     "id": "dp2",
+     "k": "note",
+     "t": "ดูต่อเรื่อง Diplopia",
+     "d": "<p>ดูหัวข้อ 9.9.2 Diplopia</p>"
+    },
+    {
+     "id": "os2",
+     "k": "dx",
+     "t": "Oscillopsia: Cerebellar lesion / Brain stem lesion",
+     "d": "<ul><li>Cerebellar lesion</li><li>Brain stem lesion</li></ul>"
+    },
+    {
+     "id": "oc",
+     "k": "q",
+     "t": "Ocular disorder"
+    },
+    {
+     "id": "ne",
+     "k": "q",
+     "t": "Neurologic disorder"
+    },
+    {
+     "id": "ant",
+     "k": "q",
+     "t": "Anterior segment"
+    },
+    {
+     "id": "post",
+     "k": "q",
+     "t": "Posterior segment"
+    },
+    {
+     "id": "corn",
+     "k": "dx",
+     "t": "Corneal ulcer"
+    },
+    {
+     "id": "glau",
+     "k": "dx",
+     "t": "Glaucoma"
+    },
+    {
+     "id": "cat",
+     "k": "dx",
+     "t": "Cataract"
+    },
+    {
+     "id": "vit",
+     "k": "dx",
+     "t": "Vitreous humour: Vitreous hemorrhage",
+     "d": "<ul><li>Vitreous hemorrhage</li></ul>"
+    },
+    {
+     "id": "ret",
+     "k": "dx",
+     "t": "Retina: Papilledema, Retinal detachment, Retinal hemorrhage",
+     "d": "<ul><li>Papilledema</li><li>Retinal detachment</li><li>Retinal hemorrhage</li></ul>"
+    },
+    {
+     "id": "rv",
+     "k": "dx",
+     "t": "Retinal vascular: CRAO, CRVO, Hypoperfusion, Hyperviscosity",
+     "d": "<ul><li>CRAO</li><li>CRVO</li><li>Hypoperfusion<ul><li>Embolic</li><li>BP <span class=\"down\">↓</span></li></ul></li><li>Hyperviscosity</li></ul>"
+    },
+    {
+     "id": "on",
+     "k": "dx",
+     "t": "Optic n. lesion: Optic neuritis, AION, PION",
+     "d": "<ul><li>Optic neuritis</li><li>AION</li><li>PION</li></ul>"
+    },
+    {
+     "id": "occ",
+     "k": "dx",
+     "t": "Occipital lobe lesion: PRES, Stroke, Tumor",
+     "d": "<ul><li>PRES</li><li>Stroke</li><li>Tumor</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "vf",
+     "l": "Visual field defect"
+    },
+    {
+     "f": "b",
+     "t": "va",
+     "l": "Visual acuity defect"
+    },
+    {
+     "f": "b",
+     "t": "dp",
+     "l": "Diplopia"
+    },
+    {
+     "f": "b",
+     "t": "os",
+     "l": "Oscillopsia"
+    },
+    {
+     "f": "vf",
+     "t": "vf2"
+    },
+    {
+     "f": "va",
+     "t": "an"
+    },
+    {
+     "f": "dp",
+     "t": "dp2"
+    },
+    {
+     "f": "os",
+     "t": "os2"
+    },
+    {
+     "f": "an",
+     "t": "oc",
+     "l": "Ocular disorder"
+    },
+    {
+     "f": "an",
+     "t": "ne",
+     "l": "Neurologic disorder"
+    },
+    {
+     "f": "oc",
+     "t": "ant",
+     "l": "Anterior segment"
+    },
+    {
+     "f": "oc",
+     "t": "post",
+     "l": "Posterior segment"
+    },
+    {
+     "f": "ant",
+     "t": "corn",
+     "l": "Cornea"
+    },
+    {
+     "f": "ant",
+     "t": "glau",
+     "l": "Anterior chamber"
+    },
+    {
+     "f": "ant",
+     "t": "cat",
+     "l": "Lens"
+    },
+    {
+     "f": "post",
+     "t": "vit",
+     "l": "Vitreous humour"
+    },
+    {
+     "f": "post",
+     "t": "ret",
+     "l": "Retina"
+    },
+    {
+     "f": "post",
+     "t": "rv",
+     "l": "Retinal vascular"
+    },
+    {
+     "f": "ne",
+     "t": "on",
+     "l": "Optic n. lesion"
+    },
+    {
+     "f": "ne",
+     "t": "occ",
+     "l": "Occipital lobe lesion"
+    }
+   ],
+   "note": "ลายมือหัวบท: stroke ... uptodate ... med scape (ใส่ไว้ที่กล่องเริ่มต้น)"
+  },
+  {
+   "id": "y99b",
+   "title": "Time based approach to Visual acuity loss",
+   "src": "fig",
+   "img": "yb-9-9-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Time based approach to Visual acuity loss"
+    },
+    {
+     "id": "sud",
+     "k": "q",
+     "t": "Sudden visual loss",
+     "d": "<p>การมองเห็นแย่ลงอย่างเฉียบพลัน</p>"
+    },
+    {
+     "id": "pro",
+     "k": "q",
+     "t": "Progressive visual loss",
+     "d": "<p>การมองเห็นแย่ลงเรื่อยๆ</p>"
+    },
+    {
+     "id": "tr",
+     "k": "q",
+     "t": "Transient",
+     "d": "<p>การมองเห็นแย่ลงอย่างเฉียบพลันแต่ต่อมากลับมามองเห็นได้ปกติ</p>"
+    },
+    {
+     "id": "np",
+     "k": "q",
+     "t": "Without progression",
+     "d": "<p>การมองเห็นแย่ลงอย่างเฉียบพลันโดยไม่กลับมาเป็นปกติเอง</p>"
+    },
+    {
+     "id": "trm",
+     "k": "q",
+     "t": "Transient: Monocular"
+    },
+    {
+     "id": "trb",
+     "k": "dx",
+     "t": "Transient binocular",
+     "d": "<ul><li>Cerebral hypoperfusion</li><li>PRES</li><li>Seizure</li><li>Head trauma</li><li>Visual obscuration (Papilledema)</li><li>Migraine</li></ul>"
+    },
+    {
+     "id": "bs",
+     "k": "dx",
+     "t": "Blood supply <span class=\"down\">↓</span> to retina",
+     "d": "<ul><li>Embolic CVD (Amaurosis fugax)</li><li>Hypoperfusion<ul><li>BP <span class=\"down\">↓</span></li><li>Hyperviscosity</li></ul></li><li>Vascular disease<ul><li>Vasospasm</li><li>Vasculitis</li></ul></li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other: Migraine, AACG, Impending CRVO",
+     "d": "<ul><li>Migraine</li><li>AACG</li><li>Impending CRVO</li></ul>"
+    },
+    {
+     "id": "npm",
+     "k": "q",
+     "t": "Without progression: Monocular"
+    },
+    {
+     "id": "npb",
+     "k": "dx",
+     "t": "Without progression: Binocular",
+     "d": "<ul><li>Bilat ION</li><li>Pituitary apoplexy</li><li>Occipital lobe stroke</li><li>Head trauma</li><li>Functional</li></ul>"
+    },
+    {
+     "id": "vas",
+     "k": "dx",
+     "t": "Vascular d/o: CRAO, CRVO, AION, PION",
+     "d": "<ul><li>CRAO</li><li>CRVO</li><li>AION</li><li>PION</li></ul>"
+    },
+    {
+     "id": "rtn",
+     "k": "dx",
+     "t": "Retina d/o: Retinal detachment, Serous retinopathy",
+     "d": "<ul><li>Retinal detachment</li><li>Serous retinopathy</li></ul>"
+    },
+    {
+     "id": "opt",
+     "k": "dx",
+     "t": "Optic n. d/o: TON",
+     "d": "<ul><li>TON</li></ul>"
+    },
+    {
+     "id": "vh",
+     "k": "dx",
+     "t": "Vitreous hemorrhage"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Ant visual pathway inflammation",
+     "d": "<ul><li>Optic neuritis</li><li>Sarcoidosis</li><li>meningitis</li><li>Radiation</li></ul>"
+    },
+    {
+     "id": "cmp",
+     "k": "dx",
+     "t": "Ant visual pathway compression",
+     "d": "<ul><li>Tumor</li><li>Aneurysm</li><li>Thyroid-ass. orbitopathy</li></ul>"
+    },
+    {
+     "id": "gl",
+     "k": "dx",
+     "t": "Glaucoma"
+    },
+    {
+     "id": "cp",
+     "k": "dx",
+     "t": "Chronic papilledema"
+    },
+    {
+     "id": "tox",
+     "k": "dx",
+     "t": "Toxic",
+     "d": "<ul><li>Ethambutol</li></ul>"
+    },
+    {
+     "id": "par",
+     "k": "dx",
+     "t": "Paraneoplastic retinopathy"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "sud"
+    },
+    {
+     "f": "a",
+     "t": "pro"
+    },
+    {
+     "f": "sud",
+     "t": "tr",
+     "l": "Transient"
+    },
+    {
+     "f": "sud",
+     "t": "np",
+     "l": "Without progression"
+    },
+    {
+     "f": "tr",
+     "t": "trm",
+     "l": "Monocular"
+    },
+    {
+     "f": "tr",
+     "t": "trb",
+     "l": "Binocular"
+    },
+    {
+     "f": "trm",
+     "t": "bs",
+     "l": "Blood supply ↓ to retina"
+    },
+    {
+     "f": "trm",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "np",
+     "t": "npm",
+     "l": "Monocular"
+    },
+    {
+     "f": "np",
+     "t": "npb",
+     "l": "Binocular"
+    },
+    {
+     "f": "npm",
+     "t": "vas",
+     "l": "Vascular d/o"
+    },
+    {
+     "f": "npm",
+     "t": "rtn",
+     "l": "Retina d/o"
+    },
+    {
+     "f": "npm",
+     "t": "opt",
+     "l": "Optic n. d/o"
+    },
+    {
+     "f": "npm",
+     "t": "vh",
+     "l": "Vitreous hemorrhage"
+    },
+    {
+     "f": "pro",
+     "t": "inf",
+     "l": "Ant visual pathway inflammation"
+    },
+    {
+     "f": "pro",
+     "t": "cmp",
+     "l": "Ant visual pathway compression"
+    },
+    {
+     "f": "pro",
+     "t": "gl",
+     "l": "Glaucoma"
+    },
+    {
+     "f": "pro",
+     "t": "cp",
+     "l": "Chronic papilledema"
+    },
+    {
+     "f": "pro",
+     "t": "tox",
+     "l": "Toxic"
+    },
+    {
+     "f": "pro",
+     "t": "par",
+     "l": "Paraneoplastic retinopathy"
+    }
+   ]
+  },
+  {
+   "id": "y99c",
+   "title": "Diplopia",
+   "src": "fig",
+   "img": "yb-9-9-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Diplopia"
+    },
+    {
+     "id": "hx",
+     "k": "act",
+     "t": "Hx ที่สำคัญ",
+     "d": "<ol><li>Monocular v.s. Binocular</li><li>Vertical v.s. Horizontal</li><li>Directionality (มองไปทางใดแล้วภาพซ้อนมากขึ้น เช่น บน/ล่าง/ซ้าย/ขวา)</li></ol>"
+    },
+    {
+     "id": "pe",
+     "k": "act",
+     "t": "PE ที่สำคัญ",
+     "d": "<ol><li>Eye misalignment/Ptosis/Pupils</li><li>EOM: Full, Vergence?</li><li>Saccade/Pursuit eye movement</li><li>Face/Ocular abnormality</li><li>Oculocephalic maneuver</li></ol>"
+    },
+    {
+     "id": "s",
+     "k": "q",
+     "t": "Monocular หรือ Binocular diplopia?"
+    },
+    {
+     "id": "mono",
+     "k": "q",
+     "t": "Monocular diplopia",
+     "d": "<p>มีภาพซ้อนแม้มองด้วยตาข้างเดียว</p>"
+    },
+    {
+     "id": "bino",
+     "k": "q",
+     "t": "Binocular diplopia",
+     "d": "<p>มองเห็นภาพซ้อนเมื่อมองด้วยสองตา แต่ถ้ามองด้วยตาข้างเดียวจะไม่ซ้อน</p>"
+    },
+    {
+     "id": "oph",
+     "k": "dx",
+     "t": "Ophthalmic: Macula abnormality"
+    },
+    {
+     "id": "neu",
+     "k": "dx",
+     "t": "Neurologic",
+     "d": "<ul><li>Occipital lobe lesion</li><li>Drug induce visual hallucination</li></ul>"
+    },
+    {
+     "id": "fun",
+     "k": "dx",
+     "t": "Functional"
+    },
+    {
+     "id": "dis",
+     "k": "q",
+     "t": "Disconjugated eye",
+     "d": "<p>ตาสองข้างวางตัวคนละระดับกัน (Misalignment)</p>"
+    },
+    {
+     "id": "nd",
+     "k": "q",
+     "t": "Neurologic disorder"
+    },
+    {
+     "id": "orb",
+     "k": "dx",
+     "t": "Orbital processing causing diplopia",
+     "d": "<ul><li>Orbital floor fracture</li><li>Muscle infiltration</li><li>Orbital myositis/ Orbital pseudotumor</li><li>Thyroid associated ophthalmopathy</li></ul>"
+    },
+    {
+     "id": "cs",
+     "k": "dx",
+     "t": "Congenital strabismus",
+     "d": "<ul><li>Esotropia</li><li>Exotropia</li></ul>"
+    },
+    {
+     "id": "sup",
+     "k": "dx",
+     "t": "Supranuclear: INO"
+    },
+    {
+     "id": "cn",
+     "k": "q",
+     "t": "Cranial nerve"
+    },
+    {
+     "id": "nmj",
+     "k": "dx",
+     "t": "NMJ: Myasthenia gravis"
+    },
+    {
+     "id": "om",
+     "k": "dx",
+     "t": "Ocular myopathy",
+     "d": "<ul><li>CPEO</li><li>Kearns-Sayre</li><li>Oculopharyngeal dystrophy</li></ul>"
+    },
+    {
+     "id": "icn",
+     "k": "dx",
+     "t": "Isolated CN",
+     "d": "<ul><li>CN III palsy</li><li>CN IV palsy</li><li>CN VI palsy</li></ul>"
+    },
+    {
+     "id": "mcn",
+     "k": "dx",
+     "t": "Multiple CN",
+     "d": "<ul><li>Brainstem</li><li>Base of skull</li><li>Cavernous/SOF</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "hx"
+    },
+    {
+     "f": "hx",
+     "t": "pe"
+    },
+    {
+     "f": "pe",
+     "t": "s"
+    },
+    {
+     "f": "s",
+     "t": "mono",
+     "l": "Monocular diplopia"
+    },
+    {
+     "f": "s",
+     "t": "bino",
+     "l": "Binocular diplopia"
+    },
+    {
+     "f": "mono",
+     "t": "oph",
+     "l": "Ophthalmic"
+    },
+    {
+     "f": "mono",
+     "t": "neu",
+     "l": "Neurologic"
+    },
+    {
+     "f": "mono",
+     "t": "fun",
+     "l": "Functional"
+    },
+    {
+     "f": "bino",
+     "t": "dis"
+    },
+    {
+     "f": "dis",
+     "t": "nd",
+     "l": "Neurologic disorder"
+    },
+    {
+     "f": "dis",
+     "t": "orb",
+     "l": "Orbital processing"
+    },
+    {
+     "f": "dis",
+     "t": "cs",
+     "l": "Congenital strabismus"
+    },
+    {
+     "f": "nd",
+     "t": "sup",
+     "l": "Supranuclear"
+    },
+    {
+     "f": "nd",
+     "t": "cn",
+     "l": "Cranial nerve"
+    },
+    {
+     "f": "nd",
+     "t": "nmj",
+     "l": "NMJ"
+    },
+    {
+     "f": "nd",
+     "t": "om",
+     "l": "Ocular myopathy"
+    },
+    {
+     "f": "cn",
+     "t": "icn",
+     "l": "Isolated CN"
+    },
+    {
+     "f": "cn",
+     "t": "mcn",
+     "l": "Multiple CN"
+    }
+   ]
+  },
+  {
+   "id": "y99d",
+   "title": "Common cause of Binocular Diplopia",
+   "src": "fig",
+   "img": "yb-9-9-f4.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Common cause of Binocular Diplopia"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Horizontal diplopia"
+    },
+    {
+     "id": "v",
+     "k": "q",
+     "t": "Vertical diplopia"
+    },
+    {
+     "id": "h1",
+     "k": "dx",
+     "t": "Supranuclear: INO"
+    },
+    {
+     "id": "h2",
+     "k": "dx",
+     "t": "Cranial nerve: III, VI palsy"
+    },
+    {
+     "id": "h3",
+     "k": "dx",
+     "t": "NMJ: MG"
+    },
+    {
+     "id": "h4",
+     "k": "dx",
+     "t": "Ocular: Decompensated Strabismus"
+    },
+    {
+     "id": "v1",
+     "k": "dx",
+     "t": "Cranial nerve: IV palsy, III palsy"
+    },
+    {
+     "id": "v2",
+     "k": "dx",
+     "t": "NMJ: MG"
+    },
+    {
+     "id": "v3",
+     "k": "dx",
+     "t": "Ocular: Thyroid-associated ophthalmopathy"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "h",
+     "l": "Horizontal diplopia"
+    },
+    {
+     "f": "a",
+     "t": "v",
+     "l": "Vertical diplopia"
+    },
+    {
+     "f": "h",
+     "t": "h1",
+     "l": "Supranuclear"
+    },
+    {
+     "f": "h",
+     "t": "h2",
+     "l": "Cranial nerve"
+    },
+    {
+     "f": "h",
+     "t": "h3",
+     "l": "NMJ"
+    },
+    {
+     "f": "h",
+     "t": "h4",
+     "l": "Ocular"
+    },
+    {
+     "f": "v",
+     "t": "v1",
+     "l": "Cranial nerve"
+    },
+    {
+     "f": "v",
+     "t": "v2",
+     "l": "NMJ"
+    },
+    {
+     "f": "v",
+     "t": "v3",
+     "l": "Ocular"
+    }
+   ]
+  },
+  {
+   "id": "y99e",
+   "title": "Painful ophthalmoplegia",
+   "src": "fig",
+   "img": "yb-9-9-f5.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Painful ophthalmoplegia"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Orbit",
+     "d": "<ul><li>Tumor<ul><li>Primary/Metas</li></ul></li><li>Orbital pseudotumor</li><li>Infection<ul><li>Sinusitis</li><li>Actinomycosis</li><li>Mucormycosis</li></ul></li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Cavernous sinus",
+     "d": "<ul><li>Tumor: Primary/Metastatic</li><li>Inflammation<ul><li>Tolosa-Hunt syndrome</li></ul></li><li>Vascular<ul><li>Carotid a. aneurysm</li><li>Cavernous sinus thrombosis</li><li>Arteriovenous fistula</li></ul></li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Sellar and posterior fossa",
+     "d": "<ul><li>Pituitary Tumor</li><li>Pituitary apoplexy</li><li>Metastatic tumor</li><li>Aneurysm</li></ul>"
+    },
+    {
+     "id": "x",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Diabetic Ophthalmoplegia</li><li>Ophthalmoplegic Migraine</li><li>Giant cell arteritis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "o",
+     "l": "Orbit"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Cavernous sinus"
+    },
+    {
+     "f": "a",
+     "t": "s",
+     "l": "Sellar and posterior fossa"
+    },
+    {
+     "f": "a",
+     "t": "x",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

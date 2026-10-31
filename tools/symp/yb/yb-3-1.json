@@ -1,0 +1,373 @@
+{
+ "key": "3-1",
+ "en": "Jaundice",
+ "th": "ดีซ่าน",
+ "pdf": "36–37",
+ "target": 9,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "class",
+   "id": "yb-3-1-approach",
+   "h": "Algorithm Jaundice แบ่ง 3 กลุ่ม (hemolytic / hepatocellular / obstructive)",
+   "html": "<figure><img src=\"symp/img/yb-3-1-f1.webp\" alt=\"Algorithm Jaundice: hemolytic, hepatocellular, obstructive พร้อมลายมือ\"><figcaption>3.1 Jaundice — เล่มเหลือง (มีลายมือ)</figcaption></figure><div class=\"flow\" data-flow=\"y31a\"></div><p>ในการวินิจฉัยสาเหตุของภาวะตัวเหลือง (Jaundice) เราสามารถแบ่งโรคออกได้เป็น 3 กลุ่มหลัก จากการซักประวัติและตรวจร่างกาย ได้แก่ Hemolytic jaundice, Obstructive jaundice และ Hepatocellular jaundice</p><ul><li><b>Hemolytic jaundice</b> เป็นภาวะตัวเหลือง อันเกิดจากเม็ดเลือดแดงแตกอย่างมากผู้ป่วยเหล่านี้มักจะมีประวัติตัวตาเหลืองร่วมกับภาวะ<span class=\"hi\">ซีด</span> อาจมี<span class=\"hi\">ปัสสาวะสีโค้ก</span> ตรวจร่างกายอาจพบ<span class=\"hi\">ม้ามโต</span>ได้</li><li><b>Obstructive jaundice</b> เป็นภาวะตัวเหลืองอันเนื่องมาจากภาวะอุดตันของทางเดินน้ำดี ผู้ป่วยมักจะมีประวัติ<span class=\"hi\">อุจจาระสีซีดลง</span> มี<span class=\"hi\">ปัสสาวะสีเข้ม</span> มีอาการ<span class=\"hi\">คัน</span>ตามตัวได้ โดยสาเหตุของภาวะตัวเหลืองจาก Hemolytic jaundice และ Obstructive jaundice จะแสดงดังตารางด้านบน</li><li>สำหรับ <b>Hepatocellular jaundice</b> ในที่นี้จะหมายรวมถึงผู้ป่วยที่มีภาวะ Abnormal bilirubin metabolism, Hepatocellular injury และ intrahepatic cholestasis เข้าไว้ด้วยกัน โดยสาเหตุของแต่ละกลุ่มโรคจะแสดงดังตารางในหน้าถัดไป</li></ul><div class=\"box\"><b>ลายมือสรุป</b><ul><li><span class=\"hw\">ซักประวัติ: onset, progress (เป็นๆ หายๆ, ค่อยๆ), associating symptom, FamHx, U/D, drug, ..</span></li><li><span class=\"hw\">prehep: มักเป็น hemolysis มี anemia ร่วม ปัสสาวะสีโค้ก, มีโรคเลือดเดิม</span> · <span class=\"hw\">hepatocellular: ไข้และ Sx เพลีย: viral, ไข้ ตาเหลือง tropical infection, อาหาร/พยาธิ(?)/เห็ดพิษ/paracet/alcohol/โรคตับเดิม, sexual, IVDU</span> · <span class=\"hw\">post-hep: เป็นๆ หายๆ ปวดท้อง, progressive malignancy (น.น.↓, [อ่านไม่ออก])</span></li><li><span class=\"hw\">invest: U/S ดู cholestasis ex stone, ... · CT ในพวก tumor · CBC, PBS, LFT, coagulogram</span></li><li><span class=\"hw\">สีตามกลุ่ม: hemolytic = เหลือง · hepatocellular = ส้ม · obstructive = เขียว</span></li></ul></div>",
+   "sub": [
+    {
+     "id": "yb-3-1-hc",
+     "h": "Algorithm Hepatocellular jaundice (เล่มเหลือง)",
+     "html": "<figure><img src=\"symp/img/yb-3-1-f2.webp\" alt=\"Algorithm Hepatocellular jaundice พร้อมลายมือ\"><figcaption>3.1 Hepatocellular jaundice — เล่มเหลือง</figcaption></figure><div class=\"flow\" data-flow=\"y31b\"></div>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "def",
+   "html": "<p><b>เล่มเหลือง</b> (ลายมือข้าง algorithm)</p><ul><li><span class=\"hw\">เริ่มมองเห็นที่ตา: 2.5 · ตามตัว 5 · 50% แพทย์ detect ได้</span></li><li><span class=\"hw\">R/O กับ carotenemia ก่อน (ตาไม่เหลือง)</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-type",
+   "html": "<p><b>เล่มเหลือง</b> — Hemolytic jaundice เป็นภาวะตัวเหลืองอันเกิดจากเม็ดเลือดแดงแตกอย่างมาก มักมีประวัติตัวตาเหลืองร่วมกับภาวะ<span class=\"hi\">ซีด</span> อาจมี<span class=\"hi\">ปัสสาวะสีโค้ก</span> ตรวจร่างกายอาจพบ<span class=\"hi\">ม้ามโต</span> · Obstructive jaundice เป็นภาวะตัวเหลืองจากการอุดตันของทางเดินน้ำดี มักมีประวัติ<span class=\"hi\">อุจจาระสีซีดลง</span> <span class=\"hi\">ปัสสาวะสีเข้ม</span> <span class=\"hi\">คันตามตัว</span> · Hepatocellular jaundice ในที่นี้รวม abnormal bilirubin metabolism, hepatocellular injury และ intrahepatic cholestasis</p><ul><li><span class=\"hw\">ซักประวัติ: onset, progress (เป็นๆ หายๆ, ค่อยๆ), associating symptom, FamHx, U/D, drug, ..</span></li><li><span class=\"hw\">เหลืองน้อยสุด = hemolytic (prehepatic) · Jx + anemia</span></li><li><span class=\"hw\">เหลืองกว่ากลุ่มอื่น = obstructive (Sx jaundice) · หาก complete obstruct → ปัสสาวะสีเข้ม, อุจจาระซีด</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-cause",
+   "html": "<p><b>เล่มเหลือง</b> (ลายมือ) — เบาะแสจากประวัติแยกกลุ่ม</p><ul><li><span class=\"hw\">prehep: มักเป็น hemolysis มี anemia ร่วม ปัสสาวะสีโค้ก, มีโรคเลือดเดิม</span></li><li><span class=\"hw\">hepatocellular: ไข้และ Sx เพลีย: viral · ไข้ ตาเหลือง tropical infection(?) · อาหาร/พยาธิ(?)/เห็ดพิษ/paracet/alcohol/โรคตับเดิม, sexual, IVDU</span></li><li><span class=\"hw\">post-hep: เป็นๆ หายๆ ปวดท้อง, progressive malignancy (น.น.↓, [อ่านไม่ออก])</span></li></ul><p>Hx/PE/LFT ที่พิมพ์ในเล่มเหลือง: <b>Hemolytic</b> — Hx: Anemic sx, FamHx, Drug Hx, Dark urine (สีโค้ก); PE: Pale, Splenomegaly; LFT: indirect bilirubin ↑↑ · <b>Hepatocellular</b> — Hx: Flu sx, Drug Hx, Alcohol, Blood transfusion, SI, infection, contact Jx person; PE: signs chronic liver; LFT: Isolated Bilirubin↑ or AST/ALT↑ and Bilirubin↑ <span class=\"hw\">(พวก direct >15% ของ total = direct เด่น)</span> · <b>Obstructive</b> — Hx: Abd pain, itching, pale stool, Dark urine (สีเข้ม); PE: ± mass in abdomen; LFT: ALP ↑↑</p>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-lab",
+   "html": "<p><b>เล่มเหลือง</b> <span class=\"hw\">invest: CBC, PBS, LFT, coagulogram</span></p>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-img",
+   "html": "<p><b>เล่มเหลือง</b> <span class=\"hw\">invest: U/S ดู cholestasis ex stone, ... · CT ในพวก tumor</span></p>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-ind",
+   "html": "<p><b>เล่มเหลือง</b> — Hemolytic jaundice (prehepatic)</p><ul><li><b>Intrinsic factor:</b> Str: HS, Elliptocytosis · Enz: G-6PD deficiency · Hb: Thalassemia · PNH</li><li><b>Extrinsic factor:</b> MAHA, AIHA, Malaria</li><li><span class=\"hw\">มีโรคพวก conjugate ไม่ได้ด้วย → indirect เด่น</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-hc",
+   "html": "<p><b>เล่มเหลือง</b> — Hepatocellular injury: Acute liver injury (Viral: HBV, HAV, EBV, CMV, Herpes · Non viral: Lepto, Scrub · Alcohol · Drug: Paracetamol, INH · Toxin: Amanita, Herb · Fatty liver of pregnancy) · Chronic liver injury/liver cirrhosis (Alcohol · Virus: HBV, HCV · Genetic: Wilson, Hemochromatosis, α-1 antitrysin def, Cystic fibrosis · Cardiac cirrhosis · Biliary cirrhosis: PBC, PSC, Autoimmune cholangiopathy · Other: AIH, NASH, Cryptogenic)</p><ul><li><span class=\"hw\">infect, inflame, ischemic, toxic (→ para, alcoholic), autoimmune</span></li><li><span class=\"hw\">cirrhosis decompensate → cell ↓↓ → ขับไม่ไหว → Jx</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-chol",
+   "html": "<p><b>เล่มเหลือง</b> — Obstructive jaundice: Choledocholithiasis · Bile duct dz (1<sup>0</sup> Sclerosing cholangitis, Post surg stricture, AIDS cholangiopathy, Cholangiocarcinoma) · Extrinsic compression · \"Periampullary CA\" (CA head of pancreas, CA Ampulla of Vater, CA 2<sup>nd</sup> part duodenum, Cholangiocarcinoma) · lymphoma · HCC with cirrhosis</p><ul><li><span class=\"hw\">intraluminal: stricture, stone, tumor, parasite</span></li><li><span class=\"hw\">intramural: stenosis, hematoma, tumor</span></li><li><span class=\"hw\">extramural: lymph node, mass กด</span></li><li><span class=\"hw\">stone [ผัน?]เหลือง intermittent</span></li><li><span class=\"hw\">progressive นึกถึง mass neoplasm มากกว่า</span></li><li><span class=\"hw\">chronic obstruct → [สี?]ตาม skin</span></li></ul><p><b>เล่มเหลือง</b> — Hepatic d/o with prominent cholestasis: Diffuse infiltration (Granulomatous: TB, sarcoidosis · Lymphoma · Wegener, amyloid, CA) · Cholangiocyte injury (PBC, GVHD · Drug: Erythromycin, Bactrim) · Other (Benign recurrent intrahep cholestasis: TPN, Steroid, Estrogen)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-gen",
+   "html": "<p><b>เล่มเหลือง</b> — Isolated hyperbilirubinemia: Direct ↑ (DB > 15%): Dubin-Johnson syn., Rotor's syndrome · Indirect ↑ (DB < 15%): Increase production (hemolytic anemia) · Decrease uptake (Drug: rifam) · Decrease conjugation (Gilbert, Crigler-Najar · Drug: indinavir)</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y31a",
+   "title": "3.1 Jaundice",
+   "src": "fig",
+   "img": "yb-3-1-f1.webp",
+   "note": "ลายมือ (หลายสี) ล้อมรอบ algorithm: ซักประวัติ/ตรวจ/สีที่เขียนกำกับแต่ละกลุ่ม — ใส่ไว้ใน d ของกล่องที่เกี่ยวข้อง · ตัวย่อ TB = total bilirubin",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Jaundice: Yellowish of tissue, TB > 3 mg/dl → icteric sclera",
+     "d": "<p><span class=\"hw\">เริ่มมองเห็นที่ตา: 2.5 · ตามตัว 5 · 50% แพทย์ detect ได้</span></p><p><span class=\"hw\">R/O กับ carotenemia ก่อน (ตาไม่เหลือง)</span></p><p><span class=\"hw\">ซัก(?): onset, progress (เป็นๆ หายๆ, ค่อยๆ), associating symptom, FamHx, U/D, drug, ..</span></p><p><span class=\"hw\">invest: U/S ดู cholestasis ex stone, ... · CT ในพวก tumor · CBC, PBS, LFT, coagulogram</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Hemolytic jaundice (prehepatic)",
+     "d": "<span class=\"hw\">เหลืองน้อยสุด · Jx + anemia · prehep: มักเป็น hemolysis มี anemia ร่วม ปัสสาวะสีโค้ก, มีโรคเลือดเดิม</span><br><span class=\"hw\">สี: เหลือง</span>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Hepatocellular jaundice",
+     "d": "<span class=\"hw\">hepatocellular: ไข้และ Sx เพลีย: viral · ไข้ ตาเหลือง tropical infection (?) · อาหาร/พยาธิ(?)/เห็ดพิษ/paracet/alcohol/โรคตับเดิม, sexual, IVDU</span><br><span class=\"hw\">พวก direct >15% ของ total = direct เด่น</span><br><span class=\"hw\">สี: ส้ม</span>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Obstructive jaundice (Sx jaundice)",
+     "d": "<span class=\"hw\">เหลืองกว่ากลุ่มอื่น · หาก complete obstruct → สีเข้ม(ปัสสาวะ), อุจจาระซีด · post-hep: เป็นๆ หายๆ ปวดท้อง, progressive malignancy (น.น.↓, [อ่านไม่ออก])</span><br><span class=\"hw\">สี: เขียว</span>"
+    },
+    {
+     "id": "b1",
+     "k": "act",
+     "t": "Hx: Anemic sx, FamHx, Drug Hx, Dark urine (สีโค้ก) · PE: Pale, Splenomegaly · LFT: indirect bilirubin ↑↑",
+     "d": "<ul><li><b>Hx:</b> Anemic sx, FamHx, Drug Hx, Dark urine (สีโค้ก)</li><li><b>PE:</b> Pale, Splenomegaly</li><li><b>LFT:</b> indirect bilirubin ↑↑</li></ul>"
+    },
+    {
+     "id": "b2",
+     "k": "dx",
+     "t": "Hemolytic: Intrinsic factor / Extrinsic factor",
+     "d": "<ul><li><b>Intrinsic factor</b><ul><li>Str: HS, Elliptocytosis</li><li>Enz: G-6PD deficiency</li><li>Hb: Thalassemia</li><li>PNH</li></ul></li><li><b>Extrinsic factor</b><ul><li>MAHA, AIHA, Malaria</li></ul></li></ul><p><span class=\"hw\">มีโรคพวก conjugate ไม่ได้ด้วย → indirect เด่น</span></p>"
+    },
+    {
+     "id": "c1",
+     "k": "act",
+     "t": "Hx: Flu sx, Drug Hx, Alcohol, Blood transfusion, SI, infection, contact Jx person · PE: signs chronic liver · LFT: Isolated Bilirubin↑ or AST/ALT↑ and Bilirubin↑",
+     "d": "<ul><li><b>Hx:</b> Flu sx, Drug Hx, Alcohol, Blood transfusion, SI, infection, contact Jx person</li><li><b>PE:</b> signs chronic liver</li><li><b>LFT:</b> Isolated Bilirubin↑ or AST/ALT↑ and Bilirubin↑</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "note",
+     "t": "ดูหน้าถัดไป (Hepatocellular jaundice — แผนภูมิที่ 2)"
+    },
+    {
+     "id": "d1",
+     "k": "act",
+     "t": "Hx: Abd pain, itching, pale stool, Dark Urine (สีเข้ม) · PE: ± mass in abdomen · LFT: ALP ↑↑",
+     "d": "<ul><li><b>Hx:</b> Abd pain, itching, pale stool, Dark Urine (สีเข้ม)</li><li><b>PE:</b> ± mass in abdomen</li><li><b>LFT:</b> ALP ↑↑</li></ul>"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Obstructive: Choledocholithiasis · Bile duct dz · Extrinsic compression · Periampullary CA · lymphoma · HCC with cirrhosis",
+     "d": "<ul><li>Choledocholithiasis</li><li>Bile duct dz<ul><li>1<sup>0</sup> Sclerosing cholangitis</li><li>Post surg stricture</li><li>AIDS cholangiopathy</li><li>Cholangiocarcinoma</li></ul></li><li>Extrinsic compression<ul><li>\"Periampullary CA\": 1. CA head of pancreas · 2. CA Ampulla of Vater · 3. CA 2<sup>nd</sup> part duodenum · 4. Cholangiocarcinoma</li></ul></li><li>lymphoma</li><li>HCC with cirrhosis</li></ul><p><span class=\"hw\">intraluminal: stricture, stone, tumor, parasite</span></p><p><span class=\"hw\">intramural: stenosis, hematoma, tumor</span></p><p><span class=\"hw\">extramural: lymph node, mass กด</span></p><p><span class=\"hw\">stone [ผัน?]เหลือง intermittent</span></p><p><span class=\"hw\">progressive นึกถึง mass neoplasm มากกว่า</span></p><p><span class=\"hw\">chronic obstruct → [สี?]ตาม skin</span></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Hemolytic"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Hepatocellular"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Obstructive"
+    },
+    {
+     "f": "b",
+     "t": "b1"
+    },
+    {
+     "f": "b1",
+     "t": "b2"
+    },
+    {
+     "f": "c",
+     "t": "c1"
+    },
+    {
+     "f": "c1",
+     "t": "c2"
+    },
+    {
+     "f": "d",
+     "t": "d1"
+    },
+    {
+     "f": "d1",
+     "t": "d2"
+    }
+   ]
+  },
+  {
+   "id": "y31b",
+   "title": "3.1 Hepatocellular jaundice",
+   "src": "fig",
+   "img": "yb-3-1-f2.webp",
+   "note": "ลายมือสีเขียวบนหัวแผนภูมิ ใส่ใน d ของกล่องเริ่มต้น",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hepatocellular jaundice",
+     "d": "<span class=\"hw\">infect, inflame, ischemic, toxic (→ para, alcoholic), autoimmune</span><br><span class=\"hw\">cirrhosis decompensate → cell ↓↓ → ขับไม่ไหว → Jx</span>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Isolated hyperbilirubinemia"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Hepatocellular injury"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Hepatic d/o with prominent cholestasis"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Direct ↑ (DB > 15%): Dubin-Johnson syn., Rotor's syndrome",
+     "d": "<ul><li>Dubin-Johnson syn.</li><li>Rotor's syndrome</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Indirect ↑ (DB < 15%)",
+     "d": "<ul><li><b>Increase production</b> (รายละเอียดดังในกลุ่ม Hemolytic anemia)</li><li><b>Decrease uptake</b><ul><li>Drug: rifam</li></ul></li><li><b>Decrease conjugation</b><ul><li>Gilbert, Crigler-Najar</li><li>Drug: indinavir</li></ul></li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Acute liver injury"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Chronic liver injury: Liver cirrhosis"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Acute: Viral · Non viral · Alcohol · Drug · Toxin · Fatty liver of pregnancy",
+     "d": "<ul><li><b>Viral:</b> HBV, HAV, EBV, CMV, Herpes</li><li><b>Non viral:</b> Lepto, Scrub</li><li>Alcohol</li><li><b>Drug:</b> Paracetamol, INH</li><li><b>Toxin:</b> Amanita, Herb</li><li>Fatty liver of pregnancy</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Cirrhosis จาก Alcohol",
+     "d": "<ul><li>Alcohol</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Cirrhosis จาก Virus",
+     "d": "<ul><li>HBV</li><li>HCV</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Cirrhosis จาก Genetic",
+     "d": "<ul><li>Wilson</li><li>Hemochromatosis</li><li>α-1 antitrysin def</li><li>Cystic fibrosis</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Cardiac cirrhosis"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Biliary cirrhosis",
+     "d": "<ul><li>PBC</li><li>PSC</li><li>Autoimmune cholangiopathy</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Cirrhosis อื่น ๆ (Other)",
+     "d": "<ul><li>AIH</li><li>NASH</li><li>Cryptogenic</li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Diffuse infiltration",
+     "d": "<ul><li>Granulomatous: TB, sarcoidosis</li><li>Lymphoma</li><li>Wegener, amyloid, CA</li></ul>"
+    },
+    {
+     "id": "q",
+     "k": "dx",
+     "t": "Cholangiocyte injury",
+     "d": "<ul><li>PBC, GVHD</li><li>Drug: Erythromycin, Bactrim</li></ul>"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Other: Benign recurrent intrahep cholestasis",
+     "d": "<ul><li>Benign recurrent intrahep cholestasis: TPN, Steroid, Estrogen</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "a",
+     "t": "c"
+    },
+    {
+     "f": "a",
+     "t": "d"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Direct↑ (DB > 15%)"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Indirect↑ (DB < 15%)"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Acute"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Chronic"
+    },
+    {
+     "f": "g",
+     "t": "i"
+    },
+    {
+     "f": "h",
+     "t": "j",
+     "l": "Alcohol"
+    },
+    {
+     "f": "h",
+     "t": "k",
+     "l": "Virus"
+    },
+    {
+     "f": "h",
+     "t": "l",
+     "l": "Genetic"
+    },
+    {
+     "f": "h",
+     "t": "m",
+     "l": "Cardiac cirrhosis"
+    },
+    {
+     "f": "h",
+     "t": "n",
+     "l": "Biliary cirrhosis"
+    },
+    {
+     "f": "h",
+     "t": "o",
+     "l": "Other"
+    },
+    {
+     "f": "d",
+     "t": "p",
+     "l": "Diffuse infiltration"
+    },
+    {
+     "f": "d",
+     "t": "q",
+     "l": "Cholangiocyte injury"
+    },
+    {
+     "f": "d",
+     "t": "r",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

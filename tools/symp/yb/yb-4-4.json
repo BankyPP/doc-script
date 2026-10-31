@@ -1,0 +1,152 @@
+{
+ "key": "4-4",
+ "en": "Polyuria",
+ "th": "ปัสสาวะมาก (Polyuria)",
+ "pdf": "55–56",
+ "target": 26,
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "dx",
+   "id": "yb-4-4-algo",
+   "h": "Polyuria — algorithm (เล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y44a\"></div><ul><li>Polyuria: Urine &gt; 3 L/day · Urine &gt; 50 ml/kg/d (child)</li><li><b>Water diuresis</b> — Uosm &lt; 150 mOsm/KgH<sub>2</sub>O → Water deprivation test → Primary polydipsia (<span class=\"hw\">pt ดื่มน้ำ &gt; 12 Lt.</span>) · Central DI · Nephrogenic DI</li><li><b>Mix</b> — Uosm 150–250 mOsm/KgH<sub>2</sub>O</li><li><b>Solute diuresis</b> <span class=\"hw\">(e'lyte)</span> — Uosm &gt; 250 mOsm/KgH<sub>2</sub>O → 2(Una + Uk)/Uosm<ul><li>&lt; 40: Non Electrolyte Diuresis — Glucose, Mannitol, Contrast, Urea</li><li>&gt; 60: Electrolyte Diuresis — NaCl, Diuretic, Anion</li></ul></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "dx",
+   "id": "yb-4-4-wdt",
+   "h": "ขั้นตอนทำ water deprivation test และการแปลผล (เล่มเหลือง)",
+   "html": "<ol><li><b>ก่อนเริ่มการทำ water deprivation test</b><ul><li>ดู Baseline: Body weight, serum electrolyte, Uosm, Posm แล้วเริ่ม Deprivation (งดอาหารและน้ำ)</li></ul></li><li><b>ทุก 1 ชั่วโมง</b><ul><li>ตรวจ BW, Urine volume, Urine specific gravity, Uosm</li></ul></li><li><b>ทุก 2 ชั่วโมง</b><ul><li>ตรวจ Serum Electrolyte, Posm</li></ul></li><li><b>จะหยุดทำ water deprivation test เมื่อ</b><ul><li>Orthostatic Sx</li><li>Body weight reduction มากกว่า 3%</li><li>Plasma Na &gt; 150</li><li>Uosm plateau (Uosm &lt; 10% นาน 2–3 ชั่วโมงติดกัน)</li></ul></li><li>หลังจากหยุด deprivation แล้ว จึงให้ DDAVP 10 mcg nasal หรือ 1 mcg IV หลังจากนั้น 1 ชั่วโมง ดูการเปลี่ยนแปลง Uosm โดยการแปลผล water deprivation test ดังตาราง</li></ol><h5>การแปลผล water deprivation test</h5><div class=\"tbl\"><table><thead><tr><th>การเพิ่มขึ้นของ Urine osmolality หลังได้ DDAVP</th><th>ระดับ AVP (pg/ml)</th><th>การแปลผล</th></tr></thead><tbody><tr><td>&gt; 50%</td><td>&lt; 1</td><td>Central DI</td></tr><tr><td>&lt; 10%</td><td>&gt; 5</td><td>Nephrogenic DI</td></tr><tr><td>&lt; 10%</td><td>&gt; 2</td><td>Partial Nephrogenic DI หรือ Primary polydipsia</td></tr><tr><td>10–50%</td><td>&lt; 1.5</td><td>Partial Central DI</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><span class=\"tag\">เล่มเหลือง</span> Primary polydipsia: <span class=\"hw\">pt ดื่มน้ำ &gt; 12 Lt.</span></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y44a",
+   "title": "Polyuria",
+   "src": "fig",
+   "img": "yb-4-4-f1.webp",
+   "note": "ลายมือเพิ่ม: \"e'lyte\" ข้าง Solute diuresis · \"pt ดื่มน้ำ > 12 Lt.\" ใต้ Primary Polydipsia · ขีดเส้นใต้ Uosm < 150 และชื่อโรคทั้ง 3",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Polyuria",
+     "d": "<ul><li>Urine &gt; 3 L/day</li><li>Urine &gt; 50 ml/kg/d (child)</li></ul>"
+    },
+    {
+     "id": "wd",
+     "k": "q",
+     "t": "Water diuresis — Uosm < 150 mOsm/KgH₂O",
+     "d": "<p>Uosm &lt; 150 mOsm/KgH<sub>2</sub>O (ลายมือขีดเส้นใต้ Uosm &lt; 150)</p>"
+    },
+    {
+     "id": "mix",
+     "k": "dx",
+     "t": "Mix — Uosm 150–250 mOsm/KgH₂O",
+     "d": "<p>Uosm 150 – 250 mOsm/KgH<sub>2</sub>O</p>"
+    },
+    {
+     "id": "sd",
+     "k": "q",
+     "t": "Solute diuresis — Uosm > 250 mOsm/KgH₂O",
+     "d": "<p>Uosm &gt; 250 mOsm/KgH<sub>2</sub>O</p><p><span class=\"hw\">ลายมือ: e'lyte</span></p>"
+    },
+    {
+     "id": "wdt",
+     "k": "act",
+     "t": "Water deprivation test",
+     "d": "<p>ขั้นตอนและการแปลผลดูหัวข้อ Water deprivation test</p>"
+    },
+    {
+     "id": "pp",
+     "k": "dx",
+     "t": "Primary polydipsia",
+     "d": "<p><span class=\"hw\">pt ดื่มน้ำ &gt; 12 Lt.</span></p>"
+    },
+    {
+     "id": "cdi",
+     "k": "dx",
+     "t": "Central DI"
+    },
+    {
+     "id": "ndi",
+     "k": "dx",
+     "t": "Nephrogenic DI"
+    },
+    {
+     "id": "calc",
+     "k": "q",
+     "t": "2(Una + Uk) / Uosm"
+    },
+    {
+     "id": "ned",
+     "k": "dx",
+     "t": "Non Electrolyte Diuresis",
+     "d": "<ul><li>Glucose</li><li>Mannitol</li><li>Contrast</li><li>Urea</li></ul>"
+    },
+    {
+     "id": "ed",
+     "k": "dx",
+     "t": "Electrolyte Diuresis",
+     "d": "<ul><li>NaCl</li><li>Diuretic</li><li>Anion</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "wd",
+     "l": "Water diuresis"
+    },
+    {
+     "f": "a",
+     "t": "mix",
+     "l": "Mix"
+    },
+    {
+     "f": "a",
+     "t": "sd",
+     "l": "Solute diuresis"
+    },
+    {
+     "f": "wd",
+     "t": "wdt"
+    },
+    {
+     "f": "wdt",
+     "t": "pp",
+     "l": "Primary polydipsia"
+    },
+    {
+     "f": "wdt",
+     "t": "cdi",
+     "l": "Central DI"
+    },
+    {
+     "f": "wdt",
+     "t": "ndi",
+     "l": "Nephrogenic DI"
+    },
+    {
+     "f": "sd",
+     "t": "calc"
+    },
+    {
+     "f": "calc",
+     "t": "ned",
+     "l": "< 40"
+    },
+    {
+     "f": "calc",
+     "t": "ed",
+     "l": "> 60"
+    }
+   ]
+  }
+ ]
+}

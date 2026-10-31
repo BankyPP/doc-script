@@ -1,0 +1,204 @@
+{
+ "key": "9-11",
+ "en": "Vertigo",
+ "th": "เวียนศีรษะ (vertigo)",
+ "pdf": "138–139",
+ "target": 32,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "pvc",
+   "id": "yb-9-11-algo",
+   "h": "Vertigo — algorithm แยก central / peripheral (เล่มเหลือง 9.11)",
+   "html": "<div class=\"flow\" data-flow=\"y911a\"></div><p>สำหรับประวัติและการตรวจร่างกายที่สำคัญในการแยก peripheral และ central vertigo จะแสดงดังตารางด้านล่าง</p><div class=\"tbl\"><table><thead><tr><th></th><th>Peripheral</th><th>Central</th></tr></thead><tbody><tr><td>Vertigo</td><td>Often intermittent; severe</td><td>Often constant; usually less severe</td></tr><tr><td>Nystagmus</td><td>Always present; unidirectional, never vertical</td><td>May be absent; uni- or bidirectional, may be vertical</td></tr><tr><td colspan=\"3\"><b>Associated findings</b></td></tr><tr><td>Hearing loss or tinnitus</td><td>Often present</td><td>Rarely present</td></tr><tr><td>Intrinsic brainstem signs</td><td>Absent</td><td>Typically present</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "append",
+   "sec": "bppv",
+   "html": "<ul><li>BPPV อยู่ในกลุ่ม peripheral vertigo — inner ear — <b>without hearing loss</b> (ร่วมกับ Vestibular neuritis, Perilymph fistula, Otosclerosis) · <span class=\"hw\">ลายมือข้าง BPPV: สัมพันธ์กับท่าทาง</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "apv",
+   "html": "<ul><li>Vestibular neuritis จัดอยู่ใน peripheral vertigo — inner ear — without hearing loss · Labytinthitis และ Labyrinthine infarction จัดอยู่ใน inner ear — <b>with hearing loss</b> (ร่วมกับ Meniere's disease)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "meniere",
+   "html": "<ul><li>Meniere's disease อยู่ในกลุ่ม peripheral vertigo — inner ear — <b>with hearing loss</b> (ร่วมกับ Labytinthitis, Labyrinthine infarction) · <span class=\"hw\">ลายมือข้าง Meniere's disease: tinnitus/neuro loss (?)</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "periph",
+   "id": "yb-9-11-pother",
+   "h": "Peripheral vertigo อื่น ๆ ตามเล่มเหลือง",
+   "html": "<ul><li>Vestibular migraine</li><li>Vestibular nerve: Vestibular shwannoma</li><li>Inner ear — with hearing loss: Meniere's disease, Labytinthitis, Labyrinthine infarction</li><li>Inner ear — without hearing loss: BPPV, Vestibular neuritis, Perilymph fistula, Otosclerosis</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "vbi",
+   "html": "<ul><li>Central vertigo — Vascular — <b>Brainstem</b>: Vertebrobasilar TIA, Wallenberg's syndrome</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "wallenberg",
+   "html": "<ul><li>Wallenberg's syndrome อยู่ใน central vertigo — vascular — brainstem</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cbl-inf",
+   "html": "<ul><li>Central vertigo — Vascular — <b>Cerebellum</b>: Infarction, Hemorrhage</li><li><span class=\"hw\">ลายมือใต้กล่อง Cerebellum: เดินเซ → เกิดจาก [อ่านไม่ออกบางคำ: เวียน…(?)] → cerebellar</span></li><li><span class=\"hw\">→ sudden : vascular → hemorrhagic : ↑ICP ปวดหัว · ischemic : ตาม vascular territory (?)</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "central",
+   "id": "yb-9-11-nonvasc",
+   "h": "Non-vascular central vertigo (เล่มเหลือง)",
+   "html": "<ul><li>Migraine</li><li>Multiple sclerosis</li><li>Epilepsy (posterior temporal lobe)</li><li>Brain stem tumor</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y911a",
+   "title": "Vertigo",
+   "src": "fig",
+   "img": "yb-9-11-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vertigo: Illusion of motion, Sense of spinning",
+     "d": "<p>Illusion of motion, Sense of spinning — มาแยกว่าเป็น Central หรือ peripheral vertigo</p>"
+    },
+    {
+     "id": "ex",
+     "k": "note",
+     "t": "Exclude: Dizziness, Headache, Psychi",
+     "d": "<ul><li>Dizziness</li><li>Headache</li><li>Psychi</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Central vertigo"
+    },
+    {
+     "id": "p",
+     "k": "q",
+     "t": "Peripheral vertigo"
+    },
+    {
+     "id": "vas",
+     "k": "q",
+     "t": "Vascular (central)"
+    },
+    {
+     "id": "nv",
+     "k": "dx",
+     "t": "Non-vascular (central)",
+     "d": "<ul><li>Migraine</li><li>Multiple sclerosis</li><li>Epilepsy (posterior temporal lobe)</li><li>Brain stem tumor</li></ul>"
+    },
+    {
+     "id": "cb",
+     "k": "dx",
+     "t": "Cerebellum",
+     "d": "<ul><li>Infarction</li><li>Hemorrhage</li></ul><p><span class=\"hw\">เดินเซ → เกิดจาก [อ่านไม่ออกบางคำ: เวียน…(?)] → cerebellar</span></p><p><span class=\"hw\">→ sudden : vascular → hemorrhagic : ↑ICP ปวดหัว · ischemic : ตาม vascular territory (?)</span></p>"
+    },
+    {
+     "id": "bs",
+     "k": "dx",
+     "t": "Brainstem",
+     "d": "<ul><li>Vertebrobasilar TIA</li><li>Wallenberg's syndrome</li></ul>"
+    },
+    {
+     "id": "vm",
+     "k": "dx",
+     "t": "Vestibular migraine"
+    },
+    {
+     "id": "ie",
+     "k": "q",
+     "t": "Inner ear"
+    },
+    {
+     "id": "vn",
+     "k": "dx",
+     "t": "Vestibular nerve: Vestibular shwannoma"
+    },
+    {
+     "id": "wh",
+     "k": "dx",
+     "t": "With hearing loss",
+     "d": "<ul><li>Meniere's disease <span class=\"hw\">(ลายมือ: tinnitus/neuro loss(?))</span></li><li>Labytinthitis</li><li>Labyrinthine infarction</li></ul>"
+    },
+    {
+     "id": "woh",
+     "k": "dx",
+     "t": "Without hearing loss",
+     "d": "<ul><li>BPPV <span class=\"hw\">(ลายมือ: สัมพันธ์กับท่าทาง)</span></li><li>Vestibular neuritis</li><li>Perilymph fistula</li><li>Otosclerosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ex"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Central vertigo"
+    },
+    {
+     "f": "a",
+     "t": "p",
+     "l": "Peripheral vertigo"
+    },
+    {
+     "f": "c",
+     "t": "vas",
+     "l": "Vascular"
+    },
+    {
+     "f": "c",
+     "t": "nv",
+     "l": "Non-vascular"
+    },
+    {
+     "f": "vas",
+     "t": "cb",
+     "l": "Cerebellum"
+    },
+    {
+     "f": "vas",
+     "t": "bs",
+     "l": "Brainstem"
+    },
+    {
+     "f": "p",
+     "t": "vm",
+     "l": "Vestibular migraine"
+    },
+    {
+     "f": "p",
+     "t": "ie",
+     "l": "Inner ear"
+    },
+    {
+     "f": "p",
+     "t": "vn",
+     "l": "Vestibular nerve"
+    },
+    {
+     "f": "ie",
+     "t": "wh",
+     "l": "With hearing loss"
+    },
+    {
+     "f": "ie",
+     "t": "woh",
+     "l": "Without hearing loss"
+    }
+   ],
+   "note": "ลายมือสีน้ำเงินใต้กล่อง cerebellum, ข้าง Meniere's disease และข้าง BPPV ใส่ในกล่องที่ตรงกัน (ไฮไลต์เหลือง/เขียว/ฟ้าในเล่มไม่ใส่)"
+  }
+ ]
+}

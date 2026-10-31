@@ -1,0 +1,415 @@
+{
+ "key": "abd-ai",
+ "book": "ai",
+ "en": "Abdominal pain — systematic approach",
+ "th": "ปวดท้อง — approach เป็นระบบ",
+ "target": 21,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "assess",
+   "id": "ai-abd",
+   "h": "Approach ปวดท้องเป็นระบบ: anatomy + etiology",
+   "html": "<p>ปวดท้องมีสาเหตุได้ทั้งในและนอกช่องท้อง จึงควรคิดเป็นขั้นจากกว้างไปแคบ:</p><ol><li><b>ประเมินความเร่งด่วนก่อน</b>: ผู้ป่วยไม่คงที่ หรือเข้าได้กับโรคที่พลาดไม่ได้หรือไม่</li><li><b>ระยะเวลา</b>: เฉียบพลัน (ชั่วโมงถึงวัน) หรือเรื้อรัง/เป็น ๆ หาย ๆ</li><li><b>Anatomy</b>: ตำแหน่งที่ปวดบอกอวัยวะ เป็นรายการแรกของโรคที่ต้องนึกถึง</li><li><b>Etiology</b>: ลักษณะและการดำเนินของอาการปวดบอกกลไก ได้แก่ อักเสบ อุดตัน แตกทะลุ ขาดเลือด เมตาบอลิก ปวดร้าวจากนอกช่องท้อง ผนังหน้าท้อง และ functional</li><li><b>ส่งตรวจ</b>ให้ตรงกับตำแหน่งและกลไกที่สงสัย พร้อมคิดถึงกลุ่มผู้ป่วยพิเศษ</li></ol><div class=\"flow\" data-flow=\"aiabda\"></div>",
+   "sub": [
+    {
+     "id": "ai-abd-1",
+     "h": "ขั้นที่ 1 ผู้ป่วยไม่คงที่ / โรคที่พลาดไม่ได้",
+     "html": "<ul><li><b>สัญญาณอันตราย</b>: ความดันต่ำหรือช็อก, ชีพจรเร็ว, ซึมลง, peritoneal signs (guarding, rebound, rigidity), ปวดรุนแรงทันทีทันใด, ปวดมากเกินกว่าที่ตรวจพบ (pain out of proportion), ซีดหรือเลือดออก, อาเจียนต่อเนื่องร่วมกับท้องอืดและไม่ผายลม, อายุมากและมี vascular risk</li><li>หญิงวัยเจริญพันธุ์ทุกรายต้องส่ง <b>urine pregnancy test</b> เสมอ</li><li>ทำ ECG ในผู้ป่วยอายุมากหรือมีความเสี่ยงโรคหัวใจที่ปวดท้องส่วนบน (inferior MI มาด้วยปวดลิ้นปี่ได้)</li><li>ให้ยาแก้ปวดได้ ไม่ทำให้วินิจฉัยพลาด</li></ul><div class=\"warn\"><b>โรคที่พลาดไม่ได้</b>: ruptured AAA · aortic dissection · perforated viscus · acute mesenteric ischemia · ruptured ectopic pregnancy · intestinal obstruction/strangulation · acute MI · ascending cholangitis · severe acute pancreatitis · ovarian/testicular torsion · DKA</div>"
+    },
+    {
+     "id": "ai-abd-2",
+     "h": "ขั้นที่ 2 เฉียบพลัน vs เรื้อรัง",
+     "html": "<div class=\"tbl\"><table><thead><tr><th></th><th>เฉียบพลัน (acute abdomen)</th><th>เรื้อรัง / เป็น ๆ หาย ๆ</th></tr></thead><tbody><tr><td>ระยะเวลา</td><td>ชั่วโมงถึงไม่กี่วัน</td><td>นานเป็นสัปดาห์ถึงเดือน หรือเป็นซ้ำ ๆ</td></tr><tr><td>สิ่งที่ต้องรีบตอบ</td><td>ต้องผ่าตัดหรือทำหัตถการด่วนหรือไม่</td><td>มี alarm features หรือไม่ (organic vs functional)</td></tr><tr><td>สาเหตุเด่น</td><td>อักเสบ อุดตัน แตกทะลุ ขาดเลือด</td><td>PUD, functional dyspepsia, IBS, IBD, นิ่วถุงน้ำดี, chronic pancreatitis, มะเร็ง, endometriosis, chronic mesenteric ischemia</td></tr></tbody></table></div>"
+    },
+    {
+     "id": "ai-abd-3",
+     "h": "ขั้นที่ 3 Anatomy: ตำแหน่ง → อวัยวะ → โรค",
+     "html": "<p>แบ่งท้องเป็น 9 บริเวณ หรือใช้ 4 quadrant แล้วไล่อวัยวะที่อยู่ใต้ตำแหน่งนั้นจากผิวลงลึก (ผนังหน้าท้อง → อวัยวะในช่องท้อง → retroperitoneum) รวมทั้งอวัยวะเหนือกะบังลมที่ปวดร้าวลงมาได้</p><div class=\"tbl\"><table><thead><tr><th>ตำแหน่ง</th><th>อวัยวะ</th><th>โรคที่ต้องนึกถึง</th><th>ตรวจเริ่มต้น</th></tr></thead><tbody><tr><td>RUQ</td><td>ตับ ถุงน้ำดี ท่อน้ำดี duodenum ไตขวา ปอดขวาส่วนล่าง</td><td>biliary colic · acute cholecystitis · cholangitis · hepatitis · liver abscess · congestive hepatopathy/Budd-Chiari · perforated duodenal ulcer · retrocecal appendicitis (และ appendicitis ในหญิงตั้งครรภ์ไตรมาสท้าย) · right pyelonephritis/นิ่วไต · RLL pneumonia/pleurisy · PE · Fitz-Hugh-Curtis · herpes zoster</td><td>U/S RUQ, LFT</td></tr><tr><td>Epigastrium</td><td>กระเพาะ duodenum ตับอ่อน หลอดอาหาร หัวใจ aorta</td><td>PUD/gastritis · GERD/esophagitis · acute pancreatitis · biliary colic · appendicitis ระยะแรก · <b>inferior MI</b> · aortic dissection/AAA · gastric cancer · functional dyspepsia</td><td>ECG ± troponin, lipase, EGD ถ้ามี alarm features</td></tr><tr><td>LUQ</td><td>ม้าม กระเพาะ หางตับอ่อน splenic flexure ไตซ้าย ปอดซ้าย</td><td>splenic infarct/abscess/rupture · gastritis/PUD · pancreatitis · left pyelonephritis/นิ่วไต · LLL pneumonia · MI · colonic ischemia (splenic flexure)</td><td>CT abdomen, CXR, UA</td></tr><tr><td>รอบสะดือ</td><td>ลำไส้เล็ก ไส้ติ่ง (ระยะแรก) aorta</td><td>appendicitis ระยะแรก · small bowel obstruction · gastroenteritis · <b>acute mesenteric ischemia</b> · AAA · umbilical hernia</td><td>AXR/CT, lactate, CTA ถ้าสงสัย ischemia</td></tr><tr><td>RLQ</td><td>ไส้ติ่ง terminal ileum cecum ท่อไตขวา รังไข่และท่อนำไข่ขวา</td><td>acute appendicitis · mesenteric adenitis · terminal ileitis (Crohn, Yersinia, ileocecal TB) · cecal diverticulitis (พบได้บ่อยในคนเอเชีย) · นิ่วท่อไตขวา · ectopic pregnancy · ovarian torsion/ruptured cyst · PID/tubo-ovarian abscess · inguinal hernia · psoas abscess · testicular torsion</td><td>UPT, U/S (เด็ก หญิงตั้งครรภ์ คนผอม) หรือ CT, Alvarado score</td></tr><tr><td>LLQ</td><td>sigmoid colon ท่อไตซ้าย รังไข่และท่อนำไข่ซ้าย</td><td>sigmoid diverticulitis · colitis (infectious, IBD, ischemic) · ท้องผูก/IBS · sigmoid volvulus · นิ่วท่อไตซ้าย · โรคทางนรีเวชเช่นเดียวกับ RLQ · inguinal hernia</td><td>CT abdomen, UPT</td></tr><tr><td>ท้องน้อย (suprapubic/pelvic)</td><td>กระเพาะปัสสาวะ มดลูก ปีกมดลูก ต่อมลูกหมาก rectum</td><td>cystitis · acute urinary retention · PID/endometritis · ectopic pregnancy · dysmenorrhea/endometriosis · prostatitis</td><td>UA, UPT, TVUS, bladder scan/สวนปัสสาวะ</td></tr><tr><td>สีข้าง/เอว (flank)</td><td>ไต ท่อไต retroperitoneum aorta</td><td>pyelonephritis · นิ่วไต/ท่อไต · renal infarct · perinephric abscess · retroperitoneal hemorrhage (ได้ยาต้านการแข็งตัวของเลือด) · AAA · musculoskeletal · herpes zoster</td><td>UA, NCCT KUB, U/S</td></tr><tr><td>ทั่วท้อง (diffuse)</td><td>peritoneum ทั้งหมด หรือสาเหตุทั่วร่างกาย</td><td>generalized peritonitis (perforation) · gastroenteritis · intestinal obstruction · mesenteric ischemia · ruptured AAA · SBP (cirrhosis + ascites) · metabolic: DKA, uremia, hypercalcemia, adrenal crisis, acute intermittent porphyria, lead poisoning · vasculitis (IgA vasculitis, SLE) · IBS</td><td>ตาม clue: upright CXR/CT, glucose/ketone, electrolytes, Ca, BUN/Cr, diagnostic paracentesis</td></tr></tbody></table></div><div class=\"pearl\">Visceral pain ระยะแรกปวดแนวกลางลำตัวตามต้นกำเนิดของลำไส้: foregut → ลิ้นปี่ · midgut → รอบสะดือ · hindgut → ท้องน้อย เมื่ออักเสบถึง parietal peritoneum จึงปวดตรงตำแหน่งอวัยวะ (เช่น appendicitis ย้ายจากรอบสะดือไป RLQ)</div>"
+    },
+    {
+     "id": "ai-abd-4",
+     "h": "ขั้นที่ 4 Etiology: กลไกการเกิดอาการปวด",
+     "html": "<div class=\"tbl\"><table><thead><tr><th>กลไก</th><th>ลักษณะที่ชี้นำ</th><th>ตัวอย่าง</th></tr></thead><tbody><tr><td>อักเสบ/ติดเชื้อ</td><td>ค่อย ๆ ปวดมากขึ้น จากปวดตื้อแนวกลางกลายเป็นปวดชัดตรงตำแหน่ง มีไข้ กดเจ็บเฉพาะที่ WBC สูง</td><td>appendicitis, cholecystitis, pancreatitis, diverticulitis, PID, pyelonephritis, hepatitis, SBP</td></tr><tr><td>อุดตันอวัยวะกลวง</td><td>ปวดบิดเป็นพัก ๆ (colicky) กระสับกระส่ายหาท่าสบายไม่ได้ อาเจียน ไม่ผายลม เสียงลำไส้ดังผิดปกติ</td><td>bowel obstruction, volvulus, biliary colic, ureteric colic</td></tr><tr><td>แตก/ทะลุ</td><td>ปวดรุนแรงทันทีทันใด รุนแรงที่สุดตั้งแต่เริ่ม peritonitis หรือช็อก</td><td>perforated PUD, ruptured AAA, ruptured ectopic, ruptured spleen/HCC, ruptured ovarian cyst</td></tr><tr><td>ขาดเลือด/หลอดเลือด</td><td>ปวดมากแต่ตรวจท้องพบน้อย (pain out of proportion) มี AF หรือ vascular risk ระยะท้ายมี lactate สูงและถ่ายเป็นเลือด</td><td>acute mesenteric ischemia, ischemic colitis, torsion (รังไข่ อัณฑะ ลำไส้), splenic/renal infarct, aortic dissection</td></tr><tr><td>เมตาบอลิก/สารพิษ/ทั่วร่างกาย</td><td>ปวดทั่วท้อง ตรวจท้องไม่เข้ากับอาการ มีความผิดปกติระบบอื่นร่วม</td><td>DKA, uremia, hypercalcemia, adrenal insufficiency, acute intermittent porphyria, lead poisoning, IgA vasculitis, SLE serositis</td></tr><tr><td>ปวดร้าวจากนอกช่องท้อง</td><td>อาการหรือผลตรวจของทรวงอก ผิวหนัง หรืออัณฑะ</td><td>inferior MI, pneumonia, PE, pleuritis, herpes zoster, radiculopathy, testicular torsion</td></tr><tr><td>ผนังหน้าท้อง</td><td>กดเจ็บจุดเดียว ปวดมากขึ้นเมื่อเกร็งหน้าท้อง (<b>Carnett sign</b> บวก)</td><td>incarcerated hernia, rectus sheath hematoma, anterior cutaneous nerve entrapment</td></tr><tr><td>เนื้องอก</td><td>เรื้อรัง น้ำหนักลด ซีด คลำได้ก้อน ดีซ่าน</td><td>มะเร็งกระเพาะ ตับอ่อน ลำไส้ใหญ่ ตับ ท่อน้ำดี</td></tr><tr><td>Functional</td><td>เรื้อรัง ไม่มี alarm features ตรวจร่างกายและผลตรวจพื้นฐานปกติ</td><td>IBS, functional dyspepsia (Rome IV)</td></tr></tbody></table></div><div class=\"flow\" data-flow=\"aiabdb\"></div>"
+    },
+    {
+     "id": "ai-abd-5",
+     "h": "ขั้นที่ 5 ส่งตรวจให้ตรงกับสิ่งที่สงสัย",
+     "html": "<div class=\"tbl\"><table><thead><tr><th>สงสัย</th><th>ส่งตรวจ</th></tr></thead><tbody><tr><td>ปวดเฉียบพลันรุนแรงทุกราย</td><td>CBC, BUN/Cr, electrolytes, glucose, LFT, lipase, UA · <b>UPT ในหญิงวัยเจริญพันธุ์</b> · ECG ในผู้สูงอายุหรือมีความเสี่ยงโรคหัวใจ</td></tr><tr><td>โรคทางเดินน้ำดี</td><td>U/S RUQ, LFT</td></tr><tr><td>Pancreatitis</td><td>lipase ≥ 3 เท่าของค่าปกติสูงสุด · CT เมื่อวินิจฉัยไม่ชัดหรืออาการไม่ดีขึ้น</td></tr><tr><td>Perforation</td><td>upright CXR หาลมใต้กะบังลม หรือ CT</td></tr><tr><td>Bowel obstruction</td><td>AXR ท่านอนและท่ายืน หรือ CT</td></tr><tr><td>Mesenteric ischemia / AAA / dissection</td><td>CTA (bedside U/S สำหรับ AAA) · lactate</td></tr><tr><td>นิ่วทางเดินปัสสาวะ</td><td>UA, NCCT KUB</td></tr><tr><td>โรคทางนรีเวช</td><td>UPT, transvaginal U/S</td></tr><tr><td>เมตาบอลิก</td><td>glucose/ketone, electrolytes, Ca, BUN/Cr, cortisol, urine porphobilinogen ตามที่สงสัย</td></tr><tr><td>SBP</td><td>diagnostic paracentesis (PMN ≥ 250 /mm³)</td></tr></tbody></table></div>"
+    },
+    {
+     "id": "ai-abd-6",
+     "h": "กลุ่มผู้ป่วยที่ต้องระวังเป็นพิเศษ",
+     "html": "<div class=\"tbl\"><table><thead><tr><th>กลุ่ม</th><th>ข้อควรระวัง</th></tr></thead><tbody><tr><td>ผู้สูงอายุ</td><td>อาการน้อยกว่าความรุนแรงจริง อาจไม่มีไข้หรือ WBC ไม่สูง · นึกถึง mesenteric ischemia, AAA, MI, perforated diverticulitis, มะเร็งลำไส้อุดตัน · อัตราตายสูง จึงควรส่ง CT เร็ว</td></tr><tr><td>หญิงวัยเจริญพันธุ์</td><td>UPT ทุกราย · ectopic pregnancy, ovarian torsion, ruptured cyst, PID</td></tr><tr><td>หญิงตั้งครรภ์</td><td>ไส้ติ่งเลื่อนสูงขึ้นตามอายุครรภ์ · ectopic, placental abruption, HELLP/AFLP (ปวด RUQ/ลิ้นปี่), preeclampsia · เลือก U/S หรือ MRI ก่อน</td></tr><tr><td>ภูมิคุ้มกันต่ำ</td><td>อาการและอาการแสดงน้อย · CMV colitis, neutropenic enterocolitis (typhlitis), TB ในช่องท้อง</td></tr><tr><td>Cirrhosis + ascites</td><td>SBP · ต้องเจาะน้ำในท้องตรวจ</td></tr><tr><td>หลังผ่าตัดช่องท้อง</td><td>adhesive obstruction, anastomotic leak, intra-abdominal abscess</td></tr><tr><td>ได้ยาต้านการแข็งตัวของเลือด</td><td>rectus sheath hematoma, retroperitoneal hemorrhage</td></tr><tr><td>เบาหวาน</td><td>DKA ทำให้ปวดท้องได้เอง แต่ต้องหาโรคที่กระตุ้น DKA ในช่องท้องด้วย</td></tr></tbody></table></div>"
+    },
+    {
+     "id": "ai-abd-7",
+     "h": "ปวดท้องเรื้อรัง / เป็น ๆ หาย ๆ",
+     "html": "<p><b>Alarm features</b> ที่ต้องหาสาเหตุ organic (ส่องกล้อง/ภาพถ่ายรังสี): อายุมากที่เพิ่งเริ่มมีอาการ · น้ำหนักลด · เลือดออกในทางเดินอาหารหรือ iron deficiency anemia · กลืนลำบาก/กลืนเจ็บ · อาเจียนต่อเนื่อง · คลำได้ก้อน · ดีซ่าน · ไข้ · ปวดจนตื่นกลางคืน · ประวัติครอบครัวมะเร็งทางเดินอาหาร</p><div class=\"tbl\"><table><thead><tr><th>รูปแบบ</th><th>นึกถึง</th></tr></thead><tbody><tr><td>ปวดลิ้นปี่ สัมพันธ์กับมื้ออาหาร</td><td>PUD, functional dyspepsia, นิ่วถุงน้ำดี, chronic pancreatitis, gastric cancer</td></tr><tr><td>สัมพันธ์กับการขับถ่าย หรือ bowel habit เปลี่ยน</td><td>IBS · ถ้ามีเลือด น้ำหนักลด หรืออายุมาก ต้องแยก IBD และมะเร็งลำไส้ใหญ่</td></tr><tr><td>ปวดหลังกินอาหาร น้ำหนักลด กลัวการกิน มี vascular risk</td><td>chronic mesenteric ischemia</td></tr><tr><td>สัมพันธ์กับรอบเดือน</td><td>dysmenorrhea, endometriosis</td></tr><tr><td>กดเจ็บจุดเดียว Carnett sign บวก</td><td>ปวดจากผนังหน้าท้อง</td></tr><tr><td>เป็นพัก ๆ ร่วมกับอาการทางระบบประสาท/จิตใจ หรือสัมผัสตะกั่ว</td><td>acute intermittent porphyria, lead poisoning</td></tr></tbody></table></div>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "aiabda",
+   "title": "Approach ปวดท้อง: ความเร่งด่วน → ระยะเวลา → ตำแหน่ง",
+   "src": "text",
+   "note": "Claude เขียนเพิ่ม — ไม่ได้มาจากเล่มเหลืองหรือตำราศิริราช",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "ปวดท้อง"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "ไม่คงที่ / peritonitis / มีสัญญาณอันตราย?",
+     "d": "<ul><li>ความดันต่ำ ชีพจรเร็ว ซึมลง</li><li>guarding, rebound, rigidity</li><li>ปวดรุนแรงทันทีทันใด</li><li>pain out of proportion</li><li>ซีด/เลือดออก</li><li>อาเจียน ท้องอืด ไม่ผายลม</li><li>อายุมาก + vascular risk</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "stop",
+     "t": "Resuscitate + ปรึกษาศัลยกรรมด่วน",
+     "d": "<ul><li>IV fluid, crossmatch, NPO, ยาแก้ปวด</li><li>bedside U/S: FAST, aorta, ectopic</li><li>UPT, ECG, lab พื้นฐาน, lactate</li><li>โรคที่พลาดไม่ได้: ruptured AAA, dissection, perforation, mesenteric ischemia, ruptured ectopic, strangulated obstruction, MI, cholangitis, severe pancreatitis, torsion, DKA</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "ระยะเวลาที่ปวด?"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "ปวดตำแหน่งไหน?",
+     "d": "<p>ตำแหน่งบอกอวัยวะ — ระยะแรกของ visceral pain อาจปวดแนวกลางลำตัวก่อน</p>"
+    },
+    {
+     "id": "r1",
+     "k": "dx",
+     "t": "RUQ: ตับ ถุงน้ำดี ท่อน้ำดี duodenum ไตขวา ปอดขวาส่วนล่า",
+     "d": "<p><b>อวัยวะ</b>: ตับ ถุงน้ำดี ท่อน้ำดี duodenum ไตขวา ปอดขวาส่วนล่าง</p><p><b>นึกถึง</b>: biliary colic · acute cholecystitis · cholangitis · hepatitis · liver abscess · congestive hepatopathy/Budd-Chiari · perforated duodenal ulcer · retrocecal appendicitis (และ appendicitis ในหญิงตั้งครรภ์ไตรมาสท้าย) · right pyelonephritis/นิ่วไต · RLL pneumonia/pleurisy · PE · Fitz-Hugh-Curtis · herpes zoster</p><p><b>ตรวจเริ่มต้น</b>: U/S RUQ, LFT</p>"
+    },
+    {
+     "id": "r2",
+     "k": "dx",
+     "t": "Epigastrium: กระเพาะ duodenum ตับอ่อน หลอดอาหาร หัวใจ aorta",
+     "d": "<p><b>อวัยวะ</b>: กระเพาะ duodenum ตับอ่อน หลอดอาหาร หัวใจ aorta</p><p><b>นึกถึง</b>: PUD/gastritis · GERD/esophagitis · acute pancreatitis · biliary colic · appendicitis ระยะแรก · <b>inferior MI</b> · aortic dissection/AAA · gastric cancer · functional dyspepsia</p><p><b>ตรวจเริ่มต้น</b>: ECG ± troponin, lipase, EGD ถ้ามี alarm features</p>"
+    },
+    {
+     "id": "r3",
+     "k": "dx",
+     "t": "LUQ: ม้าม กระเพาะ หางตับอ่อน splenic flexure ไตซ้าย ปอด",
+     "d": "<p><b>อวัยวะ</b>: ม้าม กระเพาะ หางตับอ่อน splenic flexure ไตซ้าย ปอดซ้าย</p><p><b>นึกถึง</b>: splenic infarct/abscess/rupture · gastritis/PUD · pancreatitis · left pyelonephritis/นิ่วไต · LLL pneumonia · MI · colonic ischemia (splenic flexure)</p><p><b>ตรวจเริ่มต้น</b>: CT abdomen, CXR, UA</p>"
+    },
+    {
+     "id": "r4",
+     "k": "dx",
+     "t": "รอบสะดือ: ลำไส้เล็ก ไส้ติ่ง (ระยะแรก) aorta",
+     "d": "<p><b>อวัยวะ</b>: ลำไส้เล็ก ไส้ติ่ง (ระยะแรก) aorta</p><p><b>นึกถึง</b>: appendicitis ระยะแรก · small bowel obstruction · gastroenteritis · <b>acute mesenteric ischemia</b> · AAA · umbilical hernia</p><p><b>ตรวจเริ่มต้น</b>: AXR/CT, lactate, CTA ถ้าสงสัย ischemia</p>"
+    },
+    {
+     "id": "r5",
+     "k": "dx",
+     "t": "RLQ: ไส้ติ่ง terminal ileum cecum ท่อไตขวา รังไข่และท่อ",
+     "d": "<p><b>อวัยวะ</b>: ไส้ติ่ง terminal ileum cecum ท่อไตขวา รังไข่และท่อนำไข่ขวา</p><p><b>นึกถึง</b>: acute appendicitis · mesenteric adenitis · terminal ileitis (Crohn, Yersinia, ileocecal TB) · cecal diverticulitis (พบได้บ่อยในคนเอเชีย) · นิ่วท่อไตขวา · ectopic pregnancy · ovarian torsion/ruptured cyst · PID/tubo-ovarian abscess · inguinal hernia · psoas abscess · testicular torsion</p><p><b>ตรวจเริ่มต้น</b>: UPT, U/S (เด็ก หญิงตั้งครรภ์ คนผอม) หรือ CT, Alvarado score</p>"
+    },
+    {
+     "id": "r6",
+     "k": "dx",
+     "t": "LLQ: sigmoid colon ท่อไตซ้าย รังไข่และท่อนำไข่ซ้าย",
+     "d": "<p><b>อวัยวะ</b>: sigmoid colon ท่อไตซ้าย รังไข่และท่อนำไข่ซ้าย</p><p><b>นึกถึง</b>: sigmoid diverticulitis · colitis (infectious, IBD, ischemic) · ท้องผูก/IBS · sigmoid volvulus · นิ่วท่อไตซ้าย · โรคทางนรีเวชเช่นเดียวกับ RLQ · inguinal hernia</p><p><b>ตรวจเริ่มต้น</b>: CT abdomen, UPT</p>"
+    },
+    {
+     "id": "r7",
+     "k": "dx",
+     "t": "ท้องน้อย (suprapubic/pelvic): กระเพาะปัสสาวะ มดลูก ปีกมดลูก ต่อมลูกหมาก rectum",
+     "d": "<p><b>อวัยวะ</b>: กระเพาะปัสสาวะ มดลูก ปีกมดลูก ต่อมลูกหมาก rectum</p><p><b>นึกถึง</b>: cystitis · acute urinary retention · PID/endometritis · ectopic pregnancy · dysmenorrhea/endometriosis · prostatitis</p><p><b>ตรวจเริ่มต้น</b>: UA, UPT, TVUS, bladder scan/สวนปัสสาวะ</p>"
+    },
+    {
+     "id": "r8",
+     "k": "dx",
+     "t": "สีข้าง/เอว (flank): ไต ท่อไต retroperitoneum aorta",
+     "d": "<p><b>อวัยวะ</b>: ไต ท่อไต retroperitoneum aorta</p><p><b>นึกถึง</b>: pyelonephritis · นิ่วไต/ท่อไต · renal infarct · perinephric abscess · retroperitoneal hemorrhage (ได้ยาต้านการแข็งตัวของเลือด) · AAA · musculoskeletal · herpes zoster</p><p><b>ตรวจเริ่มต้น</b>: UA, NCCT KUB, U/S</p>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "ปวดทั่วท้อง: ผลตรวจท้องเป็นอย่างไร?"
+    },
+    {
+     "id": "f1",
+     "k": "dx",
+     "t": "Generalized peritonitis",
+     "d": "<ul><li>perforated viscus</li><li>ruptured AAA/ectopic</li><li>SBP ใน cirrhosis</li><li>ตรวจ: upright CXR, CT, paracentesis ถ้ามี ascites</li></ul>"
+    },
+    {
+     "id": "f2",
+     "k": "dx",
+     "t": "Intestinal obstruction",
+     "d": "<ul><li>adhesion (เคยผ่าตัด), hernia, tumor, volvulus</li><li>ตรวจ: AXR/CT</li></ul>"
+    },
+    {
+     "id": "f3",
+     "k": "dx",
+     "t": "ischemia / เมตาบอลิก / นอกช่องท้อง",
+     "d": "<ul><li>acute mesenteric ischemia → CTA, lactate</li><li>DKA, uremia, hypercalcemia, adrenal crisis, porphyria, lead</li><li>inferior MI, pneumonia, herpes zoster</li><li>gastroenteritis, IBS (วินิจฉัยเมื่อแยกโรคอื่นแล้ว)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "มี alarm features?",
+     "d": "<ul><li>อายุมากที่เพิ่งเริ่มมีอาการ</li><li>น้ำหนักลด</li><li>GI bleeding / IDA</li><li>กลืนลำบาก</li><li>อาเจียนต่อเนื่อง</li><li>คลำได้ก้อน</li><li>ดีซ่าน</li><li>ปวดจนตื่นกลางคืน</li><li>ประวัติครอบครัวมะเร็ง</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "act",
+     "t": "หาสาเหตุ organic ตามตำแหน่ง",
+     "d": "<ul><li>EGD: ส่วนบน</li><li>colonoscopy: bowel habit เปลี่ยน, เลือดออก, IDA</li><li>CT abdomen: ก้อน, น้ำหนักลด, ตับอ่อน/ทางเดินน้ำดี</li><li>U/S: ถุงน้ำดี, ตับ</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "อาการปวดสัมพันธ์กับอะไร?"
+    },
+    {
+     "id": "i1",
+     "k": "dx",
+     "t": "Dyspepsia",
+     "d": "<ul><li>PUD, functional dyspepsia</li><li>นิ่วถุงน้ำดี, chronic pancreatitis</li><li>chronic mesenteric ischemia ถ้าปวดหลังอาหาร + น้ำหนักลด</li></ul>"
+    },
+    {
+     "id": "i2",
+     "k": "dx",
+     "t": "IBS (Rome IV) / ท้องผูก",
+     "d": "<p>ถ้ามีเลือด น้ำหนักลด หรืออายุมาก ต้องแยก IBD และมะเร็งลำไส้ใหญ่</p>"
+    },
+    {
+     "id": "i3",
+     "k": "dx",
+     "t": "Dysmenorrhea / endometriosis"
+    },
+    {
+     "id": "i4",
+     "k": "dx",
+     "t": "ปวดจากผนังหน้าท้อง",
+     "d": "<p>anterior cutaneous nerve entrapment, hernia, rectus sheath hematoma</p>"
+    },
+    {
+     "id": "i5",
+     "k": "dx",
+     "t": "เมตาบอลิก / ระบบอื่น",
+     "d": "<ul><li>acute intermittent porphyria</li><li>lead poisoning</li><li>hypercalcemia</li><li>adrenal insufficiency</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "ใช่"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "ไม่ใช่ (คงที่)"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "หลัง stabilize"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "เฉียบพลัน (ชั่วโมง–วัน)"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "เรื้อรัง / เป็น ๆ หาย ๆ"
+    },
+    {
+     "f": "e",
+     "t": "r1",
+     "l": "RUQ"
+    },
+    {
+     "f": "e",
+     "t": "r2",
+     "l": "ลิ้นปี่"
+    },
+    {
+     "f": "e",
+     "t": "r3",
+     "l": "LUQ"
+    },
+    {
+     "f": "e",
+     "t": "r4",
+     "l": "รอบสะดือ"
+    },
+    {
+     "f": "e",
+     "t": "r5",
+     "l": "RLQ"
+    },
+    {
+     "f": "e",
+     "t": "r6",
+     "l": "LLQ"
+    },
+    {
+     "f": "e",
+     "t": "r7",
+     "l": "ท้องน้อย"
+    },
+    {
+     "f": "e",
+     "t": "r8",
+     "l": "สีข้าง/เอว"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "ทั่วท้อง / บอกไม่ได้"
+    },
+    {
+     "f": "f",
+     "t": "f1",
+     "l": "ท้องแข็ง rebound ทั่วท้อง"
+    },
+    {
+     "f": "f",
+     "t": "f2",
+     "l": "ท้องอืด อาเจียน ไม่ผายลม"
+    },
+    {
+     "f": "f",
+     "t": "f3",
+     "l": "ตรวจท้องพบน้อยกว่าอาการ"
+    },
+    {
+     "f": "g",
+     "t": "h",
+     "l": "มี"
+    },
+    {
+     "f": "g",
+     "t": "i",
+     "l": "ไม่มี"
+    },
+    {
+     "f": "i",
+     "t": "i1",
+     "l": "มื้ออาหาร (ลิ้นปี่)"
+    },
+    {
+     "f": "i",
+     "t": "i2",
+     "l": "การขับถ่าย"
+    },
+    {
+     "f": "i",
+     "t": "i3",
+     "l": "รอบเดือน"
+    },
+    {
+     "f": "i",
+     "t": "i4",
+     "l": "Carnett sign บวก"
+    },
+    {
+     "f": "i",
+     "t": "i5",
+     "l": "ไม่สัมพันธ์ + มีอาการระบบอื่น"
+    }
+   ]
+  },
+  {
+   "id": "aiabdb",
+   "title": "ลักษณะการปวด → กลไก (etiology)",
+   "src": "text",
+   "note": "Claude เขียนเพิ่ม",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "ลักษณะการปวดเป็นแบบไหน?"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "แตก/ทะลุ หรือหลอดเลือด",
+     "d": "<ul><li>perforated PUD</li><li>ruptured AAA, aortic dissection</li><li>ruptured ectopic</li><li>torsion</li><li>mesenteric embolism</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "อุดตันอวัยวะกลวง",
+     "d": "<ul><li>bowel obstruction, volvulus</li><li>biliary colic</li><li>ureteric colic</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "อักเสบ/ติดเชื้อ",
+     "d": "<ul><li>appendicitis, cholecystitis, pancreatitis</li><li>diverticulitis, PID, pyelonephritis</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "ขาดเลือด / เมตาบอลิก / นอกช่องท้อง",
+     "d": "<ul><li>acute mesenteric ischemia</li><li>DKA, uremia, hypercalcemia, adrenal crisis, porphyria, lead</li><li>inferior MI, pneumonia, herpes zoster</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "ผนังหน้าท้อง",
+     "d": "<p>Carnett sign บวก: hernia, rectus sheath hematoma, nerve entrapment</p>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Functional (เมื่อไม่มี alarm features)",
+     "d": "<p>IBS, functional dyspepsia</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "ทันทีทันใด รุนแรงสุดตั้งแต่ต้น"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "บิดเป็นพัก ๆ (colicky)"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "ค่อย ๆ มากขึ้น + ไข้ + กดเจ็บเฉพาะที่"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "ปวดมากแต่ตรวจท้องพบน้อย"
+    },
+    {
+     "f": "a",
+     "t": "f",
+     "l": "กดเจ็บจุดเดียว เกร็งท้องแล้วเจ็บมากขึ้น"
+    },
+    {
+     "f": "a",
+     "t": "g",
+     "l": "เรื้อรัง ตรวจทุกอย่างปกติ"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "key": "5-3",
+ "en": "Thyroid function test interpretation",
+ "th": "การแปลผล thyroid function test",
+ "pdf": "66",
+ "target": null,
+ "new": {
+  "id": "thyroid-function-test",
+  "th": "แปลผล thyroid function test",
+  "en": "Thyroid function test interpretation",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "yb-5-3-approach",
+   "h": "Algorithm: Thyroid function test interpretation",
+   "html": "<div class=\"flow\" data-flow=\"y53a\"></div><p>เริ่มจาก <b>Free T4</b> แล้วดู TSH (และ Free T3 เมื่อ FT4 ปกติและ TSH ปกติ)</p><div class=\"tbl\"><table><thead><tr><th>Free T4</th><th>TSH</th><th>Free T3</th><th>แปลผล</th></tr></thead><tbody><tr><td>↑↑</td><td>↑↑ หรือ Normal</td><td>–</td><td>Inappropriate TSH secretion (Hyperthyroid)</td></tr><tr><td>↑↑</td><td>↓↓</td><td>–</td><td>Primary hyperthyroid</td></tr><tr><td>Normal</td><td>↑↑</td><td>–</td><td>Subclinical hypothyroid</td></tr><tr><td>Normal</td><td>↓↓</td><td>–</td><td>Subclinical hyperthyroid</td></tr><tr><td>Normal</td><td>Normal</td><td>↓↓</td><td>Non thyroidal illness</td></tr><tr><td>Normal</td><td>Normal</td><td>Normal</td><td>Normal</td></tr><tr><td>↓↓</td><td>↑↑</td><td>–</td><td>Primary hypothyroid</td></tr><tr><td>↓↓</td><td>Normal หรือ ↓↓</td><td>–</td><td>Secondary hypothyroid</td></tr></tbody></table></div>"
+  },
+  {
+   "id": "yb-5-3-hw",
+   "h": "โน้ตลายมือ",
+   "html": "<ul><li>ที่ <b>Non thyroidal illness</b> (FT4 ปกติ, TSH ปกติ, FT3 ↓↓): <span class=\"hw\">sick Euthyroid</span></li><li><span class=\"hw\">rT3 แทน(?) FT3 ∴ FT3 ↓, FT4 ปกติ</span></li><li><span class=\"hw\">★ ปกติ Hypothyroid ต้อง FT4 ↓ (ส่วน FT3 - [อ่านไม่ออก])</span></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y53a",
+   "title": "Thyroid function test interpretation",
+   "src": "fig",
+   "img": "yb-5-3-f1.webp",
+   "note": "ลายมือ: sick Euthyroid + โน้ต rT3/FT3 ที่ Non thyroidal illness และโน้ต ★ เรื่อง Hypothyroid ต้อง FT4 ↓ · กล่องผล ↑↑/Normal/↓↓ ของ TSH และ Free T3 ยุบเป็นป้ายบนลูกศร",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Free T4"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Hyperthyroid → TSH"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Normal or Subclinical → TSH"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Hypothyroid → TSH",
+     "d": "<span class=\"hw\">★ ปกติ Hypothyroid ต้อง FT4 ↓ (ส่วน FT3 - [อ่านไม่ออก])</span>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Inappropriate TSH secretion"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Primary hyperthyroid"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Subclinical hypothyroid"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Subclinical hyperthyroid"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Free T3"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Non thyroidal illness",
+     "d": "<span class=\"hw\">sick Euthyroid</span> (ลายมือ: ลูกศรจาก Non thyroidal illness ไป sick Euthyroid)<br><span class=\"hw\">rT3 แทน(?) FT3 ∴ FT3 ↓, FT4 ปกติ</span>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Normal"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Primary hypothyroid"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Secondary hypothyroid"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Free T4 ↑↑"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Free T4 Normal"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Free T4 ↓↓"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "TSH ↑↑ or Normal"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "TSH ↓↓"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "TSH ↑↑"
+    },
+    {
+     "f": "c",
+     "t": "i",
+     "l": "TSH Normal"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "TSH ↓↓"
+    },
+    {
+     "f": "i",
+     "t": "j",
+     "l": "Free T3 ↓↓"
+    },
+    {
+     "f": "i",
+     "t": "k",
+     "l": "Free T3 Normal"
+    },
+    {
+     "f": "d",
+     "t": "l",
+     "l": "TSH ↑↑"
+    },
+    {
+     "f": "d",
+     "t": "m",
+     "l": "TSH Normal or ↓↓"
+    }
+   ]
+  }
+ ]
+}

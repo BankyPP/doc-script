@@ -1,14 +1,28 @@
 /* Clinic › Symptomatology & Approach — สร้างอัตโนมัติด้วย tools/symp/build.py (อย่าแก้ด้วยมือ)
-   เนื้อหาแต่ละบทอยู่ใน docs/symp/chNN.json · รูปใน docs/symp/img/ */
+   ตำราศิริราช + เล่มเหลือง (รวมด้วย tools/symp/merge_yb.py) · เนื้อหาแต่ละบทอยู่ใน docs/symp/chNN.json · รูปใน docs/symp/img/ */
 window.POY_SYMP = {
- "v": 1793034139,
+ "v": 1793470967,
  "book": {
   "title": "ตำราอายุรศาสตร์ อาการวิทยา",
   "by": "ภาควิชาอายุรศาสตร์ คณะแพทยศาสตร์ศิริราชพยาบาล",
   "ed": "พิมพ์ครั้งที่ 3 (ฉบับปรับปรุงใหม่) พ.ศ. 2559",
   "inst": "si"
  },
- "total": 44,
+ "books": {
+  "si": {
+   "title": "ตำราอายุรศาสตร์ อาการวิทยา",
+   "by": "ภาควิชาอายุรศาสตร์ คณะแพทยศาสตร์ศิริราชพยาบาล",
+   "ed": "พิมพ์ครั้งที่ 3 (ฉบับปรับปรุงใหม่) พ.ศ. 2559",
+   "inst": "si"
+  },
+  "yb": {
+   "title": "Differential diagnostic algorithm in internal medicine (เล่มเหลือง — Approach algorithms)",
+   "by": "ณัฐพล ปัทมินทร์",
+   "ed": "พร้อมลายมือ/โน้ตที่เขียนเพิ่มในเล่ม",
+   "inst": "both"
+  }
+ },
+ "total": 62,
  "groups": [
   {
    "id": "base",
@@ -16,7 +30,8 @@ window.POY_SYMP = {
    "c": "#7A5C3E",
    "ch": [
     1,
-    2
+    2,
+    62
    ]
   },
   {
@@ -46,7 +61,11 @@ window.POY_SYMP = {
     35,
     36,
     37,
-    38
+    38,
+    58,
+    59,
+    60,
+    61
    ]
   },
   {
@@ -97,7 +116,11 @@ window.POY_SYMP = {
     27,
     28,
     42,
-    43
+    43,
+    45,
+    46,
+    47,
+    48
    ]
   },
   {
@@ -107,7 +130,23 @@ window.POY_SYMP = {
    "ch": [
     29,
     30,
-    41
+    41,
+    57
+   ]
+  },
+  {
+   "id": "endo",
+   "t": "ต่อมไร้ท่อ · การเจริญเติบโต",
+   "c": "#7A4E86",
+   "ch": [
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
    ]
   }
  ],
@@ -119,6 +158,12 @@ window.POY_SYMP = {
    "en": "Approach to the Patient",
    "pages": "2–7",
    "g": "base",
+   "b": {
+    "si": {
+     "no": 1,
+     "pages": "2–7"
+    }
+   },
    "file": "ch01.json",
    "n": 13,
    "f": 1,
@@ -132,6 +177,12 @@ window.POY_SYMP = {
    "en": "Medical Interviewing",
    "pages": "8–21",
    "g": "base",
+   "b": {
+    "si": {
+     "no": 2,
+     "pages": "8–21"
+    }
+   },
    "file": "ch02.json",
    "n": 25,
    "f": 1,
@@ -145,6 +196,12 @@ window.POY_SYMP = {
    "en": "Alteration of Consciousness",
    "pages": "22–42",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 3,
+     "pages": "22–42"
+    }
+   },
    "file": "ch03.json",
    "n": 23,
    "f": 2,
@@ -158,6 +215,12 @@ window.POY_SYMP = {
    "en": "Delirium",
    "pages": "43–52",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 4,
+     "pages": "43–52"
+    }
+   },
    "file": "ch04.json",
    "n": 17,
    "f": 2,
@@ -171,6 +234,12 @@ window.POY_SYMP = {
    "en": "Syncope",
    "pages": "53–61",
    "g": "cvr",
+   "b": {
+    "si": {
+     "no": 5,
+     "pages": "53–61"
+    }
+   },
    "file": "ch05.json",
    "n": 13,
    "f": 1,
@@ -184,6 +253,12 @@ window.POY_SYMP = {
    "en": "Seizure",
    "pages": "62–71",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 6,
+     "pages": "62–71"
+    }
+   },
    "file": "ch06.json",
    "n": 17,
    "f": 2,
@@ -197,11 +272,34 @@ window.POY_SYMP = {
    "en": "Fever",
    "pages": "72–79",
    "g": "gen",
+   "b": {
+    "si": {
+     "no": 7,
+     "pages": "72–79"
+    },
+    "yb": [
+     {
+      "k": "7.1",
+      "o": 26,
+      "p": "91–94"
+     },
+     {
+      "k": "7.2",
+      "o": 27,
+      "p": "95"
+     },
+     {
+      "k": "7.3",
+      "o": 28,
+      "p": "96"
+     }
+    ]
+   },
    "file": "ch07.json",
-   "n": 17,
-   "f": 2,
-   "i": 0,
-   "kb": 40
+   "n": 29,
+   "f": 8,
+   "i": 8,
+   "kb": 67
   },
   {
    "no": 8,
@@ -210,11 +308,29 @@ window.POY_SYMP = {
    "en": "Anemia",
    "pages": "80–93",
    "g": "heme",
+   "b": {
+    "si": {
+     "no": 8,
+     "pages": "80–93"
+    },
+    "yb": [
+     {
+      "k": "6.1",
+      "o": 24,
+      "p": "75–77"
+     },
+     {
+      "k": "6.2",
+      "o": 25,
+      "p": "78"
+     }
+    ]
+   },
    "file": "ch08.json",
-   "n": 31,
-   "f": 5,
-   "i": 3,
-   "kb": 50
+   "n": 34,
+   "f": 7,
+   "i": 8,
+   "kb": 62
   },
   {
    "no": 9,
@@ -223,11 +339,24 @@ window.POY_SYMP = {
    "en": "Jaundice",
    "pages": "94–102",
    "g": "gi",
+   "b": {
+    "si": {
+     "no": 9,
+     "pages": "94–102"
+    },
+    "yb": [
+     {
+      "k": "3.1",
+      "o": 2,
+      "p": "36–37"
+     }
+    ]
+   },
    "file": "ch09.json",
-   "n": 19,
-   "f": 2,
-   "i": 1,
-   "kb": 36
+   "n": 21,
+   "f": 4,
+   "i": 3,
+   "kb": 55
   },
   {
    "no": 10,
@@ -236,11 +365,24 @@ window.POY_SYMP = {
    "en": "Edema",
    "pages": "103–115",
    "g": "gen",
+   "b": {
+    "si": {
+     "no": 10,
+     "pages": "103–115"
+    },
+    "yb": [
+     {
+      "k": "4.5",
+      "o": 10,
+      "p": "57"
+     }
+    ]
+   },
    "file": "ch10.json",
-   "n": 19,
-   "f": 4,
-   "i": 4,
-   "kb": 47
+   "n": 20,
+   "f": 5,
+   "i": 5,
+   "kb": 53
   },
   {
    "no": 11,
@@ -249,6 +391,12 @@ window.POY_SYMP = {
    "en": "Lymphadenopathy",
    "pages": "116–123",
    "g": "heme",
+   "b": {
+    "si": {
+     "no": 11,
+     "pages": "116–123"
+    }
+   },
    "file": "ch11.json",
    "n": 19,
    "f": 2,
@@ -262,6 +410,12 @@ window.POY_SYMP = {
    "en": "Dyspnea",
    "pages": "124–134",
    "g": "cvr",
+   "b": {
+    "si": {
+     "no": 12,
+     "pages": "124–134"
+    }
+   },
    "file": "ch12.json",
    "n": 24,
    "f": 1,
@@ -275,6 +429,12 @@ window.POY_SYMP = {
    "en": "Chest Pain",
    "pages": "135–145",
    "g": "cvr",
+   "b": {
+    "si": {
+     "no": 13,
+     "pages": "135–145"
+    }
+   },
    "file": "ch13.json",
    "n": 26,
    "f": 3,
@@ -288,6 +448,12 @@ window.POY_SYMP = {
    "en": "Palpitation",
    "pages": "146–151",
    "g": "cvr",
+   "b": {
+    "si": {
+     "no": 14,
+     "pages": "146–151"
+    }
+   },
    "file": "ch14.json",
    "n": 12,
    "f": 1,
@@ -301,6 +467,12 @@ window.POY_SYMP = {
    "en": "Cough",
    "pages": "152–158",
    "g": "cvr",
+   "b": {
+    "si": {
+     "no": 15,
+     "pages": "152–158"
+    }
+   },
    "file": "ch15.json",
    "n": 14,
    "f": 2,
@@ -314,11 +486,17 @@ window.POY_SYMP = {
    "en": "Hemoptysis",
    "pages": "159–164",
    "g": "cvr",
+   "b": {
+    "si": {
+     "no": 16,
+     "pages": "159–164"
+    }
+   },
    "file": "ch16.json",
    "n": 10,
    "f": 2,
    "i": 1,
-   "kb": 27
+   "kb": 28
   },
   {
    "no": 17,
@@ -327,6 +505,12 @@ window.POY_SYMP = {
    "en": "Abdominal Mass",
    "pages": "165–168",
    "g": "gi",
+   "b": {
+    "si": {
+     "no": 17,
+     "pages": "165–168"
+    }
+   },
    "file": "ch17.json",
    "n": 9,
    "f": 2,
@@ -340,11 +524,24 @@ window.POY_SYMP = {
    "en": "Dysphagia",
    "pages": "169–177",
    "g": "gi",
+   "b": {
+    "si": {
+     "no": 18,
+     "pages": "169–177"
+    },
+    "yb": [
+     {
+      "k": "3.2",
+      "o": 3,
+      "p": "38"
+     }
+    ]
+   },
    "file": "ch18.json",
-   "n": 20,
-   "f": 3,
-   "i": 2,
-   "kb": 37
+   "n": 21,
+   "f": 4,
+   "i": 3,
+   "kb": 44
   },
   {
    "no": 19,
@@ -353,6 +550,12 @@ window.POY_SYMP = {
    "en": "Dyspepsia",
    "pages": "178–183",
    "g": "gi",
+   "b": {
+    "si": {
+     "no": 19,
+     "pages": "178–183"
+    }
+   },
    "file": "ch19.json",
    "n": 13,
    "f": 2,
@@ -366,11 +569,29 @@ window.POY_SYMP = {
    "en": "Nausea, Vomiting, Hiccups",
    "pages": "184–197",
    "g": "gi",
+   "b": {
+    "si": {
+     "no": 20,
+     "pages": "184–197"
+    },
+    "yb": [
+     {
+      "k": "3.3",
+      "o": 4,
+      "p": "39"
+     },
+     {
+      "k": "3.4",
+      "o": 5,
+      "p": "40"
+     }
+    ]
+   },
    "file": "ch20.json",
-   "n": 31,
-   "f": 2,
-   "i": 1,
-   "kb": 58
+   "n": 33,
+   "f": 4,
+   "i": 3,
+   "kb": 66
   },
   {
    "no": 21,
@@ -379,11 +600,25 @@ window.POY_SYMP = {
    "en": "Abdominal Pain",
    "pages": "198–207",
    "g": "gi",
+   "b": {
+    "si": {
+     "no": 21,
+     "pages": "198–207"
+    },
+    "yb": [
+     {
+      "k": "หน้าแทรก abdominal pain",
+      "o": 1,
+      "p": "34–35"
+     }
+    ],
+    "ai": 1
+   },
    "file": "ch21.json",
-   "n": 25,
-   "f": 2,
-   "i": 2,
-   "kb": 41
+   "n": 36,
+   "f": 5,
+   "i": 3,
+   "kb": 109
   },
   {
    "no": 22,
@@ -392,6 +627,12 @@ window.POY_SYMP = {
    "en": "Diarrhea/Constipation",
    "pages": "208–224",
    "g": "gi",
+   "b": {
+    "si": {
+     "no": 22,
+     "pages": "208–224"
+    }
+   },
    "file": "ch22.json",
    "n": 29,
    "f": 4,
@@ -405,6 +646,12 @@ window.POY_SYMP = {
    "en": "Gastrointestinal Bleeding",
    "pages": "225–231",
    "g": "gi",
+   "b": {
+    "si": {
+     "no": 23,
+     "pages": "225–231"
+    }
+   },
    "file": "ch23.json",
    "n": 22,
    "f": 3,
@@ -418,6 +665,12 @@ window.POY_SYMP = {
    "en": "Abnormal Bleeding",
    "pages": "232–242",
    "g": "heme",
+   "b": {
+    "si": {
+     "no": 24,
+     "pages": "232–242"
+    }
+   },
    "file": "ch24.json",
    "n": 17,
    "f": 7,
@@ -431,11 +684,29 @@ window.POY_SYMP = {
    "en": "Oliguria/Anuria",
    "pages": "243–251",
    "g": "kub",
+   "b": {
+    "si": {
+     "no": 25,
+     "pages": "243–251"
+    },
+    "yb": [
+     {
+      "k": "4.1",
+      "o": 6,
+      "p": "51"
+     },
+     {
+      "k": "4.2",
+      "o": 7,
+      "p": "52"
+     }
+    ]
+   },
    "file": "ch25.json",
-   "n": 18,
-   "f": 2,
-   "i": 2,
-   "kb": 34
+   "n": 22,
+   "f": 5,
+   "i": 5,
+   "kb": 47
   },
   {
    "no": 26,
@@ -444,11 +715,24 @@ window.POY_SYMP = {
    "en": "Polyuria",
    "pages": "252–257",
    "g": "kub",
+   "b": {
+    "si": {
+     "no": 26,
+     "pages": "252–257"
+    },
+    "yb": [
+     {
+      "k": "4.4",
+      "o": 9,
+      "p": "55–56"
+     }
+    ]
+   },
    "file": "ch26.json",
-   "n": 15,
-   "f": 2,
-   "i": 1,
-   "kb": 25
+   "n": 17,
+   "f": 3,
+   "i": 2,
+   "kb": 30
   },
   {
    "no": 27,
@@ -457,6 +741,12 @@ window.POY_SYMP = {
    "en": "Abnormal Urination/Dysuria",
    "pages": "258–265",
    "g": "kub",
+   "b": {
+    "si": {
+     "no": 27,
+     "pages": "258–265"
+    }
+   },
    "file": "ch27.json",
    "n": 22,
    "f": 3,
@@ -470,11 +760,29 @@ window.POY_SYMP = {
    "en": "Hematuria",
    "pages": "266–278",
    "g": "kub",
+   "b": {
+    "si": {
+     "no": 28,
+     "pages": "266–278"
+    },
+    "yb": [
+     {
+      "k": "4.6",
+      "o": 11,
+      "p": "58"
+     },
+     {
+      "k": "4.7",
+      "o": 12,
+      "p": "59"
+     }
+    ]
+   },
    "file": "ch28.json",
-   "n": 20,
-   "f": 2,
-   "i": 3,
-   "kb": 46
+   "n": 22,
+   "f": 4,
+   "i": 5,
+   "kb": 53
   },
   {
    "no": 29,
@@ -483,11 +791,24 @@ window.POY_SYMP = {
    "en": "Arthralgia and Arthritis",
    "pages": "279–289",
    "g": "msk",
+   "b": {
+    "si": {
+     "no": 29,
+     "pages": "279–289"
+    },
+    "yb": [
+     {
+      "k": "8.1",
+      "o": 29,
+      "p": "98"
+     }
+    ]
+   },
    "file": "ch29.json",
-   "n": 21,
-   "f": 2,
-   "i": 8,
-   "kb": 44
+   "n": 24,
+   "f": 3,
+   "i": 9,
+   "kb": 48
   },
   {
    "no": 30,
@@ -496,11 +817,24 @@ window.POY_SYMP = {
    "en": "Back Pain",
    "pages": "290–301",
    "g": "msk",
+   "b": {
+    "si": {
+     "no": 30,
+     "pages": "290–301"
+    },
+    "yb": [
+     {
+      "k": "8.2",
+      "o": 30,
+      "p": "99"
+     }
+    ]
+   },
    "file": "ch30.json",
-   "n": 17,
-   "f": 3,
-   "i": 6,
-   "kb": 45
+   "n": 18,
+   "f": 4,
+   "i": 7,
+   "kb": 48
   },
   {
    "no": 31,
@@ -509,6 +843,12 @@ window.POY_SYMP = {
    "en": "Headache",
    "pages": "302–310",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 31,
+     "pages": "302–310"
+    }
+   },
    "file": "ch31.json",
    "n": 22,
    "f": 3,
@@ -522,11 +862,24 @@ window.POY_SYMP = {
    "en": "Vertigo",
    "pages": "311–322",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 32,
+     "pages": "311–322"
+    },
+    "yb": [
+     {
+      "k": "9.11",
+      "o": 37,
+      "p": "138–139"
+     }
+    ]
+   },
    "file": "ch32.json",
-   "n": 17,
-   "f": 2,
-   "i": 1,
-   "kb": 43
+   "n": 20,
+   "f": 3,
+   "i": 2,
+   "kb": 50
   },
   {
    "no": 33,
@@ -535,11 +888,24 @@ window.POY_SYMP = {
    "en": "Weakness",
    "pages": "323–334",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 33,
+     "pages": "323–334"
+    },
+    "yb": [
+     {
+      "k": "9.5",
+      "o": 32,
+      "p": "115–121"
+     }
+    ]
+   },
    "file": "ch33.json",
-   "n": 28,
-   "f": 1,
-   "i": 3,
-   "kb": 40
+   "n": 37,
+   "f": 8,
+   "i": 11,
+   "kb": 73
   },
   {
    "no": 34,
@@ -548,11 +914,24 @@ window.POY_SYMP = {
    "en": "Numbness",
    "pages": "335–352",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 34,
+     "pages": "335–352"
+    },
+    "yb": [
+     {
+      "k": "9.7",
+      "o": 34,
+      "p": "125–126"
+     }
+    ]
+   },
    "file": "ch34.json",
-   "n": 20,
-   "f": 1,
-   "i": 16,
-   "kb": 57
+   "n": 24,
+   "f": 4,
+   "i": 19,
+   "kb": 64
   },
   {
    "no": 35,
@@ -561,11 +940,17 @@ window.POY_SYMP = {
    "en": "Abnormal Movement 1",
    "pages": "353–360",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 35,
+     "pages": "353–360"
+    }
+   },
    "file": "ch35.json",
    "n": 11,
    "f": 1,
    "i": 2,
-   "kb": 27
+   "kb": 28
   },
   {
    "no": 36,
@@ -574,11 +959,17 @@ window.POY_SYMP = {
    "en": "Movement Disorders 2",
    "pages": "361–375",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 36,
+     "pages": "361–375"
+    }
+   },
    "file": "ch36.json",
    "n": 26,
    "f": 3,
    "i": 6,
-   "kb": 49
+   "kb": 50
   },
   {
    "no": 37,
@@ -587,11 +978,17 @@ window.POY_SYMP = {
    "en": "Cognitive Impairment",
    "pages": "376–383",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 37,
+     "pages": "376–383"
+    }
+   },
    "file": "ch37.json",
    "n": 14,
    "f": 2,
    "i": 1,
-   "kb": 33
+   "kb": 34
   },
   {
    "no": 38,
@@ -600,11 +997,17 @@ window.POY_SYMP = {
    "en": "Sleep Disorders",
    "pages": "384–392",
    "g": "neuro",
+   "b": {
+    "si": {
+     "no": 38,
+     "pages": "384–392"
+    }
+   },
    "file": "ch38.json",
    "n": 15,
    "f": 2,
    "i": 0,
-   "kb": 46
+   "kb": 47
   },
   {
    "no": 39,
@@ -613,11 +1016,24 @@ window.POY_SYMP = {
    "en": "Weight Loss",
    "pages": "393–402",
    "g": "gen",
+   "b": {
+    "si": {
+     "no": 39,
+     "pages": "393–402"
+    },
+    "yb": [
+     {
+      "k": "10.1",
+      "o": 39,
+      "p": "142–143"
+     }
+    ]
+   },
    "file": "ch39.json",
-   "n": 17,
-   "f": 2,
-   "i": 1,
-   "kb": 36
+   "n": 18,
+   "f": 3,
+   "i": 2,
+   "kb": 42
   },
   {
    "no": 40,
@@ -626,11 +1042,24 @@ window.POY_SYMP = {
    "en": "Weight Gaining",
    "pages": "403–406",
    "g": "gen",
+   "b": {
+    "si": {
+     "no": 40,
+     "pages": "403–406"
+    },
+    "yb": [
+     {
+      "k": "10.2",
+      "o": 40,
+      "p": "144–146"
+     }
+    ]
+   },
    "file": "ch40.json",
-   "n": 9,
-   "f": 1,
-   "i": 0,
-   "kb": 21
+   "n": 22,
+   "f": 3,
+   "i": 3,
+   "kb": 39
   },
   {
    "no": 41,
@@ -639,11 +1068,17 @@ window.POY_SYMP = {
    "en": "Common Skin Manifestations",
    "pages": "407–416",
    "g": "msk",
+   "b": {
+    "si": {
+     "no": 41,
+     "pages": "407–416"
+    }
+   },
    "file": "ch41.json",
    "n": 26,
    "f": 2,
    "i": 0,
-   "kb": 39
+   "kb": 40
   },
   {
    "no": 42,
@@ -652,6 +1087,12 @@ window.POY_SYMP = {
    "en": "Urethral Discharge",
    "pages": "417–422",
    "g": "kub",
+   "b": {
+    "si": {
+     "no": 42,
+     "pages": "417–422"
+    }
+   },
    "file": "ch42.json",
    "n": 11,
    "f": 1,
@@ -665,6 +1106,12 @@ window.POY_SYMP = {
    "en": "Genital Ulcers",
    "pages": "423–427",
    "g": "kub",
+   "b": {
+    "si": {
+     "no": 43,
+     "pages": "423–427"
+    }
+   },
    "file": "ch43.json",
    "n": 18,
    "f": 2,
@@ -678,11 +1125,413 @@ window.POY_SYMP = {
    "en": "Shock",
    "pages": "428–444",
    "g": "gen",
+   "b": {
+    "si": {
+     "no": 44,
+     "pages": "428–444"
+    }
+   },
    "file": "ch44.json",
    "n": 17,
    "f": 3,
    "i": 2,
    "kb": 63
+  },
+  {
+   "no": 45,
+   "id": "azotemia",
+   "th": "ภาวะ azotemia (BUN/Cr สูง)",
+   "en": "Stepwise approach to azotemia",
+   "pages": "",
+   "g": "kub",
+   "b": {
+    "yb": [
+     {
+      "k": "4.3",
+      "o": 8,
+      "p": "53–54"
+     }
+    ]
+   },
+   "file": "ch45.json",
+   "n": 5,
+   "f": 2,
+   "i": 2,
+   "kb": 9
+  },
+  {
+   "no": 46,
+   "id": "asymptomatic-proteinuria",
+   "th": "โปรตีนในปัสสาวะโดยไม่มีอาการ",
+   "en": "Asymptomatic proteinuria",
+   "pages": "",
+   "g": "kub",
+   "b": {
+    "yb": [
+     {
+      "k": "4.8",
+      "o": 13,
+      "p": "60"
+     }
+    ]
+   },
+   "file": "ch46.json",
+   "n": 3,
+   "f": 1,
+   "i": 1,
+   "kb": 2
+  },
+  {
+   "no": 47,
+   "id": "nephrotic-syndrome",
+   "th": "กลุ่มอาการเนโฟรติก",
+   "en": "Nephrotic syndrome",
+   "pages": "",
+   "g": "kub",
+   "b": {
+    "yb": [
+     {
+      "k": "4.9",
+      "o": 14,
+      "p": "61"
+     }
+    ]
+   },
+   "file": "ch47.json",
+   "n": 4,
+   "f": 1,
+   "i": 1,
+   "kb": 3
+  },
+  {
+   "no": 48,
+   "id": "rpgn",
+   "th": "RPGN (ไตอักเสบรุนแรงเร็ว)",
+   "en": "Rapidly progressive glomerulonephritis",
+   "pages": "",
+   "g": "kub",
+   "b": {
+    "yb": [
+     {
+      "k": "4.10",
+      "o": 15,
+      "p": "62"
+     }
+    ]
+   },
+   "file": "ch48.json",
+   "n": 5,
+   "f": 1,
+   "i": 1,
+   "kb": 4
+  },
+  {
+   "no": 49,
+   "id": "short-stature",
+   "th": "ตัวเตี้ย",
+   "en": "Short stature",
+   "pages": "",
+   "g": "endo",
+   "b": {
+    "yb": [
+     {
+      "k": "5.1",
+      "o": 16,
+      "p": "64"
+     }
+    ]
+   },
+   "file": "ch49.json",
+   "n": 4,
+   "f": 1,
+   "i": 1,
+   "kb": 4
+  },
+  {
+   "no": 50,
+   "id": "tall-stature",
+   "th": "ตัวสูง",
+   "en": "Tall stature",
+   "pages": "",
+   "g": "endo",
+   "b": {
+    "yb": [
+     {
+      "k": "5.2",
+      "o": 17,
+      "p": "65"
+     }
+    ]
+   },
+   "file": "ch50.json",
+   "n": 5,
+   "f": 1,
+   "i": 1,
+   "kb": 4
+  },
+  {
+   "no": 51,
+   "id": "thyroid-function-test",
+   "th": "แปลผล thyroid function test",
+   "en": "Thyroid function test interpretation",
+   "pages": "",
+   "g": "endo",
+   "b": {
+    "yb": [
+     {
+      "k": "5.3",
+      "o": 18,
+      "p": "66"
+     }
+    ]
+   },
+   "file": "ch51.json",
+   "n": 2,
+   "f": 1,
+   "i": 1,
+   "kb": 4
+  },
+  {
+   "no": 52,
+   "id": "hypoglycemia",
+   "th": "น้ำตาลในเลือดต่ำ",
+   "en": "Hypoglycemia",
+   "pages": "",
+   "g": "endo",
+   "b": {
+    "yb": [
+     {
+      "k": "5.4",
+      "o": 19,
+      "p": "67"
+     }
+    ]
+   },
+   "file": "ch52.json",
+   "n": 3,
+   "f": 1,
+   "i": 1,
+   "kb": 3
+  },
+  {
+   "no": 53,
+   "id": "gynecomastia",
+   "th": "เต้านมโตในผู้ชาย",
+   "en": "Gynecomastia",
+   "pages": "",
+   "g": "endo",
+   "b": {
+    "yb": [
+     {
+      "k": "5.5",
+      "o": 20,
+      "p": "68"
+     }
+    ]
+   },
+   "file": "ch53.json",
+   "n": 6,
+   "f": 1,
+   "i": 1,
+   "kb": 4
+  },
+  {
+   "no": 54,
+   "id": "nipple-discharge",
+   "th": "สารคัดหลั่งจากหัวนม",
+   "en": "Nipple discharge",
+   "pages": "",
+   "g": "endo",
+   "b": {
+    "yb": [
+     {
+      "k": "5.6",
+      "o": 21,
+      "p": "69"
+     }
+    ]
+   },
+   "file": "ch54.json",
+   "n": 5,
+   "f": 1,
+   "i": 1,
+   "kb": 3
+  },
+  {
+   "no": 55,
+   "id": "amenorrhea",
+   "th": "ประจำเดือนขาด",
+   "en": "Amenorrhea",
+   "pages": "",
+   "g": "endo",
+   "b": {
+    "yb": [
+     {
+      "k": "5.7",
+      "o": 22,
+      "p": "70–72"
+     }
+    ]
+   },
+   "file": "ch55.json",
+   "n": 6,
+   "f": 3,
+   "i": 3,
+   "kb": 12
+  },
+  {
+   "no": 56,
+   "id": "hirsutism-virilization",
+   "th": "ขนดกและ virilization",
+   "en": "Hirsutism and virilization",
+   "pages": "",
+   "g": "endo",
+   "b": {
+    "yb": [
+     {
+      "k": "5.8",
+      "o": 23,
+      "p": "73–74"
+     }
+    ]
+   },
+   "file": "ch56.json",
+   "n": 3,
+   "f": 2,
+   "i": 3,
+   "kb": 4
+  },
+  {
+   "no": 57,
+   "id": "raynaud",
+   "th": "Raynaud phenomenon (นิ้วซีด-เขียว-แดงเมื่อเย็น)",
+   "en": "Raynaud's phenomenon",
+   "pages": "",
+   "g": "msk",
+   "b": {
+    "yb": [
+     {
+      "k": "8.3",
+      "o": 31,
+      "p": "100"
+     }
+    ]
+   },
+   "file": "ch57.json",
+   "n": 3,
+   "f": 1,
+   "i": 1,
+   "kb": 4
+  },
+  {
+   "no": 58,
+   "id": "spinal-cord-disorder",
+   "th": "โรคของไขสันหลัง",
+   "en": "Spinal cord disorder",
+   "pages": "",
+   "g": "neuro",
+   "b": {
+    "yb": [
+     {
+      "k": "9.6",
+      "o": 33,
+      "p": "122–124"
+     }
+    ]
+   },
+   "file": "ch58.json",
+   "n": 6,
+   "f": 1,
+   "i": 3,
+   "kb": 8
+  },
+  {
+   "no": 59,
+   "id": "visual-disorder",
+   "th": "ความผิดปกติของการมองเห็น",
+   "en": "Visual disorder",
+   "pages": "",
+   "g": "neuro",
+   "b": {
+    "yb": [
+     {
+      "k": "9.9",
+      "o": 35,
+      "p": "131–136"
+     }
+    ]
+   },
+   "file": "ch59.json",
+   "n": 6,
+   "f": 5,
+   "i": 7,
+   "kb": 19
+  },
+  {
+   "no": 60,
+   "id": "ptosis",
+   "th": "หนังตาตก",
+   "en": "Ptosis",
+   "pages": "",
+   "g": "neuro",
+   "b": {
+    "yb": [
+     {
+      "k": "9.10",
+      "o": 36,
+      "p": "137"
+     }
+    ]
+   },
+   "file": "ch60.json",
+   "n": 1,
+   "f": 1,
+   "i": 1,
+   "kb": 2
+  },
+  {
+   "no": 61,
+   "id": "stroke-in-the-young",
+   "th": "โรคหลอดเลือดสมองในคนอายุน้อย",
+   "en": "Stroke in the young",
+   "pages": "",
+   "g": "neuro",
+   "b": {
+    "yb": [
+     {
+      "k": "9.12",
+      "o": 38,
+      "p": "140–141"
+     }
+    ]
+   },
+   "file": "ch61.json",
+   "n": 1,
+   "f": 1,
+   "i": 1,
+   "kb": 4
+  },
+  {
+   "no": 62,
+   "id": "yb-abbreviations",
+   "th": "คำย่อในเล่มเหลือง",
+   "en": "Abbreviations in the Yellow Book",
+   "pages": "",
+   "g": "base",
+   "b": {
+    "yb": [
+     {
+      "k": "ภาคผนวก",
+      "o": 41,
+      "p": "147–151"
+     }
+    ]
+   },
+   "file": "ch62.json",
+   "n": 21,
+   "f": 0,
+   "i": 0,
+   "kb": 17
   }
  ]
 };

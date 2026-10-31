@@ -1,0 +1,191 @@
+{
+ "key": "10-1",
+ "en": "Weight loss",
+ "th": "น้ำหนักตัวลด",
+ "pdf": "142–143",
+ "target": 39,
+ "ops": [
+  {
+   "op": "append",
+   "sec": "def",
+   "html": "<ul><li>เล่มเหลือง: <b>Significant weight loss</b> = BW loss &gt; 4.5 kg <b>หรือ</b> <span class=\"hi\">5%</span> ใน 6–12 เดือน (เจ้าของเล่มกรอบ \"Significant weight loss\" ขีดเส้นใต้ทั้งบรรทัดและวงกลมที่ 5%)</li><li>แยกเป็น Voluntary weight loss และ <span class=\"hi\">Involuntary weight loss</span> (กรอบและติดดาวในเล่ม)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-vol",
+   "html": "<p><b>Voluntary weight loss</b> (เล่มเหลือง)</p><ul><li>Exercise</li><li>Bulimia</li><li>Diet control</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-invol",
+   "html": "<p><b>แยกตามปริมาณอาหารที่กิน</b> (เล่มเหลือง) — Involuntary weight loss</p><div class=\"tbl\"><table><thead><tr><th>กินได้</th><th>กลุ่ม</th><th>ตัวอย่าง (เล่มเหลือง)</th></tr></thead><tbody><tr><td rowspan=\"3\">Adequate food intake</td><td>Utilization <span class=\"up\">↑</span></td><td>Hyperthyroid · Chronic infection · Drug: Amphetamine</td></tr><tr><td>Absorption <span class=\"down\">↓</span></td><td>Malabsorption · Pancreatitis · IBD</td></tr><tr><td>calorie loss</td><td>DM · intestine Parasite · Fistula</td></tr><tr><td rowspan=\"5\">Diminish food intake</td><td>Malignancy</td><td>Lymphoma/leukemia · CA Colon/HCC · Breast CA, GU CA · Lung</td></tr><tr><td>Autoimmune</td><td>RA · SLE/DM · Vasculitis</td></tr><tr><td>Infection</td><td>TB · HIV</td></tr><tr><td>Endocrine</td><td>Adrenal insufficiency · Pheochromocytoma · Hypopituitarism</td></tr><tr><td>Other</td><td>COPD · Uremia · Alcohol addict · Depression</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "approach",
+   "id": "yb-10-1-algo",
+   "h": "Algorithm Weight loss (เล่มเหลือง 10.1)",
+   "html": "<figure><img src=\"symp/img/yb-10-1-f1.webp\" alt=\"แผนภูมิ Weight loss ของเล่มเหลือง (10.1)\"><figcaption>Weight loss — แผนภูมิในเล่มเหลือง (ไฮไลต์/กรอบ/วงสีแดงเป็นของเจ้าของเล่ม)</figcaption></figure><div class=\"flow\" data-flow=\"y101a\"></div><small>อ้างอิงท้ายหน้า: Robertson R, Jameson J. Involuntary weight loss (Harrison's gastroenterology and hepatology) · Kiniron M, Churchill D. Weight loss (French's index of differential diagnosis)</small>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y101a",
+   "title": "Weight loss",
+   "src": "fig",
+   "img": "yb-10-1-f1.webp",
+   "note": "ลายมือในเล่ม = ไฮไลต์สีชมพู กรอบ/วงสีแดง ขีดเส้นใต้ และวงกลมที่ 5% (ไม่มีข้อความเพิ่ม) · กล่อง Yes/No ยุบเป็นป้ายบนลูกศร",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Weight loss"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Significant weight loss: BW loss > 4.5 kg or 5% in 6–12 months",
+     "d": "<p>ในเล่มเจ้าของเล่มกรอบ \"Significant weight loss\" ด้วยสีแดง ขีดเส้นใต้บรรทัด BW loss และวงกลมที่ <span class=\"hi\">5%</span></p>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Voluntary weight loss",
+     "d": "<ul><li>Exercise</li><li>Bulimia</li><li>Diet control</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Involuntary weight loss",
+     "d": "<p>เจ้าของเล่มกรอบสีแดงและติดดาว</p>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Adequate food intake",
+     "d": "<p>วงรีสีแดงล้อมกล่อง</p>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Diminish food intake",
+     "d": "<p>วงรีสีแดงล้อมกล่อง</p>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Utilization ↑",
+     "d": "<ul><li>Hyperthyroid</li><li>Chronic infection</li><li>Drug: Amphetamine</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Absorption ↓",
+     "d": "<ul><li>Malabsorption</li><li>Pancreatitis</li><li>IBD</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "calorie loss",
+     "d": "<ul><li>DM</li><li>intestine Parasite</li><li>Fistula</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Malignancy",
+     "d": "<ul><li>Lymphoma/leukemia</li><li>CA Colon/HCC</li><li>Breast CA, GU CA</li><li>Lung</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li>RA</li><li>SLE/DM</li><li>Vasculitis</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>TB</li><li>HIV</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>Adrenal insufficiency</li><li>Pheochromocytoma</li><li>Hypopituitarism</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>COPD</li><li>Uremia</li><li>Alcohol addict</li><li>Depression</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Voluntary"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Involuntary"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Adequate food intake"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Diminish food intake"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Utilization ↑"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Absorption ↓"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "calorie loss"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Malignancy"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "f",
+     "t": "l",
+     "l": "Infection"
+    },
+    {
+     "f": "f",
+     "t": "m",
+     "l": "Endocrine"
+    },
+    {
+     "f": "f",
+     "t": "n",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,177 @@
+{
+ "key": "9-10",
+ "en": "Ptosis",
+ "th": "หนังตาตก (ptosis)",
+ "pdf": "137",
+ "target": null,
+ "new": {
+  "id": "ptosis",
+  "th": "หนังตาตก",
+  "en": "Ptosis",
+  "g": "neuro"
+ },
+ "sections": [
+  {
+   "id": "yb-9-10-approach",
+   "h": "Approach to Ptosis",
+   "html": "<div class=\"flow\" data-flow=\"y910a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y910a",
+   "title": "Ptosis",
+   "src": "fig",
+   "img": "yb-9-10-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Ptosis"
+    },
+    {
+     "id": "uni",
+     "k": "q",
+     "t": "Unilateral ptosis"
+    },
+    {
+     "id": "bi",
+     "k": "q",
+     "t": "Bilateral ptosis"
+    },
+    {
+     "id": "un",
+     "k": "dx",
+     "t": "Unilateral, pupil normal",
+     "d": "<ul><li>Myasthenia gravis</li><li>Myopathy: OPMD</li></ul>"
+    },
+    {
+     "id": "ud",
+     "k": "dx",
+     "t": "Unilateral, pupil dilate: Midbrain"
+    },
+    {
+     "id": "bc",
+     "k": "dx",
+     "t": "Bilateral, pupil constrict: Horner's syndrome"
+    },
+    {
+     "id": "bn",
+     "k": "dx",
+     "t": "Bilateral, pupil normal",
+     "d": "<ul><li>MG</li><li>Diabetes</li><li>Eyelid dz</li></ul>"
+    },
+    {
+     "id": "bd",
+     "k": "q",
+     "t": "Bilateral, pupil dilate"
+    },
+    {
+     "id": "c3",
+     "k": "note",
+     "t": "Isolated CN III palsy — ดูต่อเรื่อง CN III palsy",
+     "d": "<p>ดูต่อเรื่อง CN III palsy</p>"
+    },
+    {
+     "id": "cs",
+     "k": "q",
+     "t": "Cavernous sinus lesion",
+     "d": "<p>Involved CN III, IV, VI + V1 V2</p>"
+    },
+    {
+     "id": "sof",
+     "k": "q",
+     "t": "Superior Orbital Fissure lesion",
+     "d": "<p>Involved CN III, IV, VI + V1</p>"
+    },
+    {
+     "id": "oa",
+     "k": "q",
+     "t": "Orbital apex lesion",
+     "d": "<p>Involved CN III, IV, VI + V1 + Optic nerve</p>"
+    },
+    {
+     "id": "csl",
+     "k": "dx",
+     "t": "Cavernous sinus lesion: สาเหตุ",
+     "d": "<ul><li>Tumor: Primary/Metastatic</li><li>Inflammation<ul><li>Tolosa-Hunt syndrome</li></ul></li><li>Vascular<ul><li>Carotid aneurysm</li><li>Cavernous sinus thrombosis</li><li>Arteriovenous fistula</li></ul></li></ul>"
+    },
+    {
+     "id": "sol",
+     "k": "dx",
+     "t": "Superior Orbital Fissure / Orbital apex lesion: สาเหตุ",
+     "d": "<ul><li>Tumor: Primary/ Metastasis</li><li>Infection:<ul><li>Sinusitis</li><li>Mucormycosis</li><li>Actinomycosis</li></ul></li><li>Trauma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "uni",
+     "l": "Unilateral"
+    },
+    {
+     "f": "a",
+     "t": "bi",
+     "l": "Bilateral"
+    },
+    {
+     "f": "uni",
+     "t": "un",
+     "l": "Pupil normal"
+    },
+    {
+     "f": "uni",
+     "t": "ud",
+     "l": "Pupil dilate"
+    },
+    {
+     "f": "bi",
+     "t": "bc",
+     "l": "Pupil constrict"
+    },
+    {
+     "f": "bi",
+     "t": "bn",
+     "l": "Pupil normal"
+    },
+    {
+     "f": "bi",
+     "t": "bd",
+     "l": "Pupil dilate"
+    },
+    {
+     "f": "bd",
+     "t": "c3",
+     "l": "Isolated CN III palsy"
+    },
+    {
+     "f": "bd",
+     "t": "cs",
+     "l": "Cavernous sinus lesion"
+    },
+    {
+     "f": "bd",
+     "t": "sof",
+     "l": "Superior Orbital Fissure lesion"
+    },
+    {
+     "f": "bd",
+     "t": "oa",
+     "l": "Orbital apex lesion"
+    },
+    {
+     "f": "cs",
+     "t": "csl"
+    },
+    {
+     "f": "sof",
+     "t": "sol"
+    },
+    {
+     "f": "oa",
+     "t": "sol"
+    }
+   ]
+  }
+ ]
+}

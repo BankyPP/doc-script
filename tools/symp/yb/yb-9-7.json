@@ -1,0 +1,362 @@
+{
+ "key": "9-7",
+ "en": "Stepwise approach to peripheral neuropathy",
+ "th": "แนวทางวินิจฉัย peripheral neuropathy",
+ "pdf": "125–126",
+ "target": 34,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "interp",
+   "id": "yb-9-7-pn",
+   "h": "Stepwise approach to peripheral neuropathy",
+   "html": "<p>Peripheral neuropathy คือโรคที่เกิดขึ้นกับระบบประสาทส่วนปลาย อาการแสดงจะมีด้วยกันหลายอย่างเช่น อาการอ่อนแรงกล้ามเนื้อส่วนปลาย การชาปลายมือปลายเท้า หรืออาการทางระบบประสาทอัตโนมัติ (Autonomic nervous system)</p><p>แนวทาง approach ผู้ป่วยที่สงสัยภาวะ peripheral neuropathy แบ่งกลุ่มอาการออกเป็น 3 กลุ่มหลักที่ผู้ป่วยจะมาพบแพทย์ อันได้แก่ <b>Weakness predominant</b>, <b>Sensory impairment predominant</b> และ <b>autonomic predominant</b></p>",
+   "sub": [
+    {
+     "id": "yb-9-7-weak",
+     "h": "Peripheral neuropathy: weakness predominant",
+     "html": "<div class=\"flow\" data-flow=\"y97a\"></div><p><small>HNPP = Hereditary neuropathy with liability to pressure palsies</small></p>"
+    },
+    {
+     "id": "yb-9-7-sens",
+     "h": "Peripheral neuropathy: sensory impairment predominant",
+     "html": "<div class=\"flow\" data-flow=\"y97b\"></div>"
+    },
+    {
+     "id": "yb-9-7-auto",
+     "h": "Peripheral neuropathy: autonomic symptoms predominant",
+     "html": "<div class=\"flow\" data-flow=\"y97c\"></div>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "y97a",
+   "title": "Peripheral neuropathy: weakness predominant",
+   "src": "fig",
+   "img": "yb-9-7-f1.webp",
+   "note": "HNPP = Hereditary neuropathy with liability to pressure palsies",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Peripheral neuropathy: weakness predominant"
+    },
+    {
+     "id": "sy",
+     "k": "q",
+     "t": "Symmetrical weakness"
+    },
+    {
+     "id": "as",
+     "k": "q",
+     "t": "Asymmetrical weakness"
+    },
+    {
+     "id": "sp",
+     "k": "q",
+     "t": "Proximal+Distal weakness (symmetrical)"
+    },
+    {
+     "id": "sd",
+     "k": "q",
+     "t": "Distal weakness (symmetrical)"
+    },
+    {
+     "id": "sps",
+     "k": "dx",
+     "t": "With Sensory loss",
+     "d": "<ul><li>GBS</li><li>CIDP</li></ul>"
+    },
+    {
+     "id": "spn",
+     "k": "dx",
+     "t": "Without Sensory loss",
+     "d": "<ul><li>SMA: Spinal muscular atrophy</li></ul>"
+    },
+    {
+     "id": "sds",
+     "k": "dx",
+     "t": "C Sensory loss",
+     "d": "<ul><li><b>Hereditary</b>: CMT</li><li><b>Metabolic</b>: DM</li><li><b>Drug/Toxin</b>: INH, Lead</li><li><b>Infection</b>: HIV</li><li><b>Idiopathic</b></li><li><b>Other</b>:<ul><li>Vasculitis, amyloidosis</li><li>Paraneoplastic synd.</li><li>Monoclonal gammopathy</li></ul></li></ul>"
+    },
+    {
+     "id": "sdn",
+     "k": "dx",
+     "t": "w/o Sensory loss",
+     "d": "<p>พบไม่บ่อย</p><ul><li>Atypical CMT</li><li>Lead neuropathy</li></ul>"
+    },
+    {
+     "id": "ap",
+     "k": "q",
+     "t": "Proximal+Distal weakness (asymmetrical)"
+    },
+    {
+     "id": "ad",
+     "k": "q",
+     "t": "Distal weakness (asymmetrical)"
+    },
+    {
+     "id": "apr",
+     "k": "dx",
+     "t": "Polyradiculopathy",
+     "d": "<ul><li>DM</li><li>Meningeal carcinomatosis</li><li>Hereditary plexopathy</li><li>idiopathic</li></ul>"
+    },
+    {
+     "id": "ads",
+     "k": "q",
+     "t": "c Sensory loss (asymmetrical distal)"
+    },
+    {
+     "id": "adn",
+     "k": "q",
+     "t": "w/o Sensory loss (asymmetrical distal)"
+    },
+    {
+     "id": "mn",
+     "k": "dx",
+     "t": "Multiple nerve",
+     "d": "<ul><li><b>Multifocal CIDP</b></li><li><b>Vasculitis/ Cryoglobulinemia</b></li><li><b>Infiltration</b>: Amyloidosis / Tumor / sarcoidosis</li><li><b>Infection</b>: HIV, HCV, HBV</li><li><b>Hereditary</b>: HNPP</li></ul>"
+    },
+    {
+     "id": "sn",
+     "k": "dx",
+     "t": "Single nerve",
+     "d": "<ul><li>Compressive</li><li>สาเหตุอื่นเหมือนใน multiple nerve</li></ul>"
+    },
+    {
+     "id": "wu",
+     "k": "dx",
+     "t": "Without UMN signs",
+     "d": "<ul><li>Progressive muscular atrophy</li><li>Juvenile monomelic atrophy (Hirayama disease)</li><li>Multifocal motor neuropathy</li></ul>"
+    },
+    {
+     "id": "wi",
+     "k": "dx",
+     "t": "With UMN signs",
+     "d": "<ul><li>Motor neuron disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "sy",
+     "l": "Symmetrical weakness"
+    },
+    {
+     "f": "a",
+     "t": "as",
+     "l": "Asymmetrical weakness"
+    },
+    {
+     "f": "sy",
+     "t": "sp",
+     "l": "Proximal+Distal weakness"
+    },
+    {
+     "f": "sy",
+     "t": "sd",
+     "l": "Distal weakness"
+    },
+    {
+     "f": "sp",
+     "t": "sps",
+     "l": "With Sensory loss"
+    },
+    {
+     "f": "sp",
+     "t": "spn",
+     "l": "Without Sensory loss"
+    },
+    {
+     "f": "sd",
+     "t": "sds",
+     "l": "C Sensory loss"
+    },
+    {
+     "f": "sd",
+     "t": "sdn",
+     "l": "w/o Sensory loss"
+    },
+    {
+     "f": "as",
+     "t": "ap",
+     "l": "Proximal+Distal weakness"
+    },
+    {
+     "f": "as",
+     "t": "ad",
+     "l": "Distal weakness"
+    },
+    {
+     "f": "ap",
+     "t": "apr"
+    },
+    {
+     "f": "ad",
+     "t": "ads",
+     "l": "c Sensory loss"
+    },
+    {
+     "f": "ad",
+     "t": "adn",
+     "l": "w/o Sensory loss"
+    },
+    {
+     "f": "ads",
+     "t": "mn",
+     "l": "Multiple nerve"
+    },
+    {
+     "f": "ads",
+     "t": "sn",
+     "l": "Single nerve"
+    },
+    {
+     "f": "adn",
+     "t": "wu",
+     "l": "Without UMN signs"
+    },
+    {
+     "f": "adn",
+     "t": "wi",
+     "l": "With UMN signs"
+    }
+   ]
+  },
+  {
+   "id": "y97b",
+   "title": "Peripheral neuropathy: Sensory impairment predominant",
+   "src": "fig",
+   "img": "yb-9-7-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Peripheral neuropathy: Sensory impairment predominant"
+    },
+    {
+     "id": "sy",
+     "k": "q",
+     "t": "Symmetrical sensory impairment"
+    },
+    {
+     "id": "as",
+     "k": "q",
+     "t": "Asymmetrical sensory impairment"
+    },
+    {
+     "id": "dw",
+     "k": "dx",
+     "t": "+/- Distal weakness",
+     "d": "<ul><li><b>Hereditary</b>: CMT</li><li><b>Metabolic</b>: DM</li><li><b>Drug/Toxin</b>: INH, Lead</li><li><b>Infection</b>: HIV</li><li><b>Idiopathic</b></li><li><b>Other</b>:<ul><li>Vasculitis, amyloidosis</li><li>Paraneoplastic synd.</li><li>Monoclonal gammopathy</li></ul></li></ul>"
+    },
+    {
+     "id": "ar",
+     "k": "dx",
+     "t": "Areflexia + UMN",
+     "d": "<ul><li><b>Nutrition</b>: B12 def / vit E def / Copper def</li><li>Combined system degeneration c peripheral neuropathy</li><li>Hereditary leukodystrophies</li></ul>"
+    },
+    {
+     "id": "pr",
+     "k": "q",
+     "t": "Proprioceptive sensory loss w/o weakness"
+    },
+    {
+     "id": "sg",
+     "k": "dx",
+     "t": "Sensory ganglionopathy",
+     "d": "<ul><li>Paraneoplastic</li><li>Sjogren syndrome</li><li>B6 toxicity/ Cisplatin</li><li>HIV-related</li><li>Idiopathic sensory neuronopathy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "sy",
+     "l": "Symmetrical"
+    },
+    {
+     "f": "a",
+     "t": "as",
+     "l": "Asymmetrical"
+    },
+    {
+     "f": "sy",
+     "t": "dw",
+     "l": "+/- Distal weakness"
+    },
+    {
+     "f": "sy",
+     "t": "ar",
+     "l": "Areflexia + UMN"
+    },
+    {
+     "f": "as",
+     "t": "pr"
+    },
+    {
+     "f": "pr",
+     "t": "sg"
+    }
+   ]
+  },
+  {
+   "id": "y97c",
+   "title": "Peripheral neuropathy: autonomic symptoms predominant",
+   "src": "fig",
+   "img": "yb-9-7-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Peripheral neuropathy: autonomic symptoms predominant"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Hereditary",
+     "d": "<ul><li>Hereditary sensory and autonomic neuropathy</li><li>Familial amyloidosis</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "DM"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Idiopathic pandysautonomia"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Porphyria</li><li>HIV</li><li>Vincristine</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "h",
+     "l": "Hereditary"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "DM"
+    },
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Idiopathic pandysautonomia"
+    },
+    {
+     "f": "a",
+     "t": "o",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,578 @@
+{
+ "key": "7-1",
+ "en": "Prolonged fever and classic FUO",
+ "th": "ไข้เรื้อรัง / ไข้ไม่ทราบสาเหตุ (FUO)",
+ "pdf": "91–94",
+ "target": 7,
+ "ops": [
+  {
+   "op": "append",
+   "sec": "patho",
+   "html": "<p><span class=\"hw\">Change set point โดย cytokine จาก hypothalamus (โน้ตลายมือที่ลูกศรจากคำว่า fever ในแผนผัง non-infectious cause)</span></p>"
+  },
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-7-1-fuo",
+   "h": "Prolonged fever และ Classic FUO — แยกกลุ่มติดเชื้อ / ไม่ติดเชื้อ",
+   "html": "<div class=\"flow\" data-flow=\"y71a\"></div><ul><li>Prolonged fever = ไข้นานกว่า 3 สัปดาห์</li><li>Classic FUO = ครบทั้ง 3 criteria: BT &gt; 38.3 °C · duration &gt; 3 weeks · วินิจฉัยไม่ได้แม้สืบค้นเป็นผู้ป่วยใน 1 สัปดาห์</li><li>FUO ปัจจุบันแบ่งเป็น 4 กลุ่ม: Classic FUO, nosocomial FUO, neutropenic FUO และ FUO associated with HIV</li><li><span class=\"hw\">ลายมือใต้หัวข้อ 7.1: \"- บอกไม่ได้ว่า…ไข้\" (?) [อ่านไม่ออกบางส่วน]</span></li></ul>",
+   "sub": [
+    {
+     "id": "yb-7-1-fuo-non",
+     "h": "FUO — สาเหตุที่ไม่ติดเชื้อ (Non infectious cause)",
+     "html": "<div class=\"flow\" data-flow=\"y71b\"></div><ul><li><b>Connective tissue disease</b>: Rheumatoid arthritis, Vasculitis, SLE, Polymyositis and Dermatomyositis, Adult Still’s disease</li><li><b>Malignancy</b> — Malignant: Hematologic malignancy (Hodgkin’s lymphoma, NHD), Renal cell carcinoma, Sarcoma, Hepatocellular carcinoma · Benign: Atrial myxoma, Castleman’s disease, Renal angiomyolipoma</li><li><b>Other</b> — Drug fever: Antibiotic, Sulphonamide · Thermoregulatory disorder: Central cause (Brain tumor, Cerebrovascular accident, Encephalitis, Hypothalamic dysfunction), Peripheral cause (Hyperthyroidism, Pheochromocytoma) · Miscellaneous: Gouty arthtitis, Bullous pemphigoid, Factitious pyrexia by malingerer</li><li><span class=\"hw\">Fever → change set point โดย cytokine จาก hypothalamus</span></li></ul><p><span class=\"hw\">โน้ตลายมือที่หัวกระดาษหน้า 94: \"Bronchus – subsegmental, esophagus: มี cough receptor มีอะไรทำอย่าง…มากระตุ้นจุดทั้งนั้น (?)\" [อ่านไม่ออกบางส่วน — เรื่อง cough receptor ไม่เกี่ยวกับไข้โดยตรง]</span></p>"
+    }
+   ]
+  },
+  {
+   "op": "sec",
+   "after": "acute",
+   "id": "yb-7-1-hiv",
+   "h": "HIV — โน้ตลายมือเต็มหน้า (เล่มเหลือง หน้า 92–93)",
+   "html": "<div class=\"pearl\">หน้า 92–93 ของเล่มเหลืองเป็นหน้าลายมือล้วนเรื่อง HIV (หัวข้อ \"Medicine HIV\") — ทั้งหมดด้านล่างคือโน้ตของเจ้าของเล่ม</div><figure><img src=\"symp/img/yb-7-1-f3.webp\" alt=\"หน้าลายมือ HIV (หน้า 92 ของเล่มเหลือง)\"><figcaption>หน้า 92 — โน้ตลายมือเรื่อง HIV: virology, ยา, การติดต่อ, pathogenesis, latency</figcaption></figure>",
+   "sub": [
+    {
+     "id": "yb-7-1-hiv-virus",
+     "h": "Virology: subtype · target cell · coreceptor",
+     "html": "<p><span class=\"hw\">Medicine · HIV · THAI-endemic area: +++ → positive ✱</span></p><ul><li><span class=\"hw\">มีหลาย subtype ผสมพันธุ์กันไปหมด</span></li><li><span class=\"hw\">Thailand: AE, B</span></li><li><span class=\"hw\">Target cell ที่มี CD4 receptor (T helper, Monocyte, MΦ) + coreceptor (CXCR5, CDR4) [ตามที่เขียน] จับกัน → เกาะแน่น → HIV เข้าไปใน cell</span></li><li><span class=\"hw\">coreceptor: CXCR5 → T-helper · CDR4 → Monocyte, MΦ</span></li><li><span class=\"hw\">หลังเข้า cell → replication / Reverse transcrip(tase) / integrase / …</span></li><li><span class=\"hw\">Virus RNA → DNA → RNA, protein → Virus</span></li><li><span class=\"hw\">สร้างยาหลายตัวเยอะมาก (CD4–viral: วงลูกศร CD4 ↔ viral)</span></li></ul>"
+    },
+    {
+     "id": "yb-7-1-hiv-drug",
+     "h": "กลุ่มยาต้านไวรัส (ตามจุดออกฤทธิ์)",
+     "html": "<p><span class=\"hw\">ยา (วงกลม):</span></p><ul><li><span class=\"hw\">Chemokine receptor antagonist: CXCR5</span></li><li><span class=\"hw\">Fusion inhibitor</span></li><li><span class=\"hw\">RT inhibitor — ⊖ ยับยั้ง RNA → DNA · NNRTI, NRTI</span></li><li><span class=\"hw\">Protease inhibitor</span></li><li><span class=\"hw\">Integrase inhibitor</span></li><li><span class=\"hw\">นิยม (use บ่อย ๆ) ← ปีกกาชี้กลุ่ม RT inhibitor / Protease inhibitor (?)</span></li></ul>"
+    },
+    {
+     "id": "yb-7-1-hiv-trans",
+     "h": "การติดต่อและความเสี่ยง",
+     "html": "<ul><li><span class=\"hw\">Sexual contact → 4–1xx/10000 · anus ความเสี่ยง &gt; vagina</span></li><li><span class=\"hw\">IVDU → 63/10000 เสี่ยงต่อเข็ม</span></li><li><span class=\"hw\">Blood trans → 90%</span></li><li><span class=\"hw\">Occupational (เข็ม, fluid) → 23/10,000</span></li><li><span class=\"hw\">MTC (mother-to-child) → perinatal ส่วนมาก · บางส่วนก็ prenatal, breast feeding · มารดาควรได้รับยา ARV</span></li><li><span class=\"hw\">ความเสี่ยงไม่มาก: oral, share sex toy, น้ำลายป้าย (?)</span></li><li><span class=\"hw\">Treatment as prevention → ถ้ากินยา(?) → กันการแพร่กระจายของเชื้อ</span></li><li><span class=\"hw\">STD → ความเสี่ยง ↑</span></li><li><span class=\"hw\">circum(cision) → ความเสี่ยง ↓</span></li></ul>"
+    },
+    {
+     "id": "yb-7-1-hiv-patho",
+     "h": "Pathogenesis: การเข้าสู่ร่างกาย → steady stage",
+     "html": "<div class=\"flow\" data-flow=\"y71c\"></div><ul><li><span class=\"hw\">HIV → mucosa barrier (2-6 hr) → Langerhans cell → dendritic cell → lymph node (CD4 และ regional lymph node; 3-6 days) replication ก่อนไปที่อื่น → dissem ทั่วร่างกาย</span></li><li><span class=\"hw\">48 hr–72: regional ได้รับยาตอนนี้ดีสุด (รับยาภายใน 72 hrs) · if block ก่อน viremia ทัน → clear หมด (replication ไม่ได้)</span></li><li><span class=\"hw\">Organ: gut associated lymphoid tissue → ต่อมา GALT disruption → ↑ viremia · gut มี lymphocyte มาก คอย protect สิ่งแปลกปลอม, อุจจาระ → HIV มากตาม</span></li><li><span class=\"hw\">viral load ไม่ได้บอก progression/prognosis ในช่วงแรก แต่ตัว set point หลังจากนั้น 1 ปี (stable) · steady stage = บอก progress (plasma viremia)</span></li></ul>"
+    },
+    {
+     "id": "yb-7-1-hiv-latent",
+     "h": "Latency · reservoir · chronic inflammation",
+     "html": "<ul><li><span class=\"hw\">HIV ติด long life cell → latent infected cell: ยา clear ไม่ออก</span></li><li><span class=\"hw\">viral ↓ 1 mo, 4-5 mo, 6 mo (ลงสุด) หลังกินยา</span></li><li><span class=\"hw\">10 yr: CD4 drop ไวมาก, viral load สูงมาก</span></li><li><span class=\"hw\">clinical latency → viral ไม่ตาย มีการสร้าง แบ่งตัวตลอด (= ไม่มี biologic latency)</span></li><li><span class=\"hw\">Reservoir: จำศีล → ยาทำอะไรไม่ได้ แต่พอหยุดยา → พอมีตัวกระตุ้น → แบ่งตัว</span></li><li><span class=\"hw\">Chronic inflammation ตลอดเวลา → Athero, แก่ง่าย, ไม่ healthy, cancer</span></li><li><span class=\"hw\">Bact/viral translocation ด้วย มีการกระตุ้น immune ตลอดเลย</span></li></ul>"
+    },
+    {
+     "id": "yb-7-1-hiv-dx",
+     "h": "การวินิจฉัย HIV: lab และ timeline",
+     "html": "<div class=\"flow\" data-flow=\"y71d\"></div><ul><li><span class=\"hw\">HIV stage 3: OI, AIDS</span></li><li><span class=\"hw\">Lab: น้ำลาย, เลือด ELISA (น้ำลาย spec น้อยกว่า)</span></li><li><span class=\"hw\">Nucleic test: ดีใน acute infection, ตรวจ HIV1 ดีกว่า 2</span></li><li><span class=\"hw\">Western blot ✱ : confirmatory test ✱</span></li><li><span class=\"hw\">Day 6 เริ่มมี viremia แต่ตรวจไม่ได้ → 10 วัน viral RNA PCR → 15 วัน P24 (ELISA) ไม่ค่อย sens → 3 สัปดาห์ Antibody (ELISA) อาจไม่ specific ≠ western blot (ดูสายอย่าง) → เกือบ 1 เดือน western blot</span></li><li><span class=\"hw\">4th generation ELISA: เริ่มเจอได้แต่ไม่ 100% — เบาใจได้แต่ควร F/U 2-3 mo</span></li><li><span class=\"hw\">ไม่ต้องรอ 2-3 mo เพื่อดู</span></li><li><span class=\"hw\">ตรวจเพิ่ม (สีน้ำเงิน): confirm, viral load, CD4, sens, UA, pregnancy test, LFT</span></li></ul><figure><img src=\"symp/img/yb-7-1-f4.webp\" alt=\"หน้าลายมือ HIV (หน้า 93 ของเล่มเหลือง)\"><figcaption>หน้า 93 — โน้ตลายมือ: lab การวินิจฉัย HIV และการเริ่มยา ART</figcaption></figure>"
+    },
+    {
+     "id": "yb-7-1-hiv-art",
+     "h": "การเริ่มยา ART",
+     "html": "<ul><li><span class=\"hw\">Early ART ดีกว่า ✱✱✱</span></li><li><span class=\"hw\">Thailand: CD4 &lt; 350 → ยาฟรี · คนไข้อยากได้ยา → เอาเลย</span></li><li><span class=\"hw\">Europe: &gt; 350 recommend · &lt; 350 strongly recommend</span></li><li><span class=\"hw\">ยา ∝ (ขึ้นกับ) CD4, ความพร้อม, เงิน, co-morbid</span></li><li><span class=\"hw\">สำคัญมาก: preg, OI, CD4 ↓↓, viral ↑↑, hep B/C, nephropathy complication, …</span></li><li><span class=\"hw\">poor compliance, มี comorbid กินยาด้วยไม่ได้ / drug inter, ติดเชื้อแต่ไม่ลุกลาม → ไม่ต้องกินยาไว (delayed) (?) ; CD4 ลงไว, progression ไวมาก</span></li><li><span class=\"hw\">NRTI, PI — อย่าลืม 3NA (ขีดเส้นใต้)</span></li><li><span class=\"hw\">LPV/r ← เสริมฤทธิ์ (?)</span></li></ul>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "y71a",
+   "title": "Prolonged fever and Classic FUO",
+   "src": "fig",
+   "img": "yb-7-1-f1.webp",
+   "note": "ลายมือใต้หัวข้อ 7.1 เขียนว่า \"- บอกไม่ได้ว่า…ไข้\" (อ่านไม่ออกบางส่วน) · กลุ่ม non-infection ต่อที่แผนผังถัดไป (y71b)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Prolonged fever and Classic FUO",
+     "d": "<ul><li>Prolonged Fever = Fever more than 3 weeks</li><li>Classic fever of unknown origin (Classic FUO) = มีครบทั้ง 3 criteria ดังนี้: 1. BT &gt;38.3 °C · 2. Duration &gt;3 weeks · 3. failure to reach a diagnosis despite 1 week of inpatient investigation</li><li>ปัจจุบัน FUO แบ่งเป็น 4 กลุ่มคือ Classic FUO, nosocomial FUO, neutropenic FUO และ FUO associated with HIV</li><li><span class=\"hw\">ลายมือใต้หัวข้อ: \"- บอกไม่ได้ว่า…ไข้\" (?) [อ่านไม่ออกบางส่วน]</span></li></ul>"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infection"
+    },
+    {
+     "id": "non",
+     "k": "dx",
+     "t": "Non-Infection"
+    },
+    {
+     "id": "mal",
+     "k": "dx",
+     "t": "Malignancy"
+    },
+    {
+     "id": "cnt",
+     "k": "dx",
+     "t": "CNT dz"
+    },
+    {
+     "id": "mis",
+     "k": "dx",
+     "t": "Miscellaneous"
+    },
+    {
+     "id": "nxt",
+     "k": "note",
+     "t": "ดูต่อหน้าถัดไป (Non infectious cause)",
+     "d": "ดูแผนผัง Prolonged fever and Classic FUO: Non infectious cause (แผนผังถัดไปในเล่ม)"
+    },
+    {
+     "id": "la",
+     "k": "dx",
+     "t": "Localized abscess"
+    },
+    {
+     "id": "vi",
+     "k": "dx",
+     "t": "Vascular infection",
+     "d": "<ul><li>Bacterial endocarditis</li><li>Bacterial aortitis</li><li>Vascular Catheter related infection</li></ul>"
+    },
+    {
+     "id": "si",
+     "k": "dx",
+     "t": "Systemic infection"
+    },
+    {
+     "id": "gi",
+     "k": "dx",
+     "t": "GI",
+     "d": "<ul><li>Diverticulitis</li><li>Appendiceal abscess</li></ul>"
+    },
+    {
+     "id": "hep",
+     "k": "dx",
+     "t": "Hepatobiliary",
+     "d": "<ul><li>Liver abscess</li><li>Cholecystitis</li><li>Cholangitis</li><li>Pancreatic abscess</li></ul>"
+    },
+    {
+     "id": "gu",
+     "k": "dx",
+     "t": "GU",
+     "d": "<ul><li>Perinephric abscess</li><li>Prostatitis</li><li>PID</li></ul>"
+    },
+    {
+     "id": "ot1",
+     "k": "dx",
+     "t": "Other (localized abscess)",
+     "d": "<ul><li>Osteomyelitis</li><li>Cat scratch disease</li><li>ThromboPhlebitis</li></ul>"
+    },
+    {
+     "id": "vir",
+     "k": "dx",
+     "t": "Virus",
+     "d": "<ul><li>Infectious mononucleosis</li><li>HIV infection</li><li><span class=\"hw\">HIV: ดูโน้ตลายมือเรื่อง HIV ในหัวข้อ \"HIV\" ด้านล่าง</span></li></ul>"
+    },
+    {
+     "id": "bac",
+     "k": "dx",
+     "t": "Bacteria",
+     "d": "<ul><li>Salmonellosis</li><li>Bartonellosis</li><li>Brucellosis</li><li>Legionnaires' disease</li><li>Yersinia infection</li><li>Actinomycosis</li><li>Nocardiosis</li></ul>"
+    },
+    {
+     "id": "mic",
+     "k": "dx",
+     "t": "Microbacteria",
+     "d": "<ul><li>Tuberculosis</li><li>NTM — MAC, M. intracellurae</li></ul>"
+    },
+    {
+     "id": "trop",
+     "k": "dx",
+     "t": "Tropical infection",
+     "d": "<ul><li>Melioidosis</li><li>Leptospirosis</li><li>Rickettsail dz</li><li>Malaria</li><li>Tularemia</li></ul>"
+    },
+    {
+     "id": "ot2",
+     "k": "dx",
+     "t": "Other — Fungus",
+     "d": "<ul><li>Aspergillosis</li><li>PCP</li><li>Histoplasmosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "inf",
+     "l": "Infection"
+    },
+    {
+     "f": "a",
+     "t": "non",
+     "l": "Non-Infection"
+    },
+    {
+     "f": "non",
+     "t": "mal",
+     "l": "Malignancy"
+    },
+    {
+     "f": "non",
+     "t": "cnt",
+     "l": "CNT dz"
+    },
+    {
+     "f": "non",
+     "t": "mis",
+     "l": "Miscellaneous"
+    },
+    {
+     "f": "mal",
+     "t": "nxt"
+    },
+    {
+     "f": "cnt",
+     "t": "nxt"
+    },
+    {
+     "f": "mis",
+     "t": "nxt"
+    },
+    {
+     "f": "inf",
+     "t": "la",
+     "l": "Localized abscess"
+    },
+    {
+     "f": "inf",
+     "t": "vi",
+     "l": "Vascular infection"
+    },
+    {
+     "f": "inf",
+     "t": "si",
+     "l": "Systemic infection"
+    },
+    {
+     "f": "la",
+     "t": "gi",
+     "l": "GI"
+    },
+    {
+     "f": "la",
+     "t": "hep",
+     "l": "Hepatobiliary"
+    },
+    {
+     "f": "la",
+     "t": "gu",
+     "l": "GU"
+    },
+    {
+     "f": "la",
+     "t": "ot1",
+     "l": "Other"
+    },
+    {
+     "f": "si",
+     "t": "vir",
+     "l": "Virus"
+    },
+    {
+     "f": "si",
+     "t": "bac",
+     "l": "Bacteria"
+    },
+    {
+     "f": "si",
+     "t": "mic",
+     "l": "Microbacteria"
+    },
+    {
+     "f": "si",
+     "t": "trop",
+     "l": "Tropical infection"
+    },
+    {
+     "f": "si",
+     "t": "ot2",
+     "l": "Other (Fungus)"
+    }
+   ]
+  },
+  {
+   "id": "y71b",
+   "title": "Prolonged fever and Classic FUO: Non infectious cause",
+   "src": "fig",
+   "img": "yb-7-1-f2.webp",
+   "note": "ลายมือเหนือชื่อแผนผัง: ลูกศรจากคำว่า fever → \"change set point โดย cytokine จาก hypothalamus\"",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Prolonged fever and Classic FUO: Non infectious cause",
+     "d": "<span class=\"hw\">ขีดเส้นใต้คำว่า fever + ลูกศร → change set point โดย cytokine จาก hypothalamus</span>"
+    },
+    {
+     "id": "ctd",
+     "k": "dx",
+     "t": "Connective tissue disease",
+     "d": "<ul><li>Rheumatoid arthritis</li><li>Vasculitis</li><li>SLE</li><li>Polymyositis and Dermatomyositis</li><li>Adult Still's disease</li></ul>"
+    },
+    {
+     "id": "mal",
+     "k": "dx",
+     "t": "Malignancy",
+     "d": "<b>Malignant</b><ul><li>Hematologic malignancy: Hodgkin’s lymphoma, NHD</li><li>Renal cell carcinoma</li><li>Sarcoma</li><li>Hepatocellular carcinoma</li></ul><b>Benign</b><ul><li>Atrial myxoma</li><li>Castleman's disease</li><li>Renal angiomyolipoma</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other"
+    },
+    {
+     "id": "drug",
+     "k": "dx",
+     "t": "Drug fever",
+     "d": "<ul><li>Antibiotic</li><li>Sulphonamide</li></ul>"
+    },
+    {
+     "id": "thermo",
+     "k": "dx",
+     "t": "Thermoregulatory disorder",
+     "d": "<b>Central cause</b><ul><li>Brain tumor</li><li>Cerebrovascular accident</li><li>Encephalitis</li><li>Hypothalamic dysfunction</li></ul><b>Peripheral cause</b><ul><li>Hyperthyroidism</li><li>Pheochromocytoma</li></ul>"
+    },
+    {
+     "id": "misc",
+     "k": "dx",
+     "t": "Miscellaneous",
+     "d": "<ul><li>Gouty arthtitis</li><li>Bullous pemphigoid</li><li>Factitious pyrexia by malingerer</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ctd",
+     "l": "Connective tissue disease"
+    },
+    {
+     "f": "a",
+     "t": "mal",
+     "l": "Malignancy"
+    },
+    {
+     "f": "a",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "oth",
+     "t": "drug",
+     "l": "Drug fever"
+    },
+    {
+     "f": "oth",
+     "t": "thermo",
+     "l": "Thermoregulatory disorder"
+    },
+    {
+     "f": "oth",
+     "t": "misc",
+     "l": "Miscellaneous"
+    }
+   ]
+  },
+  {
+   "id": "y71c",
+   "title": "HIV — ลำดับการติดเชื้อและ pathogenesis (ลายมือ)",
+   "src": "fig",
+   "img": "yb-7-1-f5.webp",
+   "note": "ลายมือล้วนในกรอบสี่เหลี่ยมของหน้า 92 (เล่มเหลืองไม่มีแผนผังพิมพ์) · เรียงลำดับตามลูกศรในลายมือ",
+   "nodes": [
+    {
+     "id": "h",
+     "k": "start",
+     "t": "HIV เข้าสู่ร่างกาย",
+     "d": "<span class=\"hw\">HIV → mucosa barrier</span>"
+    },
+    {
+     "id": "mb",
+     "k": "act",
+     "t": "Mucosa barrier (2–6 hr)",
+     "d": "<span class=\"hw\">2-6 hr</span>"
+    },
+    {
+     "id": "lc",
+     "k": "act",
+     "t": "Langerhans cell"
+    },
+    {
+     "id": "dc",
+     "k": "act",
+     "t": "Dendritic cell"
+    },
+    {
+     "id": "ln",
+     "k": "act",
+     "t": "Lymph node — CD4 และ regional lymph node (3–6 days)",
+     "d": "<span class=\"hw\">replication ก่อนไปที่อื่น · (3-6 days)</span><br><span class=\"hw\">48 hr – 72: regional ได้รับยาตอนนี้ดีสุด</span>"
+    },
+    {
+     "id": "bl",
+     "k": "dx",
+     "t": "ถ้า block ก่อน viremia ทัน → clear หมด (replication ไม่ได้)",
+     "d": "<span class=\"hw\">(รับยาภายใน 72 hrs) · if block ก่อน viremia ทัน → clear หมด replication ไม่ได้</span>"
+    },
+    {
+     "id": "dis",
+     "k": "act",
+     "t": "Dissem ทั่วร่างกาย",
+     "d": "<span class=\"hw\">ลูกศรสีฟ้าใหญ่ → dissem ทั่วร่างกาย</span>"
+    },
+    {
+     "id": "galt",
+     "k": "dx",
+     "t": "Organ: GALT (gut associated lymphoid tissue) → GALT disruption → ↑ viremia",
+     "d": "<span class=\"hw\">organ: gut associated lymphoid tissue ต่อมา → GALT disruption → ↑ viremia</span><br><span class=\"hw\">gut มี lymphocyte มาก คอย protect สิ่งแปลกปลอม, อุจจาระ → HIV มากตาม</span>"
+    },
+    {
+     "id": "ss",
+     "k": "dx",
+     "t": "Steady stage (set point หลังจากนั้น ~1 ปี, stable)",
+     "d": "<span class=\"hw\">viral load ไม่ได้บอก progression/prognosis ในช่วงแรก แต่ตัว set point หลังจากนั้น 1 ปี (stable)</span><br><span class=\"hw\">steady stage = บอก progress (plasma viremia)</span><br><span class=\"hw\">กราฟ: viremia พุ่งสูงแล้วลงมาเป็น steady stage</span>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "h",
+     "t": "mb"
+    },
+    {
+     "f": "mb",
+     "t": "lc"
+    },
+    {
+     "f": "lc",
+     "t": "dc"
+    },
+    {
+     "f": "dc",
+     "t": "ln"
+    },
+    {
+     "f": "ln",
+     "t": "bl",
+     "l": "รับยาภายใน 72 hrs"
+    },
+    {
+     "f": "ln",
+     "t": "dis",
+     "l": "replication ก่อนไปที่อื่น"
+    },
+    {
+     "f": "dis",
+     "t": "galt"
+    },
+    {
+     "f": "galt",
+     "t": "ss"
+    }
+   ]
+  },
+  {
+   "id": "y71d",
+   "title": "HIV — Lab และ timeline การตรวจ (ลายมือ)",
+   "src": "fig",
+   "img": "yb-7-1-f6.webp",
+   "note": "ลายมือล้วนหน้า 93 (ส่วนบน) · timeline เรียงจากข้อความเรียงลงมาในลายมือ",
+   "nodes": [
+    {
+     "id": "lab",
+     "k": "start",
+     "t": "HIV stage 3: OI, AIDS · Lab: น้ำลาย, เลือด ELISA",
+     "d": "<span class=\"hw\">HIV stage 3 : OI, AID</span><br><span class=\"hw\">Lab: น้ำลาย, เลือด ELISA — (น้ำลาย) spec น้อยกว่า</span><br><span class=\"hw\">ตรวจเพิ่ม (สีน้ำเงิน): confirm, viral load, CD4, sens, UA, pregnancy test, LFT</span>"
+    },
+    {
+     "id": "nat",
+     "k": "dx",
+     "t": "Nucleic test: ดีใน acute infection",
+     "d": "<span class=\"hw\">nucleic test: ดีใน acute infection · ตรวจ HIV1 ดีกว่า 2</span>"
+    },
+    {
+     "id": "g4",
+     "k": "dx",
+     "t": "4th generation ELISA — เริ่มเจอได้แต่ไม่ 100%",
+     "d": "<span class=\"hw\">4th generation ELISA / เริ่มเจอได้แต่ไม่ 100% · เบาใจได้แต่ควร F/U 2-3 mo</span>"
+    },
+    {
+     "id": "d6",
+     "k": "act",
+     "t": "Day 6: เริ่มมี viremia แต่ตรวจไม่ได้",
+     "d": "<span class=\"hw\">day 6 เริ่มมี viremia แต่ตรวจไม่ได้</span>"
+    },
+    {
+     "id": "d10",
+     "k": "act",
+     "t": "10 วัน: viral RNA PCR",
+     "d": "<span class=\"hw\">10 วัน — viral RNA PCR</span>"
+    },
+    {
+     "id": "d15",
+     "k": "act",
+     "t": "15 วัน: P24 (ELISA) ไม่ค่อย sens",
+     "d": "<span class=\"hw\">15 วัน — P24 (ELISA) ไม่ค่อย sens</span>"
+    },
+    {
+     "id": "w3",
+     "k": "act",
+     "t": "3 สัปดาห์: Antibody (ELISA) อาจไม่ specific → western blot",
+     "d": "<span class=\"hw\">3 week — Antibody ✓ ELISA อาจไม่ specific ≠ western blot (ดูสายอย่าง)</span>"
+    },
+    {
+     "id": "m1",
+     "k": "act",
+     "t": "เกือบ 1 เดือน: western blot",
+     "d": "<span class=\"hw\">เกือบ 1 mo — western</span>"
+    },
+    {
+     "id": "wb",
+     "k": "dx",
+     "t": "Western blot = confirmatory test",
+     "d": "<span class=\"hw\">western blot ✱ : confirmatory test ✱</span>"
+    },
+    {
+     "id": "nw",
+     "k": "note",
+     "t": "ไม่ต้องรอ 2–3 เดือนเพื่อดู",
+     "d": "<span class=\"hw\">ไม่ต้องรอ 2-3 mo เพื่อดู</span>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "lab",
+     "t": "nat",
+     "l": "Nucleic test"
+    },
+    {
+     "f": "lab",
+     "t": "g4",
+     "l": "4th generation ELISA"
+    },
+    {
+     "f": "lab",
+     "t": "d6",
+     "l": "Timeline หลังติดเชื้อ"
+    },
+    {
+     "f": "d6",
+     "t": "d10"
+    },
+    {
+     "f": "d10",
+     "t": "d15"
+    },
+    {
+     "f": "d15",
+     "t": "w3"
+    },
+    {
+     "f": "w3",
+     "t": "m1"
+    },
+    {
+     "f": "m1",
+     "t": "wb"
+    },
+    {
+     "f": "wb",
+     "t": "nw"
+    }
+   ]
+  }
+ ]
+}

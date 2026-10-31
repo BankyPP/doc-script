@@ -1,0 +1,109 @@
+{
+ "key": "7-3",
+ "en": "Fever with splenomegaly",
+ "th": "ไข้ร่วมกับม้ามโต",
+ "pdf": "96",
+ "target": 7,
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "yb-7-3-spleno",
+   "h": "ไข้ร่วมกับม้ามโต (Fever with splenomegaly)",
+   "html": "<div class=\"flow\" data-flow=\"y73a\"></div><ul><li><b>Infection</b> — Virus: Infectious mononucleosis · Bacteria: Infective endocarditis, Enteric fever · Microbacteria: Miliary TB · Tropical infection: Mellioidosis, Malaria</li><li><b>Infection</b> — Sepsis with other cause of splenomegaly: Thalassemia, Chronic hemolytic anemia</li><li><b>Non-Infection</b> — Autoimmune: SLE, Felty syndrome, Still disease · Malignancy: Lymphoma</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y73a",
+   "title": "Fever with splenomegaly",
+   "src": "fig",
+   "img": "yb-7-3-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fever with splenomegaly"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infection"
+    },
+    {
+     "id": "non",
+     "k": "dx",
+     "t": "Non-Infection",
+     "d": "<b>Autoimmune</b><ul><li>SLE</li><li>Felty syndrome</li><li>Still disease</li></ul><b>Malignancy</b><ul><li>Lymphoma</li></ul>"
+    },
+    {
+     "id": "vir",
+     "k": "dx",
+     "t": "Virus",
+     "d": "<ul><li>Infectious mononucleosis</li></ul>"
+    },
+    {
+     "id": "bac",
+     "k": "dx",
+     "t": "Bacteria",
+     "d": "<ul><li>Infective endocarditis</li><li>Enteric fever</li></ul>"
+    },
+    {
+     "id": "mic",
+     "k": "dx",
+     "t": "Microbacteria",
+     "d": "<ul><li>Miliary TB</li></ul>"
+    },
+    {
+     "id": "trop",
+     "k": "dx",
+     "t": "Tropical infection",
+     "d": "<ul><li>Mellioidosis</li><li>Malaria</li></ul>"
+    },
+    {
+     "id": "sep",
+     "k": "dx",
+     "t": "Sepsis with other cause of splenomegaly",
+     "d": "<ul><li>Thalassemia</li><li>Chronic hemolytic anemia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "inf",
+     "l": "Infection"
+    },
+    {
+     "f": "a",
+     "t": "non",
+     "l": "Non-Infection"
+    },
+    {
+     "f": "inf",
+     "t": "vir",
+     "l": "Virus"
+    },
+    {
+     "f": "inf",
+     "t": "bac",
+     "l": "Bacteria"
+    },
+    {
+     "f": "inf",
+     "t": "mic",
+     "l": "Microbacteria"
+    },
+    {
+     "f": "inf",
+     "t": "trop",
+     "l": "Tropical infection"
+    },
+    {
+     "f": "inf",
+     "t": "sep",
+     "l": "Sepsis with other cause"
+    }
+   ]
+  }
+ ]
+}

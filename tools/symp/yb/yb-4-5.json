@@ -1,0 +1,153 @@
+{
+ "key": "4-5",
+ "en": "Edema",
+ "th": "บวม (Edema)",
+ "pdf": "57",
+ "target": 10,
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "dx",
+   "id": "yb-4-5-algo",
+   "h": "Edema — algorithm (เล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y45a\"></div><ul><li><b>Localized</b> (eg. Arm, leg)<ul><li>Venous obstruction: DVT</li><li>Lymphatic obstruction: CA infiltration · Irradiation · Scar from trauma · Filariasis · Lymphatic hypoplasia (Milroy dz)</li><li>Other: Inflammation (Cellulitis, erysipelas) · Trauma (Sprain/Fracture)</li></ul></li><li><b>Generalized</b><ul><li>Heart failure <span class=\"hw\">♡</span></li><li>Renal disease <span class=\"hw\">(ไต)</span>: Nephrotic syndrome · Glomerulonephritis · Renal failure with volume overload</li><li>Liver cirrhosis <span class=\"hw\">(GI)</span></li><li>Hypoalbuminemia <span class=\"hw\">(Nutrition)</span>: Protein-losing enteropathy · Malnutrition</li><li>Other: Hypothyroid · Drug (NSAIDs, Estrogen, CCB) · Idiopathic · High altitude</li></ul></li></ul><div class=\"box\"><p><b>โน้ตลายมือมุมขวาบนของแผนผัง</b></p><ul><li><span class=\"hw\">บวม (เขียนวงกลม)</span></li><li><span class=\"hw\">ตับ ไต – บวมทั้งตัว Albumin ↓</span></li><li><span class=\"hw\">♡ – ท 2 (ข้าง 2 ?)</span></li><li><span class=\"hw\">DVT – ท 1 (ข้าง 1 ?)</span></li></ul><p><small>เจ้าของเล่มไฮไลต์: Venous obstruction, Lymphatic obstruction, Inflammation, Trauma (เทา) · DVT, Cellulitis, erysipelas, Sprain/Fracture (ฟ้า) · Heart failure, Renal disease, Liver cirrhosis, Hypoalbuminemia, Hypothyroid, Drug (เหลือง)</small></p></div>"
+  },
+  {
+   "op": "append",
+   "sec": "class-local",
+   "html": "<ul><li><span class=\"tag\">เล่มเหลือง</span> Localized (eg. Arm, leg): Venous obstruction (DVT) · Lymphatic obstruction (CA infiltration, Irradiation, Scar from trauma, Filariasis, Lymphatic hypoplasia/Milroy dz) · Other: Inflammation (Cellulitis, erysipelas), Trauma (Sprain/Fracture)</li><li><span class=\"hw\">DVT – ท 1 (ข้าง 1 ?)</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "class-gen",
+   "html": "<ul><li><span class=\"tag\">เล่มเหลือง</span> Generalized: Heart failure · Renal disease (Nephrotic syndrome, Glomerulonephritis, Renal failure with volume overload) · Liver cirrhosis · Hypoalbuminemia (Protein-losing enteropathy, Malnutrition) · Other (Hypothyroid, Drug: NSAIDs/Estrogen/CCB, Idiopathic, High altitude)</li><li><span class=\"hw\">บวม: ตับ ไต – บวมทั้งตัว Albumin ↓ · ♡ – ท 2 (ข้าง 2 ?)</span></li><li><span class=\"hw\">ป้ายข้างกล่อง: Heart failure ♡ · Renal disease ไต · Liver cirrhosis GI · Hypoalbuminemia Nutrition</span></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y45a",
+   "title": "Edema",
+   "src": "fig",
+   "img": "yb-4-5-f1.webp",
+   "note": "ลายมือเพิ่ม: \"บวม\" วงกลม · ตับ ไต – บวมทั้งตัว Albumin ↓ · ♡ – ท 2 · DVT – ท 1 · ป้ายหัวใจ/ไต/GI/Nutrition ข้างกล่องโรค · ไฮไลต์เหลือง/เทา/ฟ้า",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Edema",
+     "d": "<p><span class=\"hw\">บวม (เขียนวงกลม)</span></p><ul><li><span class=\"hw\">ตับ ไต – บวมทั้งตัว Albumin ↓</span></li><li><span class=\"hw\">♡ – ท 2 (ข้าง 2 ?)</span></li><li><span class=\"hw\">DVT – ท 1 (ข้าง 1 ?)</span></li></ul>"
+    },
+    {
+     "id": "loc",
+     "k": "q",
+     "t": "Localized (eg. Arm, leg)"
+    },
+    {
+     "id": "gen",
+     "k": "q",
+     "t": "Generalized"
+    },
+    {
+     "id": "ven",
+     "k": "dx",
+     "t": "Venous obstruction",
+     "d": "<ul><li>DVT</li></ul><p><span class=\"hi\">ไฮไลต์: Venous obstruction (เทา), DVT (ฟ้า)</span></p>"
+    },
+    {
+     "id": "lym",
+     "k": "dx",
+     "t": "Lymphatic obstruction",
+     "d": "<ul><li>CA infiltration</li><li>Irradiation</li><li>Scar from trauma</li><li>Filariasis</li><li>Lymphatic hypoplasia (Milroy dz)</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other (Localized)",
+     "d": "<ul><li>Inflammation<ul><li>Cellulitis</li><li>erysipelas</li></ul></li><li>Trauma<ul><li>Sprain/Fracture</li></ul></li></ul>"
+    },
+    {
+     "id": "hf",
+     "k": "dx",
+     "t": "Heart failure",
+     "d": "<p><span class=\"hw\">♡</span></p>"
+    },
+    {
+     "id": "rd",
+     "k": "dx",
+     "t": "Renal disease",
+     "d": "<p><span class=\"hw\">ไต</span></p><ul><li>Nephrotic syndrome</li><li>Glomerulonephritis</li><li>Renal failure with volume overload</li></ul>"
+    },
+    {
+     "id": "lc",
+     "k": "dx",
+     "t": "Liver cirrhosis",
+     "d": "<p><span class=\"hw\">GI</span></p>"
+    },
+    {
+     "id": "ha",
+     "k": "dx",
+     "t": "Hypoalbuminemia",
+     "d": "<p><span class=\"hw\">Nutrition</span></p><ul><li>Protein-losing enteropathy</li><li>Malnutrition</li></ul>"
+    },
+    {
+     "id": "og",
+     "k": "dx",
+     "t": "Other (Generalized)",
+     "d": "<ul><li>Hypothyroid</li><li>Drug<ul><li>NSAIDs</li><li>Estrogen</li><li>CCB</li></ul></li><li>Idiopathic</li><li>High altitude</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "loc",
+     "l": "Localized"
+    },
+    {
+     "f": "a",
+     "t": "gen",
+     "l": "Generalized"
+    },
+    {
+     "f": "loc",
+     "t": "ven",
+     "l": "Venous obstruction"
+    },
+    {
+     "f": "loc",
+     "t": "lym",
+     "l": "Lymphatic obstruction"
+    },
+    {
+     "f": "loc",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "gen",
+     "t": "hf",
+     "l": "Heart failure"
+    },
+    {
+     "f": "gen",
+     "t": "rd",
+     "l": "Renal disease"
+    },
+    {
+     "f": "gen",
+     "t": "lc",
+     "l": "Liver cirrhosis"
+    },
+    {
+     "f": "gen",
+     "t": "ha",
+     "l": "Hypoalbuminemia"
+    },
+    {
+     "f": "gen",
+     "t": "og",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

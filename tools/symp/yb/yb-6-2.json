@@ -1,0 +1,178 @@
+{
+ "key": "6-2",
+ "en": "Hemolytic anemia",
+ "th": "ซีดจากเม็ดเลือดแดงแตก (hemolytic anemia)",
+ "pdf": "78",
+ "target": 8,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "approach",
+   "id": "yb-6-2-algo",
+   "h": "Algorithm: Hemolytic anemia (Intrinsic vs Extrinsic RBC cause)",
+   "html": "<div class=\"flow\" data-flow=\"y62a\"></div><p><b>Hemolytic anemia</b> แบ่งเป็น Intrinsic RBC cause และ Extrinsic RBC cause</p><ul><li><b>Intrinsic RBC cause</b><ul><li><b>Structural</b>: Membranopathies (HS, HE) · Enzymopathies (G-6PD deficiency) · Hemoglobinopathies (Homozygous Hb CS, Thalassemia)</li><li><b>Acquire</b>: PNH</li></ul></li><li><b>Extrinsic RBC cause</b><ul><li><b>Immune</b>: Autoimmune (Lymphoproliferative: Lymphoma, CLL · Autoimmune: SLE, RA, PAN, WG, UCTD · Infection: EBV, Mycoplasma · CA: ovary · Drug: Penicillin, Cephalosporin) / Alloimmune (Transfusion reaction)</li><li><b>Microangiopathies</b>: TTP, HUS, DIC, Severe PreEclampsia, HELLP syndrome, Malignant HT, Prosthesis valve</li><li><b>Infection</b>: Malaria, Clostridium</li><li><b>Chemical agent</b>: Spider venom</li></ul></li></ul><p>โน้ตลายมือ:</p><ul><li><b>HS</b>: <span class=\"hw\">ซีดตอนมีไข้</span> · <span class=\"hw\">MCHC↑ จาก CBC</span> · <span class=\"hw\">no pallor จาก PBS</span></li><li><b>G-6PD deficiency</b>: <span class=\"hw\">Bite cell, Hb leakage</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-acute",
+   "html": "<p><b>โน้ตลายมือในเล่มเหลือง (Hemolytic anemia)</b></p><ul><li><b>HS</b> (Hereditary spherocytosis): <span class=\"hw\">ซีดตอนมีไข้</span> · <span class=\"hw\">MCHC↑ จาก CBC</span> · <span class=\"hw\">no pallor จาก PBS</span></li><li><b>G-6PD deficiency</b>: <span class=\"hw\">Bite cell, Hb leakage</span></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y62a",
+   "title": "Hemolytic anemia",
+   "src": "fig",
+   "img": "yb-6-2-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hemolytic anemia"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Intrinsic RBC cause"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Extrinsic RBC cause"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Structural"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Acquire",
+     "d": "<ul><li>PNH</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Membranopathies",
+     "d": "<ul><li>HS</li><li>HE</li></ul><p>ลายมือข้างกล่อง HS:</p><ul><li><span class=\"hw\">ซีดตอนมีไข้</span> (ลูกศรชี้ไป HS)</li><li><span class=\"hw\">MCHC↑ จาก CBC</span></li><li><span class=\"hw\">no pallor จาก PBS</span></li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Enzymopathies",
+     "d": "<ul><li>G-6PD deficiency</li></ul><ul><li><span class=\"hw\">Bite cell, Hb leakage</span></li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Hemoglobinopathies",
+     "d": "<ul><li>Homozygous Hb CS</li><li>Thalassemia</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Immune"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Microangiopathies",
+     "d": "<ul><li>TTP</li><li>HUS</li><li>DIC</li><li>Severe PreEclampsia</li><li>HELLP syndrome</li><li>Malignant HT</li><li>Prosthesis valve</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Malaria</li><li>Clostridium</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Chemical agent",
+     "d": "<ul><li>Spider venom</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li><b>Lymphoproliferative</b><ul><li><span class=\"hi\">Lymphoma</span></li><li>CLL</li></ul></li><li><b>Autoimmune</b><ul><li>SLE, RA, PAN, WG, UCTD</li></ul></li><li><b>Infection</b><ul><li>EBV, <span class=\"hi\">Mycoplasma</span></li></ul></li><li><b>CA</b>: ovary</li><li><b>Drug</b>: Penicillin, Cephalosporin</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Alloimmune",
+     "d": "<ul><li>Transfusion reaction</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Intrinsic RBC cause"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Extrinsic RBC cause"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Structural"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Acquire"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Membranopathies"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Enzymopathies"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Hemoglobinopathies"
+    },
+    {
+     "f": "c",
+     "t": "i",
+     "l": "Immune"
+    },
+    {
+     "f": "c",
+     "t": "j",
+     "l": "Microangiopathies"
+    },
+    {
+     "f": "c",
+     "t": "k",
+     "l": "Infection"
+    },
+    {
+     "f": "c",
+     "t": "l",
+     "l": "Chemical agent"
+    },
+    {
+     "f": "i",
+     "t": "m",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "i",
+     "t": "n",
+     "l": "Alloimmune"
+    }
+   ],
+   "note": "ลายมือเพิ่มโน้ตข้าง HS และ G-6PD deficiency"
+  }
+ ]
+}
