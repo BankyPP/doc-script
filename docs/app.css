@@ -619,6 +619,21 @@ body.lbopen,body.fopen{overflow:hidden}
   .gdoc h3.gh{font-size:22px}
   .gdoc .gl{margin-left:calc(var(--l,0)*16px);padding-left:20px}
   .gpn a{max-width:100%}
+  /* แท็บจาก Doc โพยหมอ บนมือถือ: ขอบน้อยลง ตาราง ≤4 คอลัมน์บีบให้พอดีจอ (ไม่ต้องเลื่อนข้าง) ตารางกว้างกว่านั้นเลื่อนข้างได้ */
+  .greader{padding-left:8px;padding-right:8px}
+  .gdocart.doc{padding:18px 14px 22px;gap:18px;border-radius:8px}
+  .gdoc{font-size:15.5px;line-height:1.6}
+  .gdoc h3.gh{font-size:21px}
+  .gdoc h4.gh{font-size:18.5px}
+  .gdoc h5.gh{font-size:16.5px}
+  .gdoc .gl{margin-left:calc(var(--l,0)*12px);padding-left:18px}
+  .gtw{margin:0 -4px;max-width:calc(100% + 8px)}
+  .gt{font-size:13.5px;line-height:1.45;min-width:0;width:100%}
+  .gt td{min-width:0;padding:5px 6px;overflow-wrap:anywhere}
+  .gt td .gl{margin-left:calc(var(--l,0)*8px);padding-left:14px}
+  .gt:has(tr>td:nth-child(5)){width:auto}
+  .gt:has(tr>td:nth-child(5)) td{min-width:88px;overflow-wrap:break-word}
+  .gt td img{max-width:100%}
 }
 
 /* ห้องสอบ: จำนวนข้อแบบพิมพ์เอง */

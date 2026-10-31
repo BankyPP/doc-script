@@ -469,7 +469,8 @@
   function onBoard() { var r = route(); return r.name === 'nl' && r.args[0] === 'board'; }
   function render(keepScroll) {
     if (gateOn()) { renderGate(); return; }
-    if (keepScroll && !annForce && annEditing()) return;   /* กำลังแก้เนื้อหาอยู่ — ไม่วาดหน้าซ้ำจากการซิงก์เบื้องหลัง */
+    if (keepScroll && !annForce && annEditing()) return;
+    if (keepScroll && document.getElementById('nform') && rawGet('maidraft', null)) return;   /* กำลังกรอกโรคใหม่ — ไม่วาดฟอร์มซ้ำตอนดึงชีตเบื้องหลัง */   /* กำลังแก้เนื้อหาอยู่ — ไม่วาดหน้าซ้ำจากการซิงก์เบื้องหลัง */
     document.body.classList.remove('gated');
     var r = route();
     var page = PAGES[r.name] || PAGES._404;
@@ -779,7 +780,7 @@
       title: '1000 MAI', html:
         '<section class="wrap phead" style="padding-bottom:28px"><div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:16px"><span class="label">03 · หอพรรณไม้</span><div class="h1wrap"><h1>1000 MAI</h1><p class="h1sub">Medical Archive of Illnesses</p></div>' +
         '<p class="lede">หอพรรณไม้ของโรค — รู้จักให้พอจะ diag ได้ รู้ว่าต้องส่ง lab อะไร และเริ่ม initial management ได้</p>' +
-        '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px">' + liveHTML() + (hasSheet() ? '<button class="chip" type="button" id="reload" style="min-height:40px">ดึงใหม่</button><a class="chip on" href="#/disease/new" style="min-height:40px">+ เพิ่มโรค</a>' : '') + '</div></div>' +
+        '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px">' + liveHTML() + (hasSheet() ? '<button class="chip" type="button" id="reload" style="min-height:40px">ดึงใหม่</button><a class="chip on" href="#/disease/new" style="min-height:40px">+ เพิ่มโรค' + (LS.get('maidraft', null) ? ' (มีร่างค้าง)' : '') + '</a>' : '') + '</div></div>' +
         '<div style="flex:0 1 380px;min-width:240px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:baseline;gap:10px"><span class="k" style="font-size:64px;line-height:1">' + n + '</span><span class="muted" style="font-size:18px">/ 1000 โรค</span></div>' +
         '<svg viewBox="0 0 380 34" width="100%" aria-hidden="true"><rect x="1" y="1" width="378" height="22" rx="3" fill="#FBF9F3" stroke="#BDB39B"/><rect x="1" y="1" width="' + Math.max(0, Math.min(378, n * 0.378)) + '" height="22" rx="3" fill="#9B4F2E" opacity=".85"/><path d="' + ticks + '" stroke="#7A6E58" stroke-width="1"/><g font-family="Sarabun, sans-serif" font-size="10" fill="#5A6258"><text x="2" y="33">0</text><text x="182" y="33">500</text><text x="358" y="33">1000</text></g></svg></div></section>' +
         '<div id="dwrap"><div id="dtop">' + v0.top + '</div>' +
@@ -2824,7 +2825,7 @@
     var w = Math.round(Math.min(IW, Math.max(Math.min(1900, IW), window.innerWidth * 1.6)));
     function setW(nw) {
       var cx = (sc.scrollLeft + sc.clientWidth / 2) / w, cy = (sc.scrollTop + sc.clientHeight / 2) / (w / R);
-      w = Math.round(Math.max(sc.clientWidth, Math.min(IW * 1.6, nw))); img.style.width = w + 'px'; img.style.height = Math.round(w / R) + 'px';
+      w = Math.round(Math.max(sc.clientWidth, Math.min(IW * 2.2, nw))); img.style.width = w + 'px'; img.style.height = Math.round(w / R) + 'px';
       sc.scrollLeft = cx * w - sc.clientWidth / 2; sc.scrollTop = cy * (w / R) - sc.clientHeight / 2;
     }
     img.style.width = w + 'px'; img.style.height = Math.round(w / R) + 'px';
@@ -4784,9 +4785,34 @@
     }).join('');
     return {
       title: 'เพิ่มโรค', html: head + '<section class="wrap" style="padding-bottom:80px"><form class="sheet nform" id="nform">' + f +
-        '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="submit">บันทึกโรคนี้</button><a class="btn ghost" href="#/diseases">ยกเลิก</a></div></form></section>',
+        '<p class="muted" id="nfdraft" style="font-size:14px;margin:0" aria-live="polite"></p>' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="submit">บันทึกโรคนี้</button><a class="btn ghost" href="#/diseases">ออก (ร่างยังเก็บไว้)</a><button class="btn ghost" type="button" id="nfclear">ล้างร่าง</button></div></form></section>',
       after: function () {
-        document.getElementById('nform').addEventListener('submit', function (e) {
+        /* ร่างที่ยังกรอกไม่เสร็จ: เก็บทุกครั้งที่พิมพ์/เลือก ออกจากหน้า ปิดแท็บ หรือเว็บวาดหน้าใหม่ตอนดึงชีต ก็กลับมาครบ */
+        var fm = document.getElementById('nform'), dn = document.getElementById('nfdraft');
+        function dGet() { var v = {}; fm.querySelectorAll('[data-j]').forEach(function (x) { if (x.value.trim()) v[x.getAttribute('data-j')] = x.value; }); return v; }
+        function dSave() {
+          var v = dGet();
+          if (Object.keys(v).length) { LS.set('maidraft', { v: v, at: Date.now() }); dn.textContent = 'เก็บร่างไว้ในเครื่องนี้แล้ว · ' + fmtTime(new Date()); }
+          else { LS.del('maidraft'); dn.textContent = ''; }
+        }
+        var dr = LS.get('maidraft', null);
+        if (dr && dr.v) {
+          fm.querySelectorAll('[data-j]').forEach(function (x) {
+            var val = dr.v[x.getAttribute('data-j')]; if (val == null) return;
+            x.value = val;
+            var box = x.closest('.msel');
+            if (box) { var on = val.split(/\s*,\s*/); box.querySelectorAll('.msel-opt input').forEach(function (c) { c.checked = on.indexOf(c.value) >= 0; }); mselSync(box); }
+          });
+          dn.textContent = 'กรอกต่อจากร่างที่เก็บไว้ · ' + fmtTime(new Date(dr.at));
+        }
+        fm.addEventListener('input', dSave);
+        fm.addEventListener('change', dSave);
+        document.getElementById('nfclear').addEventListener('click', function () {
+          if (!confirm('ล้างทุกช่องที่กรอกไว้?')) return;
+          LS.del('maidraft'); render(false);
+        });
+        fm.addEventListener('submit', function (e) {
           e.preventDefault();
           if (!FB || !FB.user) { toast('เข้าสู่ระบบก่อน'); return; }
           var vals = [];
@@ -4795,7 +4821,7 @@
           var name = vals[Lx.role.name.j];
           if (!name) { toast('ใส่ชื่อโรคก่อน'); return; }
           if (D.list.some(function (d) { return d.name.trim().toLowerCase() === name.toLowerCase(); }) && !confirm('มี "' + name + '" อยู่แล้ว — เพิ่มซ้ำอีกแถว?')) return;
-          stAdd({ act: 'adddis', name: name, vals: vals, st: C.sheet && C.sheet.id ? 'wait' : 'web' }, function () { toast('เพิ่ม ' + name + ' แล้ว'); location.hash = '#/diseases'; });
+          stAdd({ act: 'adddis', name: name, vals: vals, st: C.sheet && C.sheet.id ? 'wait' : 'web' }, function () { LS.del('maidraft'); toast('เพิ่ม ' + name + ' แล้ว'); location.hash = '#/diseases'; });
         });
       }
     };
