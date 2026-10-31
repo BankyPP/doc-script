@@ -1,0 +1,112 @@
+{
+ "key": "076",
+ "en": "Abdominal Mass",
+ "th": "ก้อนในท้อง",
+ "pdf": "105",
+ "bookpg": "76",
+ "target": "abdominal-mass",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Blackbook:</b> exclude pregnancy/hernia/abdominal wall mass ก่อน แล้วจำแนกเป็น</p><h4>Organomegaly</h4><ul><li>Liver</li><li>Spleen</li><li>Kidneys (eg. Cysts, Cystic Renal Cell Carcinoma, Hydronephrosis)</li></ul><h4>Neoplastic</h4><ul><li>Gastrointestinal Tumours (eg. Colonic, Gastric, Pancreatic)</li><li>Gynecologic Tumors (eg. Ovarian, Uterine)</li><li>Lymphoma/Sarcoma</li></ul><h4>Other Causes — Feces</h4><h4>Other Causes — Pulsatile</h4><ul><li>Vascular (Abdominal Aortic Aneurysm)*</li></ul><h4>Other Causes — Pseudoneoplastic</h4><ul><li>Pancreatic Pseudocyst</li></ul><p><small>* Denotes acutely life-threatening conditions</small></p>"
+  },
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "bb-076-scheme",
+   "h": "Abdominal Mass scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b076a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b076a",
+   "title": "Abdominal Mass",
+   "src": "fig",
+   "img": "bb-076-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Abdominal Mass"
+    },
+    {
+     "id": "ex",
+     "k": "q",
+     "t": "Exclude pregnancy/hernia/abdominal wall mass"
+    },
+    {
+     "id": "organ",
+     "k": "dx",
+     "t": "Organomegaly",
+     "d": "<ul><li>Liver</li><li>Spleen</li><li>Kidneys (eg. Cysts, Cystic Renal Cell Carcinoma, Hydronephrosis)</li></ul>"
+    },
+    {
+     "id": "neo",
+     "k": "dx",
+     "t": "Neoplastic",
+     "d": "<ul><li>Gastrointestinal Tumours (eg. Colonic, Gastric, Pancreatic)</li><li>Gynecologic Tumors (eg. Ovarian, Uterine)</li><li>Lymphoma/Sarcoma</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other Causes"
+    },
+    {
+     "id": "feces",
+     "k": "dx",
+     "t": "Feces"
+    },
+    {
+     "id": "puls",
+     "k": "stop",
+     "t": "Pulsatile",
+     "d": "<p>*Denotes acutely life-threatening conditions</p><ul><li>Vascular (Abdominal Aortic Aneurysm)*</li></ul>"
+    },
+    {
+     "id": "pseudo",
+     "k": "dx",
+     "t": "Pseudoneoplastic",
+     "d": "<ul><li>Pancreatic Pseudocyst</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ex"
+    },
+    {
+     "f": "ex",
+     "t": "organ",
+     "l": "Organomegaly"
+    },
+    {
+     "f": "ex",
+     "t": "neo",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "ex",
+     "t": "oth",
+     "l": "Other Causes"
+    },
+    {
+     "f": "oth",
+     "t": "feces",
+     "l": "Feces"
+    },
+    {
+     "f": "oth",
+     "t": "puls",
+     "l": "Pulsatile"
+    },
+    {
+     "f": "oth",
+     "t": "pseudo",
+     "l": "Pseudoneoplastic"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,248 @@
+{
+ "key": "382",
+ "en": "Respiratory Distress in the Newborn",
+ "th": "หายใจลำบากในทารกแรกเกิด",
+ "pdf": "411–412",
+ "bookpg": "382–383",
+ "target": null,
+ "new": {
+  "id": "ped-respiratory-distress-newborn",
+  "th": "หายใจลำบากในทารกแรกเกิด",
+  "en": "Respiratory Distress in the Newborn",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-382-scheme",
+   "h": "Respiratory Distress in the Newborn scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b382a\"></div><div class=\"flow\" data-flow=\"b382b\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b382a",
+   "title": "Respiratory Distress in the Newborn (<48 hrs)",
+   "src": "fig",
+   "img": "bb-382-f1.webp",
+   "note": "*Indicates Key Condition · Potentially acutely life-threatening presentation",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Respiratory Distress in the Newborn (<48 hrs)"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed pregnancy and delivery history · detailed physical exam"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Respiratory",
+     "d": "<ul><li>Upper Airway<ul><li>Congenital upper airway obstruction (eg. Choanal atresia, laryngomalacia)</li><li>Airway compression (eg. Congenital neck mass, mediastinal mass)</li></ul></li><li>Lower Airway<ul><li><b>Pneumonia*</b></li><li>Transient tachypnea of the newborn</li><li>Respiratory distress syndrome</li><li>Pneumothorax</li><li>Meconium aspiration/meconium pneumonitis</li><li>Congenital lung anomalies</li></ul></li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Cardiovascular",
+     "d": "<p><b>Congenital Heart Disease*</b></p><ul><li>Cyanotic heart lesions<ul><li>Truncus Arteriosus</li><li>Total Anomalous Pulmonary Venous Return</li><li>Triscuspid Atresia</li><li>Transposition of the Great Arteries</li><li>Tetralogy of Fallot</li><li>Hypoplastic Left Heart Syndrome</li><li>Pulmonary Atresia</li></ul></li><li>Acyanotic heart lesions<ul><li>Coarctation of the Aorta</li><li>Critical Aortic Stenosis</li><li>Large AVSD</li></ul></li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Neuromuscular",
+     "d": "<p>(May present with irregular breathing rather than respiratory distress)</p><ul><li><b>Seizure*</b></li><li><b>Birth trauma*</b> (eg. Hypoxic brain injury, CNS bleed, birth asphyxia)</li><li>Congenital CNS malformation</li><li>Drugs: Narcotics/Sedatives</li><li>Chest wall deformities</li><li>Genetic neuromuscular disease (eg. Congenital myotonic dystrophy, spinal muscular atrophy, congenital myopathies)</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li><b>Sepsis*</b></li><li><b>Hypoglycemia*</b></li><li><b>Metabolic disease*</b></li><li>Gastrointestinal (eg. Diaphragmatic hernia)</li><li>Hypothermia or hyperthermia</li><li>Persistent Pulmonary Hypertension</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "r",
+     "l": "Respiratory"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Cardiovascular"
+    },
+    {
+     "f": "b",
+     "t": "n",
+     "l": "Neuromuscular"
+    },
+    {
+     "f": "b",
+     "t": "o",
+     "l": "Other"
+    }
+   ]
+  },
+  {
+   "id": "b382b",
+   "title": "Respiratory Distress in the Newborn — Tachypnea",
+   "src": "fig",
+   "img": "bb-382-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Respiratory Distress"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Check Respiratory Rate (RR)"
+    },
+    {
+     "id": "t",
+     "k": "q",
+     "t": "Tachypnea"
+    },
+    {
+     "id": "nr",
+     "k": "q",
+     "t": "Normal RR, irregular RR or Bradypnea"
+    },
+    {
+     "id": "see",
+     "k": "note",
+     "t": "See “Respiratory distress: Approach to Normal RR, irregular RR or Bradypnea”"
+    },
+    {
+     "id": "pe",
+     "k": "act",
+     "t": "Respiratory physical exam"
+    },
+    {
+     "id": "q1",
+     "k": "q",
+     "t": "No increased work of breathing · normal SaO2"
+    },
+    {
+     "id": "q2",
+     "k": "q",
+     "t": "Stridor on inspiration · increased work of breathing …",
+     "d": "<ul><li><b>Stridor</b> on inspiration</li><li>Increased work of breathing (indrawing, nasal flare, head bobbing, paradoxical breathing)</li><li>Reduced SaO2 and reduced air entry are red flags for impending respiratory failure</li></ul>"
+    },
+    {
+     "id": "q3",
+     "k": "q",
+     "t": "Wheeze on expiration · increased work of breathing …",
+     "d": "<ul><li><b>Wheeze</b> on expiration</li><li>Increased work of breathing (indrawing, nasal flare, head bobbing, paradoxical breathing)</li><li>Crackles, bronchial breath sounds, focal respiratory findings</li><li>SaO2 reduced</li></ul>"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "Tachypnea with no increased work of breathing",
+     "d": "<ul><li><b>Sepsis*</b> with lactic acidosis</li><li><b>Diabetic ketoacidosis*</b></li><li><b>Metabolic disease*</b></li></ul>"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Upper Airway (extra-thoracic obstruction present)",
+     "d": "<ul><li><b>Anaphylaxis*</b></li><li><b>Croup*</b></li><li><b>Epiglottitis*</b></li><li><b>Tracheitis*</b></li><li><b>Foreign body*</b></li></ul>"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Lower Airway (intra-thoracic obstruction present)"
+    },
+    {
+     "id": "e1",
+     "k": "dx",
+     "t": "V/Q Mismatch",
+     "d": "<ul><li><b>Bronchiolitis*</b></li><li><b>Asthma*/Status Asthmaticus*</b></li><li><b>Foreign body*</b></li><li><b>Pneumonia*</b></li><li>Atelectasis</li><li>Pleural effusion</li><li>Pneumothorax</li></ul>"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "Diffusion Problem",
+     "d": "<ul><li>Interstitial lung disease</li><li>Acute respiratory distress syndrome</li><li>Pulmonary Edema</li></ul>"
+    },
+    {
+     "id": "e3",
+     "k": "dx",
+     "t": "R → L Shunt",
+     "d": "<ul><li><b>Congestive Heart Failure*</b></li><li><b>Congenital Heart Disease*</b></li><li>Pulmonary AVM</li><li>Pulmonary Hypertension</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "t",
+     "l": "Tachypnea"
+    },
+    {
+     "f": "b",
+     "t": "nr",
+     "l": "Normal RR, irregular RR or bradypnea"
+    },
+    {
+     "f": "nr",
+     "t": "see"
+    },
+    {
+     "f": "t",
+     "t": "pe"
+    },
+    {
+     "f": "pe",
+     "t": "q1",
+     "l": "No increased work of breathing"
+    },
+    {
+     "f": "pe",
+     "t": "q2",
+     "l": "Stridor on inspiration"
+    },
+    {
+     "f": "pe",
+     "t": "q3",
+     "l": "Wheeze on expiration"
+    },
+    {
+     "f": "q1",
+     "t": "d1"
+    },
+    {
+     "f": "q2",
+     "t": "d2"
+    },
+    {
+     "f": "q3",
+     "t": "d3"
+    },
+    {
+     "f": "d3",
+     "t": "e1",
+     "l": "V/Q mismatch"
+    },
+    {
+     "f": "d3",
+     "t": "e2",
+     "l": "Diffusion problem"
+    },
+    {
+     "f": "d3",
+     "t": "e3",
+     "l": "R → L shunt"
+    }
+   ]
+  }
+ ]
+}

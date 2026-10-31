@@ -1,0 +1,165 @@
+{
+ "key": "065",
+ "en": "Suspected Deep Vein Thrombosis (DVT)",
+ "th": "สงสัยหลอดเลือดดำส่วนลึกอุดตัน (DVT)",
+ "pdf": "94",
+ "bookpg": "65",
+ "target": "venous-thrombosis",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-8-algo",
+   "id": "bb-065-scheme",
+   "h": "Suspected DVT scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b065a\"></div><div class=\"tbl\"><table><thead><tr><th>Well's Criteria for DVT</th><th>Points</th></tr></thead><tbody><tr><td>Active Cancer</td><td>(1)</td></tr><tr><td>Paralysis, paresis, recent immobilization of lower extremity</td><td>(1)</td></tr><tr><td>Recently bedridden for &gt;3days, or major surgery in last 4 weeks</td><td>(1)</td></tr><tr><td>Localized tenderness along distribution of the deep venous system</td><td>(1)</td></tr><tr><td>Entire leg swollen</td><td>(1)</td></tr><tr><td>Calf swelling by &gt;3cm compared to asymptomatic leg</td><td>(1)</td></tr><tr><td>Pitting edema (greater in symptomatic leg)</td><td>(1)</td></tr><tr><td>Collateral, nonvaricose superficial veins</td><td>(1)</td></tr><tr><td>Alternative diagnosis as or more likely than DVT</td><td>(-2)</td></tr></tbody></table></div><p><small>Wells, P.S. et al. (2003). Evaluation of D-dimer in the diagnosis of suspected deep-vein thrombosis. New England Journal of Medicine; 349: 1… (ข้อความอ้างอิงถูกตัดท้ายในหนังสือ)</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b065a",
+   "title": "Suspected Deep Vein Thrombosis (DVT)",
+   "src": "fig",
+   "img": "bb-065-f1.webp",
+   "note": "STOP/TREAT ที่ขีดเส้นใต้ใต้กล่องในหนังสือรวมเข้าชื่อกล่อง · Well's criteria อยู่ในกล่อง \"Calculate Clinical Probability Score\"",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Suspected DVT"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Calculate Clinical Probability Score",
+     "d": "<div class=\"tbl\"><table><thead><tr><th>Well's Criteria for DVT</th><th>Points</th></tr></thead><tbody><tr><td>Active Cancer</td><td>(1)</td></tr><tr><td>Paralysis, paresis, recent immobilization of lower extremity</td><td>(1)</td></tr><tr><td>Recently bedridden for &gt;3days, or major surgery in last 4 weeks</td><td>(1)</td></tr><tr><td>Localized tenderness along distribution of the deep venous system</td><td>(1)</td></tr><tr><td>Entire leg swollen</td><td>(1)</td></tr><tr><td>Calf swelling by &gt;3cm compared to asymptomatic leg</td><td>(1)</td></tr><tr><td>Pitting edema (greater in symptomatic leg)</td><td>(1)</td></tr><tr><td>Collateral, nonvaricose superficial veins</td><td>(1)</td></tr><tr><td>Alternative diagnosis as or more likely than DVT</td><td>(-2)</td></tr></tbody></table></div>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Low: ≤ 2 Points"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "High: > 2 Points"
+    },
+    {
+     "id": "e",
+     "k": "note",
+     "t": "Negative D-Dimer — STOP"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Positive D-Dimer"
+    },
+    {
+     "id": "g",
+     "k": "note",
+     "t": "Negative Leg U/S — STOP"
+    },
+    {
+     "id": "h",
+     "k": "act",
+     "t": "Positive Leg U/S — TREAT"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Negative Leg U/S"
+    },
+    {
+     "id": "j",
+     "k": "act",
+     "t": "Positive Leg U/S — TREAT"
+    },
+    {
+     "id": "k",
+     "k": "note",
+     "t": "Negative Leg U/S at 1 Week — STOP"
+    },
+    {
+     "id": "l",
+     "k": "act",
+     "t": "Positive Leg U/S at 1 Week — TREAT"
+    },
+    {
+     "id": "m",
+     "k": "note",
+     "t": "Negative Venogram — STOP"
+    },
+    {
+     "id": "n",
+     "k": "act",
+     "t": "Positive Venogram — TREAT"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Low: ≤ 2 points"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "High: > 2 points"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Negative D-dimer"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Positive D-dimer"
+    },
+    {
+     "f": "f",
+     "t": "g",
+     "l": "Negative leg U/S"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Positive leg U/S"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Negative leg U/S"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Positive leg U/S"
+    },
+    {
+     "f": "i",
+     "t": "k",
+     "l": "Leg U/S at 1 week: negative"
+    },
+    {
+     "f": "i",
+     "t": "l",
+     "l": "Leg U/S at 1 week: positive"
+    },
+    {
+     "f": "i",
+     "t": "m",
+     "l": "Venogram: negative"
+    },
+    {
+     "f": "i",
+     "t": "n",
+     "l": "Venogram: positive"
+    }
+   ]
+  }
+ ]
+}

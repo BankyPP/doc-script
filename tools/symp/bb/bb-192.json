@@ -1,0 +1,124 @@
+{
+ "key": "192",
+ "en": "Syncope",
+ "th": "เป็นลม",
+ "pdf": "221",
+ "bookpg": "192",
+ "target": "syncope",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-1-3-approach",
+   "id": "bb-192-scheme",
+   "h": "Syncope — cardiac vs non-cardiac (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b192a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "mech-t1",
+   "html": "<p><b>Cardiac</b></p><ul><li><b>Arrhythmia:</b> Tachyarrhythmia, Bradyarrhythmia, Supraventricular Tachycardia, Sick-Sinus Syndrome, Second/Third Degree Atrioventricular Block</li><li><b>Outflow obstruction:</b> Aortic Stenosis, Hypertrophic Obstructive Cardiomyopathy, Pulmonary Embolus, Other</li></ul><p><b>Non-cardiac</b></p><ul><li><b>Vasovagal/autonomic — central:</b> emotional</li><li><b>Vasovagal/autonomic — peripheral/situational:</b> Bladder Emptying, Pain, Reduced Effective Arterial Blood Volume, Carotid Sinus Syncope, Tussive, Defecation</li><li><b>Orthostatic:</b> Dehydration, Hypovolemia, Medications</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b192a",
+   "title": "Syncope",
+   "src": "fig",
+   "img": "bb-192-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Syncope"
+    },
+    {
+     "id": "car",
+     "k": "q",
+     "t": "Cardiac"
+    },
+    {
+     "id": "nc",
+     "k": "q",
+     "t": "Non-Cardiac"
+    },
+    {
+     "id": "arr",
+     "k": "dx",
+     "t": "Arrhythmia",
+     "d": "<ul><li>Tachyarrhythmia</li><li>Bradyarrhythmia</li><li>Supraventricular Tachycardia</li><li>Sick-Sinus Syndrome</li><li>Second/Third Degree Atrioventricular Block</li></ul>"
+    },
+    {
+     "id": "out",
+     "k": "dx",
+     "t": "Outflow Obstruction",
+     "d": "<ul><li>Aortic Stenosis</li><li>Hypertrophic Obstructive Cardiomyopathy</li><li>Pulmonary Embolus</li><li>Other</li></ul>"
+    },
+    {
+     "id": "vv",
+     "k": "q",
+     "t": "Vasovagal/Autonomic"
+    },
+    {
+     "id": "ort",
+     "k": "dx",
+     "t": "Orthostatic",
+     "d": "<ul><li>Dehydration</li><li>Hypovolemia</li><li>Medications</li></ul>"
+    },
+    {
+     "id": "cen",
+     "k": "dx",
+     "t": "Central",
+     "d": "<ul><li>Emotional</li></ul>"
+    },
+    {
+     "id": "per",
+     "k": "dx",
+     "t": "Peripheral/Situational",
+     "d": "<ul><li>Bladder Emptying</li><li>Pain</li><li>Reduced Effective Arterial Blood Volume</li><li>Carotid Sinus Syncope</li><li>Tussive</li><li>Defecation</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "car",
+     "l": "Cardiac"
+    },
+    {
+     "f": "a",
+     "t": "nc",
+     "l": "Non-cardiac"
+    },
+    {
+     "f": "car",
+     "t": "arr",
+     "l": "Arrhythmia"
+    },
+    {
+     "f": "car",
+     "t": "out",
+     "l": "Outflow obstruction"
+    },
+    {
+     "f": "nc",
+     "t": "vv",
+     "l": "Vasovagal/autonomic"
+    },
+    {
+     "f": "nc",
+     "t": "ort",
+     "l": "Orthostatic"
+    },
+    {
+     "f": "vv",
+     "t": "cen",
+     "l": "Central"
+    },
+    {
+     "f": "vv",
+     "t": "per",
+     "l": "Peripheral/situational"
+    }
+   ]
+  }
+ ]
+}

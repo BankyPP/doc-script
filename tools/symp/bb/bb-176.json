@@ -1,0 +1,166 @@
+{
+ "key": "176",
+ "en": "Gait Disturbance",
+ "th": "การเดินผิดปกติ",
+ "pdf": "205",
+ "bookpg": "176",
+ "target": null,
+ "new": {
+  "id": "gait-disturbance",
+  "th": "การเดินผิดปกติ",
+  "en": "Gait Disturbance",
+  "g": "neuro"
+ },
+ "sections": [
+  {
+   "id": "bb-176-scheme",
+   "h": "Gait Disturbance — แผนผัง",
+   "html": "<div class=\"flow\" data-flow=\"b176a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b176a",
+   "title": "Gait Disturbance",
+   "src": "fig",
+   "img": "bb-176-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Gait Disturbance"
+    },
+    {
+     "id": "mov",
+     "k": "note",
+     "t": "Movement Disorder",
+     "d": "<p>See <i>Movement Disorder</i> schemes</p>"
+    },
+    {
+     "id": "her",
+     "k": "q",
+     "t": "Hereditary"
+    },
+    {
+     "id": "spo",
+     "k": "dx",
+     "t": "Sporadic",
+     "d": "<ul><li>Vascular</li><li>Infection</li><li>Toxic</li><li>Nutrition</li><li>Metabolic</li><li>Inflammation</li><li>Neoplasm</li><li>Degenerative</li></ul>"
+    },
+    {
+     "id": "sen",
+     "k": "dx",
+     "t": "Sensory Ataxia",
+     "d": "<ul><li>Vestibular</li><li>Visual</li><li>Proprioceptive</li></ul>"
+    },
+    {
+     "id": "cer",
+     "k": "q",
+     "t": "Cerebellar Ataxia"
+    },
+    {
+     "id": "pro",
+     "k": "q",
+     "t": "Progressive/Degenerative"
+    },
+    {
+     "id": "cat",
+     "k": "q",
+     "t": "Catalytic Deficiency (Childhood)"
+    },
+    {
+     "id": "xl",
+     "k": "dx",
+     "t": "X-Linked/Mitochondrial",
+     "d": "<ul><li>Fragile X</li></ul>"
+    },
+    {
+     "id": "dom",
+     "k": "dx",
+     "t": "Dominant",
+     "d": "<ul><li>Spinocerebellar Ataxia</li></ul>"
+    },
+    {
+     "id": "rec",
+     "k": "dx",
+     "t": "Recessive",
+     "d": "<ul><li>Friedrich’s Ataxia</li><li>Telangiectasia</li></ul>"
+    },
+    {
+     "id": "int",
+     "k": "dx",
+     "t": "Intermittent",
+     "d": "<ul><li>Hyperammonemia</li><li>Aminoaciduria</li><li>Pyruvate/Lactic Acid</li></ul>"
+    },
+    {
+     "id": "chr",
+     "k": "dx",
+     "t": "Chronic Progressive",
+     "d": "<ul><li>Tay-Sachs Disease</li><li>Niemann-Pick Disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "mov",
+     "l": "Movement disorder"
+    },
+    {
+     "f": "a",
+     "t": "her",
+     "l": "Hereditary"
+    },
+    {
+     "f": "a",
+     "t": "spo",
+     "l": "Sporadic"
+    },
+    {
+     "f": "her",
+     "t": "sen",
+     "l": "Sensory ataxia"
+    },
+    {
+     "f": "her",
+     "t": "cer",
+     "l": "Cerebellar ataxia"
+    },
+    {
+     "f": "cer",
+     "t": "pro",
+     "l": "Progressive/degenerative"
+    },
+    {
+     "f": "cer",
+     "t": "cat",
+     "l": "Catalytic deficiency (childhood)"
+    },
+    {
+     "f": "pro",
+     "t": "xl",
+     "l": "X-linked/mitochondrial"
+    },
+    {
+     "f": "pro",
+     "t": "dom",
+     "l": "Dominant"
+    },
+    {
+     "f": "pro",
+     "t": "rec",
+     "l": "Recessive"
+    },
+    {
+     "f": "cat",
+     "t": "int",
+     "l": "Intermittent"
+    },
+    {
+     "f": "cat",
+     "t": "chr",
+     "l": "Chronic progressive"
+    }
+   ]
+  }
+ ]
+}

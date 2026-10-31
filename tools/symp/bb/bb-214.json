@@ -1,0 +1,157 @@
+{
+ "key": "214",
+ "en": "Ovarian Mass",
+ "th": "ก้อนที่รังไข่",
+ "pdf": "243",
+ "bookpg": "214",
+ "target": null,
+ "new": {
+  "id": "ovarian-mass",
+  "th": "ก้อนที่รังไข่",
+  "en": "Ovarian Mass",
+  "g": "obgyn"
+ },
+ "sections": [
+  {
+   "id": "bb-214-scheme",
+   "h": "Ovarian Mass scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b214a\"></div><ul><li><b>Benign Neoplasms</b><ul><li><b>Benign — Epithelial</b><ul><li>Serous cystadenoma</li><li>Mucinous cystadenoma</li></ul></li><li><b>Benign — Germ Cell</b><ul><li>Mature teratoma (may be cystic)</li><li>Gonadoblastoma (can become malignant)</li></ul></li><li><b>Benign — Sex Cord Stromal</b><ul><li>Fibroma</li><li>Thecoma</li><li>Granulosa cell tumor</li></ul></li></ul></li><li><b>Hyperplastic</b><ul><li>Polycystic ovary</li><li>Endometrioid cyst</li></ul></li><li><b>Functional</b><ul><li>Follicular cyst</li><li>Corpus lutein cyst</li><li>Theca lutein cyst</li></ul></li><li><b>Malignant Neoplasms</b><ul><li><b>Malignant — Epithelial</b><ul><li>Serous cystadenocarcinoma</li><li>Mucinous cystadenocarcinoma</li><li>Endometrioid</li><li>Clear Cell</li></ul></li><li><b>Malignant — Germ Cell</b><ul><li>Dysgerminoma</li><li>Immature teratoma</li><li>Yolk Sac</li></ul></li><li><b>Malignant — Sex Cord Stromal</b><ul><li>Granulosa cell tumor</li><li>Sertoli Cell</li><li>Sertoli - Leydig</li></ul></li><li><b>Metastases</b><ul><li>Krukenberg tumor (gastrointestinal metastasis)</li><li>Breast</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b214a",
+   "title": "Ovarian Mass",
+   "src": "fig",
+   "img": "bb-214-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Ovarian Mass"
+    },
+    {
+     "id": "bn",
+     "k": "q",
+     "t": "Benign Neoplasms"
+    },
+    {
+     "id": "hy",
+     "k": "dx",
+     "t": "Hyperplastic",
+     "d": "<ul><li>Polycystic ovary</li><li>Endometrioid cyst</li></ul>"
+    },
+    {
+     "id": "fu",
+     "k": "dx",
+     "t": "Functional",
+     "d": "<ul><li>Follicular cyst</li><li>Corpus lutein cyst</li><li>Theca lutein cyst</li></ul>"
+    },
+    {
+     "id": "mn",
+     "k": "q",
+     "t": "Malignant Neoplasms"
+    },
+    {
+     "id": "be",
+     "k": "dx",
+     "t": "Benign — Epithelial",
+     "d": "<ul><li>Serous cystadenoma</li><li>Mucinous cystadenoma</li></ul>"
+    },
+    {
+     "id": "bg",
+     "k": "dx",
+     "t": "Benign — Germ Cell",
+     "d": "<ul><li>Mature teratoma (may be cystic)</li><li>Gonadoblastoma (can become malignant)</li></ul>"
+    },
+    {
+     "id": "bs",
+     "k": "dx",
+     "t": "Benign — Sex Cord Stromal",
+     "d": "<ul><li>Fibroma</li><li>Thecoma</li><li>Granulosa cell tumor</li></ul>"
+    },
+    {
+     "id": "me",
+     "k": "dx",
+     "t": "Malignant — Epithelial",
+     "d": "<ul><li>Serous cystadenocarcinoma</li><li>Mucinous cystadenocarcinoma</li><li>Endometrioid</li><li>Clear Cell</li></ul>"
+    },
+    {
+     "id": "mg",
+     "k": "dx",
+     "t": "Malignant — Germ Cell",
+     "d": "<ul><li>Dysgerminoma</li><li>Immature teratoma</li><li>Yolk Sac</li></ul>"
+    },
+    {
+     "id": "ms",
+     "k": "dx",
+     "t": "Malignant — Sex Cord Stromal",
+     "d": "<ul><li>Granulosa cell tumor</li><li>Sertoli Cell</li><li>Sertoli - Leydig</li></ul>"
+    },
+    {
+     "id": "mt",
+     "k": "dx",
+     "t": "Metastases",
+     "d": "<ul><li>Krukenberg tumor (gastrointestinal metastasis)</li><li>Breast</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "bn",
+     "l": "Benign Neoplasms"
+    },
+    {
+     "f": "a",
+     "t": "hy",
+     "l": "Hyperplastic"
+    },
+    {
+     "f": "a",
+     "t": "fu",
+     "l": "Functional"
+    },
+    {
+     "f": "a",
+     "t": "mn",
+     "l": "Malignant Neoplasms"
+    },
+    {
+     "f": "bn",
+     "t": "be",
+     "l": "Epithelial"
+    },
+    {
+     "f": "bn",
+     "t": "bg",
+     "l": "Germ Cell"
+    },
+    {
+     "f": "bn",
+     "t": "bs",
+     "l": "Sex Cord Stromal"
+    },
+    {
+     "f": "mn",
+     "t": "me",
+     "l": "Epithelial"
+    },
+    {
+     "f": "mn",
+     "t": "mg",
+     "l": "Germ Cell"
+    },
+    {
+     "f": "mn",
+     "t": "ms",
+     "l": "Sex Cord Stromal"
+    },
+    {
+     "f": "mn",
+     "t": "mt",
+     "l": "Metastases"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,214 @@
+{
+ "key": "239",
+ "en": "Pruritus",
+ "th": "อาการคัน",
+ "pdf": "268–269",
+ "bookpg": "239–240",
+ "target": "common-skin-manifestations",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "sx-itch",
+   "id": "bb-239-no-lesion",
+   "h": "Pruritus without primary skin lesion (Blackbook scheme)",
+   "html": "<div class=\"flow\" data-flow=\"b239a\"></div><div class=\"tbl\"><table><thead><tr><th>Test</th><th>Cause</th></tr></thead><tbody><tr><td><b>Primary Skin Lesion</b></td><td>ดูหน้า Pruritus — Primary Skin Lesion</td></tr><tr><td><b>Blood Glucose</b></td><td><ul><li>Diabetes Mellitus</li></ul></td></tr><tr><td><b>Liver Function Tests/Enzymes</b></td><td><ul><li>Cholestatic liver disease</li></ul></td></tr><tr><td><b>Creatinine &amp; BUN</b></td><td><ul><li>Chronic renal failure/uremia</li></ul></td></tr><tr><td><b>TSH &amp; T4</b></td><td><ul><li>Hypothyroidism</li><li>Hyperthyroidism</li></ul></td></tr><tr><td><b>CBC &amp; Differential</b></td><td><ul><li>Lymphoma</li><li>Leukemia</li><li>Polycythemia rubra vera</li><li>Essential Thrombocythemia</li><li>Myelodysplastic syndrome</li></ul></td></tr><tr><td><b>Psychiatric Disease</b></td><td><ul><li>Delusions of parasitosis</li></ul></td></tr></tbody></table></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "sx-itch",
+   "id": "bb-239-lesion",
+   "h": "Pruritus with primary skin lesion (Blackbook scheme)",
+   "html": "<div class=\"flow\" data-flow=\"b239b\"></div><div class=\"tbl\"><table><thead><tr><th>Lesion</th><th>Causes</th></tr></thead><tbody><tr><td><b>No Primary skin Lesion</b></td><td>ดูหน้า Pruritus — No Primary Skin Lesion</td></tr><tr><td><b>Macules/Papules/Plaques</b></td><td><ul><li>Xerosis (dry skin)</li><li>Atopic dermatitis</li><li>Nummular dermatitis</li><li>Seborrheic dermatitis</li><li>Stasis dermatitis</li><li>Psoriasis</li><li>Lichen Planus</li><li>Infestations (scabies, lice)</li><li>Arthropod bites</li></ul></td></tr><tr><td><b>Vesicles/Bullae</b></td><td><ul><li>Varicella zoster (chickenpox)</li><li>Dermatitis herpetiformis</li><li>Bullous pemphigoid</li></ul></td></tr><tr><td><b>Wheals/Hives</b></td><td><ul><li>Urticaria</li></ul></td></tr></tbody></table></div>"
+  },
+  {
+   "op": "append",
+   "sec": "sx-itch",
+   "html": "<p><b>Blackbook — Pruritus with no primary skin lesion: primary abnormal finding</b></p><ul><li><b>Blood glucose:</b> Diabetes Mellitus</li><li><b>Liver function tests/enzymes:</b> Cholestatic liver disease</li><li><b>Creatinine &amp; BUN:</b> Chronic renal failure/uremia</li><li><b>TSH &amp; T4:</b> Hypothyroidism · Hyperthyroidism</li><li><b>CBC &amp; differential:</b> Lymphoma · Leukemia · Polycythemia rubra vera · Essential Thrombocythemia · Myelodysplastic syndrome</li><li><b>Psychiatric disease:</b> Delusions of parasitosis</li></ul><p><b>Blackbook — Pruritus with primary skin lesion</b></p><ul><li><b>Macules/Papules/Plaques:</b> Xerosis (dry skin) · Atopic dermatitis · Nummular dermatitis · Seborrheic dermatitis · Stasis dermatitis · Psoriasis · Lichen Planus · Infestations (scabies, lice) · Arthropod bites</li><li><b>Vesicles/Bullae:</b> Varicella zoster (chickenpox) · Dermatitis herpetiformis · Bullous pemphigoid</li><li><b>Wheals/Hives:</b> Urticaria</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b239a",
+   "title": "Pruritus — No Primary Skin Lesion",
+   "src": "fig",
+   "img": "bb-239-f1.webp",
+   "note": "เส้นประ = แขนงที่ไปอีกหน้า (Primary Skin Lesion)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pruritus"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Primary Skin Lesion",
+     "d": "ดูหน้า Pruritus — Primary Skin Lesion"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "No Primary skin Lesion"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Primary Abnormal Finding"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Blood Glucose",
+     "d": "<ul><li>Diabetes Mellitus</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Liver Function Tests/Enzymes",
+     "d": "<ul><li>Cholestatic liver disease</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Creatinine & BUN",
+     "d": "<ul><li>Chronic renal failure/uremia</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "TSH & T4",
+     "d": "<ul><li>Hypothyroidism</li><li>Hyperthyroidism</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "CBC & Differential",
+     "d": "<ul><li>Lymphoma</li><li>Leukemia</li><li>Polycythemia rubra vera</li><li>Essential Thrombocythemia</li><li>Myelodysplastic syndrome</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Psychiatric Disease",
+     "d": "<ul><li>Delusions of parasitosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "(dashed) see Primary Skin Lesion page"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "No Primary skin Lesion"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Primary Abnormal Finding"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Blood Glucose"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Liver Function Tests/Enzymes"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Creatinine & BUN"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "TSH & T4"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "CBC & Differential"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Psychiatric Disease"
+    }
+   ]
+  },
+  {
+   "id": "b239b",
+   "title": "Pruritus — Primary Skin Lesion",
+   "src": "fig",
+   "img": "bb-239-f2.webp",
+   "note": "เส้นประ = แขนงที่ไปอีกหน้า (No Primary skin Lesion)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pruritus"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Primary Skin Lesion"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "No Primary skin Lesion",
+     "d": "ดูหน้า Pruritus — No Primary Skin Lesion"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Macules/Papules/Plaques",
+     "d": "<ul><li>Xerosis (dry skin)</li><li>Atopic dermatitis</li><li>Nummular dermatitis</li><li>Seborrheic dermatitis</li><li>Stasis dermatitis</li><li>Psoriasis</li><li>Lichen Planus</li><li>Infestations (scabies, lice)</li><li>Arthropod bites</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Vesicles/Bullae",
+     "d": "<ul><li>Varicella zoster (chickenpox)</li><li>Dermatitis herpetiformis</li><li>Bullous pemphigoid</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Wheals/Hives",
+     "d": "<ul><li>Urticaria</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Primary Skin Lesion"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "(dashed) see No Primary Lesion page"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Macules/Papules/Plaques"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Vesicles/Bullae"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Wheals/Hives"
+    }
+   ]
+  }
+ ]
+}

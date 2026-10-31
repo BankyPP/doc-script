@@ -1,0 +1,18 @@
+{
+ "key": "304",
+ "en": "Neuro-Ophthalmology: Visual Field Defects",
+ "th": "ความผิดปกติของลานสายตา",
+ "pdf": "333",
+ "bookpg": "304",
+ "target": "visual-disorder",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "yb-9-9-vf",
+   "id": "bb-304-vf",
+   "h": "Visual field defects by lesion site (Blackbook)",
+   "html": "<figure><img src=\"symp/img/bb-304-f1.webp\" alt=\"Neuro-ophthalmology visual field defects: hand-drawn visual pathway with lesion sites (optic nerve, optic chiasm, optic tract, lateral geniculate nucleus, Meyer's loop, right parietal lobe) and the corresponding left/right eye visual field circles\"><figcaption>Neuro-Ophthalmology — Visual Field Defects: lesion site on the visual pathway and the matching field defect in the right/left eye (black = lost field)</figcaption></figure><div class=\"tbl\"><table><thead><tr><th>Lesion site</th><th>Visual field defect</th><th>Causes</th></tr></thead><tbody><tr><td><b>Optic Nerve Lesion</b></td><td>Monocular vision loss</td><td></td></tr><tr><td><b>Optic Chiasm Lesion</b></td><td>Bitemporal hemianopia</td><td><ul><li>Pituitary/metastatic tumor</li><li>Craniopharyngioma</li><li>Meningioma</li><li>Optic nerve glioma</li><li>Aneurysm</li><li>Infection</li><li>MS</li><li>Sarcoidosis</li></ul></td></tr><tr><td><b>Optic Tract Lesion</b></td><td>Incongruous right homonymous hemianopia</td><td></td></tr><tr><td><b>Lateral Geniculate Nucleus Lesion</b></td><td>Right homonymous horizontal sectoranopia</td><td></td></tr><tr><td><b>Meyer's Loop Lesion</b></td><td>Incongruous superior homonymous quadrantanopia</td><td></td></tr><tr><td><b>Right Parietal Lobe Lesion</b></td><td>Inferior homonymous hemianopia</td><td></td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": []
+}

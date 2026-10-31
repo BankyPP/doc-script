@@ -1,0 +1,330 @@
+{
+ "key": "136",
+ "en": "Adrenal Mass",
+ "th": "ก้อนที่ต่อมหมวกไต",
+ "pdf": "165–166",
+ "bookpg": "136–137",
+ "target": null,
+ "new": {
+  "id": "adrenal-mass",
+  "th": "ก้อนที่ต่อมหมวกไต",
+  "en": "Adrenal Mass",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "bb-136-benign",
+   "h": "Benign adrenal mass (หน้า 136)",
+   "html": "<div class=\"flow\" data-flow=\"b136a\"></div><ul><li><b>Benign Adrenal Mass</b><ul><li><b>Most common neoplasm is Benign Non-Functioning Adenoma</b><ul><li><span class=\"tag\">Signs of hormone excess</span> <b>Signs of Hormone Excess</b><ul><li><span class=\"tag\">Hyperplasia</span> <b>Hyperplasia</b> <span class=\"muted\">— Often Bilateral</span><ul><li>Congenital Adrenal Hyperplasia</li><li>ACTH Dependent</li><li>ACTH Independent</li><li>Macronodular Hyperplasia</li></ul></li><li><span class=\"tag\">Androgen excess</span> <b>Androgen Excess</b> <span class=\"muted\">— Virilization/ Hirsutism</span><ul><li><span class=\"tag\">High DHEAS</span> <b>High DHEAS</b><ul><li>Androgen Releasing Adenoma</li></ul></li><li><span class=\"tag\">Normal DHEAS</span> <b>Normal DHEAS</b><ul><li>Other Source (e.g. Polycystic Ovarian Syndrome, Congenital Adrenal Hyperplasia)</li></ul></li></ul></li><li><span class=\"tag\">Estrogen excess</span> <b>Estrogen Excess</b> <span class=\"muted\">— Feminization, Early Puberty, Heavy Menses</span><ul><li>Estrogen Releasing Adenoma (High Plasma E<sub>2</sub> + Clinical Picture)</li></ul></li><li><span class=\"tag\">Glucocorticoid excess</span> <b>Glucocorticoid Excess</b> <span class=\"muted\">— Cushingoid Features</span><ul><li>Glucocorticoid Releasing Adenoma (Positive Dexamethasone Suppression Test)</li></ul></li><li><span class=\"tag\">Aldosterone excess</span> <b>Aldosterone Excess</b> <span class=\"muted\">— Hypertension +/- Hypokalemia/Alkalosis</span><ul><li>Aldosterone Releasing Adenoma (High Aldosterone: Renin Ratio)</li></ul></li></ul></li><li><span class=\"tag\">No signs of hormone excess</span> <b>No Signs of Hormone Excess</b><ul><li><span class=\"tag\">Positive 24-h metanephrines + nor-metanephrines</span> <b>Positive 24-Hour Metanephrines + Nor-Metanephrines</b><ul><li>Pheochromocytoma (Paroxysmal Hypertension, Headache, Diaphoresis, Palpitations, Anxiety)</li></ul><div class=\"pearl\"><p><b>Rule of 10’s for Pheochromocytoma:</b></p><ul><li>10% are Malignant</li><li>10% are Bilateral</li><li>10% are Extra-Adrenal</li><li>10% are Familial</li><li>10% are not Associated with Hypertension</li></ul></div></li><li><span class=\"tag\">Silent/non-functioning mass</span> <b>Silent/Non-Functioning Mass</b><ul><li><span class=\"tag\">Normal DHEAS</span> <b>Normal DHEAS</b><ul><li>Non-functioning Adenoma</li><li>Lipoma</li><li>Myelolipoma</li><li>Ganglioneuroma</li></ul></li><li><span class=\"tag\">Other</span> <b>Other</b><ul><li>Cyst</li><li>Pseudocyst</li><li>Hematoma</li><li>Infection (TB, Fungal)</li><li>Amyloidosis</li></ul></li></ul></li></ul></li></ul></li></ul></li></ul>"
+  },
+  {
+   "id": "bb-136-malignant",
+   "h": "Malignant adrenal mass (หน้า 137)",
+   "html": "<div class=\"flow\" data-flow=\"b136b\"></div><ul><li><b>Malignant Adrenal Mass</b><ul><li><b>Suggestive of malignancy — DO NOT biopsy</b><p><b>Suggestive of Malignancy:</b></p><ul><li>Inhomogenous Density</li><li>Delay in CT Contrast Washout (&lt;50% in 10 minutes)</li><li>Irregular Shape</li><li>Diameter &gt;4cm</li><li>Calcification</li><li>&gt;20 Hounsfeld Units on CT</li><li>Vascularity of Mass</li><li>Hypointense to Liver on T1 Weighted MRI</li></ul><p><b>DO NOT Biopsy</b></p><ul><li><span class=\"tag\">Signs of hormone excess</span> <b>Signs of Hormone Excess</b><ul><li><span class=\"tag\">Androgen excess</span> <b>Androgen Excess</b> <span class=\"muted\">— Virilization/ Hirsutism</span><ul><li><span class=\"tag\">High DHEAS</span> <b>High DHEAS</b><ul><li>Androgen Releasing Carcinoma (e.g. Adrenocortical Carcinoma)</li></ul></li><li><span class=\"tag\">Normal DHEAS</span> <b>Normal DHEAS</b><ul><li>Other Source (e.g. Polycystic Ovarian Syndrome, Congenital Adrenal Hyperplasia)</li></ul></li></ul></li><li><span class=\"tag\">Estrogen excess</span> <b>Estrogen Excess</b> <span class=\"muted\">— Feminization, Early Puberty, Heavy Menses</span><ul><li>Estrogen Releasing Carcinoma (High Plasma E<sub>2</sub> + Clinical Picture)</li></ul></li><li><span class=\"tag\">Glucocorticoid excess</span> <b>Glucocorticoid Excess</b> <span class=\"muted\">— Cushingoid Features</span><ul><li>Glucocorticoid Releasing Carcinoma (Positive Dexamethasone Suppression Test)</li></ul></li><li><span class=\"tag\">Aldosterone excess</span> <b>Aldosterone Excess</b> <span class=\"muted\">— Hypertension +/- Hypokalemia/Alkalosis</span><ul><li>Aldosterone Releasing Carcinoma (High Aldosterone: Renin Ratio)</li></ul></li><li><span class=\"tag\">Positive 24-h metanephrines + nor-metanephrines</span> <b>Positive 24-Hour Metanephrines + Nor-Metanephrines</b><ul><li>Pheochromocytoma (Paroxysmal Hypertension, Headache, Diaphoresis, Palpitations, Anxiety)</li></ul><div class=\"pearl\"><p><b>Rule of 10’s for Pheochromocytoma:</b></p><ul><li>10% are Malignant</li><li>10% are Bilateral</li><li>10% are Extra-Adrenal</li><li>10% are Familial</li><li>10% are not Associated with Hypertension</li></ul></div></li></ul></li><li><span class=\"tag\">No signs of hormone excess</span> <b>No Signs of Hormone Excess</b><ul><li><span class=\"tag\">Positive 24-h metanephrines + nor-metanephrines</span> <b>Positive 24-Hour Metanephrines + Nor-Metanephrines</b> <span class=\"muted\">(ดูด้านบน)</span></li><li><span class=\"tag\">Silent/non-functioning mass</span> <b>Silent/Non-Functioning Mass</b><ul><li>Lymphoma</li><li>Metastases (Often Bilateral)</li><li>Adrenal Carcinoma</li></ul></li></ul></li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b136a",
+   "title": "Adrenal Mass — Benign",
+   "src": "fig",
+   "img": "bb-136-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Benign Adrenal Mass"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Most common neoplasm is Benign Non-Functioning Adenoma"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Signs of Hormone Excess"
+    },
+    {
+     "id": "nh",
+     "k": "q",
+     "t": "No Signs of Hormone Excess"
+    },
+    {
+     "id": "hyp",
+     "k": "dx",
+     "t": "Hyperplasia",
+     "d": "<p>Often Bilateral</p><ul><li>Congenital Adrenal Hyperplasia</li><li>ACTH Dependent</li><li>ACTH Independent</li><li>Macronodular Hyperplasia</li></ul>"
+    },
+    {
+     "id": "and",
+     "k": "q",
+     "t": "Androgen Excess",
+     "d": "<p>Virilization/ Hirsutism</p>"
+    },
+    {
+     "id": "hd",
+     "k": "dx",
+     "t": "High DHEAS",
+     "d": "<ul><li>Androgen Releasing Adenoma</li></ul>"
+    },
+    {
+     "id": "nd",
+     "k": "dx",
+     "t": "Normal DHEAS",
+     "d": "<ul><li>Other Source (e.g. Polycystic Ovarian Syndrome, Congenital Adrenal Hyperplasia)</li></ul>"
+    },
+    {
+     "id": "est",
+     "k": "dx",
+     "t": "Estrogen Excess",
+     "d": "<p>Feminization, Early Puberty, Heavy Menses</p><ul><li>Estrogen Releasing Adenoma (High Plasma E<sub>2</sub> + Clinical Picture)</li></ul>"
+    },
+    {
+     "id": "glu",
+     "k": "dx",
+     "t": "Glucocorticoid Excess",
+     "d": "<p>Cushingoid Features</p><ul><li>Glucocorticoid Releasing Adenoma (Positive Dexamethasone Suppression Test)</li></ul>"
+    },
+    {
+     "id": "ald",
+     "k": "dx",
+     "t": "Aldosterone Excess",
+     "d": "<p>Hypertension +/- Hypokalemia/Alkalosis</p><ul><li>Aldosterone Releasing Adenoma (High Aldosterone: Renin Ratio)</li></ul>"
+    },
+    {
+     "id": "ph",
+     "k": "dx",
+     "t": "Positive 24-Hour Metanephrines + Nor-Metanephrines",
+     "d": "<ul><li>Pheochromocytoma (Paroxysmal Hypertension, Headache, Diaphoresis, Palpitations, Anxiety)</li></ul><div class=\"pearl\"><p><b>Rule of 10’s for Pheochromocytoma:</b></p><ul><li>10% are Malignant</li><li>10% are Bilateral</li><li>10% are Extra-Adrenal</li><li>10% are Familial</li><li>10% are not Associated with Hypertension</li></ul></div>"
+    },
+    {
+     "id": "si",
+     "k": "q",
+     "t": "Silent/Non-Functioning Mass"
+    },
+    {
+     "id": "nd2",
+     "k": "dx",
+     "t": "Normal DHEAS",
+     "d": "<ul><li>Non-functioning Adenoma</li><li>Lipoma</li><li>Myelolipoma</li><li>Ganglioneuroma</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Cyst</li><li>Pseudocyst</li><li>Hematoma</li><li>Infection (TB, Fungal)</li><li>Amyloidosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Signs of hormone excess"
+    },
+    {
+     "f": "c",
+     "t": "nh",
+     "l": "No signs of hormone excess"
+    },
+    {
+     "f": "h",
+     "t": "hyp",
+     "l": "Hyperplasia"
+    },
+    {
+     "f": "h",
+     "t": "and",
+     "l": "Androgen excess"
+    },
+    {
+     "f": "h",
+     "t": "est",
+     "l": "Estrogen excess"
+    },
+    {
+     "f": "h",
+     "t": "glu",
+     "l": "Glucocorticoid excess"
+    },
+    {
+     "f": "h",
+     "t": "ald",
+     "l": "Aldosterone excess"
+    },
+    {
+     "f": "and",
+     "t": "hd",
+     "l": "High DHEAS"
+    },
+    {
+     "f": "and",
+     "t": "nd",
+     "l": "Normal DHEAS"
+    },
+    {
+     "f": "nh",
+     "t": "ph",
+     "l": "Positive 24-h metanephrines + nor-metanephrines"
+    },
+    {
+     "f": "nh",
+     "t": "si",
+     "l": "Silent/non-functioning mass"
+    },
+    {
+     "f": "si",
+     "t": "nd2",
+     "l": "Normal DHEAS"
+    },
+    {
+     "f": "si",
+     "t": "ot",
+     "l": "Other"
+    }
+   ]
+  },
+  {
+   "id": "b136b",
+   "title": "Adrenal Mass — Malignant",
+   "src": "fig",
+   "img": "bb-136-f2.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Malignant Adrenal Mass"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Suggestive of malignancy — DO NOT biopsy",
+     "d": "<p><b>Suggestive of Malignancy:</b></p><ul><li>Inhomogenous Density</li><li>Delay in CT Contrast Washout (&lt;50% in 10 minutes)</li><li>Irregular Shape</li><li>Diameter &gt;4cm</li><li>Calcification</li><li>&gt;20 Hounsfeld Units on CT</li><li>Vascularity of Mass</li><li>Hypointense to Liver on T1 Weighted MRI</li></ul><p><b>DO NOT Biopsy</b></p>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Signs of Hormone Excess"
+    },
+    {
+     "id": "nh",
+     "k": "q",
+     "t": "No Signs of Hormone Excess"
+    },
+    {
+     "id": "and",
+     "k": "q",
+     "t": "Androgen Excess",
+     "d": "<p>Virilization/ Hirsutism</p>"
+    },
+    {
+     "id": "hd",
+     "k": "dx",
+     "t": "High DHEAS",
+     "d": "<ul><li>Androgen Releasing Carcinoma (e.g. Adrenocortical Carcinoma)</li></ul>"
+    },
+    {
+     "id": "nd",
+     "k": "dx",
+     "t": "Normal DHEAS",
+     "d": "<ul><li>Other Source (e.g. Polycystic Ovarian Syndrome, Congenital Adrenal Hyperplasia)</li></ul>"
+    },
+    {
+     "id": "est",
+     "k": "dx",
+     "t": "Estrogen Excess",
+     "d": "<p>Feminization, Early Puberty, Heavy Menses</p><ul><li>Estrogen Releasing Carcinoma (High Plasma E<sub>2</sub> + Clinical Picture)</li></ul>"
+    },
+    {
+     "id": "glu",
+     "k": "dx",
+     "t": "Glucocorticoid Excess",
+     "d": "<p>Cushingoid Features</p><ul><li>Glucocorticoid Releasing Carcinoma (Positive Dexamethasone Suppression Test)</li></ul>"
+    },
+    {
+     "id": "ald",
+     "k": "dx",
+     "t": "Aldosterone Excess",
+     "d": "<p>Hypertension +/- Hypokalemia/Alkalosis</p><ul><li>Aldosterone Releasing Carcinoma (High Aldosterone: Renin Ratio)</li></ul>"
+    },
+    {
+     "id": "ph",
+     "k": "dx",
+     "t": "Positive 24-Hour Metanephrines + Nor-Metanephrines",
+     "d": "<ul><li>Pheochromocytoma (Paroxysmal Hypertension, Headache, Diaphoresis, Palpitations, Anxiety)</li></ul><div class=\"pearl\"><p><b>Rule of 10’s for Pheochromocytoma:</b></p><ul><li>10% are Malignant</li><li>10% are Bilateral</li><li>10% are Extra-Adrenal</li><li>10% are Familial</li><li>10% are not Associated with Hypertension</li></ul></div>"
+    },
+    {
+     "id": "si",
+     "k": "dx",
+     "t": "Silent/Non-Functioning Mass",
+     "d": "<ul><li>Lymphoma</li><li>Metastases (Often Bilateral)</li><li>Adrenal Carcinoma</li></ul><small>(ในเล่มพิมพ์ทั้งสามรายการต่อกันใต้ bullet เดียว)</small>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Signs of hormone excess"
+    },
+    {
+     "f": "c",
+     "t": "nh",
+     "l": "No signs of hormone excess"
+    },
+    {
+     "f": "h",
+     "t": "and",
+     "l": "Androgen excess"
+    },
+    {
+     "f": "h",
+     "t": "est",
+     "l": "Estrogen excess"
+    },
+    {
+     "f": "h",
+     "t": "glu",
+     "l": "Glucocorticoid excess"
+    },
+    {
+     "f": "h",
+     "t": "ald",
+     "l": "Aldosterone excess"
+    },
+    {
+     "f": "h",
+     "t": "ph",
+     "l": "Positive 24-h metanephrines + nor-metanephrines"
+    },
+    {
+     "f": "and",
+     "t": "hd",
+     "l": "High DHEAS"
+    },
+    {
+     "f": "and",
+     "t": "nd",
+     "l": "Normal DHEAS"
+    },
+    {
+     "f": "nh",
+     "t": "ph",
+     "l": "Positive 24-h metanephrines + nor-metanephrines"
+    },
+    {
+     "f": "nh",
+     "t": "si",
+     "l": "Silent/non-functioning mass"
+    }
+   ]
+  }
+ ]
+}

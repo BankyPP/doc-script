@@ -1,0 +1,134 @@
+{
+ "key": "171",
+ "en": "Back Pain",
+ "th": "ปวดหลัง",
+ "pdf": "200",
+ "bookpg": "171",
+ "target": "back-pain",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-8-2-algo",
+   "id": "bb-171-scheme",
+   "h": "Back Pain — red flags / duration (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b171a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "hx",
+   "html": "<p><b>Red flags</b> (always assess; if no red flags, assess after 6 weeks)</p><ul><li>bowel or bladder dysfunction</li><li>saddle paresthesia</li><li>constitutional symptoms</li><li>paresthesia</li><li>age &gt;50, &lt;18</li><li>IV drug use</li><li>neuromotor deficits</li><li>nocturnal pain</li><li>high energy trauma</li><li>past history of neoplasm</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>By duration + red flags</b></p><ul><li><b>Acute/subacute (&lt; 6 weeks) + red flags:</b> fracture · tumor/infection · cauda equina syndrome</li><li><b>Chronic / acute after 6 weeks, no red flags (&gt; 6 weeks):</b> unresolved radicular symptoms · myelopathic · spondyloarthropathies or osteoarthritis</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b171a",
+   "title": "Back Pain",
+   "src": "fig",
+   "img": "bb-171-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Back Pain"
+    },
+    {
+     "id": "rf",
+     "k": "q",
+     "t": "Always assess for red flags. If no red flags, assess after 6 weeks",
+     "d": "<p><b>Red Flags</b></p><ul><li>bowel or bladder dysfunction</li><li>saddle paresthesia</li><li>constitutional symptoms</li><li>paresthesia</li><li>age &gt;50, &lt;18</li><li>IV drug use</li><li>neuromotor deficits</li><li>nocturnal pain</li><li>high energy trauma</li><li>past history of neoplasm</li></ul>"
+    },
+    {
+     "id": "ac",
+     "k": "q",
+     "t": "Acute/Subacute + Red Flags, &lt; 6 weeks"
+    },
+    {
+     "id": "ch",
+     "k": "q",
+     "t": "Chronic/Acute after 6 weeks + No Red Flags, &gt; 6 weeks"
+    },
+    {
+     "id": "fx",
+     "k": "dx",
+     "t": "Fracture"
+    },
+    {
+     "id": "ti",
+     "k": "dx",
+     "t": "Tumor/Infection"
+    },
+    {
+     "id": "ces",
+     "k": "dx",
+     "t": "Cauda Equina Syndrome"
+    },
+    {
+     "id": "rad",
+     "k": "dx",
+     "t": "Unresolved Radicular Symptoms"
+    },
+    {
+     "id": "mye",
+     "k": "dx",
+     "t": "Myelopathic"
+    },
+    {
+     "id": "sp",
+     "k": "dx",
+     "t": "Spondyloarthropathies or Osteoarthritis"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "rf"
+    },
+    {
+     "f": "rf",
+     "t": "ac",
+     "l": "Acute/subacute + red flags"
+    },
+    {
+     "f": "rf",
+     "t": "ch",
+     "l": "Chronic / no red flags"
+    },
+    {
+     "f": "ac",
+     "t": "fx",
+     "l": "Fracture"
+    },
+    {
+     "f": "ac",
+     "t": "ti",
+     "l": "Tumor/infection"
+    },
+    {
+     "f": "ac",
+     "t": "ces",
+     "l": "Cauda equina syndrome"
+    },
+    {
+     "f": "ch",
+     "t": "rad",
+     "l": "Unresolved radicular symptoms"
+    },
+    {
+     "f": "ch",
+     "t": "mye",
+     "l": "Myelopathic"
+    },
+    {
+     "f": "ch",
+     "t": "sp",
+     "l": "Spondyloarthropathies / OA"
+    }
+   ]
+  }
+ ]
+}

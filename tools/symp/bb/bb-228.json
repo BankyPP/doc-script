@@ -1,0 +1,230 @@
+{
+ "key": "228",
+ "en": "Disorders of Pigmentation",
+ "th": "ความผิดปกติของสีผิว",
+ "pdf": "257–258",
+ "bookpg": "228–229",
+ "target": null,
+ "new": {
+  "id": "pigmentation-disorders",
+  "th": "ความผิดปกติของสีผิว",
+  "en": "Disorders of Pigmentation",
+  "g": "msk"
+ },
+ "sections": [
+  {
+   "id": "bb-228-hyper",
+   "h": "Hyperpigmentation",
+   "html": "<div class=\"flow\" data-flow=\"b228a\"></div><div class=\"tbl\"><table><thead><tr><th>Group</th><th>Causes</th></tr></thead><tbody><tr><td><b>Hypopigmentation</b></td><td>ดูหน้า Hypopigmentation</td></tr><tr><td><b>Diffuse</b></td><td><ul><li>Tanning</li><li>Adverse cutaneous drug eruption</li><li>Addison's disease</li><li>Hemochromatosis</li><li>Porphyria cutanea tarda</li></ul></td></tr><tr><td><b>Congenital</b></td><td><ul><li>Café au lait macules (neurofibromatosis or McCune Albright syndrome)</li><li>Congenital melanocytic nevi</li></ul></td></tr><tr><td><b>Acquired</b></td><td><ul><li>Freckles (ephelides)</li><li>Lentigines</li><li>Melasma</li><li>Tinea versicolor (more commonly hypopigmented)</li><li>Post-Inflammatory hyperpigmentation</li></ul></td></tr></tbody></table></div>"
+  },
+  {
+   "id": "bb-228-hypo",
+   "h": "Hypopigmentation",
+   "html": "<div class=\"flow\" data-flow=\"b228b\"></div><div class=\"tbl\"><table><thead><tr><th>Group</th><th>Causes</th></tr></thead><tbody><tr><td><b>Hyperpigmentation</b></td><td>ดูหน้า Hyperpigmentation</td></tr><tr><td><b>Congenital (localized)</b></td><td><ul><li>Tuberous sclerosis (white \"ash leaf\" macules)</li></ul></td></tr><tr><td><b>Congenital (diffuse)</b></td><td><p>Generalized hypopigmentation of hair, eyes, skin</p><ul><li>Phenylketonuria</li><li>Albinism</li><li>Piebaldism</li></ul></td></tr><tr><td><b>Acquired (diffuse)</b></td><td><ul><li>Vitiligo</li></ul></td></tr><tr><td><b>Scale</b></td><td><ul><li>Tinea versicolor (can also be hyperpigmented)</li><li>Pityriasis alba</li></ul></td></tr><tr><td><b>Acquired (sub-group)</b></td><td><ul><li>Vitiligo</li><li>Post-Inflammatory hypopigmentation</li></ul></td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b228a",
+   "title": "Disorders of Pigmentation — Hyperpigmentation",
+   "src": "fig",
+   "img": "bb-228-f1.webp",
+   "note": "เส้นประ = แขนงที่ไปอีกหน้า (Hypopigmentation)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Disorder of Pigmentation"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Hypopigmentation",
+     "d": "ดูหน้า Hypopigmentation"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Hyperpigmentation"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Diffuse",
+     "d": "<ul><li>Tanning</li><li>Adverse cutaneous drug eruption</li><li>Addison's disease</li><li>Hemochromatosis</li><li>Porphyria cutanea tarda</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Localized · Discrete Areas"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Café au lait macules (neurofibromatosis or McCune Albright syndrome)</li><li>Congenital melanocytic nevi</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Acquired",
+     "d": "<ul><li>Freckles (ephelides)</li><li>Lentigines</li><li>Melasma</li><li>Tinea versicolor (more commonly hypopigmented)</li><li>Post-Inflammatory hyperpigmentation</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "(dashed) see Hypopigmentation page"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Hyperpigmentation"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Diffuse"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Localized (discrete areas)"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Congenital"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Acquired"
+    }
+   ]
+  },
+  {
+   "id": "b228b",
+   "title": "Disorders of Pigmentation — Hypopigmentation",
+   "src": "fig",
+   "img": "bb-228-f2.webp",
+   "note": "กล่อง Acquired ใต้ Localized › Acquired ชื่อซ้ำกับ Acquired อีกกล่อง จึงแยกชื่อเป็น (sub-group)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Disorder of Pigmentation"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Hypopigmentation"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Hyperpigmentation",
+     "d": "ดูหน้า Hyperpigmentation"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Localized"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Diffuse"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Congenital (localized)",
+     "d": "<ul><li>Tuberous sclerosis (white \"ash leaf\" macules)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Acquired (localized)"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Congenital (diffuse)",
+     "d": "<p>Generalized hypopigmentation of hair, eyes, skin</p><ul><li>Phenylketonuria</li><li>Albinism</li><li>Piebaldism</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Acquired (diffuse)",
+     "d": "<ul><li>Vitiligo</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Scale",
+     "d": "<ul><li>Tinea versicolor (can also be hyperpigmented)</li><li>Pityriasis alba</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Acquired (sub-group)",
+     "d": "<ul><li>Vitiligo</li><li>Post-Inflammatory hypopigmentation</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Hypopigmentation"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "(dashed) see Hyperpigmentation page"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Localized"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Diffuse"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Congenital"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Acquired"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Congenital"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Acquired"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "Scale"
+    },
+    {
+     "f": "g",
+     "t": "k",
+     "l": "Acquired"
+    }
+   ]
+  }
+ ]
+}

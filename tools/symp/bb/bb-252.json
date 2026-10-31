@@ -1,0 +1,94 @@
+{
+ "key": "252",
+ "en": "Vascular Lesions",
+ "th": "รอยโรคของหลอดเลือดผิวหนัง",
+ "pdf": "281",
+ "bookpg": "252",
+ "target": "common-skin-manifestations",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "bb-252-scheme",
+   "h": "Vascular lesions (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b252a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "mo-flat",
+   "html": "<p><b>Blackbook — Vascular lesions</b></p><ul><li><b>Blanches with pressure</b> (small, dilated superficial blood vessels): Telangiectasia</li><li><b>Does not blanche with pressure</b> (erythematous or violaceous discolorations of skin due to extravasation of RBCs in dermis): Petechiae &lt; 0.2 cm diameter · Purpura 0.2 - 1.0 cm diameter · Ecchymosis &gt; 1 cm diameter<ul><li>Congenital: Hemangioma</li><li>Acquired: Vasculitis</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b252a",
+   "title": "Vascular Lesions",
+   "src": "fig",
+   "img": "bb-252-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vascular Lesions"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Blanches with Pressure",
+     "d": "<p>Small, dilated superficial blood vessels</p><ul><li>Telangiectasia</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Does not blanche with pressure",
+     "d": "<p>Erythematous or violaceous discolorations of skin due to extravasation of RBCs in dermis</p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Petechiae < 0.2 cm · Purpura 0.2 - 1.0 cm · Ecchymosis > 1 cm diameter",
+     "d": "<ul><li>Petechiae &lt; 0.2 cm diameter</li><li>Purpura 0.2 - 1.0 cm diameter</li><li>Ecchymosis &gt; 1 cm diameter</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Hemangioma</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Acquired",
+     "d": "<ul><li>Vasculitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Blanches with Pressure"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Does not blanche with pressure"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Size of lesion"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Congenital"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Acquired"
+    }
+   ]
+  }
+ ]
+}

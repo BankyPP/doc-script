@@ -1,0 +1,131 @@
+{
+ "key": "046",
+ "en": "Anemia with Normal MCV",
+ "th": "ซีดที่ MCV ปกติ (normocytic)",
+ "pdf": "75",
+ "bookpg": "46",
+ "target": "anemia",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "ap-size",
+   "id": "bb-046-scheme",
+   "h": "Anemia with Normal MCV scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b046a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b046a",
+   "title": "Anemia with Normal MCV",
+   "src": "fig",
+   "img": "bb-046-f1.webp",
+   "note": "ข้อความ \"Secondary (e.g. RA, SLE, PRV, Chronic\" ถูกตัดท้ายในหนังสือ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Anemia with normal Mean Corpuscular Volume"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Decreased WBCs"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Normal/Increased WBCs"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Decreased/Normal Reticulocytosis",
+     "d": "<ul><li>Marrow Aplasia</li><li>Marrow Infiltration</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Increased Reticulocytosis",
+     "d": "<ul><li>Primary Hypersplenism</li><li>Secondary (e.g. RA, SLE, PRV, Chronic</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Increased Reticulocytosis"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Normal Reticulocytosis",
+     "d": "<ul><li>Renal Failure</li><li>Inflammation</li><li>Cancer</li><li>Hypothyroid</li><li>Pregnancy</li><li>Early Iron Deficiency</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Polychromatic Macrocytes, Normal RBCs",
+     "d": "<ul><li>Acute Bleed</li><li>Hemolysis</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Polychromatic Macrocytes, RBC Spherocytes, RBC Fragments",
+     "d": "<ul><li>Microangiopathic Hemolytic Anemias (MAHA)</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Abnormal RBCs — Sickle Cells, Target Cells",
+     "d": "<ul><li>Hemoglobinopathy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Decreased WBCs"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Normal/increased WBCs"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Decreased/normal reticulocytosis"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Increased reticulocytosis"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Increased reticulocytosis"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Normal reticulocytosis"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Polychromatic macrocytes, normal RBCs"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Spherocytes, RBC fragments"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Abnormal RBCs"
+    }
+   ]
+  }
+ ]
+}

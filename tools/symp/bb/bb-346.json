@@ -1,0 +1,193 @@
+{
+ "key": "346",
+ "en": "Hypotonic Infant (Floppy Newborn)",
+ "th": "ทารกตัวอ่อนปวกเปียก",
+ "pdf": "375",
+ "bookpg": "346",
+ "target": null,
+ "new": {
+  "id": "ped-hypotonic-infant",
+  "th": "ทารกตัวอ่อนปวกเปียก",
+  "en": "Hypotonic Infant (Floppy Newborn)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-346-scheme",
+   "h": "Hypotonic Infant (Floppy Newborn) — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b346a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b346a",
+   "title": "Hypotonic Infant (Floppy Newborn)",
+   "src": "fig",
+   "img": "bb-346-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hypotonic Infant*"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed history; detailed physical exam",
+     "d": "Detailed history<br>Detailed physical exam"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Neurological"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Systemic Illness",
+     "d": "<ul><li><b>Sepsis*</b></li><li><b>Metabolic Disease*</b></li><li><b>Hypoglycemia*</b></li><li>Hypothyroidism</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Upper Motor Neuron"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Lower Motor Neuron"
+    },
+    {
+     "id": "e1",
+     "k": "q",
+     "t": "Decreased LOC, low to normal strength, normal reflexes",
+     "d": "Decreased LOC<br>Low to normal strength, normal reflexes"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "Brain",
+     "d": "<ul><li>Chromosomal (Eg. <b>Trisomy 21*</b>)</li><li>Genetic (Eg. Prader Willi)</li><li><b>Head injury*</b> or <b>Birth Trauma*</b> (Eg. Hypoxic-Ischemic Encephalopathy, Intracranial Hemorrhage)</li><li>Intracranial Infection (Eg. <b>Meningitis*, encephalitis*</b>)</li><li><b>Increased intracranial pressure*</b></li><li>Congenital intracranial structural anomalies</li><li>Benign Congenital Hypotonia</li></ul>"
+    },
+    {
+     "id": "f1",
+     "k": "q",
+     "t": "Profound weakness, muscle atrophy, fasciculations, absent reflexes",
+     "d": "Profound weakness<br>Muscle atrophy<br>Fasciculations<br>Absent reflexes"
+    },
+    {
+     "id": "f2",
+     "k": "q",
+     "t": "Weakness distal&gt;proximal, reduced reflexes; may have sensory/autonomic changes",
+     "d": "Weakness distal&gt;proximal<br>Reduced reflexes<br>May have sensory changes<br>May have autonomic changes"
+    },
+    {
+     "id": "f3",
+     "k": "q",
+     "t": "Weakness includes bulbar; reflexes fatiguable",
+     "d": "Weakness includes bulbar<br>Reflexes fatiguable"
+    },
+    {
+     "id": "f4",
+     "k": "q",
+     "t": "Weakness proximal&gt;distal, reduced reflexes, muscle atrophy",
+     "d": "Weakness proximal&gt;distal<br>Reduced reflexes<br>Muscle atrophy"
+    },
+    {
+     "id": "g1",
+     "k": "dx",
+     "t": "Anterior Horn Cell",
+     "d": "<ul><li>Spinal Muscular Atrophy</li><li>Trauma</li><li>Hematoma</li><li>Abscess</li></ul>"
+    },
+    {
+     "id": "g2",
+     "k": "dx",
+     "t": "Nerves",
+     "d": "<ul><li>Hereditary sensory autonomic neuropathy</li><li>Guillain Barre Syndrome</li></ul>"
+    },
+    {
+     "id": "g3",
+     "k": "dx",
+     "t": "Neuromuscular Junction",
+     "d": "<ul><li>Congenital Myasthenia Gravis</li><li>Infantile Botulism</li><li>Drugs</li></ul>"
+    },
+    {
+     "id": "g4",
+     "k": "dx",
+     "t": "Muscle",
+     "d": "<ul><li>Congenital Muscular Dystrophies</li><li>Congenital Myotonic Dystrophies</li><li><b>Metabolic Disease*</b></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Neurological"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Systemic Illness"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Upper Motor Neuron"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Lower Motor Neuron"
+    },
+    {
+     "f": "e",
+     "t": "e1"
+    },
+    {
+     "f": "e1",
+     "t": "e2"
+    },
+    {
+     "f": "f",
+     "t": "f1",
+     "l": "Anterior Horn Cell"
+    },
+    {
+     "f": "f",
+     "t": "f2",
+     "l": "Nerves"
+    },
+    {
+     "f": "f",
+     "t": "f3",
+     "l": "Neuromuscular Junction"
+    },
+    {
+     "f": "f",
+     "t": "f4",
+     "l": "Muscle"
+    },
+    {
+     "f": "f1",
+     "t": "g1"
+    },
+    {
+     "f": "f2",
+     "t": "g2"
+    },
+    {
+     "f": "f3",
+     "t": "g3"
+    },
+    {
+     "f": "f4",
+     "t": "g4"
+    }
+   ]
+  }
+ ]
+}

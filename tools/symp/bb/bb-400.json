@@ -1,0 +1,178 @@
+{
+ "key": "400",
+ "en": "Acute Fever",
+ "th": "ไข้เฉียบพลัน",
+ "pdf": "429",
+ "bookpg": "400",
+ "target": "fever",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "acute",
+   "id": "bb-400-scheme",
+   "h": "Fever (acute onset) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b400a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Blackbook: Acute fever (acute onset)</b></p><ul><li><b>Infectious</b><ul><li>Viral<ul><li>Rhinovirus</li><li>Influenza Virus</li><li>Parainfluenza Virus</li><li>Adenovirus</li><li>Enterovirus</li><li>Coronavirus</li><li>HIV</li></ul></li><li>Bacterial<ul><li>Bacteremia (intermittent, continuous)</li><li>Septic Shock</li><li>Acute organ specific infection (upper respiratory tract infection, urinary tract infection, pneumonia, pyelonephritis, meningitis, skin infection)</li><li>Abscess (head and neck, thoracic, abdominal, pelvic, extremity)</li></ul></li><li>Other<ul><li>Fungal</li><li>Protozoa (eg. malaria)</li><li>Other parasites</li></ul></li></ul></li><li><b>Non-infectious</b><ul><li>Inflammatory<ul><li>PE</li><li>Thrombophlebitis</li><li>DVT</li><li>Pancreatitis</li></ul></li><li>Iatrogenic<ul><li>Transfusion reaction</li><li>Malignant Hyperthermia</li><li>Neuroleptic malignant syndrome</li></ul></li><li>Endocrine<ul><li>Thyroid storm</li><li>Acute Adrenal Insufficiency</li></ul></li><li>Other<ul><li>Heat stroke</li><li>Sickle Cell disease</li><li>Drug fever</li><li>MI</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b400a",
+   "title": "Fever (acute onset)",
+   "src": "fig",
+   "img": "bb-400-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fever (acute onset)"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Infectious"
+    },
+    {
+     "id": "ni",
+     "k": "q",
+     "t": "Non-infectious"
+    },
+    {
+     "id": "v",
+     "k": "dx",
+     "t": "Viral",
+     "d": "<ul><li>Rhinovirus</li><li>Influenza Virus</li><li>Parainfluenza Virus</li><li>Adenovirus</li><li>Enterovirus</li><li>Coronavirus</li><li>HIV</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Bacterial"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Fungal</li><li>Protozoa (eg. malaria)</li><li>Other parasites</li></ul>"
+    },
+    {
+     "id": "ba",
+     "k": "dx",
+     "t": "Bacteremia",
+     "d": "<ul><li>Intermittent Bacteremia</li><li>Continuous Bacteremia</li></ul>"
+    },
+    {
+     "id": "ss",
+     "k": "dx",
+     "t": "Septic Shock"
+    },
+    {
+     "id": "ao",
+     "k": "dx",
+     "t": "Acute Organ Specific Infection",
+     "d": "<ul><li>Upper Respiratory Tract Infection</li><li>Urinary Tract Infection</li><li>Pneumonia</li><li>Pyelonephritis</li><li>Meningitis</li><li>Skin Infection</li></ul>"
+    },
+    {
+     "id": "ab",
+     "k": "dx",
+     "t": "Abscess",
+     "d": "<ul><li>Head and neck</li><li>Thoracic</li><li>Abdominal</li><li>Pelvic</li><li>Extremity</li></ul>"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>PE</li><li>Thrombophlebitis</li><li>DVT</li><li>Pancreatitis</li></ul>"
+    },
+    {
+     "id": "ia",
+     "k": "dx",
+     "t": "Iatrogenic",
+     "d": "<ul><li>Transfusion reaction</li><li>Malignant Hyperthermia</li><li>Neuroleptic malignant syndrome</li></ul>"
+    },
+    {
+     "id": "en",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>Thyroid storm</li><li>Acute Adrenal Insufficiency</li></ul>"
+    },
+    {
+     "id": "no",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Heat stroke</li><li>Sickle Cell disease</li><li>Drug fever</li><li>MI</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Infectious"
+    },
+    {
+     "f": "a",
+     "t": "ni",
+     "l": "Non-infectious"
+    },
+    {
+     "f": "i",
+     "t": "v",
+     "l": "Viral"
+    },
+    {
+     "f": "i",
+     "t": "b",
+     "l": "Bacterial"
+    },
+    {
+     "f": "i",
+     "t": "o",
+     "l": "Other"
+    },
+    {
+     "f": "b",
+     "t": "ba",
+     "l": "Bacteremia"
+    },
+    {
+     "f": "b",
+     "t": "ss",
+     "l": "Septic shock"
+    },
+    {
+     "f": "b",
+     "t": "ao",
+     "l": "Acute organ specific infection"
+    },
+    {
+     "f": "b",
+     "t": "ab",
+     "l": "Abscess"
+    },
+    {
+     "f": "ni",
+     "t": "in",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "ni",
+     "t": "ia",
+     "l": "Iatrogenic"
+    },
+    {
+     "f": "ni",
+     "t": "en",
+     "l": "Endocrine"
+    },
+    {
+     "f": "ni",
+     "t": "no",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

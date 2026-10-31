@@ -1,0 +1,253 @@
+{
+ "key": "003",
+ "en": "Abnormal Rhythm",
+ "th": "หัวใจเต้นผิดจังหวะ",
+ "pdf": "32–33",
+ "bookpg": "3–4",
+ "target": "palpitation",
+ "note": "Abnormal Rhythm (1) = types, (2) = causes — one presentation, two flows",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "def",
+   "id": "bb-003-types",
+   "h": "Types of arrhythmia (Blackbook, Abnormal Rhythm 1)",
+   "html": "<div class=\"flow\" data-flow=\"b003a\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "bb-003-causes",
+   "h": "Causes of arrhythmia (Blackbook, Abnormal Rhythm 2)",
+   "html": "<div class=\"flow\" data-flow=\"b003b\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<h5>Causes of arrhythmia (Blackbook)</h5><p>May present as: palpitations, dizziness, syncope, chest discomfort</p><ul><li><b>Cardiac</b><ul><li><b>Structural</b>: Valve disease; Cardiomyopathy</li><li><b>Electrical conduction abnormalities</b>: Ectopic foci; Accessory pathway; Scar tissue (previous MI)</li></ul></li><li><b>Non-cardiac</b><ul><li><b>High output state</b>: Anemia; Fever/infection; Pregnancy</li><li><b>Metabolic</b>: Hypoglycemia; Thyrotoxicosis; Pheochromocytoma</li><li><b>Drugs</b>: Alcohol; Caffeine; Sympathomimetics; Anticholinergics; Cocaine</li><li><b>Psychiatric</b>: Panic Attack; Generalized Anxiety Disorder</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b003a",
+   "title": "Abnormal Rhythm (1) — Types of Arrhythmia",
+   "src": "fig",
+   "img": "bb-003-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Types of Arrhythmia"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Bradyarrhythmia (&lt;60 bpm)",
+     "d": "<ul><li>Sinus Bradycardia</li><li>Sick Sinus Syndrome</li><li>SA Block</li><li>AV Block (1<sup>st</sup>/2<sup>nd</sup>/3<sup>rd</sup> degree)</li><li>Junctional Escape Rhythm</li><li>Ventricular Escape Rhythm</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Abnormal Beats",
+     "d": "<ul><li>Premature atrial contraction</li><li>Premature ventricular contraction</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Tachyarrhythmia (&gt;100 bpm)"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Narrow QRS (&lt;120 msec) — SVT"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Wide QRS (&gt;120 msec) — VT or SVT with aberrancy"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Regular Rhythm SVT (constant R-R interval)",
+     "d": "<ul><li>Sinus Tachycardia</li><li>Monofocal Ectopic Atrial Tachycardia</li><li>Aflutter</li><li>AVNRT</li><li>AVRT (ie. WPW)</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Irregular Rhythm SVT (variable R-R interval)",
+     "d": "<ul><li>AFib</li><li>AFlutter with Variable AV Conduction</li><li>Multifocal Atrial Tachycardia</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Regular Rhythm (constant R-R interval)",
+     "d": "<ul><li>Monomorphic VT</li><li>Regular rhythm SVT with conduction aberrancy</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Irregular Rhythm (variable R-R interval)",
+     "d": "<ul><li>Polymorphic VT (including Torsades de Pointes if in a setting of long QT)</li><li>Irregular rhythm SVT with conduction aberrancy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Bradyarrhythmia (<60 bpm)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Abnormal beats"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Tachyarrhythmia (>100 bpm)"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Narrow QRS (<120 msec)"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Wide QRS (>120 msec)"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Regular (constant R-R)"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Irregular (variable R-R)"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Regular (constant R-R)"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Irregular (variable R-R)"
+    }
+   ]
+  },
+  {
+   "id": "b003b",
+   "title": "Abnormal Rhythm (2) — Causes of Arrhythmia",
+   "src": "fig",
+   "img": "bb-003-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Causes of Arrhythmia"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "May present as: palpitations, dizziness, syncope, chest discomfort"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Cardiac"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Non-Cardiac"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Structural",
+     "d": "<ul><li>Valve disease</li><li>Cardiomyopathy</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Electrical Conduction Abnormalities",
+     "d": "<ul><li>Ectopic foci</li><li>Accessory pathway</li><li>Scar tissue (previous MI)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "High Output State",
+     "d": "<ul><li>Anemia</li><li>Fever/infection</li><li>Pregnancy</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Hypoglycemia</li><li>Thyrotoxicosis</li><li>Pheochromocytoma</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Drugs",
+     "d": "<ul><li>Alcohol</li><li>Caffeine</li><li>Sympathomimetics</li><li>Anticholinergics</li><li>Cocaine</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Psychiatric",
+     "d": "<ul><li>Panic Attack</li><li>Generalized Anxiety Disorder</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Cardiac"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Non-cardiac"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Structural"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Electrical conduction abnormalities"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "High output state"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Metabolic"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Drugs"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Psychiatric"
+    }
+   ]
+  }
+ ]
+}

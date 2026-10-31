@@ -1,0 +1,590 @@
+{
+ "key": "236",
+ "en": "Nail Disorders",
+ "th": "ความผิดปกติของเล็บ",
+ "pdf": "265–267",
+ "bookpg": "236–238",
+ "target": null,
+ "new": {
+  "id": "nail-disorders",
+  "th": "ความผิดปกติของเล็บ",
+  "en": "Nail Disorders",
+  "g": "msk"
+ },
+ "sections": [
+  {
+   "id": "bb-236-primary",
+   "h": "Primary dermatologic disease",
+   "html": "<div class=\"flow\" data-flow=\"b236a\"></div><div class=\"tbl\"><table><thead><tr><th>Finding</th><th>Causes</th></tr></thead><tbody><tr><td><b>Systemic Disease</b></td><td>ดูหน้า Systemic Disease</td></tr><tr><td><b>Pitting</b></td><td><ul><li>Psoriasis</li><li>Alopecia Areata</li></ul></td></tr><tr><td><b>Thickening</b></td><td><ul><li>Psoriasis</li><li>Onychomycosis</li><li>Onychogryphosis</li></ul></td></tr><tr><td><b>Onycholysis</b></td><td><ul><li>Psoriasis</li><li>Onychomycosis</li></ul></td></tr><tr><td><b>Oil Drop Sign</b></td><td><ul><li>Psoriasis</li></ul></td></tr><tr><td><b>Brown/Black Linear Streak</b></td><td><ul><li>Junctional/Melanocytic Nevus</li><li>Malignant Melanoma Under Nails</li><li>Drug-Induced</li></ul></td></tr><tr><td><b>White/Yellow-Brown</b></td><td><ul><li>Onychomycosis</li></ul></td></tr><tr><td><b>Green</b></td><td><ul><li>Pseudomonas infection</li></ul></td></tr><tr><td><b>Inflammation</b></td><td><p>Erythema, Swelling, Pain</p></td></tr><tr><td><b>Telangiectasia</b></td><td><ul><li>SLE</li><li>Scleroderma</li><li>Dermatomyositis</li></ul></td></tr><tr><td><b>Lateral Only</b></td><td><ul><li>Ingrown Nail</li></ul></td></tr><tr><td><b>Acute · Trauma/Infection</b></td><td><ul><li>Acute Paronychia</li></ul></td></tr><tr><td><b>Chronic</b></td><td><ul><li>Chronic Paronychia</li></ul></td></tr></tbody></table></div>"
+  },
+  {
+   "id": "bb-236-systemic",
+   "h": "Systemic disease",
+   "html": "<div class=\"flow\" data-flow=\"b236b\"></div><div class=\"tbl\"><table><thead><tr><th>Finding</th><th>Causes</th></tr></thead><tbody><tr><td><b>Primary Dermatologic Disease</b></td><td>ดูหน้า Primary Dermatologic Disease</td></tr><tr><td><b>Nail Fold Abnormality</b></td><td><ul><li>SLE</li><li>Scleroderma</li><li>Dermatomyositis</li></ul></td></tr><tr><td><b>Koilonychia · Spoon-Shaped</b></td><td><ul><li>Iron deficiency anemia</li></ul></td></tr><tr><td><b>Onycholysis · Plate Separating from Bed</b></td><td><ul><li>Hyperthyroidism</li></ul></td></tr><tr><td><b>Beau's Lines · Horizontal Grooves</b></td><td><ul><li>Any systemic disease severe enough to transiently halt nail growth (e.g., shock, malnutrition)</li></ul></td></tr><tr><td><b>Clubbing</b></td><td>ดูสาเหตุของ clubbing ในหน้าถัดไป</td></tr><tr><td><b>Blue Discoloration</b></td><td><ul><li>Medications</li><li>Wilson's disease</li><li>Silver poisoning</li><li>Cyanosis</li></ul></td></tr><tr><td><b>Red Discoloration</b></td><td><p>Splinter hemorrhages (dark red, thin lines, usually painful)</p><ul><li>Bacterial endocarditis</li><li>Trauma</li></ul></td></tr><tr><td><b>Terry's Nails · Proximal 90%</b></td><td><ul><li>Liver cirrhosis</li><li>Congestive heart failure</li><li>Diabetes Mellitus</li></ul></td></tr><tr><td><b>Half-and-Half Nails · 50%</b></td><td><ul><li>Chronic renal failure</li><li>Uremia</li></ul></td></tr><tr><td><b>Muehrcke's Lines · Transverse lines</b></td><td><ul><li>Nephrotic syndrome</li></ul></td></tr></tbody></table></div>"
+  },
+  {
+   "id": "bb-236-clubbing",
+   "h": "Systemic disease: clubbing",
+   "html": "<div class=\"flow\" data-flow=\"b236c\"></div><div class=\"tbl\"><table><thead><tr><th>System</th><th>Causes</th></tr></thead><tbody><tr><td><b>Primary Dermatologic Disease</b></td><td>ดูหน้า Primary Dermatologic Disease</td></tr><tr><td><b>Nail Fold Abnormality</b></td><td>ดูหน้า Systemic Disease</td></tr><tr><td><b>Nail Bed Abnormality</b></td><td>ดูหน้า Systemic Disease</td></tr><tr><td><b>Bronchopulmonary Disease</b></td><td><ul><li>Bronchiectasis</li><li>Chronic Lung Infection</li><li>Lung Cancer</li><li>Asbestosis</li><li>Cystic Fibrosis</li><li>Chronic Hypoxia</li></ul></td></tr><tr><td><b>Cardiovascular Disease</b></td><td><ul><li>Cyanotic Heart Disease</li></ul></td></tr><tr><td><b>Gastrointestinal Disease</b></td><td><ul><li>Inflammatory Bowel Disease (Crohn's Disease, Ulcerative Colitis)</li><li>Gastrointestinal Cancer</li></ul></td></tr><tr><td><b>Endocrine Disease</b></td><td><ul><li>Hyperthyroidism (Grave's Disease)</li></ul></td></tr><tr><td><b>Other</b></td><td><ul><li>Human Immunodeficiency Virus</li><li>Congenital Defect</li></ul></td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b236a",
+   "title": "Nail Disorders — Primary Dermatologic Disease",
+   "src": "fig",
+   "img": "bb-236-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Nail Disorder"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Primary Dermatologic Disease"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Systemic Disease",
+     "d": "ดูหน้า Systemic Disease"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Nail Plate Abnormality"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Nail Fold Abnormality"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Discolouration"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Pitting",
+     "d": "<ul><li>Psoriasis</li><li>Alopecia Areata</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Thickening",
+     "d": "<ul><li>Psoriasis</li><li>Onychomycosis</li><li>Onychogryphosis</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Onycholysis",
+     "d": "<ul><li>Psoriasis</li><li>Onychomycosis</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Oil Drop Sign",
+     "d": "<ul><li>Psoriasis</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "q",
+     "t": "Fungal Culture"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Brown/Black Linear Streak",
+     "d": "<ul><li>Junctional/Melanocytic Nevus</li><li>Malignant Melanoma Under Nails</li><li>Drug-Induced</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "White/Yellow-Brown",
+     "d": "<ul><li>Onychomycosis</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Green",
+     "d": "<ul><li>Pseudomonas infection</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "q",
+     "t": "Inflammation",
+     "d": "<p>Erythema, Swelling, Pain</p>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Telangiectasia",
+     "d": "<ul><li>SLE</li><li>Scleroderma</li><li>Dermatomyositis</li></ul>"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Proximal & Lateral"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Lateral Only",
+     "d": "<ul><li>Ingrown Nail</li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Acute · Trauma/Infection",
+     "d": "<ul><li>Acute Paronychia</li></ul>"
+    },
+    {
+     "id": "t",
+     "k": "dx",
+     "t": "Chronic",
+     "d": "<ul><li>Chronic Paronychia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Primary Dermatologic Disease"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Systemic Disease"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Nail Plate Abnormality"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Nail Fold Abnormality"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Discolouration"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Pitting"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Thickening"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Onycholysis"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Oil Drop Sign"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Fungal Culture"
+    },
+    {
+     "f": "f",
+     "t": "l",
+     "l": "Brown/Black Linear Streak"
+    },
+    {
+     "f": "k",
+     "t": "m",
+     "l": "White/Yellow-Brown"
+    },
+    {
+     "f": "k",
+     "t": "n",
+     "l": "Green"
+    },
+    {
+     "f": "e",
+     "t": "o",
+     "l": "Inflammation"
+    },
+    {
+     "f": "e",
+     "t": "p",
+     "l": "Telangiectasia"
+    },
+    {
+     "f": "o",
+     "t": "q",
+     "l": "Proximal & Lateral"
+    },
+    {
+     "f": "o",
+     "t": "r",
+     "l": "Lateral Only"
+    },
+    {
+     "f": "q",
+     "t": "s",
+     "l": "Acute · Trauma/Infection"
+    },
+    {
+     "f": "q",
+     "t": "t",
+     "l": "Chronic"
+    }
+   ]
+  },
+  {
+   "id": "b236b",
+   "title": "Nail Disorders — Systemic Disease",
+   "src": "fig",
+   "img": "bb-236-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Nail Disorder"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Primary Dermatologic Disease",
+     "d": "ดูหน้า Primary Dermatologic Disease"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Systemic Disease"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Nail Plate Abnormality"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Nail Fold Abnormality",
+     "d": "<ul><li>SLE</li><li>Scleroderma</li><li>Dermatomyositis</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Nail Bed Abnormality"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Koilonychia · Spoon-Shaped",
+     "d": "<ul><li>Iron deficiency anemia</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Onycholysis · Plate Separating from Bed",
+     "d": "<ul><li>Hyperthyroidism</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Beau's Lines · Horizontal Grooves",
+     "d": "<ul><li>Any systemic disease severe enough to transiently halt nail growth (e.g., shock, malnutrition)</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Clubbing",
+     "d": "ดูสาเหตุของ clubbing ในหน้าถัดไป"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Blue Discoloration",
+     "d": "<ul><li>Medications</li><li>Wilson's disease</li><li>Silver poisoning</li><li>Cyanosis</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "White Discoloration"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Red Discoloration",
+     "d": "<p>Splinter hemorrhages (dark red, thin lines, usually painful)</p><ul><li>Bacterial endocarditis</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Terry's Nails · Proximal 90%",
+     "d": "<ul><li>Liver cirrhosis</li><li>Congestive heart failure</li><li>Diabetes Mellitus</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Half-and-Half Nails · 50%",
+     "d": "<ul><li>Chronic renal failure</li><li>Uremia</li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Muehrcke's Lines · Transverse lines",
+     "d": "<ul><li>Nephrotic syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Primary Dermatologic Disease"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Systemic Disease"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Nail Plate Abnormality"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Nail Fold Abnormality"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Nail Bed Abnormality"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Koilonychia · Spoon-Shaped"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Onycholysis · Plate Separating from Bed"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Beau's Lines · Horizontal Grooves"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Clubbing"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Blue Discoloration"
+    },
+    {
+     "f": "f",
+     "t": "l",
+     "l": "White Discoloration"
+    },
+    {
+     "f": "f",
+     "t": "m",
+     "l": "Red Discoloration"
+    },
+    {
+     "f": "l",
+     "t": "n",
+     "l": "Terry's Nails · Proximal 90%"
+    },
+    {
+     "f": "l",
+     "t": "o",
+     "l": "Half-and-Half Nails · 50%"
+    },
+    {
+     "f": "l",
+     "t": "p",
+     "l": "Muehrcke's Lines · Transverse lines"
+    }
+   ]
+  },
+  {
+   "id": "b236c",
+   "title": "Nail Disorders — Systemic Disease: Clubbing",
+   "src": "fig",
+   "img": "bb-236-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Nail Disorder"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Primary Dermatologic Disease",
+     "d": "ดูหน้า Primary Dermatologic Disease"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Systemic Disease"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Nail Plate Abnormality"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Nail Fold Abnormality",
+     "d": "ดูหน้า Systemic Disease"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Nail Bed Abnormality",
+     "d": "ดูหน้า Systemic Disease"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Koilonychia · Spoon-Shaped"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Onycholysis · Plate Separating from Bed"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Beau's Lines · Horizontal Grooves"
+    },
+    {
+     "id": "j",
+     "k": "q",
+     "t": "Clubbing"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Bronchopulmonary Disease",
+     "d": "<ul><li>Bronchiectasis</li><li>Chronic Lung Infection</li><li>Lung Cancer</li><li>Asbestosis</li><li>Cystic Fibrosis</li><li>Chronic Hypoxia</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Cardiovascular Disease",
+     "d": "<ul><li>Cyanotic Heart Disease</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Gastrointestinal Disease",
+     "d": "<ul><li>Inflammatory Bowel Disease (Crohn's Disease, Ulcerative Colitis)</li><li>Gastrointestinal Cancer</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Endocrine Disease",
+     "d": "<ul><li>Hyperthyroidism (Grave's Disease)</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Human Immunodeficiency Virus</li><li>Congenital Defect</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Primary Dermatologic Disease"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Systemic Disease"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Nail Plate Abnormality"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Nail Fold Abnormality"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Nail Bed Abnormality"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Koilonychia · Spoon-Shaped"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Onycholysis · Plate Separating from Bed"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Beau's Lines · Horizontal Grooves"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Clubbing"
+    },
+    {
+     "f": "j",
+     "t": "k",
+     "l": "Bronchopulmonary Disease"
+    },
+    {
+     "f": "j",
+     "t": "l",
+     "l": "Cardiovascular Disease"
+    },
+    {
+     "f": "j",
+     "t": "m",
+     "l": "Gastrointestinal Disease"
+    },
+    {
+     "f": "j",
+     "t": "n",
+     "l": "Endocrine Disease"
+    },
+    {
+     "f": "j",
+     "t": "o",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

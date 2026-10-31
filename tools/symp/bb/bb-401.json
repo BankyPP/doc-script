@@ -1,0 +1,141 @@
+{
+ "key": "401",
+ "en": "Fever of Unknown Origin / Chronic Fever",
+ "th": "ไข้ไม่ทราบสาเหตุ / ไข้เรื้อรัง",
+ "pdf": "430",
+ "bookpg": "401",
+ "target": "fever",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-7-1-fuo",
+   "id": "bb-401-scheme",
+   "h": "Fever of unknown origin / chronic fever scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b401a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-7-1-fuo",
+   "html": "<p><b>Blackbook: FUO / chronic fever — Infection</b></p><ul><li>Bacterial — organ specific infection<ul><li>Infectious endocarditis</li><li>Osteomyelitis</li><li>Occult abscess</li><li>Sinusitis</li><li>Cholangitis</li><li>UTI</li><li>Meningitis</li></ul></li><li>Bacterial — non-organ specific<ul><li>Brucellosis</li><li>Q-fever</li><li>Salmonella</li><li>Yersinia</li><li>Tuleremia</li><li>Septic Phlebitis</li><li>Rheumatic fever</li><li>Lyme disease</li><li>TB</li><li>Whipple’s disease</li></ul></li><li>Viral<ul><li>HIV</li><li>EBV</li><li>CMV</li><li>Viral hepatitis</li><li>Enterovirus</li></ul></li><li>Other<ul><li>Fungal</li><li>Protozoa (eg. malaria)</li><li>other parasites</li></ul></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-7-1-fuo-non",
+   "html": "<p><b>Blackbook: FUO / chronic fever — non-infectious</b></p><ul><li>Neoplasm<ul><li>NHL</li><li>Hodgkin’s lymphoma</li><li>Leukemia</li><li>Solid tumors</li></ul></li><li>Autoimmune<ul><li>SLE</li><li>RA</li><li>Polyarteritis nodosum</li><li>Giant cell arteritis</li><li>Sarcoidosis</li></ul></li><li>Other<ul><li>Drug fever</li><li>Factitious fever</li><li>Trauma Non-infectious hepatitis</li><li>Recurrent PE</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b401a",
+   "title": "Fever of Unknown Origin / Chronic Fever",
+   "src": "fig",
+   "img": "bb-401-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fever of unknown origin/chronic fever"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Infection"
+    },
+    {
+     "id": "ne",
+     "k": "dx",
+     "t": "Neoplasm",
+     "d": "<ul><li>NHL</li><li>Hodgkin’s lymphoma</li><li>Leukemia</li><li>Solid tumors</li></ul>"
+    },
+    {
+     "id": "au",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li>SLE</li><li>RA</li><li>Polyarteritis nodosum</li><li>Giant cell arteritis</li><li>Sarcoidosis</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Drug fever</li><li>Factitious fever</li><li>Trauma Non-infectious hepatitis</li><li>Recurrent PE</li></ul>"
+    },
+    {
+     "id": "ba",
+     "k": "q",
+     "t": "Bacterial"
+    },
+    {
+     "id": "vi",
+     "k": "dx",
+     "t": "Viral",
+     "d": "<ul><li>HIV</li><li>EBV</li><li>CMV</li><li>Viral hepatitis</li><li>Enterovirus</li></ul>"
+    },
+    {
+     "id": "ox",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Fungal</li><li>Protozoa (eg. malaria)</li><li>other parasites</li></ul>"
+    },
+    {
+     "id": "os",
+     "k": "dx",
+     "t": "Organ Specific Infection",
+     "d": "<ul><li>Infectious endocarditis</li><li>Osteomyelitis</li><li>Occult abscess</li><li>Sinusitis</li><li>Cholangitis</li><li>UTI</li><li>Meningitis</li></ul>"
+    },
+    {
+     "id": "no",
+     "k": "dx",
+     "t": "Non-organ specific",
+     "d": "<ul><li>Brucellosis</li><li>Q-fever</li><li>Salmonella</li><li>Yersinia</li><li>Tuleremia</li><li>Septic Phlebitis</li><li>Rheumatic fever</li><li>Lyme disease</li><li>TB</li><li>Whipple’s disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Infection"
+    },
+    {
+     "f": "a",
+     "t": "ne",
+     "l": "Neoplasm"
+    },
+    {
+     "f": "a",
+     "t": "au",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "a",
+     "t": "ot",
+     "l": "Other"
+    },
+    {
+     "f": "i",
+     "t": "ba",
+     "l": "Bacterial"
+    },
+    {
+     "f": "i",
+     "t": "vi",
+     "l": "Viral"
+    },
+    {
+     "f": "i",
+     "t": "ox",
+     "l": "Other"
+    },
+    {
+     "f": "ba",
+     "t": "os",
+     "l": "Organ specific infection"
+    },
+    {
+     "f": "ba",
+     "t": "no",
+     "l": "Non-organ specific"
+    }
+   ]
+  }
+ ]
+}

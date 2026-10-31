@@ -1,0 +1,92 @@
+{
+ "key": "031",
+ "en": "Excessive Daytime Sleepiness",
+ "th": "ง่วงนอนมากผิดปกติตอนกลางวัน",
+ "pdf": "60",
+ "bookpg": "31",
+ "target": "sleep-disorders",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "bb-031-scheme",
+   "h": "Excessive daytime sleepiness scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b031a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-eds",
+   "html": "<h5>Excessive daytime sleepiness — causes by group (Blackbook)</h5><p>Differentiate fatigue from sleepiness first.</p><ul><li><b>Insufficient sleep</b>: Poor Sleep Hygiene; Insomnia; Behavioral Sleep Deprivation (Eg. Shift Work)</li><li><b>Sleep disorders</b>: Obstructive/Central Sleep Apnea; Restless Legs Syndrome; Periodic Limb Movement Disorder; Narcolepsy; Obesity Hypoventilation Syndrome</li><li><b>Medical/Psychiatric disorders</b>: Neurologic Disorders (Eg. Parkinson’s, MS); Head Trauma; Depression; Anxiety</li><li><b>Other</b>: Medications (Eg. Benzodiazepines, Antihistamines, Opioid Analgesics, Antipsychotics); Drug Abuse (Eg. Alcohol, Opioids)</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b031a",
+   "title": "Excessive Daytime Sleepiness",
+   "src": "fig",
+   "img": "bb-031-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Excessive Daytime Sleepiness"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Differentiate Fatigue from Sleepiness"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Insufficient Sleep",
+     "d": "<ul><li>Poor Sleep Hygiene</li><li>Insomnia</li><li>Behavioral Sleep Deprivation (Eg. Shift Work)</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Sleep Disorders",
+     "d": "<ul><li>Obstructive/Central Sleep Apnea</li><li>Restless Legs Syndrome</li><li>Periodic Limb Movement Disorder</li><li>Narcolepsy</li><li>Obesity Hypoventilation Syndrome</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Medical/Psychiatric Disorders",
+     "d": "<ul><li>Neurologic Disorders (Eg. Parkinson’s, MS)</li><li>Head Trauma</li><li>Depression</li><li>Anxiety</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Medications (Eg. Benzodiazepines, Antihistamines, Opioid Analgesics, Antipsychotics)</li><li>Drug Abuse (Eg. Alcohol, Opioids)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Insufficient sleep"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Sleep disorders"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Medical/psychiatric disorders"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

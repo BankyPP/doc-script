@@ -1,0 +1,197 @@
+{
+ "key": "160",
+ "en": "Short Stature",
+ "th": "ตัวเตี้ย",
+ "pdf": "189",
+ "bookpg": "160",
+ "target": "short-stature",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-5-1-groups",
+   "id": "bb-160-scheme",
+   "h": "Short stature — pathological vs normal variant (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b160a\"></div><ul><li><b>Short Stature</b><ul><li><b>&lt;3rd Percentile — Detailed History, Physical Exam, and Mid-Parental Target Height</b><ul><li><span class=\"tag\">Pathological/abnormal</span> <b>Pathological/Abnormal</b><ul><li><span class=\"tag\">Disproportionate</span> <b>Disproportionate</b><ul><li>Skeletal Dysplasias (e.g. Achondroplasia)</li><li>Rickets</li></ul></li><li><span class=\"tag\">Proportionate</span> <b>Proportionate</b><ul><li><span class=\"tag\">No dysmorphic features</span> <b>No Dysmorphic Features</b><ul><li><span class=\"tag\">Deprivation</span> <b>Deprivation</b><ul><li>Primary Malnutrition</li><li>Psychosocial</li><li>Deprivation</li></ul></li><li><span class=\"tag\">Endocrine</span> <b>Endocrine</b><ul><li>Cushing’s Disease</li><li>GH Deficiency</li><li>IGF-1 Deficiency (e.g. Laron Dwarfism)</li><li>Hypothyroidism</li><li>Congenital Adrenal Hyperplasia</li><li>Panhypopituitarism</li></ul></li><li><span class=\"tag\">Treatment</span> <b>Treatment</b><ul><li>Glucocorticoids</li><li>Radiation</li><li>Chemotherapy</li><li>Bone Marrow Transplant</li></ul></li><li><span class=\"tag\">Chronic disease</span> <b>Chronic Disease</b><ul><li>GI (e.g. Celiac, IBD)</li><li>Renal (e.g. CRF)</li><li>Infection (e.g. Chronic UTI)</li><li>Cardiopulmonary (e.g. Cystic Fibrosis, CHF)</li><li>Inborn Metabolism Error</li><li>Immunologic</li><li>Hematologic</li></ul><p><small>รายการ Hematologic ถูกตัดขอบล่างในภาพหน้า — อ่านจากข้อความถอดจาก PDF</small></p></li><li><span class=\"tag\">Other</span> <b>Other</b><ul><li>Intrauterine Growth Retardation</li><li>Bulimia Nervosa</li><li>Anorexia Nervosa</li><li>CNS Tumors (e.g. Craniopharyngioma)</li></ul></li></ul></li><li><span class=\"tag\">Dysmorphic features</span> <b>Dysmorphic Features</b><ul><li>Trisomy 21</li><li>Noonan Syndrome</li><li>Prader-Willi Syndrome</li><li>Russell-Silver Syndrome</li><li>Turner Syndrome</li></ul></li></ul></li></ul></li><li><span class=\"tag\">Normal variant</span> <b>Normal Variant</b><ul><li><span class=\"tag\">Normal puberty onset (BA=CA)</span> <b>Normal Puberty Onset</b> <span class=\"muted\">— BA=CA</span><ul><li>Familial Short Stature</li></ul></li><li><span class=\"tag\">Delayed puberty onset (BA&lt;CA)</span> <b>Delayed Puberty Onset</b> <span class=\"muted\">— BA&lt;CA</span><ul><li>Constitutional Short Stature (Late Bloomer)</li></ul></li></ul></li></ul></li></ul></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-1-dispro",
+   "html": "<p><b>Disproportionate</b></p><ul><li>Skeletal Dysplasias (e.g. Achondroplasia)</li><li>Rickets</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-1-proportion",
+   "html": "<p><b>Proportionate — Dysmorphic Features:</b> Trisomy 21, Noonan Syndrome, Prader-Willi Syndrome, Russell-Silver Syndrome, Turner Syndrome</p><p><b>Proportionate — No Dysmorphic Features:</b></p><ul><li><b>Deprivation:</b> Primary Malnutrition, Psychosocial, Deprivation</li><li><b>Endocrine:</b> Cushing’s Disease, GH Deficiency, IGF-1 Deficiency (e.g. Laron Dwarfism), Hypothyroidism, Congenital Adrenal Hyperplasia, Panhypopituitarism</li><li><b>Treatment:</b> Glucocorticoids, Radiation, Chemotherapy, Bone Marrow Transplant</li><li><b>Chronic Disease:</b> GI (e.g. Celiac, IBD), Renal (e.g. CRF), Infection (e.g. Chronic UTI), Cardiopulmonary (e.g. Cystic Fibrosis, CHF), Inborn Metabolism Error, Immunologic, Hematologic</li><li><b>Other:</b> Intrauterine Growth Retardation, Bulimia Nervosa, Anorexia Nervosa, CNS Tumors (e.g. Craniopharyngioma)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-1-groups",
+   "html": "<p><b>Normal variant:</b></p><ul><li>Normal Puberty Onset (BA=CA): Familial Short Stature</li><li>Delayed Puberty Onset (BA&lt;CA): Constitutional Short Stature (Late Bloomer)</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b160a",
+   "title": "Short Stature",
+   "src": "fig",
+   "img": "bb-160-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Short Stature"
+    },
+    {
+     "id": "a",
+     "k": "act",
+     "t": "&lt;3rd Percentile — Detailed History, Physical Exam, and Mid-Parental Target Height"
+    },
+    {
+     "id": "pa",
+     "k": "q",
+     "t": "Pathological/Abnormal"
+    },
+    {
+     "id": "nv",
+     "k": "q",
+     "t": "Normal Variant"
+    },
+    {
+     "id": "di",
+     "k": "dx",
+     "t": "Disproportionate",
+     "d": "<ul><li>Skeletal Dysplasias (e.g. Achondroplasia)</li><li>Rickets</li></ul>"
+    },
+    {
+     "id": "pr",
+     "k": "q",
+     "t": "Proportionate"
+    },
+    {
+     "id": "np",
+     "k": "dx",
+     "t": "Normal Puberty Onset",
+     "d": "<p>BA=CA</p><ul><li>Familial Short Stature</li></ul>"
+    },
+    {
+     "id": "dp",
+     "k": "dx",
+     "t": "Delayed Puberty Onset",
+     "d": "<p>BA&lt;CA</p><ul><li>Constitutional Short Stature (Late Bloomer)</li></ul>"
+    },
+    {
+     "id": "nd",
+     "k": "q",
+     "t": "No Dysmorphic Features"
+    },
+    {
+     "id": "dy",
+     "k": "dx",
+     "t": "Dysmorphic Features",
+     "d": "<ul><li>Trisomy 21</li><li>Noonan Syndrome</li><li>Prader-Willi Syndrome</li><li>Russell-Silver Syndrome</li><li>Turner Syndrome</li></ul>"
+    },
+    {
+     "id": "de",
+     "k": "dx",
+     "t": "Deprivation",
+     "d": "<ul><li>Primary Malnutrition</li><li>Psychosocial</li><li>Deprivation</li></ul>"
+    },
+    {
+     "id": "en",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>Cushing’s Disease</li><li>GH Deficiency</li><li>IGF-1 Deficiency (e.g. Laron Dwarfism)</li><li>Hypothyroidism</li><li>Congenital Adrenal Hyperplasia</li><li>Panhypopituitarism</li></ul>"
+    },
+    {
+     "id": "tr",
+     "k": "dx",
+     "t": "Treatment",
+     "d": "<ul><li>Glucocorticoids</li><li>Radiation</li><li>Chemotherapy</li><li>Bone Marrow Transplant</li></ul>"
+    },
+    {
+     "id": "cd",
+     "k": "dx",
+     "t": "Chronic Disease",
+     "d": "<ul><li>GI (e.g. Celiac, IBD)</li><li>Renal (e.g. CRF)</li><li>Infection (e.g. Chronic UTI)</li><li>Cardiopulmonary (e.g. Cystic Fibrosis, CHF)</li><li>Inborn Metabolism Error</li><li>Immunologic</li><li>Hematologic</li></ul><p><small>รายการ Hematologic ถูกตัดขอบล่างในภาพหน้า — อ่านจากข้อความถอดจาก PDF</small></p>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Intrauterine Growth Retardation</li><li>Bulimia Nervosa</li><li>Anorexia Nervosa</li><li>CNS Tumors (e.g. Craniopharyngioma)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "a"
+    },
+    {
+     "f": "a",
+     "t": "pa",
+     "l": "Pathological/abnormal"
+    },
+    {
+     "f": "a",
+     "t": "nv",
+     "l": "Normal variant"
+    },
+    {
+     "f": "pa",
+     "t": "di",
+     "l": "Disproportionate"
+    },
+    {
+     "f": "pa",
+     "t": "pr",
+     "l": "Proportionate"
+    },
+    {
+     "f": "nv",
+     "t": "np",
+     "l": "Normal puberty onset (BA=CA)"
+    },
+    {
+     "f": "nv",
+     "t": "dp",
+     "l": "Delayed puberty onset (BA&lt;CA)"
+    },
+    {
+     "f": "pr",
+     "t": "nd",
+     "l": "No dysmorphic features"
+    },
+    {
+     "f": "pr",
+     "t": "dy",
+     "l": "Dysmorphic features"
+    },
+    {
+     "f": "nd",
+     "t": "de",
+     "l": "Deprivation"
+    },
+    {
+     "f": "nd",
+     "t": "en",
+     "l": "Endocrine"
+    },
+    {
+     "f": "nd",
+     "t": "tr",
+     "l": "Treatment"
+    },
+    {
+     "f": "nd",
+     "t": "cd",
+     "l": "Chronic disease"
+    },
+    {
+     "f": "nd",
+     "t": "ot",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

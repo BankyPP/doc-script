@@ -1,0 +1,103 @@
+{
+ "key": "291",
+ "en": "Smell Dysfunction",
+ "th": "การรับกลิ่นผิดปกติ",
+ "pdf": "320",
+ "bookpg": "291",
+ "target": null,
+ "new": {
+  "id": "smell-dysfunction",
+  "th": "การรับกลิ่นผิดปกติ",
+  "en": "Smell Dysfunction",
+  "g": "eent"
+ },
+ "sections": [
+  {
+   "id": "bb-291-scheme",
+   "h": "Smell Dysfunction scheme",
+   "html": "<div class=\"flow\" data-flow=\"b291a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b291a",
+   "title": "Smell Dysfunction",
+   "src": "fig",
+   "img": "bb-291-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Smell Dysfunction"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "ENT history, physical exam, anterior rhinoscopy, sensory testing, CT/MRI",
+     "d": "<p>ENT History, Physical Exam, Anterior Rhinoscopy, Sensory Testing, CT/MRI to Rule Out Neoplasms, Fractures &amp; Congenital abnormalities</p>"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Nasal Obstruction/ URTI",
+     "d": "<ul><li>Septal Deviation</li><li>Allergic Rhinitis</li><li>Bacterial/ Viral Infection (Influenza)</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Trauma",
+     "d": "<ul><li>Foreign Body</li><li>Nasal Surgery</li><li>Base of Skull Fracture</li><li>Nasal Fracture</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Endocrine/ Metabolic",
+     "d": "<ul><li>Alcoholism</li><li>Diabetes Mellitus</li><li>Adrenal Hypofunction</li><li>Adrenal Hyperfunction</li><li>Vitamin B12 Deficiency</li><li>Zinc Deficiency</li><li>Malnutrition</li></ul>"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Neoplastic",
+     "d": "<ul><li>Nasal Polyps</li><li>Juvenile Nasopharyngeal Angiofibroma</li></ul>"
+    },
+    {
+     "id": "c5",
+     "k": "dx",
+     "t": "Toxins and other Factors",
+     "d": "<ul><li>Smoking</li><li>Drugs</li><li>Radiation</li><li>Toxin Exposure</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c1",
+     "l": "Nasal Obstruction/ URTI"
+    },
+    {
+     "f": "b",
+     "t": "c2",
+     "l": "Trauma"
+    },
+    {
+     "f": "b",
+     "t": "c3",
+     "l": "Endocrine/ Metabolic"
+    },
+    {
+     "f": "b",
+     "t": "c4",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "b",
+     "t": "c5",
+     "l": "Toxins and other Factors"
+    }
+   ]
+  }
+ ]
+}

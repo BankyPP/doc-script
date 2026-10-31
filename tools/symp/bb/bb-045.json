@@ -1,0 +1,161 @@
+{
+ "key": "045",
+ "en": "Anemia with Elevated MCV",
+ "th": "ซีดที่ MCV สูง (macrocytic)",
+ "pdf": "74",
+ "bookpg": "45",
+ "target": "anemia",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "ap-size",
+   "id": "bb-045-scheme",
+   "h": "Anemia with Elevated MCV scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b045a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b045a",
+   "title": "Anemia with Elevated MCV",
+   "src": "fig",
+   "img": "bb-045-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Anemia with elevated Mean Corpuscular Volume (MCV)"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Rule out Reticulocytosis"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Normal Blood Smear",
+     "d": "<ul><li>Drugs</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Oval Macrocytes, Hypersegmented Neutrophils"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "RBCs in Rouleaux Formation",
+     "d": "<ul><li>Multiple Myeloma</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Dysplastic",
+     "d": "<ul><li>Myelodysplastic Syndromes</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Macrocytosis, Target Cells, Normal WBCs"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Low RBC Folate",
+     "d": "<ul><li>Dietary Deficiency</li><li>Malabsorption</li><li>Increased Requirement (e.g. Pregnancy)</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Low Serum B12 — Antibody Testing"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Anti-IF Antibodies Present",
+     "d": "<ul><li>Pernicious Anemia</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Anti-IF Antibodies Not Present",
+     "d": "<ul><li>Small Bowel Disorder</li><li>Pancreatic Disease</li><li>Parasites</li><li>Pernicious Anemia</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Normal Liver Function Tests",
+     "d": "<ul><li>Rule out B12 and Folate Deficiency</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Abnormal Liver Function Tests",
+     "d": "<ul><li>Liver Disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Normal blood smear"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Oval macrocytes, hypersegm. neutrophils"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Rouleaux formation"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Dysplastic"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Macrocytosis, target cells, normal WBCs"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Low RBC folate"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Low serum B12"
+    },
+    {
+     "f": "i",
+     "t": "j",
+     "l": "Anti-IF antibodies present"
+    },
+    {
+     "f": "i",
+     "t": "k",
+     "l": "Anti-IF antibodies not present"
+    },
+    {
+     "f": "g",
+     "t": "l",
+     "l": "Normal liver function tests"
+    },
+    {
+     "f": "g",
+     "t": "m",
+     "l": "Abnormal liver function tests"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,160 @@
+{
+ "key": "193",
+ "en": "Vertigo",
+ "th": "เวียนศีรษะ",
+ "pdf": "222",
+ "bookpg": "193",
+ "target": "vertigo",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-9-11-algo",
+   "id": "bb-193-scheme",
+   "h": "Vertigo — central vs peripheral vestibular dysfunction (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b193a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "pvc",
+   "html": "<p><b>Central vestibular dysfunction:</b> imbalance, neurologic symptoms/signs, bidirectional nystagmus</p><p><b>Peripheral vestibular dysfunction:</b> nausea and vomiting, auditory symptoms, unidirectional nystagmus</p>"
+  },
+  {
+   "op": "append",
+   "sec": "periph",
+   "html": "<p><b>Peripheral vestibular dysfunction — causes</b></p><ul><li>Benign Paroxysmal Positional Vertigo</li><li>Labyrinthitis/Vestibular Neuronitis</li><li>Ménière’s Disease</li><li>Acoustic Neuroma</li><li>Ototoxicity (usually imbalance and oscillopsia)</li><li>Otitis Media</li><li>Temporal Bone Fracture</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "central",
+   "html": "<p><b>Central vestibular dysfunction — causes</b></p><ul><li><b>Infection:</b> Meningitis, Cerebellar/Brainstem Abscess</li><li><b>Trauma:</b> Cerebellar Contusion</li><li><b>Space-occupying lesion:</b> Infratentorial Tumors, Cerebellopontine Angle Tumors, Glomus Tumors</li><li><b>Vascular:</b> Vertebrobasilar Insufficiency, Basilar Artery Migraine, Transient Ischemic Attack, Cerebellar/Brainstem Infarction, Cerebellar Hemorrhage</li><li><b>Inflammatory:</b> multiple sclerosis</li><li><b>Intoxication:</b> Barbiturates, Ethanol</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b193a",
+   "title": "Vertigo",
+   "src": "fig",
+   "img": "bb-193-f1.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Dizziness (แสดงในหน้า Dizziness)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vertigo/Dizziness"
+    },
+    {
+     "id": "tv",
+     "k": "q",
+     "t": "True Vertigo",
+     "d": "<p>Illusion of Rotary Movement</p>"
+    },
+    {
+     "id": "dz",
+     "k": "q",
+     "t": "Dizziness",
+     "d": "<p>Lightheaded, unsteady, disoriented</p>"
+    },
+    {
+     "id": "cen",
+     "k": "q",
+     "t": "Central Vestibular Dysfunction",
+     "d": "<p>Imbalance, neurologic symptoms/signs, bidirectional nystagmus</p>"
+    },
+    {
+     "id": "per",
+     "k": "dx",
+     "t": "Peripheral Vestibular Dysfunction",
+     "d": "<p>Nausea and vomiting, auditory symptoms, unidirectional nystagmus</p><ul><li>Benign Paroxysmal Positional Vertigo</li><li>Labyrinthitis/Vestibular Neuronitis</li><li>Ménière’s Disease</li><li>Acoustic Neuroma</li><li>Ototoxicity (usually imbalance and oscillopsia)</li><li>Otitis Media</li><li>Temporal Bone Fracture</li></ul>"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Meningitis</li><li>Cerebellar/Brainstem Abscess</li></ul>"
+    },
+    {
+     "id": "tra",
+     "k": "dx",
+     "t": "Trauma",
+     "d": "<ul><li>Cerebellar Contusion</li></ul>"
+    },
+    {
+     "id": "sol",
+     "k": "dx",
+     "t": "Space-Occupying Lesion",
+     "d": "<ul><li>Infratentorial Tumors</li><li>Cerebellopontine Angle Tumors</li><li>Glomus Tumors</li></ul>"
+    },
+    {
+     "id": "vas",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Vertebrobasilar Insufficiency</li><li>Basilar Artery Migraine</li><li>Transient Ischemic Attack</li><li>Cerebellar/Brainstem Infarction</li><li>Cerebellar Hemorrhage</li></ul>"
+    },
+    {
+     "id": "ifl",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Multiple sclerosis</li></ul>"
+    },
+    {
+     "id": "tox",
+     "k": "dx",
+     "t": "Intoxication",
+     "d": "<ul><li>Barbiturates</li><li>Ethanol</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "tv",
+     "l": "True vertigo"
+    },
+    {
+     "f": "a",
+     "t": "dz",
+     "l": "Dizziness"
+    },
+    {
+     "f": "tv",
+     "t": "cen",
+     "l": "Central vestibular dysfunction"
+    },
+    {
+     "f": "tv",
+     "t": "per",
+     "l": "Peripheral vestibular dysfunction"
+    },
+    {
+     "f": "cen",
+     "t": "inf",
+     "l": "Infection"
+    },
+    {
+     "f": "cen",
+     "t": "tra",
+     "l": "Trauma"
+    },
+    {
+     "f": "cen",
+     "t": "sol",
+     "l": "Space-occupying lesion"
+    },
+    {
+     "f": "cen",
+     "t": "vas",
+     "l": "Vascular"
+    },
+    {
+     "f": "cen",
+     "t": "ifl",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "cen",
+     "t": "tox",
+     "l": "Intoxication"
+    }
+   ]
+  }
+ ]
+}

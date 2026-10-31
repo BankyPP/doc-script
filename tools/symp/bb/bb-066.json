@@ -1,0 +1,182 @@
+{
+ "key": "066",
+ "en": "Suspected Pulmonary Embolism (PE)",
+ "th": "สงสัยปอดอุดตัน (PE)",
+ "pdf": "95",
+ "bookpg": "66",
+ "target": "venous-thrombosis",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-8-algo",
+   "id": "bb-066-scheme",
+   "h": "Suspected PE scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b066a\"></div><div class=\"tbl\"><table><thead><tr><th>Well's Criteria for PE</th><th>Points</th></tr></thead><tbody><tr><td>Clinical Signs and Symptoms of DVT (leg swelling and pain with palpation of the deep veins)</td><td>(3.0)</td></tr><tr><td>Alternative diagnosis less likely than PE</td><td>(3.0)</td></tr><tr><td>Heart rate &gt;100bpm</td><td>(1.5)</td></tr><tr><td>Immobilization or surgery in last 4 weeks</td><td>(1.5)</td></tr><tr><td>Previous DVT or PE</td><td>(1.5)</td></tr><tr><td>Hemoptysis</td><td>(1.0)</td></tr><tr><td>Malignancy (ongoing or previous 6 months)</td><td>(1.0)</td></tr></tbody></table></div><p><small>Wells P.S, et al. (2000). Derivation of a simple clinical model to categorize patients probability of pulmonary embolism: increasing the models utility with the SimpliRED D-dimer. Thromb Haemost 2003; 83: 416-20.</small></p><p><small>Writing Group for the Christopher Study Investigators. (2006). Effectiveness of managing suspected pulmonary embolism using an algorithm combining clinical probability, D-Dimer testing, and computer tomography. JAMA;295: 172-179.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b066a",
+   "title": "Suspected Pulmonary Embolism (PE)",
+   "src": "fig",
+   "img": "bb-066-f1.webp",
+   "note": "STOP/TREAT ที่ขีดเส้นใต้ใต้กล่องในหนังสือรวมเข้าชื่อกล่อง · Well's criteria อยู่ในกล่อง \"Calculate Clinical Probability Score\"",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Suspected PE"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Calculate Clinical Probability Score",
+     "d": "<div class=\"tbl\"><table><thead><tr><th>Well's Criteria for PE</th><th>Points</th></tr></thead><tbody><tr><td>Clinical Signs and Symptoms of DVT (leg swelling and pain with palpation of the deep veins)</td><td>(3.0)</td></tr><tr><td>Alternative diagnosis less likely than PE</td><td>(3.0)</td></tr><tr><td>Heart rate &gt;100bpm</td><td>(1.5)</td></tr><tr><td>Immobilization or surgery in last 4 weeks</td><td>(1.5)</td></tr><tr><td>Previous DVT or PE</td><td>(1.5)</td></tr><tr><td>Hemoptysis</td><td>(1.0)</td></tr><tr><td>Malignancy (ongoing or previous 6 months)</td><td>(1.0)</td></tr></tbody></table></div>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Low: ≤ 4 Points"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "High: > 4 Points"
+    },
+    {
+     "id": "e",
+     "k": "note",
+     "t": "Negative D-Dimer — STOP"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Positive D-Dimer"
+    },
+    {
+     "id": "g",
+     "k": "act",
+     "t": "CT-PA or Compression U/S"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Negative CT-PE"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Non-Diagnostic"
+    },
+    {
+     "id": "j",
+     "k": "act",
+     "t": "Positive CT-PA — TREAT"
+    },
+    {
+     "id": "k",
+     "k": "note",
+     "t": "Low Clinical Suspicion — STOP"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "High Clinical Suspicion"
+    },
+    {
+     "id": "m",
+     "k": "act",
+     "t": "Compression U/S"
+    },
+    {
+     "id": "n",
+     "k": "act",
+     "t": "Positive — TREAT"
+    },
+    {
+     "id": "o",
+     "k": "q",
+     "t": "Negative",
+     "d": "<ul><li>Repeat U/S in 1 Week</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Low: ≤ 4 points"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "High: > 4 points"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Negative D-dimer"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Positive D-dimer"
+    },
+    {
+     "f": "f",
+     "t": "g"
+    },
+    {
+     "f": "d",
+     "t": "g"
+    },
+    {
+     "f": "g",
+     "t": "h",
+     "l": "Negative CT-PE"
+    },
+    {
+     "f": "g",
+     "t": "i",
+     "l": "Non-diagnostic"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "Positive CT-PA"
+    },
+    {
+     "f": "h",
+     "t": "k",
+     "l": "Low clinical suspicion"
+    },
+    {
+     "f": "h",
+     "t": "l",
+     "l": "High clinical suspicion"
+    },
+    {
+     "f": "l",
+     "t": "m"
+    },
+    {
+     "f": "i",
+     "t": "m"
+    },
+    {
+     "f": "m",
+     "t": "n",
+     "l": "Positive"
+    },
+    {
+     "f": "m",
+     "t": "o",
+     "l": "Negative"
+    }
+   ]
+  }
+ ]
+}

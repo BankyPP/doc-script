@@ -1,0 +1,73 @@
+{
+ "key": "298",
+ "en": "Approach to an Eye Exam",
+ "th": "แนวทางการตรวจตา",
+ "pdf": "327",
+ "bookpg": "298",
+ "target": "visual-disorder",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "^",
+   "id": "bb-298-exam",
+   "h": "Approach to an Eye Exam (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b298a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b298a",
+   "title": "Approach to an Eye Exam",
+   "src": "fig",
+   "img": "bb-298-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "1 — History"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "2 — Obvious Physical Trauma"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "3 — Initial Assessment",
+     "d": "<ul><li>A. Visual Acuity</li><li>B. Pupils<ul><li>a. Light Reflex, Accommodation, RAPD</li></ul></li><li>C. Ocular Movements (CN 3, 4, 6)</li><li>D. Visual Fields by Confrontation</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "4 — Slit Lamp Exam",
+     "d": "<ul><li>A. Lids / Lashes/ Lacrimal</li><li>B. Sclera/ Conjunctiva</li><li>C. Cornea</li><li>D. Anterior Chamber</li><li>E. Iris</li><li>F. Lens</li><li>G. Vitreous Humor</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "5 — Fundoscopy",
+     "d": "<ul><li>A. Retina</li><li>B. Optic Nerve/ Disc/ Cup: Disc Ratio</li><li>C. Macula</li><li>D. Fovea</li><li>E. Blood Vessels</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    },
+    {
+     "f": "d",
+     "t": "e"
+    }
+   ]
+  }
+ ]
+}

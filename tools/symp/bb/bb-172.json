@@ -1,0 +1,178 @@
+{
+ "key": "172",
+ "en": "Cognitive Impairment",
+ "th": "ความบกพร่องของสมรรถภาพทางสมอง",
+ "pdf": "201",
+ "bookpg": "172",
+ "target": "cognitive-impairment",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "class",
+   "id": "bb-172-scheme",
+   "h": "Cognitive Impairment — แผนผัง (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b172a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "chronic-path",
+   "html": "<p><b>Dementia pattern (Blackbook)</b></p><ul><li><b>Subcortical:</b> treatable cause · early extrapyramidal features (Parkinson’s disease with dementia, Huntington’s disease) · rapidly progressive (Creutzfeldt-Jakob disease, paraneoplastic disorder)</li><li><b>Cortical:</b> early language and behavioral dysfunction (fronto-temporal dementia) · abrupt onset, stepwise progression (vascular dementia) · early impairment of recent memory (Alzheimer’s dementia) · early extrapyramidal features (dementia with Lewy bodies)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ix-cause",
+   "html": "<p><b>Treatable causes of subcortical dementia</b></p><ul><li>Normal Pressure Hydrocephalus</li><li>Chronic Meningitis</li><li>Chronic Drug Abuse</li><li>Tumor</li><li>Subdural Hematoma</li><li>B12 deficiency</li><li>Hypothyroidism</li><li>Hypoglycemia</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "class",
+   "html": "<p><b>Other categories in the Blackbook scheme</b></p><ul><li><b>Affecting multiple domains:</b> depression · delirium</li><li><b>Decline in instrumental activities of daily living:</b> amnestic mild cognitive impairment · non-amnestic mild cognitive impairment</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b172a",
+   "title": "Cognitive Impairment",
+   "src": "fig",
+   "img": "bb-172-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Cognitive Impairment"
+    },
+    {
+     "id": "dem",
+     "k": "q",
+     "t": "Dementia"
+    },
+    {
+     "id": "mult",
+     "k": "q",
+     "t": "Affecting Multiple Domains",
+     "d": "<ul><li>Depression</li><li>Delirium</li></ul>"
+    },
+    {
+     "id": "iadl",
+     "k": "q",
+     "t": "Decline in Instrumental Activities of Daily Living",
+     "d": "<ul><li>Amnestic Mild Cognitive Impairment</li><li>Non-Amnestic Mild Cognitive Impairment</li></ul>"
+    },
+    {
+     "id": "sub",
+     "k": "q",
+     "t": "Subcortical Dementia"
+    },
+    {
+     "id": "cor",
+     "k": "q",
+     "t": "Cortical Dementia"
+    },
+    {
+     "id": "tre",
+     "k": "dx",
+     "t": "Treatable Cause",
+     "d": "<ul><li>Normal Pressure Hydrocephalus</li><li>Chronic Meningitis</li><li>Chronic Drug Abuse</li><li>Tumor</li><li>Subdural Hematoma</li><li>B12 deficiency</li><li>Hypothyroidism</li><li>Hypoglycemia</li></ul>"
+    },
+    {
+     "id": "epf1",
+     "k": "dx",
+     "t": "Early Extrapyramidal Features (subcortical)",
+     "d": "<ul><li>Parkinson’s Disease with Dementia</li><li>Huntington’s Disease</li></ul>"
+    },
+    {
+     "id": "rap",
+     "k": "dx",
+     "t": "Rapidly Progressive",
+     "d": "<ul><li>Creutzfeldt-Jakob Disease</li><li>Paraneoplastic disorder</li></ul>"
+    },
+    {
+     "id": "lang",
+     "k": "dx",
+     "t": "Early Language and Behavioral Dysfunction",
+     "d": "<ul><li>Fronto-temporal Dementia</li></ul>"
+    },
+    {
+     "id": "abr",
+     "k": "dx",
+     "t": "Abrupt Onset, Stepwise Progression",
+     "d": "<ul><li>Vascular Dementia</li></ul>"
+    },
+    {
+     "id": "mem",
+     "k": "dx",
+     "t": "Early Impairment of Recent Memory",
+     "d": "<ul><li>Alzheimer’s Dementia</li></ul>"
+    },
+    {
+     "id": "epf2",
+     "k": "dx",
+     "t": "Early Extrapyramidal Features (cortical)",
+     "d": "<ul><li>Dementia with Lewy Bodies</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "dem",
+     "l": "Dementia"
+    },
+    {
+     "f": "a",
+     "t": "mult",
+     "l": "Affecting multiple domains"
+    },
+    {
+     "f": "a",
+     "t": "iadl",
+     "l": "Decline in IADL"
+    },
+    {
+     "f": "dem",
+     "t": "sub",
+     "l": "Subcortical"
+    },
+    {
+     "f": "dem",
+     "t": "cor",
+     "l": "Cortical"
+    },
+    {
+     "f": "sub",
+     "t": "tre",
+     "l": "Treatable cause"
+    },
+    {
+     "f": "sub",
+     "t": "epf1",
+     "l": "Early extrapyramidal features"
+    },
+    {
+     "f": "sub",
+     "t": "rap",
+     "l": "Rapidly progressive"
+    },
+    {
+     "f": "cor",
+     "t": "lang",
+     "l": "Early language/behavioral dysfunction"
+    },
+    {
+     "f": "cor",
+     "t": "abr",
+     "l": "Abrupt onset, stepwise"
+    },
+    {
+     "f": "cor",
+     "t": "mem",
+     "l": "Early recent memory impairment"
+    },
+    {
+     "f": "cor",
+     "t": "epf2",
+     "l": "Early extrapyramidal features"
+    }
+   ]
+  }
+ ]
+}

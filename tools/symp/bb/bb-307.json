@@ -1,0 +1,186 @@
+{
+ "key": "307",
+ "en": "Red Eye",
+ "th": "ตาแดง",
+ "pdf": "336–337",
+ "bookpg": "307–308",
+ "target": null,
+ "new": {
+  "id": "red-eye",
+  "th": "ตาแดง",
+  "en": "Red Eye",
+  "g": "eent"
+ },
+ "sections": [
+  {
+   "id": "bb-307-atr",
+   "h": "Red Eye — Atraumatic",
+   "html": "<div class=\"flow\" data-flow=\"b307a\"></div><div class=\"pearl\"><p><b>Clinical Pearl:</b></p><ul><li>Orbital cellulitis can present with pain on EOM and orbital signs of involvement</li></ul></div>"
+  },
+  {
+   "id": "bb-307-tr",
+   "h": "Red Eye — Traumatic",
+   "html": "<div class=\"flow\" data-flow=\"b307b\"></div><p><small>** Urgent lateral canthotomy (Orbital Apex Injury/ Retrobulbar Fracture)</small></p><div class=\"pearl\"><p><b>Clinical Pearls:</b></p><ul><li>With chemical burns, it is important to determine if the burn was caused by acid or worse, alkali.</li><li>With a globe-penetrating injury, call ophthalmology, shield the eye, and do not touch the eye.</li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b307a",
+   "title": "Red Eye — Atraumatic",
+   "src": "fig",
+   "img": "bb-307-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Red Eye"
+    },
+    {
+     "id": "tr",
+     "k": "note",
+     "t": "Traumatic (dashed — see the Traumatic scheme)"
+    },
+    {
+     "id": "at",
+     "k": "q",
+     "t": "Atraumatic"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Lids/Orbit/ Lacrimal System",
+     "d": "<ul><li>Blepharitis</li><li>Stye/ Chalazion</li><li>Dacrocystitis</li><li>Pre-septal cellulitis</li><li>Orbital Cellulitis</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Ocular Surface",
+     "d": "<ul><li>Subconjunctival Hemorrhage</li><li>Conjunctivitis</li><li>Corneal Abrasion/ Erosion</li><li>Keratitis/Corneal Ulcer</li><li>HSV Keratitis</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Intermediate Layers",
+     "d": "<ul><li>Episcleritis</li><li>Scleritis</li><li>Uveitis</li><li>Iritis</li></ul>"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Intraocular",
+     "d": "<ul><li>Acute Angle Closure Glaucoma</li><li>Endophthalmitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "tr",
+     "l": "Traumatic (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "at",
+     "l": "Atraumatic"
+    },
+    {
+     "f": "at",
+     "t": "c1",
+     "l": "Lids/Orbit/ Lacrimal System"
+    },
+    {
+     "f": "at",
+     "t": "c2",
+     "l": "Ocular Surface"
+    },
+    {
+     "f": "at",
+     "t": "c3",
+     "l": "Intermediate Layers"
+    },
+    {
+     "f": "at",
+     "t": "c4",
+     "l": "Intraocular"
+    }
+   ]
+  },
+  {
+   "id": "b307b",
+   "title": "Red Eye — Traumatic",
+   "src": "fig",
+   "img": "bb-307-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Red Eye"
+    },
+    {
+     "id": "tr",
+     "k": "q",
+     "t": "Traumatic"
+    },
+    {
+     "id": "at",
+     "k": "note",
+     "t": "Atraumatic (dashed — see the Atraumatic scheme)"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Surface Injury",
+     "d": "<ul><li>Corneal Abrasion</li><li>Ultraviolet Keratitis</li><li>Chemical (Acid, alkali)</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Blunt Trauma — hyphema, diplopia, periorbital ecchymosis, subcutaneous emphysema of lid",
+     "d": "<p>Hyphema, diplopia, periorbital ecchymosis, subcutaneous emphysema of lid</p><ul><li>Orbital Rim/Mid-facial Fracture</li><li>Orbital Floor Fracture</li><li>Orbital Apex Injury/ Retrobulbar Fracture**</li></ul><p>** Urgent lateral canthotomy</p>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Globe Penetrating Injury",
+     "d": "<p>Hyphema, history of trauma/high velocity impact, reduced visual acuity</p>"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Associated Injury",
+     "d": "<ul><li>Lids: Swelling, Laceration</li><li>Conjunctiva: Subconjunctival hemorrhage</li><li>Cornea: Abrasion</li><li>Iris: Laceration, iritis, iridodialysis</li><li>Pupil: Traumatic mydriasis</li><li>Lens: Cataract, dislocation</li><li>Vitreous hemorrhage</li><li>Retina: Tear, hemorrhage, choroidal rupture</li><li>Glaucoma</li><li>Optic Neuropathy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "tr",
+     "l": "Traumatic"
+    },
+    {
+     "f": "a",
+     "t": "at",
+     "l": "Atraumatic (dashed)"
+    },
+    {
+     "f": "tr",
+     "t": "c1",
+     "l": "Surface Injury"
+    },
+    {
+     "f": "tr",
+     "t": "c2",
+     "l": "Blunt Trauma"
+    },
+    {
+     "f": "tr",
+     "t": "c3",
+     "l": "Globe Penetrating Injury"
+    },
+    {
+     "f": "tr",
+     "t": "c4",
+     "l": "Associated Injury"
+    }
+   ]
+  }
+ ]
+}

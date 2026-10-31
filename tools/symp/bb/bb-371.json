@@ -1,0 +1,71 @@
+{
+ "key": "371",
+ "en": "Pediatric Mood and Anxiety Disorders",
+ "th": "ความผิดปกติทางอารมณ์และความวิตกกังวลในเด็ก",
+ "pdf": "400",
+ "bookpg": "371",
+ "target": null,
+ "new": {
+  "id": "ped-mood-anxiety-disorders",
+  "th": "ความผิดปกติทางอารมณ์และความวิตกกังวลในเด็ก",
+  "en": "Pediatric Mood and Anxiety Disorders",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-371-scheme",
+   "h": "Pediatric Mood and Anxiety Disorders scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b371a\"></div><p><small>*More commonly or exclusively found in pediatric populations</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b371a",
+   "title": "Pediatric Mood and Anxiety Disorders",
+   "src": "fig",
+   "img": "bb-371-f1.webp",
+   "note": "*More commonly or exclusively found in pediatric populations",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Mood or Anxiety Disorder"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Mood",
+     "d": "<ul><li>Major Depressive Disorder</li><li>Persistent Depressive Disorder</li><li>Disruptive Mood Dysregulation Disorder*</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Bipolar"
+    },
+    {
+     "id": "x",
+     "k": "dx",
+     "t": "Anxiety",
+     "d": "<ul><li>Panic Disorder and Agoraphobia</li><li>Specific Phobia</li><li>Social Phobia</li><li>Generalized Anxiety Disorder</li><li>Selective Mutism*</li><li>Separation Anxiety Disorder*</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "m",
+     "l": "Mood"
+    },
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Bipolar"
+    },
+    {
+     "f": "a",
+     "t": "x",
+     "l": "Anxiety"
+    }
+   ]
+  }
+ ]
+}

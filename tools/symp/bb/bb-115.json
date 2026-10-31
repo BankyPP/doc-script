@@ -1,0 +1,127 @@
+{
+ "key": "115",
+ "en": "Hypertension",
+ "th": "ความดันโลหิตสูง",
+ "pdf": "144",
+ "bookpg": "115",
+ "target": null,
+ "flows": [
+  {
+   "id": "b115a",
+   "title": "Hypertension",
+   "src": "fig",
+   "img": "bb-115-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hypertension"
+    },
+    {
+     "id": "pri",
+     "k": "dx",
+     "t": "Primary (Essential) — 95%",
+     "d": "<p>Onset between age 20 and 50. Positive family history. No features of secondary hypertension.</p><ul><li>Long-standing</li><li>Uncontrolled</li><li>Drug Withdrawal</li></ul>"
+    },
+    {
+     "id": "sec",
+     "k": "q",
+     "t": "Secondary — 5%",
+     "d": "<p>Onset age &lt; 20 or &gt; 50 years. No family history. Hypertensive urgency. Resistant hypertension.</p>"
+    },
+    {
+     "id": "mis",
+     "k": "dx",
+     "t": "Mislabelled",
+     "d": "<p>Repeatedly normal blood pressure when taken at home, work or when using an ambulatory monitor.</p><ul><li>White-coat Hypertension</li><li>Masked Hypertension</li></ul>"
+    },
+    {
+     "id": "exo",
+     "k": "dx",
+     "t": "Exogenous",
+     "d": "<ul><li>Corticosteroids</li><li>Oral Contraceptive Pills</li><li>Cocaine</li><li>Black licorice</li><li>Medications</li></ul>"
+    },
+    {
+     "id": "ren",
+     "k": "dx",
+     "t": "Renal",
+     "d": "<ul><li>Renal parenchymal disease<ul><li>CKD</li><li>AKI</li><li>Glomerulonephritis</li></ul></li><li>Renovascular disease <i>(unilateral and bilateral renal artery stenosis)</i></li></ul>"
+    },
+    {
+     "id": "mec",
+     "k": "dx",
+     "t": "Mechanical",
+     "d": "<ul><li>Aortic coarctation</li><li>Obstructive Sleep Apnea</li></ul>"
+    },
+    {
+     "id": "end",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>Glucocorticoid excess (<i>Cushing syndrome or disease</i>)</li><li>Catecholamine excess (<i>pheochromocytoma</i>)</li><li>Mineralocorticoid excess (<i>primary aldosteronism</i>)</li><li>Hyperthyroidism (mainly systolic hypertension)</li><li>Hypothyroidism (mainly diastolic hypertension)</li><li>Hyperparathyroidism</li><li>Pregnancy (<i>Gestational hypertension</i>)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pri",
+     "l": "Primary (essential)"
+    },
+    {
+     "f": "a",
+     "t": "sec",
+     "l": "Secondary"
+    },
+    {
+     "f": "a",
+     "t": "mis",
+     "l": "Mislabelled"
+    },
+    {
+     "f": "sec",
+     "t": "exo",
+     "l": "Exogenous"
+    },
+    {
+     "f": "sec",
+     "t": "ren",
+     "l": "Renal"
+    },
+    {
+     "f": "sec",
+     "t": "mec",
+     "l": "Mechanical"
+    },
+    {
+     "f": "sec",
+     "t": "end",
+     "l": "Endocrine"
+    }
+   ]
+  }
+ ],
+ "new": {
+  "id": "hypertension",
+  "th": "ความดันโลหิตสูง",
+  "en": "Hypertension",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "bb-115-scheme",
+   "h": "Hypertension scheme — หมวด Renal (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b115a\"></div>",
+   "sub": [
+    {
+     "id": "bb-115-def",
+     "h": "Definition of hypertension",
+     "html": "<div class=\"box\"><ul><li>Systolic BP ≥ 140 mmHg or Diastolic BP ≥ 90 mmHg</li><li>Isolated systolic hypertension in the elderly: ≥ 160 mmHg</li><li>Diabetes mellitus: ≥ 130/80 mmHg</li></ul><p>Note: In children, the definition of hypertension is different (either systolic or diastolic BP &gt;95%ile), <b>but the approach is the same</b>.</p></div>"
+    },
+    {
+     "id": "bb-115-urg",
+     "h": "Hypertensive urgency and emergency",
+     "html": "<div class=\"box\"><ul><li><b>Hypertensive Urgency:</b> BP usually &gt;180/110 mmHg or asymptomatic Diastolic BP &gt;130 mmHg with target organ damage usually present but not acutely changing</li><li><b>Hypertensive Emergency:</b> BP usually &gt;220/140 mmHg with evolving target organ damage</li></ul></div>"
+    }
+   ]
+  }
+ ]
+}

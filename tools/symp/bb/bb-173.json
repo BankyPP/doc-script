@@ -1,0 +1,84 @@
+{
+ "key": "173",
+ "en": "Dizziness",
+ "th": "มึนศีรษะ",
+ "pdf": "202",
+ "bookpg": "173",
+ "target": "vertigo",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dizzy",
+   "id": "bb-173-scheme",
+   "h": "Dizziness — Organic vs Psychiatric (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b173a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "dizzy",
+   "html": "<p><b>Dizziness: lightheaded, unsteady, disoriented</b> (vs true vertigo = illusion of rotary movement)</p><p><b>Organic disease</b></p><ul><li>Presyncope/Vasodepressor Syncope</li><li>Cardiac Arrhythmia</li><li>Orthostatic Hypotension</li><li>Hyperventilation</li><li>Anemia</li><li>Peripheral neuropathy</li><li>Visual Impairment</li><li>Musculoskeletal Problem</li><li>Drugs</li></ul><p><b>Psychiatric disease</b></p><ul><li>Depression</li><li>Anxiety</li><li>Panic Disorder</li><li>Phobic Dizziness</li><li>Somatization</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b173a",
+   "title": "Dizziness (Vertigo/Dizziness)",
+   "src": "fig",
+   "img": "bb-173-f1.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป True Vertigo (แสดงในแผนผัง Vertigo หน้า 193)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vertigo/Dizziness"
+    },
+    {
+     "id": "tv",
+     "k": "q",
+     "t": "True Vertigo",
+     "d": "<p>Illusion of Rotary Movement</p>"
+    },
+    {
+     "id": "dz",
+     "k": "q",
+     "t": "Dizziness",
+     "d": "<p>Lightheaded, unsteady, disoriented</p>"
+    },
+    {
+     "id": "org",
+     "k": "dx",
+     "t": "Organic Disease",
+     "d": "<ul><li>Presyncope/Vasodepressor Syncope</li><li>Cardiac Arrhythmia</li><li>Orthostatic Hypotension</li><li>Hyperventilation</li><li>Anemia</li><li>Peripheral neuropathy</li><li>Visual Impairment</li><li>Musculoskeletal Problem</li><li>Drugs</li></ul>"
+    },
+    {
+     "id": "psy",
+     "k": "dx",
+     "t": "Psychiatric Disease",
+     "d": "<ul><li>Depression</li><li>Anxiety</li><li>Panic Disorder</li><li>Phobic Dizziness</li><li>Somatization</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "tv",
+     "l": "True vertigo"
+    },
+    {
+     "f": "a",
+     "t": "dz",
+     "l": "Dizziness"
+    },
+    {
+     "f": "dz",
+     "t": "org",
+     "l": "Organic disease"
+    },
+    {
+     "f": "dz",
+     "t": "psy",
+     "l": "Psychiatric disease"
+    }
+   ]
+  }
+ ]
+}

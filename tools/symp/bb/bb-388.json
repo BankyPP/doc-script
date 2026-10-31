@@ -1,0 +1,222 @@
+{
+ "key": "388",
+ "en": "Short Stature (Pediatric)",
+ "th": "ตัวเตี้ย (เด็ก)",
+ "pdf": "417",
+ "bookpg": "388",
+ "target": null,
+ "new": {
+  "id": "ped-short-stature",
+  "th": "ตัวเตี้ย (เด็ก)",
+  "en": "Short Stature (Pediatric)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-388-scheme",
+   "h": "Short Stature (Pediatric) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b388a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b388a",
+   "title": "Short Stature",
+   "src": "fig",
+   "img": "bb-388-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Short Stature"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Height <3rd Percentile: detailed history, physical exam, and mid-parental target height"
+    },
+    {
+     "id": "cs",
+     "k": "q",
+     "t": "Concerning symptoms: low weight, dysmorphic, delayed puberty"
+    },
+    {
+     "id": "path",
+     "k": "q",
+     "t": "Pathological"
+    },
+    {
+     "id": "dis",
+     "k": "dx",
+     "t": "Disproportionate",
+     "d": "<ul><li>Skeletal Dysplasias (Eg. Achondroplasia)</li><li>Rickets</li></ul>"
+    },
+    {
+     "id": "pro",
+     "k": "q",
+     "t": "Proportionate"
+    },
+    {
+     "id": "dys",
+     "k": "dx",
+     "t": "Dysmorphic",
+     "d": "<ul><li><b>Trisomy 21*</b></li><li><b>Turner Syndrome*</b></li><li>Prader-Willi Syndrome</li><li>Russell-Silver Syndrome</li></ul>"
+    },
+    {
+     "id": "nd",
+     "k": "q",
+     "t": "Non-Dysmorphic"
+    },
+    {
+     "id": "wl",
+     "k": "q",
+     "t": "Weight disproportionately low (<3rd %)"
+    },
+    {
+     "id": "wa",
+     "k": "q",
+     "t": "Weight appropriate for height"
+    },
+    {
+     "id": "psy",
+     "k": "dx",
+     "t": "Psychosocial",
+     "d": "<ul><li><b>Nutrition and Feeding issues*</b></li><li><b>Neglect*</b></li><li><b>Disordered Eating*</b></li></ul>"
+    },
+    {
+     "id": "cd",
+     "k": "dx",
+     "t": "Chronic Disease",
+     "d": "<ul><li>GI (i.e. <b>Celiac Disease*, IBD*</b>)</li><li>Renal (Eg. <b>Renal failure*</b>)</li><li>Cardiopulmonary (i.e. <b>Cystic Fibrosis*, Congestive Heart Failure*</b>)</li></ul>"
+    },
+    {
+     "id": "ia",
+     "k": "dx",
+     "t": "Iatrogenic",
+     "d": "<ul><li>Chronic steroid use</li><li>Radiation and Chemotherapy</li><li>Bone Marrow Transplant</li></ul>"
+    },
+    {
+     "id": "en",
+     "k": "dx",
+     "t": "Endocrinopathy",
+     "d": "<ul><li><b>Hypothyroidism*</b></li><li>Cushing’s Disease</li><li>Growth Hormone Deficiency</li><li>Congenital Adrenal Hyperplasia</li><li>Panhypopituitarism</li></ul>"
+    },
+    {
+     "id": "iu",
+     "k": "dx",
+     "t": "Intrauterine Insults",
+     "d": "<ul><li><b>Intrauterine Growth Retardation/Small for Gestational Age*</b></li><li><b>Fetal Alcohol Spectrum Disorder*</b></li></ul>"
+    },
+    {
+     "id": "np",
+     "k": "q",
+     "t": "Non-pathological/Normal variant"
+    },
+    {
+     "id": "ba",
+     "k": "act",
+     "t": "Assess bone age"
+    },
+    {
+     "id": "fss",
+     "k": "dx",
+     "t": "Familial Short Stature*"
+    },
+    {
+     "id": "cdl",
+     "k": "dx",
+     "t": "Constitutional Delay*"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "cs",
+     "l": "Concerning symptoms"
+    },
+    {
+     "f": "cs",
+     "t": "path"
+    },
+    {
+     "f": "path",
+     "t": "dis",
+     "l": "Disproportionate"
+    },
+    {
+     "f": "path",
+     "t": "pro",
+     "l": "Proportionate"
+    },
+    {
+     "f": "pro",
+     "t": "dys",
+     "l": "Dysmorphic"
+    },
+    {
+     "f": "pro",
+     "t": "nd",
+     "l": "Non-dysmorphic"
+    },
+    {
+     "f": "nd",
+     "t": "wl",
+     "l": "Weight disproportionately low"
+    },
+    {
+     "f": "nd",
+     "t": "wa",
+     "l": "Weight appropriate for height"
+    },
+    {
+     "f": "wl",
+     "t": "psy",
+     "l": "Psychosocial"
+    },
+    {
+     "f": "wl",
+     "t": "cd",
+     "l": "Chronic disease"
+    },
+    {
+     "f": "wa",
+     "t": "ia",
+     "l": "Iatrogenic"
+    },
+    {
+     "f": "wa",
+     "t": "en",
+     "l": "Endocrinopathy"
+    },
+    {
+     "f": "wa",
+     "t": "iu",
+     "l": "Intrauterine insults"
+    },
+    {
+     "f": "b",
+     "t": "np",
+     "l": "Otherwise well"
+    },
+    {
+     "f": "np",
+     "t": "ba"
+    },
+    {
+     "f": "ba",
+     "t": "fss",
+     "l": "Bone age = chronological age"
+    },
+    {
+     "f": "ba",
+     "t": "cdl",
+     "l": "Bone age < chronological age"
+    }
+   ]
+  }
+ ]
+}

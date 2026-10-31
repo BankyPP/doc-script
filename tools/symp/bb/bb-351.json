@@ -1,0 +1,81 @@
+{
+ "key": "351",
+ "en": "Long PT (INR), Normal PTT",
+ "th": "PT (INR) ยาว PTT ปกติ",
+ "pdf": "380",
+ "bookpg": "351",
+ "target": null,
+ "new": {
+  "id": "ped-long-pt-normal-ptt",
+  "th": "PT (INR) ยาว PTT ปกติ",
+  "en": "Long PT (INR), Normal PTT",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-351-scheme",
+   "h": "Long PT (INR), Normal PTT — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b351a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b351a",
+   "title": "Long PT (INR), Normal PTT",
+   "src": "fig",
+   "img": "bb-351-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Long PT (INR), Normal PTT"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Sufficient Vitamin K",
+     "d": "<ul><li>Congenital Clotting Factor Deficiency – Extrinsic Factor (Factor VII Deficiency)</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Insufficient Vitamin K"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Vitamin K Deficiency",
+     "d": "<ul><li>Hemorrhagic Disease of the Newborn</li><li>Antibiotics use</li><li>Poor Nutrition</li><li>Fat Malabsorption</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Vitamin K Antagonist",
+     "d": "<ul><li>Coumadin (Warfarin) use</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Sufficient Vitamin K"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Insufficient Vitamin K"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Vitamin K Deficiency"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Vitamin K Antagonist"
+    }
+   ]
+  }
+ ]
+}

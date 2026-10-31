@@ -1,0 +1,95 @@
+{
+ "key": "014",
+ "en": "Shock",
+ "th": "ช็อก",
+ "pdf": "43",
+ "bookpg": "14",
+ "target": "shock",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "approach",
+   "id": "bb-014-scheme",
+   "h": "Shock by extremity temperature and JVP (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b014a\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div>"
+  },
+  {
+   "op": "append",
+   "sec": "mech",
+   "html": "<h5>Shock types, JVP and causes (Blackbook)</h5><ul><li><b>Warm extremities</b> → <b>Distributive shock</b> (Low JVP): Sepsis; Anaphylaxis; Burns; Neurogenic</li><li><b>Cold extremities</b><ul><li><b>High JVP</b><ul><li><b>Cardiogenic shock</b> (bibasilar lung crackles): Myocardial Ischemia or Infarction; Left-sided Valvular Disease; Arrhythmia; Cardiomyopathy (ie. HOCM)</li><li><b>Obstructive shock</b> (normal/decreased breath sounds): Pulmonary Embolism; Tension Pneumothorax; Cardiac Tamponade</li></ul></li><li><b>Low JVP</b><ul><li><b>Hypovolemic shock</b> (rule out decompensated distributive shock): Hemorrhage; Dehydration; Vomiting; Diarrhea; Interstitial Fluid Redistribution</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b014a",
+   "title": "Shock",
+   "src": "fig",
+   "img": "bb-014-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Shock",
+     "d": "<div class=\"warn\">Potentially acutely life-threatening presentation</div>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Distributive Shock (Low JVP)",
+     "d": "<ul><li>Sepsis</li><li>Anaphylaxis</li><li>Burns</li><li>Neurogenic</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Cold Extremities"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Cardiogenic Shock — Bibasilar Lung Crackles",
+     "d": "<ul><li>Myocardial Ischemia or Infarction</li><li>Left-sided Valvular Disease</li><li>Arrhythmia</li><li>Cardiomyopathy (ie. HOCM)</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Obstructive Shock — Normal/Decreased Breath Sounds",
+     "d": "<ul><li>Pulmonary Embolism</li><li>Tension Pneumothorax</li><li>Cardiac Tamponade</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Hypovolemic Shock (Rule out Decompensated Distributive Shock)",
+     "d": "<ul><li>Hemorrhage</li><li>Dehydration</li><li>Vomiting</li><li>Diarrhea</li><li>Interstitial Fluid Redistribution</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Warm extremities"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Cold extremities"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "High JVP"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "High JVP"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Low JVP"
+    }
+   ],
+   "note": "ป้าย Warm/Cold Extremities และ High/Low JVP ยุบเป็นป้ายบนลูกศร · Potentially acutely life-threatening presentation"
+  }
+ ]
+}

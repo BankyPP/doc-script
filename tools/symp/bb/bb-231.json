@@ -1,0 +1,274 @@
+{
+ "key": "231",
+ "en": "Hair Loss (Alopecia)",
+ "th": "ผมร่วง",
+ "pdf": "260–261",
+ "bookpg": "231–232",
+ "target": null,
+ "new": {
+  "id": "hair-loss",
+  "th": "ผมร่วง",
+  "en": "Hair Loss (Alopecia)",
+  "g": "msk"
+ },
+ "sections": [
+  {
+   "id": "bb-231-diffuse",
+   "h": "Diffuse hair loss",
+   "html": "<div class=\"flow\" data-flow=\"b231a\"></div><div class=\"tbl\"><table><thead><tr><th>Group</th><th>Causes</th></tr></thead><tbody><tr><td><b>Localized (focal)</b></td><td>ดูหน้า Localized</td></tr><tr><td><b>Scarring · Irreversible-biopsy required</b></td><td><ul><li>Lupus erythematosus</li><li>Lichen planopilaris</li></ul></td></tr><tr><td><b>Pattern</b></td><td><ul><li>Androgenetic alopecia</li></ul></td></tr><tr><td><b>Anagen Effluvium</b></td><td><ul><li>Chemotherapy</li><li>Loose anagen syndrome</li></ul></td></tr><tr><td><b>Discrete Patches</b></td><td><ul><li>Alopecia totalis (all scalp and facial hair)</li><li>Alopecia universalis (all body hair)</li></ul></td></tr><tr><td><b>Endocrine</b></td><td><ul><li>Hypothyroidism</li><li>Hyperthyroidism</li><li>Hypopituitarism</li><li>Post-Partum</li></ul></td></tr><tr><td><b>Dietary</b></td><td><ul><li>Iron deficiency</li><li>Zinc deficiency</li><li>Copper deficiency</li><li>Vitamin A Excess</li></ul></td></tr><tr><td><b>Drugs</b></td><td><ul><li>Oral contraceptives</li><li>Hyperthyroid drugs</li><li>Anticoagulants</li><li>Lithium</li></ul></td></tr><tr><td><b>Stress Related</b></td><td><ul><li>Post-infectious</li><li>Post-operative</li><li>Psychological stress</li></ul></td></tr></tbody></table></div>"
+  },
+  {
+   "id": "bb-231-localized",
+   "h": "Localized (focal) hair loss",
+   "html": "<div class=\"flow\" data-flow=\"b231b\"></div><div class=\"tbl\"><table><thead><tr><th>Group</th><th>Causes</th></tr></thead><tbody><tr><td><b>Diffuse</b></td><td>ดูหน้า Diffuse</td></tr><tr><td><b>Infectious</b></td><td><ul><li>Tinea capitis with kerion</li><li>Folliculitis decalvans</li></ul></td></tr><tr><td><b>Secondary to Skin Disease</b></td><td><ul><li>Discoid lupus erythematosus</li><li>Lichen planopilaris</li><li>Pseudopelade of Brocq</li><li>Alopecia Mucinosa</li><li>Keratosis Follicularis</li><li>Aplasia cutis</li></ul></td></tr><tr><td><b>Broken Hair Shafts</b></td><td><ul><li>Tinea capitis</li><li>Trichotillomania</li><li>Traction alopecia</li><li>Congenital hair shaft abnormalities</li></ul></td></tr><tr><td><b>Hair Shafts Intact or Absent</b></td><td><ul><li>Alopecia areata</li><li>Secondary syphilis</li></ul></td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b231a",
+   "title": "Hair Loss (Alopecia) — Diffuse",
+   "src": "fig",
+   "img": "bb-231-f1.webp",
+   "note": "เส้นประ = แขนงที่ไปอีกหน้า (Localized)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hair Loss"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Localized (focal)",
+     "d": "ดูหน้า Localized"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Diffuse"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Scarring · Irreversible-biopsy required",
+     "d": "<ul><li>Lupus erythematosus</li><li>Lichen planopilaris</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Non-Scarring · Reversible"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Pattern",
+     "d": "<ul><li>Androgenetic alopecia</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Anagen Effluvium",
+     "d": "<ul><li>Chemotherapy</li><li>Loose anagen syndrome</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Discrete Patches",
+     "d": "<ul><li>Alopecia totalis (all scalp and facial hair)</li><li>Alopecia universalis (all body hair)</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Telogen Effluvium"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>Hypothyroidism</li><li>Hyperthyroidism</li><li>Hypopituitarism</li><li>Post-Partum</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Dietary",
+     "d": "<ul><li>Iron deficiency</li><li>Zinc deficiency</li><li>Copper deficiency</li><li>Vitamin A Excess</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Drugs",
+     "d": "<ul><li>Oral contraceptives</li><li>Hyperthyroid drugs</li><li>Anticoagulants</li><li>Lithium</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Stress Related",
+     "d": "<ul><li>Post-infectious</li><li>Post-operative</li><li>Psychological stress</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "(dashed) see Localized page"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Diffuse"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Scarring"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Non-scarring"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Pattern"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Anagen Effluvium"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Discrete Patches"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Telogen Effluvium"
+    },
+    {
+     "f": "i",
+     "t": "j",
+     "l": "Endocrine"
+    },
+    {
+     "f": "i",
+     "t": "k",
+     "l": "Dietary"
+    },
+    {
+     "f": "i",
+     "t": "l",
+     "l": "Drugs"
+    },
+    {
+     "f": "i",
+     "t": "m",
+     "l": "Stress Related"
+    }
+   ]
+  },
+  {
+   "id": "b231b",
+   "title": "Hair Loss (Alopecia) — Localized",
+   "src": "fig",
+   "img": "bb-231-f2.webp",
+   "note": "เส้นประ = แขนงที่ไปอีกหน้า (Diffuse)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hair Loss"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Localized (focal)"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Diffuse",
+     "d": "ดูหน้า Diffuse"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Scarring · Irreversible-biopsy required"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Non-Scarring · Reversible"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Tinea capitis with kerion</li><li>Folliculitis decalvans</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Secondary to Skin Disease",
+     "d": "<ul><li>Discoid lupus erythematosus</li><li>Lichen planopilaris</li><li>Pseudopelade of Brocq</li><li>Alopecia Mucinosa</li><li>Keratosis Follicularis</li><li>Aplasia cutis</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Broken Hair Shafts",
+     "d": "<ul><li>Tinea capitis</li><li>Trichotillomania</li><li>Traction alopecia</li><li>Congenital hair shaft abnormalities</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Hair Shafts Intact or Absent",
+     "d": "<ul><li>Alopecia areata</li><li>Secondary syphilis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Localized (focal)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "(dashed) see Diffuse page"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Scarring"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Non-scarring"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Infectious"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Secondary to Skin Disease"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Broken Hair Shafts"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Hair Shafts Intact or Absent"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,130 @@
+{
+ "key": "138",
+ "en": "Amenorrhea",
+ "th": "ประจำเดือนขาด",
+ "pdf": "167",
+ "bookpg": "138",
+ "target": "amenorrhea",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-5-7-stepwise",
+   "id": "bb-138-scheme",
+   "h": "Amenorrhea — FSH และ progestin challenge (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b138a\"></div><ul><li><b>Amenorrhea</b><ul><li><b>Rule Out Pregnancy</b><ul><li><span class=\"tag\">Low/normal FSH</span> <b>Low/Normal FSH</b><ul><li><span class=\"tag\">Bleed with progestin challenge</span> <b>Bleed With Progestin Challenge</b><ul><li>Polycystic Ovarian Syndrome</li></ul></li><li><span class=\"tag\">Hypothalamic-pituitary axis</span> <b>Hypothalamic-Pituitary Axis</b><ul><li><span class=\"tag\">High prolactin</span> <b>High Prolactin</b><ul><li>Hyperprolactinemia</li></ul></li><li><span class=\"tag\">Organic cause</span> <b>Organic Cause</b><ul><li>Congenital GnRH Deficiency</li><li>Infiltrative or Inflammatory Lesion</li><li>Tumors</li><li>Infarction</li><li>Empty Sella Syndrome</li><li>Apoplexy</li></ul></li><li><span class=\"tag\">Failed progestin challenge</span> <b>Failed Progestin Challenge</b><ul><li>Functional Hypothalamic Amenorrhea (e.g. Weight Loss, Eating Disorders, Exercise, Stress, Prolonged Illness)</li></ul></li></ul></li><li><span class=\"tag\">No bleed with progestin challenge</span> <b>No Bleed With Progestin Challenge</b><ul><li>Hypothyroidism</li><li>Hyperthyroidism</li><li>Diabetes Mellitus</li><li>Exogenous Androgen Use</li><li>Congenital Structural Abnormalities</li></ul></li></ul></li><li><span class=\"tag\">Elevated FSH</span> <b>Elevated FSH</b><ul><li>Premature Ovarian Failure</li><li>Menopause</li><li>Spontaneous</li></ul></li></ul></li></ul></li></ul><div class=\"pearl\"><ul><li>If bleed with progestin challenge = estrogenized</li><li>If no bleed with progestin challenge = non-estrogenized</li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b138a",
+   "title": "Amenorrhea",
+   "src": "fig",
+   "img": "bb-138-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Amenorrhea"
+    },
+    {
+     "id": "p",
+     "k": "act",
+     "t": "Rule Out Pregnancy"
+    },
+    {
+     "id": "lo",
+     "k": "q",
+     "t": "Low/Normal FSH"
+    },
+    {
+     "id": "hi",
+     "k": "dx",
+     "t": "Elevated FSH",
+     "d": "<ul><li>Premature Ovarian Failure</li><li>Menopause</li><li>Spontaneous</li></ul>"
+    },
+    {
+     "id": "bl",
+     "k": "dx",
+     "t": "Bleed With Progestin Challenge",
+     "d": "<ul><li>Polycystic Ovarian Syndrome</li></ul>"
+    },
+    {
+     "id": "hp",
+     "k": "q",
+     "t": "Hypothalamic-Pituitary Axis"
+    },
+    {
+     "id": "nb",
+     "k": "dx",
+     "t": "No Bleed With Progestin Challenge",
+     "d": "<ul><li>Hypothyroidism</li><li>Hyperthyroidism</li><li>Diabetes Mellitus</li><li>Exogenous Androgen Use</li><li>Congenital Structural Abnormalities</li></ul>"
+    },
+    {
+     "id": "pr",
+     "k": "dx",
+     "t": "High Prolactin",
+     "d": "<ul><li>Hyperprolactinemia</li></ul>"
+    },
+    {
+     "id": "og",
+     "k": "dx",
+     "t": "Organic Cause",
+     "d": "<ul><li>Congenital GnRH Deficiency</li><li>Infiltrative or Inflammatory Lesion</li><li>Tumors</li><li>Infarction</li><li>Empty Sella Syndrome</li><li>Apoplexy</li></ul>"
+    },
+    {
+     "id": "fp",
+     "k": "dx",
+     "t": "Failed Progestin Challenge",
+     "d": "<ul><li>Functional Hypothalamic Amenorrhea (e.g. Weight Loss, Eating Disorders, Exercise, Stress, Prolonged Illness)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "p"
+    },
+    {
+     "f": "p",
+     "t": "lo",
+     "l": "Low/normal FSH"
+    },
+    {
+     "f": "p",
+     "t": "hi",
+     "l": "Elevated FSH"
+    },
+    {
+     "f": "lo",
+     "t": "bl",
+     "l": "Bleed with progestin challenge"
+    },
+    {
+     "f": "lo",
+     "t": "hp",
+     "l": "Hypothalamic-pituitary axis"
+    },
+    {
+     "f": "lo",
+     "t": "nb",
+     "l": "No bleed with progestin challenge"
+    },
+    {
+     "f": "hp",
+     "t": "pr",
+     "l": "High prolactin"
+    },
+    {
+     "f": "hp",
+     "t": "og",
+     "l": "Organic cause"
+    },
+    {
+     "f": "hp",
+     "t": "fp",
+     "l": "Failed progestin challenge"
+    }
+   ],
+   "note": "If bleed with progestin challenge = estrogenized · If no bleed with progestin challenge = non-estrogenized"
+  }
+ ]
+}

@@ -1,0 +1,153 @@
+{
+ "key": "339",
+ "en": "Fever (Age >3 Months)",
+ "th": "ไข้ในเด็กอายุ > 3 เดือน",
+ "pdf": "368",
+ "bookpg": "339",
+ "target": null,
+ "new": {
+  "id": "ped-fever-gt-3-months",
+  "th": "ไข้ในเด็กอายุ > 3 เดือน",
+  "en": "Fever (Age >3 Months)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-339-scheme",
+   "h": "Fever (Age >3 Months) — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b339a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b339a",
+   "title": "Fever (Age >3 Months)",
+   "src": "fig",
+   "img": "bb-339-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fever: Age &gt;3 months"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed History and Physical Exam"
+    },
+    {
+     "id": "c1",
+     "k": "q",
+     "t": "Clinical features and investigations not suggestive of infection; often acute onset",
+     "d": "Clinical features and investigations not suggestive of infection<br>Often acute onset<br><small>(ตามเล่ม — น่าจะพิมพ์ผิด: ทางนี้นำไป Infectious)</small>"
+    },
+    {
+     "id": "c2",
+     "k": "q",
+     "t": "Clinical features and investigations not suggestive of infection; often fever &gt; 5 days",
+     "d": "Clinical features and investigations not suggestive of infection<br>Often fever &gt; 5 days"
+    },
+    {
+     "id": "d1",
+     "k": "q",
+     "t": "Infectious"
+    },
+    {
+     "id": "d2",
+     "k": "q",
+     "t": "Non infectious"
+    },
+    {
+     "id": "e1",
+     "k": "dx",
+     "t": "Bacterial",
+     "d": "<ul><li><b>Pneumonia*</b></li><li><b>Otitis Media*</b></li><li><b>Urinary Tract Infection*</b></li><li><b>Occult bacteremia/sepsis*</b></li><li><b>Meningitis*/Meningococcemia*</b></li><li>Skin and soft tissue infections (<b>Osteomyelitis*, septic arthritis*</b>)</li><li>Bacterial respiratory tract infections (<b>Pharyngitis*, pertussis*, tracheitis*, peritonsillar abscess*, retropharyngeal abscess/cellulitis*, cervical adenitis*</b>)</li></ul>"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "Viral",
+     "d": "<ul><li>Respiratory viruses (Eg. Influenza, RSV, rhinovirus, enterovirus, adenovirus, etc.)</li><li><b>Mononucleosis*</b></li><li><b>Gastroenteritis*</b></li></ul>"
+    },
+    {
+     "id": "e3",
+     "k": "dx",
+     "t": "Other (infectious)",
+     "d": "<p>Extremely rare. Seen mostly in immunodeficiency, or occasionally acquired while travelling</p><ul><li>Fungal</li><li>Protozoa (eg. malaria)</li><li>other parasites</li></ul>"
+    },
+    {
+     "id": "f1",
+     "k": "dx",
+     "t": "Malignancy",
+     "d": "<ul><li><b>Leukemia*</b></li><li><b>Lymphoma*</b></li><li><b>Neuroblastoma*</b></li><li><b>Brain tumor*</b></li><li><b>bone tumor*</b></li></ul>"
+    },
+    {
+     "id": "f2",
+     "k": "dx",
+     "t": "Autoimmune/ Inflammatory",
+     "d": "<ul><li><b>Kawasaki disease*</b></li><li><b>Inflammatory Bowel Disease*</b></li><li>Systemic Lupus Erythematous</li><li>Juvenile Idiopathic Arthritis</li></ul>"
+    },
+    {
+     "id": "f3",
+     "k": "dx",
+     "t": "Other (non infectious)",
+     "d": "<ul><li><b>Acute abdomen*</b> (Eg. appendicitis*)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c1",
+     "l": "Often acute onset"
+    },
+    {
+     "f": "b",
+     "t": "c2",
+     "l": "Often fever &gt; 5 days"
+    },
+    {
+     "f": "c1",
+     "t": "d1"
+    },
+    {
+     "f": "c2",
+     "t": "d2"
+    },
+    {
+     "f": "d1",
+     "t": "e1",
+     "l": "Bacterial"
+    },
+    {
+     "f": "d1",
+     "t": "e2",
+     "l": "Viral"
+    },
+    {
+     "f": "d1",
+     "t": "e3",
+     "l": "Other"
+    },
+    {
+     "f": "d2",
+     "t": "f1",
+     "l": "Malignancy"
+    },
+    {
+     "f": "d2",
+     "t": "f2",
+     "l": "Autoimmune/Inflammatory"
+    },
+    {
+     "f": "d2",
+     "t": "f3",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

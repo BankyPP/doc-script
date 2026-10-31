@@ -1,0 +1,122 @@
+{
+ "key": "121",
+ "en": "Polyuria",
+ "th": "ปัสสาวะมาก",
+ "pdf": "150",
+ "bookpg": "121",
+ "target": "polyuria",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "bb-121-scheme",
+   "h": "Polyuria scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b121a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<ul><li><b>Osmotic diuresis</b> (urine osmolality &gt; serum osmolality): hyperglycemia (uncontrolled diabetes mellitus); mannitol administration; increased urea concentration (e.g. recovery from acute renal failure, increased protein feeds, hypercatabolism [burns, steroids], GI bleed); NaCl administration</li><li><b>Water diuresis</b> (urine osmolality &lt; serum osmolality)<ul><li>Hypotonic urine following water deprivation test (excessive loss) → give DDAVP: Uosm increased by &gt;50% (proper kidney response) = central diabetes insipidus; Uosm unchanged or increased by &lt;50% (unresponsive kidney) = nephrogenic diabetes insipidus</li><li>Hypertonic urine following water deprivation test: primary polydipsia</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b121a",
+   "title": "Polyuria",
+   "src": "fig",
+   "img": "bb-121-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Polyuria"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Urine Output > 3 L/day — Increased Urine Volume (>2 ml/min)"
+    },
+    {
+     "id": "od",
+     "k": "dx",
+     "t": "Osmotic Diuresis (Urine Osmolality > Serum Osmolality)",
+     "d": "<ul><li>Hyperglycemia (uncontrolled Diabetes Mellitus)</li><li>Mannitol administration</li><li>Increased urea concentration (e.g. Recovery from Acute Renal Failure, increased protein feeds, Hypercatabolism [Burns, Steroids], GI Bleed)</li><li>NaCl administration</li></ul>"
+    },
+    {
+     "id": "wd",
+     "k": "q",
+     "t": "Water Diuresis (Urine Osmolality < Serum Osmolality)"
+    },
+    {
+     "id": "hypo",
+     "k": "q",
+     "t": "Hypotonic Urine Following Water Deprivation Test",
+     "d": "<p>Excessive Loss</p>"
+    },
+    {
+     "id": "hyper",
+     "k": "dx",
+     "t": "Hypertonic Urine Following Water Deprivation Test",
+     "d": "<ul><li>Primary polydipsia</li></ul>"
+    },
+    {
+     "id": "dd",
+     "k": "act",
+     "t": "Give DDAVP"
+    },
+    {
+     "id": "inc",
+     "k": "dx",
+     "t": "Uosm Increased by >50%",
+     "d": "<p>Proper kidney response</p><ul><li>Central Diabetes Insipidus</li></ul>"
+    },
+    {
+     "id": "unc",
+     "k": "dx",
+     "t": "Uosm unchanged or increased by <50%",
+     "d": "<p>Unresponsive Kidney</p><ul><li>Nephrogenic Diabetes Insipidus</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "od",
+     "l": "Osmotic diuresis"
+    },
+    {
+     "f": "b",
+     "t": "wd",
+     "l": "Water diuresis"
+    },
+    {
+     "f": "wd",
+     "t": "hypo",
+     "l": "Hypotonic urine after WDT"
+    },
+    {
+     "f": "wd",
+     "t": "hyper",
+     "l": "Hypertonic urine after WDT"
+    },
+    {
+     "f": "hypo",
+     "t": "dd"
+    },
+    {
+     "f": "dd",
+     "t": "inc",
+     "l": "Uosm ↑ by >50%"
+    },
+    {
+     "f": "dd",
+     "t": "unc",
+     "l": "Uosm unchanged or ↑ by <50%"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,279 @@
+{
+ "key": "086",
+ "en": "Constipation (Adult)",
+ "th": "ท้องผูก (ผู้ใหญ่)",
+ "pdf": "115–116",
+ "bookpg": "86–87",
+ "target": "diarrhea-constipation",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "con-def",
+   "html": "<p><b>Blackbook (Constipation):</b> Infrequency (&lt; 3 bowel movements/week)? Sensation of blockage or incomplete evacuation? Straining?</p>"
+  },
+  {
+   "op": "append",
+   "sec": "con-c2",
+   "html": "<p><b>Blackbook — Altered bowel function: Diet/Lifestyle</b></p><ul><li>Fibre</li><li>Calories</li><li>Fluid</li><li>Exercise</li><li>Psychosocial</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "con-c6",
+   "html": "<p><b>Blackbook — Altered bowel function: Medications</b></p><ul><li>Neurally Active Medications (e.g. Opiates, Anti-Hypertensives)</li><li>Cation Related (e.g. Iron, Aluminum, Calcium, Potassium)</li><li>Anticholinergic (e.g. Antispasmodics, Antidepressants, Antipsychotics)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "con-c7",
+   "html": "<p><b>Blackbook — Severe idiopathic:</b> Colonic Inertia · Outlet Delay (Pelvic Floor Dyssynergia) · Irritable Bowel</p>"
+  },
+  {
+   "op": "append",
+   "sec": "con-c4",
+   "html": "<p><b>Blackbook — Secondary causes: Colorectal Disease</b></p><ul><li>Colon Cancer</li><li>Colonic Stricture (Inflammatory Bowel Disease and Diverticular Disease)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "con-cause",
+   "html": "<p><b>Blackbook — Secondary causes: Neurogenic / Non-Neurogenic</b></p><h4>Neurogenic — Peripheral</h4><ul><li>Hirschsprung’s Disease</li><li>Autonomic Neuropathy</li><li>Pseudo-obstruction</li></ul><h4>Neurogenic — Central</h4><ul><li>Multiple Sclerosis</li><li>Parkinson’s Disease</li><li>Spinal Cord/Sacral/Cauda Equina Injury</li></ul><h4>Non-Neurogenic — Metabolic</h4><ul><li>Hypothyroidism</li><li>Hypokalemia</li><li>Hypercalcemia</li></ul>"
+  },
+  {
+   "op": "sec",
+   "after": "con-cause",
+   "id": "bb-086-scheme",
+   "h": "Constipation (Adult) schemes — Altered bowel function / Idiopathic / Secondary causes (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b086a\"></div><div class=\"flow\" data-flow=\"b086b\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b086a",
+   "title": "Constipation (Adult) — Altered Bowel Function & Idiopathic",
+   "src": "fig",
+   "img": "bb-086-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Constipation"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Infrequency (&lt;3 BM/week)? Blockage/incomplete evacuation? Straining?",
+     "d": "<p>Infrequency (&lt; 3 bowel movements/week)? Sensation of Blockage or incomplete evacuation? Straining?</p>"
+    },
+    {
+     "id": "alt",
+     "k": "dx",
+     "t": "Altered Bowel Function"
+    },
+    {
+     "id": "idio",
+     "k": "dx",
+     "t": "Severe Idiopathic"
+    },
+    {
+     "id": "sec",
+     "k": "dx",
+     "t": "Secondary Causes",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Constipation — Secondary Causes (flow b086b)</p>"
+    },
+    {
+     "id": "diet",
+     "k": "dx",
+     "t": "Diet/Lifestyle",
+     "d": "<ul><li>Fibre</li><li>Calories</li><li>Fluid</li><li>Exercise</li><li>Psychosocial</li></ul>"
+    },
+    {
+     "id": "med",
+     "k": "dx",
+     "t": "Medications",
+     "d": "<ul><li>Neurally Active Medications (e.g. Opiates, Anti-Hypertensives)</li><li>Cation Related (e.g. Iron, Aluminum, Calcium, Potassium)</li><li>Anticholinergic (e.g. Antispasmodics, Antidepressants, Antipsychotics)</li></ul>"
+    },
+    {
+     "id": "inertia",
+     "k": "dx",
+     "t": "Colonic Inertia"
+    },
+    {
+     "id": "outlet",
+     "k": "dx",
+     "t": "Outlet Delay",
+     "d": "<ul><li>Pelvic Floor Dyssynergia</li></ul>"
+    },
+    {
+     "id": "ibs",
+     "k": "dx",
+     "t": "Irritable Bowel"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "alt",
+     "l": "Altered Bowel Function"
+    },
+    {
+     "f": "q",
+     "t": "idio",
+     "l": "Severe Idiopathic"
+    },
+    {
+     "f": "q",
+     "t": "sec",
+     "l": "Secondary Causes (เส้นประ)"
+    },
+    {
+     "f": "alt",
+     "t": "diet",
+     "l": "Diet/Lifestyle"
+    },
+    {
+     "f": "alt",
+     "t": "med",
+     "l": "Medications"
+    },
+    {
+     "f": "idio",
+     "t": "inertia",
+     "l": "Colonic Inertia"
+    },
+    {
+     "f": "idio",
+     "t": "outlet",
+     "l": "Outlet Delay"
+    },
+    {
+     "f": "idio",
+     "t": "ibs",
+     "l": "Irritable Bowel"
+    }
+   ]
+  },
+  {
+   "id": "b086b",
+   "title": "Constipation (Adult) — Secondary Causes",
+   "src": "fig",
+   "img": "bb-086-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Constipation"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Infrequency (&lt;3 BM/week)? Blockage/incomplete evacuation? Straining?",
+     "d": "<p>Infrequency (&lt; 3 bowel movements/week)? Sensation of Blockage or incomplete evacuation? Straining?</p>"
+    },
+    {
+     "id": "alt",
+     "k": "dx",
+     "t": "Altered Bowel Function",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Constipation — Altered Bowel Function &amp; Idiopathic (flow b086a)</p>"
+    },
+    {
+     "id": "idio",
+     "k": "dx",
+     "t": "Severe Idiopathic",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Constipation — Altered Bowel Function &amp; Idiopathic (flow b086a)</p>"
+    },
+    {
+     "id": "sec",
+     "k": "dx",
+     "t": "Secondary Causes"
+    },
+    {
+     "id": "neuro",
+     "k": "dx",
+     "t": "Neurogenic"
+    },
+    {
+     "id": "non",
+     "k": "dx",
+     "t": "Non-Neurogenic"
+    },
+    {
+     "id": "peri",
+     "k": "dx",
+     "t": "Peripheral",
+     "d": "<ul><li>Hirschsprung’s Disease</li><li>Autonomic Neuropathy</li><li>Pseudo-obstruction</li></ul>"
+    },
+    {
+     "id": "cent",
+     "k": "dx",
+     "t": "Central",
+     "d": "<ul><li>Multiple Sclerosis</li><li>Parkinson’s Disease</li><li>Spinal Cord/Sacral/Cauda Equina Injury</li></ul>"
+    },
+    {
+     "id": "meta",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Hypothyroidism</li><li>Hypokalemia</li><li>Hypercalcemia</li></ul>"
+    },
+    {
+     "id": "colo",
+     "k": "dx",
+     "t": "Colorectal Disease",
+     "d": "<ul><li>Colon Cancer</li><li>Colonic Stricture (Inflammatory Bowel Disease and Diverticular Disease)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "alt",
+     "l": "Altered Bowel Function (เส้นประ)"
+    },
+    {
+     "f": "q",
+     "t": "idio",
+     "l": "Severe Idiopathic (เส้นประ)"
+    },
+    {
+     "f": "q",
+     "t": "sec",
+     "l": "Secondary Causes"
+    },
+    {
+     "f": "sec",
+     "t": "neuro",
+     "l": "Neurogenic"
+    },
+    {
+     "f": "sec",
+     "t": "non",
+     "l": "Non-Neurogenic"
+    },
+    {
+     "f": "neuro",
+     "t": "peri",
+     "l": "Peripheral"
+    },
+    {
+     "f": "neuro",
+     "t": "cent",
+     "l": "Central"
+    },
+    {
+     "f": "non",
+     "t": "meta",
+     "l": "Metabolic"
+    },
+    {
+     "f": "non",
+     "t": "colo",
+     "l": "Colorectal Disease"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,164 @@
+{
+ "key": "033",
+ "en": "Hypoxemia",
+ "th": "ภาวะออกซิเจนในเลือดต่ำ",
+ "pdf": "62",
+ "bookpg": "33",
+ "target": null,
+ "new": {
+  "id": "hypoxemia",
+  "th": "ภาวะออกซิเจนในเลือดต่ำ",
+  "en": "Hypoxemia",
+  "g": "cvr"
+ },
+ "note": "มี cyanosis (เหลือง 2.4) แต่เป็นหัวข้อต่างกัน → บทใหม่ · สมการ A-a gradient อยู่ในกล่องรูปไข่มุมซ้ายบน (ไม่มีลูกศรต่อ) ใส่ไว้ในกล่องเริ่มต้นและกล่องข้อความ",
+ "sections": [
+  {
+   "id": "bb-033-scheme",
+   "h": "Hypoxemia by A–a gradient (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b033a\"></div><div class=\"box\"><p>Alveolar-Arterial Gradient = P<sub>A</sub>O<sub>2</sub> – P<sub>a</sub>O<sub>2</sub></p><p>P<sub>A</sub>O<sub>2</sub> = F<sub>i</sub>O<sub>2</sub> (P<sub>B</sub> – PH<sub>2</sub>O) – (P<sub>a</sub>CO<sub>2</sub>/0.8)</p><p><small>*In Calgary, P<sub>B</sub> = 660 mmHg, Sea level P<sub>B</sub> = 760 mmHg</small></p></div><p><small>* Potentially acutely life-threatening.<br>** VSDs will be a Right-to-left shunt in infancy, become a Left-to-Right shunt in childhood to adulthood, and revert back to a right-to-left shunt when the left ventricle fails in severe disease, contributing to Eisenmenger’s Syndrome.</small></p>"
+  },
+  {
+   "id": "bb-033-causes",
+   "h": "Causes by mechanism",
+   "html": "<ul><li><b>High AA gradient</b><ul><li><b>Right-to-left shunt</b><ul><li><b>Intracardiac</b>: Ventricular Septal Defect**; Atrial Septal Defect</li><li><b>Pulmonary</b>: Arteriovenous Malformation; Severe Pneumonia; Atelectasis</li></ul></li><li><b>Ventilation/perfusion mismatch</b>: Airway Disease (Asthma, COPD); Vascular (PE*); Parenchymal Disease</li><li><b>Diffusion limitation</b>: Interstitial lung disease; Pulmonary Arterial Hypertension</li></ul></li><li><b>Normal AA gradient</b> (normal &lt; (Age/4) + 4)<ul><li><b>Low inspired PO<sub>2</sub></b>: High Altitude</li><li><b>Hypoventilation</b> (increased PCO<sub>2</sub>)<ul><li><b>Central</b>: Drugs*; Coma; Hypothyroidism</li><li><b>Peripheral</b>: Obesity Hypoventilation Syndrome; Neuromuscular Weakness; Pleural Abnormalities; Chest Wall Abnormalities</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b033a",
+   "title": "Hypoxemia",
+   "src": "fig",
+   "img": "bb-033-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hypoxemia",
+     "d": "<p>Alveolar-Arterial Gradient = P<sub>A</sub>O<sub>2</sub> – P<sub>a</sub>O<sub>2</sub></p><p>P<sub>A</sub>O<sub>2</sub> = F<sub>i</sub>O<sub>2</sub> (P<sub>B</sub> – PH<sub>2</sub>O) – (P<sub>a</sub>CO<sub>2</sub>/0.8)</p><p>*In Calgary, P<sub>B</sub> = 660 mmHg, Sea level P<sub>B</sub> = 760 mmHg</p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "High AA Gradient"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Normal AA Gradient",
+     "d": "<p>Normal &lt; (Age/4) + 4</p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Right-to-Left Shunt"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Ventilation/Perfusion Mismatch",
+     "d": "<ul><li>Airway Disease (Asthma, COPD)</li><li>Vascular (PE*)</li><li>Parenchymal Disease</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Diffusion Limitation",
+     "d": "<ul><li>Interstitial lung disease</li><li>Pulmonary Arterial Hypertension</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Low Inspired PO<sub>2</sub>",
+     "d": "<ul><li>High Altitude</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Hypoventilation — increased PCO<sub>2</sub>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Intracardiac",
+     "d": "<ul><li>Ventricular Septal Defect**</li><li>Atrial Septal Defect</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Pulmonary",
+     "d": "<ul><li>Arteriovenous Malformation</li><li>Severe Pneumonia</li><li>Atelectasis</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Central",
+     "d": "<ul><li>Drugs*</li><li>Coma</li><li>Hypothyroidism</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Peripheral",
+     "d": "<ul><li>Obesity Hypoventilation Syndrome</li><li>Neuromuscular Weakness</li><li>Pleural Abnormalities</li><li>Chest Wall Abnormalities</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "High AA gradient"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Normal AA gradient"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Right-to-left shunt"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Ventilation/perfusion mismatch"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Diffusion limitation"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Intracardiac"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Pulmonary"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Low inspired PO2"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Hypoventilation (increased PCO2)"
+    },
+    {
+     "f": "h",
+     "t": "k",
+     "l": "Central"
+    },
+    {
+     "f": "h",
+     "t": "l",
+     "l": "Peripheral"
+    }
+   ],
+   "note": "* Potentially acutely life-threatening · ** VSDs will be a Right-to-left shunt in infancy, become a Left-to-Right shunt in childhood to adulthood, and revert back to a right-to-left shunt when the left ventricle fails in severe disease, contributing to Eisenmenger’s Syndrome."
+  }
+ ]
+}

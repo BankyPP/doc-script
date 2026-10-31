@@ -1,0 +1,18 @@
+{
+ "key": "261",
+ "en": "Guide to Spinal Cord Injury",
+ "th": "แนวทางตรวจระดับ spinal cord injury",
+ "pdf": "290",
+ "bookpg": "261",
+ "target": "spinal-cord-disorder",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "yb-9-6-approach",
+   "id": "bb-261-guide",
+   "h": "Guide to spinal cord injury — root / sensory / motor / reflex (Blackbook)",
+   "html": "<div class=\"tbl\"><table><thead><tr><th>Spinal Root</th><th>Sensory</th><th>Motor</th><th>Reflex</th></tr></thead><tbody><tr><td>C4</td><td>Acromioclavicular Joint</td><td>Respiration</td><td>None</td></tr><tr><td>C5</td><td>Radial Antecubital Fossa</td><td>Elbow Flexion</td><td>Biceps Reflex</td></tr><tr><td>C6</td><td>Dorsal Thumb</td><td>Wrist Extension</td><td>Brachioradialis Reflex</td></tr><tr><td>C7</td><td>Dorsal Middle Finger</td><td>Elbow Extension</td><td>Triceps Reflex</td></tr><tr><td>C8</td><td>Dorsal Little Finger</td><td>Finger Flexion</td><td>None</td></tr><tr><td>T1</td><td>Ulnar Antecubital Fossa</td><td>Finger Abduction</td><td>None</td></tr><tr><td>T7-12</td><td>See Dermatomes</td><td>Abdominal Muscles</td><td>Abdominal Reflex</td></tr><tr><td>L2</td><td>Anterior Medial Thigh</td><td>Hip Flexion</td><td>Cremasteric Reflex</td></tr><tr><td>L3</td><td>Medial Femoral Condyle</td><td>Knee Extension</td><td>None</td></tr><tr><td>L4</td><td>Medial Malleolus</td><td>Ankle Dorsiflexion</td><td>Knee Jerk Reflex</td></tr><tr><td>L5</td><td>First Web Space (1st/2nd MTP)</td><td>Big Toe Extension</td><td>Hamstring Reflex</td></tr><tr><td>S1</td><td>Lateral Calcaneus</td><td>Ankle Plantarflexion</td><td>Ankle Jerk Reflex</td></tr><tr><td>S2</td><td>Popliteal Fossa</td><td>Anal Sphincter</td><td>Bulbocavernosus</td></tr><tr><td>S3/S4</td><td>Perianal Region</td><td>Anal Sphincter</td><td>None</td></tr></tbody></table></div><div class=\"pearl\"><b>N.B.</b> There is considerable variability in spinal cord levels for motor and reflex testing. Always test the level above and below the suspected injury.</div>"
+  }
+ ],
+ "flows": []
+}

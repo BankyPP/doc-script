@@ -1,0 +1,83 @@
+{
+ "key": "152",
+ "en": "Hyperphosphatemia",
+ "th": "ฟอสเฟตในเลือดสูง",
+ "pdf": "181",
+ "bookpg": "152",
+ "target": null,
+ "new": {
+  "id": "hyperphosphatemia",
+  "th": "ฟอสเฟตในเลือดสูง",
+  "en": "Hyperphosphatemia",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "bb-152-scheme",
+   "h": "Hyperphosphatemia — สาเหตุ",
+   "html": "<div class=\"flow\" data-flow=\"b152a\"></div><ul><li><b>Hyperphosphatemia</b> <span class=\"muted\">— > 1.46 mmol/L</span><ul><li><span class=\"tag\">Transcellular shift</span> <b>Transcellular Shift</b><ul><li>Rhabdomyolysis</li><li>Tumor Lysis</li><li>Metabolic or Respiratory Acidosis</li><li>Insulin Deficiency</li></ul></li><li><span class=\"tag\">Decreased excretion</span> <b>Decreased Excretion</b> <span class=\"muted\">— FE<sub>PO4</sub> &lt; 20%</span><ul><li>Renal Disease</li><li>Hypoparathyroidism</li><li>Pseudo-hypoparathyroidism</li><li>Acromegaly</li><li>Bisphosphonate Therapy</li></ul></li><li><span class=\"tag\">Increased intake/absorption</span> <b>Increased Intake/ Absorption</b> <span class=\"muted\">— Normally in Context of Impaired Renal Function</span><ul><li>Hypervitaminosis D</li><li>Phosphate Supplementation</li><li>Phosphate Containing Enemas/Laxatives</li></ul></li><li><span class=\"tag\">Pseudo-hyperphosphatemia</span> <b>Pseudo-hyperphosphatemia</b><ul><li>Multiple Myeloma</li><li>Hyperbilirubinemia</li><li>Hemolysis</li><li>Hyperlipidemia</li><li>Tumor Lysis</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b152a",
+   "title": "Hyperphosphatemia",
+   "src": "fig",
+   "img": "bb-152-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hyperphosphatemia",
+     "d": "<p>> 1.46 mmol/L</p>"
+    },
+    {
+     "id": "a",
+     "k": "dx",
+     "t": "Transcellular Shift",
+     "d": "<ul><li>Rhabdomyolysis</li><li>Tumor Lysis</li><li>Metabolic or Respiratory Acidosis</li><li>Insulin Deficiency</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Decreased Excretion",
+     "d": "<p>FE<sub>PO4</sub> &lt; 20%</p><ul><li>Renal Disease</li><li>Hypoparathyroidism</li><li>Pseudo-hypoparathyroidism</li><li>Acromegaly</li><li>Bisphosphonate Therapy</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Increased Intake/ Absorption",
+     "d": "<p>Normally in Context of Impaired Renal Function</p><ul><li>Hypervitaminosis D</li><li>Phosphate Supplementation</li><li>Phosphate Containing Enemas/Laxatives</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Pseudo-hyperphosphatemia",
+     "d": "<ul><li>Multiple Myeloma</li><li>Hyperbilirubinemia</li><li>Hemolysis</li><li>Hyperlipidemia</li><li>Tumor Lysis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "a",
+     "l": "Transcellular shift"
+    },
+    {
+     "f": "r",
+     "t": "b",
+     "l": "Decreased excretion"
+    },
+    {
+     "f": "r",
+     "t": "c",
+     "l": "Increased intake/absorption"
+    },
+    {
+     "f": "r",
+     "t": "d",
+     "l": "Pseudo-hyperphosphatemia"
+    }
+   ]
+  }
+ ]
+}

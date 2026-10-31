@@ -1,0 +1,178 @@
+{
+ "key": "027",
+ "en": "Cough, Dyspnea & Fever",
+ "th": "ไอ เหนื่อย และมีไข้",
+ "pdf": "56",
+ "bookpg": "27",
+ "target": "cough",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-2-2-approach",
+   "id": "bb-027-scheme",
+   "h": "Cough, dyspnea & fever scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b027a\"></div><p><small>* Potentially acutely life-threatening</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-acute",
+   "html": "<h5>Cough, dyspnea & fever — causes by chest X-ray (Blackbook)</h5><ul><li><b>Normal CXR</b>: Acute Bronchitis; AECOPD</li><li><b>Abnormal CXR</b><ul><li><b>Non-infectious</b>: Pulmonary Embolism*; Cryptogenic Organizing Pneumonia; Wegener’s Granulomatosis</li><li><b>Pneumonia in the immunocompetent host</b><ul><li><b>Hospital-acquired</b>: Aerobic Gram-Negative Bacilli; Gram-Positive Cocci</li><li><b>Community-acquired</b>: <i>S. pneumoniae</i>; <i>H. influenzae</i>; Viral (Eg. Influenza); <i>M. pneumoniae</i>; <i>C. pneumoniae</i></li><li><b>Tuberculosis</b></li></ul></li><li><b>Pneumonia in the immunocompromised host</b>: Bacterial (often non-pathogenic with immune competence); Fungal (e.g. <i>Pneumocystic jirovecii</i>); Viral</li><li><b>New/changed murmur</b><ul><li><b>Peripheral stigmata of subacute endocarditis</b>: Left-Sided Endocarditis</li><li><b>Intravenous drug user</b>: Right-Sided Endocarditis with Septic Emboli</li></ul></li></ul></li></ul><p><small>* Potentially acutely life-threatening</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b027a",
+   "title": "Cough, Dyspnea & Fever",
+   "src": "fig",
+   "img": "bb-027-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Cough"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Chronic Cough (&gt; 3 wks)",
+     "d": "<p>Dashed branch in the book — shown in the \"Cough — Chronic\" scheme.</p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Cough & Dyspnea & Fever"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Normal CXR",
+     "d": "<ul><li>Acute Bronchitis</li><li>AECOPD</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Abnormal CXR"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Non-Infectious",
+     "d": "<ul><li>Pulmonary Embolism*</li><li>Cryptogenic Organizing Pneumonia</li><li>Wegener’s Granulomatosis</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Pneumonia in the Immunocompetent Host"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Pneumonia in the Immunocompromised Host",
+     "d": "<ul><li>Bacterial (often non-pathogenic with immune competence)</li><li>Fungal (e.g. <i>Pneumocystic jirovecii</i>)</li><li>Viral</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "New/Changed Murmur"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Hospital-Acquired",
+     "d": "<ul><li>Aerobic Gram-Negative Bacilli</li><li>Gram-Positive Cocci</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Community-Acquired",
+     "d": "<ul><li><i>S. pneumoniae</i></li><li><i>H. influenzae</i></li><li>Viral (Eg. Influenza)</li><li><i>M. pneumoniae</i></li><li><i>C. pneumoniae</i></li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Tuberculosis"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Peripheral Stigmata of Subacute Endocarditis",
+     "d": "<ul><li>Left-Sided Endocarditis</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Intravenous Drug User",
+     "d": "<ul><li>Right-Sided Endocarditis with Septic Emboli</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Chronic cough (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Cough & dyspnea & fever"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Normal CXR"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Abnormal CXR"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Non-infectious"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Pneumonia in immunocompetent host"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Pneumonia in immunocompromised host"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "New/changed murmur"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "Hospital-acquired"
+    },
+    {
+     "f": "g",
+     "t": "k",
+     "l": "Community-acquired"
+    },
+    {
+     "f": "g",
+     "t": "l",
+     "l": "Tuberculosis"
+    },
+    {
+     "f": "i",
+     "t": "m",
+     "l": "Peripheral stigmata of subacute endocarditis"
+    },
+    {
+     "f": "i",
+     "t": "n",
+     "l": "Intravenous drug user"
+    }
+   ],
+   "note": "* Potentially acutely life-threatening"
+  }
+ ]
+}

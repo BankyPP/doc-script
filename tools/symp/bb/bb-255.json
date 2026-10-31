@@ -1,0 +1,135 @@
+{
+ "key": "255",
+ "en": "Acute Joint Pain",
+ "th": "ปวดข้อเฉียบพลัน",
+ "pdf": "284",
+ "bookpg": "255",
+ "target": "arthralgia-arthritis",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-8-1-algo",
+   "id": "bb-255-scheme",
+   "h": "Acute joint pain — VITAMIN CD (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b255a\"></div><div class=\"tbl\"><table><thead><tr><th></th><th>Cause</th><th>Blackbook note</th></tr></thead><tbody><tr><td>V</td><td>Vascular</td><td>See vascular joint pain</td></tr><tr><td>I</td><td>Infectious</td><td>See infectious joint pain</td></tr><tr><td>T</td><td>Trauma</td><td>Multiple injury sites, Open Fracture, Infectious joint pain</td></tr><tr><td>A</td><td>Autoimmune</td><td>See inflammatory joint pain</td></tr><tr><td>M</td><td>Metabolic</td><td>See pathologic fractures</td></tr><tr><td>I</td><td>Iatrogenic</td><td>Hx of prior surgery</td></tr><tr><td>N</td><td>Neoplastic</td><td>See Tumour</td></tr><tr><td>C</td><td>Congenital</td><td>Scoliosis, Talipes Equinovarus, Metatarsus adductus, Bow leg, Knock-Knee’d</td></tr><tr><td>D</td><td>Degenerative</td><td>Degenerative Disc Disease, Osteoarthritis, Osteoporosis</td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b255a",
+   "title": "Acute Joint Pain — Vitamin CD",
+   "src": "fig",
+   "img": "bb-255-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Joint Pain — Vitamin CD",
+     "d": "Mnemonic VITAMIN CD: Vascular, Infectious, Trauma, Autoimmune, Metabolic, Iatrogenic, Neoplastic, Congenital, Degenerative"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "See vascular joint pain"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "See infectious joint pain"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Trauma",
+     "d": "<ul><li>Multiple injury sites</li><li>Open Fracture</li><li>Infectious joint pain</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "See inflammatory joint pain"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "See pathologic fractures"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Iatrogenic",
+     "d": "<ul><li>Hx of prior surgery</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Neoplastic",
+     "d": "See Tumour"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Scoliosis</li><li>Talipes Equinovarus</li><li>Metatarsus adductus</li><li>Bow leg</li><li>Knock-Knee’d</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Degenerative",
+     "d": "<ul><li>Degenerative Disc Disease</li><li>Osteoarthritis</li><li>Osteoporosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Vascular"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Infectious"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Trauma"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "a",
+     "t": "f",
+     "l": "Metabolic"
+    },
+    {
+     "f": "a",
+     "t": "g",
+     "l": "Iatrogenic"
+    },
+    {
+     "f": "a",
+     "t": "h",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Congenital"
+    },
+    {
+     "f": "a",
+     "t": "j",
+     "l": "Degenerative"
+    }
+   ],
+   "note": "ตัวอักษรแรกของแต่ละกล่อง = mnemonic VITAMIN CD · ในเล่มพิมพ์ \"Meta tarsus adductus\" แก้เป็น Metatarsus adductus · ข้อความ \"See …\" คือการอ้างไป scheme อื่นในเล่ม Blackbook"
+  }
+ ]
+}

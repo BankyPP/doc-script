@@ -1,0 +1,83 @@
+{
+ "key": "008",
+ "en": "Diastolic Murmur",
+ "th": "เสียงฟู่ช่วง diastole",
+ "pdf": "37",
+ "bookpg": "8",
+ "target": null,
+ "new": {
+  "id": "diastolic-murmur",
+  "th": "เสียงฟู่ช่วง diastole",
+  "en": "Diastolic Murmur",
+  "g": "cvr"
+ },
+ "note": "ไม่มีบท murmur บนเว็บ → บทใหม่ (systolic murmur = key 016 แยกเป็นอีกบท)",
+ "sections": [
+  {
+   "id": "bb-008-scheme",
+   "h": "Diastolic murmur scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b008a\"></div><p><small>* ตามที่พิมพ์ในหน้า (ไม่มีคำอธิบาย *) · OS = opening snap</small></p>"
+  },
+  {
+   "id": "bb-008-causes",
+   "h": "Causes by timing in diastole",
+   "html": "<h5>Early diastolic</h5><ul><li>Aortic Regurgitation*</li><li>Pulmonary Regurgitation (Graham-Steell Murmur)*</li></ul><h5>Mid-diastolic</h5><ul><li>Mitral Stenosis*</li><li>Tricuspid Stenosis*</li><li>Severe Aortic Regurgitation (Austin Flint Murmur)</li><li>Atrial Myxoma Prolapse</li></ul><h5>Late diastolic</h5><ul><li>Mitral Stenosis*</li><li>Tricuspid Stenosis*</li><li>Myxoma</li></ul>"
+  },
+  {
+   "id": "bb-008-figs",
+   "h": "Murmur timing diagrams (S1, S2, OS)",
+   "html": "<figure><img src=\"symp/img/bb-008-f2.webp\" alt=\"Early diastolic decrescendo murmur after S2\"><figcaption>Aortic Regurgitation/Pulmonary Regurgitation (S<sub>1</sub>, S<sub>2</sub>)</figcaption></figure><figure><img src=\"symp/img/bb-008-f3.webp\" alt=\"Mid-to-late diastolic murmur after opening snap with presystolic accentuation before S1\"><figcaption>* Mitral Stenosis/Tricuspid Stenosis (OS – opening snap) (S<sub>1</sub>, S<sub>2</sub>, OS, S<sub>1</sub>)</figcaption></figure>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b008a",
+   "title": "Diastolic Murmur",
+   "src": "fig",
+   "img": "bb-008-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Diastolic Murmur"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Early Diastolic",
+     "d": "<ul><li>Aortic Regurgitation*</li><li>Pulmonary Regurgitation (Graham-Steell Murmur)*</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Mid-Diastolic",
+     "d": "<ul><li>Mitral Stenosis*</li><li>Tricuspid Stenosis*</li><li>Severe Aortic Regurgitation (Austin Flint Murmur)</li><li>Atrial Myxoma Prolapse</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Late Diastolic",
+     "d": "<ul><li>Mitral Stenosis*</li><li>Tricuspid Stenosis*</li><li>Myxoma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Early diastolic"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Mid-diastolic"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Late diastolic"
+    }
+   ],
+   "note": "* Mitral Stenosis/Tricuspid Stenosis (OS – opening snap) · รูป phonocardiogram อยู่ใต้ scheme"
+  }
+ ]
+}

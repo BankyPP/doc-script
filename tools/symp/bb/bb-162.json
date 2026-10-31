@@ -1,0 +1,136 @@
+{
+ "key": "162",
+ "en": "Weight Gain / Obesity",
+ "th": "น้ำหนักตัวเพิ่ม / โรคอ้วน",
+ "pdf": "191",
+ "bookpg": "162",
+ "target": "weight-gaining",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "approach",
+   "id": "bb-162-scheme",
+   "h": "Weight gain / obesity — energy related vs secondary (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b162a\"></div><ul><li><b>Weight Gain/Obesity</b><ul><li><span class=\"tag\">Energy related (primary)</span> <b>Energy Related</b> <span class=\"muted\">— (Primary)</span><ul><li><span class=\"tag\">Increased intake</span> <b>Increased Intake</b><ul><li><span class=\"tag\">Dietary</span> <b>Dietary</b><ul><li>Progressive</li><li>Polyphagia</li><li>High-Fat Diet</li></ul></li><li><span class=\"tag\">Social/behavioural</span> <b>Social/Behavioural</b><ul><li>Socioeconomic</li><li>Ethnicity</li><li>Psychological</li></ul></li><li><span class=\"tag\">Iatrogenic</span> <b>Iatrogenic</b><ul><li>Drugs/Hormones</li><li>Tube Feeding</li><li>Hypothalamic Surgery</li></ul></li></ul></li><li><span class=\"tag\">Decreased expenditure</span> <b>Decreased Expenditure</b><ul><li>Sedentary Lifestyle</li><li>Smoking Cessation</li></ul></li><li><span class=\"tag\">Neuroendocrine</span> <b>Neuroendocrine</b><ul><li>Polycystic Ovarian Syndrome</li><li>Hypothyroid</li><li>Cushing’s Syndrome</li><li>Hypogonadism</li><li>GH Deficiency</li><li>Hypothalamic Obesity</li></ul></li><li><span class=\"tag\">Genetic</span> <b>Genetic</b><ul><li>Autosomal Dominant</li><li>Autosomal Recessive</li><li>X-Linked</li><li>Chromosomal Abnormality</li></ul></li></ul></li><li><span class=\"tag\">Secondary</span> <b>Secondary</b></li></ul></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "primary",
+   "html": "<p><b>Energy related (primary)</b></p><ul><li><b>Increased intake</b><ul><li>Dietary: Progressive, Polyphagia, High-Fat Diet</li><li>Social/Behavioural: Socioeconomic, Ethnicity, Psychological</li><li>Iatrogenic: Drugs/Hormones, Tube Feeding, Hypothalamic Surgery</li></ul></li><li><b>Decreased expenditure:</b> Sedentary Lifestyle, Smoking Cessation</li><li><b>Neuroendocrine:</b> Polycystic Ovarian Syndrome, Hypothyroid, Cushing’s Syndrome, Hypogonadism, GH Deficiency, Hypothalamic Obesity</li><li><b>Genetic:</b> Autosomal Dominant, Autosomal Recessive, X-Linked, Chromosomal Abnormality</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b162a",
+   "title": "Weight Gain / Obesity",
+   "src": "fig",
+   "img": "bb-162-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Weight Gain/Obesity"
+    },
+    {
+     "id": "er",
+     "k": "q",
+     "t": "Energy Related",
+     "d": "<p>(Primary)</p>"
+    },
+    {
+     "id": "se",
+     "k": "dx",
+     "t": "Secondary"
+    },
+    {
+     "id": "ii",
+     "k": "q",
+     "t": "Increased Intake"
+    },
+    {
+     "id": "de",
+     "k": "dx",
+     "t": "Decreased Expenditure",
+     "d": "<ul><li>Sedentary Lifestyle</li><li>Smoking Cessation</li></ul>"
+    },
+    {
+     "id": "ne",
+     "k": "dx",
+     "t": "Neuroendocrine",
+     "d": "<ul><li>Polycystic Ovarian Syndrome</li><li>Hypothyroid</li><li>Cushing’s Syndrome</li><li>Hypogonadism</li><li>GH Deficiency</li><li>Hypothalamic Obesity</li></ul>"
+    },
+    {
+     "id": "ge",
+     "k": "dx",
+     "t": "Genetic",
+     "d": "<ul><li>Autosomal Dominant</li><li>Autosomal Recessive</li><li>X-Linked</li><li>Chromosomal Abnormality</li></ul>"
+    },
+    {
+     "id": "di",
+     "k": "dx",
+     "t": "Dietary",
+     "d": "<ul><li>Progressive</li><li>Polyphagia</li><li>High-Fat Diet</li></ul>"
+    },
+    {
+     "id": "sb",
+     "k": "dx",
+     "t": "Social/Behavioural",
+     "d": "<ul><li>Socioeconomic</li><li>Ethnicity</li><li>Psychological</li></ul>"
+    },
+    {
+     "id": "ia",
+     "k": "dx",
+     "t": "Iatrogenic",
+     "d": "<ul><li>Drugs/Hormones</li><li>Tube Feeding</li><li>Hypothalamic Surgery</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "er",
+     "l": "Energy related (primary)"
+    },
+    {
+     "f": "r",
+     "t": "se",
+     "l": "Secondary"
+    },
+    {
+     "f": "er",
+     "t": "ii",
+     "l": "Increased intake"
+    },
+    {
+     "f": "er",
+     "t": "de",
+     "l": "Decreased expenditure"
+    },
+    {
+     "f": "er",
+     "t": "ne",
+     "l": "Neuroendocrine"
+    },
+    {
+     "f": "er",
+     "t": "ge",
+     "l": "Genetic"
+    },
+    {
+     "f": "ii",
+     "t": "di",
+     "l": "Dietary"
+    },
+    {
+     "f": "ii",
+     "t": "sb",
+     "l": "Social/behavioural"
+    },
+    {
+     "f": "ii",
+     "t": "ia",
+     "l": "Iatrogenic"
+    }
+   ]
+  }
+ ]
+}

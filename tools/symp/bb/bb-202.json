@@ -1,0 +1,282 @@
+{
+ "key": "202",
+ "en": "Amenorrhea",
+ "th": "ประจำเดือนขาด",
+ "pdf": "231–232",
+ "bookpg": "202–203",
+ "target": "amenorrhea",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-5-7-approach",
+   "id": "bb-202-primary",
+   "h": "Amenorrhea — Primary (Blackbook scheme)",
+   "html": "<div class=\"flow\" data-flow=\"b202a\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-5-7-secondary",
+   "id": "bb-202-secondary",
+   "h": "Amenorrhea — Secondary (Blackbook scheme)",
+   "html": "<div class=\"flow\" data-flow=\"b202b\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-7-approach",
+   "html": "<p><b>Definition (Blackbook)</b></p><ul><li><b>Primary</b>: No onset of menarche by age 16 with secondary sexual characteristics; or no onset of menarche by age 14 without secondary sexual characteristics</li><li><b>Secondary</b>: Absence of menses for 3 cycles or 6 months; more precisely, absence of menses for more than 3 cycles or 6 months in women who were previously menstruating (→ Rule out pregnancy, β-hCG)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-7-primary-abn",
+   "html": "<p><b>Blackbook — Primary amenorrhea</b></p><ul><li><b>Congenital Outflow Tract Anomalies</b><ul><li>Imperforate hymen</li><li>Transverse vaginal septum</li><li>Vaginal agenesis (Mayer-Rokitansky-Küster-Hauser syndrome)</li><li>Cervical stenosis</li></ul></li><li><b>Receptor Abnormalities and Enzyme Deficiencies</b><ul><li>Androgen insensitivity</li><li>5-α Reductase deficiency</li><li>17-α Hydroxylase deficiency</li><li>Vanishing Testes Syndrome</li><li>Absent Testes Determining Factor</li></ul></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-7-primary-nl",
+   "html": "<p><b>Blackbook — Primary amenorrhea</b></p><ul><li><b>Ovarian Etiology</b> (High FSH, Low Estrogen)<ul><li>46,XX Gonadal Dysgenesis (e.g. Fragile X, Balanced Translocations, Turner’s mosaic)</li><li>46,XY Gonadal Dysgenesis (e.g. Swyer’s Syndrome)</li><li>45,XO Turner syndrome</li><li>Savage syndrome (ovarian resistance)</li><li>Premature Ovarian Failure (Autoimmune, Iatrogenic)</li></ul></li><li><b>Central</b> (Low FSH, Low Estrogen)<ul><li><b>Hypothalamic</b><ul><li>Functional (e.g. eating disorder, weight loss, stress, excessive exercise, illness)</li><li>Congenital GnRH deficiency (Kallmann syndrome)</li><li>Constitutional delay of puberty</li></ul></li><li><b>Pituitary</b><ul><li>Surgery</li><li>Irradiation</li><li>Tumor, Infiltration</li><li>Hyperprolactinemia</li><li>Hypothyroidism</li></ul></li></ul></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-7-secondary",
+   "html": "<p><b>Blackbook — Secondary amenorrhea</b> (Rule out pregnancy, β-hCG)</p><ul><li><b>Ovarian</b><ul><li><b>Normal FSH</b>: Polycystic ovarian syndrome (positive progesterone challenge, normal prolactin, chaotic menstruation history)</li><li><b>High FSH</b>: Menopause; Premature ovarian failure (&lt;35 years old, e.g. autoimmune, chromosomal, iatrogenic)</li></ul></li><li><b>Hypothalamic</b> (Negative progesterone challenge, Low FSH, Low estrogen)<ul><li>Functional (e.g. eating disorder, weight loss, stress, excessive exercise, illness)</li><li>Infiltrative lesions (e.g. lymphoma, Langerhans cell histiocytosis, sarcoidosis)</li></ul></li><li><b>Pituitary</b><ul><li><b>High Prolactin</b>: Pituitary Adenoma; Prolactinoma; Chest wall irritation; Hypothalamic-Pituitary Stalk Damage (e.g. Tumors, trauma, compression); Hypothyroidism</li><li><b>Other</b>: Sheehan’s Syndrome; Radiation; Infection; Infiltrative Lesions; hemochromatosis</li></ul></li><li><b>Outflow Tract Obstruction</b>: Asherman’s syndrome; Cervical stenosis</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b202a",
+   "title": "Amenorrhea — Primary",
+   "src": "fig",
+   "img": "bb-202-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Amenorrhea"
+    },
+    {
+     "id": "pr",
+     "k": "q",
+     "t": "Primary",
+     "d": "No onset of menarche by age 16 with secondary sexual characteristics<br>Or, No onset of menarche by age 14 without secondary sexual characteristics"
+    },
+    {
+     "id": "se",
+     "k": "note",
+     "t": "Secondary",
+     "d": "Absence of menses for 3 cycles or 6 months<br>เส้นประในเล่ม — ดูแผนผัง Secondary"
+    },
+    {
+     "id": "ov",
+     "k": "dx",
+     "t": "Ovarian Etiology (High FSH, Low Estrogen)",
+     "d": "<ul><li>46,XX Gonadal Dysgenesis (e.g. Fragile X, Balanced Translocations, Turner’s mosaic)</li><li>46,XY Gonadal Dysgenesis (e.g. Swyer’s Syndrome)</li><li>45,XO Turner syndrome</li><li>Savage syndrome (ovarian resistance)</li><li>Premature Ovarian Failure (Autoimmune, Iatrogenic)</li></ul>"
+    },
+    {
+     "id": "rc",
+     "k": "dx",
+     "t": "Receptor Abnormalities and Enzyme Deficiencies",
+     "d": "<ul><li>Androgen insensitivity</li><li>5-α Reductase deficiency</li><li>17-α Hydroxylase deficiency</li><li>Vanishing Testes Syndrome</li><li>Absent Testes Determining Factor</li></ul>"
+    },
+    {
+     "id": "ce",
+     "k": "q",
+     "t": "Central (Low FSH, Low Estrogen)"
+    },
+    {
+     "id": "co",
+     "k": "dx",
+     "t": "Congenital Outflow Tract Anomalies",
+     "d": "<ul><li>Imperforate hymen</li><li>Transverse vaginal septum</li><li>Vaginal agenesis (Mayer-Rokitansky-Küster-Hauser syndrome)</li><li>Cervical stenosis</li></ul>"
+    },
+    {
+     "id": "hy",
+     "k": "dx",
+     "t": "Hypothalamic",
+     "d": "<ul><li>Functional (e.g. eating disorder, weight loss, stress, excessive exercise, illness)</li><li>Congenital GnRH deficiency (Kallmann syndrome)</li><li>Constitutional delay of puberty</li></ul>"
+    },
+    {
+     "id": "pi",
+     "k": "dx",
+     "t": "Pituitary",
+     "d": "<ul><li>Surgery</li><li>Irradiation</li><li>Tumor, Infiltration</li><li>Hyperprolactinemia</li><li>Hypothyroidism</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pr",
+     "l": "Primary"
+    },
+    {
+     "f": "a",
+     "t": "se",
+     "l": "Secondary (เส้นประ)"
+    },
+    {
+     "f": "pr",
+     "t": "ov",
+     "l": "Ovarian Etiology"
+    },
+    {
+     "f": "pr",
+     "t": "rc",
+     "l": "Receptor / enzyme deficiencies"
+    },
+    {
+     "f": "pr",
+     "t": "ce",
+     "l": "Central"
+    },
+    {
+     "f": "pr",
+     "t": "co",
+     "l": "Congenital Outflow Tract Anomalies"
+    },
+    {
+     "f": "ce",
+     "t": "hy",
+     "l": "Hypothalamic"
+    },
+    {
+     "f": "ce",
+     "t": "pi",
+     "l": "Pituitary"
+    }
+   ],
+   "note": "เส้นประจากกล่อง Amenorrhea ไป Secondary = ลิงก์ไปแผนผัง Secondary"
+  },
+  {
+   "id": "b202b",
+   "title": "Amenorrhea — Secondary",
+   "src": "fig",
+   "img": "bb-202-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Amenorrhea"
+    },
+    {
+     "id": "pr",
+     "k": "note",
+     "t": "Primary",
+     "d": "No onset of menarche by age 16<br>เส้นประในเล่ม — ดูแผนผัง Primary"
+    },
+    {
+     "id": "se",
+     "k": "q",
+     "t": "Secondary",
+     "d": "Absence of menses for more than 3 cycles or 6 months in women who were previously menstruating"
+    },
+    {
+     "id": "preg",
+     "k": "act",
+     "t": "Rule out pregnancy (β-hCG)"
+    },
+    {
+     "id": "ov",
+     "k": "q",
+     "t": "Ovarian"
+    },
+    {
+     "id": "hy",
+     "k": "dx",
+     "t": "Hypothalamic",
+     "d": "<p>Negative progesterone challenge, Low FSH, Low estrogen</p><ul><li>Functional (e.g. eating disorder, weight loss, stress, excessive exercise, illness)</li><li>Infiltrative lesions (e.g. lymphoma, Langerhans cell histiocytosis, sarcoidosis)</li></ul>"
+    },
+    {
+     "id": "pi",
+     "k": "q",
+     "t": "Pituitary"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Outflow Tract Obstruction",
+     "d": "<ul><li>Asherman’s syndrome</li><li>Cervical stenosis</li></ul>"
+    },
+    {
+     "id": "nf",
+     "k": "dx",
+     "t": "Normal FSH",
+     "d": "<ul><li>Polycystic ovarian syndrome (positive progesterone challenge, normal prolactin, chaotic menstruation history)</li></ul>"
+    },
+    {
+     "id": "hf",
+     "k": "dx",
+     "t": "High FSH",
+     "d": "<ul><li>Menopause</li><li>Premature ovarian failure (&lt;35 years old, e.g. autoimmune, chromosomal, iatrogenic)</li></ul>"
+    },
+    {
+     "id": "hp",
+     "k": "dx",
+     "t": "High Prolactin",
+     "d": "<ul><li>Pituitary Adenoma</li><li>Prolactinoma</li><li>Chest wall irritation</li><li>Hypothalamic-Pituitary Stalk Damage (e.g. Tumors, trauma, compression)</li><li>Hypothyroidism</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Sheehan’s Syndrome</li><li>Radiation</li><li>Infection</li><li>Infiltrative Lesions; hemochromatosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pr",
+     "l": "Primary (เส้นประ)"
+    },
+    {
+     "f": "a",
+     "t": "se",
+     "l": "Secondary"
+    },
+    {
+     "f": "se",
+     "t": "preg"
+    },
+    {
+     "f": "preg",
+     "t": "ov",
+     "l": "Ovarian"
+    },
+    {
+     "f": "preg",
+     "t": "hy",
+     "l": "Hypothalamic"
+    },
+    {
+     "f": "preg",
+     "t": "pi",
+     "l": "Pituitary"
+    },
+    {
+     "f": "preg",
+     "t": "ot",
+     "l": "Outflow Tract Obstruction"
+    },
+    {
+     "f": "ov",
+     "t": "nf",
+     "l": "Normal FSH"
+    },
+    {
+     "f": "ov",
+     "t": "hf",
+     "l": "High FSH"
+    },
+    {
+     "f": "pi",
+     "t": "hp",
+     "l": "High Prolactin"
+    },
+    {
+     "f": "pi",
+     "t": "oth",
+     "l": "Other"
+    }
+   ],
+   "note": "เส้นประจากกล่อง Amenorrhea ไป Primary = ลิงก์ไปแผนผัง Primary"
+  }
+ ]
+}

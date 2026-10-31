@@ -1,0 +1,132 @@
+{
+ "key": "108",
+ "en": "Generalized Edema",
+ "th": "บวมทั่วตัว",
+ "pdf": "137",
+ "bookpg": "108",
+ "target": "edema",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "bb-108-scheme",
+   "h": "Generalized Edema scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b108a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "class-gen",
+   "html": "<ul><li><b>Overfill</b> (increased renal sodium retention, urine Na &gt; 40 meq/L): NSAIDs, AKI/CKD, nephrotic syndrome</li><li><b>Underfill</b> (urine Na &lt; 20 meq/L): altered Starling forces (absolute decrease in EABV) or congestive heart failure “forward failure” (relative decrease in EABV; signs of left ventricular failure)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p>Altered Starling forces:</p><ul><li>Increased interstitial oncotic pressure: myxedema (hypothyroid)</li><li>Increased capillary hydrostatic pressure: right heart failure, constrictive pericarditis, portal hypertension, pregnancy</li><li>Decreased capillary oncotic pressure (low serum albumin due to loss or impaired synthesis): nephrotic syndrome, cirrhosis</li><li>Increased capillary permeability (severely ill, e.g. in ICU): inflammation, sepsis, acute respiratory distress syndrome, allergies, burns/trauma</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b108a",
+   "title": "Generalized Edema",
+   "src": "fig",
+   "img": "bb-108-f1.webp",
+   "note": "“Startling Forces” ในต้นฉบับ แก้เป็น Starling forces",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Generalized Edema"
+    },
+    {
+     "id": "ov",
+     "k": "dx",
+     "t": "Overfill (Increased renal sodium retention, Urine Na > 40 meq/L)",
+     "d": "<ul><li>NSAIDs</li><li>AKI/CKD</li><li>Nephrotic Syndrome</li></ul>"
+    },
+    {
+     "id": "un",
+     "k": "q",
+     "t": "Underfill (Urine Na < 20 meq/L)"
+    },
+    {
+     "id": "asf",
+     "k": "q",
+     "t": "Altered Starling Forces",
+     "d": "<p>(Absolute decrease in EABV)</p>"
+    },
+    {
+     "id": "chf",
+     "k": "dx",
+     "t": "Congestive Heart Failure “forward failure”",
+     "d": "<p>(Relative decrease in EABV)</p>"
+    },
+    {
+     "id": "iop",
+     "k": "dx",
+     "t": "Increased Interstitial Oncotic Pressure",
+     "d": "<ul><li>Myxedema (Hypothyroid)</li></ul>"
+    },
+    {
+     "id": "chp",
+     "k": "dx",
+     "t": "Increased Capillary Hydrostatic Pressure",
+     "d": "<ul><li>Right heart failure</li><li>Constrictive pericarditis</li><li>Portal hypertension</li><li>Pregnancy</li></ul>"
+    },
+    {
+     "id": "dco",
+     "k": "dx",
+     "t": "Decreased Capillary Oncotic Pressure",
+     "d": "<p>Low serum albumin due to loss or impaired synthesis</p><ul><li>Nephrotic syndrome</li><li>Cirrhosis</li></ul>"
+    },
+    {
+     "id": "icp",
+     "k": "dx",
+     "t": "Increased Capillary Permeability",
+     "d": "<p>Severely ill (e.g. in ICU)</p><ul><li>Inflammation</li><li>Sepsis</li><li>Acute Respiratory Distress Syndrome</li><li>Allergies</li><li>Burns/Trauma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ov",
+     "l": "Increased blood pressure"
+    },
+    {
+     "f": "a",
+     "t": "un",
+     "l": "Underfill"
+    },
+    {
+     "f": "un",
+     "t": "asf",
+     "l": "Altered Starling forces"
+    },
+    {
+     "f": "un",
+     "t": "chf",
+     "l": "Signs of left ventricular failure"
+    },
+    {
+     "f": "asf",
+     "t": "iop",
+     "l": "Increased interstitial oncotic pressure"
+    },
+    {
+     "f": "asf",
+     "t": "chp",
+     "l": "Increased capillary hydrostatic pressure"
+    },
+    {
+     "f": "asf",
+     "t": "dco",
+     "l": "Low serum albumin"
+    },
+    {
+     "f": "asf",
+     "t": "icp",
+     "l": "Severely ill (e.g. in ICU)"
+    }
+   ]
+  }
+ ]
+}

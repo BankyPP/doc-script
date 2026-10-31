@@ -1,0 +1,210 @@
+{
+ "key": "145",
+ "en": "Hypercalcemia",
+ "th": "แคลเซียมในเลือดสูง",
+ "pdf": "174–175",
+ "bookpg": "145–146",
+ "target": null,
+ "new": {
+  "id": "hypercalcemia",
+  "th": "แคลเซียมในเลือดสูง",
+  "en": "Hypercalcemia",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "bb-145-low-pth",
+   "h": "Hypercalcemia — Low PTH (หน้า 145)",
+   "html": "<div class=\"flow\" data-flow=\"b145a\"></div><ul><li><b>Hypercalcemia</b> <span class=\"muted\">— Total Calcium &gt; 2.55 mmol/L; Ionized Calcium &gt; 1.30 mmol/L</span><ul><li><b>Measure In Fasting State</b><ul><li><span class=\"tag\">Normal/high PTH (เส้นประ → หน้า 146)</span> <b>Normal/High PTH</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 146 (Normal / High PTH)</span></p></li><li><span class=\"tag\">Drug side effects</span> <b>Drug Side Effects</b><ul><li>Thiazide Diuretics</li><li>Lithium</li><li>Vitamin A/Isotretinoin</li></ul></li><li><span class=\"tag\">Low PTH</span> <b>Low PTH</b><ul><li><span class=\"tag\">Malignancy</span> <b>Malignancy</b><ul><li>PTH-Related Peptide (e.g. Breast, Kidney, Lung)</li><li>Cytokine-Mediated Bone Resorption (e.g. Multiple Myeloma, Lymphomas)</li><li>Metastatic Bone Disease</li></ul></li><li><span class=\"tag\">Vitamin D related</span> <b>Vitamin D Related</b><ul><li>Excess Vitamin D/ Calcitriol Intake</li><li>Unregulated Conversion of 25-OH D3 to 1,25-(OH)2D3 (e.g. Granulomatous Disease, Lymphoma)</li></ul></li><li><span class=\"tag\">Other</span> <b>Other</b><ul><li>Excess Calcium Intake (e.g. Milk Alkali)</li><li>Immobilization</li><li>Adrenal Insufficiency</li><li>Thyrotoxicosis</li><li>Paget’s Disease</li></ul></li></ul></li></ul></li></ul></li></ul><div class=\"pearl\"><p>Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]</p></div>"
+  },
+  {
+   "id": "bb-145-high-pth",
+   "h": "Hypercalcemia — Normal / High PTH (หน้า 146)",
+   "html": "<div class=\"flow\" data-flow=\"b145b\"></div><ul><li><b>Hypercalcemia</b> <span class=\"muted\">— Total &gt; 2.55 mmol/L; Ionized Calcium &gt; 1.30 mmol/L</span><ul><li><b>Measure In Fasting State</b><ul><li><span class=\"tag\">Normal/high PTH</span> <b>Normal/High PTH</b><ul><li><span class=\"tag\">Primary hyperparathyroidism</span> <b>Primary Hyperparathyroidism</b><ul><li>Adenoma</li><li>Hyperplasia</li><li>MEN 1 and 2A</li></ul></li><li><span class=\"tag\">Tertiary hyperparathyroidism</span> <b>Tertiary Hyperparathyroidism</b><ul><li>Hypercalcemia (in the setting of long-standing secondary hyperparathyroidism) (e.g. Renal Failure, Post-Renal Transplant)</li></ul></li><li><span class=\"tag\">Familial hypocalciuria hypercalcemia</span> <b>Familial Hypocalciuria Hypercalcemia</b><ul><li>Autosomal Dominant Calcium Receptor Mutation (CaSR)</li><li>Other Familial Hypercalcemias (e.g. MEN)</li></ul></li></ul></li><li><span class=\"tag\">Drug side effects</span> <b>Drug Side Effects</b><ul><li>Thiazide Diuretics</li><li>Lithium</li><li>Vitamin A/Isotretinoin</li></ul></li><li><span class=\"tag\">Low PTH (เส้นประ → หน้า 145)</span> <b>Low PTH</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 145 (Low PTH)</span></p></li></ul></li></ul></li></ul><div class=\"pearl\"><p>Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]</p></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b145a",
+   "title": "Hypercalcemia — Low PTH",
+   "src": "fig",
+   "img": "bb-145-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hypercalcemia",
+     "d": "<p>Total Calcium &gt; 2.55 mmol/L; Ionized Calcium &gt; 1.30 mmol/L</p>"
+    },
+    {
+     "id": "m",
+     "k": "act",
+     "t": "Measure In Fasting State"
+    },
+    {
+     "id": "nh",
+     "k": "dx",
+     "t": "Normal/High PTH",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 146 (Normal / High PTH)</span></p>"
+    },
+    {
+     "id": "dr",
+     "k": "dx",
+     "t": "Drug Side Effects",
+     "d": "<ul><li>Thiazide Diuretics</li><li>Lithium</li><li>Vitamin A/Isotretinoin</li></ul>"
+    },
+    {
+     "id": "lp",
+     "k": "q",
+     "t": "Low PTH"
+    },
+    {
+     "id": "ma",
+     "k": "dx",
+     "t": "Malignancy",
+     "d": "<ul><li>PTH-Related Peptide (e.g. Breast, Kidney, Lung)</li><li>Cytokine-Mediated Bone Resorption (e.g. Multiple Myeloma, Lymphomas)</li><li>Metastatic Bone Disease</li></ul>"
+    },
+    {
+     "id": "vd",
+     "k": "dx",
+     "t": "Vitamin D Related",
+     "d": "<ul><li>Excess Vitamin D/ Calcitriol Intake</li><li>Unregulated Conversion of 25-OH D3 to 1,25-(OH)2D3 (e.g. Granulomatous Disease, Lymphoma)</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Excess Calcium Intake (e.g. Milk Alkali)</li><li>Immobilization</li><li>Adrenal Insufficiency</li><li>Thyrotoxicosis</li><li>Paget’s Disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "m"
+    },
+    {
+     "f": "m",
+     "t": "nh",
+     "l": "Normal/high PTH (เส้นประ → หน้า 146)"
+    },
+    {
+     "f": "m",
+     "t": "dr",
+     "l": "Drug side effects"
+    },
+    {
+     "f": "m",
+     "t": "lp",
+     "l": "Low PTH"
+    },
+    {
+     "f": "lp",
+     "t": "ma",
+     "l": "Malignancy"
+    },
+    {
+     "f": "lp",
+     "t": "vd",
+     "l": "Vitamin D related"
+    },
+    {
+     "f": "lp",
+     "t": "ot",
+     "l": "Other"
+    }
+   ],
+   "note": "Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]"
+  },
+  {
+   "id": "b145b",
+   "title": "Hypercalcemia — Normal / High PTH",
+   "src": "fig",
+   "img": "bb-145-f2.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hypercalcemia",
+     "d": "<p>Total &gt; 2.55 mmol/L; Ionized Calcium &gt; 1.30 mmol/L</p>"
+    },
+    {
+     "id": "m",
+     "k": "act",
+     "t": "Measure In Fasting State"
+    },
+    {
+     "id": "nh",
+     "k": "q",
+     "t": "Normal/High PTH"
+    },
+    {
+     "id": "dr",
+     "k": "dx",
+     "t": "Drug Side Effects",
+     "d": "<ul><li>Thiazide Diuretics</li><li>Lithium</li><li>Vitamin A/Isotretinoin</li></ul>"
+    },
+    {
+     "id": "lp",
+     "k": "dx",
+     "t": "Low PTH",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 145 (Low PTH)</span></p>"
+    },
+    {
+     "id": "p1",
+     "k": "dx",
+     "t": "Primary Hyperparathyroidism",
+     "d": "<ul><li>Adenoma</li><li>Hyperplasia</li><li>MEN 1 and 2A</li></ul>"
+    },
+    {
+     "id": "p3",
+     "k": "dx",
+     "t": "Tertiary Hyperparathyroidism",
+     "d": "<ul><li>Hypercalcemia (in the setting of long-standing secondary hyperparathyroidism) (e.g. Renal Failure, Post-Renal Transplant)</li></ul>"
+    },
+    {
+     "id": "fh",
+     "k": "dx",
+     "t": "Familial Hypocalciuria Hypercalcemia",
+     "d": "<ul><li>Autosomal Dominant Calcium Receptor Mutation (CaSR)</li><li>Other Familial Hypercalcemias (e.g. MEN)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "m"
+    },
+    {
+     "f": "m",
+     "t": "nh",
+     "l": "Normal/high PTH"
+    },
+    {
+     "f": "m",
+     "t": "dr",
+     "l": "Drug side effects"
+    },
+    {
+     "f": "m",
+     "t": "lp",
+     "l": "Low PTH (เส้นประ → หน้า 145)"
+    },
+    {
+     "f": "nh",
+     "t": "p1",
+     "l": "Primary hyperparathyroidism"
+    },
+    {
+     "f": "nh",
+     "t": "p3",
+     "l": "Tertiary hyperparathyroidism"
+    },
+    {
+     "f": "nh",
+     "t": "fh",
+     "l": "Familial hypocalciuria hypercalcemia"
+    }
+   ],
+   "note": "Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]"
+  }
+ ]
+}

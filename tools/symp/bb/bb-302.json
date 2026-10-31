@@ -1,0 +1,76 @@
+{
+ "key": "302",
+ "en": "Amblyopia",
+ "th": "ตาขี้เกียจ",
+ "pdf": "331",
+ "bookpg": "302",
+ "target": "visual-disorder",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-9-9-blur",
+   "id": "bb-302-ambly",
+   "h": "Amblyopia (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b302a\"></div><p><small>* Can cause permanent visual impairment if not treated urgently in infancy</small></p><div class=\"pearl\"><p><b>Clinical Pearl:</b></p><ul><li>Congenital cataracts and retinoblastoma's cause leukocoria and a decreased red reflex</li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b302a",
+   "title": "Amblyopia",
+   "src": "fig",
+   "img": "bb-302-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Amblyopia"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Deprivational* — obstruction of visual axis",
+     "d": "<p>Obstruction of Visual Axis</p><ul><li>Ptosis</li><li>Congenital Cataracts</li><li>Congenital Corneal Opacities</li><li>Hemangioma</li><li>Retinal Disease/Damage (undiagnosed not responsive to treatment)</li></ul><p><small>* Can cause permanent visual impairment if not treated urgently in infancy</small></p>"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Refractive Error",
+     "d": "<ul><li>Severe Anisometropia (Unequal Refractive Error)</li><li>Hyperopia</li><li>Astigmatism</li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Strabismic — abnormal binocular interaction",
+     "d": "<p>Abnormal Binocular Interaction</p>"
+    },
+    {
+     "id": "x",
+     "k": "note",
+     "t": "See Strabismus scheme"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Deprivational*"
+    },
+    {
+     "f": "a",
+     "t": "r",
+     "l": "Refractive Error"
+    },
+    {
+     "f": "a",
+     "t": "s",
+     "l": "Strabismic"
+    },
+    {
+     "f": "s",
+     "t": "x"
+    }
+   ]
+  }
+ ]
+}

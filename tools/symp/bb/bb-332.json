@@ -1,0 +1,153 @@
+{
+ "key": "332",
+ "en": "Diarrhea (Pediatric)",
+ "th": "ท้องเสีย (เด็ก)",
+ "pdf": "361",
+ "bookpg": "332",
+ "target": null,
+ "new": {
+  "id": "ped-diarrhea",
+  "th": "ท้องเสีย (เด็ก)",
+  "en": "Diarrhea (Pediatric)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-332-scheme",
+   "h": "Diarrhea (Pediatric) — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b332a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b332a",
+   "title": "Pediatric Diarrhea",
+   "src": "fig",
+   "img": "bb-332-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pediatric Diarrhea"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "History and physical exam"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Acute (&lt; 2 weeks)"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Chronic (&gt; 2 weeks)"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Dietary",
+     "d": "<ul><li>High sugar load</li><li>Lactose intolerance</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Viral (<b>Gastroenteritis*</b>)</li><li>Bacteria (Eg. <i>E. coli, Salmonella, Yersinia, Campylobacter, Shigella</i>)</li><li>Parasitic (Eg. Giardia, E histolytica)</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Drugs",
+     "d": "<ul><li>Antibiotics</li><li>Laxatives</li></ul>"
+    },
+    {
+     "id": "d1",
+     "k": "q",
+     "t": "Non-Bloody"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Bloody (Red Flag)",
+     "d": "<ul><li><b>Inflammatory bowel Disease*</b> (Crohn’s disease, Ulcerative Colitis)</li><li>C Difficile</li><li>Drugs (Eg. Antibiotics, laxatives)</li></ul>"
+    },
+    {
+     "id": "r",
+     "k": "act",
+     "t": "Red Flags: night time awakening, systemic symptoms (fever, weight loss/FTT, rash, joint swelling)",
+     "d": "Red Flags: Night time awakening, systemic symptoms (fever, weight loss/FTT, rash, joint swelling)"
+    },
+    {
+     "id": "r1",
+     "k": "dx",
+     "t": "Red flags present",
+     "d": "<ul><li><b>Celiac Disease*</b></li><li><b>Inflammatory Bowel Disease*</b> (Crohn’s Disease)</li><li>Pancreatic Insufficiency</li><li>Secretory neoplasm</li></ul>"
+    },
+    {
+     "id": "r2",
+     "k": "dx",
+     "t": "No red flags",
+     "d": "<ul><li><b>Celiac Disease*</b></li><li><b>Constipation*</b> with overflow diarrhea</li><li>Lactose Intolerance</li><li>Bacterial Overgrowth</li><li>Carbohydrate malabsorption</li><li>Drugs/Toxins</li><li>Hyperthyroid</li><li>Irritable bowel syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Acute (&lt; 2 weeks)"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Chronic (&gt; 2 weeks)"
+    },
+    {
+     "f": "c",
+     "t": "c1",
+     "l": "Dietary"
+    },
+    {
+     "f": "c",
+     "t": "c2",
+     "l": "Infectious"
+    },
+    {
+     "f": "c",
+     "t": "c3",
+     "l": "Drugs"
+    },
+    {
+     "f": "d",
+     "t": "d1",
+     "l": "Non-Bloody"
+    },
+    {
+     "f": "d",
+     "t": "d2",
+     "l": "Bloody (Red Flag)"
+    },
+    {
+     "f": "d1",
+     "t": "r"
+    },
+    {
+     "f": "r",
+     "t": "r1",
+     "l": "Red flags present"
+    },
+    {
+     "f": "r",
+     "t": "r2",
+     "l": "No red flags"
+    }
+   ]
+  }
+ ]
+}

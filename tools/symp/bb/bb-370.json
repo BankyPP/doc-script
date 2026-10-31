@@ -1,0 +1,284 @@
+{
+ "key": "370",
+ "en": "Pediatric Infectious Skin Rash",
+ "th": "ผื่นติดเชื้อในเด็ก",
+ "pdf": "399",
+ "bookpg": "370",
+ "target": null,
+ "new": {
+  "id": "ped-infectious-skin-rash",
+  "th": "ผื่นติดเชื้อในเด็ก",
+  "en": "Pediatric Infectious Skin Rash",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-370-scheme",
+   "h": "Pediatric Infectious Skin Rash scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b370a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b370a",
+   "title": "Pediatric Infectious Skin Rash",
+   "src": "fig",
+   "img": "bb-370-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pediatric Infectious Skin Rash"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Bacterial"
+    },
+    {
+     "id": "v",
+     "k": "q",
+     "t": "Viral*"
+    },
+    {
+     "id": "o",
+     "k": "q",
+     "t": "Other"
+    },
+    {
+     "id": "b1d",
+     "k": "q",
+     "t": "Erythematous, poorly demarcated, non-palpable, blanchable rash"
+    },
+    {
+     "id": "b1x",
+     "k": "dx",
+     "t": "Cellulitis*"
+    },
+    {
+     "id": "b2d",
+     "k": "q",
+     "t": "Pustules with overlying thick honey-yellow crusts. Occurs in clusters"
+    },
+    {
+     "id": "b2x",
+     "k": "dx",
+     "t": "Impetigo*"
+    },
+    {
+     "id": "b3d",
+     "k": "q",
+     "t": "Erythematous sand-paper like rash over trunk, extremities, cheeks …",
+     "d": "Erythematous sand-paper like rash over trunk, extremities, cheeks. Strawberry tongue. Spares palms and soles. Pastia lines"
+    },
+    {
+     "id": "b3x",
+     "k": "dx",
+     "t": "Scarlet Fever*"
+    },
+    {
+     "id": "b4d",
+     "k": "q",
+     "t": "Widespread erythroderma involving face, diaper, intertriginous areas …",
+     "d": "Widespread erythroderma, involving the face, diaper, and intertriginous areas. Desquamation and crusting present. Nikolsky sign."
+    },
+    {
+     "id": "b4x",
+     "k": "dx",
+     "t": "Staph Scaled Skin"
+    },
+    {
+     "id": "b5d",
+     "k": "q",
+     "t": "Purpuric, non blanchable rash over full body"
+    },
+    {
+     "id": "b5x",
+     "k": "dx",
+     "t": "Meningococcemia*"
+    },
+    {
+     "id": "v1d",
+     "k": "q",
+     "t": "Erythematous, blanchable macules spreading cephalo-caudally. Koplik spots …",
+     "d": "Erythematous, blanchable macules spreading cephalo-caudally. Koplik spots. URTI symptoms and pharyngitis"
+    },
+    {
+     "id": "v1x",
+     "k": "dx",
+     "t": "Measles"
+    },
+    {
+     "id": "v2d",
+     "k": "q",
+     "t": "Bright red, well demarcated rash over cheeks – “slapped-cheek” appearance …",
+     "d": "Bright red, well demarcated rash over cheeks – “slapped-cheek” appearance. May have lacy reticular rash over hands and feet"
+    },
+    {
+     "id": "v2x",
+     "k": "dx",
+     "t": "Parvovirus"
+    },
+    {
+     "id": "v3d",
+     "k": "q",
+     "t": "Erythematous, blanchable macules spreading cephalo-caudally …",
+     "d": "Erythematous, blanchable macules spreading cephalo-caudally. Rash usually starts after fever defervesces"
+    },
+    {
+     "id": "v3x",
+     "k": "dx",
+     "t": "Roseola"
+    },
+    {
+     "id": "v4d",
+     "k": "q",
+     "t": "Flesh colored, well demarcated papules with umbilicated center"
+    },
+    {
+     "id": "v4x",
+     "k": "dx",
+     "t": "Molluscum Contagiosum"
+    },
+    {
+     "id": "v5d",
+     "k": "q",
+     "t": "Vesicular rash filled with clear fluid, on an erythematous base …",
+     "d": "Vesicular rash filled with clear fluid, on an erythematous base. Highly pruritic"
+    },
+    {
+     "id": "v5x",
+     "k": "dx",
+     "t": "Varicella"
+    },
+    {
+     "id": "o1d",
+     "k": "q",
+     "t": "Erythematous papules and vesicles over hands and skin folds …",
+     "d": "Erythematous papules and vesicles distributed over hands and skin folds. Burrow may be present. Highly pruritic."
+    },
+    {
+     "id": "o1x",
+     "k": "dx",
+     "t": "Scabies*"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Bacterial"
+    },
+    {
+     "f": "a",
+     "t": "v",
+     "l": "Viral"
+    },
+    {
+     "f": "a",
+     "t": "o",
+     "l": "Other"
+    },
+    {
+     "f": "b",
+     "t": "b1d",
+     "l": "Cellulitis"
+    },
+    {
+     "f": "b1d",
+     "t": "b1x"
+    },
+    {
+     "f": "b",
+     "t": "b2d",
+     "l": "Impetigo"
+    },
+    {
+     "f": "b2d",
+     "t": "b2x"
+    },
+    {
+     "f": "b",
+     "t": "b3d",
+     "l": "Scarlet Fever"
+    },
+    {
+     "f": "b3d",
+     "t": "b3x"
+    },
+    {
+     "f": "b",
+     "t": "b4d",
+     "l": "Staph Scaled Skin"
+    },
+    {
+     "f": "b4d",
+     "t": "b4x"
+    },
+    {
+     "f": "b",
+     "t": "b5d",
+     "l": "Meningococcemia"
+    },
+    {
+     "f": "b5d",
+     "t": "b5x"
+    },
+    {
+     "f": "v",
+     "t": "v1d",
+     "l": "Measles"
+    },
+    {
+     "f": "v1d",
+     "t": "v1x"
+    },
+    {
+     "f": "v",
+     "t": "v2d",
+     "l": "Parvovirus"
+    },
+    {
+     "f": "v2d",
+     "t": "v2x"
+    },
+    {
+     "f": "v",
+     "t": "v3d",
+     "l": "Roseola"
+    },
+    {
+     "f": "v3d",
+     "t": "v3x"
+    },
+    {
+     "f": "v",
+     "t": "v4d",
+     "l": "Molluscum Contagiosum"
+    },
+    {
+     "f": "v4d",
+     "t": "v4x"
+    },
+    {
+     "f": "v",
+     "t": "v5d",
+     "l": "Varicella"
+    },
+    {
+     "f": "v5d",
+     "t": "v5x"
+    },
+    {
+     "f": "o",
+     "t": "o1d",
+     "l": "Scabies"
+    },
+    {
+     "f": "o1d",
+     "t": "o1x"
+    }
+   ]
+  }
+ ]
+}

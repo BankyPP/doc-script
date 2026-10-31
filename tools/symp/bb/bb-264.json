@@ -1,0 +1,18 @@
+{
+ "key": "264",
+ "en": "Myotomes — Segmental Innervation of Muscles",
+ "th": "ไมโอโทม (การควบคุมกล้ามเนื้อตาม segment)",
+ "pdf": "293",
+ "bookpg": "264",
+ "target": "weakness",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "loc",
+   "id": "bb-264-myotomes",
+   "h": "Myotomes — segmental innervation of muscles (Blackbook)",
+   "html": "<div class=\"tbl\"><table><thead><tr><th>Muscle Group</th><th>Action</th><th>Myotome</th><th>Peripheral Nerve</th></tr></thead><tbody><tr><td>Shoulder</td><td>Abduction</td><td>C5</td><td>Axillary Nerve</td></tr><tr><td></td><td>Adduction</td><td>C6-C8</td><td>Thoracodorsal Nerve</td></tr><tr><td>Elbow</td><td>Flexion</td><td>C5</td><td>Musculocutaneous Nerve</td></tr><tr><td></td><td>Extension</td><td>C7</td><td>Radial Nerve</td></tr><tr><td>Wrist</td><td>Extension</td><td>C6</td><td>Radial Nerve</td></tr><tr><td>Fingers</td><td>Flexion</td><td>C8</td><td>Median Nerve</td></tr><tr><td></td><td>Abduction</td><td>T1</td><td>Ulnar Nerve</td></tr><tr><td>Hip</td><td>Flexion</td><td>L2</td><td>Nerve to Psoas</td></tr><tr><td></td><td>Extension</td><td>S1</td><td>Inferior Gluteal Nerve</td></tr><tr><td></td><td>Abduction</td><td>L5</td><td>Superior Gluteal Nerve</td></tr><tr><td>Knee</td><td>Flexion</td><td>L5</td><td>Tibial Nerve</td></tr><tr><td></td><td>Extension</td><td>L3</td><td>Femoral Nerve</td></tr><tr><td>Ankle</td><td>Dorsiflexion</td><td>L4</td><td>Deep Peroneal Nerve</td></tr><tr><td></td><td>Plantarflexion</td><td>S1</td><td>Tibial Nerve</td></tr></tbody></table></div><div class=\"pearl\"><b>N.B.</b> There is considerable overlap between myotomes for some actions. The myotomes listed are the dominant segments involved.</div>"
+  }
+ ],
+ "flows": []
+}

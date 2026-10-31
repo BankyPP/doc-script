@@ -1,0 +1,67 @@
+{
+ "key": "267",
+ "en": "Osteoporosis — BMD Testing",
+ "th": "กระดูกพรุน (การตรวจ BMD)",
+ "pdf": "296",
+ "bookpg": "267",
+ "target": null,
+ "new": {
+  "id": "osteoporosis",
+  "th": "กระดูกพรุน",
+  "en": "Osteoporosis",
+  "g": "msk"
+ },
+ "sections": [
+  {
+   "id": "bb-267-scheme",
+   "h": "Osteoporosis — BMD testing: age > 50 vs < 50 (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b267a\"></div><p><small>Source: 2010 Clinical Practice Guidelines for the Diagnosis and Management of Osteoporosis in Canada</small></p>"
+  },
+  {
+   "id": "bb-267-tscore",
+   "h": "T-scores",
+   "html": "<div class=\"tbl\"><table><thead><tr><th>T-score</th><th>Category</th></tr></thead><tbody><tr><td>≥ -1</td><td>Normal</td></tr><tr><td>-2.49 &lt; T &lt; -1</td><td>Osteopenia</td></tr><tr><td>≤ -2.5</td><td>Osteoporosis</td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b267a",
+   "title": "Osteoporosis — BMD Testing",
+   "src": "fig",
+   "img": "bb-267-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Osteoporosis — BMD Testing",
+     "d": "<p><b>T-Scores</b></p><ul><li>Normal ≥ -1</li><li>-2.49 &lt; Osteopenia &lt; -1</li><li>Osteoporosis ≤ -2.5</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Age &gt; 50 years",
+     "d": "<ul><li>All men and women ≥65</li><li>Prior fragility fracture</li><li>Prolonged glucocorticoid use</li><li>Rheumatoid Arthritis</li><li>Falls in past 12 months</li><li>Parental Hip Fracture</li><li>Other medications</li><li>Vertebral fracture</li><li>Osteopenia on X ray</li><li>Smoking/ETOH</li><li>Low body weight (&lt;60kg) or major loss (&gt;10% of when 25)</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Age &lt; 50 years",
+     "d": "<ul><li>Fragility Fracture</li><li>Prolonged Glucocorticoid use</li><li>Use of other high risk medications: Aromatase Inhibitors; Androgen Deprivation Therapy</li><li>Hypogonadism/Premature Menopause</li><li>Malabsorption Syndrome</li><li>Primary Hyperparathyroidism</li><li>Other disorders strongly associated with rapid bone loss and/or fracture</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Age > 50 years"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Age < 50 years"
+    }
+   ],
+   "note": "กล่อง T-Scores ในเล่มใส่ไว้ในรายละเอียดของกล่อง Osteoporosis และในตารางด้านบน"
+  }
+ ]
+}

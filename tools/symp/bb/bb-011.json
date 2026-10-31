@@ -1,0 +1,120 @@
+{
+ "key": "011",
+ "en": "Isolated Right-Sided Heart Failure",
+ "th": "หัวใจล้มเหลวด้านขวา",
+ "pdf": "40",
+ "bookpg": "11",
+ "target": "heart-failure-cm",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-1-5-chf",
+   "id": "bb-011-scheme",
+   "h": "Isolated right-sided heart failure (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b011a\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div><p>Note: all left-sided heart failure can also lead to right-sided heart failure (the most common cause of right heart failure is left heart failure).</p><h5>Causes by group</h5><ul><li><b>Cardiac</b> — rule out left-sided heart failure (most common)<ul><li><b>Myocardium</b>: Right Ventricle Infarction; Restrictive Cardiomyopathy</li><li><b>Valves</b>: Pulmonary Stenosis; Tricuspid Regurgitation</li><li><b>Pericardium</b>: Constrictive Pericarditis; Pericardial Tamponade</li></ul></li><li><b>Pulmonary</b><ul><li><b>Parenchyma</b>: Chronic Obstructive Pulmonary Disease; Diffuse Lung Disease; Acute Respiratory Distress Syndrome; Chronic Lung Infection</li><li><b>Vasculature</b>: Pulmonary Embolism; Primary Pulmonary Arterial Hypertension; Pulmonary Veno-Occlusive Disease</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b011a",
+   "title": "Isolated Right-Sided Heart Failure",
+   "src": "fig",
+   "img": "bb-011-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Isolated Right-Sided Heart Failure",
+     "d": "<p>Note: all left-sided heart failure can also lead to right-sided heart failure (the most common cause of right heart failure is left heart failure)</p><div class=\"warn\">Potentially acutely life-threatening presentation</div>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Cardiac"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Pulmonary"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "Rule out Left-Sided Heart Failure (Most Common)"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Myocardium",
+     "d": "<ul><li>Right Ventricle Infarction</li><li>Restrictive Cardiomyopathy</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Valves",
+     "d": "<ul><li>Pulmonary Stenosis</li><li>Tricuspid Regurgitation</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Pericardium",
+     "d": "<ul><li>Constrictive Pericarditis</li><li>Pericardial Tamponade</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Parenchyma",
+     "d": "<ul><li>Chronic Obstructive Pulmonary Disease</li><li>Diffuse Lung Disease</li><li>Acute Respiratory Distress Syndrome</li><li>Chronic Lung Infection</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Vasculature",
+     "d": "<ul><li>Pulmonary Embolism</li><li>Primary Pulmonary Arterial Hypertension</li><li>Pulmonary Veno-Occlusive Disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiac"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Pulmonary"
+    },
+    {
+     "f": "b",
+     "t": "d"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Myocardium"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Valves"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Pericardium"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Parenchyma"
+    },
+    {
+     "f": "c",
+     "t": "i",
+     "l": "Vasculature"
+    }
+   ],
+   "note": "Potentially acutely life-threatening presentation"
+  }
+ ]
+}

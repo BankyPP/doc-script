@@ -1,0 +1,155 @@
+{
+ "key": "216",
+ "en": "Post-Partum Fever",
+ "th": "ไข้หลังคลอด",
+ "pdf": "245",
+ "bookpg": "216",
+ "target": null,
+ "new": {
+  "id": "postpartum-fever",
+  "th": "ไข้หลังคลอด",
+  "en": "Post-Partum Fever",
+  "g": "obgyn"
+ },
+ "sections": [
+  {
+   "id": "bb-216-scheme",
+   "h": "Post-Partum Fever scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b216a\"></div><p><u>6 W’s for Causes of PPF</u></p><ul><li><b>Wind</b>: pneumonia, atelectasis</li><li><b>Water</b>: UTI</li><li><b>“Woobies”</b>: mastitis</li><li><b>Womb</b></li><li><b>Wound</b>: cellulitis, vulvas incision, endomyometritis</li><li><b>Walking</b>: DVT</li></ul><ul><li><b>&lt; 6 Weeks Post-Partum</b><ul><li><b>Infectious</b><ul><li><b>Infectious — Respiratory</b><ul><li>Pneumonia</li></ul></li><li><b>Infectious — Uterine</b><ul><li>Endometritis</li><li>Retained Products of Conception</li></ul></li><li><b>Infectious — Breasts</b><ul><li>Mastitis</li><li>Abscess</li></ul></li><li><b>Infectious — Urinary</b><ul><li>UTI</li><li>Pyelonephritis</li></ul></li><li><b>Infectious — Wound</b><ul><li>Cesarean Incision</li><li>Vaginal Laceration</li><li>Episiotomy</li><li>Abscess/Hematoma</li></ul></li></ul></li><li><b>Non-Infectious</b><ul><li><b>Non-Infectious — Respiratory</b><ul><li>Atelectasis</li><li>PE</li></ul></li><li><b>Non-Infectious — Uterine</b></li><li><b>Non-Infectious — Thrombotic</b><ul><li>DVT</li><li>Septic Pelvic Thrombophlebitis</li></ul></li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b216a",
+   "title": "Post-Partum Fever (Puerperal)",
+   "src": "fig",
+   "img": "bb-216-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Post-Partum Fever (Puerperal)",
+     "d": "<p><u>6 W’s for Causes of PPF</u></p><ul><li><b>Wind</b>: pneumonia, atelectasis</li><li><b>Water</b>: UTI</li><li><b>“Woobies”</b>: mastitis</li><li><b>Womb</b></li><li><b>Wound</b>: cellulitis, vulvas incision, endomyometritis</li><li><b>Walking</b>: DVT</li></ul>"
+    },
+    {
+     "id": "pp",
+     "k": "q",
+     "t": "< 6 Weeks Post-Partum"
+    },
+    {
+     "id": "in",
+     "k": "q",
+     "t": "Infectious"
+    },
+    {
+     "id": "ni",
+     "k": "q",
+     "t": "Non-Infectious"
+    },
+    {
+     "id": "nr",
+     "k": "dx",
+     "t": "Non-Infectious — Respiratory",
+     "d": "<ul><li>Atelectasis</li><li>PE</li></ul>"
+    },
+    {
+     "id": "nu",
+     "k": "dx",
+     "t": "Non-Infectious — Uterine"
+    },
+    {
+     "id": "nt",
+     "k": "dx",
+     "t": "Non-Infectious — Thrombotic",
+     "d": "<ul><li>DVT</li><li>Septic Pelvic Thrombophlebitis</li></ul>"
+    },
+    {
+     "id": "ir",
+     "k": "dx",
+     "t": "Infectious — Respiratory",
+     "d": "<ul><li>Pneumonia</li></ul>"
+    },
+    {
+     "id": "iu",
+     "k": "dx",
+     "t": "Infectious — Uterine",
+     "d": "<ul><li>Endometritis</li><li>Retained Products of Conception</li></ul>"
+    },
+    {
+     "id": "ib",
+     "k": "dx",
+     "t": "Infectious — Breasts",
+     "d": "<ul><li>Mastitis</li><li>Abscess</li></ul>"
+    },
+    {
+     "id": "iy",
+     "k": "dx",
+     "t": "Infectious — Urinary",
+     "d": "<ul><li>UTI</li><li>Pyelonephritis</li></ul>"
+    },
+    {
+     "id": "iw",
+     "k": "dx",
+     "t": "Infectious — Wound",
+     "d": "<ul><li>Cesarean Incision</li><li>Vaginal Laceration</li><li>Episiotomy</li><li>Abscess/Hematoma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pp"
+    },
+    {
+     "f": "pp",
+     "t": "in",
+     "l": "Infectious"
+    },
+    {
+     "f": "pp",
+     "t": "ni",
+     "l": "Non-Infectious"
+    },
+    {
+     "f": "ni",
+     "t": "nr",
+     "l": "Respiratory"
+    },
+    {
+     "f": "ni",
+     "t": "nu",
+     "l": "Uterine"
+    },
+    {
+     "f": "ni",
+     "t": "nt",
+     "l": "Thrombotic"
+    },
+    {
+     "f": "in",
+     "t": "ir",
+     "l": "Respiratory"
+    },
+    {
+     "f": "in",
+     "t": "iu",
+     "l": "Uterine"
+    },
+    {
+     "f": "in",
+     "t": "ib",
+     "l": "Breasts"
+    },
+    {
+     "f": "in",
+     "t": "iy",
+     "l": "Urinary"
+    },
+    {
+     "f": "in",
+     "t": "iw",
+     "l": "Wound"
+    }
+   ]
+  }
+ ]
+}

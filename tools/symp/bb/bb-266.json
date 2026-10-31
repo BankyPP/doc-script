@@ -1,0 +1,190 @@
+{
+ "key": "266",
+ "en": "Soft Tissue",
+ "th": "พยาธิสภาพเนื้อเยื่ออ่อน",
+ "pdf": "295",
+ "bookpg": "266",
+ "target": null,
+ "new": {
+  "id": "soft-tissue",
+  "th": "พยาธิสภาพเนื้อเยื่ออ่อน",
+  "en": "Soft Tissue",
+  "g": "msk"
+ },
+ "sections": [
+  {
+   "id": "bb-266-scheme",
+   "h": "Soft tissue — septic / aseptic, intra-articular / periarticular (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b266a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b266a",
+   "title": "Soft Tissue",
+   "src": "fig",
+   "img": "bb-266-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Soft Tissue"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Septic",
+     "d": "<ul><li>Septic Bursitis</li><li>Necrotizing Fasciitis</li><li>Septic Tenosynovitis</li><li>Cellulitis</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Aseptic"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Intra-articular"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Periarticular"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Ligament (intra-articular)",
+     "d": "<ul><li>Sprain</li><li>Dislocation (3rd Degrees Sprain)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Articular Cartilage",
+     "d": "<ul><li>Osteochondritis Dissecans</li><li>Bone Contusion</li><li>Chondromalacia</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Synovium",
+     "d": "<ul><li>Traumatic Synovitis</li><li>Monoarthritis</li><li>Polyarthritis</li><li>Synovial Osteochondromatosis</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Fibrous Cartilage",
+     "d": "<ul><li>Meniscal Injury</li><li>Labral Injury</li><li>SLAP Lesion</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Bone (intra-articular)",
+     "d": "<ul><li>Fracture</li><li>Spontaneous Osteonecrosis</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Septic Bursa (periarticular)",
+     "d": "<ul><li>Aseptic Bursitis</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Ligament (periarticular)",
+     "d": "<ul><li>Sprain</li><li>Dislocation (3rd Degree Sprain)</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Tendon/Muscle",
+     "d": "<ul><li>Tendon Rupture</li><li>Muscle Strain</li><li>Contusion</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Bone (periarticular)",
+     "d": "<ul><li>Fracture</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Skin/Fascia",
+     "d": "<ul><li>Laceration</li><li>Contusion</li><li>Fat Pad Contusion</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Septic"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Aseptic"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Intra-articular"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Periarticular"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Ligament"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Articular cartilage"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Synovium"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Fibrous cartilage"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Bone"
+    },
+    {
+     "f": "e",
+     "t": "k",
+     "l": "Septic bursa"
+    },
+    {
+     "f": "e",
+     "t": "l",
+     "l": "Ligament"
+    },
+    {
+     "f": "e",
+     "t": "m",
+     "l": "Tendon/muscle"
+    },
+    {
+     "f": "e",
+     "t": "n",
+     "l": "Bone"
+    },
+    {
+     "f": "e",
+     "t": "o",
+     "l": "Skin/fascia"
+    }
+   ],
+   "note": "ในเล่ม Septic ↔ Aseptic มีลูกศรสองหัวเชื่อมกัน · กล่อง \"Septic Bursa\" ใต้ Periarticular มีรายการ \"Aseptic Bursitis\" ตามที่พิมพ์ · \"Confusion\" ในเล่มแก้เป็น Contusion"
+  }
+ ]
+}

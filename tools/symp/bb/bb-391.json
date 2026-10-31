@@ -1,0 +1,141 @@
+{
+ "key": "391",
+ "en": "Small for Gestational Age",
+ "th": "ทารกเล็กกว่าอายุครรภ์ (SGA)",
+ "pdf": "420",
+ "bookpg": "391",
+ "target": null,
+ "new": {
+  "id": "ped-small-for-gestational-age",
+  "th": "ทารกเล็กกว่าอายุครรภ์ (SGA)",
+  "en": "Small for Gestational Age",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-391-scheme",
+   "h": "Small for Gestational Age scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b391a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>",
+   "sub": [
+    {
+     "id": "bb-391-pattern",
+     "h": "Pattern of growth¥: Symmetric vs Asymmetric IUGR",
+     "html": "<div class=\"tbl\"><table><thead><tr><th></th><th>Symmetric¥</th><th>Asymmetric¥</th></tr></thead><tbody><tr><td>Growth pattern</td><td>Head circumference, length, and weight proportionally decreased</td><td>Head circumference is spared relative to decreased weight, length</td></tr><tr><td>Timing</td><td>Usually occurs early in pregnancy (1<sup>st</sup> or 2<sup>nd</sup> trimester)</td><td>Usually occurs later in pregnancy (3<sup>rd</sup> trimester)</td></tr><tr><td>Causes</td><td>Causes: Intrinsic fetal factors (i.e. genetic) or first-trimester insult (e.g. infection)</td><td>Causes: Often due to maternal factors. Thought to result from adaptation to an unfavourable environment late in pregnancy</td></tr></tbody></table></div>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "b391a",
+   "title": "Small for Gestational Age",
+   "src": "fig",
+   "img": "bb-391-f1.webp",
+   "note": "¥ ดูตารางเปรียบเทียบ Symmetric / Asymmetric ด้านล่างของ scheme",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Small for Gestational Age* (Growth < 10th percentile for GA)"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed pregnancy, and labour/delivery history · detailed physical exam · assess pattern of growth¥ (asymmetric vs symmetric IUGR)"
+    },
+    {
+     "id": "cs",
+     "k": "q",
+     "t": "Constitutionally Small"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Fetal"
+    },
+    {
+     "id": "pf",
+     "k": "dx",
+     "t": "Placental Factors",
+     "d": "<ul><li>Placental insufficiency</li><li>Placental abnormalities (placental abruption, placental infarction, hemangioma, chorioangioma)</li></ul>"
+    },
+    {
+     "id": "mi",
+     "k": "dx",
+     "t": "Maternal Illness",
+     "d": "<ul><li>Chronic Maternal Disease (Eg. Maternal hypertension, Renal insufficiency, pulmonary disease, chronic anemia, Type 1 Diabetes Mellitus, autoimmune disease, etc.)</li><li>Gestational hypertension</li><li>Anatomical uterine abnormalities</li></ul>"
+    },
+    {
+     "id": "ml",
+     "k": "dx",
+     "t": "Maternal Lifestyle",
+     "d": "<ul><li>Malnutrition</li><li>Smoking</li><li>Drug use</li><li>Alcohol</li></ul>"
+    },
+    {
+     "id": "ia",
+     "k": "dx",
+     "t": "Iatrogenic",
+     "d": "<ul><li>Drugs (Eg. Ace inhibitors, phenytoin, etc.)</li></ul>"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li><b>Congenital infections*</b> (Eg. TORCH infections)</li></ul>"
+    },
+    {
+     "id": "ge",
+     "k": "dx",
+     "t": "Genetic",
+     "d": "<ul><li>Chromosomal disorders (Eg. <b>Trisomy 21*</b>)</li><li>Genetic disorders</li><li>Congenital anomalies</li><li>Multiple gestation</li><li>Metabolic disorders</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "cs",
+     "l": "Constitutionally small"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Fetal"
+    },
+    {
+     "f": "b",
+     "t": "pf",
+     "l": "Placental factors"
+    },
+    {
+     "f": "cs",
+     "t": "mi",
+     "l": "Maternal illness"
+    },
+    {
+     "f": "cs",
+     "t": "ml",
+     "l": "Maternal lifestyle"
+    },
+    {
+     "f": "cs",
+     "t": "ia",
+     "l": "Iatrogenic"
+    },
+    {
+     "f": "f",
+     "t": "in",
+     "l": "Infection"
+    },
+    {
+     "f": "f",
+     "t": "ge",
+     "l": "Genetic"
+    }
+   ]
+  }
+ ]
+}

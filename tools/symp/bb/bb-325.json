@@ -1,0 +1,101 @@
+{
+ "key": "325",
+ "en": "Chronic Kidney Disease",
+ "th": "โรคไตเรื้อรัง (เด็ก)",
+ "pdf": "354",
+ "bookpg": "325",
+ "target": null,
+ "new": {
+  "id": "ped-chronic-kidney-disease",
+  "th": "โรคไตเรื้อรัง (เด็ก)",
+  "en": "Chronic Kidney Disease",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-325-scheme",
+   "h": "Chronic Kidney Disease — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b325a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b325a",
+   "title": "Chronic Kidney Disease",
+   "src": "fig",
+   "img": "bb-325-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Kidney Disease"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Decreased kidney function (eGFR &lt; 60ml/min/1.73m²) persistent over at least 3 months"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Pre-Renal (Evidence of Renovascular disease)",
+     "d": "<ul><li>Renal artery stenosis</li><li>Drugs (Eg. NSAIDs)</li><li>Chronic hypoperfusion</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Renal (Abnormal urinalysis: proteinuria/pyuria)"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Post-Renal (Obstruction/hydronephrosis on U/S)",
+     "d": "<ul><li>Obstructive uropathy</li><li>Reflux nephropathy</li><li><b>Constipation*</b></li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Tubular/Interstitial",
+     "d": "<ul><li><b>Urinary Tract Infection*</b> (chronic or recurrent pyelonephritis)</li><li>Congenital abnormalities of the kidney and urinary tract (Eg. Polycystic kidney disease)</li><li>Immune (sarcoid, Sjögren)</li><li>Hypercalciuria/nephrolithiasis</li><li>Drugs (NSAIDs, analgesics)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Glomerular",
+     "d": "<ul><li><b>Nephrotic Syndrome*</b> (steroid resistant)</li><li><b>Glomerulonephritis*</b></li><li><b>Hemolytic Uremic Syndrome*</b></li><li><b>Diabetes*</b></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Pre-Renal"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Renal"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Post-Renal"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Tubular/Interstitial"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Glomerular"
+    }
+   ]
+  }
+ ]
+}

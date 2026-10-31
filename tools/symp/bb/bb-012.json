@@ -1,0 +1,151 @@
+{
+ "key": "012",
+ "en": "Left-Sided Heart Failure",
+ "th": "หัวใจล้มเหลวด้านซ้าย",
+ "pdf": "41",
+ "bookpg": "12",
+ "target": "heart-failure-cm",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-1-5-chf",
+   "id": "bb-012-scheme",
+   "h": "Left-sided heart failure (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b012a\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div><p>Ejection Fraction = SV/EDV = (EDV − ESV)/EDV — SV = Stroke Volume, EDV = End-Diastolic Volume, ESV = End-Systolic Volume.</p><h5>Causes by group</h5><ul><li><b>Valvular disease (preserved diastolic/systolic function)</b>: Mitral Stenosis; Mitral Regurgitation; Aortic Stenosis; Aortic Regurgitation</li><li><b>Myocardial</b><ul><li><b>Systolic dysfunction (reduced ejection fraction)</b><ul><li><b>Impaired contractility</b> — Coronary artery disease: Myocardial Infarction; Transient Myocardial Ischemia · Chronic volume overload: Mitral Regurgitation; Aortic Regurgitation · Dilated cardiomyopathies: Infiltrative; Infectious; Toxic (alcohol, cocaine); Genetic</li><li><b>Increased afterload</b>: Uncontrolled Severe Hypertension; Aortic Stenosis (Severe)</li></ul></li><li><b>Diastolic dysfunction (preserved ejection fraction)</b><ul><li><b>Impaired diastolic filling</b>: Transient Myocardial Ischemia; Left Ventricular Hypertrophy; Restrictive Cardiomyopathy; Pericardial Constriction</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b012a",
+   "title": "Left-Sided Heart Failure",
+   "src": "fig",
+   "img": "bb-012-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Left-Sided Heart Failure",
+     "d": "<p>SV = Stroke Volume · EDV = End-Diastolic Volume · ESV = End-Systolic Volume</p><div class=\"warn\">Potentially acutely life-threatening presentation</div>"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Ejection Fraction = SV/EDV = (EDV − ESV)/EDV"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Valvular Disease (Preserved Diastolic/Systolic Function)",
+     "d": "<ul><li>Mitral Stenosis</li><li>Mitral Regurgitation</li><li>Aortic Stenosis</li><li>Aortic Regurgitation</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Myocardial"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Systolic Dysfunction (Reduced Ejection Fraction)"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Diastolic Dysfunction (Preserved Ejection Fraction)"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Impaired Contractility"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Increased Afterload",
+     "d": "<ul><li>Uncontrolled Severe Hypertension</li><li>Aortic Stenosis (Severe)</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Impaired Diastolic Filling",
+     "d": "<ul><li>Transient Myocardial Ischemia</li><li>Left Ventricular Hypertrophy</li><li>Restrictive Cardiomyopathy</li><li>Pericardial Constriction</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Coronary Artery Disease",
+     "d": "<ul><li>Myocardial Infarction</li><li>Transient Myocardial Ischemia</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Chronic Volume Overload",
+     "d": "<ul><li>Mitral Regurgitation</li><li>Aortic Regurgitation</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Dilated Cardiomyopathies",
+     "d": "<ul><li>Infiltrative</li><li>Infectious</li><li>Toxic (alcohol, cocaine)</li><li>Genetic</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Valvular disease"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Myocardial"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Systolic dysfunction (reduced EF)"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Diastolic dysfunction (preserved EF)"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Impaired contractility"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Increased afterload"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Impaired diastolic filling"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "Coronary artery disease"
+    },
+    {
+     "f": "g",
+     "t": "k",
+     "l": "Chronic volume overload"
+    },
+    {
+     "f": "g",
+     "t": "l",
+     "l": "Dilated cardiomyopathies"
+    }
+   ],
+   "note": "ในหนังสือมีลูกศรสองหัวระหว่าง Valvular Disease กับ Myocardial · Potentially acutely life-threatening presentation"
+  }
+ ]
+}

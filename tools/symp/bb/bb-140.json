@@ -1,0 +1,336 @@
+{
+ "key": "140",
+ "en": "Gynecomastia",
+ "th": "เต้านมโตในผู้ชาย",
+ "pdf": "169–170",
+ "bookpg": "140–141",
+ "target": "gynecomastia",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-5-5-causes",
+   "id": "bb-140-est-hcg",
+   "h": "Gynecomastia — Increased estrogen & HCG (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b140a\"></div><ul><li><b>Gynecomastia</b><ul><li><span class=\"tag\">True gynecomastia</span> <b>True Gynecomastia</b><ul><li><span class=\"tag\">Normal blood work</span> <b>Normal Blood Work</b><ul><li>Idiopathic</li></ul></li><li><span class=\"tag\">Increased estrogen</span> <b>Increased Estrogen</b><ul><li><span class=\"tag\">No testicular mass</span> <b>No Testicular Mass on Ultrasound</b><ul><li>Adrenal Neoplasm</li><li>Increased Extraglomerular Aromatase Activity</li><li>Liver Disease</li></ul></li><li><span class=\"tag\">Testicular mass</span> <b>Testicular Mass on Ultrasound</b><ul><li>Leydig Cell Tumor</li><li>Sertoli Cell Tumor</li></ul></li></ul></li><li><span class=\"tag\">Increased HCG</span> <b>Increased HCG</b><ul><li><span class=\"tag\">No testicular mass</span> <b>No Testicular Mass on Ultrasound</b><ul><li>Extragonadal Germ Cell Tumor</li><li>HCG Secreting Non-Trophoblastic Neoplasm</li></ul></li><li><span class=\"tag\">Testicular mass</span> <b>Testicular Mass on Ultrasound</b><ul><li>Testicular Germ Cell Tumor</li></ul></li></ul></li><li><span class=\"tag\">Increased LH (เส้นประ → หน้า 141)</span> <b>Increased LH</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 141 (Increased LH &amp; Decreased Testosterone)</span></p></li><li><span class=\"tag\">Low testosterone + normal/low LH (เส้นประ → 141)</span> <b>Decreased Testosterone &amp; Normal/Low LH</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 141 (Increased LH &amp; Decreased Testosterone)</span></p></li></ul></li><li><span class=\"tag\">Pseudogynecomastia</span> <b>Pseudogynecomastia</b> <span class=\"muted\">— Fat Deposition Only</span></li><li><span class=\"tag\">Physiologic</span> <b>Physiologic</b><ul><li>Newborns</li><li>Pubescent/ Adolescent</li><li>Elderly</li></ul></li></ul></li></ul>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-5-5-causes",
+   "id": "bb-140-lh-testo",
+   "h": "Gynecomastia — Increased LH & decreased testosterone (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b140b\"></div><ul><li><b>Gynecomastia</b><ul><li><span class=\"tag\">True gynecomastia</span> <b>True Gynecomastia</b><ul><li><span class=\"tag\">Normal blood work (เส้นประ → หน้า 140)</span> <b>Normal Blood Work</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 140 (Increased Estrogen &amp; Increased HCG)</span></p></li><li><span class=\"tag\">Increased estrogen (เส้นประ → หน้า 140)</span> <b>Increased Estrogen</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 140 (Increased Estrogen &amp; Increased HCG)</span></p></li><li><span class=\"tag\">Increased HCG (เส้นประ → หน้า 140)</span> <b>Increased HCG</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 140 (Increased Estrogen &amp; Increased HCG)</span></p></li><li><span class=\"tag\">Increased LH</span> <b>Increased LH</b><ul><li><span class=\"tag\">Increased testosterone</span> <b>Increased Testosterone</b><ul><li>Testicular Germ Cell Tumor</li></ul><ul><li><span class=\"tag\">Increased T4, decreased TSH</span> <b>Increased T4, Decreased TSH</b><ul><li>Hyperthyroidism</li></ul></li><li><span class=\"tag\">Normal T4 and TSH</span> <b>Normal T4 and TSH</b><ul><li>Androgen Resistance</li></ul></li></ul></li><li><span class=\"tag\">Decreased testosterone</span> <b>Decreased Testosterone</b><ul><li>Hypogonadism</li><li>Klinefelter’s Syndrome</li><li>Kallman’s Syndrome</li><li>Testicular Torsion</li><li>Testicular Trauma</li><li>Congenital Anorchia</li><li>Viral Orchitis</li></ul></li></ul></li><li><span class=\"tag\">Decreased testosterone + normal/low LH</span> <b>Decreased Testosterone &amp; Normal/Low LH</b><ul><li><span class=\"tag\">Increased prolactin</span> <b>Increased Prolactin</b><ul><li>Prolactin Secreting Tumor</li></ul></li><li><span class=\"tag\">Normal prolactin</span> <b>Normal Prolactin</b><ul><li>Non-Tumor Secondary Hypogonadism</li></ul></li></ul></li></ul></li><li><span class=\"tag\">Pseudogynecomastia</span> <b>Pseudogynecomastia</b> <span class=\"muted\">— Fat Deposition Only</span></li><li><span class=\"tag\">Physiologic</span> <b>Physiologic</b><ul><li>Newborns</li><li>Pubescent Adolescent</li><li>Elderly</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b140a",
+   "title": "Gynecomastia — Increased Estrogen &amp; Increased HCG",
+   "src": "fig",
+   "img": "bb-140-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Gynecomastia"
+    },
+    {
+     "id": "t",
+     "k": "q",
+     "t": "True Gynecomastia"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Pseudogynecomastia",
+     "d": "<p>Fat Deposition Only</p>"
+    },
+    {
+     "id": "ph",
+     "k": "dx",
+     "t": "Physiologic",
+     "d": "<ul><li>Newborns</li><li>Pubescent/ Adolescent</li><li>Elderly</li></ul>"
+    },
+    {
+     "id": "nb",
+     "k": "dx",
+     "t": "Normal Blood Work",
+     "d": "<ul><li>Idiopathic</li></ul>"
+    },
+    {
+     "id": "ie",
+     "k": "q",
+     "t": "Increased Estrogen"
+    },
+    {
+     "id": "ih",
+     "k": "q",
+     "t": "Increased HCG"
+    },
+    {
+     "id": "lh",
+     "k": "dx",
+     "t": "Increased LH",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 141 (Increased LH &amp; Decreased Testosterone)</span></p>"
+    },
+    {
+     "id": "dt",
+     "k": "dx",
+     "t": "Decreased Testosterone &amp; Normal/Low LH",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 141 (Increased LH &amp; Decreased Testosterone)</span></p>"
+    },
+    {
+     "id": "e1",
+     "k": "dx",
+     "t": "No Testicular Mass on Ultrasound",
+     "d": "<ul><li>Adrenal Neoplasm</li><li>Increased Extraglomerular Aromatase Activity</li><li>Liver Disease</li></ul>"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "Testicular Mass on Ultrasound",
+     "d": "<ul><li>Leydig Cell Tumor</li><li>Sertoli Cell Tumor</li></ul>"
+    },
+    {
+     "id": "h1",
+     "k": "dx",
+     "t": "No Testicular Mass on Ultrasound",
+     "d": "<ul><li>Extragonadal Germ Cell Tumor</li><li>HCG Secreting Non-Trophoblastic Neoplasm</li></ul>"
+    },
+    {
+     "id": "h2",
+     "k": "dx",
+     "t": "Testicular Mass on Ultrasound",
+     "d": "<ul><li>Testicular Germ Cell Tumor</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "t",
+     "l": "True gynecomastia"
+    },
+    {
+     "f": "r",
+     "t": "p",
+     "l": "Pseudogynecomastia"
+    },
+    {
+     "f": "r",
+     "t": "ph",
+     "l": "Physiologic"
+    },
+    {
+     "f": "t",
+     "t": "nb",
+     "l": "Normal blood work"
+    },
+    {
+     "f": "t",
+     "t": "ie",
+     "l": "Increased estrogen"
+    },
+    {
+     "f": "t",
+     "t": "ih",
+     "l": "Increased HCG"
+    },
+    {
+     "f": "t",
+     "t": "lh",
+     "l": "Increased LH (เส้นประ → หน้า 141)"
+    },
+    {
+     "f": "t",
+     "t": "dt",
+     "l": "Low testosterone + normal/low LH (เส้นประ → 141)"
+    },
+    {
+     "f": "ie",
+     "t": "e1",
+     "l": "No testicular mass"
+    },
+    {
+     "f": "ie",
+     "t": "e2",
+     "l": "Testicular mass"
+    },
+    {
+     "f": "ih",
+     "t": "h1",
+     "l": "No testicular mass"
+    },
+    {
+     "f": "ih",
+     "t": "h2",
+     "l": "Testicular mass"
+    }
+   ]
+  },
+  {
+   "id": "b140b",
+   "title": "Gynecomastia — Increased LH &amp; Decreased Testosterone",
+   "src": "fig",
+   "img": "bb-140-f2.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Gynecomastia"
+    },
+    {
+     "id": "t",
+     "k": "q",
+     "t": "True Gynecomastia"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Pseudogynecomastia",
+     "d": "<p>Fat Deposition Only</p>"
+    },
+    {
+     "id": "ph",
+     "k": "dx",
+     "t": "Physiologic",
+     "d": "<ul><li>Newborns</li><li>Pubescent Adolescent</li><li>Elderly</li></ul>"
+    },
+    {
+     "id": "nb",
+     "k": "dx",
+     "t": "Normal Blood Work",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 140 (Increased Estrogen &amp; Increased HCG)</span></p>"
+    },
+    {
+     "id": "ie",
+     "k": "dx",
+     "t": "Increased Estrogen",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 140 (Increased Estrogen &amp; Increased HCG)</span></p>"
+    },
+    {
+     "id": "ih",
+     "k": "dx",
+     "t": "Increased HCG",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 140 (Increased Estrogen &amp; Increased HCG)</span></p>"
+    },
+    {
+     "id": "lh",
+     "k": "q",
+     "t": "Increased LH"
+    },
+    {
+     "id": "dt",
+     "k": "q",
+     "t": "Decreased Testosterone &amp; Normal/Low LH"
+    },
+    {
+     "id": "it",
+     "k": "dx",
+     "t": "Increased Testosterone",
+     "d": "<ul><li>Testicular Germ Cell Tumor</li></ul>"
+    },
+    {
+     "id": "dte",
+     "k": "dx",
+     "t": "Decreased Testosterone",
+     "d": "<ul><li>Hypogonadism</li><li>Klinefelter’s Syndrome</li><li>Kallman’s Syndrome</li><li>Testicular Torsion</li><li>Testicular Trauma</li><li>Congenital Anorchia</li><li>Viral Orchitis</li></ul>"
+    },
+    {
+     "id": "t4",
+     "k": "dx",
+     "t": "Increased T4, Decreased TSH",
+     "d": "<ul><li>Hyperthyroidism</li></ul>"
+    },
+    {
+     "id": "nt",
+     "k": "dx",
+     "t": "Normal T4 and TSH",
+     "d": "<ul><li>Androgen Resistance</li></ul>"
+    },
+    {
+     "id": "ip",
+     "k": "dx",
+     "t": "Increased Prolactin",
+     "d": "<ul><li>Prolactin Secreting Tumor</li></ul>"
+    },
+    {
+     "id": "np",
+     "k": "dx",
+     "t": "Normal Prolactin",
+     "d": "<ul><li>Non-Tumor Secondary Hypogonadism</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "t",
+     "l": "True gynecomastia"
+    },
+    {
+     "f": "r",
+     "t": "p",
+     "l": "Pseudogynecomastia"
+    },
+    {
+     "f": "r",
+     "t": "ph",
+     "l": "Physiologic"
+    },
+    {
+     "f": "t",
+     "t": "nb",
+     "l": "Normal blood work (เส้นประ → หน้า 140)"
+    },
+    {
+     "f": "t",
+     "t": "ie",
+     "l": "Increased estrogen (เส้นประ → หน้า 140)"
+    },
+    {
+     "f": "t",
+     "t": "ih",
+     "l": "Increased HCG (เส้นประ → หน้า 140)"
+    },
+    {
+     "f": "t",
+     "t": "lh",
+     "l": "Increased LH"
+    },
+    {
+     "f": "t",
+     "t": "dt",
+     "l": "Decreased testosterone + normal/low LH"
+    },
+    {
+     "f": "lh",
+     "t": "it",
+     "l": "Increased testosterone"
+    },
+    {
+     "f": "lh",
+     "t": "dte",
+     "l": "Decreased testosterone"
+    },
+    {
+     "f": "it",
+     "t": "t4",
+     "l": "Increased T4, decreased TSH"
+    },
+    {
+     "f": "it",
+     "t": "nt",
+     "l": "Normal T4 and TSH"
+    },
+    {
+     "f": "dt",
+     "t": "ip",
+     "l": "Increased prolactin"
+    },
+    {
+     "f": "dt",
+     "t": "np",
+     "l": "Normal prolactin"
+    }
+   ]
+  }
+ ]
+}

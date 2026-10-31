@@ -1,0 +1,219 @@
+{
+ "key": "048",
+ "en": "Approach to Bleeding / Bruising",
+ "th": "แนวทางเลือดออก/ฟกช้ำ (เกล็ดเลือด หลอดเลือด โปรตีนการแข็งตัวของเลือด)",
+ "pdf": "77–78",
+ "bookpg": "48–49",
+ "target": "abnormal-bleeding",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-4-algo",
+   "id": "bb-048-scheme",
+   "h": "Approach to Bleeding / Bruising scheme (Blackbook)",
+   "html": "",
+   "sub": [
+    {
+     "id": "bb-048-plt",
+     "h": "Platelets & Vascular System",
+     "html": "<div class=\"flow\" data-flow=\"b048a\"></div>"
+    },
+    {
+     "id": "bb-048-coag",
+     "h": "Coagulation Proteins",
+     "html": "<div class=\"flow\" data-flow=\"b048b\"></div>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "yb-6-5-algo",
+   "html": "<p><b>Disordered platelet function (qualitative defect)</b></p><ul><li>Congenital: rare</li><li>Acquired: Drugs (e.g. ASA), Renal Disease</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Vascular system</b></p><ul><li>Congenital: Connective Tissue Disorders, Hereditary Telangiectasia</li><li>Acquired: Steroids, Vasculitis</li></ul><p><b>Coagulation proteins</b></p><ul><li>Congenital: Factor VIII Deficiency, Factor IX Deficiency, Von Willebrand's Disease, Other deficiencies</li><li>Acquired: Anticoagulation (Iatrogenic), Liver Disease, Vitamin K Deficiency, Disseminated Intravascular Coagulation</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b048a",
+   "title": "Approach to Bleeding / Bruising — Platelets & Vascular System",
+   "src": "fig",
+   "img": "bb-048-f1.webp",
+   "note": "เส้นประไปกล่อง Coagulation Proteins = ดู scheme หน้าถัดไป · \"IITelangiectasia\" ในหนังสือแก้เป็น Telangiectasia",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Bleeding/Bruising"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Platelets"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Vascular System"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "Coagulation Proteins"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Thrombocytopenia — Quantitative Defect",
+     "d": "<ul><li>Decreased Production</li><li>Increased Destruction</li><li>Abnormal Sequestration</li><li>(See thrombocytopenia scheme)</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Disordered Platelet Function — Qualitative Defect"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Congenital — Rare"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Acquired",
+     "d": "<ul><li>Drugs (e.g. ASA)</li><li>Renal Disease</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Connective Tissue Disorders</li><li>Hereditary Telangiectasia</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Acquired",
+     "d": "<ul><li>Steroids</li><li>Vasculitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Platelets"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Vascular System"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Coagulation Proteins (dashed: next scheme)"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Thrombocytopenia (quantitative)"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Disordered platelet function (qualitative)"
+    },
+    {
+     "f": "f",
+     "t": "g",
+     "l": "Congenital"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Acquired"
+    },
+    {
+     "f": "c",
+     "t": "i",
+     "l": "Congenital"
+    },
+    {
+     "f": "c",
+     "t": "j",
+     "l": "Acquired"
+    }
+   ]
+  },
+  {
+   "id": "b048b",
+   "title": "Approach to Bleeding / Bruising — Coagulation Proteins",
+   "src": "fig",
+   "img": "bb-048-f2.webp",
+   "note": "เส้นประไปกล่อง Platelets / Vascular System = ดู scheme หน้าก่อนหน้า",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Bleeding/Bruising"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Platelets"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Vascular System"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Coagulation Proteins"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Factor VIII Deficiency</li><li>Factor IX Deficiency</li><li>Von Willebrand's Disease</li><li>Other deficiencies</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Acquired",
+     "d": "<ul><li>Anticoagulation (Iatrogenic)</li><li>Liver Disease</li><li>Vitamin K Deficiency</li><li>Disseminated Intravascular Coagulation</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Platelets (dashed: previous scheme)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Vascular System (dashed: previous scheme)"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Coagulation Proteins"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Congenital"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Acquired"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,123 @@
+{
+ "key": "355",
+ "en": "Mouth Disorders (Pediatric)",
+ "th": "โรคในช่องปากเด็ก",
+ "pdf": "384",
+ "bookpg": "355",
+ "target": null,
+ "new": {
+  "id": "ped-mouth-disorders",
+  "th": "โรคในช่องปากเด็ก",
+  "en": "Mouth Disorders (Pediatric)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-355-scheme",
+   "h": "Mouth Disorders (Pediatric) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b355a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b355a",
+   "title": "Mouth Disorders (Pediatric)",
+   "src": "fig",
+   "img": "bb-355-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Mouth Disorders"
+    },
+    {
+     "id": "t",
+     "k": "dx",
+     "t": "Teeth",
+     "d": "<ul><li>Teething</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "q",
+     "t": "Mucous Membranes"
+    },
+    {
+     "id": "p",
+     "k": "q",
+     "t": "Painful"
+    },
+    {
+     "id": "np",
+     "k": "q",
+     "t": "Non-Painful"
+    },
+    {
+     "id": "gi",
+     "k": "dx",
+     "t": "Gastrointestinal",
+     "d": "<ul><li>Crohn’s Disease</li><li>Ulcerative Colitis</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Gum Disease (e.g. Gingivitis)</li><li>Hand, Foot and Mouth Disease (Coxsackie Virus)</li><li>Streptococcal Throat Infection</li><li>Canker Sore</li><li>Herpes Simplex Virus</li><li>Inflamed Papillae (e.g. Burn)</li></ul>"
+    },
+    {
+     "id": "ni",
+     "k": "dx",
+     "t": "Non-Inflammatory",
+     "d": "<ul><li>Impetigo</li><li>Mucocele</li><li>Candidiasis</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Inflammation",
+     "d": "<ul><li>Allergic Reaction</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "t",
+     "l": "Teeth"
+    },
+    {
+     "f": "a",
+     "t": "m",
+     "l": "Mucous membranes"
+    },
+    {
+     "f": "m",
+     "t": "p",
+     "l": "Painful"
+    },
+    {
+     "f": "m",
+     "t": "np",
+     "l": "Non-painful"
+    },
+    {
+     "f": "p",
+     "t": "gi",
+     "l": "Gastrointestinal"
+    },
+    {
+     "f": "p",
+     "t": "o",
+     "l": "Other"
+    },
+    {
+     "f": "np",
+     "t": "ni",
+     "l": "Non-inflammatory"
+    },
+    {
+     "f": "np",
+     "t": "i",
+     "l": "Inflammation"
+    }
+   ]
+  }
+ ]
+}

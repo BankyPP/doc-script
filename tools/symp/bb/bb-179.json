@@ -1,0 +1,108 @@
+{
+ "key": "179",
+ "en": "Hemiplegia",
+ "th": "อัมพาตครึ่งซีก",
+ "pdf": "208",
+ "bookpg": "179",
+ "target": "weakness",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "umn-lmn",
+   "id": "bb-179-scheme",
+   "h": "Hemiplegia — UMN weakness (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b179a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-cortex",
+   "html": "<p><b>Cerebral hemisphere (contralateral motor cortex)</b></p><ul><li>Aphasia</li><li>Apraxia</li><li>Agnosia</li><li>Agraphia</li><li>Acalculia</li><li>Alexia</li><li>Anomia</li><li>Anosognosia</li><li>Asterognosia</li><li>Seizures</li><li>Personality Changes</li><li>Cognition/Confusion, Dementia</li><li>+/- Sensory Loss</li></ul><p><b>Contralateral/sub-cortical (corona radiata, internal capsule)</b></p><ul><li>May be without sensory loss</li><li>May be combined with contralateral sensory loss</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-bs",
+   "html": "<p><b>Brain stem</b></p><ul><li>Diplopia</li><li>Dysarthria</li><li>Dysphagia</li><li>Ptosis</li><li>Decreased Level of Consciousness</li><li>Cranial Nerve Palsies</li><li>‘Crossed’ Sensory Findings: ipsilateral facial and contralateral extremity findings</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-cord",
+   "html": "<p><b>Unilateral spinal cord lesions above ~C5</b></p><ul><li>Brown-Séquard Syndrome (sensory loss to pain and temperature contralateral to weakness, vibration and proprioception loss ipsilateral to weakness)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "umn-lmn",
+   "html": "<p><b>UMN weakness</b></p><ul><li>Tone: Spastic with clasp-knife resistance</li><li>Reflexes: Hyperactive +/- Clonus</li><li>Pathological Reflexes: Babinski/Hoffman</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b179a",
+   "title": "Hemiplegia — Upper Motor Neuron Weakness",
+   "src": "fig",
+   "img": "bb-179-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Upper Motor Neuron Weakness"
+    },
+    {
+     "id": "s",
+     "k": "act",
+     "t": "UMN signs: spastic tone, hyperactive reflexes, Babinski/Hoffman",
+     "d": "<ul><li>Tone: Spastic with clasp-knife resistance</li><li>Reflexes: Hyperactive +/- Clonus</li><li>Pathological Reflexes: Babinski/Hoffman</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Cerebral Hemisphere (Contralateral motor cortex)",
+     "d": "<ul><li>Aphasia</li><li>Apraxia</li><li>Agnosia</li><li>Agraphia</li><li>Acalculia</li><li>Alexia</li><li>Anomia</li><li>Anosognosia</li><li>Asterognosia</li><li>Seizures</li><li>Personality Changes</li><li>Cognition/Confusion, Dementia</li><li>+/- Sensory Loss</li></ul>"
+    },
+    {
+     "id": "sc",
+     "k": "dx",
+     "t": "Contralateral/Sub-Cortical (Corona radiata, Internal Capsule)",
+     "d": "<ul><li>May be without sensory loss</li><li>May be combined with contralateral sensory loss</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Brain Stem",
+     "d": "<ul><li>Diplopia</li><li>Dysarthria</li><li>Dysphagia</li><li>Ptosis</li><li>Decreased Level of Consciousness</li><li>Cranial Nerve Palsies</li><li>‘Crossed’ Sensory Findings: ipsilateral facial and contralateral extremity findings</li></ul>"
+    },
+    {
+     "id": "sp",
+     "k": "dx",
+     "t": "Unilateral Spinal Cord Lesions Above ~C5",
+     "d": "<ul><li>Brown-Séquard Syndrome (sensory loss to pain and temperature contralateral to weakness, vibration and proprioception loss ipsilateral to weakness)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "s"
+    },
+    {
+     "f": "s",
+     "t": "c",
+     "l": "Cerebral hemisphere"
+    },
+    {
+     "f": "s",
+     "t": "sc",
+     "l": "Contralateral / sub-cortical"
+    },
+    {
+     "f": "s",
+     "t": "b",
+     "l": "Brain stem"
+    },
+    {
+     "f": "s",
+     "t": "sp",
+     "l": "Unilateral spinal cord lesion above ~C5"
+    }
+   ]
+  }
+ ]
+}

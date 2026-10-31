@@ -1,0 +1,187 @@
+{
+ "key": "117",
+ "en": "Metabolic Alkalosis",
+ "th": "ภาวะเลือดเป็นด่างจากเมแทบอลิก",
+ "pdf": "146",
+ "bookpg": "117",
+ "target": null,
+ "new": {
+  "id": "metabolic-alkalosis",
+  "th": "เมแทบอลิกอัลคาโลซิส",
+  "en": "Metabolic Alkalosis",
+  "g": "kub"
+ },
+ "sections": [
+  {
+   "id": "bb-117-scheme",
+   "h": "Metabolic Alkalosis scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b117a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b117a",
+   "title": "Metabolic Alkalosis",
+   "src": "fig",
+   "img": "bb-117-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Sustained Metabolic Alkalosis"
+    },
+    {
+     "id": "tr",
+     "k": "dx",
+     "t": "Transient",
+     "d": "<ul><li>IV Bicarbonate</li><li>Acute correction of hypercapnia</li></ul>"
+    },
+    {
+     "id": "rf",
+     "k": "dx",
+     "t": "Renal Failure with Ingestion",
+     "d": "<ul><li>Milk-Alkali syndrome</li><li>Bicarbonate ingestion</li></ul>"
+    },
+    {
+     "id": "vs",
+     "k": "act",
+     "t": "Volume Status Assessment"
+    },
+    {
+     "id": "exp",
+     "k": "q",
+     "t": "Expanded Effective Arterial Blood Volume (No signs of volume depletion)"
+    },
+    {
+     "id": "con",
+     "k": "q",
+     "t": "Contracted Effective Arterial Blood Volume (Signs of volume depletion)"
+    },
+    {
+     "id": "gi",
+     "k": "q",
+     "t": "Gastrointestinal Loss (Low U Cl⁻)"
+    },
+    {
+     "id": "rl",
+     "k": "q",
+     "t": "Renal Loss (High U Cl⁻)"
+    },
+    {
+     "id": "gas",
+     "k": "dx",
+     "t": "Gastric",
+     "d": "<ul><li>Vomiting</li><li>NG suction</li></ul>"
+    },
+    {
+     "id": "lb",
+     "k": "dx",
+     "t": "Lower Bowel",
+     "d": "<ul><li>Villous adenoma</li><li>Laxative abuse</li><li>Chloridorrhea</li></ul>"
+    },
+    {
+     "id": "nra",
+     "k": "dx",
+     "t": "Non-reabsorbed anions",
+     "d": "<ul><li>Penicillins</li></ul>"
+    },
+    {
+     "id": "itt",
+     "k": "dx",
+     "t": "Impaired tubular transport",
+     "d": "<ul><li>Diuretics (loop/thiazide)</li><li>Hypomagnesemia</li><li>Barrter's/Gitelman's</li></ul>"
+    },
+    {
+     "id": "hh",
+     "k": "dx",
+     "t": "High Renin High Aldosterone",
+     "d": "<ul><li>Malignant Hypertension</li><li>Renovascular Hypertension</li><li>Renin-Secreting Tumor</li></ul>"
+    },
+    {
+     "id": "lh",
+     "k": "dx",
+     "t": "Low Renin High Aldosterone",
+     "d": "<ul><li>Aldosterone-secreting mass</li><li>Adrenal hyperplasia</li><li>Glucocorticoid remediable aldosteronism</li></ul>"
+    },
+    {
+     "id": "ll",
+     "k": "dx",
+     "t": "Low Renin Low Aldosterone",
+     "d": "<ul><li>Licorice</li><li>Liddle's Syndrome</li><li>Enzyme deficiency</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "tr",
+     "l": "Rule out (transient)"
+    },
+    {
+     "f": "a",
+     "t": "rf",
+     "l": "Rule out (renal failure + ingestion)"
+    },
+    {
+     "f": "a",
+     "t": "vs",
+     "l": "Sustained"
+    },
+    {
+     "f": "vs",
+     "t": "exp",
+     "l": "Expanded EABV"
+    },
+    {
+     "f": "vs",
+     "t": "con",
+     "l": "Contracted EABV"
+    },
+    {
+     "f": "con",
+     "t": "gi",
+     "l": "GI loss (low U Cl⁻)"
+    },
+    {
+     "f": "con",
+     "t": "rl",
+     "l": "Renal loss (high U Cl⁻)"
+    },
+    {
+     "f": "gi",
+     "t": "gas",
+     "l": "Gastric"
+    },
+    {
+     "f": "gi",
+     "t": "lb",
+     "l": "Lower bowel"
+    },
+    {
+     "f": "rl",
+     "t": "nra",
+     "l": "Non-reabsorbed anions"
+    },
+    {
+     "f": "rl",
+     "t": "itt",
+     "l": "Impaired tubular transport"
+    },
+    {
+     "f": "exp",
+     "t": "hh",
+     "l": "High renin, high aldosterone"
+    },
+    {
+     "f": "exp",
+     "t": "lh",
+     "l": "Low renin, high aldosterone"
+    },
+    {
+     "f": "exp",
+     "t": "ll",
+     "l": "Low renin, low aldosterone"
+    }
+   ]
+  }
+ ]
+}

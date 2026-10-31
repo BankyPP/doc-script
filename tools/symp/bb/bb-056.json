@@ -1,0 +1,87 @@
+{
+ "key": "056",
+ "en": "Lymphocytosis",
+ "th": "ลิมโฟไซต์สูง",
+ "pdf": "85",
+ "bookpg": "56",
+ "target": null,
+ "new": {
+  "id": "lymphocytosis",
+  "th": "ลิมโฟไซต์สูง",
+  "en": "Lymphocytosis",
+  "g": "heme"
+ },
+ "sections": [
+  {
+   "id": "bb-056-scheme",
+   "h": "Lymphocytosis scheme",
+   "html": "<div class=\"flow\" data-flow=\"b056a\"></div>"
+  },
+  {
+   "id": "bb-056-list",
+   "h": "Classification (text)",
+   "html": "<ul><li><b>Increased Lymphocytes</b><ul><li><b>Reactive — Polyclonal proliferation</b><ul><li><b>Infectious — Atypical polyclonal T-Lymphocytes</b><ul><li>Viral (EBV, CMV, Rubella, Mumps, Hepatitis)</li><li><i>Bordetella pertussis</i></li></ul></li><li><b>Other</b><ul><li>Hypersensitivity reactions (drugs, stress)</li><li>Asplenia</li><li>Autoimmune (Rheumatoid Arthritis)</li></ul></li></ul></li><li><b>Neoplastic — Monoclonal proliferation of mature lymphocytes</b><ul><li>Chronic lymphoblastic leukemia</li><li>Non-Hodgkin's Lymphoma</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b056a",
+   "title": "Lymphocytosis",
+   "src": "fig",
+   "img": "bb-056-f1.webp",
+   "note": "\"Chronic lymphoblastic leukemia\" ตามที่พิมพ์ในหนังสือ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Increased Lymphocytes"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Reactive — Polyclonal proliferation"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Neoplastic — Monoclonal proliferation of mature lymphocytes",
+     "d": "<ul><li>Chronic lymphoblastic leukemia</li><li>Non-Hodgkin's Lymphoma</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Infectious — Atypical polyclonal T-Lymphocytes",
+     "d": "<ul><li>Viral (EBV, CMV, Rubella, Mumps, Hepatitis)</li><li><i>Bordetella pertussis</i></li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Hypersensitivity reactions (drugs, stress)</li><li>Asplenia</li><li>Autoimmune (Rheumatoid Arthritis)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Reactive"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Infectious"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,256 @@
+{
+ "key": "147",
+ "en": "Hypocalcemia",
+ "th": "แคลเซียมในเลือดต่ำ",
+ "pdf": "176–178",
+ "bookpg": "147–149",
+ "target": null,
+ "new": {
+  "id": "hypocalcemia",
+  "th": "แคลเซียมในเลือดต่ำ",
+  "en": "Hypocalcemia",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "bb-147-high-phos",
+   "h": "Hypocalcemia — High Phosphate (หน้า 147)",
+   "html": "<div class=\"flow\" data-flow=\"b147a\"></div><ul><li><b>Hypocalcemia</b> <span class=\"muted\">— Total Corrected Serum Calcium &lt; 2.10 mmol/L</span><ul><li><span class=\"tag\">Low phosphate (เส้นประ → หน้า 148)</span> <b>Low Phosphate</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 148 (Low Phosphate)</span></p></li><li><span class=\"tag\">High phosphate</span> <b>High Phosphate</b><ul><li><span class=\"tag\">Normal creatinine · low/normal PTH</span> <b>Low/Normal PTH</b> <span class=\"muted\">— Normal Creatinine</span><ul><li>Hypoparathyroidism (e.g. Acquired, Autoimmune, Idiopathic, Congenital, Infiltrative)</li><li>Activating Mutation in Calcium Sensing Receptor (CaSR)</li><li>Hypomagnesemia</li></ul></li><li><span class=\"tag\">Normal creatinine · high PTH</span> <b>High PTH</b> <span class=\"muted\">— Normal Creatinine</span><ul><li>PTH Resistance (Pseudo-hypoparathyroidism)</li><li>Calcium Complexing (Citrate Infusion, Pancreatitis)</li></ul></li><li><span class=\"tag\">High creatinine · low PTH</span> <b>Low PTH</b> <span class=\"muted\">— High Creatinine</span><ul><li>Hypoparathyroidism with Chronic Kidney Disease</li></ul></li><li><span class=\"tag\">High creatinine · high PTH</span> <b>High PTH</b> <span class=\"muted\">— High Creatinine</span><ul><li>Secondary Hyperparathyroidism</li><li>Rhabdomyolysis</li><li>Phosphate Poisoning</li></ul></li></ul></li></ul></li></ul><div class=\"pearl\"><p>Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]</p></div>"
+  },
+  {
+   "id": "bb-147-low-phos",
+   "h": "Hypocalcemia — Low Phosphate (หน้า 148)",
+   "html": "<div class=\"flow\" data-flow=\"b147b\"></div><ul><li><b>Hypocalcemia</b> <span class=\"muted\">— Total Corrected Serum Calcium &lt; 2.10 mmol/L</span><ul><li><span class=\"tag\">Low phosphate</span> <b>Low Phosphate</b><ul><li><span class=\"tag\">Low/normal PTH</span> <b>Low/Normal PTH</b><ul><li>Severe Malnutrition with Hypomagnesemia</li></ul></li><li><span class=\"tag\">High PTH</span> <b>High PTH</b><ul><li>Vitamin D Deficiency (e.g. Diet, Malabsorption, Phenytoin, Nephrotic Syndrome, Hepatobiliary Disease)</li><li>Hereditary Vitamin D Resistance</li><li>1-α-Hydroxylase Deficiency</li></ul></li></ul></li><li><span class=\"tag\">High phosphate (เส้นประ → หน้า 147)</span> <b>High Phosphate</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 147 (High Phosphate)</span></p></li></ul></li></ul><div class=\"pearl\"><p>Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]</p></div>"
+  },
+  {
+   "id": "bb-147-pth",
+   "h": "Hypocalcemia — High / Low PTH (หน้า 149)",
+   "html": "<div class=\"flow\" data-flow=\"b147c\"></div><ul><li><b>Hypocalcemia</b> <span class=\"muted\">— Total Corrected Serum Calcium &lt; 2.10 mmol/L</span><ul><li><span class=\"tag\">Low PTH</span> <b>Low PTH — Hypoparathyroidism</b><ul><li><span class=\"tag\">Congenital (pediatric)</span> <b>Congenital (Pediatric)</b><ul><li>Ca-S-R</li><li>DiGeorge</li></ul></li><li><span class=\"tag\">Acquired</span> <b>Acquired</b><ul><li>Post-operative neck</li><li>Radiation</li><li>Infiltrative disease</li><li>Autoimmune polyendocrinopathy</li><li>Hypomagnesemia</li></ul></li></ul></li><li><span class=\"tag\">High PTH</span> <b>High PTH</b><ul><li><span class=\"tag\">25-OH D very low</span> <b>25-OH D very low</b><ul><li>Malabsorption</li><li>Short gut</li><li>Gastric bypass</li><li>Liver disease</li><li>Increased Vit-D degradation (eg. anti-convulsants)</li></ul></li><li><span class=\"tag\">25-OH D not very low</span> <b>25-OH D not very low</b><ul><li>Chronic Renal Failure</li><li>Severe hyperphosphatemia (eg. Tumor lysis syndrome, rhabdomyolysis, oral phosphate abuse/laxatives)</li></ul></li></ul></li></ul></li></ul><div class=\"pearl\"><p>Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]</p></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b147a",
+   "title": "Hypocalcemia — High Phosphate",
+   "src": "fig",
+   "img": "bb-147-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hypocalcemia",
+     "d": "<p>Total Corrected Serum Calcium &lt; 2.10 mmol/L</p>"
+    },
+    {
+     "id": "lp",
+     "k": "dx",
+     "t": "Low Phosphate",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 148 (Low Phosphate)</span></p>"
+    },
+    {
+     "id": "hp",
+     "k": "q",
+     "t": "High Phosphate"
+    },
+    {
+     "id": "n1",
+     "k": "dx",
+     "t": "Low/Normal PTH",
+     "d": "<p>Normal Creatinine</p><ul><li>Hypoparathyroidism (e.g. Acquired, Autoimmune, Idiopathic, Congenital, Infiltrative)</li><li>Activating Mutation in Calcium Sensing Receptor (CaSR)</li><li>Hypomagnesemia</li></ul>"
+    },
+    {
+     "id": "n2",
+     "k": "dx",
+     "t": "High PTH",
+     "d": "<p>Normal Creatinine</p><ul><li>PTH Resistance (Pseudo-hypoparathyroidism)</li><li>Calcium Complexing (Citrate Infusion, Pancreatitis)</li></ul>"
+    },
+    {
+     "id": "n3",
+     "k": "dx",
+     "t": "Low PTH",
+     "d": "<p>High Creatinine</p><ul><li>Hypoparathyroidism with Chronic Kidney Disease</li></ul>"
+    },
+    {
+     "id": "n4",
+     "k": "dx",
+     "t": "High PTH",
+     "d": "<p>High Creatinine</p><ul><li>Secondary Hyperparathyroidism</li><li>Rhabdomyolysis</li><li>Phosphate Poisoning</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "lp",
+     "l": "Low phosphate (เส้นประ → หน้า 148)"
+    },
+    {
+     "f": "r",
+     "t": "hp",
+     "l": "High phosphate"
+    },
+    {
+     "f": "hp",
+     "t": "n1",
+     "l": "Normal creatinine · low/normal PTH"
+    },
+    {
+     "f": "hp",
+     "t": "n2",
+     "l": "Normal creatinine · high PTH"
+    },
+    {
+     "f": "hp",
+     "t": "n3",
+     "l": "High creatinine · low PTH"
+    },
+    {
+     "f": "hp",
+     "t": "n4",
+     "l": "High creatinine · high PTH"
+    }
+   ],
+   "note": "Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]"
+  },
+  {
+   "id": "b147b",
+   "title": "Hypocalcemia — Low Phosphate",
+   "src": "fig",
+   "img": "bb-147-f2.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hypocalcemia",
+     "d": "<p>Total Corrected Serum Calcium &lt; 2.10 mmol/L</p>"
+    },
+    {
+     "id": "lp",
+     "k": "q",
+     "t": "Low Phosphate"
+    },
+    {
+     "id": "hp",
+     "k": "dx",
+     "t": "High Phosphate",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 147 (High Phosphate)</span></p>"
+    },
+    {
+     "id": "n1",
+     "k": "dx",
+     "t": "Low/Normal PTH",
+     "d": "<ul><li>Severe Malnutrition with Hypomagnesemia</li></ul>"
+    },
+    {
+     "id": "n2",
+     "k": "dx",
+     "t": "High PTH",
+     "d": "<ul><li>Vitamin D Deficiency (e.g. Diet, Malabsorption, Phenytoin, Nephrotic Syndrome, Hepatobiliary Disease)</li><li>Hereditary Vitamin D Resistance</li><li>1-α-Hydroxylase Deficiency</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "lp",
+     "l": "Low phosphate"
+    },
+    {
+     "f": "r",
+     "t": "hp",
+     "l": "High phosphate (เส้นประ → หน้า 147)"
+    },
+    {
+     "f": "lp",
+     "t": "n1",
+     "l": "Low/normal PTH"
+    },
+    {
+     "f": "lp",
+     "t": "n2",
+     "l": "High PTH"
+    }
+   ],
+   "note": "Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]"
+  },
+  {
+   "id": "b147c",
+   "title": "Hypocalcemia — High / Low PTH",
+   "src": "fig",
+   "img": "bb-147-f3.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hypocalcemia",
+     "d": "<p>Total Corrected Serum Calcium &lt; 2.10 mmol/L</p>"
+    },
+    {
+     "id": "lo",
+     "k": "q",
+     "t": "Low PTH — Hypoparathyroidism"
+    },
+    {
+     "id": "hi",
+     "k": "q",
+     "t": "High PTH"
+    },
+    {
+     "id": "cg",
+     "k": "dx",
+     "t": "Congenital (Pediatric)",
+     "d": "<ul><li>Ca-S-R</li><li>DiGeorge</li></ul>"
+    },
+    {
+     "id": "aq",
+     "k": "dx",
+     "t": "Acquired",
+     "d": "<ul><li>Post-operative neck</li><li>Radiation</li><li>Infiltrative disease</li><li>Autoimmune polyendocrinopathy</li><li>Hypomagnesemia</li></ul>"
+    },
+    {
+     "id": "vl",
+     "k": "dx",
+     "t": "25-OH D very low",
+     "d": "<ul><li>Malabsorption</li><li>Short gut</li><li>Gastric bypass</li><li>Liver disease</li><li>Increased Vit-D degradation (eg. anti-convulsants)</li></ul>"
+    },
+    {
+     "id": "nv",
+     "k": "dx",
+     "t": "25-OH D not very low",
+     "d": "<ul><li>Chronic Renal Failure</li><li>Severe hyperphosphatemia (eg. Tumor lysis syndrome, rhabdomyolysis, oral phosphate abuse/laxatives)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "lo",
+     "l": "Low PTH"
+    },
+    {
+     "f": "r",
+     "t": "hi",
+     "l": "High PTH"
+    },
+    {
+     "f": "lo",
+     "t": "cg",
+     "l": "Congenital (pediatric)"
+    },
+    {
+     "f": "lo",
+     "t": "aq",
+     "l": "Acquired"
+    },
+    {
+     "f": "hi",
+     "t": "vl",
+     "l": "25-OH D very low"
+    },
+    {
+     "f": "hi",
+     "t": "nv",
+     "l": "25-OH D not very low"
+    }
+   ],
+   "note": "Corrected total serum calcium concentration (mmol/L) = measured total serum calcium concentration (mmol/L) + 0.02[40 g/L – albumin(g/L)]"
+  }
+ ]
+}

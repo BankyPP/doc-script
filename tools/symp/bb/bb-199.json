@@ -1,0 +1,134 @@
+{
+ "key": "199",
+ "en": "Abnormal Genital Bleeding",
+ "th": "เลือดออกทางช่องคลอดผิดปกติ",
+ "pdf": "228",
+ "bookpg": "199",
+ "target": null,
+ "new": {
+  "id": "abnormal-genital-bleeding",
+  "th": "เลือดออกทางช่องคลอดผิดปกติ",
+  "en": "Abnormal Genital Bleeding",
+  "g": "obgyn"
+ },
+ "sections": [
+  {
+   "id": "bb-199-scheme",
+   "h": "Abnormal Genital Bleeding scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b199a\"></div><ul><li><b>Pregnant</b><ul><li><b>See Bleeding in Pregnancy scheme</b> — ดูแผนผัง Bleeding in Pregnancy</li></ul></li><li><b>Non Pregnant</b><ul><li><b>Gynecologic</b><ul><li><b>Uterus</b><ul><li>Anovulatory</li><li>Atrophy</li><li>Fibroid</li><li>Polyp</li><li>Exogenous estrogen</li><li>Neoplasm</li><li>Infection</li><li>Endometrial Hyperplasia</li></ul></li><li><b>Cervix</b><ul><li>Polyp</li><li>Ectropion</li><li>Dysplasia</li><li>Neoplasm</li><li>Infection</li><li>Trauma</li></ul></li><li><b>Vagina</b><ul><li>Atrophy</li><li>Vulvovaginitis</li><li>Neoplasm</li><li>Infection</li><li>Trauma</li></ul></li><li><b>Vulva</b><ul><li>Vulvar dystrophy</li><li>Vulvar Atrophy</li><li>Vulvovaginitis</li><li>Neoplasm</li><li>Infection</li><li>Trauma</li></ul></li></ul></li><li><b>Non-Gynecologic</b><ul><li>Medical (e.g. coagulopathy, liver disease, renal disease)</li><li>Drugs</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b199a",
+   "title": "Abnormal Genital Bleeding",
+   "src": "fig",
+   "img": "bb-199-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Abnormal Genital Bleeding"
+    },
+    {
+     "id": "p",
+     "k": "q",
+     "t": "Pregnant"
+    },
+    {
+     "id": "np",
+     "k": "q",
+     "t": "Non Pregnant"
+    },
+    {
+     "id": "see",
+     "k": "note",
+     "t": "See Bleeding in Pregnancy scheme",
+     "d": "ดูแผนผัง Bleeding in Pregnancy"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Gynecologic"
+    },
+    {
+     "id": "ng",
+     "k": "dx",
+     "t": "Non-Gynecologic",
+     "d": "<ul><li>Medical (e.g. coagulopathy, liver disease, renal disease)</li><li>Drugs</li></ul>"
+    },
+    {
+     "id": "u",
+     "k": "dx",
+     "t": "Uterus",
+     "d": "<ul><li>Anovulatory</li><li>Atrophy</li><li>Fibroid</li><li>Polyp</li><li>Exogenous estrogen</li><li>Neoplasm</li><li>Infection</li><li>Endometrial Hyperplasia</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Cervix",
+     "d": "<ul><li>Polyp</li><li>Ectropion</li><li>Dysplasia</li><li>Neoplasm</li><li>Infection</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "v",
+     "k": "dx",
+     "t": "Vagina",
+     "d": "<ul><li>Atrophy</li><li>Vulvovaginitis</li><li>Neoplasm</li><li>Infection</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "vu",
+     "k": "dx",
+     "t": "Vulva",
+     "d": "<ul><li>Vulvar dystrophy</li><li>Vulvar Atrophy</li><li>Vulvovaginitis</li><li>Neoplasm</li><li>Infection</li><li>Trauma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "p",
+     "l": "Pregnant"
+    },
+    {
+     "f": "a",
+     "t": "np",
+     "l": "Non Pregnant"
+    },
+    {
+     "f": "p",
+     "t": "see",
+     "l": "See Bleeding in Pregnancy scheme"
+    },
+    {
+     "f": "np",
+     "t": "g",
+     "l": "Gynecologic"
+    },
+    {
+     "f": "np",
+     "t": "ng",
+     "l": "Non-Gynecologic"
+    },
+    {
+     "f": "g",
+     "t": "u",
+     "l": "Uterus"
+    },
+    {
+     "f": "g",
+     "t": "c",
+     "l": "Cervix"
+    },
+    {
+     "f": "g",
+     "t": "v",
+     "l": "Vagina"
+    },
+    {
+     "f": "g",
+     "t": "vu",
+     "l": "Vulva"
+    }
+   ]
+  }
+ ]
+}

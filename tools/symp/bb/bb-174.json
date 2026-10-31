@@ -1,0 +1,87 @@
+{
+ "key": "174",
+ "en": "Dysarthria",
+ "th": "พูดไม่ชัด",
+ "pdf": "203",
+ "bookpg": "174",
+ "target": null,
+ "new": {
+  "id": "dysarthria",
+  "th": "พูดไม่ชัด (Dysarthria)",
+  "en": "Dysarthria",
+  "g": "neuro"
+ },
+ "sections": [
+  {
+   "id": "bb-174-scheme",
+   "h": "Dysarthria — แผนผัง",
+   "html": "<div class=\"flow\" data-flow=\"b174a\"></div>"
+  },
+  {
+   "id": "bb-174-table",
+   "h": "สรุปชนิดของ dysarthria",
+   "html": "<div class=\"tbl\"><table><thead><tr><th>Type</th><th>Speech features</th><th>Causes</th></tr></thead><tbody><tr><td><b>Lower Motor Neuron</b></td><td>Slow, Low Volume, Breathy Speech; Tongue and Facial Atrophy; Fasciculations</td><td>Motor Neuron Disease; Lesions of Cranial Nerves VII, IX, X, XII; Myasthenia Gravis; Muscular Dystrophy</td></tr><tr><td><b>Upper Motor Neuron</b></td><td>Slow, strangulated, harsh voice; Positive jaw jerk, hyperactive gag reflex; Emotional lability</td><td>Bilateral Lacunar Internal Capsule Strokes; Multiple Sclerosis; Amyotrophic Lateral Sclerosis</td></tr><tr><td><b>Ataxic (Cerebellar)</b></td><td>Irregular Rhythm and Pitch</td><td>Spinal-Cerebellar Ataxia; Multiple Sclerosis; Alcohol; Tumour; Paraneoplastic Disorder</td></tr><tr><td><b>Extra-Pyramidal</b></td><td>Rapid, Low Volume, Monotone Speech</td><td>Parkinson’s Disease</td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b174a",
+   "title": "Dysarthria",
+   "src": "fig",
+   "img": "bb-174-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dysarthria"
+    },
+    {
+     "id": "lmn",
+     "k": "dx",
+     "t": "Lower Motor Neuron",
+     "d": "<p>Slow, Low Volume, Breathy Speech; Tongue and Facial Atrophy; Fasciculations</p><ul><li>Motor Neuron Disease</li><li>Lesions of Cranial Nerves VII, IX, X, XII</li><li>Myasthenia Gravis</li><li>Muscular Dystrophy</li></ul>"
+    },
+    {
+     "id": "umn",
+     "k": "dx",
+     "t": "Upper Motor Neuron",
+     "d": "<p>Slow, strangulated, harsh voice; Positive jaw jerk, hyperactive gag reflex; Emotional lability</p><ul><li>Bilateral Lacunar Internal Capsule Strokes</li><li>Multiple Sclerosis</li><li>Amyotrophic Lateral Sclerosis</li></ul>"
+    },
+    {
+     "id": "atx",
+     "k": "dx",
+     "t": "Ataxic (Cerebellar)",
+     "d": "<p>Irregular Rhythm and Pitch</p><ul><li>Spinal-Cerebellar Ataxia</li><li>Multiple Sclerosis</li><li>Alcohol</li><li>Tumour</li><li>Paraneoplastic Disorder</li></ul>"
+    },
+    {
+     "id": "ep",
+     "k": "dx",
+     "t": "Extra-Pyramidal",
+     "d": "<p>Rapid, Low Volume, Monotone Speech</p><ul><li>Parkinson’s Disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "lmn",
+     "l": "Lower Motor Neuron"
+    },
+    {
+     "f": "a",
+     "t": "umn",
+     "l": "Upper Motor Neuron"
+    },
+    {
+     "f": "a",
+     "t": "atx",
+     "l": "Ataxic (Cerebellar)"
+    },
+    {
+     "f": "a",
+     "t": "ep",
+     "l": "Extra-Pyramidal"
+    }
+   ]
+  }
+ ]
+}

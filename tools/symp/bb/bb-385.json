@@ -1,0 +1,91 @@
+{
+ "key": "385",
+ "en": "School Difficulties",
+ "th": "ปัญหาการเรียนในเด็ก",
+ "pdf": "414",
+ "bookpg": "385",
+ "target": null,
+ "new": {
+  "id": "ped-school-difficulties",
+  "th": "ปัญหาการเรียนในเด็ก",
+  "en": "School Difficulties",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-385-scheme",
+   "h": "School Difficulties scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b385a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b385a",
+   "title": "School Difficulty",
+   "src": "fig",
+   "img": "bb-385-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "School Difficulty"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed history · review of school records · detailed physical exam"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Environmental",
+     "d": "<ul><li><b>Neglect*</b></li><li><b>Physical abuse*</b> and <b>Domestic violence*</b></li><li><b>Sexual abuse*</b></li><li><b>Sleep issues*</b></li><li><b>Nutrition and feeding issues*</b> (eg. malnutrition)</li><li><b>Socio-economic /cultural /home /environment issues*</b></li><li>Bullying</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Mental Health",
+     "d": "<ul><li><b>Anxiety*</b></li><li><b>Depression*</b></li><li>Behavioural disorders (eg. Conduct /Oppositional Defiance Disorder)</li><li><b>Substance use and abuse*</b></li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Neurodevelopmental",
+     "d": "<ul><li><b>Intellectual disability/Global delay*</b></li><li><b>Specific learning disability*</b></li><li><b>Attention Deficit Hyperactivity Disorder*</b></li><li><b>Autism Spectrum Disorder*</b></li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Medical",
+     "d": "<ul><li><b>Hearing impairment*</b></li><li><b>Visual changes*</b></li><li>Neurologic disease (eg. <b>tumor*, seizures*, head injury*</b>, neurodegenerative disease)</li><li><b>Sleep issues*</b> (eg. Obstructive sleep apnea)</li><li>Hypothyroidism</li><li><b>Iron deficiency*</b></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Environmental"
+    },
+    {
+     "f": "b",
+     "t": "m",
+     "l": "Mental health"
+    },
+    {
+     "f": "b",
+     "t": "n",
+     "l": "Neurodevelopmental"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Medical"
+    }
+   ]
+  }
+ ]
+}

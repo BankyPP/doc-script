@@ -1,0 +1,307 @@
+{
+ "key": "005",
+ "en": "Chest Discomfort",
+ "th": "เจ็บแน่นหน้าอก",
+ "pdf": "34–36",
+ "bookpg": "5–7",
+ "target": "chest-pain",
+ "note": "Cardiovascular / Pulmonary-Mediastinal / Other. หมวด Respiratory มี Chest Discomfort อีกชุด (หน้า 22–24, key 022): CV และ Other เหมือนกัน (GERD เขียนย่อ) แต่ Pulmonary ต่างกัน → แยกไฟล์",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-1-1-approach",
+   "id": "bb-005-scheme",
+   "h": "Chest Discomfort — 3 schemes (Blackbook)",
+   "html": "<p>แยกตามกลุ่มอวัยวะ: Cardiovascular / Pulmonary-Mediastinal / Other · เส้นประ = ไปดู scheme ของกลุ่มอื่น · * = acutely life-threatening</p>",
+   "sub": [
+    {
+     "id": "bb-005-cv",
+     "h": "Cardiovascular",
+     "html": "<div class=\"flow\" data-flow=\"b005a\"></div>"
+    },
+    {
+     "id": "bb-005-pulm",
+     "h": "Pulmonary / Mediastinal",
+     "html": "<div class=\"flow\" data-flow=\"b005b\"></div>"
+    },
+    {
+     "id": "bb-005-oth",
+     "h": "Other",
+     "html": "<div class=\"flow\" data-flow=\"b005c\"></div>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "cvs",
+   "html": "<h5>Cardiovascular causes by group (Blackbook)</h5><ul><li><b>Outflow obstruction</b>: Aortic Stenosis</li><li><b>Ischemic</b>: Myocardial Infarction*; Stable/Unstable Angina*</li><li><b>Non-ischemic</b>: Aortic Dissection*; Dilating Aneurysm*; Pericarditis; Myocarditis</li></ul><p><small>* Denotes acutely life-threatening causes</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "resp",
+   "html": "<h5>Pulmonary/Mediastinal causes by group (Blackbook)</h5><ul><li><b>Vascular</b>: Pulmonary Embolism* (chest pain often not present); Pulmonary Hypertension</li><li><b>Pleural processes</b>: Pneumothorax (Tension*); Pleuritis/Serositis; Pleural Effusion; Malignant Mesothelioma</li><li><b>Parenchymal</b>: Pneumonia with pleurisy*; Tuberculosis*; Neoplasm*; Sarcoidosis</li></ul><p><small>* Denotes acutely life-threatening causes</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "gi",
+   "html": "<h5>Gastrointestinal causes (Blackbook)</h5><ul><li>Gastro-Esophageal Reflux Disease</li><li>Biliary Disease</li><li>Peptic Ulcer Disease</li><li>Pancreatitis*</li><li>Esophageal Spasm</li><li>Esophageal Perforation*</li></ul><p><small>* Denotes acutely life-threatening causes</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "msk",
+   "html": "<h5>Musculoskeletal causes (Blackbook)</h5><ul><li>Costochondritis</li><li>Muscular Injury</li><li>Trauma</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "bb-005-neuro",
+   "h": "Neurologic/Psychiatric causes (Blackbook)",
+   "html": "<ul><li>Anxiety/Panic</li><li>Herpes Simplex Virus/Post-Herpetic Neuralgia</li><li>Somatoform Disorder</li><li>Spinal Radiculopathy</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b005a",
+   "title": "Chest Discomfort — Cardiovascular",
+   "src": "fig",
+   "img": "bb-005-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chest Discomfort"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Cardiovascular"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Pulmonary/Mediastinal",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Pulmonary / Mediastinal\" scheme.</p>"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "Other",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Other\" scheme.</p>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Outflow Obstruction",
+     "d": "<ul><li>Aortic Stenosis</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Ischemic",
+     "d": "<ul><li>Myocardial Infarction*</li><li>Stable/Unstable Angina*</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Non-Ischemic",
+     "d": "<ul><li>Aortic Dissection*</li><li>Dilating Aneurysm*</li><li>Pericarditis</li><li>Myocarditis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiovascular"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Pulmonary/Mediastinal (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Other (dashed)"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Outflow obstruction"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Ischemic"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Non-ischemic"
+    }
+   ],
+   "note": "* Denotes acutely life-threatening causes · เส้นประ = ไปดู scheme อีกสองหน้าของ Chest Discomfort"
+  },
+  {
+   "id": "b005b",
+   "title": "Chest Discomfort — Pulmonary / Mediastinal",
+   "src": "fig",
+   "img": "bb-005-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chest Discomfort"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Cardiovascular",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Cardiovascular\" scheme.</p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Pulmonary/Mediastinal"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "Other",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Other\" scheme.</p>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Pulmonary Embolism* (chest pain often not present)</li><li>Pulmonary Hypertension</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Pleural Processes",
+     "d": "<ul><li>Pneumothorax (Tension*)</li><li>Pleuritis/Serositis</li><li>Pleural Effusion</li><li>Malignant Mesothelioma</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Parenchymal",
+     "d": "<ul><li>Pneumonia with pleurisy*</li><li>Tuberculosis*</li><li>Neoplasm*</li><li>Sarcoidosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiovascular (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Pulmonary/Mediastinal"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Other (dashed)"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Vascular"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Pleural processes"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Parenchymal"
+    }
+   ],
+   "note": "* Denotes acutely life-threatening causes · เส้นประ = ไปดู scheme อีกสองหน้าของ Chest Discomfort"
+  },
+  {
+   "id": "b005c",
+   "title": "Chest Discomfort — Other",
+   "src": "fig",
+   "img": "bb-005-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chest Discomfort"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Cardiovascular",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Cardiovascular\" scheme.</p>"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Pulmonary/Mediastinal",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Pulmonary / Mediastinal\" scheme.</p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Other"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Gastrointestinal",
+     "d": "<ul><li>Gastro-Esophageal Reflux Disease</li><li>Biliary Disease</li><li>Peptic Ulcer Disease</li><li>Pancreatitis*</li><li>Esophageal Spasm</li><li>Esophageal Perforation*</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Musculoskeletal",
+     "d": "<ul><li>Costochondritis</li><li>Muscular Injury</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Neurologic/Psychiatric",
+     "d": "<ul><li>Anxiety/Panic</li><li>Herpes Simplex Virus/Post-Herpetic Neuralgia</li><li>Somatoform Disorder</li><li>Spinal Radiculopathy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiovascular (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Pulmonary/Mediastinal (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Other"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Gastrointestinal"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Musculoskeletal"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Neurologic/Psychiatric"
+    }
+   ],
+   "note": "* Denotes acutely life-threatening causes · เส้นประ = ไปดู scheme อีกสองหน้าของ Chest Discomfort"
+  }
+ ]
+}

@@ -1,0 +1,181 @@
+{
+ "key": "161",
+ "en": "Tall Stature",
+ "th": "ตัวสูง",
+ "pdf": "190",
+ "bookpg": "161",
+ "target": "tall-stature",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-5-2-secondary",
+   "id": "bb-161-scheme",
+   "h": "Tall stature — BA/CA และ stigmata (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b161a\"></div><ul><li><b>Tall Stature</b><ul><li><b>>97th Percentile — Detailed History, Physical Exam, and Mid-Parental Target Height</b><ul><li><span class=\"tag\">No other obvious abnormalities/stigmata</span> <b>No Other Obvious Abnormalities/Stigmata</b><ul><li><span class=\"tag\">Normal growth (BA=CA)</span> <b>Normal Growth</b> <span class=\"muted\">— BA=CA</span><ul><li>Familial Tall Stature</li><li>XYY Syndrome</li></ul></li><li><span class=\"tag\">Accelerated growth (BA&gt;CA)</span> <b>Accelerated Growth</b> <span class=\"muted\">— BA&gt;CA</span><ul><li><span class=\"tag\">Non-obese BMI</span> <b>Non-Obese BMI</b><ul><li><span class=\"tag\">Early puberty onset</span> <b>Early Puberty Onset</b><ul><li><span class=\"tag\">Precocious puberty</span> <b>Precocious Puberty</b><ul><li>Adrenal Tumor</li><li>Ovarian Tumor</li><li>Testotoxicosis</li><li>Congenital Adrenal Hyperplasia</li></ul></li><li><span class=\"tag\">Constitutional</span> <b>Constitutional</b><ul><li>Constitutional Tall Stature (Early Bloomer)</li></ul></li></ul></li><li><span class=\"tag\">Normal puberty onset</span> <b>Normal Puberty Onset</b><ul><li>GH Excess</li><li>Hyperthyroidism</li></ul></li></ul></li><li><span class=\"tag\">Obese BMI</span> <b>Obese BMI</b><ul><li>Exogenous Obesity</li></ul></li></ul></li></ul></li><li><span class=\"tag\">Other obvious abnormalities/stigmata</span> <b>Other Obvious Abnormalities/Stigmata</b><ul><li><span class=\"tag\">Disproportionate</span> <b>Disproportionate</b><ul><li>Klinefelter’s Syndrome (XXY)</li><li>Soto’s Syndrome/ Cerebral Gigantism</li><li>Marfan’s Syndrome</li><li>Homocystinuria</li><li>Sex Steroid Deficiency/ Resistance</li><li>Acromegaly (Rare in Children)</li></ul></li><li><span class=\"tag\">Proportionate</span> <b>Proportionate</b><ul><li>Beckwith-Wiedemann Syndrome (Normalizing growth after birth)</li><li>Weaver Syndrome</li><li>XYY Syndrome</li><li>Neurofibromatosis 1</li><li>Hyperthyroidism (Untreated/Severe)</li></ul></li></ul></li></ul></li></ul></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-2-primary",
+   "html": "<p><b>Blackbook — Normal growth (BA=CA):</b> Familial Tall Stature, XYY Syndrome · <b>Accelerated growth (BA&gt;CA):</b> Obese BMI → Exogenous Obesity; Non-obese BMI → Normal puberty onset: GH Excess, Hyperthyroidism</p><p><b>Disproportionate:</b> Klinefelter’s Syndrome (XXY), Soto’s Syndrome/ Cerebral Gigantism, Marfan’s Syndrome, Homocystinuria, Sex Steroid Deficiency/ Resistance, Acromegaly (Rare in Children)</p><p><b>Proportionate:</b> Beckwith-Wiedemann Syndrome (Normalizing growth after birth), Weaver Syndrome, XYY Syndrome, Neurofibromatosis 1, Hyperthyroidism (Untreated/Severe)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-2-precocious",
+   "html": "<p><b>Precocious Puberty (early puberty onset, non-obese BMI, accelerated growth):</b> Adrenal Tumor, Ovarian Tumor, Testotoxicosis, Congenital Adrenal Hyperplasia</p><p><b>Constitutional:</b> Constitutional Tall Stature (Early Bloomer)</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b161a",
+   "title": "Tall Stature",
+   "src": "fig",
+   "img": "bb-161-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Tall Stature"
+    },
+    {
+     "id": "a",
+     "k": "act",
+     "t": ">97th Percentile — Detailed History, Physical Exam, and Mid-Parental Target Height"
+    },
+    {
+     "id": "no",
+     "k": "q",
+     "t": "No Other Obvious Abnormalities/Stigmata"
+    },
+    {
+     "id": "ot",
+     "k": "q",
+     "t": "Other Obvious Abnormalities/Stigmata"
+    },
+    {
+     "id": "ng",
+     "k": "dx",
+     "t": "Normal Growth",
+     "d": "<p>BA=CA</p><ul><li>Familial Tall Stature</li><li>XYY Syndrome</li></ul>"
+    },
+    {
+     "id": "ac",
+     "k": "q",
+     "t": "Accelerated Growth",
+     "d": "<p>BA&gt;CA</p>"
+    },
+    {
+     "id": "nb",
+     "k": "q",
+     "t": "Non-Obese BMI"
+    },
+    {
+     "id": "ob",
+     "k": "dx",
+     "t": "Obese BMI",
+     "d": "<ul><li>Exogenous Obesity</li></ul>"
+    },
+    {
+     "id": "ep",
+     "k": "q",
+     "t": "Early Puberty Onset"
+    },
+    {
+     "id": "np",
+     "k": "dx",
+     "t": "Normal Puberty Onset",
+     "d": "<ul><li>GH Excess</li><li>Hyperthyroidism</li></ul>"
+    },
+    {
+     "id": "pp",
+     "k": "dx",
+     "t": "Precocious Puberty",
+     "d": "<ul><li>Adrenal Tumor</li><li>Ovarian Tumor</li><li>Testotoxicosis</li><li>Congenital Adrenal Hyperplasia</li></ul>"
+    },
+    {
+     "id": "co",
+     "k": "dx",
+     "t": "Constitutional",
+     "d": "<ul><li>Constitutional Tall Stature (Early Bloomer)</li></ul>"
+    },
+    {
+     "id": "di",
+     "k": "dx",
+     "t": "Disproportionate",
+     "d": "<ul><li>Klinefelter’s Syndrome (XXY)</li><li>Soto’s Syndrome/ Cerebral Gigantism</li><li>Marfan’s Syndrome</li><li>Homocystinuria</li><li>Sex Steroid Deficiency/ Resistance</li><li>Acromegaly (Rare in Children)</li></ul>"
+    },
+    {
+     "id": "pr",
+     "k": "dx",
+     "t": "Proportionate",
+     "d": "<ul><li>Beckwith-Wiedemann Syndrome (Normalizing growth after birth)</li><li>Weaver Syndrome</li><li>XYY Syndrome</li><li>Neurofibromatosis 1</li><li>Hyperthyroidism (Untreated/Severe)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "a"
+    },
+    {
+     "f": "a",
+     "t": "no",
+     "l": "No other obvious abnormalities/stigmata"
+    },
+    {
+     "f": "a",
+     "t": "ot",
+     "l": "Other obvious abnormalities/stigmata"
+    },
+    {
+     "f": "no",
+     "t": "ng",
+     "l": "Normal growth (BA=CA)"
+    },
+    {
+     "f": "no",
+     "t": "ac",
+     "l": "Accelerated growth (BA&gt;CA)"
+    },
+    {
+     "f": "ac",
+     "t": "nb",
+     "l": "Non-obese BMI"
+    },
+    {
+     "f": "ac",
+     "t": "ob",
+     "l": "Obese BMI"
+    },
+    {
+     "f": "nb",
+     "t": "ep",
+     "l": "Early puberty onset"
+    },
+    {
+     "f": "nb",
+     "t": "np",
+     "l": "Normal puberty onset"
+    },
+    {
+     "f": "ep",
+     "t": "pp",
+     "l": "Precocious puberty"
+    },
+    {
+     "f": "ep",
+     "t": "co",
+     "l": "Constitutional"
+    },
+    {
+     "f": "ot",
+     "t": "di",
+     "l": "Disproportionate"
+    },
+    {
+     "f": "ot",
+     "t": "pr",
+     "l": "Proportionate"
+    }
+   ]
+  }
+ ]
+}

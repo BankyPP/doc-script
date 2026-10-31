@@ -1,0 +1,117 @@
+{
+ "key": "093",
+ "en": "Hepatomegaly",
+ "th": "ตับโต",
+ "pdf": "122",
+ "bookpg": "93",
+ "target": null,
+ "new": {
+  "id": "hepatomegaly",
+  "th": "ตับโต",
+  "en": "Hepatomegaly",
+  "g": "gi"
+ },
+ "sections": [
+  {
+   "id": "bb-093-scheme",
+   "h": "Hepatomegaly scheme",
+   "html": "<div class=\"flow\" data-flow=\"b093a\"></div>"
+  },
+  {
+   "id": "bb-093-causes",
+   "h": "Causes by category",
+   "html": "<p><b>Rule out</b> concurrent splenomegaly and jaundice</p><h4>Infiltrative — Malignant</h4><ul><li>Primary Carcinoma</li><li>Metastases</li><li>Lymphoma</li><li>Leukemia</li><li>Polycythemia</li><li>Multiple Myeloma</li></ul><h4>Infiltrative — Non-Malignant</h4><ul><li>Fatty Liver</li><li>Cysts</li><li>Hemochromatosis</li><li>Wilson’s Disease</li><li>Amyloidosis</li><li>Myelofibrosis</li></ul><h4>Congestive</h4><ul><li>Right Heart Failure</li><li>Budd-Chiari Syndrome</li><li>Constrictive Pericarditis</li></ul><h4>Infectious</h4><ul><li>Hepatitis A, B, C</li><li>Mononucleosis</li><li>Tuberculosis</li><li>Bacterial Cholangitis</li><li>Abscess</li><li>Schistosomiasis</li></ul><h4>Inflammatory</h4><ul><li>Alcoholic Hepatitis</li><li>Autoimmune Hepatitis</li><li>Drug Induced Hepatitis</li><li>Sarcoidosis</li><li>Histiocytosis X</li><li>Primary Sclerosing Cholangitis</li><li>Primary Biliary Cirrhosis</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b093a",
+   "title": "Hepatomegaly",
+   "src": "fig",
+   "img": "bb-093-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hepatomegaly"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Rule out concurrent splenomegaly and jaundice"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infiltrative"
+    },
+    {
+     "id": "con",
+     "k": "dx",
+     "t": "Congestive",
+     "d": "<ul><li>Right Heart Failure</li><li>Budd-Chiari Syndrome</li><li>Constrictive Pericarditis</li></ul>"
+    },
+    {
+     "id": "ife",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Hepatitis A, B, C</li><li>Mononucleosis</li><li>Tuberculosis</li><li>Bacterial Cholangitis</li><li>Abscess</li><li>Schistosomiasis</li></ul>"
+    },
+    {
+     "id": "ifl",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Alcoholic Hepatitis</li><li>Autoimmune Hepatitis</li><li>Drug Induced Hepatitis</li><li>Sarcoidosis</li><li>Histiocytosis X</li><li>Primary Sclerosing Cholangitis</li><li>Primary Biliary Cirrhosis</li></ul>"
+    },
+    {
+     "id": "mal",
+     "k": "dx",
+     "t": "Malignant",
+     "d": "<ul><li>Primary Carcinoma</li><li>Metastases</li><li>Lymphoma</li><li>Leukemia</li><li>Polycythemia</li><li>Multiple Myeloma</li></ul>"
+    },
+    {
+     "id": "nm",
+     "k": "dx",
+     "t": "Non-Malignant",
+     "d": "<ul><li>Fatty Liver</li><li>Cysts</li><li>Hemochromatosis</li><li>Wilson’s Disease</li><li>Amyloidosis</li><li>Myelofibrosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "inf",
+     "l": "Infiltrative"
+    },
+    {
+     "f": "q",
+     "t": "con",
+     "l": "Congestive"
+    },
+    {
+     "f": "q",
+     "t": "ife",
+     "l": "Infectious"
+    },
+    {
+     "f": "q",
+     "t": "ifl",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "inf",
+     "t": "mal",
+     "l": "Malignant"
+    },
+    {
+     "f": "inf",
+     "t": "nm",
+     "l": "Non-Malignant"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,164 @@
+{
+ "key": "343",
+ "en": "Hypernatremia",
+ "th": "โซเดียมในเลือดสูง (เด็ก)",
+ "pdf": "372",
+ "bookpg": "343",
+ "target": null,
+ "new": {
+  "id": "ped-hypernatremia",
+  "th": "โซเดียมในเลือดสูง (เด็ก)",
+  "en": "Hypernatremia",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-343-scheme",
+   "h": "Hypernatremia — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b343a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b343a",
+   "title": "Hypernatremia",
+   "src": "fig",
+   "img": "bb-343-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hypernatremia"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Check clinical volume status"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Salt Excess"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Water Deficit"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Exogenous",
+     "d": "<ul><li>Abuse/Neglect*</li><li>Iatrogenic</li><li>Inappropriate formula preparation</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Endogenous",
+     "d": "<ul><li>Hyperaldosteronism</li></ul>"
+    },
+    {
+     "id": "d1",
+     "k": "q",
+     "t": "Fluid losses"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Reduced intake",
+     "d": "<p>Uosm &gt;600</p><ul><li><b>Abuse/Neglect*</b></li><li><b>Brain Tumour*</b></li><li>Hypothalamic dysfunction</li></ul>"
+    },
+    {
+     "id": "e1",
+     "k": "q",
+     "t": "Renal Loss"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "GI Loss",
+     "d": "<p>Uosm &gt;600</p><ul><li><b>Gastroenteritis*</b></li></ul>"
+    },
+    {
+     "id": "e3",
+     "k": "dx",
+     "t": "Insensible Loss",
+     "d": "<p>Uosm &gt;600</p><ul><li><b>Burns*</b></li><li>Sweat</li><li>Respiratory losses</li></ul>"
+    },
+    {
+     "id": "f1",
+     "k": "dx",
+     "t": "Osmotic Diuresis",
+     "d": "<p>Uosm &gt; Posm, Uosm 300-600</p><ul><li><b>Diabetic Ketoacidosis*</b> (Glucosuria)</li><li>Mannitol</li><li>Post-obstructive diuresis</li><li>Polyuric Acute Tubular Necrosis</li></ul>"
+    },
+    {
+     "id": "f2",
+     "k": "dx",
+     "t": "Diabetes Insipidus",
+     "d": "<p>Uosm &lt; Posm<br>FeNa &gt; 1%<br>U Na &lt;10</p><ul><li>Nephrogenic Diabetes Insipidus</li><li>Central Diabetes Insipidus</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Hypervolemic/Euvolemic"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Hypovolemic"
+    },
+    {
+     "f": "c",
+     "t": "c1",
+     "l": "Exogenous"
+    },
+    {
+     "f": "c",
+     "t": "c2",
+     "l": "Endogenous"
+    },
+    {
+     "f": "d",
+     "t": "d1",
+     "l": "Fluid losses"
+    },
+    {
+     "f": "d",
+     "t": "d2",
+     "l": "Reduced intake"
+    },
+    {
+     "f": "d1",
+     "t": "e1",
+     "l": "Renal Loss"
+    },
+    {
+     "f": "d1",
+     "t": "e2",
+     "l": "GI Loss"
+    },
+    {
+     "f": "d1",
+     "t": "e3",
+     "l": "Insensible Loss"
+    },
+    {
+     "f": "e1",
+     "t": "f1",
+     "l": "Osmotic Diuresis"
+    },
+    {
+     "f": "e1",
+     "t": "f2",
+     "l": "Diabetes Insipidus"
+    }
+   ]
+  }
+ ]
+}

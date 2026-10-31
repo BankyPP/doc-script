@@ -1,0 +1,186 @@
+{
+ "key": "091",
+ "en": "Upper Gastrointestinal Bleed (Hematemesis / Melena)",
+ "th": "เลือดออกทางเดินอาหารส่วนต้น",
+ "pdf": "120",
+ "bookpg": "91",
+ "target": "gi-bleeding",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "sx-melena",
+   "html": "<p><b>Blackbook:</b> If melena, 5-10% are colorectal/small bowel source. Exclude bleeding disorder.</p>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Blackbook — Acute hematemesis/melena (blood in vomitus? black, tarry stools?) แยกตามสาเหตุ</b></p><h4>Peptic Ulcer Disease (55%)</h4><ul><li>Gastric Acid Hypersecretion (Zollinger-Ellison Syndrome)</li><li>Non-Steroidal Anti-Inflammatory Drugs</li><li>Stress (ICU Setting)</li><li>Helicobacter Pylori</li></ul><h4>Portal Hypertension (15%)</h4><ul><li>Gastro-esophageal varices*</li></ul><h4>Other — Aorto-Enteric Fistula*</h4><h4>Other — Mallory Weiss Tear (retching?)</h4><h4>Other — Tumors</h4><ul><li>Benign</li><li>Malignancy</li></ul><h4>Other — Esophagitis/Gastritis</h4><p><small>* Denotes acutely life-threatening conditions</small></p>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-3-5-approach",
+   "id": "bb-091-scheme",
+   "h": "Upper Gastrointestinal Bleed scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b091a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b091a",
+   "title": "Upper Gastrointestinal Bleed (Hematemesis / Melena)",
+   "src": "fig",
+   "img": "bb-091-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Hematemesis/Melena"
+    },
+    {
+     "id": "q1",
+     "k": "q",
+     "t": "Blood in vomitus?/black, tarry stools"
+    },
+    {
+     "id": "q2",
+     "k": "q",
+     "t": "If Melena, 5-10% colorectal/small bowel. Exclude bleeding disorder."
+    },
+    {
+     "id": "pud",
+     "k": "dx",
+     "t": "Peptic Ulcer Disease (55%)"
+    },
+    {
+     "id": "ph",
+     "k": "dx",
+     "t": "Portal Hypertension (15%)",
+     "d": "<p>*Denotes acutely life-threatening conditions</p><ul><li>Gastro-esophageal varices*</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other"
+    },
+    {
+     "id": "acid",
+     "k": "dx",
+     "t": "Gastric Acid Hypersecretion",
+     "d": "<ul><li>Zollinger-Ellison Syndrome</li></ul>"
+    },
+    {
+     "id": "nsaid",
+     "k": "dx",
+     "t": "Non-Steroidal Anti-Inflammatory Drugs"
+    },
+    {
+     "id": "stress",
+     "k": "dx",
+     "t": "Stress (ICU Setting)"
+    },
+    {
+     "id": "hp",
+     "k": "dx",
+     "t": "Helicobacter Pylori"
+    },
+    {
+     "id": "aef",
+     "k": "stop",
+     "t": "Aorto-Enteric Fistula*",
+     "d": "<p>*Denotes acutely life-threatening conditions</p>"
+    },
+    {
+     "id": "ret",
+     "k": "q",
+     "t": "Retching?"
+    },
+    {
+     "id": "mw",
+     "k": "dx",
+     "t": "Mallory Weiss Tear"
+    },
+    {
+     "id": "tum",
+     "k": "dx",
+     "t": "Tumors",
+     "d": "<ul><li>Benign</li><li>Malignancy</li></ul>"
+    },
+    {
+     "id": "esoph",
+     "k": "dx",
+     "t": "Esophagitis/Gastritis"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q1"
+    },
+    {
+     "f": "q1",
+     "t": "q2"
+    },
+    {
+     "f": "q2",
+     "t": "pud",
+     "l": "Peptic Ulcer Disease (55%)"
+    },
+    {
+     "f": "q2",
+     "t": "ph",
+     "l": "Portal Hypertension (15%)"
+    },
+    {
+     "f": "q2",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "pud",
+     "t": "acid",
+     "l": "Gastric Acid Hypersecretion"
+    },
+    {
+     "f": "pud",
+     "t": "nsaid",
+     "l": "NSAIDs"
+    },
+    {
+     "f": "pud",
+     "t": "stress",
+     "l": "Stress (ICU Setting)"
+    },
+    {
+     "f": "pud",
+     "t": "hp",
+     "l": "Helicobacter Pylori"
+    },
+    {
+     "f": "oth",
+     "t": "aef",
+     "l": "Aorto-Enteric Fistula*"
+    },
+    {
+     "f": "oth",
+     "t": "ret",
+     "l": "Retching?"
+    },
+    {
+     "f": "oth",
+     "t": "tum",
+     "l": "Tumors"
+    },
+    {
+     "f": "oth",
+     "t": "esoph",
+     "l": "Esophagitis/Gastritis"
+    },
+    {
+     "f": "ret",
+     "t": "mw",
+     "l": "Mallory Weiss Tear"
+    }
+   ]
+  }
+ ]
+}

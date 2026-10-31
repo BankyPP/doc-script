@@ -1,0 +1,318 @@
+{
+ "key": "205",
+ "en": "Bleeding in Pregnancy",
+ "th": "เลือดออกขณะตั้งครรภ์",
+ "pdf": "234–235",
+ "bookpg": "205–206",
+ "target": null,
+ "new": {
+  "id": "bleeding-in-pregnancy",
+  "th": "เลือดออกขณะตั้งครรภ์",
+  "en": "Bleeding in Pregnancy",
+  "g": "obgyn"
+ },
+ "sections": [
+  {
+   "id": "bb-205-lt20",
+   "h": "< 20 Weeks",
+   "html": "<div class=\"flow\" data-flow=\"b205a\"></div><ul><li><b>Hemodynamically Unstable – Do ABCDEs</b><ul><li><b>&lt; 20 Weeks</b><ul><li><b>Bleeding from the Os</b><ul><li><b>Cervix Open</b><ul><li><b>Passing Tissue and Clots</b><ul><li>Complete abortion</li><li>Incomplete abortion</li><li>Ectopic pregnancy</li></ul></li><li><b>Not Passing Tissue and Clots</b><ul><li>Missed abortion</li><li>Inevitable abortion</li><li>Cervical insufficiency</li></ul></li></ul></li><li><b>Cervix Closed</b><ul><li><b>IUP on Transvaginal U/S</b></li><li><b>No IUP on Transvaginal U/S</b><ul><li><b>Ectopic Pregnancy on U/S</b></li><li><b>No Ectopic Pregnancy on U/S</b><ul><li><b>β-hCG &lt; 1500</b><ul><li><b>β-hCG doubled in 72h</b> — Viable pregnancy – monitor for ectopic or IUP (implantation bleed)</li><li><b>β-hCG not doubled in 72h</b> — Ectopic pregnancy or failed pregnancy</li></ul></li><li><b>β-hCG &gt; 1500</b> — Ectopic likely</li></ul></li></ul></li></ul></li></ul></li><li><b>Not Bleeding from the Os</b><ul><li>Cervical polyp/Ectropion</li><li>Cervical/Vaginal neoplasm</li><li>Vaginal laceration</li><li>Infection</li></ul></li></ul></li><li><b>Second / Third Trimester</b> — เส้นประในเล่ม — ดูแผนผัง Bleeding in Pregnancy: 2nd & 3rd Trimester</li></ul></li></ul>"
+  },
+  {
+   "id": "bb-205-t23",
+   "h": "2nd & 3rd Trimester",
+   "html": "<div class=\"flow\" data-flow=\"b205b\"></div><ul><li><b>Hemodynamically Unstable – Do ABCDEs</b><ul><li><b>&lt; 20 Weeks</b> — เส้นประในเล่ม — ดูแผนผัง Bleeding in Pregnancy: < 20 Weeks</li><li><b>Second / Third Trimester</b><ul><li><b>Do NOT perform digital examination until the placental location is known</b><ul><li><b>Bleeding from the Os</b><ul><li><b>Painful</b><ul><li>Placental abruption</li><li>Uterine rupture</li><li>Labour (bloody show)</li></ul></li><li><b>Painless</b><ul><li>Placenta previa</li><li>Vasa previa</li></ul></li></ul></li><li><b>Not Bleeding from the Os</b><ul><li>Cervical polyp/Ectropion</li><li>Cervical/Vaginal neoplasm</li><li>Vaginal laceration</li><li>Infection</li></ul></li></ul></li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b205a",
+   "title": "Bleeding in Pregnancy — < 20 Weeks",
+   "src": "fig",
+   "img": "bb-205-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Bleeding in Pregnancy"
+    },
+    {
+     "id": "hd",
+     "k": "stop",
+     "t": "Hemodynamically Unstable – Do ABCDEs"
+    },
+    {
+     "id": "lt",
+     "k": "q",
+     "t": "< 20 Weeks"
+    },
+    {
+     "id": "st",
+     "k": "note",
+     "t": "Second / Third Trimester",
+     "d": "เส้นประในเล่ม — ดูแผนผัง Bleeding in Pregnancy: 2nd & 3rd Trimester"
+    },
+    {
+     "id": "bo",
+     "k": "q",
+     "t": "Bleeding from the Os"
+    },
+    {
+     "id": "nb",
+     "k": "dx",
+     "t": "Not Bleeding from the Os",
+     "d": "<ul><li>Cervical polyp/Ectropion</li><li>Cervical/Vaginal neoplasm</li><li>Vaginal laceration</li><li>Infection</li></ul>"
+    },
+    {
+     "id": "co",
+     "k": "q",
+     "t": "Cervix Open"
+    },
+    {
+     "id": "cc",
+     "k": "q",
+     "t": "Cervix Closed"
+    },
+    {
+     "id": "pt",
+     "k": "dx",
+     "t": "Passing Tissue and Clots",
+     "d": "<ul><li>Complete abortion</li><li>Incomplete abortion</li><li>Ectopic pregnancy</li></ul>"
+    },
+    {
+     "id": "np",
+     "k": "dx",
+     "t": "Not Passing Tissue and Clots",
+     "d": "<ul><li>Missed abortion</li><li>Inevitable abortion</li><li>Cervical insufficiency</li></ul>"
+    },
+    {
+     "id": "iup",
+     "k": "dx",
+     "t": "IUP on Transvaginal U/S"
+    },
+    {
+     "id": "noiup",
+     "k": "q",
+     "t": "No IUP on Transvaginal U/S"
+    },
+    {
+     "id": "ect",
+     "k": "dx",
+     "t": "Ectopic Pregnancy on U/S"
+    },
+    {
+     "id": "noect",
+     "k": "q",
+     "t": "No Ectopic Pregnancy on U/S"
+    },
+    {
+     "id": "h1",
+     "k": "q",
+     "t": "β-hCG < 1500"
+    },
+    {
+     "id": "h2",
+     "k": "dx",
+     "t": "β-hCG > 1500",
+     "d": "Ectopic likely"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "β-hCG doubled in 72h",
+     "d": "Viable pregnancy – monitor for ectopic or IUP (implantation bleed)"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "β-hCG not doubled in 72h",
+     "d": "Ectopic pregnancy or failed pregnancy"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "hd"
+    },
+    {
+     "f": "hd",
+     "t": "lt",
+     "l": "< 20 Weeks"
+    },
+    {
+     "f": "hd",
+     "t": "st",
+     "l": "Second / Third Trimester (เส้นประ)"
+    },
+    {
+     "f": "lt",
+     "t": "bo",
+     "l": "Bleeding from the Os"
+    },
+    {
+     "f": "lt",
+     "t": "nb",
+     "l": "Not Bleeding from the Os"
+    },
+    {
+     "f": "bo",
+     "t": "co",
+     "l": "Cervix Open"
+    },
+    {
+     "f": "bo",
+     "t": "cc",
+     "l": "Cervix Closed"
+    },
+    {
+     "f": "co",
+     "t": "pt",
+     "l": "Passing tissue and clots"
+    },
+    {
+     "f": "co",
+     "t": "np",
+     "l": "Not passing tissue and clots"
+    },
+    {
+     "f": "cc",
+     "t": "iup",
+     "l": "IUP on Transvaginal U/S"
+    },
+    {
+     "f": "cc",
+     "t": "noiup",
+     "l": "No IUP on Transvaginal U/S"
+    },
+    {
+     "f": "noiup",
+     "t": "ect",
+     "l": "Ectopic Pregnancy on U/S"
+    },
+    {
+     "f": "noiup",
+     "t": "noect",
+     "l": "No Ectopic Pregnancy on U/S"
+    },
+    {
+     "f": "noect",
+     "t": "h1",
+     "l": "β-hCG < 1500"
+    },
+    {
+     "f": "noect",
+     "t": "h2",
+     "l": "β-hCG > 1500"
+    },
+    {
+     "f": "h1",
+     "t": "d1",
+     "l": "β-hCG doubled in 72h"
+    },
+    {
+     "f": "h1",
+     "t": "d2",
+     "l": "β-hCG not doubled in 72h"
+    }
+   ],
+   "note": "เส้นประจาก Hemodynamically Unstable ไป Second / Third Trimester = ลิงก์ไปแผนผัง 2nd & 3rd Trimester"
+  },
+  {
+   "id": "b205b",
+   "title": "Bleeding in Pregnancy — 2nd & 3rd Trimester",
+   "src": "fig",
+   "img": "bb-205-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Bleeding in Pregnancy"
+    },
+    {
+     "id": "hd",
+     "k": "stop",
+     "t": "Hemodynamically Unstable – Do ABCDEs"
+    },
+    {
+     "id": "lt",
+     "k": "note",
+     "t": "< 20 Weeks",
+     "d": "เส้นประในเล่ม — ดูแผนผัง Bleeding in Pregnancy: < 20 Weeks"
+    },
+    {
+     "id": "st",
+     "k": "q",
+     "t": "Second / Third Trimester"
+    },
+    {
+     "id": "nd",
+     "k": "stop",
+     "t": "Do NOT perform digital examination until the placental location is known"
+    },
+    {
+     "id": "bo",
+     "k": "q",
+     "t": "Bleeding from the Os"
+    },
+    {
+     "id": "nb",
+     "k": "dx",
+     "t": "Not Bleeding from the Os",
+     "d": "<ul><li>Cervical polyp/Ectropion</li><li>Cervical/Vaginal neoplasm</li><li>Vaginal laceration</li><li>Infection</li></ul>"
+    },
+    {
+     "id": "pa",
+     "k": "dx",
+     "t": "Painful",
+     "d": "<ul><li>Placental abruption</li><li>Uterine rupture</li><li>Labour (bloody show)</li></ul>"
+    },
+    {
+     "id": "pl",
+     "k": "dx",
+     "t": "Painless",
+     "d": "<ul><li>Placenta previa</li><li>Vasa previa</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "hd"
+    },
+    {
+     "f": "hd",
+     "t": "lt",
+     "l": "< 20 Weeks (เส้นประ)"
+    },
+    {
+     "f": "hd",
+     "t": "st",
+     "l": "Second / Third Trimester"
+    },
+    {
+     "f": "st",
+     "t": "nd"
+    },
+    {
+     "f": "nd",
+     "t": "bo",
+     "l": "Bleeding from the Os"
+    },
+    {
+     "f": "nd",
+     "t": "nb",
+     "l": "Not Bleeding from the Os"
+    },
+    {
+     "f": "bo",
+     "t": "pa",
+     "l": "Painful"
+    },
+    {
+     "f": "bo",
+     "t": "pl",
+     "l": "Painless"
+    }
+   ],
+   "note": "เส้นประจาก Hemodynamically Unstable ไป < 20 Weeks = ลิงก์ไปแผนผัง < 20 Weeks"
+  }
+ ]
+}

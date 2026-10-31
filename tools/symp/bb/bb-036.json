@@ -1,0 +1,120 @@
+{
+ "key": "036",
+ "en": "Pleural Effusion",
+ "th": "น้ำในโพรงเยื่อหุ้มปอด",
+ "pdf": "65",
+ "bookpg": "36",
+ "target": "pleural-effusion",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-2-6-approach",
+   "id": "bb-036-scheme",
+   "h": "Pleural effusion scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b036a\"></div><div class=\"box\"><p><b><u>Light’s Criteria</u></b></p><ul><li>Pleural Fluid Protein/Serum Protein &gt; 0.5</li><li>Pleural Fluid Lactate Dehydrogenase (LDH)/Serum LDH &gt; 0.6</li><li>Pleural Fluid LDH &gt; 2/3 Serum LDH Upper Limit of Normal</li></ul></div><p><small>* Potentially acutely life-threatening</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-2-6-causes",
+   "html": "<h5>Pleural effusion — causes by type (Blackbook)</h5><ul><li><b>Exudate</b><ul><li><b>Pulmonary</b>: Infectious; Neoplastic; Inflammatory (RA, SLE); Pulmonary Embolus*; Chylothorax; Hemothorax</li><li><b>Gastrointestinal</b>: Ruptured Esophagus*; Pancreatitis</li></ul></li><li><b>Transudate</b><ul><li><b>Increased hydrostatic pressure</b>: Congestive Heart Failure; Renal Failure with Hypervolemia; (Early) Pulmonary Embolus</li><li><b>Decreased oncotic pressure</b>: Cirrhosis; Nephrotic Syndrome</li></ul></li></ul><p><small>* Potentially acutely life-threatening</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-2-6-exudate",
+   "html": "<h5>Light’s Criteria (Blackbook)</h5><ul><li>Pleural Fluid Protein/Serum Protein &gt; 0.5</li><li>Pleural Fluid Lactate Dehydrogenase (LDH)/Serum LDH &gt; 0.6</li><li>Pleural Fluid LDH &gt; 2/3 Serum LDH Upper Limit of Normal</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b036a",
+   "title": "Pleural Effusion",
+   "src": "fig",
+   "img": "bb-036-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pleural Effusion"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Thoracic Ultrasound should be used to perform Diagnostic Thoracentesis"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Exudate — use Light’s Criteria",
+     "d": "<p><b><u>Light’s Criteria</u></b></p><ul><li>Pleural Fluid Protein/Serum Protein &gt; 0.5</li><li>Pleural Fluid Lactate Dehydrogenase (LDH)/Serum LDH &gt; 0.6</li><li>Pleural Fluid LDH &gt; 2/3 Serum LDH Upper Limit of Normal</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Transudate — use Light’s Criteria",
+     "d": "<p><b><u>Light’s Criteria</u></b></p><ul><li>Pleural Fluid Protein/Serum Protein &gt; 0.5</li><li>Pleural Fluid Lactate Dehydrogenase (LDH)/Serum LDH &gt; 0.6</li><li>Pleural Fluid LDH &gt; 2/3 Serum LDH Upper Limit of Normal</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Pulmonary",
+     "d": "<ul><li>Infectious</li><li>Neoplastic</li><li>Inflammatory (RA, SLE)</li><li>Pulmonary Embolus*</li><li>Chylothorax</li><li>Hemothorax</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Gastrointestinal",
+     "d": "<ul><li>Ruptured Esophagus*</li><li>Pancreatitis</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Increased Hydrostatic Pressure",
+     "d": "<ul><li>Congestive Heart Failure</li><li>Renal Failure with Hypervolemia</li><li>(Early) Pulmonary Embolus</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Decreased Oncotic Pressure",
+     "d": "<ul><li>Cirrhosis</li><li>Nephrotic Syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Exudate"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Transudate"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Pulmonary"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Gastrointestinal"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Increased hydrostatic pressure"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Decreased oncotic pressure"
+    }
+   ],
+   "note": "* Potentially acutely life-threatening"
+  }
+ ]
+}

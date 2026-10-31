@@ -1,0 +1,291 @@
+{
+ "key": "084",
+ "en": "Chronic Diarrhea",
+ "th": "ท้องเดินเรื้อรัง",
+ "pdf": "113–114",
+ "bookpg": "84–85",
+ "target": "diarrhea-constipation",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "dia-def",
+   "html": "<p><b>Blackbook (Chronic diarrhea):</b> &gt;3 loose stools/day, &gt; 14 days — exclude chronic inflammation. แบ่งเป็น Steatorrhea (oily/foul/hard to flush), Large bowel (small volume/bloody/painful/tenesmus/urgency), Small bowel (large volume/watery)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-cause",
+   "html": "<p><b>Blackbook — Chronic diarrhea แยกตามกลุ่ม</b></p><h4>Small Bowel (Large Volume/Watery) — Secretory › Mucosal</h4><ul><li>Crohn’s Disease (Screen with CBC, albumin, ESR, endoscopy)</li><li>Celiac Disease (screen with TTG)</li><li>Chronic Inflammation</li><li>Whipple’s Disease</li></ul><h4>Small Bowel — Secretory › Tumors › Mucosal</h4><ul><li>Gastrinoma</li><li>Carcinoid Syndrome</li><li>Mastocytosis</li></ul><h4>Small Bowel — Secretory › Tumors › Neoplastic</h4><ul><li>Adenocarcinoma</li><li>Lymphoma</li></ul><h4>Small Bowel — Disordered Motility</h4><ul><li>Irritable Bowel Syndrome (diagnosis of exclusion)</li><li>Diabetic Neuropathy</li><li>Hyperthyroidism</li></ul><h4>Small Bowel — Osmotic</h4><ul><li>Magnesium, Phosphate, Sulfate</li><li>Carbohydrate Malabsorption</li><li>Lactose Intolerance</li></ul><h4>Steatorrhea — Maldigestive</h4><ul><li>Pancreatic Insufficiency</li></ul><h4>Steatorrhea — Malabsorptive: Primary Malabsorption</h4><ul><li>Celiac Disease</li><li>Mucosal Disease</li><li>Ileal Crohn’s Disease</li></ul><h4>Steatorrhea — Malabsorptive: Secondary Malabsorption</h4><ul><li>Bacterial Overgrowth</li><li>Liver Cholestasis</li><li>Mesenteric Ischemia</li><li>Short Bowel/ Resection</li></ul><h4>Large Bowel (Small Volume/Bloody/Painful/Tenesmus/Urgency) — Motility</h4><ul><li>Irritable Bowel Syndrome</li><li>Hyperthyroid</li></ul><h4>Large Bowel — Inflammatory</h4><ul><li>Inflammatory Bowel Disease</li><li>Radiation Colitis</li><li>Ischemic Colitis</li></ul><h4>Large Bowel — Secretory</h4><ul><li>Villous Adenoma</li><li>Colon Cancer</li><li>Microscopic Colitis</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "dia-chronic",
+   "id": "bb-084-scheme",
+   "h": "Chronic Diarrhea schemes — Small Bowel / Steatorrhea and Large Bowel (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b084a\"></div><div class=\"flow\" data-flow=\"b084b\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b084a",
+   "title": "Chronic Diarrhea — Small Bowel",
+   "src": "fig",
+   "img": "bb-084-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Diarrhea"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "&gt;3 Loose Stools/Day, &gt; 14 days — Exclude Chronic Inflammation"
+    },
+    {
+     "id": "ste",
+     "k": "dx",
+     "t": "Steatorrhea — Oily/Foul/Hard to Flush",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Steatorrhea &amp; Large Bowel (flow b084b)</p>"
+    },
+    {
+     "id": "lb",
+     "k": "dx",
+     "t": "Large Bowel — Small Volume/Bloody/Painful/Tenesmus/Urgency",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Steatorrhea &amp; Large Bowel (flow b084b)</p>"
+    },
+    {
+     "id": "sb",
+     "k": "dx",
+     "t": "Small Bowel — Large Volume/Watery"
+    },
+    {
+     "id": "sec",
+     "k": "dx",
+     "t": "Secretory"
+    },
+    {
+     "id": "mot",
+     "k": "dx",
+     "t": "Disordered Motility",
+     "d": "<ul><li>Irritable Bowel Syndrome (diagnosis of exclusion)</li><li>Diabetic Neuropathy</li><li>Hyperthyroidism</li></ul>"
+    },
+    {
+     "id": "osm",
+     "k": "dx",
+     "t": "Osmotic",
+     "d": "<ul><li>Magnesium, Phosphate, Sulfate</li><li>Carbohydrate Malabsorption</li><li>Lactose Intolerance</li></ul>"
+    },
+    {
+     "id": "muc",
+     "k": "dx",
+     "t": "Mucosal",
+     "d": "<ul><li>Crohn’s Disease (Screen with CBC, albumin, ESR, endoscopy)</li><li>Celiac Disease (screen with TTG)</li><li>Chronic Inflammation</li><li>Whipple’s Disease</li></ul>"
+    },
+    {
+     "id": "tum",
+     "k": "dx",
+     "t": "Tumors"
+    },
+    {
+     "id": "muc2",
+     "k": "dx",
+     "t": "Mucosal",
+     "d": "<ul><li>Gastrinoma</li><li>Carcinoid Syndrome</li><li>Mastocytosis</li></ul>"
+    },
+    {
+     "id": "neo",
+     "k": "dx",
+     "t": "Neoplastic",
+     "d": "<ul><li>Adenocarcinoma</li><li>Lymphoma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "ste",
+     "l": "Steatorrhea (เส้นประ)"
+    },
+    {
+     "f": "q",
+     "t": "lb",
+     "l": "Large Bowel (เส้นประ)"
+    },
+    {
+     "f": "q",
+     "t": "sb",
+     "l": "Small Bowel"
+    },
+    {
+     "f": "sb",
+     "t": "sec",
+     "l": "Secretory"
+    },
+    {
+     "f": "sb",
+     "t": "mot",
+     "l": "Disordered Motility"
+    },
+    {
+     "f": "sb",
+     "t": "osm",
+     "l": "Osmotic"
+    },
+    {
+     "f": "sec",
+     "t": "muc",
+     "l": "Mucosal"
+    },
+    {
+     "f": "sec",
+     "t": "tum",
+     "l": "Tumors"
+    },
+    {
+     "f": "tum",
+     "t": "muc2",
+     "l": "Mucosal"
+    },
+    {
+     "f": "tum",
+     "t": "neo",
+     "l": "Neoplastic"
+    }
+   ]
+  },
+  {
+   "id": "b084b",
+   "title": "Chronic Diarrhea — Steatorrhea & Large Bowel",
+   "src": "fig",
+   "img": "bb-084-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Diarrhea"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "&gt;3 Loose Stools/Day, &gt; 14 days — Exclude Chronic Inflammation"
+    },
+    {
+     "id": "ste",
+     "k": "dx",
+     "t": "Steatorrhea — Oily/Foul/Hard to Flush"
+    },
+    {
+     "id": "lb",
+     "k": "dx",
+     "t": "Large Bowel — Small Volume/Bloody/Painful/Tenesmus/Urgency"
+    },
+    {
+     "id": "sb",
+     "k": "dx",
+     "t": "Small Bowel — Large Volume/Watery",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Small Bowel (flow b084a)</p>"
+    },
+    {
+     "id": "mald",
+     "k": "dx",
+     "t": "Maldigestive",
+     "d": "<ul><li>Pancreatic Insufficiency</li></ul>"
+    },
+    {
+     "id": "malab",
+     "k": "dx",
+     "t": "Malabsorptive"
+    },
+    {
+     "id": "prim",
+     "k": "dx",
+     "t": "Primary Malabsorption",
+     "d": "<ul><li>Celiac Disease</li><li>Mucosal Disease</li><li>Ileal Crohn’s Disease</li></ul>"
+    },
+    {
+     "id": "secm",
+     "k": "dx",
+     "t": "Secondary Malabsorption",
+     "d": "<ul><li>Bacterial Overgrowth</li><li>Liver Cholestasis</li><li>Mesenteric Ischemia</li><li>Short Bowel/ Resection</li></ul>"
+    },
+    {
+     "id": "mot",
+     "k": "dx",
+     "t": "Motility",
+     "d": "<ul><li>Irritable Bowel Syndrome</li><li>Hyperthyroid</li></ul>"
+    },
+    {
+     "id": "infl",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Inflammatory Bowel Disease</li><li>Radiation Colitis</li><li>Ischemic Colitis</li></ul>"
+    },
+    {
+     "id": "sec",
+     "k": "dx",
+     "t": "Secretory",
+     "d": "<ul><li>Villous Adenoma</li><li>Colon Cancer</li><li>Microscopic Colitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "ste",
+     "l": "Steatorrhea"
+    },
+    {
+     "f": "q",
+     "t": "lb",
+     "l": "Large Bowel"
+    },
+    {
+     "f": "q",
+     "t": "sb",
+     "l": "Small Bowel (เส้นประ)"
+    },
+    {
+     "f": "ste",
+     "t": "mald",
+     "l": "Maldigestive"
+    },
+    {
+     "f": "ste",
+     "t": "malab",
+     "l": "Malabsorptive"
+    },
+    {
+     "f": "malab",
+     "t": "prim",
+     "l": "Primary Malabsorption"
+    },
+    {
+     "f": "malab",
+     "t": "secm",
+     "l": "Secondary Malabsorption"
+    },
+    {
+     "f": "lb",
+     "t": "mot",
+     "l": "Motility"
+    },
+    {
+     "f": "lb",
+     "t": "infl",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "lb",
+     "t": "sec",
+     "l": "Secretory"
+    }
+   ]
+  }
+ ]
+}

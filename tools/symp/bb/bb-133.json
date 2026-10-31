@@ -1,0 +1,232 @@
+{
+ "key": "133",
+ "en": "Abnormal Lipid Profile",
+ "th": "ไขมันในเลือดผิดปกติ",
+ "pdf": "162–163",
+ "bookpg": "133–134",
+ "target": null,
+ "new": {
+  "id": "abnormal-lipid-profile",
+  "th": "ไขมันในเลือดผิดปกติ",
+  "en": "Abnormal Lipid Profile",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "bb-133-combined",
+   "h": "Combined & Decreased HDL (หน้า 133)",
+   "html": "<div class=\"flow\" data-flow=\"b133a\"></div><ul><li><b>Abnormal Serum Lipid Profile</b><ul><li><span class=\"tag\">Increased LDL (เส้นประ → หน้า 134)</span> <b>Increased LDL</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 134 (Increased LDL &amp; Increased Triglycerides)</span></p></li><li><span class=\"tag\">Increased TG (เส้นประ → หน้า 134)</span> <b>Increased Triglycerides</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 134 (Increased LDL &amp; Increased Triglycerides)</span></p></li><li><span class=\"tag\">Increased cholesterol + TG</span> <b>Increased Cholesterol and Triglycerides</b><ul><li><span class=\"tag\">Genetic causes</span> <b>Genetic Causes</b><ul><li>Familial Combined Hyperlipidemia</li><li>Familial Dysbetalipoproteinemia</li></ul></li><li><span class=\"tag\">Secondary causes</span> <b>Secondary Causes</b><ul><li>Nephrotic Syndrome</li><li>Drugs</li><li>Diabetes</li><li>Hypothyroidism</li></ul></li></ul></li><li><span class=\"tag\">Decreased HDL</span> <b>Decreased HDL</b><ul><li><span class=\"tag\">Genetic causes</span> <b>Genetic Causes</b><ul><li>Apo-A1 Deficiency/Variant</li><li>Tangier Disease</li><li>LCAT Deficiency</li><li>Primary Hypo-alphalipoproteinemia</li></ul></li><li><span class=\"tag\">Secondary causes</span> <b>Secondary Causes</b><ul><li>Sedentary Lifestyle</li><li>Smoking</li><li>Androgens</li></ul></li></ul></li></ul></li></ul><div class=\"box\"><p><b>Physical signs:</b></p><ul><li>Hypertriglyceridemia: eruptive xanthoma, lipemia retinalis</li><li>Increased IDL: palmar crease xanthoma, tuberous xanthoma</li><li>Increased LDL: tendon xanthomata on Achilles tendon, knuckles</li></ul></div>"
+  },
+  {
+   "id": "bb-133-ldl-tg",
+   "h": "Increased LDL & Increased Triglycerides (หน้า 134)",
+   "html": "<div class=\"flow\" data-flow=\"b133b\"></div><ul><li><b>Abnormal Serum Lipid Profile</b><ul><li><span class=\"tag\">Increased LDL</span> <b>Increased LDL</b><ul><li><span class=\"tag\">Genetic causes</span> <b>Genetic Causes</b><ul><li>Polygenic Hypercholesterolemia</li><li>Familial Hypercholesterolemia</li><li>Familial Defective ApoB-100</li><li>LDLr deficiency</li></ul></li><li><span class=\"tag\">Secondary causes</span> <b>Secondary Causes</b><ul><li>Hypothyroid</li><li>Obstructive Liver Disease</li><li>Nephrotic Syndrome</li></ul></li></ul></li><li><span class=\"tag\">Increased triglycerides</span> <b>Increased Triglycerides</b><ul><li><span class=\"tag\">Genetic causes</span> <b>Genetic Causes</b><ul><li>Familial Hypertriglyceridemia</li><li>Familial LPL Deficiency</li><li>Apo-CII Deficiency</li></ul></li><li><span class=\"tag\">Secondary causes</span> <b>Secondary Causes</b><ul><li>Diabetes</li><li>Alcohol</li><li>Increased Estrogen (e.g. Pregnancy, Hormone Replacement Therapy, Oral Contraceptive)</li></ul></li></ul></li><li><span class=\"tag\">Increased cholesterol + TG (เส้นประ → หน้า 133)</span> <b>Increased Cholesterol and Triglycerides</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 133 (Combined &amp; Decreased HDL)</span></p></li><li><span class=\"tag\">Decreased HDL (เส้นประ → หน้า 133)</span> <b>Decreased HDL</b><p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 133 (Combined &amp; Decreased HDL)</span></p></li></ul></li></ul><div class=\"box\"><p><b>Physical signs:</b></p><ul><li>Hypertriglyceridemia: eruptive xanthoma, lipemia retinalis</li><li>Increased IDL: palmar crease xanthoma, tuberous xanthoma</li><li>Increased LDL: tendon xanthomata on Achilles tendon, knuckles</li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b133a",
+   "title": "Abnormal Lipid Profile — Combined &amp; Decreased HDL",
+   "src": "fig",
+   "img": "bb-133-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Abnormal Serum Lipid Profile"
+    },
+    {
+     "id": "ldl",
+     "k": "dx",
+     "t": "Increased LDL",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 134 (Increased LDL &amp; Increased Triglycerides)</span></p>"
+    },
+    {
+     "id": "tg",
+     "k": "dx",
+     "t": "Increased Triglycerides",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 134 (Increased LDL &amp; Increased Triglycerides)</span></p>"
+    },
+    {
+     "id": "ct",
+     "k": "q",
+     "t": "Increased Cholesterol and Triglycerides"
+    },
+    {
+     "id": "hdl",
+     "k": "q",
+     "t": "Decreased HDL"
+    },
+    {
+     "id": "ctg",
+     "k": "dx",
+     "t": "Genetic Causes",
+     "d": "<ul><li>Familial Combined Hyperlipidemia</li><li>Familial Dysbetalipoproteinemia</li></ul>"
+    },
+    {
+     "id": "cts",
+     "k": "dx",
+     "t": "Secondary Causes",
+     "d": "<ul><li>Nephrotic Syndrome</li><li>Drugs</li><li>Diabetes</li><li>Hypothyroidism</li></ul>"
+    },
+    {
+     "id": "hg",
+     "k": "dx",
+     "t": "Genetic Causes",
+     "d": "<ul><li>Apo-A1 Deficiency/Variant</li><li>Tangier Disease</li><li>LCAT Deficiency</li><li>Primary Hypo-alphalipoproteinemia</li></ul>"
+    },
+    {
+     "id": "hs",
+     "k": "dx",
+     "t": "Secondary Causes",
+     "d": "<ul><li>Sedentary Lifestyle</li><li>Smoking</li><li>Androgens</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "ldl",
+     "l": "Increased LDL (เส้นประ → หน้า 134)"
+    },
+    {
+     "f": "r",
+     "t": "tg",
+     "l": "Increased TG (เส้นประ → หน้า 134)"
+    },
+    {
+     "f": "r",
+     "t": "ct",
+     "l": "Increased cholesterol + TG"
+    },
+    {
+     "f": "r",
+     "t": "hdl",
+     "l": "Decreased HDL"
+    },
+    {
+     "f": "ct",
+     "t": "ctg",
+     "l": "Genetic causes"
+    },
+    {
+     "f": "ct",
+     "t": "cts",
+     "l": "Secondary causes"
+    },
+    {
+     "f": "hdl",
+     "t": "hg",
+     "l": "Genetic causes"
+    },
+    {
+     "f": "hdl",
+     "t": "hs",
+     "l": "Secondary causes"
+    }
+   ],
+   "note": "Physical signs: Hypertriglyceridemia: eruptive xanthoma, lipemia retinalis · Increased IDL: palmar crease xanthoma, tuberous xanthoma · Increased LDL: tendon xanthomata on Achilles tendon, knuckles"
+  },
+  {
+   "id": "b133b",
+   "title": "Abnormal Lipid Profile — Increased LDL &amp; Increased Triglycerides",
+   "src": "fig",
+   "img": "bb-133-f2.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Abnormal Serum Lipid Profile"
+    },
+    {
+     "id": "ldl",
+     "k": "q",
+     "t": "Increased LDL"
+    },
+    {
+     "id": "tg",
+     "k": "q",
+     "t": "Increased Triglycerides"
+    },
+    {
+     "id": "ct",
+     "k": "dx",
+     "t": "Increased Cholesterol and Triglycerides",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 133 (Combined &amp; Decreased HDL)</span></p>"
+    },
+    {
+     "id": "hdl",
+     "k": "dx",
+     "t": "Decreased HDL",
+     "d": "<p><span class=\"muted\">เส้นประในเล่ม — รายละเอียดอยู่หน้า 133 (Combined &amp; Decreased HDL)</span></p>"
+    },
+    {
+     "id": "lg",
+     "k": "dx",
+     "t": "Genetic Causes",
+     "d": "<ul><li>Polygenic Hypercholesterolemia</li><li>Familial Hypercholesterolemia</li><li>Familial Defective ApoB-100</li><li>LDLr deficiency</li></ul>"
+    },
+    {
+     "id": "ls",
+     "k": "dx",
+     "t": "Secondary Causes",
+     "d": "<ul><li>Hypothyroid</li><li>Obstructive Liver Disease</li><li>Nephrotic Syndrome</li></ul>"
+    },
+    {
+     "id": "tgg",
+     "k": "dx",
+     "t": "Genetic Causes",
+     "d": "<ul><li>Familial Hypertriglyceridemia</li><li>Familial LPL Deficiency</li><li>Apo-CII Deficiency</li></ul>"
+    },
+    {
+     "id": "tgs",
+     "k": "dx",
+     "t": "Secondary Causes",
+     "d": "<ul><li>Diabetes</li><li>Alcohol</li><li>Increased Estrogen (e.g. Pregnancy, Hormone Replacement Therapy, Oral Contraceptive)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "ldl",
+     "l": "Increased LDL"
+    },
+    {
+     "f": "r",
+     "t": "tg",
+     "l": "Increased triglycerides"
+    },
+    {
+     "f": "r",
+     "t": "ct",
+     "l": "Increased cholesterol + TG (เส้นประ → หน้า 133)"
+    },
+    {
+     "f": "r",
+     "t": "hdl",
+     "l": "Decreased HDL (เส้นประ → หน้า 133)"
+    },
+    {
+     "f": "ldl",
+     "t": "lg",
+     "l": "Genetic causes"
+    },
+    {
+     "f": "ldl",
+     "t": "ls",
+     "l": "Secondary causes"
+    },
+    {
+     "f": "tg",
+     "t": "tgg",
+     "l": "Genetic causes"
+    },
+    {
+     "f": "tg",
+     "t": "tgs",
+     "l": "Secondary causes"
+    }
+   ],
+   "note": "Physical signs: Hypertriglyceridemia: eruptive xanthoma, lipemia retinalis · Increased IDL: palmar crease xanthoma, tuberous xanthoma · Increased LDL: tendon xanthomata on Achilles tendon, knuckles"
+  }
+ ]
+}

@@ -1,0 +1,258 @@
+{
+ "key": "299",
+ "en": "Acute Vision Loss",
+ "th": "การมองเห็นลดลงเฉียบพลัน",
+ "pdf": "328–329",
+ "bookpg": "299–300",
+ "target": "visual-disorder",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-9-9-blur",
+   "id": "bb-299-acute",
+   "h": "Acute vision loss (Blackbook)",
+   "sub": [
+    {
+     "id": "bb-299-bil",
+     "h": "Bilateral",
+     "html": "<div class=\"flow\" data-flow=\"b299a\"></div><div class=\"pearl\"><p><b>Clinical Pearl:</b></p><ul><li>Patients with bilateral acute vision loss should have a CT.</li></ul></div>"
+    },
+    {
+     "id": "bb-299-uni",
+     "h": "Unilateral",
+     "html": "<div class=\"flow\" data-flow=\"b299b\"></div><div class=\"pearl\"><p><b>Clinical Pearls:</b></p><ul><li>Optic neuritis causes pain with EOM</li><li>Temporal arteritis causes temporalis pain and pain with mastication</li><li>Acute angle closure glaucoma causes high intraocular pressure, unilateral eye pain, mid-dilated pupil and n/v</li><li>Retinal detachment can present as a veil over the vision and with flashes and floaters.</li><li>TIA, vein or artery occlusion requires stroke work-up</li></ul></div>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "b299a",
+   "title": "Acute Vision Loss — Bilateral",
+   "src": "fig",
+   "img": "bb-299-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vision Loss"
+    },
+    {
+     "id": "ac",
+     "k": "q",
+     "t": "Acute"
+    },
+    {
+     "id": "ch",
+     "k": "note",
+     "t": "Chronic (dashed — see the Chronic Vision Loss scheme)"
+    },
+    {
+     "id": "un",
+     "k": "note",
+     "t": "Unilateral (dashed — see the Unilateral scheme)"
+    },
+    {
+     "id": "bi",
+     "k": "q",
+     "t": "Bilateral"
+    },
+    {
+     "id": "ho",
+     "k": "dx",
+     "t": "Complete/ Partial Homonymous Hemianopia",
+     "d": "<ul><li>Infarct</li><li>Intracranial Hemorrhage</li><li>Tumor</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Migraine</li><li>Systemic Hypoperfusion</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ac",
+     "l": "Acute"
+    },
+    {
+     "f": "a",
+     "t": "ch",
+     "l": "Chronic (dashed)"
+    },
+    {
+     "f": "ac",
+     "t": "un",
+     "l": "Unilateral (dashed)"
+    },
+    {
+     "f": "ac",
+     "t": "bi",
+     "l": "Bilateral"
+    },
+    {
+     "f": "bi",
+     "t": "ho",
+     "l": "Complete/ partial homonymous hemianopia"
+    },
+    {
+     "f": "bi",
+     "t": "ot",
+     "l": "Other"
+    }
+   ]
+  },
+  {
+   "id": "b299b",
+   "title": "Acute Vision Loss — Unilateral",
+   "src": "fig",
+   "img": "bb-299-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Vision Loss"
+    },
+    {
+     "id": "bi",
+     "k": "note",
+     "t": "Bilateral (dashed — see the Bilateral scheme)"
+    },
+    {
+     "id": "un",
+     "k": "q",
+     "t": "Unilateral"
+    },
+    {
+     "id": "pa",
+     "k": "q",
+     "t": "Painful"
+    },
+    {
+     "id": "pl",
+     "k": "q",
+     "t": "Painless"
+    },
+    {
+     "id": "on",
+     "k": "q",
+     "t": "Optic Nerve"
+    },
+    {
+     "id": "co",
+     "k": "dx",
+     "t": "Cornea",
+     "d": "<ul><li>Keratopathy</li></ul>"
+    },
+    {
+     "id": "n1",
+     "k": "dx",
+     "t": "No Abnormalities of the Optic Nerve",
+     "d": "<ul><li>Acute Angle Closure Glaucoma (fixed dilated pupil)</li></ul>"
+    },
+    {
+     "id": "n2",
+     "k": "dx",
+     "t": "Abnormalities of the Optic Nerve",
+     "d": "<ul><li>Temporal Arteritis</li><li>Demyelination</li><li>MS</li><li>Idiopathic</li><li>Glaucoma</li></ul>"
+    },
+    {
+     "id": "re",
+     "k": "dx",
+     "t": "Retina",
+     "d": "<ul><li>Retinal Detachment</li><li>Retinal Artery Occlusion</li><li>Retinal Vein Occlusion</li><li>Ischemic Optic Neuropathy</li></ul>"
+    },
+    {
+     "id": "ti",
+     "k": "dx",
+     "t": "Transient Ischemic Attack"
+    },
+    {
+     "id": "vi",
+     "k": "q",
+     "t": "Vitreous"
+    },
+    {
+     "id": "rv",
+     "k": "dx",
+     "t": "Retina Visible",
+     "d": "<ul><li>Visual Cortex Infarction</li></ul>"
+    },
+    {
+     "id": "rn",
+     "k": "dx",
+     "t": "Retina Not Visible",
+     "d": "<ul><li>Retinal Hemorrhage</li><li>Vitreous Hemorrhage</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "un",
+     "l": "Unilateral"
+    },
+    {
+     "f": "a",
+     "t": "bi",
+     "l": "Bilateral (dashed)"
+    },
+    {
+     "f": "un",
+     "t": "pa",
+     "l": "Painful"
+    },
+    {
+     "f": "un",
+     "t": "pl",
+     "l": "Painless"
+    },
+    {
+     "f": "pa",
+     "t": "on",
+     "l": "Optic nerve"
+    },
+    {
+     "f": "pa",
+     "t": "co",
+     "l": "Cornea"
+    },
+    {
+     "f": "on",
+     "t": "n1",
+     "l": "No abnormalities of the optic nerve"
+    },
+    {
+     "f": "on",
+     "t": "n2",
+     "l": "Abnormalities of the optic nerve"
+    },
+    {
+     "f": "pl",
+     "t": "re",
+     "l": "Retina"
+    },
+    {
+     "f": "pl",
+     "t": "ti",
+     "l": "Transient ischemic attack"
+    },
+    {
+     "f": "pl",
+     "t": "vi",
+     "l": "Vitreous"
+    },
+    {
+     "f": "vi",
+     "t": "rv",
+     "l": "Retina visible"
+    },
+    {
+     "f": "vi",
+     "t": "rn",
+     "l": "Retina not visible"
+    }
+   ]
+  }
+ ]
+}

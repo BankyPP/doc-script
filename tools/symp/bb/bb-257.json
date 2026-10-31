@@ -1,0 +1,174 @@
+{
+ "key": "257",
+ "en": "Bone Lesion",
+ "th": "รอยโรคของกระดูก",
+ "pdf": "286",
+ "bookpg": "257",
+ "target": null,
+ "new": {
+  "id": "bone-lesion",
+  "th": "รอยโรคของกระดูก",
+  "en": "Bone Lesion",
+  "g": "msk"
+ },
+ "sections": [
+  {
+   "id": "bb-257-scheme",
+   "h": "Bone lesion on X-ray (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b257a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b257a",
+   "title": "Bone Lesion",
+   "src": "fig",
+   "img": "bb-257-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Bone Lesion on X-ray"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Rule Out Osteomyelitis &amp; Secondary Metastases"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Non-aggressive"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Aggressive"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Exostotic",
+     "d": "<ul><li>Osteochondroma</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Narrow, &lt;1mm margin — Reactive bone formation"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Broad or Indistinct Margin &amp;/or Soft Tissue Invasion"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Multiple Lytic Lesions",
+     "d": "<ul><li>Multiple Myeloma</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Asymptomatic &amp;/or Non-Active Bone Scan",
+     "d": "<ul><li>Unicameral Bone Cysts</li><li>Aneurysmal Bone Cysts</li><li>Non-ossifying Fibroma</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "q",
+     "t": "Symptomatic &amp;/or Active Bone Scan"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Benign — No Bone Mineralization",
+     "d": "<ul><li>Enchondroma (can calcify &amp;/or turn malignant)</li><li>Giant Cell Tumor (“Soap Bubble” appearance)</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Malignant",
+     "d": "<p>Bone Mineralization, Constitutional Symptoms, Codman’s Triangle, Excessive Scalloping &amp; Destruction of Cortical Bone</p><ul><li>Osteosarcoma (Codman’s Triangle)</li><li>Chondrosarcoma (“Popcorn” appearance)</li><li>Ewing’s Sarcoma</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Inflammatory Appearance",
+     "d": "<ul><li>Osteoid Osteoma (“Nidus” appearance)</li><li>Osteoblastoma (may be malignant or sclerotic in appearance)</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Not Inflammatory Appearance",
+     "d": "<ul><li>Chondroblastoma</li><li>Chondromyxoid Fibroma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Non-aggressive"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Aggressive"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Exostotic"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Narrow margin (<1mm)"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Broad/indistinct margin"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Multiple lytic lesions"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Asymptomatic / non-active scan"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Symptomatic / active scan"
+    },
+    {
+     "f": "g",
+     "t": "k",
+     "l": "Benign"
+    },
+    {
+     "f": "g",
+     "t": "l",
+     "l": "Malignant"
+    },
+    {
+     "f": "j",
+     "t": "m",
+     "l": "Inflammatory appearance"
+    },
+    {
+     "f": "j",
+     "t": "n",
+     "l": "Not inflammatory"
+    }
+   ]
+  }
+ ]
+}

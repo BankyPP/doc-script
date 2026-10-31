@@ -1,0 +1,135 @@
+{
+ "key": "200",
+ "en": "Acute Pelvic Pain",
+ "th": "ปวดอุ้งเชิงกรานเฉียบพลัน",
+ "pdf": "229",
+ "bookpg": "200",
+ "target": null,
+ "new": {
+  "id": "acute-pelvic-pain",
+  "th": "ปวดอุ้งเชิงกรานเฉียบพลัน",
+  "en": "Acute Pelvic Pain",
+  "g": "obgyn"
+ },
+ "sections": [
+  {
+   "id": "bb-200-scheme",
+   "h": "Acute Pelvic Pain scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b200a\"></div><p><small>** Obstetrical Emergencies</small></p><ul><li><b>Gynecologic</b><ul><li><b>Pregnant</b><ul><li><b>Extrauterine</b><ul><li>Ectopic pregnancy**</li></ul></li><li><b>Intrauterine</b><ul><li>Placental abruption**</li><li>Spontaneous abortion</li><li>Labour</li><li>Molar pregnancy</li></ul></li></ul></li><li><b>Non-Pregnant</b><ul><li><b>Uterus</b><ul><li>Fibroid</li><li>Endometriosis</li><li>Adenomyosis</li><li>Pyometra</li><li>Hematometra</li><li>Congenital Anomaly</li><li>Dysmenorrhea</li></ul></li><li><b>Ovary</b><ul><li>Tubo-ovarian abscess**</li><li>Torsion**</li><li>Ovarian cyst</li><li>Endometriosis</li><li>Ovulation pain</li></ul></li><li><b>Fallopian Tube</b><ul><li>Tubo-ovarian abscess**</li><li>Pelvic inflammatory disease</li><li>Torsion</li><li>Endometriosis</li><li>Hydrosalpinx</li></ul></li></ul></li></ul></li><li><b>Non-Gynecologic</b><ul><li>Genitourinary (Infection, Stone)</li><li>Gastrointestinal (Appendicitis, Gastroenteritis, Diverticulitis, IBD)</li><li>Musculoskeletal</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b200a",
+   "title": "Acute Pelvic Pain",
+   "src": "fig",
+   "img": "bb-200-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Pelvic Pain"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Gynecologic"
+    },
+    {
+     "id": "ng",
+     "k": "dx",
+     "t": "Non-Gynecologic",
+     "d": "<ul><li>Genitourinary (Infection, Stone)</li><li>Gastrointestinal (Appendicitis, Gastroenteritis, Diverticulitis, IBD)</li><li>Musculoskeletal</li></ul>"
+    },
+    {
+     "id": "pr",
+     "k": "q",
+     "t": "Pregnant"
+    },
+    {
+     "id": "np",
+     "k": "q",
+     "t": "Non-Pregnant"
+    },
+    {
+     "id": "ex",
+     "k": "stop",
+     "t": "Extrauterine",
+     "d": "<ul><li>Ectopic pregnancy**</li></ul>"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "Intrauterine",
+     "d": "<ul><li>Placental abruption**</li><li>Spontaneous abortion</li><li>Labour</li><li>Molar pregnancy</li></ul>"
+    },
+    {
+     "id": "ut",
+     "k": "dx",
+     "t": "Uterus",
+     "d": "<ul><li>Fibroid</li><li>Endometriosis</li><li>Adenomyosis</li><li>Pyometra</li><li>Hematometra</li><li>Congenital Anomaly</li><li>Dysmenorrhea</li></ul>"
+    },
+    {
+     "id": "ov",
+     "k": "dx",
+     "t": "Ovary",
+     "d": "<ul><li>Tubo-ovarian abscess**</li><li>Torsion**</li><li>Ovarian cyst</li><li>Endometriosis</li><li>Ovulation pain</li></ul>"
+    },
+    {
+     "id": "ft",
+     "k": "dx",
+     "t": "Fallopian Tube",
+     "d": "<ul><li>Tubo-ovarian abscess**</li><li>Pelvic inflammatory disease</li><li>Torsion</li><li>Endometriosis</li><li>Hydrosalpinx</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "g",
+     "l": "Gynecologic"
+    },
+    {
+     "f": "a",
+     "t": "ng",
+     "l": "Non-Gynecologic"
+    },
+    {
+     "f": "g",
+     "t": "pr",
+     "l": "Pregnant"
+    },
+    {
+     "f": "g",
+     "t": "np",
+     "l": "Non-Pregnant"
+    },
+    {
+     "f": "pr",
+     "t": "ex",
+     "l": "Extrauterine"
+    },
+    {
+     "f": "pr",
+     "t": "in",
+     "l": "Intrauterine"
+    },
+    {
+     "f": "np",
+     "t": "ut",
+     "l": "Uterus"
+    },
+    {
+     "f": "np",
+     "t": "ov",
+     "l": "Ovary"
+    },
+    {
+     "f": "np",
+     "t": "ft",
+     "l": "Fallopian Tube"
+    }
+   ],
+   "note": "** = Obstetrical Emergencies"
+  }
+ ]
+}

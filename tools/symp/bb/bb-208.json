@@ -1,0 +1,295 @@
+{
+ "key": "208",
+ "en": "Growth Discrepancy",
+ "th": "ขนาดทารกผิดปกติตามอายุครรภ์ (SGA / LGA)",
+ "pdf": "237–238",
+ "bookpg": "208–209",
+ "target": null,
+ "new": {
+  "id": "growth-discrepancy",
+  "th": "ขนาดทารกผิดปกติตามอายุครรภ์ (SGA / LGA)",
+  "en": "Growth Discrepancy",
+  "g": "obgyn"
+ },
+ "sections": [
+  {
+   "id": "bb-208-sga",
+   "h": "Small for Gestational Age / Intrauterine Growth Restriction",
+   "html": "<div class=\"flow\" data-flow=\"b208a\"></div><ul><li><b>Large for Gestational Age</b> — Growth &gt; 90<sup>th</sup> percentile for GA<br>เส้นประในเล่ม — ดูแผนผัง Large for Gestational Age</li><li><b>Small for Gestational Age</b> — Growth &lt; 10<sup>th</sup> percentile for GA<ul><li><b>Maternal Factors</b><ul><li><b>Decreased Uteroplacental Flow</b><ul><li>Gestational hypertension/ Pre-eclampsia</li><li>Renal insufficiency</li><li>Diabetes mellitus</li><li>Autoimmune disorders</li></ul></li><li><b>Maternal Lifestyle</b><ul><li>Malnutrition</li><li>Smoking</li><li>Alcohol</li><li>Drugs</li></ul></li><li><b>Maternal Hypoxemia</b><ul><li>Pulmonary diseases</li><li>Chronic anemia</li><li>High altitude</li></ul></li><li><b>Iatrogenic</b><ul><li>Folic acid antagonists</li><li>Anticonvulsants</li></ul></li></ul></li><li><b>Fetal Factors</b><ul><li><b>TORCH Infections</b></li><li><b>Multiple Gestation</b></li><li><b>Chromosomal Abnormalities</b><ul><li>Trisomy 13, 18, 21</li><li>Turner syndrome, 45X</li></ul></li></ul></li><li><b>Placental Factors</b><ul><li><b>Placental Ischemia/ Infarction</b><ul><li>Placenta previa</li><li>Chronic insufficiency</li></ul></li><li><b>Placental Abruption</b></li><li><b>Placental Malformations</b><ul><li>Vasa previa</li></ul></li><li><b>Confined Placental Mosaicism (Rare)</b></li></ul></li></ul></li></ul>"
+  },
+  {
+   "id": "bb-208-lga",
+   "h": "Large for Gestational Age",
+   "html": "<div class=\"flow\" data-flow=\"b208b\"></div><ul><li><b>Large for Gestational Age</b> — Growth &gt; 90<sup>th</sup> percentile for GA<ul><li><b>Maternal Factors</b><ul><li>Multiparity</li><li>Previous history of large for gestational age fetus</li><li>Aboriginal, Hispanic, and Caucasian races</li><li>Maternal co-morbidities (e.g. diabetes, obesity)</li><li>Excessive weight gain over course of pregnancy (&gt;40 lbs)</li></ul><ul><li><b>MATERNAL COMPLICATIONS</b><ul><li>Prolonged labour</li><li>Operative vaginal delivery</li><li>Caesarean section</li><li>Genital tract lacerations</li><li>Post-partum hemorrhage</li><li>Uterine rupture</li></ul></li></ul></li><li><b>Fetal factors</b><ul><li>Male infant</li><li>Prolonged gestation (&gt;41 weeks)</li><li>Genetic disorder (e.g. Sotos syndrome, Beckwith-Wiedemann syndrome, Weaver’s syndrome)</li></ul><ul><li><b>FETAL COMPLICATIONS</b><ul><li>Shoulder dystocia</li><li>Birth injury (brachial plexus injury, clavicular fracture)</li><li>Cerebral palsy secondary to hypoxia</li><li>Hypoglycemia</li><li>Polycythemia</li><li>Perinatal asphyxia</li><li>Hyperbilirubinemia</li></ul></li></ul></li></ul></li><li><b>Small for Gestational Age</b> — Growth &lt; 10<sup>th</sup> percentile for GA<br>เส้นประในเล่ม — ดูแผนผัง Small for Gestational Age / IUGR</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b208a",
+   "title": "Growth Discrepancy — Small for Gestational Age / Intrauterine Growth Restriction",
+   "src": "fig",
+   "img": "bb-208-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Growth Discrepancy"
+    },
+    {
+     "id": "lga",
+     "k": "note",
+     "t": "Large for Gestational Age",
+     "d": "Growth &gt; 90<sup>th</sup> percentile for GA<br>เส้นประในเล่ม — ดูแผนผัง Large for Gestational Age"
+    },
+    {
+     "id": "sga",
+     "k": "q",
+     "t": "Small for Gestational Age",
+     "d": "Growth &lt; 10<sup>th</sup> percentile for GA"
+    },
+    {
+     "id": "mf",
+     "k": "q",
+     "t": "Maternal Factors"
+    },
+    {
+     "id": "ff",
+     "k": "q",
+     "t": "Fetal Factors"
+    },
+    {
+     "id": "pf",
+     "k": "q",
+     "t": "Placental Factors"
+    },
+    {
+     "id": "tor",
+     "k": "dx",
+     "t": "TORCH Infections"
+    },
+    {
+     "id": "mg",
+     "k": "dx",
+     "t": "Multiple Gestation"
+    },
+    {
+     "id": "ch",
+     "k": "dx",
+     "t": "Chromosomal Abnormalities",
+     "d": "<ul><li>Trisomy 13, 18, 21</li><li>Turner syndrome, 45X</li></ul>"
+    },
+    {
+     "id": "pi",
+     "k": "dx",
+     "t": "Placental Ischemia/ Infarction",
+     "d": "<ul><li>Placenta previa</li><li>Chronic insufficiency</li></ul>"
+    },
+    {
+     "id": "pab",
+     "k": "dx",
+     "t": "Placental Abruption"
+    },
+    {
+     "id": "pm",
+     "k": "dx",
+     "t": "Placental Malformations",
+     "d": "<ul><li>Vasa previa</li></ul>"
+    },
+    {
+     "id": "cpm",
+     "k": "dx",
+     "t": "Confined Placental Mosaicism (Rare)"
+    },
+    {
+     "id": "du",
+     "k": "dx",
+     "t": "Decreased Uteroplacental Flow",
+     "d": "<ul><li>Gestational hypertension/ Pre-eclampsia</li><li>Renal insufficiency</li><li>Diabetes mellitus</li><li>Autoimmune disorders</li></ul>"
+    },
+    {
+     "id": "ml",
+     "k": "dx",
+     "t": "Maternal Lifestyle",
+     "d": "<ul><li>Malnutrition</li><li>Smoking</li><li>Alcohol</li><li>Drugs</li></ul>"
+    },
+    {
+     "id": "mh",
+     "k": "dx",
+     "t": "Maternal Hypoxemia",
+     "d": "<ul><li>Pulmonary diseases</li><li>Chronic anemia</li><li>High altitude</li></ul>"
+    },
+    {
+     "id": "ia",
+     "k": "dx",
+     "t": "Iatrogenic",
+     "d": "<ul><li>Folic acid antagonists</li><li>Anticonvulsants</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "lga",
+     "l": "Large for GA (เส้นประ)"
+    },
+    {
+     "f": "a",
+     "t": "sga",
+     "l": "Small for GA"
+    },
+    {
+     "f": "sga",
+     "t": "mf",
+     "l": "Maternal Factors"
+    },
+    {
+     "f": "sga",
+     "t": "ff",
+     "l": "Fetal Factors"
+    },
+    {
+     "f": "sga",
+     "t": "pf",
+     "l": "Placental Factors"
+    },
+    {
+     "f": "ff",
+     "t": "tor",
+     "l": "TORCH Infections"
+    },
+    {
+     "f": "ff",
+     "t": "mg",
+     "l": "Multiple Gestation"
+    },
+    {
+     "f": "ff",
+     "t": "ch",
+     "l": "Chromosomal Abnormalities"
+    },
+    {
+     "f": "pf",
+     "t": "pi",
+     "l": "Placental Ischemia/ Infarction"
+    },
+    {
+     "f": "pf",
+     "t": "pab",
+     "l": "Placental Abruption"
+    },
+    {
+     "f": "pf",
+     "t": "pm",
+     "l": "Placental Malformations"
+    },
+    {
+     "f": "pf",
+     "t": "cpm",
+     "l": "Confined Placental Mosaicism"
+    },
+    {
+     "f": "mf",
+     "t": "du",
+     "l": "Decreased Uteroplacental Flow"
+    },
+    {
+     "f": "mf",
+     "t": "ml",
+     "l": "Maternal Lifestyle"
+    },
+    {
+     "f": "mf",
+     "t": "mh",
+     "l": "Maternal Hypoxemia"
+    },
+    {
+     "f": "mf",
+     "t": "ia",
+     "l": "Iatrogenic"
+    }
+   ],
+   "note": "เส้นประจาก Growth Discrepancy ไป Large for Gestational Age = ลิงก์ไปแผนผัง LGA"
+  },
+  {
+   "id": "b208b",
+   "title": "Growth Discrepancy — Large for Gestational Age",
+   "src": "fig",
+   "img": "bb-208-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Growth Discrepancy"
+    },
+    {
+     "id": "lga",
+     "k": "q",
+     "t": "Large for Gestational Age",
+     "d": "Growth &gt; 90<sup>th</sup> percentile for GA"
+    },
+    {
+     "id": "sga",
+     "k": "note",
+     "t": "Small for Gestational Age",
+     "d": "Growth &lt; 10<sup>th</sup> percentile for GA<br>เส้นประในเล่ม — ดูแผนผัง Small for Gestational Age / IUGR"
+    },
+    {
+     "id": "mf",
+     "k": "dx",
+     "t": "Maternal Factors",
+     "d": "<ul><li>Multiparity</li><li>Previous history of large for gestational age fetus</li><li>Aboriginal, Hispanic, and Caucasian races</li><li>Maternal co-morbidities (e.g. diabetes, obesity)</li><li>Excessive weight gain over course of pregnancy (&gt;40 lbs)</li></ul>"
+    },
+    {
+     "id": "ff",
+     "k": "dx",
+     "t": "Fetal factors",
+     "d": "<ul><li>Male infant</li><li>Prolonged gestation (&gt;41 weeks)</li><li>Genetic disorder (e.g. Sotos syndrome, Beckwith-Wiedemann syndrome, Weaver’s syndrome)</li></ul>"
+    },
+    {
+     "id": "mc",
+     "k": "dx",
+     "t": "MATERNAL COMPLICATIONS",
+     "d": "<ul><li>Prolonged labour</li><li>Operative vaginal delivery</li><li>Caesarean section</li><li>Genital tract lacerations</li><li>Post-partum hemorrhage</li><li>Uterine rupture</li></ul>"
+    },
+    {
+     "id": "fc",
+     "k": "dx",
+     "t": "FETAL COMPLICATIONS",
+     "d": "<ul><li>Shoulder dystocia</li><li>Birth injury (brachial plexus injury, clavicular fracture)</li><li>Cerebral palsy secondary to hypoxia</li><li>Hypoglycemia</li><li>Polycythemia</li><li>Perinatal asphyxia</li><li>Hyperbilirubinemia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "lga",
+     "l": "Large for GA"
+    },
+    {
+     "f": "a",
+     "t": "sga",
+     "l": "Small for GA (เส้นประ)"
+    },
+    {
+     "f": "lga",
+     "t": "mf",
+     "l": "Maternal Factors"
+    },
+    {
+     "f": "lga",
+     "t": "ff",
+     "l": "Fetal factors"
+    },
+    {
+     "f": "mf",
+     "t": "mc",
+     "l": "Maternal complications"
+    },
+    {
+     "f": "ff",
+     "t": "fc",
+     "l": "Fetal complications"
+    }
+   ],
+   "note": "เส้นประจาก Growth Discrepancy ไป Small for Gestational Age = ลิงก์ไปแผนผัง SGA/IUGR · กรอบวงรี Maternal/Fetal Complications ไม่มีเส้นเชื่อมในเล่ม (วางใต้ Maternal Factors / Fetal factors)"
+  }
+ ]
+}

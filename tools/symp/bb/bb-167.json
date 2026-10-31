@@ -1,0 +1,328 @@
+{
+ "key": "167",
+ "en": "Altered Level of Consciousness",
+ "th": "การรู้สึกตัวผิดปกติ",
+ "pdf": "196–197",
+ "bookpg": "167–168",
+ "target": "alteration-of-consciousness",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-9-4-overview",
+   "id": "bb-167-scheme-a",
+   "h": "Altered LOC — Approach (GCS / clinical exam / blood work / imaging)",
+   "html": "<div class=\"flow\" data-flow=\"b167a\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-9-4-overview",
+   "id": "bb-167-scheme-b",
+   "h": "Altered LOC GCS ≤ 7 — Coma and other causes",
+   "html": "<div class=\"flow\" data-flow=\"b167b\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div><small>NB – must be direct or indirect bi-hemispheric involvement</small>"
+  },
+  {
+   "op": "append",
+   "sec": "gcs",
+   "html": "<p><b>GCS score → action</b></p><ul><li>12-15 = Investigate</li><li>8-12 = Urgent Investigation</li><li>≤ 7 = Resuscitate + Investigate</li><li>Rapidly Deteriorating = Resuscitate + Investigate</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ddx",
+   "html": "<p><b>GCS ≤ 7 — other (non-coma) states</b></p><ul><li>Locked-in Syndrome</li><li>Stupor</li><li>Persistent Vegetative State</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "group",
+   "html": "<p><b>Causes of coma (GCS ≤ 7)</b></p><ul><li><b>Brain involvement — focal lesions:</b> hemispheric (hemorrhage, traumatic, ischemia/infarction, neoplastic abscess, skull fracture, subdural hematoma, intracranial bleeding) · brain stem (hemorrhage, traumatic, ischemia/infarction, neoplastic abscess, herniation, brain stem lesion)</li><li><b>Brain involvement — diffuse lesions:</b> vascular (hypertensive encephalopathy, vasculitis, TTP, DIC, hypoxemia, multiple emboli) · infection (meningitis, encephalitis) · other (trauma/concussion, post-ictal)</li><li><b>Systemic involvement:</b> excesses (liver/renal failure, CO<sub>2</sub> narcosis, metabolic acidosis, hypernatremia, hypercalcemia, hypermagnesemia, hyperthermia, thyroid storm) · deficiencies (hypoxemia, hypoglycemia, B12/thiamine deficiency, hyponatremia, hypocalcemia, hypomagnesemia, hypothermia, myxedema coma) · drugs/toxins (alcohols, barbiturates, tranquilizers, other)</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b167a",
+   "title": "Altered Level of Consciousness — Approach",
+   "src": "fig",
+   "img": "bb-167-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Altered Level of Consciousness"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Glasgow Coma Scale score",
+     "d": "<ul><li>12-15 = Investigate</li><li>8-12 = Urgent Investigation</li><li>≤ 7 = Resuscitate + Investigate</li><li>Rapidly Deteriorating = Resuscitate + Investigate</li></ul>"
+    },
+    {
+     "id": "ce",
+     "k": "act",
+     "t": "Clinical Exam"
+    },
+    {
+     "id": "bw",
+     "k": "act",
+     "t": "Blood Work"
+    },
+    {
+     "id": "im",
+     "k": "act",
+     "t": "Imaging"
+    },
+    {
+     "id": "foc",
+     "k": "dx",
+     "t": "Focal",
+     "d": "<ul><li>Trauma</li><li>Stroke</li><li>Tumor</li><li>Hemorrhage</li><li>See Imaging Section</li></ul>"
+    },
+    {
+     "id": "nf",
+     "k": "note",
+     "t": "Non-Focal",
+     "d": "<p>Refer to Blood Work and Imaging Sections</p>"
+    },
+    {
+     "id": "met",
+     "k": "dx",
+     "t": "Metabolic Abnormality",
+     "d": "<ul><li>Hypoxia</li><li>Hypercapnea</li><li>Hyper/HypoNa</li><li>Hyper/HypoCa</li><li>Hyper/HypoK</li><li>Sepsis</li></ul>"
+    },
+    {
+     "id": "nmet",
+     "k": "dx",
+     "t": "No Metabolic Abnormality",
+     "d": "<ul><li>Postictal</li><li>Concussion</li><li>Meningitis</li><li>Encephalitis</li></ul>"
+    },
+    {
+     "id": "str",
+     "k": "dx",
+     "t": "Structural Abnormality",
+     "d": "<ul><li>Epidural Hemorrhage</li><li>Subdural Hemorrhage</li><li>Intracranial Hemorrhage</li><li>Ischemia</li><li>Tumor</li></ul>"
+    },
+    {
+     "id": "nstr",
+     "k": "dx",
+     "t": "Non-Structural",
+     "d": "<ul><li>Post-Ictal</li><li>Concussion</li><li>Encephalitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "g"
+    },
+    {
+     "f": "g",
+     "t": "ce",
+     "l": "Clinical exam"
+    },
+    {
+     "f": "g",
+     "t": "bw",
+     "l": "Blood work"
+    },
+    {
+     "f": "g",
+     "t": "im",
+     "l": "Imaging"
+    },
+    {
+     "f": "ce",
+     "t": "foc",
+     "l": "Focal"
+    },
+    {
+     "f": "ce",
+     "t": "nf",
+     "l": "Non-focal"
+    },
+    {
+     "f": "bw",
+     "t": "met",
+     "l": "Metabolic abnormality"
+    },
+    {
+     "f": "bw",
+     "t": "nmet",
+     "l": "No metabolic abnormality"
+    },
+    {
+     "f": "im",
+     "t": "str",
+     "l": "Structural abnormality"
+    },
+    {
+     "f": "im",
+     "t": "nstr",
+     "l": "Non-structural"
+    }
+   ]
+  },
+  {
+   "id": "b167b",
+   "title": "Altered Level of Consciousness — GCS ≤ 7",
+   "src": "fig",
+   "img": "bb-167-f2.webp",
+   "note": "*NB – must be direct or indirect bi-hemispheric involvement (เชิงอรรถในรูปต้นฉบับ ไม่ระบุว่าอ้างถึงกล่องใด)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Altered LOC GCS ≤ 7"
+    },
+    {
+     "id": "coma",
+     "k": "q",
+     "t": "Coma"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Locked-in Syndrome</li><li>Stupor</li><li>Persistent Vegetative State</li></ul>"
+    },
+    {
+     "id": "brain",
+     "k": "q",
+     "t": "Brain Involvement"
+    },
+    {
+     "id": "focal",
+     "k": "q",
+     "t": "Focal Lesions"
+    },
+    {
+     "id": "diff",
+     "k": "q",
+     "t": "Diffuse Lesions",
+     "d": "<p>NB – must be direct or indirect bi-hemispheric involvement</p>"
+    },
+    {
+     "id": "hemi",
+     "k": "dx",
+     "t": "Hemispheric",
+     "d": "<ul><li>Hemorrhage</li><li>Traumatic</li><li>Ischemia/Infarction</li><li>Neoplastic Abscess</li><li>Skull fracture</li><li>Subdural hematoma</li><li>Intracranial Bleeding</li></ul>"
+    },
+    {
+     "id": "bs",
+     "k": "dx",
+     "t": "Brain Stem",
+     "d": "<ul><li>Hemorrhage</li><li>Traumatic</li><li>Ischemia/Infarction</li><li>Neoplastic Abscess</li><li>Herniation</li><li>Brain stem Lesion</li></ul>"
+    },
+    {
+     "id": "vas",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Hypertensive encephalopathy</li><li>Vasculitis</li><li>TTP</li><li>DIC</li><li>Hypoxemia</li><li>Multiple emboli</li></ul>"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Meningitis</li><li>Encephalitis</li></ul>"
+    },
+    {
+     "id": "odif",
+     "k": "dx",
+     "t": "Other (diffuse lesions)",
+     "d": "<ul><li>Trauma/Concussion</li><li>Post-ictal</li></ul>"
+    },
+    {
+     "id": "sys",
+     "k": "q",
+     "t": "Systemic Involvement"
+    },
+    {
+     "id": "exc",
+     "k": "dx",
+     "t": "Excesses",
+     "d": "<ul><li>Liver/Renal Failure</li><li>Carbon Dioxide Narcosis</li><li>Metabolic Acidosis</li><li>Hypernatremia</li><li>Hypercalcemia</li><li>Hypermagnesemia</li><li>Hyperthermia</li><li>Thyroid Storm</li></ul>"
+    },
+    {
+     "id": "def",
+     "k": "dx",
+     "t": "Deficiencies",
+     "d": "<ul><li>Hypoxemia</li><li>Hypoglycemia</li><li>B12/Thiamine deficiency</li><li>Hyponatremia</li><li>Hypocalcemia</li><li>Hypomagnesemia</li><li>Hypothermia</li><li>Myxedema Coma</li></ul>"
+    },
+    {
+     "id": "drug",
+     "k": "dx",
+     "t": "Drugs/Toxins",
+     "d": "<ul><li>Alcohols</li><li>Barbiturates</li><li>Tranquilizers</li><li>Other</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "coma",
+     "l": "Coma"
+    },
+    {
+     "f": "a",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "coma",
+     "t": "brain",
+     "l": "Brain involvement"
+    },
+    {
+     "f": "coma",
+     "t": "sys",
+     "l": "Systemic involvement"
+    },
+    {
+     "f": "brain",
+     "t": "focal",
+     "l": "Focal lesions"
+    },
+    {
+     "f": "brain",
+     "t": "diff",
+     "l": "Diffuse lesions"
+    },
+    {
+     "f": "focal",
+     "t": "hemi",
+     "l": "Hemispheric"
+    },
+    {
+     "f": "focal",
+     "t": "bs",
+     "l": "Brain stem"
+    },
+    {
+     "f": "diff",
+     "t": "vas",
+     "l": "Vascular"
+    },
+    {
+     "f": "diff",
+     "t": "inf",
+     "l": "Infection"
+    },
+    {
+     "f": "diff",
+     "t": "odif",
+     "l": "Other"
+    },
+    {
+     "f": "sys",
+     "t": "exc",
+     "l": "Excesses"
+    },
+    {
+     "f": "sys",
+     "t": "def",
+     "l": "Deficiencies"
+    },
+    {
+     "f": "sys",
+     "t": "drug",
+     "l": "Drugs/toxins"
+    }
+   ]
+  }
+ ]
+}

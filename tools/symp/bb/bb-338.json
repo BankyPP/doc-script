@@ -1,0 +1,57 @@
+{
+ "key": "338",
+ "en": "Fever (Age 1-3 Months)",
+ "th": "ไข้ในเด็กอายุ 1-3 เดือน",
+ "pdf": "367",
+ "bookpg": "338",
+ "target": null,
+ "new": {
+  "id": "ped-fever-1-3-months",
+  "th": "ไข้ในเด็กอายุ 1-3 เดือน",
+  "en": "Fever (Age 1-3 Months)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-338-scheme",
+   "h": "Fever (Age 1-3 Months) — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b338a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b338a",
+   "title": "Fever (Age 1-3 Months)",
+   "src": "fig",
+   "img": "bb-338-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fever Age 1-3 months"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed History and Physical Exam"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Consider both: clinical approach to Fever in the &lt;1 month old, AND clinical approach to Fever in the &gt;3 month old",
+     "d": "<b>Consider both</b><br>Clinical approach to Fever in the &lt;1 month old, AND<br>Clinical approach to Fever in the &gt;3 month old"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    }
+   ]
+  }
+ ]
+}

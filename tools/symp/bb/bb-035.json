@@ -1,0 +1,76 @@
+{
+ "key": "035",
+ "en": "Mediastinal Mass",
+ "th": "ก้อนในช่องกลางทรวงอก",
+ "pdf": "64",
+ "bookpg": "35",
+ "target": null,
+ "new": {
+  "id": "mediastinal-mass",
+  "th": "ก้อนในช่องกลางทรวงอก",
+  "en": "Mediastinal Mass",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "bb-035-scheme",
+   "h": "Mediastinal mass by compartment (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b035a\"></div>"
+  },
+  {
+   "id": "bb-035-list",
+   "h": "Causes by compartment",
+   "html": "<h5>Anterior</h5><ul><li>Thyroid</li><li>Thymoma</li><li>Teratoma</li><li>“Terrible” Lymphoma</li></ul><h5>Middle</h5><ul><li>Aneurysm</li><li>Lymphadenopathy</li><li>Cystic (Bronchial, Pericardial, Esophageal)</li></ul><h5>Posterior</h5><ul><li>Neurogenic Tumour</li><li>Esophageal Lesion</li><li>Diaphragmatic Hernia</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b035a",
+   "title": "Mediastinal Mass",
+   "src": "fig",
+   "img": "bb-035-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Mediastinal Mass"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Anterior",
+     "d": "<ul><li>Thyroid</li><li>Thymoma</li><li>Teratoma</li><li>“Terrible” Lymphoma</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Middle",
+     "d": "<ul><li>Aneurysm</li><li>Lymphadenopathy</li><li>Cystic (Bronchial, Pericardial, Esophageal)</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Posterior",
+     "d": "<ul><li>Neurogenic Tumour</li><li>Esophageal Lesion</li><li>Diaphragmatic Hernia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Anterior"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Middle"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Posterior"
+    }
+   ]
+  }
+ ]
+}

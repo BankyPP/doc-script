@@ -1,0 +1,148 @@
+{
+ "key": "028",
+ "en": "Dyspnea — Acute",
+ "th": "เหนื่อยเฉียบพลัน",
+ "pdf": "57",
+ "bookpg": "28",
+ "target": "dyspnea",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-2-1-approach",
+   "id": "bb-028-scheme",
+   "h": "Acute dyspnea scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b028a\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<h5>Acute dyspnea (minutes to hours) — causes by group (Blackbook)</h5><ul><li><b>Cardiovascular</b>: Myocardial Infarction*; Cardiac Tamponade*; CHF</li><li><b>Respiratory</b><ul><li><b>Pleural</b>: Pneumothorax (Tension*)</li><li><b>Parenchymal</b>: Pneumonia</li><li><b>Vascular</b>: Pulmonary Embolism*</li><li><b>Airway</b><ul><li><b>Lower airway</b> (wheeze): Asthma*; AECOPD; CHF</li><li><b>Upper airway</b> (stridor): Aspiration*; Anaphylaxis*</li></ul></li></ul></li></ul><p><small>* Denotes acutely life-threatening causes</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b028a",
+   "title": "Dyspnea — Acute",
+   "src": "fig",
+   "img": "bb-028-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dyspnea",
+     "d": "<div class=\"warn\">Potentially acutely life-threatening presentation</div>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Acute — presents in minutes to hours"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Chronic",
+     "d": "<p>Dashed branch in the book — shown in the \"Dyspnea Chronic\" schemes.</p>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Cardiovascular",
+     "d": "<ul><li>Myocardial Infarction*</li><li>Cardiac Tamponade*</li><li>CHF</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Respiratory"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Pleural",
+     "d": "<ul><li>Pneumothorax (Tension*)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Parenchymal",
+     "d": "<ul><li>Pneumonia</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Pulmonary Embolism*</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Airway"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Lower Airway (Wheeze)",
+     "d": "<ul><li>Asthma*</li><li>AECOPD</li><li>CHF</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Upper Airway (Stridor)",
+     "d": "<ul><li>Aspiration*</li><li>Anaphylaxis*</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Acute (minutes to hours)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Chronic (dashed)"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Cardiovascular"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Respiratory"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Pleural"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Parenchymal"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Vascular"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Airway"
+    },
+    {
+     "f": "i",
+     "t": "j",
+     "l": "Lower airway (wheeze)"
+    },
+    {
+     "f": "i",
+     "t": "k",
+     "l": "Upper airway (stridor)"
+    }
+   ],
+   "note": "* Denotes acutely life-threatening causes · Potentially acutely life-threatening presentation"
+  }
+ ]
+}

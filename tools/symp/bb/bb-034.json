@@ -1,0 +1,149 @@
+{
+ "key": "034",
+ "en": "Lung Nodule",
+ "th": "ก้อนในปอด (lung nodule)",
+ "pdf": "63",
+ "bookpg": "34",
+ "target": null,
+ "new": {
+  "id": "lung-nodule",
+  "th": "ก้อนในปอด",
+  "en": "Lung Nodule",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "bb-034-scheme",
+   "h": "Lung nodule scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b034a\"></div><p><small>&gt; 3 cm = Mass (malignancy until proven otherwise) · * Potentially acutely life-threatening (as printed; no item is marked on this page)</small></p>"
+  },
+  {
+   "id": "bb-034-causes",
+   "h": "Causes by pattern",
+   "html": "<h5>Nodule on CXR &gt; 2 years without a change in size</h5><ul><li>Scar</li><li>Granuloma</li><li>Arteriovenous Malformation</li></ul><h5>New nodule — solitary</h5><ul><li>Malignant Neoplasm</li><li>Benign Neoplasm (eg. Hamartoma, Lipoma, Fibroma)</li><li>Granuloma</li><li>Abscess</li><li>Arteriovenous Malformation</li><li>Bronchogenic Cyst</li><li>Rounded Atelectasis</li></ul><h5>New nodule — multiple</h5><ul><li><b>Malignancy</b>: Primary lung cancer; Metastases (“cannonball lesions”; Eg. Melanoma, Head &amp; Neck, Sarcoma, Colon, Kidney, Breast, Testicle)</li><li><b>Infection</b>: Fungal; Tuberculosis; Septic Embolism; Parasitic</li><li><b>Inflammation</b>: Rheumatoid Arthritis; Granulomatosis with polyangiitis (GPA)/microscopic polyangiitis (MPA); Sarcoidosis; Pneumoconiosis</li><li><b>Vascular</b>: Arteriovenous Malformation</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b034a",
+   "title": "Lung Nodule",
+   "src": "fig",
+   "img": "bb-034-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Lung Nodule"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Single Round Lesion ≤ 3 cm in Diameter"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "&gt; 3 cm = Mass (malignancy until proven otherwise)"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "New Nodule"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Nodule on CXR &gt; 2 Years Without a Change in Size",
+     "d": "<ul><li>Scar</li><li>Granuloma</li><li>Arteriovenous Malformation</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Multiple Nodules"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Solitary Nodule",
+     "d": "<ul><li>Malignant Neoplasm</li><li>Benign Neoplasm (eg. Hamartoma, Lipoma, Fibroma)</li><li>Granuloma</li><li>Abscess</li><li>Arteriovenous Malformation</li><li>Bronchogenic Cyst</li><li>Rounded Atelectasis</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Malignancy",
+     "d": "<ul><li>Primary lung cancer</li><li>Metastases (“cannonball lesions”; Eg. Melanoma, Head &amp; Neck, Sarcoma, Colon, Kidney, Breast, Testicle)</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Fungal</li><li>Tuberculosis</li><li>Septic Embolism</li><li>Parasitic</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Inflammation",
+     "d": "<ul><li>Rheumatoid Arthritis</li><li>Granulomatosis with polyangiitis (GPA)/microscopic polyangiitis (MPA)</li><li>Sarcoidosis</li><li>Pneumoconiosis</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Arteriovenous Malformation</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "> 3 cm = mass"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "New nodule"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "On CXR > 2 years without change in size"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Multiple nodules"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Solitary nodule"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Malignancy"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Infection"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Inflammation"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Vascular"
+    }
+   ],
+   "note": "หน้านี้พิมพ์ \"* Potentially acutely life-threatening\" ท้ายหน้า แต่ไม่มี * ในกล่องใด"
+  }
+ ]
+}

@@ -1,0 +1,174 @@
+{
+ "key": "258",
+ "en": "Chronic Joint Pain",
+ "th": "ปวดข้อเรื้อรัง",
+ "pdf": "287",
+ "bookpg": "258",
+ "target": "arthralgia-arthritis",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-8-1-algo",
+   "id": "bb-258-scheme",
+   "h": "Chronic joint pain — chronic/degenerative change (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b258a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-8-1-extra",
+   "html": "<p><b>Chronic joint pain — peri-articular (Blackbook)</b></p><ul><li><b>Bursa</b>: Aseptic Bursitis</li><li><b>Epiphysitis/Apophysitis</b>: Slipped Epiphysis; Apophysitis (Osgood-Schlatter Disease)</li><li><b>Tendon</b>: Enthesitis; Tendinopathy; Tendon Rupture; Impingement; Tenosynovitis; Ganglion Cyst</li><li><b>Bone</b>: Stress Fracture; Charcot Joint; Pathologic Fracture; Periostitis; Epicondylitis</li><li><b>Skin/Fascia</b>: Fascitis (e.g., Myofascial Pain, Iliotibial Band Friction, Plantar Fasciitis)</li><li><b>Muscle</b>: Delayed Onset Muscle Soreness; Fibromyalgia; Myositis Ossificans</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "appr-nonin",
+   "html": "<p><b>Chronic joint pain — intra-articular (Blackbook)</b></p><ul><li><b>Bone</b>: Stress Fracture; Charcot Joint</li><li><b>Articular Cartilage</b>: Osteoarthritis; Chondromalacia</li><li><b>Joint Capsule</b>: Baker Cyst; Ganglion Cyst; Adhesive Capsulitis</li><li><b>Synovium</b>: Monoarthritis; Polyarthritis</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b258a",
+   "title": "Chronic Joint Pain — Chronic/Degenerative Change",
+   "src": "fig",
+   "img": "bb-258-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic/Degenerative Change"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Peri-Articular"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Intra-Articular"
+    },
+    {
+     "id": "p0",
+     "k": "dx",
+     "t": "Bursa",
+     "d": "<ul><li>Aseptic Bursitis</li></ul>"
+    },
+    {
+     "id": "p1",
+     "k": "dx",
+     "t": "Epiphysitis/Apophysitis",
+     "d": "<ul><li>Slipped Epiphysis</li><li>Apophysitis (Osgood-Schlatter Disease)</li></ul>"
+    },
+    {
+     "id": "p2",
+     "k": "dx",
+     "t": "Tendon",
+     "d": "<ul><li>Enthesitis</li><li>Tendinopathy</li><li>Tendon Rupture</li><li>Impingement</li><li>Tenosynovitis</li><li>Ganglion Cyst</li></ul>"
+    },
+    {
+     "id": "p3",
+     "k": "dx",
+     "t": "Bone",
+     "d": "<ul><li>Stress Fracture</li><li>Charcot Joint</li><li>Pathologic Fracture</li><li>Periostitis</li><li>Epicondylitis</li></ul>"
+    },
+    {
+     "id": "p4",
+     "k": "dx",
+     "t": "Skin/Fascia",
+     "d": "<ul><li>Fascitis (e.g., Myofascial Pain, Iliotibial Band Friction, Plantar Fasciitis)</li></ul>"
+    },
+    {
+     "id": "p5",
+     "k": "dx",
+     "t": "Muscle",
+     "d": "<ul><li>Delayed Onset Muscle Soreness</li><li>Fibromyalgia</li><li>Myositis Ossificans</li></ul>"
+    },
+    {
+     "id": "i0",
+     "k": "dx",
+     "t": "Bone",
+     "d": "<ul><li>Stress Fracture</li><li>Charcot Joint</li></ul>"
+    },
+    {
+     "id": "i1",
+     "k": "dx",
+     "t": "Articular Cartilage",
+     "d": "<ul><li>Osteoarthritis</li><li>Chondromalacia</li></ul>"
+    },
+    {
+     "id": "i2",
+     "k": "dx",
+     "t": "Joint Capsule",
+     "d": "<ul><li>Baker Cyst</li><li>Ganglion Cyst</li><li>Adhesive Capsulitis</li></ul>"
+    },
+    {
+     "id": "i3",
+     "k": "dx",
+     "t": "Synovium",
+     "d": "<ul><li>Monoarthritis</li><li>Polyarthritis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Peri-articular"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Intra-articular"
+    },
+    {
+     "f": "b",
+     "t": "p0",
+     "l": "Bursa"
+    },
+    {
+     "f": "b",
+     "t": "p1",
+     "l": "Epiphysitis/Apophysitis"
+    },
+    {
+     "f": "b",
+     "t": "p2",
+     "l": "Tendon"
+    },
+    {
+     "f": "b",
+     "t": "p3",
+     "l": "Bone"
+    },
+    {
+     "f": "b",
+     "t": "p4",
+     "l": "Skin/Fascia"
+    },
+    {
+     "f": "b",
+     "t": "p5",
+     "l": "Muscle"
+    },
+    {
+     "f": "c",
+     "t": "i0",
+     "l": "Bone"
+    },
+    {
+     "f": "c",
+     "t": "i1",
+     "l": "Articular Cartilage"
+    },
+    {
+     "f": "c",
+     "t": "i2",
+     "l": "Joint Capsule"
+    },
+    {
+     "f": "c",
+     "t": "i3",
+     "l": "Synovium"
+    }
+   ]
+  }
+ ]
+}

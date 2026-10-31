@@ -1,0 +1,144 @@
+{
+ "key": "155",
+ "en": "Hypothyroidism",
+ "th": "ไทรอยด์ทำงานน้อย",
+ "pdf": "184",
+ "bookpg": "155",
+ "target": null,
+ "new": {
+  "id": "hypothyroidism",
+  "th": "ไทรอยด์ทำงานน้อย",
+  "en": "Hypothyroidism",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "bb-155-scheme",
+   "h": "Hypothyroidism — central / primary / อื่น ๆ",
+   "html": "<div class=\"flow\" data-flow=\"b155a\"></div><ul><li><b>Hypothyroidism</b><ul><li><span class=\"tag\">Central hypothyroidism</span> <b>Central Hypothyroidism</b><ul><li>Isolated TSH Deficiency</li><li>Panhypopituitarism</li></ul></li><li><span class=\"tag\">Primary hypothyroidism</span> <b>Primary Hypothyroidism</b><ul><li><span class=\"tag\">Chronic</span> <b>Chronic</b><ul><li><span class=\"tag\">Infiltrative disease</span> <b>Infiltrative Disease</b><ul><li>Fibrous Thyroiditis</li><li>Hemosiderosis</li></ul></li><li><span class=\"tag\">Congenital thyroid agenesis/degenesis</span> <b>Congenital Thyroid Agenesis/ Degenesis</b><ul><li>Severe Iodine Deficiency</li></ul></li><li><span class=\"tag\">Medications</span> <b>Medications</b><ul><li>Thionamides</li><li>Lithium</li><li>Amiodarone</li><li>Interferon</li></ul></li><li><span class=\"tag\">Central hypothyroidism (ตามเล่ม)</span> <b>Central Hypothyroidism</b> <span class=\"muted\">— ตามที่พิมพ์ในเล่ม (ใต้ Chronic)</span><ul><li>Hashimoto’s Thyroiditis</li></ul></li></ul></li><li><span class=\"tag\">Transient</span> <b>Transient</b><ul><li>Subacute Lymphocytic/ Granulomatous Thyroiditis</li><li>Post-Partum Thyroiditis</li><li>Subtotal Thyroidectomy</li></ul></li></ul></li><li><span class=\"tag\">Thyroid hormone resistance</span> <b>Thyroid Hormone Resistance</b></li><li><span class=\"tag\">Iatrogenic</span> <b>Iatrogenic</b></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b155a",
+   "title": "Hypothyroidism",
+   "src": "fig",
+   "img": "bb-155-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hypothyroidism"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Central Hypothyroidism",
+     "d": "<ul><li>Isolated TSH Deficiency</li><li>Panhypopituitarism</li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "q",
+     "t": "Primary Hypothyroidism"
+    },
+    {
+     "id": "t",
+     "k": "dx",
+     "t": "Thyroid Hormone Resistance"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Iatrogenic"
+    },
+    {
+     "id": "ch",
+     "k": "q",
+     "t": "Chronic"
+    },
+    {
+     "id": "tr",
+     "k": "dx",
+     "t": "Transient",
+     "d": "<ul><li>Subacute Lymphocytic/ Granulomatous Thyroiditis</li><li>Post-Partum Thyroiditis</li><li>Subtotal Thyroidectomy</li></ul>"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "Infiltrative Disease",
+     "d": "<ul><li>Fibrous Thyroiditis</li><li>Hemosiderosis</li></ul>"
+    },
+    {
+     "id": "cg",
+     "k": "dx",
+     "t": "Congenital Thyroid Agenesis/ Degenesis",
+     "d": "<ul><li>Severe Iodine Deficiency</li></ul>"
+    },
+    {
+     "id": "md",
+     "k": "dx",
+     "t": "Medications",
+     "d": "<ul><li>Thionamides</li><li>Lithium</li><li>Amiodarone</li><li>Interferon</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Central Hypothyroidism",
+     "d": "<p>ตามที่พิมพ์ในเล่ม (ใต้ Chronic)</p><ul><li>Hashimoto’s Thyroiditis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "c",
+     "l": "Central hypothyroidism"
+    },
+    {
+     "f": "r",
+     "t": "p",
+     "l": "Primary hypothyroidism"
+    },
+    {
+     "f": "r",
+     "t": "t",
+     "l": "Thyroid hormone resistance"
+    },
+    {
+     "f": "r",
+     "t": "i",
+     "l": "Iatrogenic"
+    },
+    {
+     "f": "p",
+     "t": "ch",
+     "l": "Chronic"
+    },
+    {
+     "f": "p",
+     "t": "tr",
+     "l": "Transient"
+    },
+    {
+     "f": "ch",
+     "t": "in",
+     "l": "Infiltrative disease"
+    },
+    {
+     "f": "ch",
+     "t": "cg",
+     "l": "Congenital thyroid agenesis/degenesis"
+    },
+    {
+     "f": "ch",
+     "t": "md",
+     "l": "Medications"
+    },
+    {
+     "f": "ch",
+     "t": "c2",
+     "l": "Central hypothyroidism (ตามเล่ม)"
+    }
+   ]
+  }
+ ]
+}

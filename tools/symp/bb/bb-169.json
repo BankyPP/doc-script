@@ -1,0 +1,237 @@
+{
+ "key": "169",
+ "en": "Aphasia",
+ "th": "อะเฟเซีย (ภาวะเสียการสื่อภาษา)",
+ "pdf": "198–199",
+ "bookpg": "169–170",
+ "target": null,
+ "new": {
+  "id": "aphasia",
+  "th": "อะเฟเซีย (ภาวะเสียการสื่อภาษา)",
+  "en": "Aphasia",
+  "g": "neuro"
+ },
+ "sections": [
+  {
+   "id": "bb-169-fluent",
+   "h": "Aphasia — Fluent",
+   "html": "<div class=\"flow\" data-flow=\"b169a\"></div>"
+  },
+  {
+   "id": "bb-169-nonfluent",
+   "h": "Aphasia — Non-Fluent",
+   "html": "<div class=\"flow\" data-flow=\"b169b\"></div>"
+  },
+  {
+   "id": "bb-169-summary",
+   "h": "สรุปชนิดของ aphasia (fluency × repetition × comprehension)",
+   "html": "<div class=\"tbl\"><table><thead><tr><th>Fluency</th><th>Repetition</th><th>Comprehension</th><th>Aphasia</th></tr></thead><tbody><tr><td rowspan=\"4\">Fluent</td><td rowspan=\"2\">Impaired</td><td>Impaired</td><td>Wernicke’s Aphasia</td></tr><tr><td>Intact</td><td>Conduction Aphasia</td></tr><tr><td rowspan=\"2\">Intact</td><td>Impaired</td><td>Transcortical Sensory Aphasia</td></tr><tr><td>Intact</td><td>Anomic Aphasia</td></tr><tr><td rowspan=\"4\">Non-Fluent</td><td rowspan=\"2\">Impaired</td><td>Impaired</td><td>Global Aphasia</td></tr><tr><td>Intact</td><td>Broca’s Aphasia</td></tr><tr><td rowspan=\"2\">Intact</td><td>Impaired</td><td>Mixed Transcortical Aphasia</td></tr><tr><td>Intact</td><td>Transcortical Motor Aphasia</td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b169a",
+   "title": "Aphasia — Fluent",
+   "src": "fig",
+   "img": "bb-169-f1.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Non-Fluent (แสดงในหน้า Non-Fluent)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Aphasia"
+    },
+    {
+     "id": "fl",
+     "k": "q",
+     "t": "Fluent",
+     "d": "<p>Grammatically correct, but nonsensical, tangential. Phonemic & semantic paraphasias</p>"
+    },
+    {
+     "id": "nf",
+     "k": "q",
+     "t": "Non-Fluent",
+     "d": "<p>Agrammatic, hesitant, but substantive communication</p>"
+    },
+    {
+     "id": "ir",
+     "k": "q",
+     "t": "Impaired Repetition"
+    },
+    {
+     "id": "nr",
+     "k": "q",
+     "t": "Intact Repetition"
+    },
+    {
+     "id": "w",
+     "k": "dx",
+     "t": "Wernicke's Aphasia",
+     "d": "<p>Fluent · impaired repetition · impaired comprehension</p>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Conduction Aphasia",
+     "d": "<p>Fluent · impaired repetition · intact comprehension</p>"
+    },
+    {
+     "id": "ts",
+     "k": "dx",
+     "t": "Transcortical Sensory Aphasia",
+     "d": "<p>Fluent · intact repetition · impaired comprehension</p>"
+    },
+    {
+     "id": "an",
+     "k": "dx",
+     "t": "Anomic Aphasia",
+     "d": "<p>Fluent · intact repetition · intact comprehension</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "fl",
+     "l": "Fluent"
+    },
+    {
+     "f": "a",
+     "t": "nf",
+     "l": "Non-fluent"
+    },
+    {
+     "f": "fl",
+     "t": "ir",
+     "l": "Impaired repetition"
+    },
+    {
+     "f": "fl",
+     "t": "nr",
+     "l": "Intact repetition"
+    },
+    {
+     "f": "ir",
+     "t": "w",
+     "l": "Impaired comprehension"
+    },
+    {
+     "f": "ir",
+     "t": "c",
+     "l": "Intact comprehension"
+    },
+    {
+     "f": "nr",
+     "t": "ts",
+     "l": "Impaired comprehension"
+    },
+    {
+     "f": "nr",
+     "t": "an",
+     "l": "Intact comprehension"
+    }
+   ]
+  },
+  {
+   "id": "b169b",
+   "title": "Aphasia — Non-Fluent",
+   "src": "fig",
+   "img": "bb-169-f2.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Fluent (แสดงในหน้า Fluent)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Aphasia"
+    },
+    {
+     "id": "fl",
+     "k": "q",
+     "t": "Fluent",
+     "d": "<p>Grammatically correct, but nonsensical, tangential. Phonemic & semantic paraphasias</p>"
+    },
+    {
+     "id": "nf",
+     "k": "q",
+     "t": "Non-Fluent",
+     "d": "<p>Agrammatic, hesitant, but substantive communication</p>"
+    },
+    {
+     "id": "ir",
+     "k": "q",
+     "t": "Impaired Repetition"
+    },
+    {
+     "id": "nr",
+     "k": "q",
+     "t": "Intact Repetition"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Global Aphasia",
+     "d": "<p>Non-fluent · impaired repetition · impaired comprehension</p>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Broca's Aphasia",
+     "d": "<p>Non-fluent · impaired repetition · intact comprehension</p>"
+    },
+    {
+     "id": "mt",
+     "k": "dx",
+     "t": "Mixed Transcortical Aphasia",
+     "d": "<p>Non-fluent · intact repetition · impaired comprehension</p>"
+    },
+    {
+     "id": "tm",
+     "k": "dx",
+     "t": "Transcortical Motor Aphasia",
+     "d": "<p>Non-fluent · intact repetition · intact comprehension</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "fl",
+     "l": "Fluent"
+    },
+    {
+     "f": "a",
+     "t": "nf",
+     "l": "Non-fluent"
+    },
+    {
+     "f": "nf",
+     "t": "ir",
+     "l": "Impaired repetition"
+    },
+    {
+     "f": "nf",
+     "t": "nr",
+     "l": "Intact repetition"
+    },
+    {
+     "f": "ir",
+     "t": "g",
+     "l": "Impaired comprehension"
+    },
+    {
+     "f": "ir",
+     "t": "b",
+     "l": "Intact comprehension"
+    },
+    {
+     "f": "nr",
+     "t": "mt",
+     "l": "Impaired comprehension"
+    },
+    {
+     "f": "nr",
+     "t": "tm",
+     "l": "Intact comprehension"
+    }
+   ]
+  }
+ ]
+}

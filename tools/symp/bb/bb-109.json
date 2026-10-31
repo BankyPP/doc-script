@@ -1,0 +1,151 @@
+{
+ "key": "109",
+ "en": "Hematuria",
+ "th": "ปัสสาวะเป็นเลือด",
+ "pdf": "138",
+ "bookpg": "109",
+ "target": "hematuria",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-4-7-algo",
+   "id": "bb-109-scheme",
+   "h": "Hematuria scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b109a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-glom",
+   "html": "<ul><li>Isolated hematuria with benign sediment (injury to epithelial side of glomerular capillary wall): IgA nephropathy, thin GBM disease, hereditary nephritis (Alport’s)</li><li>Isolated hematuria with active sediment (injury to the endothelial side): anti-GBM antibodies; immune-complex deposition (IgA, post-strep, lupus); pauci-immune disease (granulomatosis with polyangiitis/microscopic polyangiitis)</li><li>Hematuria with active sediment and &gt; 3.5 g/day (nephrotic range) proteinuria (injury to both endothelial and epithelial capillary wall): membranoproliferative GN, lupus GN, post-infectious GN</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-nonglom",
+   "html": "<p>Extraglomerular (isomorphic RBCs with no casts): consider UTI (pyuria +/- nitrites with bacteria on microscopy). Isolated extraglomerular hematuria is presumed to be secondary to malignancy until proven otherwise.</p><ul><li>Upper tract (above bladder): vascular, tubulointerstitial, calculi (see scheme for renal colic), trauma, neoplasm/cyst (see schemes for renal mass)</li><li>Lower tract (bladder &amp; below): trauma, neoplasm, BPH, calculi</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b109a",
+   "title": "Hematuria",
+   "src": "fig",
+   "img": "bb-109-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hematuria"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Red blood cells on urine microscopy",
+     "d": "<p>Must exclude false positives from myoglobinuria, beet, drugs (pyridium, phenytoin, rifampin, nitrofurantoin), or menstruation.</p>"
+    },
+    {
+     "id": "ex",
+     "k": "q",
+     "t": "Extraglomerular (Isomorphic RBCs with no casts)"
+    },
+    {
+     "id": "gl",
+     "k": "q",
+     "t": "Glomerular (Dysmorphic RBCs and/or RBC casts)"
+    },
+    {
+     "id": "uti",
+     "k": "q",
+     "t": "Urinary Tract Infection?",
+     "d": "<p>Pyuria +/- nitrites with bacteria on microscopy</p>"
+    },
+    {
+     "id": "mal",
+     "k": "note",
+     "t": "Isolated extraglomerular hematuria: presumed malignancy until proven otherwise",
+     "d": "<p>Isolated extraglomerular hematuria is presumed to be secondary to malignancy until proven otherwise</p>"
+    },
+    {
+     "id": "up",
+     "k": "dx",
+     "t": "Upper Tract (above bladder)",
+     "d": "<ul><li>Vascular</li><li>TubuloInterstitial</li><li>Calculi (see scheme for renal colic)</li><li>Trauma</li><li>Neoplasm/Cyst (see schemes for renal mass)</li></ul>"
+    },
+    {
+     "id": "lo",
+     "k": "dx",
+     "t": "Lower Tract (bladder & below)",
+     "d": "<ul><li>Trauma</li><li>Neoplasm</li><li>BPH</li><li>Calculi</li></ul>"
+    },
+    {
+     "id": "ib",
+     "k": "dx",
+     "t": "Isolated Hematuria with benign sediment",
+     "d": "<p>(injury to epithelial side of glomerular capillary wall)</p><ul><li>IgA nephropathy</li><li>Thin GBM disease</li><li>Hereditary nephritis (Alport's)</li></ul>"
+    },
+    {
+     "id": "ia",
+     "k": "dx",
+     "t": "Isolated Hematuria with active sediment",
+     "d": "<p>(injury to the endothelial side of glomerular capillary wall)</p><ul><li>Anti-GBM antibodies</li><li>Immune-complex deposition (IgA, post-strep, lupus)</li><li>Pauci-immune disease (Granulomatosis with polyangiitis/microscopic polyangiitis)</li></ul>"
+    },
+    {
+     "id": "np",
+     "k": "dx",
+     "t": "Hematuria with active sediment and >3.5 g/day (nephrotic range) proteinuria",
+     "d": "<p>(injury to both endothelial and epithelial capillary wall)</p><ul><li>Membranoproliferative glomerulonephritis</li><li>Lupus glomerulonephritis</li><li>Post-Infectious glomerulonephritis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "ex",
+     "l": "Extraglomerular"
+    },
+    {
+     "f": "b",
+     "t": "gl",
+     "l": "Glomerular"
+    },
+    {
+     "f": "ex",
+     "t": "uti",
+     "l": "Pyuria +/- nitrites, bacteria"
+    },
+    {
+     "f": "ex",
+     "t": "mal",
+     "l": "Isolated extraglomerular"
+    },
+    {
+     "f": "mal",
+     "t": "up",
+     "l": "Upper tract"
+    },
+    {
+     "f": "mal",
+     "t": "lo",
+     "l": "Lower tract"
+    },
+    {
+     "f": "gl",
+     "t": "ib",
+     "l": "Benign sediment"
+    },
+    {
+     "f": "gl",
+     "t": "ia",
+     "l": "Active sediment"
+    },
+    {
+     "f": "gl",
+     "t": "np",
+     "l": "Active sediment + nephrotic proteinuria"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "key": "013",
+ "en": "Pulse Abnormalities",
+ "th": "ชีพจรผิดปกติ",
+ "pdf": "42",
+ "bookpg": "13",
+ "target": null,
+ "new": {
+  "id": "pulse-abnormalities",
+  "th": "ชีพจรผิดปกติ",
+  "en": "Pulse Abnormalities",
+  "g": "cvr"
+ },
+ "note": "หนังสือพิมพ์ \"thyrotoxicosis, )\" มีเครื่องหมายเกิน — ตัดออก",
+ "sections": [
+  {
+   "id": "bb-013-scheme",
+   "h": "Pulse abnormalities scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b013a\"></div><p><small>* Denotes acutely life-threatening causes</small></p>"
+  },
+  {
+   "id": "bb-013-types",
+   "h": "Pulse patterns and causes",
+   "html": "<h5>Unequal/Delayed</h5><ul><li>Obstructive arterial disease (ie. Atherosclerosis)</li><li>Aortic dissection*</li><li>Aortic aneurysm*</li><li>Aortic coarctation</li><li>Takayasu disease</li><li>Normal variant</li></ul><h5>Pulsus Alternans</h5><p>Variation in pulse amplitude with alternate beats</p><ul><li>Left heart failure*</li></ul><h5>Pulsus Paradoxus</h5><p>Exaggerated inspiratory drop in arterial pressure &gt;10 mmHg</p><ul><li>Cardiac tamponade*</li><li>AECOPD/Acute Exacerbation of Asthma*</li><li>Hypovolemic shock*</li><li>Constrictive Pericarditis</li><li>Restrictive Cardiomyopathy</li></ul><h5>Aortic Stenosis</h5><ul><li>Anacrotic</li><li>Pulsus parvus (small amplitude)</li><li>Pulsus tardus (delayed/slow upstroke)</li></ul><h5>Water Hammer Pulse</h5><p>Rapid upstroke followed by rapid collapse</p><ul><li>Aortic regurgitation</li><li>High output states (ie. Anemia, hypoglycemia, thyrotoxicosis)</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b013a",
+   "title": "Pulse Abnormalities",
+   "src": "fig",
+   "img": "bb-013-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pulse Abnormalities"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Unequal/Delayed",
+     "d": "<ul><li>Obstructive arterial disease (ie. Atherosclerosis)</li><li>Aortic dissection*</li><li>Aortic aneurysm*</li><li>Aortic coarctation</li><li>Takayasu disease</li><li>Normal variant</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Pulsus Alternans — variation in pulse amplitude with alternate beats",
+     "d": "<ul><li>Left heart failure*</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Pulsus Paradoxus — exaggerated inspiratory drop in arterial pressure &gt;10 mmHg",
+     "d": "<ul><li>Cardiac tamponade*</li><li>AECOPD/Acute Exacerbation of Asthma*</li><li>Hypovolemic shock*</li><li>Constrictive Pericarditis</li><li>Restrictive Cardiomyopathy</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Aortic Stenosis",
+     "d": "<ul><li>Anacrotic</li><li>Pulsus parvus (small amplitude)</li><li>Pulsus tardus (delayed/slow upstroke)</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Water Hammer Pulse — rapid upstroke followed by rapid collapse",
+     "d": "<ul><li>Aortic regurgitation</li><li>High output states (ie. Anemia, hypoglycemia, thyrotoxicosis)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Unequal/delayed"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Pulsus alternans"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Pulsus paradoxus"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Aortic stenosis"
+    },
+    {
+     "f": "a",
+     "t": "f",
+     "l": "Water hammer pulse"
+    }
+   ],
+   "note": "* Denotes acutely life-threatening causes"
+  }
+ ]
+}

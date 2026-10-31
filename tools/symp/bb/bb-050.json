@@ -1,0 +1,131 @@
+{
+ "key": "050",
+ "en": "Approach to Splenomegaly",
+ "th": "ม้ามโต",
+ "pdf": "79",
+ "bookpg": "50",
+ "target": "splenomegaly",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-10-algo",
+   "id": "bb-050-scheme",
+   "h": "Approach to Splenomegaly scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b050a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b050a",
+   "title": "Approach to Splenomegaly",
+   "src": "fig",
+   "img": "bb-050-f1.webp",
+   "note": "กล่องรูปวงรี 2 กล่อง (portal hypertension/coagulopathy, blood smear) เป็นคำถามที่ต่อกับ Splenomegaly ด้วยลูกศรสองหัว → ชี้ไป Congestive / Hemolytic Disease",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Splenomegaly"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Evidence of portal hypertension or coagulopathy?"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Blood smear abnormalities?"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Bacterial</li><li>Viral (EBV)</li><li>Parasitic</li><li>Fungal</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Infiltrative"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Systemic Lupus Erythematosus</li><li>Sarcoidosis</li><li>Felty's Disease</li><li>Serum Sickness</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Congestive",
+     "d": "<ul><li>Cirrhosis</li><li>Thrombus (e.g. Hepatic, Portal, Splenic)</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Hemolytic Disease",
+     "d": "<ul><li>Sickle Cell Disease (children)</li><li>Thalassemia</li><li>Congenital Spherocytosis</li><li>Acquired causes</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Non-Malignant",
+     "d": "<ul><li>Amyloidosis</li><li>Gaucher's Disease</li><li>Glycogen Storage Disease</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Malignant",
+     "d": "<ul><li>Lymphoma</li><li>Leukemia</li><li>Myeloproliferative disorders (eg. polycythemia vera, essential thrombocytosis, myelofibrosis)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Infectious"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Infiltrative"
+    },
+    {
+     "f": "a",
+     "t": "f",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Portal hypertension / coagulopathy?"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Blood smear abnormalities?"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Evidence present"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Smear abnormal"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Non-malignant"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "Malignant"
+    }
+   ]
+  }
+ ]
+}

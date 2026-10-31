@@ -1,0 +1,327 @@
+{
+ "key": "184",
+ "en": "Peripheral Weakness",
+ "th": "กล้ามเนื้ออ่อนแรงส่วนปลาย",
+ "pdf": "213–214",
+ "bookpg": "184–185",
+ "target": "weakness",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "loc",
+   "id": "bb-184-scheme-a",
+   "h": "Peripheral Weakness — objective vs no objective weakness (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b184a\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": "loc",
+   "id": "bb-184-scheme-b",
+   "h": "Peripheral Weakness — with sensory changes (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b184b\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "umn-lmn",
+   "html": "<p><b>Weakness: objective vs no objective weakness</b></p><ul><li><b>Upper motor neuron:</b> increased tone and reflexes, Babinski reflex</li><li><b>Lower motor neuron:</b> decreased tone and reflexes, no Babinski reflex</li><li><b>Upper and lower motor neuron:</b> Amyotrophic Lateral Sclerosis, Cervical myeloradiculopathy, Syrinx</li><li><b>No objective weakness:</b> Cardio-pulmonary disease, Anemia, Chronic Infection, Malignancy, Depression, Deconditioning, Arthritis, Fibromyalgia, Endocrine Disease</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-ahc",
+   "html": "<p><b>Motor neuron and motor neuropathy</b> (atrophy, fasciculations, hyperreflexia; no sensory changes)</p><ul><li>Lead toxicity</li><li>Progressive muscular atrophy</li><li>Hodgkin’s lymphoma</li><li>Polio</li><li>Multifocal Motor Neuropathy</li><li>Spinal Muscular Atrophy</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-root",
+   "html": "<p><b>Radiculopathy</b> (sensory changes, follows distribution)</p><ul><li>Disc</li><li>Spondylosis</li><li>Tumor</li><li>Infection</li></ul><p><b>Poly-radiculopathy</b> (sensory changes, does not follow distribution)</p><ul><li>Spondylosis</li><li>Chronic Inflammatory Demyelinating Polyneuropathy</li><li>Neoplasm</li><li>Infection</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-plexus",
+   "html": "<p><b>Plexopathy</b> (sensory changes, does not follow distribution)</p><ul><li>Brachial neuritis</li><li>Diabetes</li><li>Tumor</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-nerve",
+   "html": "<p><b>Mononeuropathy</b> (follows distribution)</p><ul><li><b>Compression:</b> Carpal Tunnel, Ulnar, Peroneal, Radial</li><li><b>Other:</b> Trauma, Tumor, Ischemia</li></ul><p><b>Polyneuropathy (length dependent)</b></p><ul><li>Diabetes</li><li>Nutrition</li><li>Alcohol</li><li>Toxins</li><li>Paraproteinemic</li><li>Inherited</li><li>Inflammation</li></ul><p><b>Mononeuritis multiplex</b> (does not follow distribution)</p><ul><li>Vasculitis</li><li>Diabetes</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-nmj",
+   "html": "<p>Fatigability, variability, oculomotor involvement</p><ul><li>Myasthenia Gravis</li><li>Lambert-Eaton Myasthenic Syndrome</li><li>Botulism</li><li>Congenital</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-muscle",
+   "html": "<p>Proximal muscle involvement, elevated CK</p><ul><li>Polymyositis</li><li>Duchenne Muscular Dystrophy</li><li>Statin Toxicity</li><li>Dermatomyositis</li><li>Viral infection</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b184a",
+   "title": "Peripheral Weakness",
+   "src": "fig",
+   "img": "bb-184-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Weakness"
+    },
+    {
+     "id": "ob",
+     "k": "q",
+     "t": "Objective Weakness"
+    },
+    {
+     "id": "no",
+     "k": "dx",
+     "t": "No Objective Weakness",
+     "d": "<ul><li>Cardio-pulmonary disease</li><li>Anemia</li><li>Chronic Infection</li><li>Malignancy</li><li>Depression</li><li>Deconditioning</li><li>Arthritis</li><li>Fibromyalgia</li><li>Endocrine Disease</li></ul>"
+    },
+    {
+     "id": "umn",
+     "k": "q",
+     "t": "Upper Motor Neuron",
+     "d": "<p>Increased tone and reflexes; Babinski Reflex</p>"
+    },
+    {
+     "id": "lmn",
+     "k": "q",
+     "t": "Lower Motor Neuron",
+     "d": "<p>Decreased tone and reflexes; No Babinski reflex</p>"
+    },
+    {
+     "id": "both",
+     "k": "dx",
+     "t": "Upper and Lower Motor Neuron",
+     "d": "<ul><li>Amyotrophic Lateral Sclerosis</li><li>Cervical myeloradiculopathy</li><li>Syrinx</li></ul>"
+    },
+    {
+     "id": "sc",
+     "k": "note",
+     "t": "Sensory Changes",
+     "d": "<p>See <i>Peripheral Weakness: Sensory Changes</i> scheme</p>"
+    },
+    {
+     "id": "ns",
+     "k": "q",
+     "t": "No Sensory Changes"
+    },
+    {
+     "id": "mn",
+     "k": "dx",
+     "t": "Motor Neuron and Motor Neuropathy",
+     "d": "<p>Atrophy, Fasciculations, Hyperreflexia</p><ul><li>Lead toxicity</li><li>Progressive muscular atrophy</li><li>Hodgkin’s lymphoma</li><li>Polio</li><li>Multifocal Motor Neuropathy</li><li>Spinal Muscular Atrophy</li></ul>"
+    },
+    {
+     "id": "nmj",
+     "k": "dx",
+     "t": "Neuromuscular Junction",
+     "d": "<p>Fatigability, Variability, Oculomotor</p><ul><li>Myasthenia Gravis</li><li>Lambert-Eaton Myasthenic Syndrome</li><li>Botulism</li><li>Congenital</li></ul>"
+    },
+    {
+     "id": "my",
+     "k": "dx",
+     "t": "Myopathy",
+     "d": "<p>Proximal muscle involvement, elevated CK</p><ul><li>Polymyositis</li><li>Duchenne Muscular Dystrophy</li><li>Statin Toxicity</li><li>Dermatomyositis</li><li>Viral infection</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ob",
+     "l": "Objective weakness"
+    },
+    {
+     "f": "a",
+     "t": "no",
+     "l": "No objective weakness"
+    },
+    {
+     "f": "ob",
+     "t": "umn",
+     "l": "Upper motor neuron"
+    },
+    {
+     "f": "ob",
+     "t": "lmn",
+     "l": "Lower motor neuron"
+    },
+    {
+     "f": "ob",
+     "t": "both",
+     "l": "Upper and lower motor neuron"
+    },
+    {
+     "f": "lmn",
+     "t": "sc",
+     "l": "Sensory changes"
+    },
+    {
+     "f": "lmn",
+     "t": "ns",
+     "l": "No sensory changes"
+    },
+    {
+     "f": "ns",
+     "t": "mn",
+     "l": "Motor neuron / motor neuropathy"
+    },
+    {
+     "f": "ns",
+     "t": "nmj",
+     "l": "Neuromuscular junction"
+    },
+    {
+     "f": "ns",
+     "t": "my",
+     "l": "Myopathy"
+    }
+   ]
+  },
+  {
+   "id": "b184b",
+   "title": "Peripheral Weakness — Sensory Changes",
+   "src": "fig",
+   "img": "bb-184-f2.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป No Sensory Changes (แสดงในหน้า Peripheral Weakness)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Objective Lower Motor Neuron Weakness"
+    },
+    {
+     "id": "sc",
+     "k": "q",
+     "t": "Sensory Changes"
+    },
+    {
+     "id": "ns",
+     "k": "q",
+     "t": "No Sensory Changes"
+    },
+    {
+     "id": "fd",
+     "k": "q",
+     "t": "Follows Distribution"
+    },
+    {
+     "id": "dn",
+     "k": "q",
+     "t": "Does Not Follow Distribution"
+    },
+    {
+     "id": "rad",
+     "k": "dx",
+     "t": "Radiculopathy",
+     "d": "<ul><li>Disc</li><li>Spondylosis</li><li>Tumor</li><li>Infection</li></ul>"
+    },
+    {
+     "id": "mono",
+     "k": "q",
+     "t": "Mononeuropathy"
+    },
+    {
+     "id": "poly",
+     "k": "dx",
+     "t": "Polyneuropathy (Length Dependent)",
+     "d": "<ul><li>Diabetes</li><li>Nutrition</li><li>Alcohol</li><li>Toxins</li><li>Paraproteinemic</li><li>Inherited</li><li>Inflammation</li></ul>"
+    },
+    {
+     "id": "comp",
+     "k": "dx",
+     "t": "Compression",
+     "d": "<ul><li>Carpal Tunnel</li><li>Ulnar</li><li>Peroneal</li><li>Radial</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other (mononeuropathy)",
+     "d": "<ul><li>Trauma</li><li>Tumor</li><li>Ischemia</li></ul>"
+    },
+    {
+     "id": "mm",
+     "k": "dx",
+     "t": "Mononeuritis Multiplex",
+     "d": "<ul><li>Vasculitis</li><li>Diabetes</li></ul>"
+    },
+    {
+     "id": "plex",
+     "k": "dx",
+     "t": "Plexopathy",
+     "d": "<ul><li>Brachial neuritis</li><li>Diabetes</li><li>Tumor</li></ul>"
+    },
+    {
+     "id": "pr",
+     "k": "dx",
+     "t": "Poly-Radiculopathy",
+     "d": "<ul><li>Spondylosis</li><li>Chronic Inflammatory Demyelinating Polyneuropathy</li><li>Neoplasm</li><li>Infection</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "sc",
+     "l": "Sensory changes"
+    },
+    {
+     "f": "a",
+     "t": "ns",
+     "l": "No sensory changes"
+    },
+    {
+     "f": "sc",
+     "t": "fd",
+     "l": "Follows distribution"
+    },
+    {
+     "f": "sc",
+     "t": "dn",
+     "l": "Does not follow distribution"
+    },
+    {
+     "f": "fd",
+     "t": "rad",
+     "l": "Radiculopathy"
+    },
+    {
+     "f": "fd",
+     "t": "mono",
+     "l": "Mononeuropathy"
+    },
+    {
+     "f": "fd",
+     "t": "poly",
+     "l": "Polyneuropathy"
+    },
+    {
+     "f": "mono",
+     "t": "comp",
+     "l": "Compression"
+    },
+    {
+     "f": "mono",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "dn",
+     "t": "mm",
+     "l": "Mononeuritis multiplex"
+    },
+    {
+     "f": "dn",
+     "t": "plex",
+     "l": "Plexopathy"
+    },
+    {
+     "f": "dn",
+     "t": "pr",
+     "l": "Poly-radiculopathy"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+ "key": "009",
+ "en": "Hypertension",
+ "th": "ความดันโลหิตสูง",
+ "pdf": "38",
+ "bookpg": "9",
+ "target": null,
+ "new": {
+  "id": "hypertension",
+  "th": "ความดันโลหิตสูง",
+  "en": "Hypertension",
+  "g": "cvr"
+ },
+ "note": "ไม่มีบท Hypertension ทั่วไป (htn-young เป็นหัวข้อเฉพาะคนอายุน้อย) → บทใหม่ id hypertension ร่วมกับ key 010 และหน้า 115 (Renal)",
+ "sections": [
+  {
+   "id": "bb-009-scheme",
+   "h": "Hypertension scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b009a\"></div>"
+  },
+  {
+   "id": "bb-009-def",
+   "h": "Definition, urgency and emergency",
+   "html": "<div class=\"box\"><p><b><i>Definition of hypertension:</i></b></p><ul><li>Systolic BP ≥ 140 mmHg or Diastolic BP ≥ 90 mmHg</li><li>Isolated systolic hypertension in the elderly: ≥ 160 mmHg</li><li>Diabetes mellitus ≥ 130/80 mmHg</li></ul><p>Note: In children, the definition of hypertension is different (either systolic or diastolic BP &gt;95%ile), <b>but the approach is the same</b>.</p></div><div class=\"box\"><ul><li><b>Hypertensive Urgency</b>: BP usually &gt;180/110 mmHg or asymptomatic Diastolic BP &gt;130 mmHg with target organ damage usually present but not acutely changing</li><li><b>Hypertensive Emergency</b>: BP usually &gt;220/140 mmHg with evolving target organ damage</li></ul></div>"
+  },
+  {
+   "id": "bb-009-types",
+   "h": "Primary, secondary and mislabelled hypertension",
+   "html": "<h5>Primary (Essential) (95%)</h5><p>Onset between age 20 and 50. Positive family history. No features of secondary hypertension.</p><ul><li>Long-standing</li><li>Uncontrolled</li><li>Drug Withdrawal</li></ul><h5>Secondary (5%)</h5><p>Onset age &lt; 20 or &gt; 50 years. No family history. Hypertensive urgency. Resistant hypertension.</p><h5>Mislabelled</h5><p>Repeatedly normal blood pressure when taken at home, work or when using an ambulatory monitor.</p><ul><li>White-coat Hypertension</li><li>Masked Hypertension</li></ul>",
+   "sub": [
+    {
+     "id": "bb-009-sec-causes",
+     "h": "Secondary hypertension — causes by group",
+     "html": "<h5>Exogenous</h5><ul><li>Corticosteroids</li><li>Oral Contraceptive Pills</li><li>Cocaine</li><li>Black licorice</li><li>Medications</li></ul><h5>Renal</h5><ul><li>Renal parenchymal disease<ul><li>CKD</li><li>AKI</li><li>Glomerulonephritis</li></ul></li><li>Renovascular disease<ul><li><i>(unilateral and bilateral renal artery stenosis)</i></li></ul></li></ul><h5>Mechanical</h5><ul><li>Aortic coarctation</li><li>Obstructive Sleep Apnea</li></ul><h5>Endocrine</h5><ul><li>Glucocorticoid excess (<i>Cushing syndrome or disease</i>)</li><li>Catecholamine excess (<i>pheochromocytoma</i>)</li><li>Mineralocorticoid excess (<i>primary aldosteronism</i>)</li><li>Hyperthyroidism (mainly systolic hypertension)</li><li>Hypothyroidism (mainly diastolic hypertension)</li><li>Hyperparathyroidism</li><li>Pregnancy (<i>Gestational hypertension</i>)</li></ul>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "b009a",
+   "title": "Hypertension",
+   "src": "fig",
+   "img": "bb-009-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hypertension",
+     "d": "<p><b>Definition of hypertension:</b></p><ul><li>Systolic BP ≥ 140 mmHg or Diastolic BP ≥ 90 mmHg</li><li>Isolated systolic hypertension in the elderly: ≥ 160 mmHg</li><li>Diabetes mellitus ≥ 130/80 mmHg</li></ul><p>Note: In children, the definition of hypertension is different (either systolic or diastolic BP &gt;95%ile), <b>but the approach is the same</b>.</p><p><b>Hypertensive Urgency</b>: BP usually &gt;180/110 mmHg or asymptomatic Diastolic BP &gt;130 mmHg with target organ damage usually present but not acutely changing.<br><b>Hypertensive Emergency</b>: BP usually &gt;220/140 mmHg with evolving target organ damage.</p>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Primary (Essential) (95%)",
+     "d": "<p>Onset between age 20 and 50. Positive family history. No features of secondary hypertension.</p><ul><li>Long-standing</li><li>Uncontrolled</li><li>Drug Withdrawal</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Secondary (5%)",
+     "d": "<p>Onset age &lt; 20 or &gt; 50 years. No family history. Hypertensive urgency. Resistant hypertension.</p>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Mislabelled",
+     "d": "<p>Repeatedly normal blood pressure when taken at home, work or when using an ambulatory monitor.</p><ul><li>White-coat Hypertension</li><li>Masked Hypertension</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Exogenous",
+     "d": "<ul><li>Corticosteroids</li><li>Oral Contraceptive Pills</li><li>Cocaine</li><li>Black licorice</li><li>Medications</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Renal",
+     "d": "<ul><li>Renal parenchymal disease<ul><li>CKD</li><li>AKI</li><li>Glomerulonephritis</li></ul></li><li>Renovascular disease<ul><li><i>(unilateral and bilateral renal artery stenosis)</i></li></ul></li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Mechanical",
+     "d": "<ul><li>Aortic coarctation</li><li>Obstructive Sleep Apnea</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>Glucocorticoid excess (<i>Cushing syndrome or disease</i>)</li><li>Catecholamine excess (<i>pheochromocytoma</i>)</li><li>Mineralocorticoid excess (<i>primary aldosteronism</i>)</li><li>Hyperthyroidism (mainly systolic hypertension)</li><li>Hypothyroidism (mainly diastolic hypertension)</li><li>Hyperparathyroidism</li><li>Pregnancy (<i>Gestational hypertension</i>)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Primary (essential) 95%"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Secondary 5%"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Mislabelled"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Exogenous"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Renal"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Mechanical"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Endocrine"
+    }
+   ],
+   "note": "ในหน้าหนังสือ Definition และ Hypertensive urgency/emergency เป็นกล่องข้อความมุมล่าง — ใส่ไว้ในกล่อง Hypertension"
+  }
+ ]
+}

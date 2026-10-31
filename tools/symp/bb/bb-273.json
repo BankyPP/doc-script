@@ -1,0 +1,270 @@
+{
+ "key": "273",
+ "en": "Anxiety Disorders",
+ "th": "โรควิตกกังวล",
+ "pdf": "302–303",
+ "bookpg": "273–274",
+ "target": null,
+ "new": {
+  "id": "anxiety-disorders",
+  "th": "โรควิตกกังวล",
+  "en": "Anxiety Disorders",
+  "g": "psych"
+ },
+ "sections": [
+  {
+   "id": "bb-273-panic",
+   "h": "Associated with panic (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b273a\"></div><p><small>1. Anxiety Review Panel, Evans M, Bradwejn J, Dunn L (Eds) (2000). Guidelines for the Treatment of Anxiety Disorders in Primary Care. Toronto: Queen’s Printer of Ontario, pp. 41. 2. American Psychiatric Association (2013). Diagnostic and Statistical Manual of Mental Disorders (5th ed. DSM-V).</small></p>"
+  },
+  {
+   "id": "bb-273-thoughts",
+   "h": "Recurrent anxious thoughts (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b273b\"></div><p>* Not considered an anxiety disorder according to DSM-V</p><p><small>American Psychiatric Association (2013). Diagnostic and Statistical Manual of Mental Disorders (5th ed. DSM-V).</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b273a",
+   "title": "Anxiety Disorders — Associated with Panic",
+   "src": "fig",
+   "img": "bb-273-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Excessive Anxiety, Fear, Avoidance, and/or Increased Arousal"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Rule out Anxiety Disorder due to General Medical Condition (e.g. hyperthyroidism, anemia, CHF), Another Mental Disorder, or Substance/Medication-Induced Anxiety Disorder"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Associated with Panic and/or Physical (Autonomic) Symptoms"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "Associated with Recurrent Anxious Thoughts",
+     "d": "กล่องเส้นประในเล่ม — ดูแผนผัง \"Recurrent Anxious Thoughts\" (flow ถัดไป)"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Associated with Specific Situation / Avoidance of the Specific Situation"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Panic Disorder",
+     "d": "Recurrent, Unexpected Panic Attacks"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Specific Phobia",
+     "d": "Specific Trigger (e.g. water, heights, animals, etc.)"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Separation Anxiety Disorder",
+     "d": "Separation From Attachment Figure"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Agoraphobia",
+     "d": "Using Public Transportation, Open Spaces, Enclosed Spaces, Being in a Line, Crowd, or Outside the Home"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Social Anxiety Disorder",
+     "d": "Public Setting Where a Negative Evaluation May Occur"
+    },
+    {
+     "id": "k",
+     "k": "note",
+     "t": "NB: criteria not met for a specific anxiety disorder",
+     "d": "If the symptoms are clinically significant but do not meet the criteria for a specific anxiety disorder, consider Other Specified Anxiety Disorder or Unspecified Anxiety Disorder"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Panic and/or physical symptoms"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Recurrent anxious thoughts (dashed)"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Specific situation / avoidance"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Recurrent, unexpected panic attacks"
+    },
+    {
+     "f": "c",
+     "t": "k",
+     "l": "Clinically significant, criteria not met"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Specific trigger (water, heights, animals)"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Separation from attachment figure"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Transport, open spaces, lines, crowds"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "Public setting, negative evaluation"
+    }
+   ]
+  },
+  {
+   "id": "b273b",
+   "title": "Anxiety Disorders — Recurrent Anxious Thoughts",
+   "src": "fig",
+   "img": "bb-273-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Excessive Anxiety, Fear, Avoidance, and/or Increased Arousal"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Rule out Anxiety Disorder due to Another Medical Condition (e.g. hyperthyroidism, anemia, CHF), Another Mental Disorder, or Substance/Medication-Induced Anxiety Disorder"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Associated with Panic and/or Physical (Autonomic) Symptoms",
+     "d": "กล่องเส้นประในเล่ม — ดูแผนผัง \"Associated with Panic\" (flow ก่อนหน้า)"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Associated with Recurrent Anxious Thoughts"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Generalized Worry"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Specific Worries"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Generalized Anxiety Disorder",
+     "d": "Worry about Several Events or Activities for &gt;6 months (e.g. Work or School)"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Agoraphobia",
+     "d": "Setting Where Patient May Sense Difficulty in Escape (e.g. Public transportation, Lines, Crowds etc.)"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Obsessive Compulsive Disorder*",
+     "d": "Intrusive/Inappropriate/Distressing Thoughts With Repetitive Behaviour Meant to Neutralize Anxiety. *Not considered an anxiety disorder according to DSM-V"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Social Anxiety Disorder (Social Phobia)",
+     "d": "Excessive Worry or Fear About Social Situations"
+    },
+    {
+     "id": "k",
+     "k": "note",
+     "t": "NB: criteria not met for a specific anxiety disorder",
+     "d": "If the symptoms are clinically significant but do not meet the criteria for a specific anxiety disorder, consider Other Specified Anxiety Disorder or Unspecified Anxiety Disorder"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Panic and/or physical symptoms (dashed)"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Recurrent anxious thoughts"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Generalized worry"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Specific worries"
+    },
+    {
+     "f": "d",
+     "t": "k",
+     "l": "Clinically significant, criteria not met"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Worry about several events >6 months"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Setting where escape is difficult"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Intrusive thoughts + repetitive behaviour"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Fear of social situations"
+    }
+   ],
+   "note": "* Obsessive Compulsive Disorder ไม่นับเป็น anxiety disorder ตาม DSM-V"
+  }
+ ]
+}

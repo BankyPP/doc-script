@@ -1,0 +1,130 @@
+{
+ "key": "256",
+ "en": "Back Pain",
+ "th": "ปวดหลัง",
+ "pdf": "285",
+ "bookpg": "256",
+ "target": "back-pain",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-8-2-algo",
+   "id": "bb-256-scheme",
+   "h": "Back pain scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b256a\"></div><div class=\"warn\"><b>Red Flags</b><ul><li>bowel or bladder dysfunction</li><li>saddle paresthesia</li><li>constitutional symptoms</li><li>paresthesia</li><li>age &gt;50</li><li>&lt;18</li><li>IV drug use</li><li>neuromotor deficits</li><li>nocturnal pain</li><li>high energy trauma</li><li>past history of neoplasm</li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "hx",
+   "html": "<p><b>Red flags (Blackbook)</b>: always assess for red flags; if no red flags, assess after 6 weeks</p><ul><li>bowel or bladder dysfunction</li><li>saddle paresthesia</li><li>constitutional symptoms</li><li>paresthesia</li><li>age &gt;50</li><li>&lt;18</li><li>IV drug use</li><li>neuromotor deficits</li><li>nocturnal pain</li><li>high energy trauma</li><li>past history of neoplasm</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b256a",
+   "title": "Back Pain",
+   "src": "fig",
+   "img": "bb-256-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Back Pain"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Always assess for red flags. If no red flags, assess after 6 weeks",
+     "d": "<p><b>Red Flags</b></p><ul><li>bowel or bladder dysfunction</li><li>saddle paresthesia</li><li>constitutional symptoms</li><li>paresthesia</li><li>age &gt;50</li><li>&lt;18</li><li>IV drug use</li><li>neuromotor deficits</li><li>nocturnal pain</li><li>high energy trauma</li><li>past history of neoplasm</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Acute/Subacute + Red Flags &lt; 6 weeks"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Chronic/Acute After 6 weeks + No Red Flags &gt; 6 weeks"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Fracture"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Tumor/Infection"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Cauda Equina Syndrome"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Unresolved Radicular Symptoms"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Myelopathic"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Spondyloarthropathies or Osteoarthritis"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Red flags present · < 6 weeks"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "No red flags · > 6 weeks"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Fracture"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Tumor/Infection"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Cauda equina syndrome"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Unresolved radicular symptoms"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Myelopathic"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Spondyloarthropathies or OA"
+    }
+   ],
+   "note": "รายการ red flags (กล่องข้างแผนผัง) ใส่ไว้ในรายละเอียดของกล่อง \"Always assess for red flags\""
+  }
+ ]
+}

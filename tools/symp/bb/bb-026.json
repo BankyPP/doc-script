@@ -1,0 +1,135 @@
+{
+ "key": "026",
+ "en": "Cough — Chronic",
+ "th": "ไอเรื้อรัง",
+ "pdf": "55",
+ "bookpg": "26",
+ "target": "cough",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-2-2-approach",
+   "id": "bb-026-scheme",
+   "h": "Chronic cough scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b026a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-chronic",
+   "html": "<h5>Chronic cough (> 3 wks) — causes by chest X-ray and spirometry (Blackbook)</h5><ul><li><b>Abnormal chest X-ray</b>: COPD; Chronic Infection (Eg. Fungal, Tuberculosis); Neoplasm; CHF; Interstitial Disease; Foreign Body</li><li><b>Normal chest X-ray</b><ul><li><b>Obstructive disease</b> (FEV<sub>1</sub>/FVC &lt;75%): Asthma; COPD</li><li><b>Normal spirometry</b><ul><li><b>Upper airway</b>: Post-Nasal Drip / Rhinosinusitis; Neuromuscular Swallowing Disorder; Thyroiditis; Mediastinal Mass; Elongated Uvula</li><li><b>Lower airway</b>: Asthma; GERD; Post-Infectious; Smoker’s Cough; Non-Asthmatic Eosinophilic Bronchitis; Foreign Body</li><li><b>Other</b>: ACE Inhibitor</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b026a",
+   "title": "Cough — Chronic",
+   "src": "fig",
+   "img": "bb-026-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Cough"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Chronic Cough (&gt; 3 wks)"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Cough & Dyspnea & Fever",
+     "d": "<p>Dashed branch in the book — shown in the \"Cough, Dyspnea &amp; Fever\" scheme.</p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Normal Chest X-Ray"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Abnormal Chest X-Ray",
+     "d": "<ul><li>COPD</li><li>Chronic Infection (Eg. Fungal, Tuberculosis)</li><li>Neoplasm</li><li>CHF</li><li>Interstitial Disease</li><li>Foreign Body</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Normal Spirometry"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Obstructive Disease (FEV<sub>1</sub>/FVC &lt;75%)",
+     "d": "<ul><li>Asthma</li><li>COPD</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Upper Airway",
+     "d": "<ul><li>Post-Nasal Drip / Rhinosinusitis</li><li>Neuromuscular Swallowing Disorder</li><li>Thyroiditis</li><li>Mediastinal Mass</li><li>Elongated Uvula</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Lower Airway",
+     "d": "<ul><li>Asthma</li><li>GERD</li><li>Post-Infectious</li><li>Smoker’s Cough</li><li>Non-Asthmatic Eosinophilic Bronchitis</li><li>Foreign Body</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>ACE Inhibitor</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Chronic cough (> 3 wks)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Cough & dyspnea & fever (dashed)"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Normal chest X-ray"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Abnormal chest X-ray"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Normal spirometry"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Obstructive disease (FEV1/FVC <75%)"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Upper airway"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Lower airway"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

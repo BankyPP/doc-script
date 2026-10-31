@@ -1,0 +1,200 @@
+{
+ "key": "062",
+ "en": "Prolonged PTT, Normal PT (INR)",
+ "th": "PTT ยาว PT (INR) ปกติ (มี/ไม่มีแนวโน้มเลือดออก)",
+ "pdf": "91–92",
+ "bookpg": "62–63",
+ "target": "abnormal-bleeding",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-7-algo",
+   "id": "bb-062-scheme",
+   "h": "Prolonged PTT, Normal PT (INR) scheme (Blackbook)",
+   "html": "",
+   "sub": [
+    {
+     "id": "bb-062-bleed",
+     "h": "Bleeding tendency",
+     "html": "<div class=\"flow\" data-flow=\"b062a\"></div>"
+    },
+    {
+     "id": "bb-062-nobleed",
+     "h": "No bleeding tendency",
+     "html": "<div class=\"flow\" data-flow=\"b062b\"></div>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "b062a",
+   "title": "Prolonged PTT, Normal PT (INR) — Bleeding Tendency",
+   "src": "fig",
+   "img": "bb-062-f1.webp",
+   "note": "เส้นประไปกล่อง No Bleeding Tendency = ดู scheme หน้าถัดไป",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Long PTT / Normal PT"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Bleeding Tendency"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "No Bleeding Tendency"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Congenital"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Acquired"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "X-Linked Disorder",
+     "d": "<ul><li>Factor VIII Deficiency (Hemophilia A)</li><li>Factor IX Deficiency (Hemophilia B)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Autosomal Recessive Disorder",
+     "d": "<ul><li>Factor XI Deficiency (Hemophilia C)</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Autosomal Dominant Disorder",
+     "d": "<ul><li>von Willebrand's Disease with a low Factor VIII</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Autoantibodies",
+     "d": "<ul><li>Factor VIII Inhibitor</li><li>Other Factors (rare)</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Drugs",
+     "d": "<ul><li>Heparin</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Bleeding tendency"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "No bleeding tendency (dashed: next scheme)"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Congenital"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Acquired"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "X-linked disorder"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Autosomal recessive"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Autosomal dominant"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Autoantibodies"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "Drugs"
+    }
+   ]
+  },
+  {
+   "id": "b062b",
+   "title": "Prolonged PTT, Normal PT (INR) — No Bleeding Tendency",
+   "src": "fig",
+   "img": "bb-062-f2.webp",
+   "note": "เส้นประไปกล่อง Bleeding Tendency = ดู scheme หน้าก่อนหน้า",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Long PTT / Normal PT"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Bleeding Tendency"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "No Bleeding Tendency"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Congenital — (Intrinsic Pathway Factor Deficiency)",
+     "d": "<ul><li>Factor XII</li><li>Prekallikrein (Fletcher Factor)</li><li>High Molecular Weight Kininogen (Fitzgerald Factor)</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Acquired",
+     "d": "<ul><li>Antiphospholipid Antibodies (APLA)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Bleeding tendency (dashed line)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "No bleeding tendency"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Congenital"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Acquired"
+    }
+   ]
+  }
+ ]
+}

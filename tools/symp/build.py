@@ -23,6 +23,8 @@ BOOKS = {
     'si': BOOK,
     'yb': {'title': 'Differential diagnostic algorithm in internal medicine (เล่มเหลือง — Approach algorithms)',
            'by': 'ณัฐพล ปัทมินทร์', 'ed': 'พร้อมลายมือ/โน้ตที่เขียนเพิ่มในเล่ม', 'inst': 'both'},
+    'bb': {'title': 'Blackbook: Approaches to Medical Presentations', 'by': 'Cumming School of Medicine, University of Calgary',
+           'ed': 'Fifteenth Edition (2022) · CC BY-NC 4.0', 'inst': 'intl'},
 }
 GROUPS = [
     ('base', 'พื้นฐานการดูแลผู้ป่วย', '#7A5C3E', [1, 2]),
@@ -34,6 +36,10 @@ GROUPS = [
     ('kub', 'ไต · ทางเดินปัสสาวะ · อวัยวะเพศ', '#2F7466', [25, 26, 27, 28, 42, 43]),
     ('msk', 'กระดูก · ข้อ · ผิวหนัง', '#C9952E', [29, 30, 41]),
     ('endo', 'ต่อมไร้ท่อ · การเจริญเติบโต', '#7A4E86', []),
+    ('obgyn', 'สูติศาสตร์ · นรีเวช', '#A33A3A', []),
+    ('ped', 'กุมารเวชศาสตร์', '#9B4F2E', []),
+    ('psych', 'จิตเวช', '#5B4F7A', []),
+    ('eent', 'ตา · หู คอ จมูก', '#2F6A86', []),
 ]
 GOF = {n: g[0] for g in GROUPS for n in g[3]}
 
@@ -50,7 +56,7 @@ def main():
     os.makedirs(os.path.join(OUT, 'img'), exist_ok=True)
     chapters, search, used = [], [], set()
     for f in sorted(os.listdir(SRC)):
-        m = re.match(r'ch(\d\d)\.json$', f)
+        m = re.match(r'ch(\d{2,3})\.json$', f)
         if not m: continue
         d = json.load(open(os.path.join(SRC, f), encoding='utf-8'))
         no = d['no']

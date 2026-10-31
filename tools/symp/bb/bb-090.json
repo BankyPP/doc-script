@@ -1,0 +1,164 @@
+{
+ "key": "090",
+ "en": "Elevated Liver Enzymes",
+ "th": "เอนไซม์ตับสูง",
+ "pdf": "119",
+ "bookpg": "90",
+ "target": null,
+ "new": {
+  "id": "elevated-liver-enzymes",
+  "th": "เอนไซม์ตับสูง",
+  "en": "Elevated Liver Enzymes",
+  "g": "gi"
+ },
+ "sections": [
+  {
+   "id": "bb-090-scheme",
+   "h": "Elevated Liver Enzymes scheme",
+   "html": "<div class=\"flow\" data-flow=\"b090a\"></div>"
+  },
+  {
+   "id": "bb-090-causes",
+   "h": "Causes by pattern",
+   "html": "<p><b>Hepatocellular:</b> ALT or AST &gt; ALP · <b>Cholestatic</b> (does not always cause Jaundice): ALP &gt; ALT or AST</p><h4>Hepatocellular — Severe (ALT &gt; 15x ULN)</h4><ul><li>Viral</li><li>Drugs/Toxins</li><li>Ischemia</li><li>Autoimmune</li><li>Wilson’s</li><li>Pregnancy<ul><li>AFLP</li><li>HELLP</li></ul></li></ul><p>Dx ALF if ↑INR and hepatic encephalopathy</p><h4>Hepatocellular — Moderate (ALT 5–15x ULN)</h4><ul><li>Viral</li><li>Drugs</li><li>AIH</li><li>Wilson’s</li><li>Hemochromatosis</li><li>NAFLD</li><li>Others</li></ul><p>ETOH hepatitis usually cholestatic, and usually ALT &lt; 300</p><h4>Hepatocellular — Mild (ALT &lt; 5x ULN)</h4><ul><li><b>NAFLD</b></li><li><b>Alcohol</b></li><li><b>Viral</b></li><li><b>Hemochromatosis</b></li><li><b>Drugs</b></li><li>AIH</li><li>A1AT deficiency</li><li>Wilson’s</li><li>Others</li><li>Cholestatic disease</li></ul><p>NAFLD 10% population</p><h4>Cholestatic — US: Normal Bile Ducts</h4><ul><li>PBC</li><li>PSC</li><li>Alcoholic hepatitis</li><li>Drugs</li><li>TPN</li><li>Sepsis</li><li>Infiltrative<ul><li>Sarcoid</li><li>Amyloid</li><li>Malignancy</li><li>Infection</li></ul></li><li>Cirrhosis (any)</li><li>Congenital<ul><li>Biliary Atresia</li><li>Alagille Syndrome</li><li>Progressive Familial Intrahepatic Cholestasis</li></ul></li></ul><p>Dx by biopsy ± MRI/MRCP</p><h4>Cholestatic — US: Dilated Bile Ducts</h4><ul><li>Common Bile Duct Stone</li><li>Biliary stricture</li><li>PSC</li><li>Worms/flukes</li><li>Cholangiocarcinoma</li><li>Pancreatic cancer</li><li>Others</li></ul><p>ERCP for dx and therapy</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b090a",
+   "title": "Elevated Liver Enzymes",
+   "src": "fig",
+   "img": "bb-090-f1.webp",
+   "note": "กล่องล่างสุด 5 กล่องในต้นฉบับวางใต้แต่ละคอลัมน์ ไม่มีเส้นเชื่อม — ผูกตามตำแหน่งคอลัมน์",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Elevated Liver Enzymes"
+    },
+    {
+     "id": "hep",
+     "k": "dx",
+     "t": "Hepatocellular — ALT or AST &gt; ALP"
+    },
+    {
+     "id": "chol",
+     "k": "dx",
+     "t": "Cholestatic (does not always cause Jaundice) — ALP &gt; ALT or AST"
+    },
+    {
+     "id": "sev",
+     "k": "dx",
+     "t": "Severe — ALT &gt; 15x ULN",
+     "d": "<ul><li>Viral</li><li>Drugs/Toxins</li><li>Ischemia</li><li>Autoimmune</li><li>Wilson’s</li><li>Pregnancy<ul><li>AFLP</li><li>HELLP</li></ul></li></ul>"
+    },
+    {
+     "id": "mod",
+     "k": "dx",
+     "t": "Moderate — ALT 5–15x ULN",
+     "d": "<ul><li>Viral</li><li>Drugs</li><li>AIH</li><li>Wilson’s</li><li>Hemochromatosis</li><li>NAFLD</li><li>Others</li></ul>"
+    },
+    {
+     "id": "mild",
+     "k": "dx",
+     "t": "Mild — ALT &lt; 5x ULN",
+     "d": "<ul><li><b>NAFLD</b></li><li><b>Alcohol</b></li><li><b>Viral</b></li><li><b>Hemochromatosis</b></li><li><b>Drugs</b></li><li>AIH</li><li>A1AT deficiency</li><li>Wilson’s</li><li>Others</li><li>Cholestatic disease</li></ul>"
+    },
+    {
+     "id": "usn",
+     "k": "dx",
+     "t": "US – Normal Bile Ducts",
+     "d": "<ul><li>PBC</li><li>PSC</li><li>Alcoholic hepatitis</li><li>Drugs</li><li>TPN</li><li>Sepsis</li><li>Infiltrative<ul><li>Sarcoid</li><li>Amyloid</li><li>Malignancy</li><li>Infection</li></ul></li><li>Cirrhosis (any)</li><li>Congenital<ul><li>Biliary Atresia</li><li>Alagille Syndrome</li><li>Progressive Familial Intrahepatic Cholestasis</li></ul></li></ul>"
+    },
+    {
+     "id": "usd",
+     "k": "dx",
+     "t": "US – Dilated Bile Ducts",
+     "d": "<ul><li>Common Bile Duct Stone</li><li>Biliary stricture</li><li>PSC</li><li>Worms/flukes</li><li>Cholangiocarcinoma</li><li>Pancreatic cancer</li><li>Others</li></ul>"
+    },
+    {
+     "id": "n1",
+     "k": "note",
+     "t": "Dx ALF if ↑INR and hepatic encephalopathy"
+    },
+    {
+     "id": "n2",
+     "k": "note",
+     "t": "ETOH hepatitis usually cholestatic, and usually ALT &lt; 300"
+    },
+    {
+     "id": "n3",
+     "k": "note",
+     "t": "NAFLD 10% population"
+    },
+    {
+     "id": "n4",
+     "k": "act",
+     "t": "Dx by biopsy ± MRI/MRCP"
+    },
+    {
+     "id": "n5",
+     "k": "act",
+     "t": "ERCP for dx and therapy"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "hep",
+     "l": "Hepatocellular"
+    },
+    {
+     "f": "a",
+     "t": "chol",
+     "l": "Cholestatic"
+    },
+    {
+     "f": "hep",
+     "t": "sev",
+     "l": "Severe (ALT &gt; 15x ULN)"
+    },
+    {
+     "f": "hep",
+     "t": "mod",
+     "l": "Moderate (ALT 5–15x ULN)"
+    },
+    {
+     "f": "hep",
+     "t": "mild",
+     "l": "Mild (ALT &lt; 5x ULN)"
+    },
+    {
+     "f": "chol",
+     "t": "usn",
+     "l": "US – Normal Bile Ducts"
+    },
+    {
+     "f": "chol",
+     "t": "usd",
+     "l": "US – Dilated Bile Ducts"
+    },
+    {
+     "f": "sev",
+     "t": "n1"
+    },
+    {
+     "f": "mod",
+     "t": "n2"
+    },
+    {
+     "f": "mild",
+     "t": "n3"
+    },
+    {
+     "f": "usn",
+     "t": "n4"
+    },
+    {
+     "f": "usd",
+     "t": "n5"
+    }
+   ]
+  }
+ ]
+}

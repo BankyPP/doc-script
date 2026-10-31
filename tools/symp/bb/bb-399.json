@@ -1,0 +1,197 @@
+{
+ "key": "399",
+ "en": "Fatigue",
+ "th": "อ่อนเพลีย",
+ "pdf": "428",
+ "bookpg": "399",
+ "target": null,
+ "new": {
+  "id": "fatigue",
+  "th": "อ่อนเพลีย",
+  "en": "Fatigue",
+  "g": "gen"
+ },
+ "sections": [
+  {
+   "id": "bb-399-scheme",
+   "h": "Fatigue scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b399a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b399a",
+   "title": "Fatigue",
+   "src": "fig",
+   "img": "bb-399-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fatigue"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Exclude Sleep Disturbance/Lifestyle Issues/Pregnancy"
+    },
+    {
+     "id": "o",
+     "k": "q",
+     "t": "Organic Etiologies"
+    },
+    {
+     "id": "n",
+     "k": "q",
+     "t": "No Organic Etiologies"
+    },
+    {
+     "id": "em",
+     "k": "q",
+     "t": "Endocrine/Metabolic"
+    },
+    {
+     "id": "en",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>Hypo/Hyper-thyroidism</li><li>Diabetes</li><li>Pituitary Insufficiency</li><li>Adrenal Insufficiency</li></ul>"
+    },
+    {
+     "id": "me",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Renal Failure</li><li>Liver Failure</li><li>Hypercalcemia</li></ul>"
+    },
+    {
+     "id": "nh",
+     "k": "dx",
+     "t": "Neoplastic/Hematologic",
+     "d": "<ul><li>Anemia</li><li>Malignancy</li></ul>"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Endocarditis</li><li>Tuberculosis</li><li>Epstein-Barr Virus</li><li>Hepatitis</li><li>HIV</li></ul>"
+    },
+    {
+     "id": "cd",
+     "k": "q",
+     "t": "Chronic Disease"
+    },
+    {
+     "id": "ai",
+     "k": "dx",
+     "t": "Autoimmune/Inflammatory",
+     "d": "<ul><li>Rheumatoid Arthritis</li><li>Celiac Disease</li><li>SLE</li><li>Polymyalgia Rheumatica</li></ul>"
+    },
+    {
+     "id": "cp",
+     "k": "dx",
+     "t": "Cardio-pulmonary",
+     "d": "<ul><li>Congestive Heart Failure</li><li>Chronic Obstructive Pulmonary Disease</li></ul>"
+    },
+    {
+     "id": "ne",
+     "k": "dx",
+     "t": "Neurologic",
+     "d": "<ul><li>Depression</li><li>Multiple Sclerosis</li><li>Stroke</li><li>Parkinson’s</li><li>Myasthenia Gravis</li></ul>"
+    },
+    {
+     "id": "ph",
+     "k": "dx",
+     "t": "Pharmacologic",
+     "d": "<ul><li>Hypnotics</li><li>Anti-hypertensives</li><li>Anti-Depressants</li><li>Drug Abuse (e.g. Alcohol)</li><li>Drug Withdrawal</li></ul>"
+    },
+    {
+     "id": "ps",
+     "k": "dx",
+     "t": "Psychogenic",
+     "d": "<ul><li>Anxiety</li><li>Somatization Disorder</li><li>Malnutrition/Drug Addiction</li></ul>"
+    },
+    {
+     "id": "id",
+     "k": "dx",
+     "t": "Idiopathic",
+     "d": "<ul><li>Chronic Fatigue Syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "o",
+     "l": "Organic etiologies"
+    },
+    {
+     "f": "b",
+     "t": "n",
+     "l": "No organic etiologies"
+    },
+    {
+     "f": "o",
+     "t": "em",
+     "l": "Endocrine/Metabolic"
+    },
+    {
+     "f": "o",
+     "t": "nh",
+     "l": "Neoplastic/Hematologic"
+    },
+    {
+     "f": "o",
+     "t": "in",
+     "l": "Infectious"
+    },
+    {
+     "f": "o",
+     "t": "cd",
+     "l": "Chronic disease"
+    },
+    {
+     "f": "o",
+     "t": "ph",
+     "l": "Pharmacologic"
+    },
+    {
+     "f": "em",
+     "t": "en",
+     "l": "Endocrine"
+    },
+    {
+     "f": "em",
+     "t": "me",
+     "l": "Metabolic"
+    },
+    {
+     "f": "cd",
+     "t": "ai",
+     "l": "Autoimmune/Inflammatory"
+    },
+    {
+     "f": "cd",
+     "t": "cp",
+     "l": "Cardio-pulmonary"
+    },
+    {
+     "f": "cd",
+     "t": "ne",
+     "l": "Neurologic"
+    },
+    {
+     "f": "n",
+     "t": "ps",
+     "l": "Psychogenic"
+    },
+    {
+     "f": "n",
+     "t": "id",
+     "l": "Idiopathic"
+    }
+   ]
+  }
+ ]
+}

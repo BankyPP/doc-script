@@ -1,0 +1,176 @@
+{
+ "key": "089",
+ "en": "Dysphagia",
+ "th": "กลืนลำบาก",
+ "pdf": "118",
+ "bookpg": "89",
+ "target": "dysphagia",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "hx",
+   "html": "<p><b>Blackbook:</b> If heartburn present: consider GERD</p>"
+  },
+  {
+   "op": "append",
+   "sec": "oro-clue",
+   "html": "<p><b>Blackbook — Oropharyngeal dysphagia (immediate difficulty):</b> difficulty initiating swallowing? Choking? Nasal regurgitation?</p>"
+  },
+  {
+   "op": "append",
+   "sec": "oro-cause",
+   "html": "<p><b>Blackbook — Oropharyngeal dysphagia</b></p><h4>Structural</h4><ul><li>Tumors</li><li>Zenker’s Diverticulum</li><li>Foreign Body</li></ul><h4>Neuromuscular/Toxic/Metabolic</h4><ul><li>Myasthenia Gravis</li><li>CNS Tumors</li><li>Cerebrovascular Accident</li><li>Multiple Sclerosis</li><li>Amyotrophic Lateral Sclerosis</li><li>Polymyositis</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "eso-hx",
+   "html": "<p><b>Blackbook — Esophageal dysphagia (delayed difficulty):</b> food sticks seconds later / further down? Motor disorder = solids and/or liquids · Mechanical obstruction = solids only; แยกต่อเป็น intermittent หรือ progressive symptoms</p>"
+  },
+  {
+   "op": "append",
+   "sec": "eso-cause",
+   "html": "<p><b>Blackbook — Esophageal dysphagia</b></p><h4>Motor Disorder — Intermittent Symptoms</h4><ul><li>Esophageal Spasm</li></ul><h4>Motor Disorder — Progressive Symptoms</h4><ul><li>Scleroderma</li><li>Achalasia</li><li>Diabetic Neuropathy</li></ul><h4>Mechanical Obstruction — Intermittent Symptoms</h4><ul><li>Schatzki Ring</li><li>Esophageal Web</li><li>Eosinophilic Esophagitis</li></ul><h4>Mechanical Obstruction — Progressive Symptoms</h4><ul><li>Reflux Stricture</li><li>Esophageal Cancer</li></ul>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-3-2-approach",
+   "id": "bb-089-scheme",
+   "h": "Dysphagia scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b089a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b089a",
+   "title": "Dysphagia",
+   "src": "fig",
+   "img": "bb-089-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dysphagia"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "If heartburn present: Consider GERD"
+    },
+    {
+     "id": "oro",
+     "k": "dx",
+     "t": "Oropharyngeal Dysphagia — Immediate Difficulty",
+     "d": "<p>Difficulty initiating swallowing? Choking? Nasal Regurgitation?</p>"
+    },
+    {
+     "id": "eso",
+     "k": "dx",
+     "t": "Esophageal Dysphagia — Delayed Difficulty",
+     "d": "<p>Food sticks seconds later/ Further down?</p>"
+    },
+    {
+     "id": "str",
+     "k": "dx",
+     "t": "Structural",
+     "d": "<ul><li>Tumors</li><li>Zenker’s Diverticulum</li><li>Foreign Body</li></ul>"
+    },
+    {
+     "id": "nm",
+     "k": "dx",
+     "t": "Neuromuscular/Toxic/Metabolic",
+     "d": "<ul><li>Myasthenia Gravis</li><li>CNS Tumors</li><li>Cerebrovascular Accident</li><li>Multiple Sclerosis</li><li>Amyotrophic Lateral Sclerosis</li><li>Polymyositis</li></ul>"
+    },
+    {
+     "id": "mot",
+     "k": "dx",
+     "t": "Motor Disorder — Solids and/or Liquids"
+    },
+    {
+     "id": "mech",
+     "k": "dx",
+     "t": "Mechanical Obstruction — Solids only"
+    },
+    {
+     "id": "mi",
+     "k": "dx",
+     "t": "Intermittent Symptoms (Motor Disorder)",
+     "d": "<ul><li>Esophageal Spasm</li></ul>"
+    },
+    {
+     "id": "mp",
+     "k": "dx",
+     "t": "Progressive Symptoms (Motor Disorder)",
+     "d": "<ul><li>Scleroderma</li><li>Achalasia</li><li>Diabetic Neuropathy</li></ul>"
+    },
+    {
+     "id": "xi",
+     "k": "dx",
+     "t": "Intermittent Symptoms (Mechanical Obstruction)",
+     "d": "<ul><li>Schatzki Ring</li><li>Esophageal Web</li><li>Eosinophilic Esophagitis</li></ul>"
+    },
+    {
+     "id": "xp",
+     "k": "dx",
+     "t": "Progressive Symptoms (Mechanical Obstruction)",
+     "d": "<ul><li>Reflux Stricture</li><li>Esophageal Cancer</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "oro",
+     "l": "Oropharyngeal (immediate)"
+    },
+    {
+     "f": "q",
+     "t": "eso",
+     "l": "Esophageal (delayed)"
+    },
+    {
+     "f": "oro",
+     "t": "str",
+     "l": "Structural"
+    },
+    {
+     "f": "oro",
+     "t": "nm",
+     "l": "Neuromuscular/Toxic/Metabolic"
+    },
+    {
+     "f": "eso",
+     "t": "mot",
+     "l": "Motor Disorder (solids and/or liquids)"
+    },
+    {
+     "f": "eso",
+     "t": "mech",
+     "l": "Mechanical Obstruction (solids only)"
+    },
+    {
+     "f": "mot",
+     "t": "mi",
+     "l": "Intermittent Symptoms"
+    },
+    {
+     "f": "mot",
+     "t": "mp",
+     "l": "Progressive Symptoms"
+    },
+    {
+     "f": "mech",
+     "t": "xi",
+     "l": "Intermittent Symptoms"
+    },
+    {
+     "f": "mech",
+     "t": "xp",
+     "l": "Progressive Symptoms"
+    }
+   ]
+  }
+ ]
+}

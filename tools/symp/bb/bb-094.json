@@ -1,0 +1,141 @@
+{
+ "key": "094",
+ "en": "Jaundice",
+ "th": "ดีซ่าน",
+ "pdf": "123",
+ "bookpg": "94",
+ "target": "jaundice",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "cause-ind",
+   "html": "<p><b>Blackbook — Pre-hepatic (unconjugated hyperbilirubinemia)</b></p><h4>Increased Production</h4><ul><li>Hemolysis</li><li>Ineffective Erythropoiesis</li><li>Hematoma</li></ul><h4>Decreased Hepatic Uptake</h4><ul><li>Sepsis</li><li>Drugs (eg. Rifampin)</li></ul><h4>Decreased Conjugation</h4><ul><li>Gilbert’s Syndrome</li><li>Crigler-Najjar Syndromes (I and II)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-dir",
+   "html": "<p><b>Blackbook — Conjugated hyperbilirubinemia</b></p><h4>Hepatic (see Elevated Liver Enzymes scheme)</h4><ul><li>Hepatocellular</li><li>Cholestatic</li><li>Dubin Johnson</li></ul><h4>Post-Hepatic — usually has duct dilatation on ultrasound: Biliary Duct Compression</h4><ul><li>Malignancy</li><li>Metastases</li><li>Pancreatitis</li></ul><h4>Post-Hepatic — Intraductal Obstruction</h4><ul><li>Gallstones</li><li>Biliary Stricture</li><li>Cholangiocarcinoma</li><li>Primary Sclerosing Cholangitis</li></ul>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-3-1-approach",
+   "id": "bb-094-scheme",
+   "h": "Jaundice scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b094a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b094a",
+   "title": "Jaundice",
+   "src": "fig",
+   "img": "bb-094-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Jaundice"
+    },
+    {
+     "id": "pre",
+     "k": "dx",
+     "t": "Pre-Hepatic — Unconjugated Hyperbilirubinemia"
+    },
+    {
+     "id": "hep",
+     "k": "dx",
+     "t": "Hepatic — Conjugated Hyperbilirubinemia",
+     "d": "<ul><li>Hepatocellular</li><li>Cholestatic</li><li>Dubin Johnson</li></ul>"
+    },
+    {
+     "id": "post",
+     "k": "dx",
+     "t": "Post-Hepatic — Conjugated Hyperbilirubinemia",
+     "d": "<p>Usually has Duct Dilatation on Ultrasound.</p>"
+    },
+    {
+     "id": "ref",
+     "k": "q",
+     "t": "See Elevated Liver Enzymes scheme",
+     "d": "<p>แผนภูมิ Elevated Liver Enzymes (Blackbook หน้า 90)</p>"
+    },
+    {
+     "id": "inc",
+     "k": "dx",
+     "t": "Increased Production",
+     "d": "<ul><li>Hemolysis</li><li>Ineffective Erythropoiesis</li><li>Hematoma</li></ul>"
+    },
+    {
+     "id": "dup",
+     "k": "dx",
+     "t": "Decreased Hepatic Uptake",
+     "d": "<ul><li>Sepsis</li><li>Drugs (eg. Rifampin)</li></ul>"
+    },
+    {
+     "id": "dco",
+     "k": "dx",
+     "t": "Decreased Conjugation",
+     "d": "<ul><li>Gilbert’s Syndrome</li><li>Crigler-Najjar Syndromes (I and II)</li></ul>"
+    },
+    {
+     "id": "bdc",
+     "k": "dx",
+     "t": "Biliary Duct Compression",
+     "d": "<ul><li>Malignancy</li><li>Metastases</li><li>Pancreatitis</li></ul>"
+    },
+    {
+     "id": "ido",
+     "k": "dx",
+     "t": "Intraductal Obstruction",
+     "d": "<ul><li>Gallstones</li><li>Biliary Stricture</li><li>Cholangiocarcinoma</li><li>Primary Sclerosing Cholangitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pre",
+     "l": "Pre-Hepatic (unconjugated)"
+    },
+    {
+     "f": "a",
+     "t": "hep",
+     "l": "Hepatic (conjugated)"
+    },
+    {
+     "f": "a",
+     "t": "post",
+     "l": "Post-Hepatic (conjugated)"
+    },
+    {
+     "f": "pre",
+     "t": "inc",
+     "l": "Increased Production"
+    },
+    {
+     "f": "pre",
+     "t": "dup",
+     "l": "Decreased Hepatic Uptake"
+    },
+    {
+     "f": "pre",
+     "t": "dco",
+     "l": "Decreased Conjugation"
+    },
+    {
+     "f": "hep",
+     "t": "ref"
+    },
+    {
+     "f": "post",
+     "t": "bdc",
+     "l": "Biliary Duct Compression"
+    },
+    {
+     "f": "post",
+     "t": "ido",
+     "l": "Intraductal Obstruction"
+    }
+   ]
+  }
+ ]
+}

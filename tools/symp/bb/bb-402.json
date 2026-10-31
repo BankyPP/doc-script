@@ -1,0 +1,103 @@
+{
+ "key": "402",
+ "en": "Hypothermia",
+ "th": "ภาวะอุณหภูมิกายต่ำ",
+ "pdf": "431",
+ "bookpg": "402",
+ "target": null,
+ "new": {
+  "id": "hypothermia",
+  "th": "ภาวะอุณหภูมิกายต่ำ",
+  "en": "Hypothermia",
+  "g": "gen"
+ },
+ "sections": [
+  {
+   "id": "bb-402-scheme",
+   "h": "Hypothermia scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b402a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b402a",
+   "title": "Hypothermia",
+   "src": "fig",
+   "img": "bb-402-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hypothermia"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Environmental",
+     "d": "<ul><li>Immersion</li><li>Non-Immersion</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Acute Illness"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Body Heat Loss",
+     "d": "<ul><li>Drugs/Toxins</li><li>Iatrogenic</li><li>Burns</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Lack of Body Heat Generation",
+     "d": "<ul><li>Hypothyroidism</li><li>Adrenal Insufficiency</li><li>Hypoglycemia</li><li>Malnutrition</li></ul>"
+    },
+    {
+     "id": "t",
+     "k": "dx",
+     "t": "Improper Thermoregulation",
+     "d": "<ul><li>Cerebrovascular Accident</li><li>Central Nervous System Trauma</li><li>Multiple Sclerosis</li><li>Drugs/Toxins</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Trauma</li><li>Sepsis</li><li>Vascular Insufficiency</li><li>Uremia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Environmental"
+    },
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Acute illness"
+    },
+    {
+     "f": "i",
+     "t": "h",
+     "l": "Body heat loss"
+    },
+    {
+     "f": "i",
+     "t": "g",
+     "l": "Lack of body heat generation"
+    },
+    {
+     "f": "i",
+     "t": "t",
+     "l": "Improper thermoregulation"
+    },
+    {
+     "f": "i",
+     "t": "o",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

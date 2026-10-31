@@ -1,0 +1,18 @@
+{
+ "key": "297",
+ "en": "Cross Section of the Eye & Acronyms",
+ "th": "ภาพตัดขวางของตาและคำย่อ",
+ "pdf": "326",
+ "bookpg": "297",
+ "target": "visual-disorder",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "^",
+   "id": "bb-297-anat",
+   "h": "Cross section of the eye & acronyms (Blackbook)",
+   "html": "<figure><img src=\"symp/img/bb-297-f1.webp\" alt=\"Cross section of the eye: ciliary muscle, ciliary body, cornea, lens, pupil, iris, conjunctiva, vitreous humor, sclera, retina, choroid, fovea, macula, optic disk, optic nerve, retinal blood vessels\"><figcaption>Cross section of the eye — Ciliary Muscle, Ciliary Body, Cornea, Lens, Pupil, Iris, Conjunctiva, Vitreous Humor, Sclera, Retina, Choroid, Fovea, Macula, Optic Disk, Optic Nerve, Retinal Blood Vessels</figcaption></figure><h4>Ophthalmology Acronyms</h4><div class=\"tbl\"><table><thead><tr><th>Acronym</th><th>Meaning</th></tr></thead><tbody><tr><td><b>EOM</b></td><td>Extra ocular movements</td></tr><tr><td><b>IOL</b></td><td>Intraocular Lens</td></tr><tr><td><b>IOP</b></td><td>Intraocular Pressure</td></tr><tr><td><b>OD</b></td><td>Oculus Dexter (right eye)</td></tr><tr><td><b>OS</b></td><td>Oculus Sinister (left eye)</td></tr><tr><td><b>OU</b></td><td>Oculus Uterque (both eyes)</td></tr><tr><td><b>PERRLA</b></td><td>Pupils Equal, Round, Reactive to Light &amp; Accommodation</td></tr><tr><td><b>RAPD</b></td><td>Relative Afferent pupillary defect</td></tr><tr><td><b>SLE</b></td><td>Slit Lamp Exam</td></tr><tr><td><b>VA</b></td><td>Visual Acuity</td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": []
+}

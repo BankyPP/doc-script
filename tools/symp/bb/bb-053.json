@@ -1,0 +1,271 @@
+{
+ "key": "053",
+ "en": "Lymphadenopathy: Localized / Diffuse",
+ "th": "ต่อมน้ำเหลืองโต (เฉพาะที่ / ทั่วตัว)",
+ "pdf": "82–83",
+ "bookpg": "53–54",
+ "target": "lymphadenopathy",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-9-algo",
+   "id": "bb-053-scheme",
+   "h": "Lymphadenopathy scheme (Blackbook)",
+   "html": "",
+   "sub": [
+    {
+     "id": "bb-053-local",
+     "h": "Localized",
+     "html": "<div class=\"flow\" data-flow=\"b053a\"></div><div class=\"tbl\"><table><thead><tr><th>Cervical</th><th>Supraclavicular</th><th>Axillary</th><th>Epitrochlear (Always pathologic)</th><th>Inguinal</th></tr></thead><tbody><tr><td><u>Anterior</u><ul><li>Infection (e.g. Mononucleosis, Toxoplasmosis)</li></ul><u>Posterior</u><ul><li>TB</li><li>Lymphoma</li><li>Kikuchi Disease</li><li>Head/Neck Malignancy</li></ul></td><td><ul><li>Thoracic Malignancy (Breast, Mediastinum, Lungs, Esophagus)</li><li>Abdominal Malignancy (Virchow's Node)</li></ul></td><td><ul><li>Infection (Arm, Thoracic Wall, Breast)</li><li>Cancer (In absence of infection in upper extremity)</li></ul></td><td><ul><li>Infection (Forearm/Hand)</li><li>Lymphoma</li><li>Sarcoidosis</li><li>Tularemia</li><li>Secondary Syphilis</li></ul></td><td><ul><li>Leg Infection</li><li>Sexually Transmitted Infection</li><li>Cancer</li></ul></td></tr></tbody></table></div>"
+    },
+    {
+     "id": "bb-053-diffuse",
+     "h": "Diffuse",
+     "html": "<div class=\"flow\" data-flow=\"b053b\"></div>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "loc-cervical",
+   "html": "<p><b>Cervical</b></p><ul><li><u>Anterior</u>: Infection (e.g. Mononucleosis, Toxoplasmosis)</li><li><u>Posterior</u>: TB, Lymphoma, Kikuchi Disease, Head/Neck Malignancy</li></ul><p><b>Supraclavicular</b></p><ul><li>Thoracic Malignancy (Breast, Mediastinum, Lungs, Esophagus)</li><li>Abdominal Malignancy (Virchow's Node)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-axillary",
+   "html": "<ul><li>Infection (Arm, Thoracic Wall, Breast)</li><li>Cancer (In absence of infection in upper extremity)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-inguinal",
+   "html": "<ul><li>Leg Infection</li><li>Sexually Transmitted Infection</li><li>Cancer</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "ddx-local",
+   "id": "bb-053-epi",
+   "h": "Epitrochlear lymphadenopathy (always pathologic)",
+   "html": "<ul><li>Infection (Forearm/Hand)</li><li>Lymphoma</li><li>Sarcoidosis</li><li>Tularemia</li><li>Secondary Syphilis</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ddx-gen",
+   "html": "<p><b>Diffuse lymphadenopathy</b></p><ul><li>Reactive: Systemic inflammatory (Systemic Lupus Erythematosus, Sarcoidosis, Rheumatoid Arthritis, Pseudotumor); Infectious (EBV, CMV, HIV, Tuberculosis, Hepatitis); Other (Acne, Allergy, Insect Bites, Young age)</li><li>Neoplastic: Leukemia (history of bleeding, infection, fatigue: Acute Lymphoblastic Leukemia; asymptomatic, age &gt; 50: Chronic Lymphocytic Leukemia); Monoclonal lymphocytes on biopsy: Non-Hodgkin's Lymphoma; Reed-Sternberg cells on biopsy: Hodgkin's Lymphoma</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b053a",
+   "title": "Lymphadenopathy — Localized",
+   "src": "fig",
+   "img": "bb-053-f1.webp",
+   "note": "ตารางสาเหตุตามตำแหน่ง (ใต้ scheme ในหนังสือ) ใส่ไว้ในกล่อง \"Causes by site\"",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Localized Lymphadenopathy"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Reactive"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Neoplastic"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Allergy</li><li>Acne</li><li>Insect bites</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Bacterial (e.g. Pharyngitis, Cellulitis, Lymphadenitis)</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Stage I-II Lymphoma",
+     "d": "<ul><li>Non-Hodgkin's Lymphoma</li><li>Hodgkin's Lymphoma</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Metastatic Carcinoma",
+     "d": "<ul><li>Nasopharyngeal</li><li>Head/Neck</li><li>Thyroid</li><li>Breast</li><li>GI Tract</li><li>Melanoma</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "note",
+     "t": "Causes by site: Cervical / Supraclavicular / Axillary / Epitrochlear / Inguinal",
+     "d": "<div class=\"tbl\"><table><thead><tr><th>Cervical</th><th>Supraclavicular</th><th>Axillary</th><th>Epitrochlear (Always pathologic)</th><th>Inguinal</th></tr></thead><tbody><tr><td><u>Anterior</u><ul><li>Infection (e.g. Mononucleosis, Toxoplasmosis)</li></ul><u>Posterior</u><ul><li>TB</li><li>Lymphoma</li><li>Kikuchi Disease</li><li>Head/Neck Malignancy</li></ul></td><td><ul><li>Thoracic Malignancy (Breast, Mediastinum, Lungs, Esophagus)</li><li>Abdominal Malignancy (Virchow's Node)</li></ul></td><td><ul><li>Infection (Arm, Thoracic Wall, Breast)</li><li>Cancer (In absence of infection in upper extremity)</li></ul></td><td><ul><li>Infection (Forearm/Hand)</li><li>Lymphoma</li><li>Sarcoidosis</li><li>Tularemia</li><li>Secondary Syphilis</li></ul></td><td><ul><li>Leg Infection</li><li>Sexually Transmitted Infection</li><li>Cancer</li></ul></td></tr></tbody></table></div>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Reactive"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Infectious"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Stage I-II Lymphoma"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Metastatic Carcinoma"
+    },
+    {
+     "f": "a",
+     "t": "h",
+     "l": "Causes by node site (table)"
+    }
+   ]
+  },
+  {
+   "id": "b053b",
+   "title": "Lymphadenopathy — Diffuse",
+   "src": "fig",
+   "img": "bb-053-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Diffuse Lymphadenopathy"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Reactive"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Neoplastic"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Systemic Inflammatory",
+     "d": "<ul><li>Systemic Lupus Erythematosus</li><li>Sarcoidosis</li><li>Rheumatoid Arthritis</li><li>Pseudotumor</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>EBV</li><li>CMV</li><li>HIV</li><li>Tuberculosis</li><li>Hepatitis</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Acne</li><li>Allergy</li><li>Insect Bites</li><li>Young age</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Leukemia"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Monoclonal Lymphocytes on Biopsy",
+     "d": "<ul><li>Non-Hodgkin's Lymphoma</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Reed-Sternberg Cells on Biopsy",
+     "d": "<ul><li>Hodgkin's Lymphoma</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "History of Bleeding, Infection, Fatigue",
+     "d": "<ul><li>Acute Lymphoblastic Leukemia (Pancytopenia, WBC differential includes Blasts)</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Asymptomatic, Age > 50",
+     "d": "<ul><li>Chronic Lymphocytic Leukemia (CBC with Lymphocytes)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Reactive"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Systemic inflammatory"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Infectious"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Other"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Leukemia"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Monoclonal lymphocytes on biopsy"
+    },
+    {
+     "f": "c",
+     "t": "i",
+     "l": "Reed-Sternberg cells on biopsy"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "History of bleeding, infection, fatigue"
+    },
+    {
+     "f": "g",
+     "t": "k",
+     "l": "Asymptomatic, age > 50"
+    }
+   ]
+  }
+ ]
+}

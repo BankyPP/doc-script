@@ -1,0 +1,109 @@
+{
+ "key": "301",
+ "en": "Chronic Vision Loss — Anatomic",
+ "th": "การมองเห็นลดลงเรื้อรัง",
+ "pdf": "330",
+ "bookpg": "301",
+ "target": "visual-disorder",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-9-9-blur",
+   "id": "bb-301-chronic",
+   "h": "Chronic vision loss — Anatomic (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b301a\"></div><div class=\"pearl\"><p><b>Clinical Pearls:</b></p><ul><li>Edema can cause halos in the vision.</li><li>Bilateral disc swelling and any suspected mass require imaging.</li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b301a",
+   "title": "Chronic Vision Loss — Anatomic",
+   "src": "fig",
+   "img": "bb-301-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Vision Loss"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Perform slit-lamp exam to localize: Left → Right on scheme"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Cornea",
+     "d": "<ul><li>Keratoconus</li><li>Stromal Scaring</li><li>Neovascularization</li><li>Edema</li><li>Pterygium</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Lens — obscure red reflex, poor fundus visibility",
+     "d": "<p>Obscure Red Reflex, Poor fundus Visibility</p><ul><li>Cataract (Nuclear, Subcapsular, Cortical)</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Macula — drusen or edema",
+     "d": "<p>Drusen or Edema</p><ul><li>Age Related Macular Degeneration (Wet, Dry)</li></ul>"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Retina — cotton wool spots, micro-aneurysms, hemorrhage, macular edema",
+     "d": "<p>Cotton wool spots, Micro-aneurysms, Hemorrhage and Macular Edema</p><ul><li>Diabetic Retinopathy (Background, Pre-Proliferative, Proliferative)</li><li>Retinitis Pigmentosa (Decreased night vision, loss of peripheral vision)</li><li>Systemic inflammatory conditions</li></ul>"
+    },
+    {
+     "id": "c5",
+     "k": "dx",
+     "t": "Optic Nerve — pallor, papilledema, irregular disc, large cup:disc",
+     "d": "<p>Pallor, Papilledema, Irregular Disc Large Cup:Disc</p><ul><li>Glaucoma (Open-Angle)</li></ul>"
+    },
+    {
+     "id": "c6",
+     "k": "dx",
+     "t": "Optic Track — visual field defects, decreased color vision",
+     "d": "<p>Visual field defects, decrease in color vision</p><ul><li>Optic Nerve Compression</li><li>Pituitary Lesion</li><li>Meningioma</li><li>Craniopharyngioma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c1",
+     "l": "Cornea"
+    },
+    {
+     "f": "b",
+     "t": "c2",
+     "l": "Lens"
+    },
+    {
+     "f": "b",
+     "t": "c3",
+     "l": "Macula"
+    },
+    {
+     "f": "b",
+     "t": "c4",
+     "l": "Retina"
+    },
+    {
+     "f": "b",
+     "t": "c5",
+     "l": "Optic Nerve"
+    },
+    {
+     "f": "b",
+     "t": "c6",
+     "l": "Optic Track"
+    }
+   ]
+  }
+ ]
+}

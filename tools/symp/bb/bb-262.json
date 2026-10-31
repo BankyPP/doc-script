@@ -1,0 +1,113 @@
+{
+ "key": "262",
+ "en": "Infectious Joint Pain",
+ "th": "ปวดข้อจากการติดเชื้อ",
+ "pdf": "291",
+ "bookpg": "262",
+ "target": "arthralgia-arthritis",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-8-1-algo",
+   "id": "bb-262-scheme",
+   "h": "Infectious joint pain (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b262a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-8-1-pattern",
+   "html": "<p><b>Infectious joint pain (Blackbook)</b> — fever/chills/myalgia, constant pain, increased heat and swelling, signs &amp; symptoms of viral infection (e.g., rhinitis/cough)</p><ul><li><b>Polyarticular</b>:<ul><li>Viral Myalgia</li><li>Viral Arthritis</li><li>Disseminated Gonococcal Infection (Dermatitis, Migratory Arthralgia &amp; Tenosynovitis)</li><li>Secondary Syphilis (Red/Copper Papules &amp; Mucosal Lesions)</li><li>Fifth Disease (Erythema Infectiosum &amp; Symmetrical Rash)</li><li>Rubella (Measles-like rash)</li><li>Primary HIV Infection</li><li>Endocarditis</li></ul></li><li><b>Monoarticular — articular</b>: <b>acute onset</b> = Septic Arthritis · <b>insidious onset</b> = Fungal tuberculosis, Lyme Disease (Erythema Migrans)</li><li><b>Monoarticular — peri-articular</b>:<ul><li>Cellulitis</li><li>Necrotizing Fasciitis</li><li>Septic Bursitis</li><li>Abscess</li><li>Osteomyelitis</li><li>Lymphadenitis</li><li>Warts</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b262a",
+   "title": "Infectious Joint Pain",
+   "src": "fig",
+   "img": "bb-262-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Infectious Joint Pain"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Fever/Chills/Myalgia · Constant Pain · Increased Heat and Swelling · Signs &amp; Symptoms of Viral Infection (e.g., Rhinitis/Cough)",
+     "d": "<ul><li>Fever/Chills/Myalgia</li><li>Constant Pain</li><li>Increased Heat and Swelling</li><li>Signs &amp; Symptoms of Viral Infection (e.g., Rhinitis/Cough)</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Polyarticular",
+     "d": "<ul><li>Viral Myalgia</li><li>Viral Arthritis</li><li>Disseminated Gonococcal Infection (Dermatitis, Migratory Arthralgia &amp; Tenosynovitis)</li><li>Secondary Syphilis (Red/Copper Papules &amp; Mucosal Lesions)</li><li>Fifth Disease (Erythema Infectiosum &amp; Symmetrical Rash)</li><li>Rubella (Measles-like rash)</li><li>Primary HIV Infection</li><li>Endocarditis</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Monoarticular"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Articular"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Peri-Articular",
+     "d": "<ul><li>Cellulitis</li><li>Necrotizing Fasciitis</li><li>Septic Bursitis</li><li>Abscess</li><li>Osteomyelitis</li><li>Lymphadenitis</li><li>Warts</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Acute Onset",
+     "d": "<ul><li>Septic Arthritis</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Insidious Onset",
+     "d": "<ul><li>Fungal tuberculosis</li><li>Lyme Disease (Erythema Migrans)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Polyarticular"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Monoarticular"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Articular"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Peri-articular"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Acute onset"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Insidious onset"
+    }
+   ]
+  }
+ ]
+}

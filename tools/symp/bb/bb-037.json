@@ -1,0 +1,212 @@
+{
+ "key": "037",
+ "en": "Pulmonary Function Tests — Interpretation",
+ "th": "การแปลผลการทดสอบสมรรถภาพปอด",
+ "pdf": "66",
+ "bookpg": "37",
+ "target": null,
+ "new": {
+  "id": "pulmonary-function-test",
+  "th": "แปลผลการทดสอบสมรรถภาพปอด (PFT)",
+  "en": "Pulmonary Function Tests Interpretation",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "bb-037-scheme",
+   "h": "PFT interpretation algorithm (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b037a\"></div><p><small>LLN: Lower limit of Normal · Adapted from: Pellegrino et al. Eur Respir J. 2005;26:948-968.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b037a",
+   "title": "Pulmonary Function Tests — Interpretation",
+   "src": "fig",
+   "img": "bb-037-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pulmonary Function Tests — Interpretation",
+     "d": "<p>LLN: Lower limit of Normal</p><p><small>Adapted from: Pellegrino et al. Eur Respir J. 2005;26:948-968.</small></p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "FEV<sub>1</sub>/FVC ≥ LLN"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "FVC ≥ LLN"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "FVC ≥ LLN"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "<i>D</i><sub>L,CO</sub> ≥ LLN"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "TLC ≤ LLN"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "TLC ≥ LLN"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Restriction"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Obstruction"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Mixed Defect"
+    },
+    {
+     "id": "k",
+     "k": "q",
+     "t": "<i>D</i><sub>L,CO</sub> ≥ LLN"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "<i>D</i><sub>L,CO</sub> ≥ LLN"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Normal"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Pulmonary Hypertension, Anemia, Carboxyhemoglobinemia"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Chest Wall or Neuromuscular Disorders"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Interstitial Lung Disease"
+    },
+    {
+     "id": "q",
+     "k": "dx",
+     "t": "Asthma or Non-Emphysematous COPD"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Emphysematous COPD"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "YES"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "NO"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "YES"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "NO"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "YES"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "YES"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "NO"
+    },
+    {
+     "f": "g",
+     "t": "i",
+     "l": "YES"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "NO"
+    },
+    {
+     "f": "e",
+     "t": "m",
+     "l": "YES"
+    },
+    {
+     "f": "e",
+     "t": "n",
+     "l": "NO"
+    },
+    {
+     "f": "h",
+     "t": "k"
+    },
+    {
+     "f": "k",
+     "t": "o",
+     "l": "YES"
+    },
+    {
+     "f": "k",
+     "t": "p",
+     "l": "NO"
+    },
+    {
+     "f": "i",
+     "t": "l"
+    },
+    {
+     "f": "l",
+     "t": "q",
+     "l": "YES"
+    },
+    {
+     "f": "l",
+     "t": "r",
+     "l": "NO"
+    }
+   ],
+   "note": "LLN = lower limit of normal · ป้าย YES/NO อยู่บนลูกศรตามหนังสือ · ในหนังสือ TLC ≤ LLN มีเฉพาะทาง YES ที่ต่อไปยัง Restriction"
+  }
+ ]
+}

@@ -1,0 +1,141 @@
+{
+ "key": "303",
+ "en": "Diplopia",
+ "th": "ภาพซ้อน",
+ "pdf": "332",
+ "bookpg": "303",
+ "target": "visual-disorder",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "yb-9-9-dip",
+   "id": "bb-303-scheme",
+   "h": "Diplopia scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b303a\"></div><div class=\"pearl\"><p><b>Clinical Pearls:</b></p><ul><li>Diplopia is almost always binocular.</li><li>CN VI palsy is a red flag for intracranial masses.</li><li>Look for ptosis with CN III palsy.</li><li>Examine both eyes to determine which is affected.</li><li>Neurologic symptoms suggest a mass as the cause.</li><li>Myasthenia Gravis is fatiguable.</li><li>Migraine is a diagnosis of exclusion.</li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b303a",
+   "title": "Diplopia",
+   "src": "fig",
+   "img": "bb-303-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Diplopia"
+    },
+    {
+     "id": "mo",
+     "k": "dx",
+     "t": "Monocular",
+     "d": "<ul><li>Refractive Error</li><li>Cataract/Lens Dislocation</li><li>Functional</li><li>Corneal Distortion/Scarring</li><li>Vitreous Abnormalities</li></ul>"
+    },
+    {
+     "id": "bi",
+     "k": "q",
+     "t": "Binocular"
+    },
+    {
+     "id": "nm",
+     "k": "dx",
+     "t": "Neuromuscular Junction",
+     "d": "<ul><li>Myasthenia Gravis</li></ul>"
+    },
+    {
+     "id": "ne",
+     "k": "q",
+     "t": "Neuronal (Non-Comitant)"
+    },
+    {
+     "id": "ex",
+     "k": "dx",
+     "t": "Extraocular Muscle Restriction/Entrapment",
+     "d": "<ul><li>Orbital Inflammation</li><li>Orbital Tumor</li><li>Orbital Floor Fracture</li></ul>"
+    },
+    {
+     "id": "sh",
+     "k": "dx",
+     "t": "Strictly Horizontal — Cranial Nerve VI problem, cannot abduct",
+     "d": "<p>Cranial Nerve VI problem — Cannot Abduct</p><ul><li>Ischemia</li><li>Diabetes Mellitus</li><li>Aneurysm</li><li>Tumor</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "hv",
+     "k": "q",
+     "t": "Horizontal and/or Vertical"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Cranial Nerve III — eye depressed, abducted, ptosis, large/unreactive pupil",
+     "d": "<p>Eye depressed, abducted, ptosis, large/unreactive pupil</p><ul><li>Ischemia</li><li>Diabetes Mellitus</li><li>Aneurysm</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Cranial Nerve IV — eye cannot depress when looking medially",
+     "d": "<p>Eye cannot depress when looking medially</p><ul><li>Ischemia</li><li>Diabetes Mellitus</li><li>Aneurysm</li><li>Trauma</li><li>Subdural Hemorrhage</li></ul>"
+    },
+    {
+     "id": "gr",
+     "k": "dx",
+     "t": "Grave's Ophthalmopathy",
+     "d": "<ul><li>Hyperthyroidism</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "mo",
+     "l": "Monocular"
+    },
+    {
+     "f": "a",
+     "t": "bi",
+     "l": "Binocular"
+    },
+    {
+     "f": "bi",
+     "t": "nm",
+     "l": "Neuromuscular junction"
+    },
+    {
+     "f": "bi",
+     "t": "ne",
+     "l": "Neuronal (non-comitant)"
+    },
+    {
+     "f": "bi",
+     "t": "ex",
+     "l": "Extraocular muscle restriction/entrapment"
+    },
+    {
+     "f": "ne",
+     "t": "sh",
+     "l": "Strictly horizontal"
+    },
+    {
+     "f": "ne",
+     "t": "hv",
+     "l": "Horizontal and/or vertical"
+    },
+    {
+     "f": "hv",
+     "t": "c3",
+     "l": "Cranial nerve III"
+    },
+    {
+     "f": "hv",
+     "t": "c4",
+     "l": "Cranial nerve IV"
+    },
+    {
+     "f": "hv",
+     "t": "gr",
+     "l": "Grave's ophthalmopathy"
+    }
+   ]
+  }
+ ]
+}

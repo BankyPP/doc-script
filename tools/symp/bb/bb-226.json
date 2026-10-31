@@ -1,0 +1,229 @@
+{
+ "key": "226",
+ "en": "Dermatoses in Pregnancy",
+ "th": "ผื่นผิวหนังในหญิงตั้งครรภ์",
+ "pdf": "255–256",
+ "bookpg": "226–227",
+ "target": null,
+ "new": {
+  "id": "dermatoses-in-pregnancy",
+  "th": "ผื่นผิวหนังในหญิงตั้งครรภ์",
+  "en": "Dermatoses in Pregnancy",
+  "g": "msk"
+ },
+ "sections": [
+  {
+   "id": "bb-226-physio",
+   "h": "Physiologic skin changes",
+   "html": "<div class=\"flow\" data-flow=\"b226a\"></div><div class=\"tbl\"><table><thead><tr><th>Group</th><th>Changes</th></tr></thead><tbody><tr><td><b>Specific Skin Conditions</b></td><td>ดูหน้า Specific Skin Conditions (pregnancy-specific dermatoses) ในหัวข้อถัดไป</td></tr><tr><td><b>Other</b></td><td><ul><li>Striae Distensae (striae gravidarum)</li><li>Distal Onycholysis</li><li>Subungual Keratosis</li><li>Hyperhidrosis</li><li>Miliaria</li><li>Dyshidrotic Eczema</li><li>Hirsutism (face, limbs, and back)</li></ul></td></tr><tr><td><b>Face</b></td><td><ul><li>Melasma</li></ul></td></tr><tr><td><b>Abdomen</b></td><td><ul><li>Linea Nigra</li></ul></td></tr><tr><td><b>Hormone induced</b></td><td><ul><li>Hyperpigmentation of areolae, axillae &amp; genitalia</li><li>Increase in mole size &amp; number (probable)</li></ul></td></tr><tr><td><b>Skin</b></td><td><ul><li>Palmar erythema</li><li>Spider Nevi</li><li>Cherry Hemangioma (Campbell de Morgan spot)</li><li>Pyogenic granuloma</li></ul></td></tr><tr><td><b>Mucous Membranes</b></td><td><ul><li>Chadwick's sign (bluish discoloration of cervix/vagina/vulva)</li></ul></td></tr></tbody></table></div>"
+  },
+  {
+   "id": "bb-226-specific",
+   "h": "Specific skin conditions",
+   "html": "<div class=\"flow\" data-flow=\"b226b\"></div><div class=\"tbl\"><table><thead><tr><th>Group</th><th>Conditions</th></tr></thead><tbody><tr><td><b>Physiologic Skin Changes</b></td><td>ดูหน้า Physiologic Changes ในหัวข้อก่อนหน้า</td></tr><tr><td><b>Non-Pruritic</b></td><td><ul><li>Pustular psoriasis of pregnancy</li><li>Impetigo Herpetiformis</li></ul></td></tr><tr><td><b>Non-Primary Skin Lesion</b></td><td><ul><li>Intrahepatic cholestasis of pregnancy (pruritus worse at night, 3rd trimester)</li></ul></td></tr><tr><td><b>Primary Skin Lesion</b></td><td><ul><li>Pemphigoid gestationis</li><li>Pruritic urticarial plaques &amp; papules of pregnancy (PUPPP)</li></ul></td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b226a",
+   "title": "Dermatoses in Pregnancy — Physiologic Changes",
+   "src": "fig",
+   "img": "bb-226-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dermatoses in Pregnancy"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Physiologic Skin Changes"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Specific Skin Conditions",
+     "d": "ดูหน้า Specific Skin Conditions (pregnancy-specific dermatoses) ในหัวข้อถัดไป"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Pigmented"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Striae Distensae (striae gravidarum)</li><li>Distal Onycholysis</li><li>Subungual Keratosis</li><li>Hyperhidrosis</li><li>Miliaria</li><li>Dyshidrotic Eczema</li><li>Hirsutism (face, limbs, and back)</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Vascular"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Face",
+     "d": "<ul><li>Melasma</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Abdomen",
+     "d": "<ul><li>Linea Nigra</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Hormone induced",
+     "d": "<ul><li>Hyperpigmentation of areolae, axillae &amp; genitalia</li><li>Increase in mole size &amp; number (probable)</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Skin",
+     "d": "<ul><li>Palmar erythema</li><li>Spider Nevi</li><li>Cherry Hemangioma (Campbell de Morgan spot)</li><li>Pyogenic granuloma</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Mucous Membranes",
+     "d": "<ul><li>Chadwick's sign (bluish discoloration of cervix/vagina/vulva)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Physiologic Skin Changes"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Specific Skin Conditions"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Pigmented"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Other"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Vascular"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Face"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Abdomen"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Hormone induced"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Skin"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Mucous Membranes"
+    }
+   ]
+  },
+  {
+   "id": "b226b",
+   "title": "Dermatoses in Pregnancy — Specific Skin Conditions",
+   "src": "fig",
+   "img": "bb-226-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dermatoses in Pregnancy"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Physiologic Skin Changes",
+     "d": "ดูหน้า Physiologic Changes ในหัวข้อก่อนหน้า"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Specific Skin Conditions"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Non-Pruritic",
+     "d": "<ul><li>Pustular psoriasis of pregnancy</li><li>Impetigo Herpetiformis</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Pruritic"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Non-Primary Skin Lesion",
+     "d": "<ul><li>Intrahepatic cholestasis of pregnancy (pruritus worse at night, 3rd trimester)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Primary Skin Lesion",
+     "d": "<ul><li>Pemphigoid gestationis</li><li>Pruritic urticarial plaques &amp; papules of pregnancy (PUPPP)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Physiologic Skin Changes"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Specific Skin Conditions"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Non-Pruritic"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Pruritic"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Non-Primary Skin Lesion"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Primary Skin Lesion"
+    }
+   ]
+  }
+ ]
+}

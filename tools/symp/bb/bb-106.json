@@ -1,0 +1,125 @@
+{
+ "key": "106",
+ "en": "Chronic Kidney Disease",
+ "th": "โรคไตเรื้อรัง",
+ "pdf": "135",
+ "bookpg": "106",
+ "target": "azotemia",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-4-3-intrinsic",
+   "id": "bb-106-scheme",
+   "h": "Chronic Kidney Disease scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b106a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-4-3-step2",
+   "html": "<p>CKD = decreased kidney function (eGFR &lt; 60 ml/min/1.73 m²) persistent over at least 3 months</p><ul><li><b>Pre-Renal</b> (evidence of renovascular disease): atheroemboli, renal artery stenosis, drugs, chronic hypoperfusion</li><li><b>Renal</b> (abnormal urinalysis: proteinuria/pyuria)<ul><li>Tubular (family history, ultrasound): polycystic kidney disease, medullary cystic disease, nephronophthisis</li><li>Vascular (other small vessel disease): atherosclerosis</li><li>Glomerular (proteinuria): diabetes, hypertension</li><li>Interstitial (sterile pyuria, WBC casts, eosinophiluria): drugs (NSAIDs, analgesics), infections (chronic pyelonephritis), immune (sarcoid, Sjögren), multiple myeloma, hyperoxaluria, hypercalcemia, hyperphosphatemia</li></ul></li><li><b>Post-Renal</b> (obstruction/hydronephrosis on U/S): reflux nephropathy, benign prostatic hyperplasia, constipation, prostate cancer</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b106a",
+   "title": "Chronic Kidney Disease",
+   "src": "fig",
+   "img": "bb-106-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Kidney Disease"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Decreased kidney function (eGFR < 60 ml/min/1.73 m²) for ≥ 3 months",
+     "d": "<p>Decreased kidney function (eGFR &lt; 60 ml/min/1.73 m²) persistent over at least 3 months</p>"
+    },
+    {
+     "id": "pre",
+     "k": "dx",
+     "t": "Pre-Renal (Evidence of Renovascular disease)",
+     "d": "<ul><li>Atheroemboli</li><li>Renal artery stenosis</li><li>Drugs</li><li>Chronic hypoperfusion</li></ul>"
+    },
+    {
+     "id": "ren",
+     "k": "q",
+     "t": "Renal (Abnormal urinalysis: proteinuria/pyuria)"
+    },
+    {
+     "id": "post",
+     "k": "dx",
+     "t": "Post-Renal (Obstruction/hydronephrosis on U/S)",
+     "d": "<ul><li>Reflux nephropathy</li><li>Benign prostatic hyperplasia</li><li>Constipation</li><li>Prostate cancer</li></ul>"
+    },
+    {
+     "id": "tub",
+     "k": "dx",
+     "t": "Tubular (Family history, ultrasound)",
+     "d": "<ul><li>Polycystic kidney disease</li><li>Medullary cystic disease</li><li>Nephronophthisis</li></ul>"
+    },
+    {
+     "id": "vas",
+     "k": "dx",
+     "t": "Vascular (Other small vessel disease)",
+     "d": "<ul><li>Atherosclerosis</li></ul>"
+    },
+    {
+     "id": "glo",
+     "k": "dx",
+     "t": "Glomerular (Proteinuria)",
+     "d": "<ul><li>Diabetes</li><li>Hypertension</li></ul>"
+    },
+    {
+     "id": "int",
+     "k": "dx",
+     "t": "Interstitial (Sterile pyuria, WBC casts, eosinophiluria)",
+     "d": "<ul><li>Drugs (NSAIDs, analgesics)</li><li>Infections (chronic pyelonephritis)</li><li>Immune (sarcoid, Sjögren)</li><li>Multiple myeloma</li><li>Hyperoxaluria</li><li>Hypercalcemia</li><li>Hyperphosphatemia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "pre",
+     "l": "Pre-renal"
+    },
+    {
+     "f": "b",
+     "t": "ren",
+     "l": "Renal"
+    },
+    {
+     "f": "b",
+     "t": "post",
+     "l": "Post-renal"
+    },
+    {
+     "f": "ren",
+     "t": "tub",
+     "l": "Tubular"
+    },
+    {
+     "f": "ren",
+     "t": "vas",
+     "l": "Vascular"
+    },
+    {
+     "f": "ren",
+     "t": "glo",
+     "l": "Glomerular"
+    },
+    {
+     "f": "ren",
+     "t": "int",
+     "l": "Interstitial"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,130 @@
+{
+ "key": "068",
+ "en": "Thrombocytosis",
+ "th": "เกล็ดเลือดสูง",
+ "pdf": "97",
+ "bookpg": "68",
+ "target": null,
+ "new": {
+  "id": "thrombocytosis",
+  "th": "เกล็ดเลือดสูง",
+  "en": "Thrombocytosis",
+  "g": "heme"
+ },
+ "sections": [
+  {
+   "id": "bb-068-scheme",
+   "h": "Thrombocytosis scheme",
+   "html": "<div class=\"flow\" data-flow=\"b068a\"></div>"
+  },
+  {
+   "id": "bb-068-list",
+   "h": "Classification (text)",
+   "html": "<ul><li><b>Thrombocytosis</b><ul><li><b>Reactive — (Most common)</b><ul><li><b>Infectious</b><ul><li>Acute or Chronic</li></ul></li><li><b>Inflammatory</b><ul><li>IBD</li><li>Rheumatic disorders</li><li>Celiac disease</li></ul></li><li><b>Tissue Damage</b><ul><li>Post-op surgery</li><li>Trauma</li><li>Burns</li></ul></li><li><b>Non-malignant hematologic conditions</b><ul><li>Rebound effect following treatment of ITP</li><li>Rebound effect following ETOH induced thrombocytopenia</li></ul></li><li><b>Other</b><ul><li>Post-splenectomy or hyposplenic states (Howell-Jolly bodies on PBS)</li><li>Non-hematologic malignancy</li><li>Iron deficiency anemia (most common)</li></ul></li></ul></li><li><b>Spurious</b><ul><li>Artifact (redo CBC)</li></ul></li><li><b>Autonomous</b><ul><li>Essential thrombocytosis</li><li>Polycythemia Vera</li><li>Chronic Myelogenous Leukemia</li><li>Primary Myelofibrosis</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b068a",
+   "title": "Thrombocytosis",
+   "src": "fig",
+   "img": "bb-068-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Thrombocytosis"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Reactive — (Most common)"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Spurious",
+     "d": "<ul><li>Artifact (redo CBC)</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Autonomous",
+     "d": "<ul><li>Essential thrombocytosis</li><li>Polycythemia Vera</li><li>Chronic Myelogenous Leukemia</li><li>Primary Myelofibrosis</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Acute or Chronic</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>IBD</li><li>Rheumatic disorders</li><li>Celiac disease</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Tissue Damage",
+     "d": "<ul><li>Post-op surgery</li><li>Trauma</li><li>Burns</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Non-malignant hematologic conditions",
+     "d": "<ul><li>Rebound effect following treatment of ITP</li><li>Rebound effect following ETOH induced thrombocytopenia</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Post-splenectomy or hyposplenic states (Howell-Jolly bodies on PBS)</li><li>Non-hematologic malignancy</li><li>Iron deficiency anemia (most common)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Reactive (most common)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Spurious"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Autonomous"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Infectious"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Tissue damage"
+    },
+    {
+     "f": "b",
+     "t": "h",
+     "l": "Non-malignant hematologic conditions"
+    },
+    {
+     "f": "b",
+     "t": "i",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

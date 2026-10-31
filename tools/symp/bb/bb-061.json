@@ -1,0 +1,168 @@
+{
+ "key": "061",
+ "en": "Approach to Prolonged PT (INR), Prolonged PTT",
+ "th": "PT (INR) ยาว PTT ยาว",
+ "pdf": "90",
+ "bookpg": "61",
+ "target": "abnormal-bleeding",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-7-algo",
+   "id": "bb-061-scheme",
+   "h": "Prolonged PT (INR), Prolonged PTT scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b061a\"></div><div class=\"pearl\"><p><b>Notes</b></p><ul><li>PT more sensitive to Vitamin K deficiency; therefore PT used for monitoring Coumadin therapy (PTT only affected in very severe cases)</li><li>PTT more sensitive to heparin; therefore PTT used for monitoring heparin therapy (PT only affected in very severe cases)</li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-pt",
+   "html": "<p>PT more sensitive to Vitamin K deficiency; therefore PT used for monitoring Coumadin therapy (PTT only affected in very severe cases)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-aptt",
+   "html": "<p>PTT more sensitive to heparin; therefore PTT used for monitoring heparin therapy (PT only affected in very severe cases)</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b061a",
+   "title": "Approach to Prolonged PT (INR), Prolonged PTT",
+   "src": "fig",
+   "img": "bb-061-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Long PT (INR), Long PTT"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Factor Deficiency"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Inhibitor"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Factor X</li><li>Factor V</li><li>Factor II</li><li>Fibrinogen</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Acquired"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Drugs",
+     "d": "<ul><li>Heparin</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Autoantibodies to a Clotting Factor in the Common Pathway — (Rare)"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Disseminated Intravascular Coagulation"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Vitamin K Problem"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Liver Disease"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Vit K Deficiency — (decreases levels of Factors II, VII, IX, X, and Protein C+S)"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Antagonist",
+     "d": "<ul><li>Coumadin</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "note",
+     "t": "Notes",
+     "d": "<ul><li>PT more sensitive to Vitamin K deficiency; therefore PT used for monitoring Coumadin therapy (PTT only affected in very severe cases)</li><li>PTT more sensitive to heparin; therefore PTT used for monitoring heparin therapy (PT only affected in very severe cases)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Factor deficiency"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Inhibitor"
+    },
+    {
+     "f": "a",
+     "t": "m",
+     "l": "Notes"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Congenital"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Acquired"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Drugs"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Autoantibodies (rare)"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Disseminated intravascular coagulation"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Vitamin K problem"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "Liver disease"
+    },
+    {
+     "f": "i",
+     "t": "k",
+     "l": "Vitamin K deficiency"
+    },
+    {
+     "f": "i",
+     "t": "l",
+     "l": "Antagonist"
+    }
+   ]
+  }
+ ]
+}

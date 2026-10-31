@@ -1,0 +1,261 @@
+{
+ "key": "118",
+ "en": "Metabolic Acidosis",
+ "th": "ภาวะเลือดเป็นกรดจากเมแทบอลิก",
+ "pdf": "147–148",
+ "bookpg": "118–119",
+ "target": null,
+ "new": {
+  "id": "metabolic-acidosis",
+  "th": "เมแทบอลิกแอซิโดซิส",
+  "en": "Metabolic Acidosis",
+  "g": "kub"
+ },
+ "sections": [
+  {
+   "id": "bb-118-nag",
+   "h": "Metabolic Acidosis — Normal Anion Gap (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b118a\"></div><p><small>TTKG = (K<sub>Urine</sub> × Osm<sub>Serum</sub>) / (K<sub>Serum</sub> × Osm<sub>Urine</sub>)</small></p><p><small>Urine net charge = U<sub>Na</sub> + U<sub>K</sub> – U<sub>Cl</sub></small></p>"
+  },
+  {
+   "id": "bb-118-eag",
+   "h": "Metabolic Acidosis — Elevated Anion Gap (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b118b\"></div><div class=\"box\"><p><i>Anion Gap = Na – (Cl + HCO<sub>3</sub>)</i> (normal AG ~12)</p><p><b><i>Diagnosis of Mixed Metabolic Disorders in Patients with Metabolic Acidosis:</i></b></p><ul><li><i>Anion Gap Not Increased</i> → Non-Anion Gap Acidosis Alone</li><li><i>ΔAnion Gap = ΔHCO<sub>3</sub></i> → Anion Gap Acidosis Alone</li><li><i>ΔAnion Gap &lt; ΔHCO<sub>3</sub></i> → Mixed Anion Gap Acidosis + Non-Anion Gap Acidosis</li><li><i>ΔAnion Gap &gt; ΔHCO<sub>3</sub></i> → Mixed Anion Gap Acidosis + Metabolic Alkalosis</li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b118a",
+   "title": "Metabolic Acidosis — Normal Anion Gap",
+   "src": "fig",
+   "img": "bb-118-f1.webp",
+   "note": "เส้นประไป Elevated Anion Gap = ลิงก์ไป scheme Elevated Anion Gap (หน้าถัดไป) · ในหน้านี้ใช้ cutoff AG > 14 / ≤ 14 ตามต้นฉบับ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Metabolic Acidosis"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Correct anion gap for albumin",
+     "d": "<p>Need to correct anion gap for albumin: For every drop of 10 for albumin (from 40) add 2.5 to the anion gap</p>"
+    },
+    {
+     "id": "eag",
+     "k": "dx",
+     "t": "Elevated Anion Gap (>14) — Acid Gain",
+     "d": "<p>ดู scheme Metabolic Acidosis — Elevated Anion Gap (เส้นประในต้นฉบับ)</p>"
+    },
+    {
+     "id": "nag",
+     "k": "q",
+     "t": "Normal Anion Gap (≤14) — Loss of Bicarbonate"
+    },
+    {
+     "id": "gi",
+     "k": "dx",
+     "t": "GI Tract Loss (Negative urine net charge)",
+     "d": "<ul><li>Diarrhea</li><li>Fistula</li></ul>"
+    },
+    {
+     "id": "rl",
+     "k": "q",
+     "t": "Renal Loss"
+    },
+    {
+     "id": "dir",
+     "k": "dx",
+     "t": "Direct Loss",
+     "d": "<p>Negative U net charge; High FE<sub>HCO3</sub></p><ul><li>RTA Type II</li><li>Carbonic anhydrase inhibitor</li></ul>"
+    },
+    {
+     "id": "ind",
+     "k": "q",
+     "t": "Indirect Loss (Positive U net charge)"
+    },
+    {
+     "id": "pc",
+     "k": "dx",
+     "t": "Principal Cell Problem (Low TTKG)",
+     "d": "<ul><li>RTA Type IV</li></ul>"
+    },
+    {
+     "id": "ic",
+     "k": "dx",
+     "t": "α-Intercalated Cell Problem (High TTKG)",
+     "d": "<ul><li>RTA Type I</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "eag",
+     "l": "Elevated anion gap"
+    },
+    {
+     "f": "b",
+     "t": "nag",
+     "l": "Normal anion gap"
+    },
+    {
+     "f": "nag",
+     "t": "gi",
+     "l": "History of diarrhea?"
+    },
+    {
+     "f": "nag",
+     "t": "rl",
+     "l": "Renal loss"
+    },
+    {
+     "f": "rl",
+     "t": "dir",
+     "l": "Direct loss"
+    },
+    {
+     "f": "rl",
+     "t": "ind",
+     "l": "Indirect loss"
+    },
+    {
+     "f": "ind",
+     "t": "pc",
+     "l": "Principal cell problem"
+    },
+    {
+     "f": "ind",
+     "t": "ic",
+     "l": "α-Intercalated cell problem"
+    }
+   ]
+  },
+  {
+   "id": "b118b",
+   "title": "Metabolic Acidosis — Elevated Anion Gap",
+   "src": "fig",
+   "img": "bb-118-f2.webp",
+   "note": "ป้าย “Elevated serum creatinine” ในต้นฉบับวางกึ่งกลางเส้นที่แตกไปสองกล่อง — ใส่ไว้ที่เส้นไป Decreased NH4 production · เส้นประไป Normal Anion Gap = ลิงก์ไป scheme Normal Anion Gap (หน้าก่อนหน้า) · ในหน้านี้ใช้ cutoff AG > 12 / ≤ 12 ตามต้นฉบับ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Metabolic Acidosis"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Correct anion gap for albumin",
+     "d": "<p>Need to correct anion gap for albumin: For every drop of 10 for albumin (from 40) add 2.5 to the anion gap</p>"
+    },
+    {
+     "id": "eag",
+     "k": "q",
+     "t": "Elevated Anion Gap (>12) — Gain of H⁺"
+    },
+    {
+     "id": "nag",
+     "k": "dx",
+     "t": "Normal Anion Gap (≤12) — loss of HCO<sub>3</sub>",
+     "d": "<p>ดู scheme Metabolic Acidosis — Normal Anion Gap (เส้นประในต้นฉบับ)</p>"
+    },
+    {
+     "id": "exc",
+     "k": "q",
+     "t": "Excess acid addition"
+    },
+    {
+     "id": "nh4",
+     "k": "dx",
+     "t": "Decreased NH<sub>4</sub> production and anion secretion",
+     "d": "<ul><li>AKI/CKD</li></ul>"
+    },
+    {
+     "id": "sal",
+     "k": "dx",
+     "t": "Salicylate poisoning"
+    },
+    {
+     "id": "lac",
+     "k": "dx",
+     "t": "Lactic acidosis",
+     "d": "<ul><li>Shock</li><li>Drugs</li><li>Inborn errors</li></ul>"
+    },
+    {
+     "id": "ket",
+     "k": "dx",
+     "t": "Ketosis",
+     "d": "<ul><li>Diabetic ketoacidosis</li><li>Starvation/alcoholic ketosis</li></ul>"
+    },
+    {
+     "id": "tox",
+     "k": "dx",
+     "t": "Toxic alcohol ingestion",
+     "d": "<ul><li>Ethylene/Propylene glycol</li><li>Methanol</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other ingestion",
+     "d": "<ul><li>Paraldehyde, Iron, Isoniazid, Toluene, Cyanide</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "eag",
+     "l": "Elevated anion gap"
+    },
+    {
+     "f": "b",
+     "t": "nag",
+     "l": "Normal anion gap"
+    },
+    {
+     "f": "eag",
+     "t": "exc",
+     "l": "Excess acid addition"
+    },
+    {
+     "f": "eag",
+     "t": "nh4",
+     "l": "Elevated serum creatinine"
+    },
+    {
+     "f": "exc",
+     "t": "sal",
+     "l": "Positive serum salicylate level"
+    },
+    {
+     "f": "exc",
+     "t": "lac",
+     "l": "Elevated serum lactate"
+    },
+    {
+     "f": "exc",
+     "t": "ket",
+     "l": "Positive serum ketones"
+    },
+    {
+     "f": "exc",
+     "t": "tox",
+     "l": "Elevated osmolar gap"
+    },
+    {
+     "f": "exc",
+     "t": "oth",
+     "l": "Other ingestion"
+    }
+   ]
+  }
+ ]
+}

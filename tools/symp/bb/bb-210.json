@@ -1,0 +1,166 @@
+{
+ "key": "210",
+ "en": "Infertility (Female)",
+ "th": "ภาวะมีบุตรยาก (หญิง)",
+ "pdf": "239",
+ "bookpg": "210",
+ "target": null,
+ "new": {
+  "id": "infertility-female",
+  "th": "ภาวะมีบุตรยาก (หญิง)",
+  "en": "Infertility (Female)",
+  "g": "obgyn"
+ },
+ "sections": [
+  {
+   "id": "bb-210-scheme",
+   "h": "Infertility (Female) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b210a\"></div><ul><li><b>Failure to conceive following &gt; 1 year of unprotected sexual intercourse</b><ul><li><b>Male (35%)</b> — เส้นประในเล่ม — ดูแผนผัง Infertility (Male)</li><li><b>Unexplained (15%)</b></li><li><b>Female (50%)</b><ul><li><b>Uterus</b><p>HSG or SHG or hysteroscopy</p><ul><li>Fibroids/polyps</li><li>Asherman’s syndrome</li><li>Congenital anomalies</li><li>Adenomyosis</li><li>Unfavourable cervical mucous</li><li>Cervical stenosis</li></ul></li><li><b>Fallopian Tube</b><p>HSG or SHG or laparoscopy</p><ul><li>Pelvic inflammatory disease</li><li>Endometriosis</li><li>Adhesions</li><li>Previous tubal pregnancy</li><li>Congenital Anomalies</li></ul></li><li><b>Ovary</b><p>Ovulation confirmation: mid-luteal serum progesterone<br>Ovarian reserve: Day 3 FSH +/- Estradiol</p><ul><li><b>Decreased FSH</b><ul><li><b>Hypothalamic</b><ul><li>Weight loss/malnutrition</li><li>Excessive exercise</li><li>Stress/psychosis</li><li>Systemic disease</li></ul></li><li><b>Hypopituitarism</b><ul><li>Hypothyroidism</li><li>Hyperprolactinemia</li><li>Tumors (e.g. Prolactinoma)</li></ul></li></ul></li><li><b>Normal FSH</b><ul><li>Polycystic ovarian syndrome</li><li>Obesity</li></ul></li><li><b>Increased FSH</b><ul><li>Premature ovarian failure</li><li>Premenopausal changes</li><li>Turner’s syndrome</li></ul></li></ul></li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b210a",
+   "title": "Infertility (Female)",
+   "src": "fig",
+   "img": "bb-210-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Infertility"
+    },
+    {
+     "id": "def",
+     "k": "q",
+     "t": "Failure to conceive following > 1 year of unprotected sexual intercourse"
+    },
+    {
+     "id": "ma",
+     "k": "note",
+     "t": "Male (35%)",
+     "d": "เส้นประในเล่ม — ดูแผนผัง Infertility (Male)"
+    },
+    {
+     "id": "un",
+     "k": "dx",
+     "t": "Unexplained (15%)"
+    },
+    {
+     "id": "fe",
+     "k": "q",
+     "t": "Female (50%)"
+    },
+    {
+     "id": "ut",
+     "k": "act",
+     "t": "Uterus",
+     "d": "<p>HSG or SHG or hysteroscopy</p><ul><li>Fibroids/polyps</li><li>Asherman’s syndrome</li><li>Congenital anomalies</li><li>Adenomyosis</li><li>Unfavourable cervical mucous</li><li>Cervical stenosis</li></ul>"
+    },
+    {
+     "id": "ft",
+     "k": "act",
+     "t": "Fallopian Tube",
+     "d": "<p>HSG or SHG or laparoscopy</p><ul><li>Pelvic inflammatory disease</li><li>Endometriosis</li><li>Adhesions</li><li>Previous tubal pregnancy</li><li>Congenital Anomalies</li></ul>"
+    },
+    {
+     "id": "ov",
+     "k": "act",
+     "t": "Ovary",
+     "d": "<p>Ovulation confirmation: mid-luteal serum progesterone<br>Ovarian reserve: Day 3 FSH +/- Estradiol</p>"
+    },
+    {
+     "id": "df",
+     "k": "q",
+     "t": "Decreased FSH"
+    },
+    {
+     "id": "nf",
+     "k": "dx",
+     "t": "Normal FSH",
+     "d": "<ul><li>Polycystic ovarian syndrome</li><li>Obesity</li></ul>"
+    },
+    {
+     "id": "if",
+     "k": "dx",
+     "t": "Increased FSH",
+     "d": "<ul><li>Premature ovarian failure</li><li>Premenopausal changes</li><li>Turner’s syndrome</li></ul>"
+    },
+    {
+     "id": "hy",
+     "k": "dx",
+     "t": "Hypothalamic",
+     "d": "<ul><li>Weight loss/malnutrition</li><li>Excessive exercise</li><li>Stress/psychosis</li><li>Systemic disease</li></ul>"
+    },
+    {
+     "id": "hp",
+     "k": "dx",
+     "t": "Hypopituitarism",
+     "d": "<ul><li>Hypothyroidism</li><li>Hyperprolactinemia</li><li>Tumors (e.g. Prolactinoma)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "def"
+    },
+    {
+     "f": "def",
+     "t": "ma",
+     "l": "Male (35%) (เส้นประ)"
+    },
+    {
+     "f": "def",
+     "t": "un",
+     "l": "Unexplained (15%)"
+    },
+    {
+     "f": "def",
+     "t": "fe",
+     "l": "Female (50%)"
+    },
+    {
+     "f": "fe",
+     "t": "ut",
+     "l": "Uterus"
+    },
+    {
+     "f": "fe",
+     "t": "ft",
+     "l": "Fallopian Tube"
+    },
+    {
+     "f": "fe",
+     "t": "ov",
+     "l": "Ovary"
+    },
+    {
+     "f": "ov",
+     "t": "df",
+     "l": "Decreased FSH"
+    },
+    {
+     "f": "ov",
+     "t": "nf",
+     "l": "Normal FSH"
+    },
+    {
+     "f": "ov",
+     "t": "if",
+     "l": "Increased FSH"
+    },
+    {
+     "f": "df",
+     "t": "hy",
+     "l": "Hypothalamic"
+    },
+    {
+     "f": "df",
+     "t": "hp",
+     "l": "Hypopituitarism"
+    }
+   ],
+   "note": "เส้นประจากกล่องนิยามไป Male (35%) = ลิงก์ไปแผนผัง Infertility (Male) · Unexplained (15%) ไม่มีกิ่งต่อในเล่ม"
+  }
+ ]
+}

@@ -1,0 +1,172 @@
+{
+ "key": "230",
+ "en": "Genital Lesion",
+ "th": "รอยโรคที่อวัยวะเพศ",
+ "pdf": "259",
+ "bookpg": "230",
+ "target": "genital-ulcers",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "bb-230-scheme",
+   "h": "Genital lesion scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b230a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "intro",
+   "html": "<p><b>Blackbook — genital lesion: Elevated vs Depressed</b></p><ul><li><b>Elevated — Vesicles:</b> Herpes simplex</li><li><b>Elevated — Papules/Plaques, Infectious:</b> Molluscum contagiosum · Human papilloma virus warts (condyloma acuminata) · Secondary Syphilis (condyloma lata) · Reiter's syndrome (circinate balanitis)</li><li><b>Elevated — Papules/Plaques, Non-Infectious, Inflammatory:</b> Lichen planus · Psoriasis</li><li><b>Elevated — Papules/Plaques, Non-Infectious:</b> Squamous cell carcinoma (can be <i>in situ</i>) · Melanoma</li><li><b>Depressed — Excoriations:</b> Scabies · Pubic lice</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Blackbook — Depressed lesion: Erosions/Ulcers</b></p><ul><li><b>Painful:</b> Herpes simplex · <i>Haemophilus ducreyi</i> (chancroid) · Behçet's syndrome · Pemphigus vulgaris · Lichen Sclerosis · Erosive Lichen Planus</li><li><b>Painless:</b> Primary syphilis (chancre) · Granuloma Inguinale · Lymphogranuloma venereum</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b230a",
+   "title": "Genital Lesion",
+   "src": "fig",
+   "img": "bb-230-f1.webp",
+   "note": "กล่อง Non-Infectious ใต้ Papules/Plaques › Non-Infectious มีชื่อซ้ำ จึงแยกเป็น (sub-level)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Genital Lesion"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Elevated"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Depressed"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Vesicles",
+     "d": "<ul><li>Herpes simplex</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Papules/Plaques"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Erosions/Ulcers"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Excoriations",
+     "d": "<ul><li>Scabies</li><li>Pubic lice</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Molluscum contagiosum</li><li>Human papilloma virus warts (condyloma acuminata)</li><li>Secondary Syphilis (condyloma lata)</li><li>Reiter's syndrome (circinate balanitis)</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Non-Infectious"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Painful",
+     "d": "<ul><li>Herpes simplex</li><li><i>Haemophilus ducreyi</i> (chancroid)</li><li>Behçet's syndrome</li><li>Pemphigus vulgaris</li><li>Lichen Sclerosis</li><li>Erosive Lichen Planus</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Painless",
+     "d": "<ul><li>Primary syphilis (chancre)</li><li>Granuloma Inguinale</li><li>Lymphogranuloma venereum</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Lichen planus</li><li>Psoriasis</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Non-Infectious (sub-level)",
+     "d": "<ul><li>Squamous cell carcinoma (can be <i>in situ</i>)</li><li>Melanoma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Elevated"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Depressed"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Vesicles"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Papules/Plaques"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Erosions/Ulcers"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Excoriations"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Infectious"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Non-Infectious"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Painful"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Painless"
+    },
+    {
+     "f": "i",
+     "t": "l",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "i",
+     "t": "m",
+     "l": "Non-Infectious"
+    }
+   ]
+  }
+ ]
+}

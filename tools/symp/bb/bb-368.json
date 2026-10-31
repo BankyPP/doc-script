@@ -1,0 +1,81 @@
+{
+ "key": "368",
+ "en": "Pediatric Epilepsies",
+ "th": "โรคลมชักในเด็ก",
+ "pdf": "397",
+ "bookpg": "368",
+ "target": null,
+ "new": {
+  "id": "ped-epilepsies",
+  "th": "โรคลมชักในเด็ก",
+  "en": "Pediatric Epilepsies",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-368-scheme",
+   "h": "Pediatric Epilepsies scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b368a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b368a",
+   "title": "Pediatric Epilepsies",
+   "src": "fig",
+   "img": "bb-368-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pediatric Epilepsies"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Infantile",
+     "d": "<ul><li>Benign Focal Epilepsy of Infancy</li><li>West Syndrome</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Childhood"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Generalized Epilepsies",
+     "d": "<ul><li>Childhood Absence Epilepsy</li><li>Juvenile Absence Epilepsy</li><li>Juvenile Myoclonic Epilepsy</li><li>Lennox Gastaut Syndrome</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Focal Epilepsies",
+     "d": "<ul><li>Self-limited epilepsy with centrotemporal spikes</li><li>Remote symptomatic epilepsy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Infantile"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Childhood"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Generalized"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Focal"
+    }
+   ]
+  }
+ ]
+}

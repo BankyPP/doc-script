@@ -1,0 +1,197 @@
+{
+ "key": "320",
+ "en": "Altered Level Of Consciousness",
+ "th": "ระดับความรู้สึกตัวผิดปกติ (เด็ก)",
+ "pdf": "349",
+ "bookpg": "320",
+ "target": null,
+ "new": {
+  "id": "ped-altered-level-of-consciousness",
+  "th": "ระดับความรู้สึกตัวผิดปกติ (เด็ก)",
+  "en": "Altered Level Of Consciousness",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-320-scheme",
+   "h": "Altered Level Of Consciousness — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b320a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b320a",
+   "title": "Altered Level of Consciousness",
+   "src": "fig",
+   "img": "bb-320-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Altered Level of Consciousness"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Stabilize: A-B-C-D-D",
+     "d": "<ul><li>A- Airway</li><li>B- Breathing</li><li>C- Circulation</li><li>D- Disability (Glasgow coma scale)</li><li>D- Dextrose check</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "History and physical exam"
+    },
+    {
+     "id": "d1",
+     "k": "q",
+     "t": "Often no preceding prodrome; toxidrome possible; no focal findings",
+     "d": "Often no preceding prodrome<br>May have signs or symptoms suggestive of toxidrome<br>Usually no focal findings on neurological exam"
+    },
+    {
+     "id": "d2",
+     "k": "act",
+     "t": "Obtain urine drug screen, gas, osmolality, electrolytes"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Drugs",
+     "d": "<ul><li><b>Poisoning/intoxication*</b> (Eg. Opioids, beta blockers, diabetes medications, alcohol etc.)</li></ul>"
+    },
+    {
+     "id": "e1",
+     "k": "q",
+     "t": "Signs or symptoms suggestive of infection such as fever",
+     "d": "Signs or symptoms suggestive of infection such as fever<br>May or may not have focal findings on neurological exam<br>May have signs of increased intracranial pressure"
+    },
+    {
+     "id": "e2",
+     "k": "act",
+     "t": "Perform CBC, blood cultures, Lumbar puncture +/- head imaging"
+    },
+    {
+     "id": "e3",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Bacterial (Eg. <b>Meningitis*</b>, intracranial abscess, <b>sepsis*</b>)</li><li>Viral (Eg. <b>Encephalitis*</b>)</li></ul>"
+    },
+    {
+     "id": "f1",
+     "k": "q",
+     "t": "No focal findings on neurological exam; abnormal initial bloodwork",
+     "d": "Usually no focal findings on neurological exam<br>Abnormal bloodwork on initial labs"
+    },
+    {
+     "id": "f2",
+     "k": "act",
+     "t": "Obtain urine drug screen, gas, osmolality, electrolytes, consider ammonia and lactate"
+    },
+    {
+     "id": "f3",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li><b>Hypoglycemia*</b></li><li><b>Hypernatremia*</b></li><li><b>Hyponatremia*</b></li><li><b>Metabolic disease*</b></li></ul>"
+    },
+    {
+     "id": "g1",
+     "k": "q",
+     "t": "Often focal findings on neurological exam; may have raised ICP",
+     "d": "Often will have focal findings on neurological exam<br>May have signs of increased intracranial pressure"
+    },
+    {
+     "id": "g2",
+     "k": "act",
+     "t": "Obtain STAT head imaging"
+    },
+    {
+     "id": "g3",
+     "k": "dx",
+     "t": "Structural",
+     "d": "<ul><li><b>Trauma/head injury*</b></li><li><b>Abusive head trauma*</b></li><li><b>Brain tumor*</b></li><li><b>Increased intracranial pressure*</b> (Eg. hydrocephalus, space occupying lesions, idiopathic, drugs)</li><li>Vascular (Eg Stroke, arteriovenous malformation, aneurysm)</li><li><b>Concussion*</b></li></ul>"
+    },
+    {
+     "id": "h1",
+     "k": "act",
+     "t": "Consider ancillary testing depending of history (Eg. Bloodwork, EEG, EKG, etc.)"
+    },
+    {
+     "id": "h3",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li><b>Seizure/status epilepticus*</b></li><li>Cardiac (Eg. Arrhythmia)</li><li><b>Syncope*</b></li><li><b>Migraine*</b> (atypical presentation)</li><li>Immune-mediated encephalitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d1",
+     "l": "Drugs"
+    },
+    {
+     "f": "c",
+     "t": "e1",
+     "l": "Infection"
+    },
+    {
+     "f": "c",
+     "t": "f1",
+     "l": "Metabolic"
+    },
+    {
+     "f": "c",
+     "t": "g1",
+     "l": "Structural"
+    },
+    {
+     "f": "c",
+     "t": "h1",
+     "l": "Other"
+    },
+    {
+     "f": "d1",
+     "t": "d2"
+    },
+    {
+     "f": "d2",
+     "t": "d3"
+    },
+    {
+     "f": "e1",
+     "t": "e2"
+    },
+    {
+     "f": "e2",
+     "t": "e3"
+    },
+    {
+     "f": "f1",
+     "t": "f2"
+    },
+    {
+     "f": "f2",
+     "t": "f3"
+    },
+    {
+     "f": "g1",
+     "t": "g2"
+    },
+    {
+     "f": "g2",
+     "t": "g3"
+    },
+    {
+     "f": "h1",
+     "t": "h3"
+    }
+   ]
+  }
+ ]
+}

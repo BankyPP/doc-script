@@ -1,0 +1,197 @@
+{
+ "key": "158",
+ "en": "Sellar / Pituitary Mass",
+ "th": "ก้อนที่ sella / ต่อมใต้สมอง",
+ "pdf": "187–188",
+ "bookpg": "158–159",
+ "target": null,
+ "new": {
+  "id": "sellar-pituitary-mass",
+  "th": "ก้อนที่ sella / ต่อมใต้สมอง",
+  "en": "Sellar / Pituitary Mass",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "bb-158-types",
+   "h": "Sellar / pituitary mass — ชนิด (หน้า 158)",
+   "html": "<div class=\"flow\" data-flow=\"b158a\"></div><ul><li><b>Sellar/Pituitary Mass</b><ul><li><span class=\"tag\">Adenoma</span> <b>Adenoma</b> <span class=\"muted\">— Primarily Anterior Pituitary</span><ul><li><span class=\"tag\">Secreting</span> <b>Secreting</b><ul><li>Prolactin</li><li>GH</li><li>ACTH</li><li>TSH</li><li>LH/FSH</li><li>Mixed</li></ul></li><li><span class=\"tag\">Non-functioning</span> <b>Non-Functioning</b><ul><li>Oncocytoma</li><li>Null Cell Adenoma</li></ul></li></ul></li><li><span class=\"tag\">Hyperplasia</span> <b>Hyperplasia</b><ul><li>Physiological (e.g. Pregnancy)</li><li>Compensation (e.g. Hypothyroidism)</li><li>Stimulatory (e.g. Ectopic GNRH, CRH)</li></ul></li><li><span class=\"tag\">Non-adenomatous</span> <b>Non-Adenomatous</b><ul><li><span class=\"tag\">Vascular</span> <b>Vascular</b><ul><li>Aneurysm</li><li>Infarction</li></ul></li><li><span class=\"tag\">Hamartoma</span> <b>Hamartoma</b></li><li><span class=\"tag\">Neoplasm</span> <b>Neoplasm</b><ul><li>Craniopharyngioma</li><li>Meningioma</li><li>Cyst</li><li>Glioma</li><li>Ependymoma</li></ul></li><li><span class=\"tag\">Metastatic</span> <b>Metastatic</b></li></ul></li><li><span class=\"tag\">Inflammatory</span> <b>Inflammatory</b><ul><li>Infectious</li><li>Autoimmune</li><li>Giant Cell Granuloma</li><li>Langerhan’s Cell Histiocytosis</li><li>Sarcoidosis</li></ul></li></ul></li></ul>"
+  },
+  {
+   "id": "bb-158-size",
+   "h": "Sellar / pituitary mass — ขนาด (หน้า 159)",
+   "html": "<div class=\"flow\" data-flow=\"b158b\"></div><ul><li><b>Sellar/Pituitary Mass</b><ul><li><span class=\"tag\">Small (&lt;1 cm)</span> <b>Small</b> <span class=\"muted\">— (&lt;1cm)</span><ul><li>Hypersecretion</li></ul></li><li><span class=\"tag\">Large (&gt;1 cm)</span> <b>Large</b> <span class=\"muted\">— (&gt;1cm)</span><ul><li>Hypersecretion</li><li>Hyposecretion</li></ul></li><li><span class=\"tag\">Other</span> <b>Other</b></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b158a",
+   "title": "Sellar / Pituitary Mass",
+   "src": "fig",
+   "img": "bb-158-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Sellar/Pituitary Mass"
+    },
+    {
+     "id": "ad",
+     "k": "q",
+     "t": "Adenoma",
+     "d": "<p>Primarily Anterior Pituitary</p>"
+    },
+    {
+     "id": "hy",
+     "k": "dx",
+     "t": "Hyperplasia",
+     "d": "<ul><li>Physiological (e.g. Pregnancy)</li><li>Compensation (e.g. Hypothyroidism)</li><li>Stimulatory (e.g. Ectopic GNRH, CRH)</li></ul>"
+    },
+    {
+     "id": "na",
+     "k": "q",
+     "t": "Non-Adenomatous"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Infectious</li><li>Autoimmune</li><li>Giant Cell Granuloma</li><li>Langerhan’s Cell Histiocytosis</li><li>Sarcoidosis</li></ul>"
+    },
+    {
+     "id": "se",
+     "k": "dx",
+     "t": "Secreting",
+     "d": "<ul><li>Prolactin</li><li>GH</li><li>ACTH</li><li>TSH</li><li>LH/FSH</li><li>Mixed</li></ul>"
+    },
+    {
+     "id": "nf",
+     "k": "dx",
+     "t": "Non-Functioning",
+     "d": "<ul><li>Oncocytoma</li><li>Null Cell Adenoma</li></ul>"
+    },
+    {
+     "id": "va",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Aneurysm</li><li>Infarction</li></ul>"
+    },
+    {
+     "id": "ha",
+     "k": "dx",
+     "t": "Hamartoma"
+    },
+    {
+     "id": "ne",
+     "k": "dx",
+     "t": "Neoplasm",
+     "d": "<ul><li>Craniopharyngioma</li><li>Meningioma</li><li>Cyst</li><li>Glioma</li><li>Ependymoma</li></ul>"
+    },
+    {
+     "id": "me",
+     "k": "dx",
+     "t": "Metastatic"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "ad",
+     "l": "Adenoma"
+    },
+    {
+     "f": "r",
+     "t": "hy",
+     "l": "Hyperplasia"
+    },
+    {
+     "f": "r",
+     "t": "na",
+     "l": "Non-adenomatous"
+    },
+    {
+     "f": "r",
+     "t": "in",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "ad",
+     "t": "se",
+     "l": "Secreting"
+    },
+    {
+     "f": "ad",
+     "t": "nf",
+     "l": "Non-functioning"
+    },
+    {
+     "f": "na",
+     "t": "va",
+     "l": "Vascular"
+    },
+    {
+     "f": "na",
+     "t": "ha",
+     "l": "Hamartoma"
+    },
+    {
+     "f": "na",
+     "t": "ne",
+     "l": "Neoplasm"
+    },
+    {
+     "f": "na",
+     "t": "me",
+     "l": "Metastatic"
+    }
+   ]
+  },
+  {
+   "id": "b158b",
+   "title": "Sellar / Pituitary Mass — Size",
+   "src": "fig",
+   "img": "bb-158-f2.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Sellar/Pituitary Mass"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Small",
+     "d": "<p>(&lt;1cm)</p><ul><li>Hypersecretion</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Large",
+     "d": "<p>(&gt;1cm)</p><ul><li>Hypersecretion</li><li>Hyposecretion</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "s",
+     "l": "Small (&lt;1 cm)"
+    },
+    {
+     "f": "r",
+     "t": "l",
+     "l": "Large (&gt;1 cm)"
+    },
+    {
+     "f": "r",
+     "t": "o",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

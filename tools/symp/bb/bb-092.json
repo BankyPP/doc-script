@@ -1,0 +1,123 @@
+{
+ "key": "092",
+ "en": "Lower Gastrointestinal Bleed",
+ "th": "เลือดออกทางเดินอาหารส่วนปลาย",
+ "pdf": "121",
+ "bookpg": "92",
+ "target": "gi-bleeding",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Blackbook — Lower GI bleed แยกตามสาเหตุ</b></p><h4>Occult Bleeding (or iron-deficiency anemia)</h4><ul><li>Colorectal cancer</li><li>Angiodysplasia (colon or small bowel)</li><li>Occult UGIB (ulcer, esophagitis, gastritis, cancer)</li><li>Small bowel tumors</li><li>Asymptomatic IBD</li></ul><h4>Overt Bleeding — Out Patient</h4><ul><li>Perianal disease most common (hemorrhoids, fissures, abscess)</li><li>Inflammatory Bowel Disease</li><li>Colorectal Cancer</li></ul><h4>Overt Bleeding — In Patient (lots of bleeding; rule out brisk UGIB): Large Bowel - Painful</h4><ul><li>Acute colitis (ischemia, infectious, inflammatory)</li></ul><h4>Overt Bleeding — In Patient: Large Bowel - Painless</h4><ul><li>Diverticular bleed</li><li>Angiodysplasia</li></ul><h4>Overt Bleeding — In Patient: Small Bowel</h4><ul><li>Meckel’s Diverticulum</li><li>Tumors</li></ul>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-3-6-approach",
+   "id": "bb-092-scheme",
+   "h": "Lower Gastrointestinal Bleed scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b092a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b092a",
+   "title": "Lower Gastrointestinal Bleed",
+   "src": "fig",
+   "img": "bb-092-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Lower Gastrointestinal Bleed"
+    },
+    {
+     "id": "occ",
+     "k": "dx",
+     "t": "Occult Bleeding (or iron-deficiency anemia)",
+     "d": "<ul><li>Colorectal cancer</li><li>Angiodysplasia (colon or small bowel)</li><li>Occult UGIB (ulcer, esophagitis, gastritis, cancer)</li><li>Small bowel tumors</li><li>Asymptomatic IBD</li></ul>"
+    },
+    {
+     "id": "ov",
+     "k": "dx",
+     "t": "Overt Bleeding"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "In Patient — Lots of bleeding"
+    },
+    {
+     "id": "out",
+     "k": "dx",
+     "t": "Out Patient",
+     "d": "<ul><li>Perianal disease most common (hemorrhoids, fissures, abscess)</li><li>Inflammatory Bowel Disease</li><li>Colorectal Cancer</li></ul>"
+    },
+    {
+     "id": "rule",
+     "k": "q",
+     "t": "Rule out brisk UGIB"
+    },
+    {
+     "id": "lbp",
+     "k": "dx",
+     "t": "Large Bowel - Painful",
+     "d": "<ul><li>Acute colitis (ischemia, infectious, inflammatory)</li></ul>"
+    },
+    {
+     "id": "lbl",
+     "k": "dx",
+     "t": "Large Bowel - Painless",
+     "d": "<ul><li>Diverticular bleed</li><li>Angiodysplasia</li></ul>"
+    },
+    {
+     "id": "sb",
+     "k": "dx",
+     "t": "Small Bowel",
+     "d": "<ul><li>Meckel’s Diverticulum</li><li>Tumors</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "occ",
+     "l": "Occult Bleeding (or IDA)"
+    },
+    {
+     "f": "a",
+     "t": "ov",
+     "l": "Overt Bleeding"
+    },
+    {
+     "f": "ov",
+     "t": "in",
+     "l": "In Patient (lots of bleeding)"
+    },
+    {
+     "f": "ov",
+     "t": "out",
+     "l": "Out Patient"
+    },
+    {
+     "f": "in",
+     "t": "rule"
+    },
+    {
+     "f": "rule",
+     "t": "lbp",
+     "l": "Large Bowel - Painful"
+    },
+    {
+     "f": "rule",
+     "t": "lbl",
+     "l": "Large Bowel - Painless"
+    },
+    {
+     "f": "rule",
+     "t": "sb",
+     "l": "Small Bowel"
+    }
+   ]
+  }
+ ]
+}

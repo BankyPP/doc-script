@@ -1,0 +1,105 @@
+{
+ "key": "100",
+ "en": "Weight Gain",
+ "th": "น้ำหนักเพิ่ม",
+ "pdf": "129",
+ "bookpg": "100",
+ "target": "weight-gaining",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Blackbook — Weight gain แยกตามกลไก</b></p><h4>Increased Intake</h4><ul><li>Dietary</li><li>Social/Behavioural</li><li>Iatrogenic</li></ul><h4>Decreased Expenditure</h4><ul><li>Sedentary Lifestyle</li><li>Smoking Cessation</li></ul><h4>Neurogenic/Genetic</h4><ul><li>Depression</li><li>Dementia</li></ul><h4>Hypothalamic/Pituitary</h4><ul><li>Hypothalamic Syndrome</li><li>Growth Hormone Deficiency</li></ul><h4>Gonadic</h4><ul><li>Polycystic Ovarian Syndrome</li><li>Hypogonadism</li></ul><h4>Other Causes</h4><ul><li>Cushing’s Disease</li><li>Hypothyroidism</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "approach",
+   "id": "bb-100-scheme",
+   "h": "Weight Gain scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b100a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b100a",
+   "title": "Weight Gain",
+   "src": "fig",
+   "img": "bb-100-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Weight Gain"
+    },
+    {
+     "id": "in",
+     "k": "dx",
+     "t": "Increased Intake",
+     "d": "<ul><li>Dietary</li><li>Social/Behavioural</li><li>Iatrogenic</li></ul>"
+    },
+    {
+     "id": "ex",
+     "k": "dx",
+     "t": "Decreased Expenditure",
+     "d": "<ul><li>Sedentary Lifestyle</li><li>Smoking Cessation</li></ul>"
+    },
+    {
+     "id": "ng",
+     "k": "dx",
+     "t": "Neurogenic/Genetic",
+     "d": "<ul><li>Depression</li><li>Dementia</li></ul>"
+    },
+    {
+     "id": "hp",
+     "k": "dx",
+     "t": "Hypothalamic/Pituitary",
+     "d": "<ul><li>Hypothalamic Syndrome</li><li>Growth Hormone Deficiency</li></ul>"
+    },
+    {
+     "id": "go",
+     "k": "dx",
+     "t": "Gonadic",
+     "d": "<ul><li>Polycystic Ovarian Syndrome</li><li>Hypogonadism</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other Causes",
+     "d": "<ul><li>Cushing’s Disease</li><li>Hypothyroidism</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "in",
+     "l": "Increased Intake"
+    },
+    {
+     "f": "a",
+     "t": "ex",
+     "l": "Decreased Expenditure"
+    },
+    {
+     "f": "a",
+     "t": "ng",
+     "l": "Neurogenic/Genetic"
+    },
+    {
+     "f": "a",
+     "t": "hp",
+     "l": "Hypothalamic/Pituitary"
+    },
+    {
+     "f": "a",
+     "t": "go",
+     "l": "Gonadic"
+    },
+    {
+     "f": "a",
+     "t": "ot",
+     "l": "Other Causes"
+    }
+   ]
+  }
+ ]
+}

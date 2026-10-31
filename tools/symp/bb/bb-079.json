@@ -1,0 +1,289 @@
+{
+ "key": "079",
+ "en": "Abdominal Pain (Adult) — Chronic",
+ "th": "ปวดท้องเรื้อรัง (ผู้ใหญ่)",
+ "pdf": "108–110",
+ "bookpg": "79–81",
+ "target": "abdominal-pain",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-abd-approach",
+   "id": "bb-079-scheme",
+   "h": "Chronic abdominal pain scheme — Constant / Cramping-Fleeting / Post-prandial (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b079a\"></div><div class=\"flow\" data-flow=\"b079b\"></div><div class=\"flow\" data-flow=\"b079c\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b079a",
+   "title": "Abdominal Pain (Adult) — Chronic · Constant",
+   "src": "fig",
+   "img": "bb-079-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Abdominal Pain"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Recurrent pain? Consider tumor · UQ/epigastric: cardiac · Lower: GU",
+     "d": "<p><b>Recurrent abdominal pain?</b> Consider tumor</p><p><b>Upper Quadrant/Epigastric?</b> Consider cardiac causes</p><p><b>Lower quadrant?</b> Consider genitourinary causes</p>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Constant"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Cramping/Fleeting",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Chronic Abdominal Pain — Cramping/Fleeting</p>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Post-Prandial",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Chronic Abdominal Pain — Post-Prandial</p>"
+    },
+    {
+     "id": "uq",
+     "k": "dx",
+     "t": "Upper Quadrant",
+     "d": "<ul><li>Gastroesophageal Reflux Disease</li><li>Peptic Ulcer Disease</li><li>Chronic Pancreatitis</li><li>Pancreatic Tumor</li><li>Gastric Cancer</li><li>Liver Distention (e.g. Hepatomegaly, Tumor, Fat)</li><li>Splenic (e.g. Abscess, Splenomegaly) – very rare</li></ul>"
+    },
+    {
+     "id": "lq",
+     "k": "dx",
+     "t": "Lower Quadrant",
+     "d": "<ul><li>Crohn’s Disease</li><li>Gynecologic (e.g. Tumor, Endometriosis)</li></ul>"
+    },
+    {
+     "id": "any",
+     "k": "dx",
+     "t": "Any Location/Diffuse",
+     "d": "<ul><li>Ascites</li><li>Muscle Wall</li><li>Neuropathic pain</li><li>Somatization</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "c",
+     "l": "Constant"
+    },
+    {
+     "f": "q",
+     "t": "f",
+     "l": "Cramping/Fleeting"
+    },
+    {
+     "f": "q",
+     "t": "p",
+     "l": "Post-Prandial"
+    },
+    {
+     "f": "c",
+     "t": "uq",
+     "l": "Upper Quadrant"
+    },
+    {
+     "f": "c",
+     "t": "lq",
+     "l": "Lower Quadrant"
+    },
+    {
+     "f": "c",
+     "t": "any",
+     "l": "Any Location/Diffuse"
+    }
+   ]
+  },
+  {
+   "id": "b079b",
+   "title": "Abdominal Pain (Adult) — Chronic · Crampy / Fleeting",
+   "src": "fig",
+   "img": "bb-079-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Abdominal Pain"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Recurrent pain? Consider tumor · UQ/epigastric: cardiac · Lower: GU",
+     "d": "<p><b>Recurrent abdominal pain?</b> Consider tumor</p><p><b>Upper Quadrant/Epigastric?</b> Consider cardiac causes</p><p><b>Lower quadrant?</b> Consider genitourinary causes</p>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Constant",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Chronic Abdominal Pain — Constant</p>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Cramping/Fleeting"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Post-Prandial",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Chronic Abdominal Pain — Post-Prandial</p>"
+    },
+    {
+     "id": "uq",
+     "k": "dx",
+     "t": "Upper Quadrant",
+     "d": "<ul><li>Biliary Colic/Cholelithiasis</li><li>Choledocholithiasis</li><li>Sphincter of Oddi Dysfunction</li><li>Renal Colic</li></ul>"
+    },
+    {
+     "id": "lq",
+     "k": "dx",
+     "t": "Lower Quadrant",
+     "d": "<ul><li>Bloating (e.g. Celiac Disease, Lactose Intolerance)</li><li>Renal colic</li><li>Irritable Bowel Syndrome</li><li>Endometriosis</li></ul>"
+    },
+    {
+     "id": "any",
+     "k": "dx",
+     "t": "Any Location/Diffuse",
+     "d": "<ul><li>Bowel Obstruction (e.g. Adhesions, Crohn’s, Volvulus, Neoplasm, Hernia)</li><li>Irritable Bowel Syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "c",
+     "l": "Constant"
+    },
+    {
+     "f": "q",
+     "t": "f",
+     "l": "Cramping/Fleeting"
+    },
+    {
+     "f": "q",
+     "t": "p",
+     "l": "Post-Prandial"
+    },
+    {
+     "f": "f",
+     "t": "uq",
+     "l": "Upper Quadrant"
+    },
+    {
+     "f": "f",
+     "t": "lq",
+     "l": "Lower Quadrant"
+    },
+    {
+     "f": "f",
+     "t": "any",
+     "l": "Any Location/Diffuse"
+    }
+   ]
+  },
+  {
+   "id": "b079c",
+   "title": "Abdominal Pain (Adult) — Chronic · Post-Prandial",
+   "src": "fig",
+   "img": "bb-079-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Abdominal Pain"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Recurrent pain? Consider tumor · UQ/epigastric: cardiac · Lower: GU",
+     "d": "<p><b>Recurrent abdominal pain?</b> Consider tumor</p><p><b>Upper Quadrant/Epigastric?</b> Consider cardiac causes</p><p><b>Lower quadrant?</b> Consider genitourinary causes</p>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Constant",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Chronic Abdominal Pain — Constant</p>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Cramping/Fleeting",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Chronic Abdominal Pain — Cramping/Fleeting</p>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Post-Prandial"
+    },
+    {
+     "id": "uq",
+     "k": "dx",
+     "t": "Upper Quadrant",
+     "d": "<ul><li>Biliary Colic/Cholelithiasis</li><li>Gastroesophageal Reflux Disease</li><li>Peptic Ulcer Disease/Dyspepsia</li><li>Gastric Cancer</li><li>Chronic Pancreatitis</li><li>Obstructing Colon Cancer</li></ul>"
+    },
+    {
+     "id": "lq",
+     "k": "dx",
+     "t": "Lower Quadrant",
+     "d": "<ul><li>Obstructing Colon Cancer</li><li>Lactose Intolerance</li></ul>"
+    },
+    {
+     "id": "any",
+     "k": "dx",
+     "t": "Any Location/Diffuse",
+     "d": "<ul><li>Bowel Obstruction (e.g. Adhesions, Crohn’s, Volvulus, Neoplasm, Hernia)</li><li>Mesenteric Angina</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "c",
+     "l": "Constant"
+    },
+    {
+     "f": "q",
+     "t": "f",
+     "l": "Cramping/Fleeting"
+    },
+    {
+     "f": "q",
+     "t": "p",
+     "l": "Post-Prandial"
+    },
+    {
+     "f": "p",
+     "t": "uq",
+     "l": "Upper Quadrant"
+    },
+    {
+     "f": "p",
+     "t": "lq",
+     "l": "Lower Quadrant"
+    },
+    {
+     "f": "p",
+     "t": "any",
+     "l": "Any Location/Diffuse"
+    }
+   ]
+  }
+ ]
+}

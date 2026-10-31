@@ -1,0 +1,117 @@
+{
+ "key": "116",
+ "en": "Increased Urinary Frequency",
+ "th": "ปัสสาวะบ่อย",
+ "pdf": "145",
+ "bookpg": "116",
+ "target": "abnormal-urination-dysuria",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "freq",
+   "id": "bb-116-scheme",
+   "h": "Increased Urinary Frequency scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b116a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "freq-def",
+   "html": "<p>Non-increased urine volume (&lt;2 mL/min): rule out polyuria first.</p>"
+  },
+  {
+   "op": "append",
+   "sec": "freq-type",
+   "html": "<ul><li><b>Intrinsic to urinary tract</b><ul><li>Urinary tract infection (see Dysuria scheme)</li><li>Urinary obstruction: benign prostatic hyperplasia, prostatitis, prostate cancer, nephrolithiasis</li><li>Small volume bladder</li><li>Detrusor hyperactivity: overactive bladder, diabetes, MS, irritant drugs (diuretics, caffeine, alcohol)</li></ul></li><li><b>Extrinsic to urinary tract</b>: vulvovaginitis, bladder compression/pregnancy</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b116a",
+   "title": "Increased Urinary Frequency",
+   "src": "fig",
+   "img": "bb-116-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Increased Urinary Frequency"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Non-increased urine volume (<2 mL/min) — rule out polyuria"
+    },
+    {
+     "id": "in",
+     "k": "q",
+     "t": "Intrinsic to Urinary Tract"
+    },
+    {
+     "id": "ex",
+     "k": "dx",
+     "t": "Extrinsic to Urinary Tract",
+     "d": "<ul><li>Vulvovaginitis</li><li>Bladder compression/Pregnancy</li></ul>"
+    },
+    {
+     "id": "uti",
+     "k": "dx",
+     "t": "Urinary Tract Infection",
+     "d": "<p>(See <i>Dysuria</i> scheme)</p>"
+    },
+    {
+     "id": "obs",
+     "k": "dx",
+     "t": "Urinary Obstruction",
+     "d": "<ul><li>Benign prostatic hyperplasia</li><li>Prostatitis</li><li>Prostate cancer</li><li>Nephrolithiasis</li></ul>"
+    },
+    {
+     "id": "sm",
+     "k": "dx",
+     "t": "Small volume bladder"
+    },
+    {
+     "id": "det",
+     "k": "dx",
+     "t": "Detrusor Hyperactivity",
+     "d": "<ul><li>Overactive Bladder</li><li>Diabetes</li><li>MS</li><li>Irritant drugs: Diuretics, caffeine, alcohol</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "in",
+     "l": "Intrinsic"
+    },
+    {
+     "f": "b",
+     "t": "ex",
+     "l": "Extrinsic"
+    },
+    {
+     "f": "in",
+     "t": "uti",
+     "l": "Urinary tract infection"
+    },
+    {
+     "f": "in",
+     "t": "obs",
+     "l": "Urinary obstruction"
+    },
+    {
+     "f": "in",
+     "t": "sm",
+     "l": "Small volume bladder"
+    },
+    {
+     "f": "in",
+     "t": "det",
+     "l": "Detrusor hyperactivity"
+    }
+   ]
+  }
+ ]
+}

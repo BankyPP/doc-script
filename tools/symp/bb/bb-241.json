@@ -1,0 +1,768 @@
+{
+ "key": "241",
+ "en": "Skin Rash",
+ "th": "ผื่นผิวหนัง",
+ "pdf": "270–274",
+ "bookpg": "241–245",
+ "target": "common-skin-manifestations",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "bb-241-scheme",
+   "h": "Skin rash by type (Blackbook)",
+   "html": "<p>Skin rash แบ่งเป็น 5 กลุ่ม (Blackbook) — เลือกกลุ่มจากลักษณะผื่น แล้วแยกโรคตามแต่ละกลุ่ม</p><div class=\"tbl\"><table><thead><tr><th>Skin rash type</th><th>Definition</th></tr></thead><tbody><tr><td><b>Eczematous</b></td><td>Pruritic/Scaly/Erythematous lesions. Usually poorly demarcated</td></tr><tr><td><b>Papulosquamous</b></td><td>Erythematous or violaceous papules &amp; plaques with overlying scale</td></tr><tr><td><b>Vesiculobullous</b></td><td>Blisters containing non-purulent fluid</td></tr><tr><td><b>Pustular</b></td><td>Blisters containing purulent fluid</td></tr><tr><td><b>Reactive</b></td><td>Reactive erythematous with various morphology</td></tr></tbody></table></div>",
+   "sub": [
+    {
+     "id": "bb-241-eczematous",
+     "h": "Eczematous",
+     "html": "<div class=\"flow\" data-flow=\"b241a\"></div>"
+    },
+    {
+     "id": "bb-241-papulosquamous",
+     "h": "Papulosquamous",
+     "html": "<div class=\"flow\" data-flow=\"b241b\"></div>"
+    },
+    {
+     "id": "bb-241-vesiculobullous",
+     "h": "Vesiculobullous",
+     "html": "<div class=\"flow\" data-flow=\"b241e\"></div>"
+    },
+    {
+     "id": "bb-241-pustular",
+     "h": "Pustular",
+     "html": "<div class=\"flow\" data-flow=\"b241c\"></div>"
+    },
+    {
+     "id": "bb-241-reactive",
+     "h": "Reactive",
+     "html": "<div class=\"flow\" data-flow=\"b241d\"></div>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "b241a",
+   "title": "Skin Rash — Eczematous",
+   "src": "fig",
+   "img": "bb-241-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Skin Rash"
+    },
+    {
+     "id": "c0",
+     "k": "q",
+     "t": "Eczematous",
+     "d": "<p>Pruritic/Scaly/Erythematous lesions. Usually poorly demarcated</p>"
+    },
+    {
+     "id": "c1",
+     "k": "q",
+     "t": "Papulosquamous",
+     "d": "<p>Erythematous or violaceous papules &amp; plaques with overlying scale</p>"
+    },
+    {
+     "id": "c2",
+     "k": "q",
+     "t": "Vesiculobullous",
+     "d": "<p>Blisters containing non-purulent fluid</p>"
+    },
+    {
+     "id": "c3",
+     "k": "q",
+     "t": "Pustular",
+     "d": "<p>Blisters containing purulent fluid</p>"
+    },
+    {
+     "id": "c4",
+     "k": "q",
+     "t": "Reactive",
+     "d": "<p>Reactive erythematous with various morphology</p>"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "Atopic Dermatitis (Eczema)",
+     "d": "<p>Erythematous papules and vesicles (acute) or lichenification (chronic)</p><p><b>Age dependent distribution:</b></p><ul><li><u>Infants:</u> scalp, face, extensor extremities</li><li><u>Children:</u> flexural areas</li><li><u>Adults:</u> flexural areas/hands/face/nipples</li></ul>"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Nummular Dermatitis (Discoid Eczema)",
+     "d": "<p>Coin shaped (discoid) erythematous plaques. Usually on lower legs</p>"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Seborrheic Dermatitis",
+     "d": "<p>Yellowish-red plaques with greasy distinct margins on scalp/face/central chest folds</p>"
+    },
+    {
+     "id": "d4",
+     "k": "dx",
+     "t": "Stasis Dermatitis",
+     "d": "<p>Erythematous eruption on lower legs. Secondary to venous insufficiency. +/- pigmentation, edema, varicose veins, venous ulcers</p>"
+    },
+    {
+     "id": "d5",
+     "k": "dx",
+     "t": "Dyshidrotic Eczema (pompholyx)",
+     "d": "<p>Deep-Seated tapioca-like vesicles on hands/feet/sides of digits.</p>"
+    },
+    {
+     "id": "d6",
+     "k": "q",
+     "t": "Contact Dermatitis",
+     "d": "<p>Well-demarcated erythema, papules, vesicles, erosions scaling confined to area of contact</p>"
+    },
+    {
+     "id": "e1",
+     "k": "dx",
+     "t": "Irritant",
+     "d": "<p>Rapid onset, requires high doses of the agent. May occur in anyone</p>"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "Allergic",
+     "d": "<p>Delayed onset (12-72 hrs). Very low concentrations sufficient. Occurs only in those sensitized</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "c0",
+     "l": "Eczematous"
+    },
+    {
+     "f": "a",
+     "t": "c1",
+     "l": "Papulosquamous"
+    },
+    {
+     "f": "a",
+     "t": "c2",
+     "l": "Vesiculobullous"
+    },
+    {
+     "f": "a",
+     "t": "c3",
+     "l": "Pustular"
+    },
+    {
+     "f": "a",
+     "t": "c4",
+     "l": "Reactive"
+    },
+    {
+     "f": "c0",
+     "t": "d1",
+     "l": "Atopic Dermatitis (Eczema)"
+    },
+    {
+     "f": "c0",
+     "t": "d2",
+     "l": "Nummular Dermatitis (Discoid Eczema)"
+    },
+    {
+     "f": "c0",
+     "t": "d3",
+     "l": "Seborrheic Dermatitis"
+    },
+    {
+     "f": "c0",
+     "t": "d4",
+     "l": "Stasis Dermatitis"
+    },
+    {
+     "f": "c0",
+     "t": "d5",
+     "l": "Dyshidrotic Eczema (pompholyx)"
+    },
+    {
+     "f": "c0",
+     "t": "d6",
+     "l": "Contact Dermatitis"
+    },
+    {
+     "f": "d6",
+     "t": "e1",
+     "l": "Irritant"
+    },
+    {
+     "f": "d6",
+     "t": "e2",
+     "l": "Allergic"
+    }
+   ]
+  },
+  {
+   "id": "b241b",
+   "title": "Skin Rash — Papulosquamous",
+   "src": "fig",
+   "img": "bb-241-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Skin Rash"
+    },
+    {
+     "id": "c0",
+     "k": "q",
+     "t": "Eczematous",
+     "d": "<p>Pruritic/Scaly/Erythematous lesions. Usually poorly demarcated</p>"
+    },
+    {
+     "id": "c1",
+     "k": "q",
+     "t": "Papulosquamous",
+     "d": "<p>Erythematous or violaceous papules &amp; plaques with overlying scale</p>"
+    },
+    {
+     "id": "c2",
+     "k": "q",
+     "t": "Vesiculobullous",
+     "d": "<p>Blisters containing non-purulent fluid</p>"
+    },
+    {
+     "id": "c3",
+     "k": "q",
+     "t": "Pustular",
+     "d": "<p>Blisters containing purulent fluid</p>"
+    },
+    {
+     "id": "c4",
+     "k": "q",
+     "t": "Reactive",
+     "d": "<p>Reactive erythematous with various morphology</p>"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "Psoriasis",
+     "d": "<p>Well demarcated plaques, thick silvery scale on elbows &amp; knees. Auspitz sign. Koebner's phenomenon</p>"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Lichen Planus",
+     "d": "<p>Purple, pruritic, polygonal, planar (flat-topped) papules on wrists/ankles/genitals (especially penis). Wickham's striae. Koebner's phenomenon</p>"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Pityriasis Rosea",
+     "d": "<p>Oval, tannish-pink or salmon-coloured patches, plaques with scaling border in Christmas tree pattern on trunk, begins with a large lesion patch (Herald's patch)</p>"
+    },
+    {
+     "id": "d4",
+     "k": "dx",
+     "t": "Tinea (Ring Worm)",
+     "d": "<p>Annular (Ring-shaped) lesion with elevated scaling, red border, central clearing</p>"
+    },
+    {
+     "id": "d5",
+     "k": "dx",
+     "t": "Secondary Syphilis",
+     "d": "<p>Red brown or copper coloured scaling papules and plaques on palms and soles</p>"
+    },
+    {
+     "id": "d6",
+     "k": "dx",
+     "t": "Discoid Lupus Erythematous",
+     "d": "<p>Scarring and/or atrophic red/purple plaques with white adherent scales on sun-exposed area</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "c0",
+     "l": "Eczematous"
+    },
+    {
+     "f": "a",
+     "t": "c1",
+     "l": "Papulosquamous"
+    },
+    {
+     "f": "a",
+     "t": "c2",
+     "l": "Vesiculobullous"
+    },
+    {
+     "f": "a",
+     "t": "c3",
+     "l": "Pustular"
+    },
+    {
+     "f": "a",
+     "t": "c4",
+     "l": "Reactive"
+    },
+    {
+     "f": "c1",
+     "t": "d1",
+     "l": "Psoriasis"
+    },
+    {
+     "f": "c1",
+     "t": "d2",
+     "l": "Lichen Planus"
+    },
+    {
+     "f": "c1",
+     "t": "d3",
+     "l": "Pityriasis Rosea"
+    },
+    {
+     "f": "c1",
+     "t": "d4",
+     "l": "Tinea (Ring Worm)"
+    },
+    {
+     "f": "c1",
+     "t": "d5",
+     "l": "Secondary Syphilis"
+    },
+    {
+     "f": "c1",
+     "t": "d6",
+     "l": "Discoid Lupus Erythematous"
+    }
+   ]
+  },
+  {
+   "id": "b241c",
+   "title": "Skin Rash — Pustular",
+   "src": "fig",
+   "img": "bb-241-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Skin Rash"
+    },
+    {
+     "id": "c0",
+     "k": "q",
+     "t": "Eczematous",
+     "d": "<p>Pruritic/Scaly/Erythematous lesions. Usually poorly demarcated</p>"
+    },
+    {
+     "id": "c1",
+     "k": "q",
+     "t": "Papulosquamous",
+     "d": "<p>Erythematous or violaceous papules &amp; plaques with overlying scale</p>"
+    },
+    {
+     "id": "c2",
+     "k": "q",
+     "t": "Vesiculobullous",
+     "d": "<p>Blisters containing non-purulent fluid</p>"
+    },
+    {
+     "id": "c3",
+     "k": "q",
+     "t": "Pustular",
+     "d": "<p>Blisters containing purulent fluid</p>"
+    },
+    {
+     "id": "c4",
+     "k": "q",
+     "t": "Reactive",
+     "d": "<p>Reactive erythematous with various morphology</p>"
+    },
+    {
+     "id": "d1",
+     "k": "q",
+     "t": "Acneiform",
+     "d": "<p>Erythematous papules and pustules on face</p>"
+    },
+    {
+     "id": "d2",
+     "k": "q",
+     "t": "Infectious"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Acne Vulgaris",
+     "d": "<p>Comedones +/- nodules, cysts, scars on face &amp; trunk</p>"
+    },
+    {
+     "id": "d4",
+     "k": "q",
+     "t": "Comedones Absent"
+    },
+    {
+     "id": "d5",
+     "k": "dx",
+     "t": "Folliculitis",
+     "d": "<p>Pustules centered around hair follicles</p>"
+    },
+    {
+     "id": "d6",
+     "k": "dx",
+     "t": "Impetigo",
+     "d": "<p>Pustules with overlying thick honey-yellow crusts</p>"
+    },
+    {
+     "id": "d7",
+     "k": "dx",
+     "t": "Candidiasis",
+     "d": "<p>\"Beefy red\" erythematous patches in body folds with satellite pustules at periphery</p>"
+    },
+    {
+     "id": "d8",
+     "k": "dx",
+     "t": "Acne Rosacea",
+     "d": "<p>Telangiectasia, episodic flushing after sunlight, alcohol, hot or spicy food &amp; drinks</p>"
+    },
+    {
+     "id": "d9",
+     "k": "dx",
+     "t": "Perioral Dermatitis",
+     "d": "<p>Perioral, periorbital &amp; nasolabial distribution, sparing vermillion borders of lips</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "c0",
+     "l": "Eczematous"
+    },
+    {
+     "f": "a",
+     "t": "c1",
+     "l": "Papulosquamous"
+    },
+    {
+     "f": "a",
+     "t": "c2",
+     "l": "Vesiculobullous"
+    },
+    {
+     "f": "a",
+     "t": "c3",
+     "l": "Pustular"
+    },
+    {
+     "f": "a",
+     "t": "c4",
+     "l": "Reactive"
+    },
+    {
+     "f": "c3",
+     "t": "d1",
+     "l": "Acneiform"
+    },
+    {
+     "f": "c3",
+     "t": "d2",
+     "l": "Infectious"
+    },
+    {
+     "f": "d1",
+     "t": "d3",
+     "l": "Acne Vulgaris"
+    },
+    {
+     "f": "d1",
+     "t": "d4",
+     "l": "Comedones Absent"
+    },
+    {
+     "f": "d2",
+     "t": "d5",
+     "l": "Folliculitis"
+    },
+    {
+     "f": "d2",
+     "t": "d6",
+     "l": "Impetigo"
+    },
+    {
+     "f": "d2",
+     "t": "d7",
+     "l": "Candidiasis"
+    },
+    {
+     "f": "d4",
+     "t": "d8",
+     "l": "Acne Rosacea"
+    },
+    {
+     "f": "d4",
+     "t": "d9",
+     "l": "Perioral Dermatitis"
+    }
+   ]
+  },
+  {
+   "id": "b241d",
+   "title": "Skin Rash — Reactive",
+   "src": "fig",
+   "img": "bb-241-f4.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Skin Rash"
+    },
+    {
+     "id": "c0",
+     "k": "q",
+     "t": "Eczematous",
+     "d": "<p>Pruritic/Scaly/Erythematous lesions. Usually poorly demarcated</p>"
+    },
+    {
+     "id": "c1",
+     "k": "q",
+     "t": "Papulosquamous",
+     "d": "<p>Erythematous or violaceous papules &amp; plaques with overlying scale</p>"
+    },
+    {
+     "id": "c2",
+     "k": "q",
+     "t": "Vesiculobullous",
+     "d": "<p>Blisters containing non-purulent fluid</p>"
+    },
+    {
+     "id": "c3",
+     "k": "q",
+     "t": "Pustular",
+     "d": "<p>Blisters containing purulent fluid</p>"
+    },
+    {
+     "id": "c4",
+     "k": "q",
+     "t": "Reactive",
+     "d": "<p>Reactive erythematous with various morphology</p>"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "Urticaria",
+     "d": "<p>Firm/edematous papules &amp; plaques that are transient &amp; itchy. Usually lasts &lt;24hrs</p>"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Erythema Nodosum",
+     "d": "<p>Tender or painful red nodules on shins</p>"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Erythema Multiforme",
+     "d": "<p>Target lesions possibly with macules, papules, vesicles &amp;/or bullae on palms soles and mucous membranes</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "c0",
+     "l": "Eczematous"
+    },
+    {
+     "f": "a",
+     "t": "c1",
+     "l": "Papulosquamous"
+    },
+    {
+     "f": "a",
+     "t": "c2",
+     "l": "Vesiculobullous"
+    },
+    {
+     "f": "a",
+     "t": "c3",
+     "l": "Pustular"
+    },
+    {
+     "f": "a",
+     "t": "c4",
+     "l": "Reactive"
+    },
+    {
+     "f": "c4",
+     "t": "d1",
+     "l": "Urticaria"
+    },
+    {
+     "f": "c4",
+     "t": "d2",
+     "l": "Erythema Nodosum"
+    },
+    {
+     "f": "c4",
+     "t": "d3",
+     "l": "Erythema Multiforme"
+    }
+   ]
+  },
+  {
+   "id": "b241e",
+   "title": "Skin Rash — Vesiculobullous",
+   "src": "fig",
+   "img": "bb-241-f5.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Skin Rash"
+    },
+    {
+     "id": "c0",
+     "k": "q",
+     "t": "Eczematous",
+     "d": "<p>Pruritic/Scaly/Erythematous lesions. Usually poorly demarcated</p>"
+    },
+    {
+     "id": "c1",
+     "k": "q",
+     "t": "Papulosquamous",
+     "d": "<p>Erythematous or violaceous papules &amp; plaques with overlying scale</p>"
+    },
+    {
+     "id": "c2",
+     "k": "q",
+     "t": "Vesiculobullous",
+     "d": "<p>Blisters containing non-purulent fluid</p>"
+    },
+    {
+     "id": "c3",
+     "k": "q",
+     "t": "Pustular",
+     "d": "<p>Blisters containing purulent fluid</p>"
+    },
+    {
+     "id": "c4",
+     "k": "q",
+     "t": "Reactive",
+     "d": "<p>Reactive erythematous with various morphology</p>"
+    },
+    {
+     "id": "d1",
+     "k": "q",
+     "t": "Vesicles Fragile/Easily Ruptured",
+     "d": "<p>Intraepidermal blisters, possibly crusts/erosions</p>"
+    },
+    {
+     "id": "d2",
+     "k": "q",
+     "t": "Vesicles NOT Fragile/NOT Easily Ruptured",
+     "d": "<p>Subepidermal blisters, tense intact blisters</p>"
+    },
+    {
+     "id": "e1",
+     "k": "dx",
+     "t": "Inflammatory · fragile vesicles",
+     "d": "<ul><li>Pemphigus vulgaris</li><li>Pemphigus foliaceus</li></ul>"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Varicella zoster (chickenpox)</li><li>Herpes zoster (shingles)</li><li>Herpes simplex</li><li>Bullous impetigo</li></ul>"
+    },
+    {
+     "id": "e3",
+     "k": "dx",
+     "t": "Reaction to Agent · fragile vesicles",
+     "d": "<ul><li>Contact dermatitis</li></ul>"
+    },
+    {
+     "id": "e4",
+     "k": "dx",
+     "t": "Inflammatory · not fragile vesicles",
+     "d": "<ul><li>Bullous pemphigoid</li><li>Mucous membrane pemphigoid</li><li>Dermatitis herpetiformis</li><li>Bullous systemic lupus erythematosus</li></ul>"
+    },
+    {
+     "id": "e5",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Porphyria cutanea tarda</li><li>Diabetic bullae (bullous diabeticorum)</li></ul>"
+    },
+    {
+     "id": "e6",
+     "k": "dx",
+     "t": "Reaction to Agent · not fragile vesicles",
+     "d": "<ul><li>Phototoxic drug eruption</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "c0",
+     "l": "Eczematous"
+    },
+    {
+     "f": "a",
+     "t": "c1",
+     "l": "Papulosquamous"
+    },
+    {
+     "f": "a",
+     "t": "c2",
+     "l": "Vesiculobullous"
+    },
+    {
+     "f": "a",
+     "t": "c3",
+     "l": "Pustular"
+    },
+    {
+     "f": "a",
+     "t": "c4",
+     "l": "Reactive"
+    },
+    {
+     "f": "c2",
+     "t": "d1",
+     "l": "Vesicles Fragile/Easily Ruptured"
+    },
+    {
+     "f": "c2",
+     "t": "d2",
+     "l": "Vesicles NOT Fragile/NOT Easily Ruptured"
+    },
+    {
+     "f": "d1",
+     "t": "e1",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "d1",
+     "t": "e2",
+     "l": "Infectious"
+    },
+    {
+     "f": "d1",
+     "t": "e3",
+     "l": "Reaction to Agent"
+    },
+    {
+     "f": "d2",
+     "t": "e4",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "d2",
+     "t": "e5",
+     "l": "Metabolic"
+    },
+    {
+     "f": "d2",
+     "t": "e6",
+     "l": "Reaction to Agent"
+    }
+   ]
+  }
+ ]
+}

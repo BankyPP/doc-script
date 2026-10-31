@@ -1,0 +1,113 @@
+{
+ "key": "309",
+ "en": "Strabismus (Ocular Misalignment)",
+ "th": "ตาเหล่",
+ "pdf": "338",
+ "bookpg": "309",
+ "target": null,
+ "new": {
+  "id": "strabismus",
+  "th": "ตาเหล่",
+  "en": "Strabismus (Ocular Misalignment)",
+  "g": "eent"
+ },
+ "sections": [
+  {
+   "id": "bb-309-scheme",
+   "h": "Strabismus — Ocular Misalignment",
+   "html": "<div class=\"flow\" data-flow=\"b309a\"></div><div class=\"pearl\"><p><b>Clinical Pearl:</b></p><ul><li>Strabismus is most often seen in pediatrics.</li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b309a",
+   "title": "Strabismus — Ocular Misalignment",
+   "src": "fig",
+   "img": "bb-309-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Strabismus"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Rule Out Amblyopia"
+    },
+    {
+     "id": "ph",
+     "k": "dx",
+     "t": "Phoria",
+     "d": "<ul><li>Latent deviation</li><li>Symmetrical corneal light reflex</li><li>Negative cover test positive cover/uncover test</li></ul><ul><li>Esophoria (eye moves medial → centre when uncovered)</li><li>Exophoria (eye moves lateral → centre when uncovered)</li></ul>"
+    },
+    {
+     "id": "tp",
+     "k": "dx",
+     "t": "Tropia",
+     "d": "<ul><li>Manifest deviation</li><li>Asymmetrical light reflex</li><li>Positive cover test</li></ul>"
+    },
+    {
+     "id": "pa",
+     "k": "q",
+     "t": "Paretic — non-comitant; angle of misalignment changes with direction of gaze",
+     "d": "<p>Non-comitant<br>Angle of misalignment changes with direction of gaze</p>"
+    },
+    {
+     "id": "np",
+     "k": "dx",
+     "t": "Non-Paretic — comitant; angle of misalignment unchanged with direction of gaze",
+     "d": "<p>Comitant<br>Angle of misalignment unchanged with direction of gaze</p><ul><li>Accommodative Esotropia (onset 2-4yrs, hyperopic)</li><li>Congenital Esotropia (contralateral eye deviates medial → straight when ipsilateral covered)</li><li>Exotropia (contralateral eye deviates lateral → straight when ipsilateral covered)</li></ul>"
+    },
+    {
+     "id": "ho",
+     "k": "dx",
+     "t": "Horizontal (eso/exotropia)",
+     "d": "<ul><li>CN VI problem (eye cannot abduct)</li></ul>"
+    },
+    {
+     "id": "hv",
+     "k": "dx",
+     "t": "Horizontal and/or vertical (eso/exotropia, hyper/hypotropia, mixed)",
+     "d": "<p>Eso/exotropia, hyper/hypotropia, mixed</p><ul><li>CN III Problem (eye is depressed and abducted, ptosis, large/unreactive pupil)</li><li>CN IV Problem (eye cannot depress when looking medially)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "ph",
+     "l": "Phoria"
+    },
+    {
+     "f": "b",
+     "t": "tp",
+     "l": "Tropia"
+    },
+    {
+     "f": "tp",
+     "t": "pa",
+     "l": "Paretic"
+    },
+    {
+     "f": "tp",
+     "t": "np",
+     "l": "Non-paretic"
+    },
+    {
+     "f": "pa",
+     "t": "ho",
+     "l": "Horizontal"
+    },
+    {
+     "f": "pa",
+     "t": "hv",
+     "l": "Horizontal and/or vertical"
+    }
+   ]
+  }
+ ]
+}

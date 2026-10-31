@@ -1,0 +1,343 @@
+{
+ "key": "181",
+ "en": "Movement Disorder",
+ "th": "การเคลื่อนไหวผิดปกติ",
+ "pdf": "210–212",
+ "bookpg": "181–183",
+ "target": "movement-disorders-2",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-9-8-class",
+   "id": "bb-181-hyper",
+   "h": "Movement Disorder — Hyperkinetic (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b181a\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-9-8-class",
+   "id": "bb-181-tremor",
+   "h": "Movement Disorder — Tremor (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b181b\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-9-8-class",
+   "id": "bb-181-brady",
+   "h": "Movement Disorder — Bradykinetic (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b181c\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "phenom",
+   "html": "<p><b>Hyperkinetic disorders — examples (not exhaustive for all causes)</b></p><ul><li><b>Tics</b>: Tourette’s Syndrome, Attention Deficit Hyperactivity Disorder, Obsessive Compulsive Disorder</li><li><b>Dystonia</b>: Generalized dystonia, Writer’s cramp, Blepharospasm, Cervical Dystonia</li><li><b>Stereotypies</b></li><li><b>Myoclonus</b>: Epilepsy, Toxic/metabolic</li><li><b>Chorea</b>: Huntington’s Disease</li><li><b>Athetosis</b></li><li><b>Ballism</b></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "tremor-cause",
+   "html": "<p><b>Tremor by type</b></p><ul><li><b>Action tremor</b> (occurs during voluntary muscle movement): Cerebellar Disease (e.g. spinocerebellar ataxia, Vitamin E deficiency, stroke, multiple sclerosis)</li><li><b>Resting tremor</b> (occurs at rest): Parkinson’s Disease, Midbrain Tremor, Wilson’s Disease, Progressive supranuclear palsy, Multiple System Atrophy, Drug-Induced Parkinsonism</li><li><b>Postural tremor</b> (occurs while held motionless against gravity): Enhanced Physiologic Change, Essential tremor, Dystonia, Metabolic Etiology (Thyroid, Liver, Kidney), Drugs (Lithium, Amiodarone, Valproate)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "tremor-drug",
+   "html": "<p>Postural tremor — drugs: lithium, amiodarone, valproate</p>"
+  },
+  {
+   "op": "append",
+   "sec": "pk-class",
+   "html": "<p><b>Bradykinetic movement disorders</b></p><ul><li><b>Parkinson’s disease (TRAP):</b> Resting <u>T</u>remor, Cogwheel <u>R</u>igidity, <u>A</u>kinesia/Bradykinesia, <u>P</u>ostural Instability</li><li><b>Drug-induced parkinsonism:</b> Neuroleptics, Haloperidol, Metoclopramide, Prochlorperazine, Amiodarone, Verapamil</li><li><b>Progressive supranuclear palsy:</b> Vertical Gaze Palsy; Axial rigidity &gt; limb rigidity; +/- Tremor; Bradykinesia; Falling backwards</li><li><b>Multiple system atrophy:</b> Bradykinesia, +/- tremor, Cerebellar signs, Postural Hypotension</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b181a",
+   "title": "Movement Disorder — Hyperkinetic",
+   "src": "fig",
+   "img": "bb-181-f1.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Bradykinetic (แสดงในหน้า Bradykinetic)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Movement Disorder"
+    },
+    {
+     "id": "hy",
+     "k": "q",
+     "t": "Hyperkinetic",
+     "d": "<p>Examples listed not exhaustive for all causes</p>"
+    },
+    {
+     "id": "tr",
+     "k": "q",
+     "t": "Tremor"
+    },
+    {
+     "id": "br",
+     "k": "q",
+     "t": "Bradykinetic"
+    },
+    {
+     "id": "tic",
+     "k": "dx",
+     "t": "Tics",
+     "d": "<ul><li>Tourette’s Syndrome</li><li>Attention Deficit Hyperactivity Disorder</li><li>Obsessive Compulsive Disorder</li></ul>"
+    },
+    {
+     "id": "dys",
+     "k": "dx",
+     "t": "Dystonia",
+     "d": "<ul><li>Generalized dystonia</li><li>Writer’s cramp</li><li>Blepharospasm</li><li>Cervical Dystonia</li></ul>"
+    },
+    {
+     "id": "ste",
+     "k": "dx",
+     "t": "Stereotypies"
+    },
+    {
+     "id": "myo",
+     "k": "dx",
+     "t": "Myoclonus",
+     "d": "<ul><li>Epilepsy</li><li>Toxic/metabolic</li></ul>"
+    },
+    {
+     "id": "cho",
+     "k": "dx",
+     "t": "Chorea",
+     "d": "<ul><li>Huntington’s Disease</li></ul>"
+    },
+    {
+     "id": "ath",
+     "k": "dx",
+     "t": "Athetosis"
+    },
+    {
+     "id": "bal",
+     "k": "dx",
+     "t": "Ballism"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "hy",
+     "l": "Hyperkinetic"
+    },
+    {
+     "f": "a",
+     "t": "tr",
+     "l": "Tremor"
+    },
+    {
+     "f": "a",
+     "t": "br",
+     "l": "Bradykinetic"
+    },
+    {
+     "f": "hy",
+     "t": "tic",
+     "l": "Tics"
+    },
+    {
+     "f": "hy",
+     "t": "dys",
+     "l": "Dystonia"
+    },
+    {
+     "f": "hy",
+     "t": "ste",
+     "l": "Stereotypies"
+    },
+    {
+     "f": "hy",
+     "t": "myo",
+     "l": "Myoclonus"
+    },
+    {
+     "f": "hy",
+     "t": "cho",
+     "l": "Chorea"
+    },
+    {
+     "f": "hy",
+     "t": "ath",
+     "l": "Athetosis"
+    },
+    {
+     "f": "hy",
+     "t": "bal",
+     "l": "Ballism"
+    }
+   ]
+  },
+  {
+   "id": "b181b",
+   "title": "Movement Disorder — Tremor",
+   "src": "fig",
+   "img": "bb-181-f2.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Hyperkinetic และ Bradykinetic (แสดงในหน้าของตัวเอง)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Movement Disorder"
+    },
+    {
+     "id": "hy",
+     "k": "q",
+     "t": "Hyperkinetic"
+    },
+    {
+     "id": "tr",
+     "k": "q",
+     "t": "Tremor"
+    },
+    {
+     "id": "br",
+     "k": "q",
+     "t": "Bradykinetic"
+    },
+    {
+     "id": "ac",
+     "k": "dx",
+     "t": "Action Tremor",
+     "d": "<p>Occurs During Voluntary Muscle Movement</p><ul><li>Cerebellar Disease (e.g. spinocerebellar ataxia, Vitamin E deficiency, stroke, multiple sclerosis)</li></ul>"
+    },
+    {
+     "id": "re",
+     "k": "dx",
+     "t": "Resting Tremor",
+     "d": "<p>Occurs at Rest</p><ul><li>Parkinson’s Disease</li><li>Midbrain Tremor</li><li>Wilson’s Disease</li><li>Progressive supranuclear palsy</li><li>Multiple System Atrophy</li><li>Drug-Induced Parkinsonism</li></ul>"
+    },
+    {
+     "id": "po",
+     "k": "dx",
+     "t": "Postural Tremor",
+     "d": "<p>Occurs While Held Motionless Against Gravity</p><ul><li>Enhanced Physiologic Change</li><li>Essential tremor</li><li>Dystonia</li><li>Metabolic Etiology (Thyroid, Liver, Kidney)</li><li>Drugs (Lithium, Amiodarone, Valproate)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "hy",
+     "l": "Hyperkinetic"
+    },
+    {
+     "f": "a",
+     "t": "tr",
+     "l": "Tremor"
+    },
+    {
+     "f": "a",
+     "t": "br",
+     "l": "Bradykinetic"
+    },
+    {
+     "f": "tr",
+     "t": "ac",
+     "l": "Action tremor"
+    },
+    {
+     "f": "tr",
+     "t": "re",
+     "l": "Resting tremor"
+    },
+    {
+     "f": "tr",
+     "t": "po",
+     "l": "Postural tremor"
+    }
+   ]
+  },
+  {
+   "id": "b181c",
+   "title": "Movement Disorder — Bradykinetic",
+   "src": "fig",
+   "img": "bb-181-f3.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Hyperkinetic และ Tremor (แสดงในหน้าของตัวเอง)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Movement Disorder"
+    },
+    {
+     "id": "hy",
+     "k": "q",
+     "t": "Hyperkinetic"
+    },
+    {
+     "id": "tr",
+     "k": "q",
+     "t": "Tremor"
+    },
+    {
+     "id": "br",
+     "k": "q",
+     "t": "Bradykinetic"
+    },
+    {
+     "id": "pd",
+     "k": "dx",
+     "t": "Parkinson’s Disease (TRAP)",
+     "d": "<ul><li>Resting <u>T</u>remor</li><li>Cogwheel <u>R</u>igidity</li><li><u>A</u>kinesia/Bradykinesia</li><li><u>P</u>ostural Instability</li></ul>"
+    },
+    {
+     "id": "di",
+     "k": "dx",
+     "t": "Drug-Induced Parkinsonism",
+     "d": "<ul><li>Neuroleptics</li><li>Haloperidol</li><li>Metoclopramide</li><li>Prochlorperazine</li><li>Amiodarone</li><li>Verapamil</li></ul>"
+    },
+    {
+     "id": "ps",
+     "k": "dx",
+     "t": "Progressive Supranuclear Palsy",
+     "d": "<p><b>Characteristics:</b></p><ul><li>Vertical Gaze Palsy</li><li>Axial rigidity &gt; limb rigidity</li><li>+/- Tremor</li><li>Bradykinesia</li><li>Falling backwards</li></ul>"
+    },
+    {
+     "id": "ms",
+     "k": "dx",
+     "t": "Multiple System Atrophy",
+     "d": "<p><b>Characteristics:</b></p><ul><li>Bradykinesia</li><li>+/- tremor</li><li>Cerebellar signs</li><li>Postural Hypotension</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "hy",
+     "l": "Hyperkinetic"
+    },
+    {
+     "f": "a",
+     "t": "tr",
+     "l": "Tremor"
+    },
+    {
+     "f": "a",
+     "t": "br",
+     "l": "Bradykinetic"
+    },
+    {
+     "f": "br",
+     "t": "pd",
+     "l": "Parkinson’s disease"
+    },
+    {
+     "f": "br",
+     "t": "di",
+     "l": "Drug-induced parkinsonism"
+    },
+    {
+     "f": "br",
+     "t": "ps",
+     "l": "Progressive supranuclear palsy"
+    },
+    {
+     "f": "br",
+     "t": "ms",
+     "l": "Multiple system atrophy"
+    }
+   ]
+  }
+ ]
+}

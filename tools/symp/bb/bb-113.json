@@ -1,0 +1,132 @@
+{
+ "key": "113",
+ "en": "Hypernatremia",
+ "th": "โซเดียมในเลือดสูง",
+ "pdf": "142",
+ "bookpg": "113",
+ "target": null,
+ "new": {
+  "id": "hypernatremia",
+  "th": "ภาวะโซเดียมในเลือดสูง",
+  "en": "Hypernatremia",
+  "g": "kub"
+ },
+ "sections": [
+  {
+   "id": "bb-113-scheme",
+   "h": "Hypernatremia scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b113a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b113a",
+   "title": "Hypernatremia",
+   "src": "fig",
+   "img": "bb-113-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hypernatremia — Excess free water loss"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Serum Sodium > 145 mmol/L"
+    },
+    {
+     "id": "hv",
+     "k": "q",
+     "t": "High Urine Volume (> 3 L/24 hours) — Renal water loss"
+    },
+    {
+     "id": "lv",
+     "k": "q",
+     "t": "Low Urine Volume (< 3 L/24 hours)"
+    },
+    {
+     "id": "huo",
+     "k": "dx",
+     "t": "High Urine Osmolality (> 300 mmol/kg)",
+     "d": "<ul><li>Hypertonic saline administration</li><li>Osmotic diuresis (see <i>Polyuria</i> scheme) e.g., mannitol, glucosuria</li></ul>"
+    },
+    {
+     "id": "luo",
+     "k": "dx",
+     "t": "Low Urine Osmolality (< 300 mmol/kg)",
+     "d": "<ul><li>Diabetes Insipidus</li></ul>"
+    },
+    {
+     "id": "nr",
+     "k": "q",
+     "t": "Non-renal losses"
+    },
+    {
+     "id": "hyp",
+     "k": "dx",
+     "t": "Hypodipsia (Decreased intake of water)",
+     "d": "<ul><li>Decreased level of consciousness</li><li>No access to water</li></ul>"
+    },
+    {
+     "id": "gi",
+     "k": "dx",
+     "t": "GI loss",
+     "d": "<ul><li>Watery Diarrhea</li></ul>"
+    },
+    {
+     "id": "ins",
+     "k": "dx",
+     "t": "Insensible loss",
+     "d": "<ul><li>Burns</li><li>ICU patients</li><li>Fever</li><li>Inadequate intake for exercise-related loss</li><li>Hyperventilation</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "hv",
+     "l": "High urine volume"
+    },
+    {
+     "f": "b",
+     "t": "lv",
+     "l": "Low urine volume"
+    },
+    {
+     "f": "hv",
+     "t": "huo",
+     "l": "High urine osmolality"
+    },
+    {
+     "f": "hv",
+     "t": "luo",
+     "l": "Low urine osmolality"
+    },
+    {
+     "f": "lv",
+     "t": "nr",
+     "l": "Non-renal losses"
+    },
+    {
+     "f": "lv",
+     "t": "hyp",
+     "l": "Hypodipsia"
+    },
+    {
+     "f": "nr",
+     "t": "gi",
+     "l": "GI loss"
+    },
+    {
+     "f": "nr",
+     "t": "ins",
+     "l": "Insensible loss"
+    }
+   ]
+  }
+ ]
+}

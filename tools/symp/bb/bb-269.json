@@ -1,0 +1,88 @@
+{
+ "key": "269",
+ "en": "Vascular Joint Pain",
+ "th": "ปวดข้อจากหลอดเลือด",
+ "pdf": "298",
+ "bookpg": "269",
+ "target": "arthralgia-arthritis",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-8-1-algo",
+   "id": "bb-269-scheme",
+   "h": "Vascular joint pain (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b269a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b269a",
+   "title": "Vascular Joint Pain",
+   "src": "fig",
+   "img": "bb-269-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vascular Joint Pain"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Constant Pain (Ischemia) · Acute Onset · Increased Pain with Activity (Claudication) · Cold Extremity or Hyperemia",
+     "d": "<ul><li>Constant Pain (Ischemia)</li><li>Acute Onset</li><li>Increased Pain with Activity (Claudication)</li><li>Cold Extremity or Hyperemia</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Spasm",
+     "d": "<ul><li>Vasculitis</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Occlusion",
+     "d": "<ul><li>Sickle Cell Anemia</li><li>Peripheral Vascular Disease</li><li>Atherosclerosis</li><li>Deep Vein Thrombosis</li><li>Septic Embolism (e.g. Infective Endocarditis)</li><li>Fat Embolism (e.g. fractured long bone)</li><li>Air Embolism</li><li>Vasculitis</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Disruption",
+     "d": "<ul><li>Trauma to Vessel (dislocation/fracture)</li><li>Hemarthrosis (Hemophilia or Trauma)</li><li>Peripheral/Mycotic Aneurysm (e.g. Marfan’s Syndrome, Infective Endocarditis, Atherosclerosis)</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Compression",
+     "d": "<ul><li>Any structure compressing the blood vessels</li><li>Abscess</li><li>Cyst</li><li>Neoplasm</li><li>Dislocated Bone</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Spasm"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Occlusion"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Disruption"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Compression"
+    }
+   ]
+  }
+ ]
+}

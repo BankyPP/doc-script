@@ -1,0 +1,405 @@
+{
+ "key": "186",
+ "en": "Spell / Seizure",
+ "th": "ชัก / อาการเป็นพัก ๆ",
+ "pdf": "215–217",
+ "bookpg": "186–188",
+ "target": "seizure",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "class",
+   "id": "bb-186-epileptic",
+   "h": "Spell/Seizure — Epileptic seizure (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b186a\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div><small><sup>1</sup> Previously named Simple Partial Seizure<br><sup>2</sup> Previously named Complex Partial Seizure<br><sup>3</sup> Previously named Secondary Generalized Tonic-Clonic Seizure<br><sup>4</sup> A focal seizure may evolve so rapidly to a bilateral convulsive seizure that no initial distinguishing features are apparent.</small>"
+  },
+  {
+   "op": "sec",
+   "after": "class",
+   "id": "bb-186-organic",
+   "h": "Spell/Seizure — Secondary organic (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b186b\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div><small>หมายเหตุ: กล่อง Pregnancy ถูกตัดขอบขวาที่ขอบหน้าในหนังสือ — ข้อความครบ (Pregnancy → Eclampsia)</small>"
+  },
+  {
+   "op": "sec",
+   "after": "class",
+   "id": "bb-186-other",
+   "h": "Spell/Seizure — Other (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b186c\"></div><div class=\"warn\">Potentially acutely life-threatening presentation</div>"
+  },
+  {
+   "op": "append",
+   "sec": "class",
+   "html": "<p><b>Unprovoked recurrence (epileptic seizure)</b></p><ul><li><b>Focal seizure<sup>1</sup>:</b> non-dyscognitive<sup>1</sup> (features of aura, motor, autonomic) · dyscognitive<sup>2</sup> · evolving to bilateral convulsive seizure<sup>3,4</sup></li><li><b>Unclassified</b></li><li><b>Generalized:</b> non-convulsive (absence, atonic) · convulsive (myoclonic, clonic, tonic, tonic-clonic)</li></ul><small><sup>1</sup> Previously named Simple Partial Seizure<br><sup>2</sup> Previously named Complex Partial Seizure<br><sup>3</sup> Previously named Secondary Generalized Tonic-Clonic Seizure<br><sup>4</sup> A focal seizure may evolve so rapidly to a bilateral convulsive seizure that no initial distinguishing features are apparent.</small>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Provoked recurrence (secondary) — secondary organic causes</b></p><ul><li><b>Febrile</b></li><li><b>Infection:</b> Sepsis, Encephalitis, Meningitis</li><li><b>Metabolic:</b> Hypoglycemia, Hyperglycemia, Hypocalcemia, Hyponatremia, Uremia, Alcohol/drug withdrawal, Drug overdose, Liver Failure</li><li><b>Vascular:</b> Intracerebral hemorrhage, Subarachnoid hemorrhage, Subdural hemorrhage, Epidural hemorrhage, Ischemic stroke, Vasculitides</li><li><b>Degenerative:</b> dementia</li><li><b>Structural:</b> Congenital abnormality, Neoplasm, Arteriovenous malformation</li><li><b>Pregnancy:</b> eclampsia</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ddx",
+   "html": "<p><b>Provoked recurrence (secondary) — other (non-epileptic)</b></p><ul><li><b>Neurological:</b> migraine/auras; movement disorders (dystonia, dyskinesia, chorea)</li><li><b>Cardiovascular:</b> syncope</li><li><b>Psychogenic:</b> panic disorder, conversion disorder, pseudoseizures</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b186a",
+   "title": "Spell/Seizure — Epileptic Seizure",
+   "src": "fig",
+   "img": "bb-186-f1.webp",
+   "note": "เส้นประจาก Non-Dyscognitive และ Dyscognitive ไป Evolving to Bilateral Convulsive Seizure · เส้นประจากกล่องบนชี้ไป Provoked Recurrence (แสดงในหน้า Secondary Organic/Other) · เชิงอรรถ 1–4 ตามต้นฉบับ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Spell/Seizure"
+    },
+    {
+     "id": "unp",
+     "k": "q",
+     "t": "Unprovoked Recurrence",
+     "d": "<p>Epileptic Seizure</p>"
+    },
+    {
+     "id": "pro",
+     "k": "q",
+     "t": "Provoked Recurrence",
+     "d": "<p>Non-epileptic organic seizure/other</p>"
+    },
+    {
+     "id": "foc",
+     "k": "q",
+     "t": "Focal Seizure<sup>1</sup>",
+     "d": "<p><sup>1</sup> Previously named Simple Partial Seizure</p>"
+    },
+    {
+     "id": "unc",
+     "k": "dx",
+     "t": "Unclassified"
+    },
+    {
+     "id": "gen",
+     "k": "q",
+     "t": "Generalized"
+    },
+    {
+     "id": "nd",
+     "k": "dx",
+     "t": "Non-Dyscognitive<sup>1</sup>",
+     "d": "<p>Features of:</p><ul><li>Aura</li><li>Motor</li><li>Autonomic</li></ul><p><sup>1</sup> Previously named Simple Partial Seizure</p>"
+    },
+    {
+     "id": "dc",
+     "k": "dx",
+     "t": "Dyscognitive<sup>2</sup>",
+     "d": "<p><sup>2</sup> Previously named Complex Partial Seizure</p>"
+    },
+    {
+     "id": "ev",
+     "k": "stop",
+     "t": "Evolving to Bilateral Convulsive Seizure<sup>3,4</sup>",
+     "d": "<p><sup>3</sup> Previously named Secondary Generalized Tonic-Clonic Seizure</p><p><sup>4</sup> A focal seizure may evolve so rapidly to a bilateral convulsive seizure that no initial distinguishing features are apparent.</p>"
+    },
+    {
+     "id": "nc",
+     "k": "dx",
+     "t": "Non-Convulsive",
+     "d": "<ul><li>Absence</li><li>Atonic</li></ul>"
+    },
+    {
+     "id": "cv",
+     "k": "dx",
+     "t": "Convulsive",
+     "d": "<ul><li>Myoclonic</li><li>Clonic</li><li>Tonic</li><li>Tonic-Clonic</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "unp",
+     "l": "Unprovoked recurrence"
+    },
+    {
+     "f": "a",
+     "t": "pro",
+     "l": "Provoked recurrence"
+    },
+    {
+     "f": "unp",
+     "t": "foc",
+     "l": "Focal seizure"
+    },
+    {
+     "f": "unp",
+     "t": "unc",
+     "l": "Unclassified"
+    },
+    {
+     "f": "unp",
+     "t": "gen",
+     "l": "Generalized"
+    },
+    {
+     "f": "foc",
+     "t": "nd",
+     "l": "Non-dyscognitive"
+    },
+    {
+     "f": "foc",
+     "t": "dc",
+     "l": "Dyscognitive"
+    },
+    {
+     "f": "foc",
+     "t": "ev",
+     "l": "Evolving to bilateral convulsive"
+    },
+    {
+     "f": "nd",
+     "t": "ev"
+    },
+    {
+     "f": "dc",
+     "t": "ev"
+    },
+    {
+     "f": "gen",
+     "t": "nc",
+     "l": "Non-convulsive"
+    },
+    {
+     "f": "gen",
+     "t": "cv",
+     "l": "Convulsive"
+    }
+   ]
+  },
+  {
+   "id": "b186b",
+   "title": "Spell/Seizure — Secondary Organic",
+   "src": "fig",
+   "img": "bb-186-f2.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Unprovoked Recurrence และ Other (แสดงในหน้าอื่น)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Spell/Seizure"
+    },
+    {
+     "id": "unp",
+     "k": "q",
+     "t": "Unprovoked Recurrence (Primary)",
+     "d": "<p>Epileptic Seizure</p>"
+    },
+    {
+     "id": "pro",
+     "k": "q",
+     "t": "Provoked Recurrence (Secondary)",
+     "d": "<p>Non-epileptic organic seizure/other</p>"
+    },
+    {
+     "id": "oth",
+     "k": "q",
+     "t": "Other"
+    },
+    {
+     "id": "so",
+     "k": "q",
+     "t": "Secondary Organic"
+    },
+    {
+     "id": "feb",
+     "k": "dx",
+     "t": "Febrile"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Sepsis</li><li>Encephalitis</li><li>Meningitis</li></ul>"
+    },
+    {
+     "id": "met",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Hypoglycemia</li><li>Hyperglycemia</li><li>Hypocalcemia</li><li>Hyponatremia</li><li>Uremia</li><li>Alcohol/drug withdrawal</li><li>Drug overdose</li><li>Liver Failure</li></ul>"
+    },
+    {
+     "id": "vas",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Intracerebral hemorrhage</li><li>Subarachnoid hemorrhage</li><li>Subdural hemorrhage</li><li>Epidural hemorrhage</li><li>Ischemic stroke</li><li>Vasculitides</li></ul>"
+    },
+    {
+     "id": "deg",
+     "k": "dx",
+     "t": "Degenerative",
+     "d": "<ul><li>Dementia</li></ul>"
+    },
+    {
+     "id": "str",
+     "k": "dx",
+     "t": "Structural",
+     "d": "<ul><li>Congenital abnormality</li><li>Neoplasm</li><li>Arteriovenous malformation</li></ul>"
+    },
+    {
+     "id": "preg",
+     "k": "dx",
+     "t": "Pregnancy",
+     "d": "<ul><li>Eclampsia</li></ul><p><small>กล่อง Pregnancy ในหนังสือถูกตัดขอบขวาที่ขอบหน้า (ข้อความในกล่องคือ “Pregnancy” ครบ ไม่มีตัวอักษรหาย)</small></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "unp",
+     "l": "Unprovoked recurrence (primary)"
+    },
+    {
+     "f": "a",
+     "t": "pro",
+     "l": "Provoked recurrence (secondary)"
+    },
+    {
+     "f": "pro",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "pro",
+     "t": "so",
+     "l": "Secondary organic"
+    },
+    {
+     "f": "so",
+     "t": "feb",
+     "l": "Febrile"
+    },
+    {
+     "f": "so",
+     "t": "inf",
+     "l": "Infection"
+    },
+    {
+     "f": "so",
+     "t": "met",
+     "l": "Metabolic"
+    },
+    {
+     "f": "so",
+     "t": "vas",
+     "l": "Vascular"
+    },
+    {
+     "f": "so",
+     "t": "deg",
+     "l": "Degenerative"
+    },
+    {
+     "f": "so",
+     "t": "str",
+     "l": "Structural"
+    },
+    {
+     "f": "so",
+     "t": "preg",
+     "l": "Pregnancy"
+    }
+   ]
+  },
+  {
+   "id": "b186c",
+   "title": "Spell/Seizure — Other",
+   "src": "fig",
+   "img": "bb-186-f3.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Unprovoked Recurrence และ Secondary Organic (แสดงในหน้าอื่น)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Spell/Seizure"
+    },
+    {
+     "id": "unp",
+     "k": "q",
+     "t": "Unprovoked Recurrence (Primary)",
+     "d": "<p>Epileptic Seizure</p>"
+    },
+    {
+     "id": "pro",
+     "k": "q",
+     "t": "Provoked Recurrence (Secondary)",
+     "d": "<p>Non-epileptic organic seizure/other</p>"
+    },
+    {
+     "id": "oth",
+     "k": "q",
+     "t": "Other"
+    },
+    {
+     "id": "so",
+     "k": "q",
+     "t": "Secondary Organic"
+    },
+    {
+     "id": "neu",
+     "k": "dx",
+     "t": "Neurological",
+     "d": "<ul><li>Migraine/Auras</li><li>Movement disorders (Dystonia, Dyskinesia, Chorea)</li></ul>"
+    },
+    {
+     "id": "cv",
+     "k": "dx",
+     "t": "Cardiovascular",
+     "d": "<ul><li>Syncope</li></ul>"
+    },
+    {
+     "id": "psy",
+     "k": "dx",
+     "t": "Psychogenic",
+     "d": "<ul><li>Panic Disorder</li><li>Conversion Disorder</li><li>Pseudoseizures</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "unp",
+     "l": "Unprovoked recurrence (primary)"
+    },
+    {
+     "f": "a",
+     "t": "pro",
+     "l": "Provoked recurrence (secondary)"
+    },
+    {
+     "f": "pro",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "pro",
+     "t": "so",
+     "l": "Secondary organic"
+    },
+    {
+     "f": "oth",
+     "t": "neu",
+     "l": "Neurological"
+    },
+    {
+     "f": "oth",
+     "t": "cv",
+     "l": "Cardiovascular"
+    },
+    {
+     "f": "oth",
+     "t": "psy",
+     "l": "Psychogenic"
+    }
+   ]
+  }
+ ]
+}

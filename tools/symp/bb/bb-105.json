@@ -1,0 +1,212 @@
+{
+ "key": "105",
+ "en": "Acute Kidney Injury",
+ "th": "ไตวายเฉียบพลัน",
+ "pdf": "134",
+ "bookpg": "105",
+ "target": "azotemia",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-4-3-stepwise",
+   "id": "bb-105-scheme",
+   "h": "Acute Kidney Injury scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b105a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-4-3-step2",
+   "html": "<p>AKI = acute increase in creatinine by at least 50%</p>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-4-3-step3",
+   "html": "<p><b>Pre-Renal</b> (FeNa &lt; 1%, bland urine sediment)</p><ul><li>Renal hypoperfusion: hepatorenal syndromes, drugs, emboli</li><li>Systemic hypotension: shock</li></ul><p><b>Post-Renal</b> (obstruction/hydronephrosis on U/S)</p><ul><li>Benign prostatic hyperplasia</li><li>Constipation</li><li>Prostate cancer</li><li>Urolithiasis</li></ul><p><b>Renal</b> (FeNa &gt; 2%) → urinalysis and CBC to separate tubular / vascular / glomerular / interstitial (see Intrinsic renal causes)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-4-3-intrinsic",
+   "html": "<ul><li><b>Tubular</b>: acute tubular necrosis (epithelial cell casts): ischemia (severe hypotension), toxins (contrast, aminoglycosides, chemotherapy), pigments · tubular obstruction: cast nephropathy (multiple myeloma), urate crystals, calcium oxalate (ethylene glycol)</li><li><b>Vascular</b> (thrombocytopenia and schistocytosis on CBC): TTP/HUS: Shiga-like toxin (E. coli), drugs, HIV, malignancy</li><li><b>Glomerular</b> (RBC casts, dysmorphic RBCs): rapidly progressive glomerulonephritis: anti-GBM antibodies, immune-complex deposition (IgA, post-strep, lupus), pauci-immune (Wegener's)</li><li><b>Interstitial</b> (sterile pyuria, eosinophiluria): acute interstitial nephritis: drugs (NSAIDs, Abx, allopurinol, PPI), infections (CMV, strep, legionella), immune (lupus, sarcoid, Sjögren)</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b105a",
+   "title": "Acute Kidney Injury",
+   "src": "fig",
+   "img": "bb-105-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Kidney Injury"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Acute increase in creatinine by at least 50%"
+    },
+    {
+     "id": "pre",
+     "k": "dx",
+     "t": "Pre-Renal (FeNa < 1%, bland urine sediment)"
+    },
+    {
+     "id": "ren",
+     "k": "q",
+     "t": "Renal (FeNa > 2%)"
+    },
+    {
+     "id": "post",
+     "k": "dx",
+     "t": "Post-Renal (Obstruction/hydronephrosis on U/S)",
+     "d": "<ul><li>Benign Prostatic Hyperplasia</li><li>Constipation</li><li>Prostate Cancer</li><li>Urolithiasis</li></ul>"
+    },
+    {
+     "id": "hypo",
+     "k": "dx",
+     "t": "Renal Hypoperfusion",
+     "d": "<ul><li>Hepatorenal syndromes</li><li>Drugs</li><li>Emboli</li></ul>"
+    },
+    {
+     "id": "sys",
+     "k": "dx",
+     "t": "Systemic Hypotension",
+     "d": "<ul><li>Shock</li></ul>"
+    },
+    {
+     "id": "ua",
+     "k": "act",
+     "t": "Urinalysis and CBC"
+    },
+    {
+     "id": "tub",
+     "k": "q",
+     "t": "Tubular"
+    },
+    {
+     "id": "vas",
+     "k": "q",
+     "t": "Vascular (Thrombocytopenia and schistocytosis on CBC)"
+    },
+    {
+     "id": "glo",
+     "k": "q",
+     "t": "Glomerular (RBC casts, dysmorphic RBCs)"
+    },
+    {
+     "id": "int",
+     "k": "q",
+     "t": "Interstitial (Sterile pyuria, eosinophiluria)"
+    },
+    {
+     "id": "atn",
+     "k": "dx",
+     "t": "Acute Tubular Necrosis (Epithelial cell casts)",
+     "d": "<ul><li>Ischemia (severe hypotension)</li><li>Toxins (contrast, aminoglycosides, chemotherapy)</li><li>Pigments</li></ul>"
+    },
+    {
+     "id": "tob",
+     "k": "dx",
+     "t": "Tubular Obstruction",
+     "d": "<ul><li>Cast nephropathy (multiple myeloma)</li><li>Urate crystals</li><li>Calcium Oxalate (Ethylene glycol)</li></ul>"
+    },
+    {
+     "id": "ttp",
+     "k": "dx",
+     "t": "TTP/HUS",
+     "d": "<ul><li>Shiga-like toxin (E. coli)</li><li>Drugs</li><li>HIV</li><li>Malignancy</li></ul>"
+    },
+    {
+     "id": "rpg",
+     "k": "dx",
+     "t": "Rapidly Progressive Glomerulonephritis",
+     "d": "<ul><li>Anti-GBM antibodies</li><li>Immune-complex deposition (IgA, post-strep, lupus)</li><li>Pauci-immune (Wegener's)</li></ul>"
+    },
+    {
+     "id": "ain",
+     "k": "dx",
+     "t": "Acute Interstitial Nephritis",
+     "d": "<ul><li>Drugs (NSAIDs, Abx, allopurinol, PPI)</li><li>Infections (CMV, strep, legionella)</li><li>Immune (lupus, sarcoid, Sjögren)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "pre",
+     "l": "Pre-renal"
+    },
+    {
+     "f": "b",
+     "t": "ren",
+     "l": "Renal"
+    },
+    {
+     "f": "b",
+     "t": "post",
+     "l": "Post-renal"
+    },
+    {
+     "f": "pre",
+     "t": "hypo",
+     "l": "Renal hypoperfusion"
+    },
+    {
+     "f": "pre",
+     "t": "sys",
+     "l": "Systemic hypotension"
+    },
+    {
+     "f": "ren",
+     "t": "ua"
+    },
+    {
+     "f": "ua",
+     "t": "tub",
+     "l": "Tubular"
+    },
+    {
+     "f": "ua",
+     "t": "vas",
+     "l": "Vascular"
+    },
+    {
+     "f": "ua",
+     "t": "glo",
+     "l": "Glomerular"
+    },
+    {
+     "f": "ua",
+     "t": "int",
+     "l": "Interstitial"
+    },
+    {
+     "f": "tub",
+     "t": "atn",
+     "l": "Acute tubular necrosis"
+    },
+    {
+     "f": "tub",
+     "t": "tob",
+     "l": "Tubular obstruction"
+    },
+    {
+     "f": "vas",
+     "t": "ttp"
+    },
+    {
+     "f": "glo",
+     "t": "rpg"
+    },
+    {
+     "f": "int",
+     "t": "ain"
+    }
+   ]
+  }
+ ]
+}

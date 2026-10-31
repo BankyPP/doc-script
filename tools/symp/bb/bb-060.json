@@ -1,0 +1,98 @@
+{
+ "key": "060",
+ "en": "Prolonged PT (INR), Normal PTT",
+ "th": "PT (INR) ยาว PTT ปกติ",
+ "pdf": "89",
+ "bookpg": "60",
+ "target": "abnormal-bleeding",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-7-algo",
+   "id": "bb-060-scheme",
+   "h": "Prolonged PT (INR), Normal PTT scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b060a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b060a",
+   "title": "Prolonged PT (INR), Normal PTT",
+   "src": "fig",
+   "img": "bb-060-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Normal PTT / Long PT"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Sufficient Vitamin K",
+     "d": "<ul><li>Congenital Clotting Factor Deficiency – Extrinsic Factor (Factor VII Deficiency)</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Insufficient Vitamin K"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Vitamin K Deficiency"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Vitamin K Antagonist",
+     "d": "<ul><li>Coumadin (Warfarin) use</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Child/Adult",
+     "d": "<ul><li>Antibiotics and Poor Nutrition</li><li>Fat Malabsorption</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Newborn",
+     "d": "<ul><li>Hemorrhagic Disease of the Newborn</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Sufficient Vitamin K"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Insufficient Vitamin K"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Vitamin K deficiency"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Vitamin K antagonist"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Child/Adult"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Newborn"
+    }
+   ]
+  }
+ ]
+}

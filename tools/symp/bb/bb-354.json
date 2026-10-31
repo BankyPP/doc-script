@@ -1,0 +1,154 @@
+{
+ "key": "354",
+ "en": "Microcytic Anemia (Pediatric)",
+ "th": "โลหิตจางชนิดเม็ดเลือดแดงเล็กในเด็ก",
+ "pdf": "383",
+ "bookpg": "354",
+ "target": null,
+ "new": {
+  "id": "ped-microcytic-anemia",
+  "th": "โลหิตจางชนิดเม็ดเลือดแดงเล็กในเด็ก",
+  "en": "Microcytic Anemia (Pediatric)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-354-scheme",
+   "h": "Microcytic Anemia (Pediatric) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b354a\"></div><p><small>* Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b354a",
+   "title": "Microcytic Anemia",
+   "src": "fig",
+   "img": "bb-354-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Microcytic Anemia"
+    },
+    {
+     "id": "q1",
+     "k": "q",
+     "t": "Ferritin decreased, serum iron decreased, TIBC increased · Fe/TIBC <18% · MCV/RBC >13"
+    },
+    {
+     "id": "q2",
+     "k": "q",
+     "t": "Ferritin normal/increased, serum iron decreased, TIBC normal/decreased · Fe/TIBC >18%"
+    },
+    {
+     "id": "q3",
+     "k": "q",
+     "t": "Ferritin normal/increased, serum iron normal, TIBC normal · MCV/RBC <13, +/- basophilic stippling, +/- increased reticulocytes"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "Iron Deficiency*",
+     "d": "<ul><li>Reduced dietary intake (over consumption of cow’s milk)</li><li>Malabsorption (Eg. <b>Celiac disease*, Inflammatory Bowel Disease*</b>)</li><li>Chronic Blood Loss</li></ul>"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Anemia of Chronic Disease",
+     "d": "<ul><li>Chronic inflammation (Eg. <b>Juvenile Idiopathic Arthritis*, Inflammatory Bowel Disease*</b>, Lupus, etc.)</li></ul>"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Hemoglobinopathies*"
+    },
+    {
+     "id": "h1",
+     "k": "q",
+     "t": "Increased HgbA2 · Normal HgbA"
+    },
+    {
+     "id": "h2",
+     "k": "q",
+     "t": "Increased HgbA2 · Increased HgbF · No HgbA"
+    },
+    {
+     "id": "h3",
+     "k": "q",
+     "t": "Increased HgbH · HgbH inclusions in RBC"
+    },
+    {
+     "id": "e1",
+     "k": "dx",
+     "t": "β-Thalassemia Minor"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "β-Thalassemia Major"
+    },
+    {
+     "id": "e3",
+     "k": "dx",
+     "t": "α-Thalassemia 2-3 digene deletion"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q1",
+     "l": "Ferritin ↓ · iron ↓ · TIBC ↑"
+    },
+    {
+     "f": "a",
+     "t": "q2",
+     "l": "Ferritin N/↑ · iron ↓ · TIBC N/↓"
+    },
+    {
+     "f": "a",
+     "t": "q3",
+     "l": "Ferritin N/↑ · iron N · TIBC N"
+    },
+    {
+     "f": "q1",
+     "t": "d1"
+    },
+    {
+     "f": "q2",
+     "t": "d2"
+    },
+    {
+     "f": "q3",
+     "t": "d3"
+    },
+    {
+     "f": "d3",
+     "t": "h1",
+     "l": "HgbA2 ↑ · HgbA normal"
+    },
+    {
+     "f": "d3",
+     "t": "h2",
+     "l": "HgbA2 ↑ · HgbF ↑ · no HgbA"
+    },
+    {
+     "f": "d3",
+     "t": "h3",
+     "l": "HgbH ↑ · HgbH inclusions"
+    },
+    {
+     "f": "h1",
+     "t": "e1"
+    },
+    {
+     "f": "h2",
+     "t": "e2"
+    },
+    {
+     "f": "h3",
+     "t": "e3"
+    }
+   ]
+  }
+ ]
+}

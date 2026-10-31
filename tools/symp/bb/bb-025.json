@@ -1,0 +1,77 @@
+{
+ "key": "025",
+ "en": "Chest Trauma Complications",
+ "th": "ภาวะแทรกซ้อนจากการบาดเจ็บทรวงอก",
+ "pdf": "54",
+ "bookpg": "25",
+ "target": null,
+ "new": {
+  "id": "chest-trauma",
+  "th": "การบาดเจ็บที่ทรวงอก",
+  "en": "Chest Trauma Complications",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "bb-025-scheme",
+   "h": "Chest trauma complications (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b025a\"></div><p><small>* Potentially acutely life-threatening</small></p>"
+  },
+  {
+   "id": "bb-025-list",
+   "h": "Complications by site",
+   "html": "<h5>Cardiac</h5><ul><li>Cardiac Tamponade*</li><li>Pericarditis</li><li>Myocardial Contusion</li><li>Acute Aortic Rupture*</li></ul><h5>Chest wall</h5><ul><li>Rib Fractures</li><li>Flail Chest*</li><li>Diaphragm Injury</li></ul><h5>Lung</h5><ul><li>Pulmonary Contusion</li><li>Pneumothorax (Tension*)</li><li>Hemothorax</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b025a",
+   "title": "Chest Trauma Complications",
+   "src": "fig",
+   "img": "bb-025-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chest Trauma"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Cardiac",
+     "d": "<ul><li>Cardiac Tamponade*</li><li>Pericarditis</li><li>Myocardial Contusion</li><li>Acute Aortic Rupture*</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Chest Wall",
+     "d": "<ul><li>Rib Fractures</li><li>Flail Chest*</li><li>Diaphragm Injury</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Lung",
+     "d": "<ul><li>Pulmonary Contusion</li><li>Pneumothorax (Tension*)</li><li>Hemothorax</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiac"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Chest wall"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Lung"
+    }
+   ],
+   "note": "* Potentially acutely life-threatening"
+  }
+ ]
+}

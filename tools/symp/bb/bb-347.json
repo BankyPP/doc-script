@@ -1,0 +1,169 @@
+{
+ "key": "347",
+ "en": "Increased Urinary Frequency",
+ "th": "ปัสสาวะบ่อย (เด็ก)",
+ "pdf": "376",
+ "bookpg": "347",
+ "target": null,
+ "new": {
+  "id": "ped-increased-urinary-frequency",
+  "th": "ปัสสาวะบ่อย (เด็ก)",
+  "en": "Increased Urinary Frequency",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-347-scheme",
+   "h": "Increased Urinary Frequency — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b347a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b347a",
+   "title": "Increased Urinary Frequency",
+   "src": "fig",
+   "img": "bb-347-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Increased Urinary Frequency"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed history and physical exam"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "No polyuria",
+     "d": "u/o&lt;7mL/kg/hr, and u/o appropriate for intake"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Polyuria",
+     "d": "u/o&gt;7mL/kg/hr, or inappropriately high for intake"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "Urinalysis; urine culture",
+     "d": "Urinalysis<br>Urine Culture"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Urinary Tract Infection"
+    },
+    {
+     "id": "f1",
+     "k": "note",
+     "t": "See “Genitourinary Complaints: Clinical approach to Dysuria”"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Urinary obstruction (Eg. Nephrolithiasis)</li><li>Small volume bladder</li><li>Detrusor hyperactivity</li><li><b>Vulvovaginitis*</b></li><li>Bladder compression<ul><li><b>Constipation*</b></li><li>Mass</li><li>Pregnancy</li></ul></li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "act",
+     "t": "Check serum and urine osmolality"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Osmotic Diuresis",
+     "d": "<ul><li><b>Diabetes Mellitus*</b></li><li><b>Renal Failure *</b> (high output)</li><li>Iatrogenic (Mannitol, NaCl)</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Water Diuresis"
+    },
+    {
+     "id": "k",
+     "k": "act",
+     "t": "Water deprivation test"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Diabetes Insipidus",
+     "d": "<ul><li>Central Diabetes Insipidus</li><li>Nephrogenic Diabetes Insipidus</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Primary polydipsia"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "u/o &lt;7 mL/kg/hr, appropriate for intake"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "u/o &gt;7 mL/kg/hr or inappropriately high"
+    },
+    {
+     "f": "c",
+     "t": "e"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Urine culture positive"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Urine culture negative"
+    },
+    {
+     "f": "f",
+     "t": "f1"
+    },
+    {
+     "f": "d",
+     "t": "h"
+    },
+    {
+     "f": "h",
+     "t": "i",
+     "l": "Urine Osmolality &gt; Serum Osmolality"
+    },
+    {
+     "f": "h",
+     "t": "j",
+     "l": "Urine Osmolality &lt; Serum Osmolality"
+    },
+    {
+     "f": "j",
+     "t": "k"
+    },
+    {
+     "f": "k",
+     "t": "l",
+     "l": "Hypotonic urine"
+    },
+    {
+     "f": "k",
+     "t": "m",
+     "l": "Hypertonic Urine"
+    }
+   ]
+  }
+ ]
+}

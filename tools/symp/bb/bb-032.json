@@ -1,0 +1,144 @@
+{
+ "key": "032",
+ "en": "Hemoptysis",
+ "th": "ไอเป็นเลือด",
+ "pdf": "61",
+ "bookpg": "32",
+ "target": "hemoptysis",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-2-3-approach",
+   "id": "bb-032-scheme",
+   "h": "Hemoptysis scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b032a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<h5>Hemoptysis — causes by group (Blackbook)</h5><ul><li><b>Massive hemoptysis</b> (&gt;100 mL in 24 hours): Malignancy; Bronchiectasis; Abscess/Mycetoma; Arteriovenous Malformation</li><li><b>Non-massive hemoptysis</b> — CXR +/- CT<ul><li><b>Normal</b>: Hematemesis; Epistaxis; Bronchitis</li><li><b>Diffuse abnormality</b>: CHF; Bronchiectasis; Pulmonary Vasculitis</li><li><b>Focal abnormality</b><ul><li><b>Infection</b>: Bacterial; Viral; Tuberculosis; Fungal</li><li><b>Malignancy</b></li><li><b>Pulmonary vasculitis</b>: Lupus Erythematosus; Goodpasture’s Syndrome; Granulomatosis with polyangiitis/microscopic polyangiitis</li><li><b>Vascular</b>: Pulmonary Embolism; Arteriovenous Malformation</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b032a",
+   "title": "Hemoptysis",
+   "src": "fig",
+   "img": "bb-032-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hemoptysis"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Massive Hemoptysis (&gt;100 mL in 24 hours)",
+     "d": "<ul><li>Malignancy</li><li>Bronchiectasis</li><li>Abscess/Mycetoma</li><li>Arteriovenous Malformation</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Non-Massive Hemoptysis"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "CXR +/- CT"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Normal",
+     "d": "<ul><li>Hematemesis</li><li>Epistaxis</li><li>Bronchitis</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Focal Abnormality"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Diffuse Abnormality",
+     "d": "<ul><li>CHF</li><li>Bronchiectasis</li><li>Pulmonary Vasculitis</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Bacterial</li><li>Viral</li><li>Tuberculosis</li><li>Fungal</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Malignancy"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Pulmonary Vasculitis",
+     "d": "<ul><li>Lupus Erythematosus</li><li>Goodpasture’s Syndrome</li><li>Granulomatosis with polyangiitis/microscopic polyangiitis</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Pulmonary Embolism</li><li>Arteriovenous Malformation</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Massive (>100 mL in 24 hours)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Non-massive"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Normal"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Focal abnormality"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Diffuse abnormality"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Infection"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Malignancy"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Pulmonary vasculitis"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Vascular"
+    }
+   ]
+  }
+ ]
+}

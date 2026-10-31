@@ -1,0 +1,133 @@
+{
+ "key": "333",
+ "en": "Dysuria",
+ "th": "ปัสสาวะแสบขัด (เด็ก)",
+ "pdf": "362",
+ "bookpg": "333",
+ "target": null,
+ "new": {
+  "id": "ped-dysuria",
+  "th": "ปัสสาวะแสบขัด (เด็ก)",
+  "en": "Dysuria",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-333-scheme",
+   "h": "Dysuria — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b333a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b333a",
+   "title": "Dysuria",
+   "src": "fig",
+   "img": "bb-333-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dysuria"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed history and physical exam; urinalysis; urine cultures",
+     "d": "Detailed history and physical exam<br>Urinalysis<br>Urine cultures"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Normal Genitourinary exam"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Abnormal Genitourinary exam"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "*Urinary Tract Infection"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Further urine studies warranted",
+     "d": "<ul><li>Viral infection</li><li>Inflammatory (Eg. <b>Kawasaki Disease*</b>)</li><li>Nephrolithiasis</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Upper Urinary Tract Infection/Pyelonephritis",
+     "d": "<ul><li>Bacterial</li><li>Candida</li><li><b>Sexually Transmitted Infections*</b></li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Lower Urinary Tract Infection/Cystitis",
+     "d": "<ul><li>Bacterial</li><li>Candida</li><li><b>Sexually Transmitted Infections*</b></li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Vesicles or Ulcers",
+     "d": "<ul><li><b>Sexually Transmitted Infections*</b></li><li>Infectious (Eg. HSV, CMV)</li><li>Systemic inflammatory illness (Eg. Steven-Johnson syndrome)</li><li>Autoimmune conditions (Eg. <b>Inflammatory bowel disease*</b>, Behçet’s disease)</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "No vesicles or ulcers",
+     "d": "<ul><li><b>Vulvo-vaginitis*</b> (Eg. Group A Streptococcus infection, candida infection, irritation)</li><li><b>Balanitis*</b></li><li><b>Phimosis*</b></li><li>Labial adhesions</li><li>Anatomic (Eg. Trauma, chemical irritation, foreign body)</li><li>Dermatologic (Contact dermatitis, lichen planus, psoriasis, inflammatory skin conditions)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Normal Genitourinary exam"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Abnormal Genitourinary exam"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Urine culture positive"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Urine culture negative"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Fever, other systemic symptoms"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "No fever, otherwise well"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Vesicles or Ulcers"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "No vesicles or ulcers"
+    }
+   ]
+  }
+ ]
+}

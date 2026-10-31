@@ -1,0 +1,113 @@
+{
+ "key": "289",
+ "en": "Neck Mass",
+ "th": "ก้อนที่คอ",
+ "pdf": "318",
+ "bookpg": "289",
+ "target": null,
+ "new": {
+  "id": "neck-mass",
+  "th": "ก้อนที่คอ",
+  "en": "Neck Mass",
+  "g": "eent"
+ },
+ "sections": [
+  {
+   "id": "bb-289-scheme",
+   "h": "Neck Mass scheme",
+   "html": "<div class=\"flow\" data-flow=\"b289a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b289a",
+   "title": "Neck Mass",
+   "src": "fig",
+   "img": "bb-289-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Neck Mass"
+    },
+    {
+     "id": "inf",
+     "k": "q",
+     "t": "Inflammatory"
+    },
+    {
+     "id": "con",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Thyroglossal Duct Cyst</li><li>Branchial Cleft Anomalies</li><li>Dermoid Cyst</li><li>Teratoma</li><li>Lymphatic Malformation</li><li>Hemangioma</li></ul>"
+    },
+    {
+     "id": "neo",
+     "k": "q",
+     "t": "Neoplasms"
+    },
+    {
+     "id": "ly",
+     "k": "dx",
+     "t": "Lymphadenitis",
+     "d": "<ul><li>Bacterial</li><li>Viral</li><li>Granulomatous Disease<ul><li>Tuberculosis</li><li>Atypical Mycobacterium</li><li>Actinomycosis</li><li>Cat-Scratch Disease</li></ul></li></ul>"
+    },
+    {
+     "id": "si",
+     "k": "dx",
+     "t": "Sialadenitis",
+     "d": "<ul><li>Parotid Salivary Gland</li><li>Submandibular Salivary Gland</li></ul>"
+    },
+    {
+     "id": "pr",
+     "k": "dx",
+     "t": "Primary",
+     "d": "<ul><li>Lymphoma</li><li>Thyroid Neoplasm</li><li>Neoplasm of Salivary Glands</li><li>Neurogenic Neoplasm<ul><li>Schwannoma</li><li>Neuroblastoma</li><li>Ganglioneuroma</li></ul></li><li>Paragangliomas<ul><li>Carotid Body Tumors</li></ul></li></ul>"
+    },
+    {
+     "id": "me",
+     "k": "dx",
+     "t": "Metastatic",
+     "d": "<ul><li>Squamous Cell Carcinoma</li><li>Thyroid (Spread to Cervical Lymph Nodes)</li><li>Melanoma</li><li>Distant site (Stomach, etc.)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "inf",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "a",
+     "t": "con",
+     "l": "Congenital"
+    },
+    {
+     "f": "a",
+     "t": "neo",
+     "l": "Neoplasms"
+    },
+    {
+     "f": "inf",
+     "t": "ly",
+     "l": "Lymphadenitis"
+    },
+    {
+     "f": "inf",
+     "t": "si",
+     "l": "Sialadenitis"
+    },
+    {
+     "f": "neo",
+     "t": "pr",
+     "l": "Primary"
+    },
+    {
+     "f": "neo",
+     "t": "me",
+     "l": "Metastatic"
+    }
+   ]
+  }
+ ]
+}

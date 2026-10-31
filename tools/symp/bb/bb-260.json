@@ -1,0 +1,195 @@
+{
+ "key": "260",
+ "en": "Fracture Healing",
+ "th": "การหายของกระดูกหัก",
+ "pdf": "289",
+ "bookpg": "260",
+ "target": null,
+ "new": {
+  "id": "fracture-healing",
+  "th": "การหายของกระดูกหัก",
+  "en": "Fracture Healing",
+  "g": "msk"
+ },
+ "sections": [
+  {
+   "id": "bb-260-scheme",
+   "h": "Fracture healing — delayed union / non-union / malunion (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b260a\"></div>"
+  },
+  {
+   "id": "bb-260-stages",
+   "h": "Stages of fracture healing",
+   "html": "<div class=\"flow\" data-flow=\"b260b\"></div>"
+  },
+  {
+   "id": "bb-260-redflags",
+   "h": "Red flags (life threatening)",
+   "html": "<div class=\"warn\"><b>RED FLAGS (life threatening)</b><ul><li>Multi-trauma</li><li>Pelvic Fracture</li><li>Femur Fracture</li><li>High Cervical Spine Fracture</li></ul></div>"
+  },
+  {
+   "id": "bb-260-operative",
+   "h": "Operative vs non-operative fractures",
+   "html": "<div class=\"tbl\"><table><thead><tr><th>Operative Fractures</th><th>Non-Operative Fractures</th></tr></thead><tbody><tr><td><ul><li>Open</li><li>Unstable</li><li>Displaced</li><li>Intra-articular</li></ul></td><td><ul><li>Closed</li><li>Stable</li><li>Undisplaced</li><li>Extra-articular</li></ul></td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b260a",
+   "title": "Fracture Healing",
+   "src": "fig",
+   "img": "bb-260-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fracture Healing"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Delayed Union (3 – 6 months)",
+     "d": "<ul><li>Tobacco / nicotine</li><li>NSAIDS</li><li>Ca2+ / Vitamin D deficiency</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Non-Union (after 6 months)"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Malunion"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Septic (R/O First)"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Aseptic"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Hypertrophic (adequate blood flow)",
+     "d": "<ul><li>Mechanical failure</li><li>Excessive motion</li><li>Excessive bone gap</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Atrophic (inadequate blood flow)",
+     "d": "<ul><li>Tobacco / nicotine</li><li>NSAIDS</li><li>Medications</li><li>Allergies</li><li>Biologic Failure</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Functional",
+     "d": "<ul><li>Small deviations from normal axis</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Non Functional",
+     "d": "<ul><li>Inadequate immobilization/ reduction</li><li>Misalignment before casting</li><li>Premature cast removal</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Delayed union"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Non-union"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Malunion"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Septic (R/O first)"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Aseptic"
+    },
+    {
+     "f": "f",
+     "t": "g",
+     "l": "Hypertrophic"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Atrophic"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Functional"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Non functional"
+    }
+   ]
+  },
+  {
+   "id": "b260b",
+   "title": "Fracture Healing — stages and time course",
+   "src": "fig",
+   "img": "bb-260-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Inflammation",
+     "d": "Hours – Days"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Soft Callus",
+     "d": "Days – Weeks"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "Hard Callus",
+     "d": "Weeks – Months"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "Remodelling",
+     "d": "Years"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    }
+   ],
+   "note": "เวลาที่ระบุในเล่ม: Inflammation = Hours–Days · Soft Callus = Days–Weeks · Hard Callus = Weeks–Months · Remodelling = Years"
+  }
+ ]
+}

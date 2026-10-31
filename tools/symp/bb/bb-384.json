@@ -1,0 +1,22 @@
+{
+ "key": "384",
+ "en": "Salter Harris Physeal Injury Classification",
+ "th": "การจำแนกกระดูกหักที่แผ่นกระดูกเจริญเติบโต (Salter-Harris)",
+ "pdf": "413",
+ "bookpg": "384",
+ "target": null,
+ "new": {
+  "id": "ped-salter-harris",
+  "th": "การจำแนกกระดูกหักที่ growth plate (Salter-Harris)",
+  "en": "Salter Harris Physeal Injury Classification",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-384-class",
+   "h": "Salter Harris classification (Blackbook)",
+   "html": "<figure><img src=\"symp/img/bb-384-f1.webp\" alt=\"Salter Harris physeal injury classification types I-V\"><figcaption>Salter Harris Physeal Injury Classification (types I–V)</figcaption></figure><div class=\"tbl\"><table><thead><tr><th>Type</th><th>Population</th><th>Features</th></tr></thead><tbody><tr><td>I</td><td>Younger Children</td><td>Separation through the physis</td></tr><tr><td>II</td><td>Older Children (75%)</td><td>Fracture through a portion of the physis that extends through the metaphyses</td></tr><tr><td>III</td><td>Older Children (75%)</td><td>Fracture line goes below the physis through the epiphysis, and into the joint</td></tr><tr><td>IV</td><td></td><td>Fracture Line through the metaphysis, physis and epiphysis</td></tr><tr><td>V</td><td></td><td>Compression fracture of the growth plate</td></tr></tbody></table></div><h4>Mnemonic (SALTR)</h4><div class=\"tbl\"><table><tbody><tr><td>S</td><td>Straight through</td></tr><tr><td>A</td><td>Above</td></tr><tr><td>L</td><td>Lower</td></tr><tr><td>T</td><td>Through</td></tr><tr><td>R</td><td>Crush</td></tr></tbody></table></div><p><small>Image source: http://www.jaaos.org/content/10/5/345/F1.large.jpg</small></p>"
+  }
+ ],
+ "flows": []
+}

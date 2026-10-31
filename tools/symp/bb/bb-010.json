@@ -1,0 +1,127 @@
+{
+ "key": "010",
+ "en": "Hypertension in Pregnancy",
+ "th": "ความดันโลหิตสูงในสตรีตั้งครรภ์",
+ "pdf": "39",
+ "bookpg": "10",
+ "target": null,
+ "new": {
+  "id": "hypertension",
+  "th": "ความดันโลหิตสูง",
+  "en": "Hypertension",
+  "g": "cvr"
+ },
+ "note": "ตามคำสั่ง coordinator: ใช้บทใหม่ id hypertension ร่วมกับหน้า 9 (key 009) และหน้า 115 (Renal) — ตัวรวมต่อเข้าบทเดียวกัน",
+ "sections": [
+  {
+   "id": "bb-010-scheme",
+   "h": "Hypertension in pregnancy scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b010a\"></div><div class=\"pearl\">Clinical Pearl: BP should always be measured in a sitting position for a pregnant patient.</div>"
+  },
+  {
+   "id": "bb-010-classes",
+   "h": "Classification",
+   "html": "<h5>Pre-existing Hypertension</h5><p>Before Pregnancy OR &lt;20 weeks gestational age</p><ul><li><b>No proteinuria</b> → Chronic Hypertension: Primary; Secondary</li><li><b>Proteinuria (≥0.3 g/24 hr urine) <b><u>OR</u></b> one or more Adverse Conditions*</b> → Pre-existing Hypertension with Pre-Eclampsia</li></ul><h5>Gestational Hypertension</h5><p>Previously normotensive, &gt;20 weeks gestational age</p><ul><li><b>No proteinuria</b> → Gestational Hypertension</li><li><b>Proteinuria (≥0.3 g/24 hr urine) <b><u>OR</u></b> one or more Adverse Conditions*</b> → Gestational Hypertension with Pre-Eclampsia</li><li><b>Pre-Eclampsia + Seizures/Coma</b> → Eclampsia</li></ul>"
+  },
+  {
+   "id": "bb-010-adverse",
+   "h": "*Adverse conditions (SOGC, 2008)",
+   "html": "<div class=\"tbl\"><table><thead><tr><th></th><th>Maternal</th><th>Fetal</th></tr></thead><tbody><tr><td><b>*Adverse Conditions:</b> (SOGC, 2008)</td><td><ul><li>Persistent or new/unusual headache</li><li>Visual disturbances</li><li>Persistent abdominal/RUQ pain</li><li>Severe nausea or vomiting</li><li>Chest pain/dyspnea</li><li>Severe hypertension</li><li>Pulmonary Edema</li><li>Suspected placental abruption</li><li>Elevated serum creatinine/AST/ALT/LDH</li><li>Platelet &lt;100×10<sup>9</sup>/L</li><li>Serum albumin &lt;20 g/L</li></ul></td><td><ul><li>Oligohydramnios</li><li>Intrauterine growth restriction</li><li>Absent/reversed end-diastolic flow in the umbilical artery</li><li>Intrauterine fetal death</li></ul></td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b010a",
+   "title": "Hypertension in Pregnancy",
+   "src": "fig",
+   "img": "bb-010-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hypertension in Pregnancy",
+     "d": "<p>DBP ≥ 90 mmHg, based on two measurements</p><div class=\"pearl\">Clinical Pearl: BP should always be measured in a sitting position for a pregnant patient.</div>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Pre-existing Hypertension",
+     "d": "<p>Before Pregnancy OR &lt;20 weeks gestational age</p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Gestational Hypertension",
+     "d": "<p>Previously normotensive, &gt;20 weeks gestational age</p>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Chronic Hypertension",
+     "d": "<ul><li>Primary</li><li>Secondary</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Pre-existing Hypertension with Pre-Eclampsia",
+     "d": "<p>Proteinuria (≥0.3 g/24 hr urine) <b><u>OR</u></b> one or more Adverse Conditions*</p><div class=\"tbl\"><table><thead><tr><th></th><th>Maternal</th><th>Fetal</th></tr></thead><tbody><tr><td><b>*Adverse Conditions:</b> (SOGC, 2008)</td><td><ul><li>Persistent or new/unusual headache</li><li>Visual disturbances</li><li>Persistent abdominal/RUQ pain</li><li>Severe nausea or vomiting</li><li>Chest pain/dyspnea</li><li>Severe hypertension</li><li>Pulmonary Edema</li><li>Suspected placental abruption</li><li>Elevated serum creatinine/AST/ALT/LDH</li><li>Platelet &lt;100×10<sup>9</sup>/L</li><li>Serum albumin &lt;20 g/L</li></ul></td><td><ul><li>Oligohydramnios</li><li>Intrauterine growth restriction</li><li>Absent/reversed end-diastolic flow in the umbilical artery</li><li>Intrauterine fetal death</li></ul></td></tr></tbody></table></div>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Gestational Hypertension"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Gestational Hypertension with Pre-Eclampsia",
+     "d": "<p>Proteinuria (≥0.3 g/24 hr urine) <b><u>OR</u></b> one or more Adverse Conditions*</p><div class=\"tbl\"><table><thead><tr><th></th><th>Maternal</th><th>Fetal</th></tr></thead><tbody><tr><td><b>*Adverse Conditions:</b> (SOGC, 2008)</td><td><ul><li>Persistent or new/unusual headache</li><li>Visual disturbances</li><li>Persistent abdominal/RUQ pain</li><li>Severe nausea or vomiting</li><li>Chest pain/dyspnea</li><li>Severe hypertension</li><li>Pulmonary Edema</li><li>Suspected placental abruption</li><li>Elevated serum creatinine/AST/ALT/LDH</li><li>Platelet &lt;100×10<sup>9</sup>/L</li><li>Serum albumin &lt;20 g/L</li></ul></td><td><ul><li>Oligohydramnios</li><li>Intrauterine growth restriction</li><li>Absent/reversed end-diastolic flow in the umbilical artery</li><li>Intrauterine fetal death</li></ul></td></tr></tbody></table></div>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Eclampsia",
+     "d": "<p>Pre-Eclampsia + Seizures/Coma</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Pre-existing (before pregnancy or <20 wk)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Gestational (previously normotensive, >20 wk)"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "No proteinuria"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Proteinuria (≥0.3 g/24 hr) OR ≥1 adverse condition*"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "No proteinuria"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Proteinuria (≥0.3 g/24 hr) OR ≥1 adverse condition*"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Pre-eclampsia + seizures/coma"
+    }
+   ],
+   "note": "กล่อง No Proteinuria / Proteinuria / Pre-Eclampsia + Seizures/Coma ยุบเป็นป้ายบนลูกศร · ตาราง *Adverse Conditions อยู่ในกล่อง pre-eclampsia ทั้งสองและในส่วนล่าง"
+  }
+ ]
+}

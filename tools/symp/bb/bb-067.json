@@ -1,0 +1,141 @@
+{
+ "key": "067",
+ "en": "Thrombocytopenia",
+ "th": "เกล็ดเลือดต่ำ",
+ "pdf": "96",
+ "bookpg": "67",
+ "target": "abnormal-bleeding",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-6-algo",
+   "id": "bb-067-scheme",
+   "h": "Thrombocytopenia scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b067a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b067a",
+   "title": "Thrombocytopenia",
+   "src": "fig",
+   "img": "bb-067-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Low Platelet Count"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Decreased Production"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Increased Sequestration",
+     "d": "<ul><li>Splenomegaly</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Increased Destruction"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Decreased Megakaryopoiesis",
+     "d": "<ul><li>Aplastic Anemia</li><li>Toxic Damage (e.g. Chemotherapy)</li><li>Displacement (e.g. Leukemia, Tumour)</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Ineffective Megakaryopoiesis",
+     "d": "<ul><li>B12 Deficiency</li><li>Folate Deficiency</li><li>Folate Antagonist (methotrexate)</li><li>Drugs</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Immune"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Non-Immune",
+     "d": "<ul><li>HELLP Syndrome</li><li>TTP/HUS</li><li>DIC</li><li>Vasculitis</li><li>Infection</li><li>Foreign Surface (e.g. Prosthetic Heart Valve)</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li>ITP</li><li>SLE</li><li>CLL</li><li>APLA</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Alloimmune",
+     "d": "<ul><li>anti-HLA antibodies</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Drugs",
+     "d": "<ul><li>Quinidine</li><li>HIT</li><li>Others</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Decreased production"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Increased sequestration"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Increased destruction"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Decreased megakaryopoiesis"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Ineffective megakaryopoiesis"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Immune"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Non-immune"
+    },
+    {
+     "f": "g",
+     "t": "i",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "Alloimmune"
+    },
+    {
+     "f": "g",
+     "t": "k",
+     "l": "Drugs"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,197 @@
+{
+ "key": "365",
+ "en": "Pediatric Cough (Acute / Chronic)",
+ "th": "ไอในเด็ก (เฉียบพลัน / เรื้อรัง)",
+ "pdf": "394–395",
+ "bookpg": "365–366",
+ "target": null,
+ "new": {
+  "id": "ped-cough",
+  "th": "ไอในเด็ก (เฉียบพลัน / เรื้อรัง)",
+  "en": "Pediatric Cough",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-365-scheme",
+   "h": "Pediatric Cough (Acute / Chronic) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b365a\"></div><div class=\"flow\" data-flow=\"b365b\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b365a",
+   "title": "Pediatric Cough — Acute",
+   "src": "fig",
+   "img": "bb-365-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Cough (< 3 weeks)"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed history · respiratory physical exam"
+    },
+    {
+     "id": "r",
+     "k": "q",
+     "t": "Respiratory"
+    },
+    {
+     "id": "nr",
+     "k": "dx",
+     "t": "Non-Respiratory",
+     "d": "<ul><li>Cardiac (E.g. <b>Congestive heart failure*</b>)</li><li>Neurological (E.g. Aspiration)</li><li>Gastrointestinal (E.g. <b>Gastroesophageal reflux*</b>)</li><li>Other (E.g. Habit cough)</li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "q",
+     "t": "Stridor on inspiration · increased work of breathing …",
+     "d": "<ul><li><b>Stridor</b> on inspiration</li><li>Increased work of breathing (indrawing, nasal flare, head bobbing, paradoxical breathing)</li><li>Reduced SaO2 and reduced air entry are red flags for impending respiratory failure</li></ul>"
+    },
+    {
+     "id": "w",
+     "k": "q",
+     "t": "Wheeze on expiration, asymmetric breath sounds · increased work of breathing …",
+     "d": "<ul><li><b>Wheeze</b> on expiration, asymmetric breathsounds</li><li>Increased work of breathing (indrawing, nasal flare, head bobbing, paradoxical breathing)</li><li>Crackles, bronchial breath sounds, focal respiratory findings</li><li>SaO2 reduced</li></ul>"
+    },
+    {
+     "id": "u",
+     "k": "dx",
+     "t": "Upper Respiratory",
+     "d": "<ul><li>Infectious<ul><li>Viral URTI*</li><li>Sinusitis*</li><li>Croup*</li><li>Epiglottitis*</li><li>Pertussis*</li><li>Tracheitis*</li></ul></li><li>Foreign body</li><li><b>Anaphylaxis*</b></li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Lower Respiratory",
+     "d": "<ul><li>Infectious<ul><li><b>Pneumonia*</b></li><li><b>Bronchiolitis*</b></li></ul></li><li><b>Asthma*</b></li><li><b>Anaphylaxis*</b></li><li>Foreign body</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "r",
+     "l": "Respiratory"
+    },
+    {
+     "f": "b",
+     "t": "nr",
+     "l": "Non-respiratory"
+    },
+    {
+     "f": "r",
+     "t": "s",
+     "l": "Stridor on inspiration"
+    },
+    {
+     "f": "r",
+     "t": "w",
+     "l": "Wheeze on expiration"
+    },
+    {
+     "f": "s",
+     "t": "u"
+    },
+    {
+     "f": "w",
+     "t": "l"
+    }
+   ]
+  },
+  {
+   "id": "b365b",
+   "title": "Pediatric Cough — Chronic",
+   "src": "fig",
+   "img": "bb-365-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chronic Cough (> 3 weeks)"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed history · assess growth · respiratory physical exam"
+    },
+    {
+     "id": "r",
+     "k": "q",
+     "t": "Respiratory"
+    },
+    {
+     "id": "nr",
+     "k": "dx",
+     "t": "Non-Respiratory",
+     "d": "<ul><li>Cardiac (E.g. <b>Congestive heart failure*</b>)</li><li>Neurological (E.g. Chronic aspiration)</li><li>Gastrointestinal (E.g. <b>Gastroesophageal reflux*</b>, tracheoesophageal fistula)</li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "q",
+     "t": "Stridor on inspiration · increased work of breathing …",
+     "d": "<ul><li><b>Stridor</b> on inspiration</li><li>Increased work of breathing (indrawing, nasal flare, head bobbing, paradoxical breathing)</li></ul>"
+    },
+    {
+     "id": "w",
+     "k": "q",
+     "t": "Wheeze on expiration · increased work of breathing …",
+     "d": "<ul><li><b>Wheeze</b> on expiration</li><li>Increased work of breathing (indrawing, nasal flare, head bobbing, paradoxical breathing)</li><li>Crackles, bronchial breath sounds, focal respiratory findings</li><li>SaO2 may be reduced</li></ul>"
+    },
+    {
+     "id": "u",
+     "k": "dx",
+     "t": "Upper Respiratory",
+     "d": "<ul><li>Infectious (E.g. <b>Sinusitis*</b>)</li><li><b>Mass/tumour*</b></li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Lower Respiratory",
+     "d": "<ul><li>Infectious (E.g. Atypical <b>pneumonia*</b>)</li><li><b>Asthma*</b></li><li><b>Cystic Fibrosis*</b></li><li>Foreign body</li><li>Immunodeficiency</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "r",
+     "l": "Respiratory"
+    },
+    {
+     "f": "b",
+     "t": "nr",
+     "l": "Non-respiratory"
+    },
+    {
+     "f": "r",
+     "t": "s",
+     "l": "Stridor on inspiration"
+    },
+    {
+     "f": "r",
+     "t": "w",
+     "l": "Wheeze on expiration"
+    },
+    {
+     "f": "s",
+     "t": "u"
+    },
+    {
+     "f": "w",
+     "t": "l"
+    }
+   ]
+  }
+ ]
+}

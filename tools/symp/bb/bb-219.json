@@ -1,0 +1,123 @@
+{
+ "key": "219",
+ "en": "Vaginal Discharge",
+ "th": "ตกขาว",
+ "pdf": "248",
+ "bookpg": "219",
+ "target": null,
+ "new": {
+  "id": "vaginal-discharge",
+  "th": "ตกขาว",
+  "en": "Vaginal Discharge",
+  "g": "obgyn"
+ },
+ "sections": [
+  {
+   "id": "bb-219-scheme",
+   "h": "Vaginal Discharge scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b219a\"></div><ul><li><b>Infectious</b><ul><li><b>Sexually Transmitted Infection</b><ul><li><i>Chlamydia trachomatis</i></li><li><i>Neisseria gonorrhoeae</i></li></ul></li><li><b>Toxic Shock Syndrome</b></li><li><b>Vulvovaginitis</b><ul><li>Vulvovaginal candidiasis</li><li>Bacterial vaginosis</li><li>Trichomonas vaginalis</li></ul></li></ul></li><li><b>Inflammatory</b><ul><li><b>Systemic</b><ul><li>Crohn’s disease</li><li>Collagen vascular disease</li><li>Dermatologic</li></ul></li><li><b>Local</b><ul><li>Chemical irritant</li><li>Douching</li><li>Atrophic vaginitis</li><li>Foreign body</li><li>Lichen planus</li></ul></li></ul></li><li><b>Neoplastic</b><ul><li>Endometrium</li><li>Cervix</li><li>Vulva</li><li>Vagina</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b219a",
+   "title": "Vaginal Discharge",
+   "src": "fig",
+   "img": "bb-219-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vaginal Discharge"
+    },
+    {
+     "id": "in",
+     "k": "q",
+     "t": "Infectious"
+    },
+    {
+     "id": "fl",
+     "k": "q",
+     "t": "Inflammatory"
+    },
+    {
+     "id": "ne",
+     "k": "dx",
+     "t": "Neoplastic",
+     "d": "<ul><li>Endometrium</li><li>Cervix</li><li>Vulva</li><li>Vagina</li></ul>"
+    },
+    {
+     "id": "sti",
+     "k": "dx",
+     "t": "Sexually Transmitted Infection",
+     "d": "<ul><li><i>Chlamydia trachomatis</i></li><li><i>Neisseria gonorrhoeae</i></li></ul>"
+    },
+    {
+     "id": "tss",
+     "k": "dx",
+     "t": "Toxic Shock Syndrome"
+    },
+    {
+     "id": "vv",
+     "k": "dx",
+     "t": "Vulvovaginitis",
+     "d": "<ul><li>Vulvovaginal candidiasis</li><li>Bacterial vaginosis</li><li>Trichomonas vaginalis</li></ul>"
+    },
+    {
+     "id": "sy",
+     "k": "dx",
+     "t": "Systemic",
+     "d": "<ul><li>Crohn’s disease</li><li>Collagen vascular disease</li><li>Dermatologic</li></ul>"
+    },
+    {
+     "id": "lo",
+     "k": "dx",
+     "t": "Local",
+     "d": "<ul><li>Chemical irritant</li><li>Douching</li><li>Atrophic vaginitis</li><li>Foreign body</li><li>Lichen planus</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "in",
+     "l": "Infectious"
+    },
+    {
+     "f": "a",
+     "t": "fl",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "a",
+     "t": "ne",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "in",
+     "t": "sti",
+     "l": "Sexually Transmitted Infection"
+    },
+    {
+     "f": "in",
+     "t": "tss",
+     "l": "Toxic Shock Syndrome"
+    },
+    {
+     "f": "in",
+     "t": "vv",
+     "l": "Vulvovaginitis"
+    },
+    {
+     "f": "fl",
+     "t": "sy",
+     "l": "Systemic"
+    },
+    {
+     "f": "fl",
+     "t": "lo",
+     "l": "Local"
+    }
+   ]
+  }
+ ]
+}

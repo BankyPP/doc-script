@@ -1,0 +1,306 @@
+{
+ "key": "029",
+ "en": "Dyspnea Chronic",
+ "th": "เหนื่อยเรื้อรัง",
+ "pdf": "58–59",
+ "bookpg": "29–30",
+ "target": "dyspnea",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-2-1-approach",
+   "id": "bb-029-scheme",
+   "h": "Chronic dyspnea schemes (Blackbook)",
+   "html": "<p>แยกเป็นสาเหตุจากหัวใจ และจากปอด/อื่น ๆ · เส้นประ = ไปดู scheme อื่นของ Dyspnea · * = acutely life-threatening</p>",
+   "sub": [
+    {
+     "id": "bb-029-cardiac",
+     "h": "Cardiac",
+     "html": "<div class=\"flow\" data-flow=\"b029a\"></div>"
+    },
+    {
+     "id": "bb-029-pulm",
+     "h": "Pulmonary / Other",
+     "html": "<div class=\"flow\" data-flow=\"b029b\"></div>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "cause-cv",
+   "html": "<h5>Chronic dyspnea — cardiac causes (Blackbook)</h5><ul><li><b>Pericardial</b>: Effusion; Cardiac Tamponade*; Constriction</li><li><b>Myocardial</b>: Systolic Dysfunction; Diastolic Dysfunction; Restrictive Cardiomyopathy</li><li><b>Valvular</b>: Stenosis; Regurgitation; Sub-Valvular Disease</li><li><b>Coronary Artery Disease</b>: Stable Angina; Acute Coronary Syndrome*</li><li><b>Arrhythmia</b>: Atrial Fibrillation; Bradyarrhythmia; Tachyarrhythmia</li></ul><p><small>* Denotes acutely life-threatening causes</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-resp",
+   "html": "<h5>Chronic dyspnea — pulmonary causes (Blackbook)</h5><ul><li><b>Airways</b>: Asthma; COPD; Bronchiectasis</li><li><b>Parenchyma</b> (abnormal chest X-ray)<ul><li><b>Alveoli</b>: Pneumonia</li><li><b>Interstitium</b>: Interstitial Pulmonary Fibrosis; Hypersensitivity Pneumonitis; CHF; Sarcoidosis</li><li><b>Vessels</b>: Pulmonary Embolism*; Pulmonary Hypertension</li></ul></li><li><b>Pump</b>: Chest Wall; Neuromuscular; Pleura</li></ul><p><small>* Denotes acutely life-threatening causes</small></p>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "bb-029-other",
+   "h": "Chronic dyspnea — other causes (Blackbook)",
+   "html": "<ul><li>Anemia</li><li>Anxiety</li><li>Deconditioning</li><li>Hyperthyroidism</li><li>Metabolic Acidosis</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b029a",
+   "title": "Dyspnea Chronic — Cardiac",
+   "src": "fig",
+   "img": "bb-029-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dyspnea"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Acute — presents in minutes to hours",
+     "d": "<p>Dashed branch in the book — shown in the \"Dyspnea — Acute\" scheme.</p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Chronic"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Cardiac"
+    },
+    {
+     "id": "e",
+     "k": "note",
+     "t": "Pulmonary",
+     "d": "<p>Dashed branch in the book — shown in the \"Dyspnea Chronic — Pulmonary / Other\" scheme.</p>"
+    },
+    {
+     "id": "f",
+     "k": "note",
+     "t": "Other",
+     "d": "<p>Dashed branch in the book — shown in the \"Dyspnea Chronic — Pulmonary / Other\" scheme.</p>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Pericardial",
+     "d": "<ul><li>Effusion</li><li>Cardiac Tamponade*</li><li>Constriction</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Myocardial",
+     "d": "<ul><li>Systolic Dysfunction</li><li>Diastolic Dysfunction</li><li>Restrictive Cardiomyopathy</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Valvular",
+     "d": "<ul><li>Stenosis</li><li>Regurgitation</li><li>Sub-Valvular Disease</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Coronary Artery Disease",
+     "d": "<ul><li>Stable Angina</li><li>Acute Coronary Syndrome*</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Arrhythmia",
+     "d": "<ul><li>Atrial Fibrillation</li><li>Bradyarrhythmia</li><li>Tachyarrhythmia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Acute (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Chronic"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Cardiac"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Pulmonary (dashed)"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Other (dashed)"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Pericardial"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Myocardial"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Valvular"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Coronary artery disease"
+    },
+    {
+     "f": "d",
+     "t": "k",
+     "l": "Arrhythmia"
+    }
+   ],
+   "note": "* Denotes acutely life-threatening causes"
+  },
+  {
+   "id": "b029b",
+   "title": "Dyspnea Chronic — Pulmonary / Other",
+   "src": "fig",
+   "img": "bb-029-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dyspnea"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Acute — presents in minutes to hours",
+     "d": "<p>Dashed branch in the book — shown in the \"Dyspnea — Acute\" scheme.</p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Chronic"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "Cardiac",
+     "d": "<p>Dashed branch in the book — shown in the \"Dyspnea Chronic — Cardiac\" scheme.</p>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Pulmonary"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Anemia</li><li>Anxiety</li><li>Deconditioning</li><li>Hyperthyroidism</li><li>Metabolic Acidosis</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Airways",
+     "d": "<ul><li>Asthma</li><li>COPD</li><li>Bronchiectasis</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Parenchyma (abnormal chest X-ray)"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Pump",
+     "d": "<ul><li>Chest Wall</li><li>Neuromuscular</li><li>Pleura</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Alveoli",
+     "d": "<ul><li>Pneumonia</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Interstitium",
+     "d": "<ul><li>Interstitial Pulmonary Fibrosis</li><li>Hypersensitivity Pneumonitis</li><li>CHF</li><li>Sarcoidosis</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Vessels",
+     "d": "<ul><li>Pulmonary Embolism*</li><li>Pulmonary Hypertension</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Acute (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Chronic"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Cardiac (dashed)"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Pulmonary"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Other"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Airways"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Parenchyma (abnormal chest X-ray)"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Pump"
+    },
+    {
+     "f": "h",
+     "t": "j",
+     "l": "Alveoli"
+    },
+    {
+     "f": "h",
+     "t": "k",
+     "l": "Interstitium"
+    },
+    {
+     "f": "h",
+     "t": "l",
+     "l": "Vessels"
+    }
+   ],
+   "note": "* Denotes acutely life-threatening causes"
+  }
+ ]
+}

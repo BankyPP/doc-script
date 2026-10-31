@@ -1,0 +1,147 @@
+{
+ "key": "055",
+ "en": "Approach to Leukocytosis",
+ "th": "เม็ดเลือดขาวสูง",
+ "pdf": "84",
+ "bookpg": "55",
+ "target": null,
+ "new": {
+  "id": "leukocytosis",
+  "th": "เม็ดเลือดขาวสูง",
+  "en": "Leukocytosis",
+  "g": "heme"
+ },
+ "sections": [
+  {
+   "id": "bb-055-scheme",
+   "h": "Approach to Leukocytosis scheme",
+   "html": "<div class=\"flow\" data-flow=\"b055a\"></div><p><small>*Denotes acutely life-threatening condition</small></p>"
+  },
+  {
+   "id": "bb-055-list",
+   "h": "Classification (text)",
+   "html": "<ul><li><b>Increased Leukocytes</b><ul><li><b>Granulocytosis</b><ul><li><b>Neutrophilia — (most common - See Neutrophilia scheme)</b><ul><li><b>Reactive</b></li><li><b>Neoplastic</b></li></ul></li><li><b>Basophilia</b><ul><li>Infection</li><li>Allergies</li><li>Chronic inflammation</li><li>Chronic myelogenous leukemia</li></ul></li><li><b>Eosinophilia</b><ul><li>Parasitic Infection</li><li>Allergies</li><li>Autoimmune disorders (ex. EGPA, IBD, RA, Sarcoidosis)</li><li>Chronic myelogenous leukemia</li><li>Hypereosinophilic syndromes</li><li>DRESS*</li></ul></li></ul></li><li><b>Lymphocytosis — (See Lymphocytosis scheme)</b><ul><li><b>Reactive</b></li><li><b>Neoplastic</b></li></ul></li><li><b>Acute Leukemia — (Blast Cells, Anemia, Thrombocytopenia)</b><ul><li>Acute lymphoblastic leukemia</li><li>Acute myeloblastic leukemia (May see Auer Rods on PBS)</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b055a",
+   "title": "Approach to Leukocytosis",
+   "src": "fig",
+   "img": "bb-055-f1.webp",
+   "note": "*DRESS = ภาวะที่คุกคามชีวิตเฉียบพลัน (ตามเชิงอรรถในหนังสือ) · Reactive/Neoplastic ชุดซ้าย = ของ Neutrophilia, ชุดขวา = ของ Lymphocytosis",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Increased Leukocytes"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Granulocytosis"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Lymphocytosis — (See Lymphocytosis scheme)"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Acute Leukemia — (Blast Cells, Anemia, Thrombocytopenia)",
+     "d": "<ul><li>Acute lymphoblastic leukemia</li><li>Acute myeloblastic leukemia (May see Auer Rods on PBS)</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Neutrophilia — (most common - See Neutrophilia scheme)"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Basophilia",
+     "d": "<ul><li>Infection</li><li>Allergies</li><li>Chronic inflammation</li><li>Chronic myelogenous leukemia</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Eosinophilia",
+     "d": "<ul><li>Parasitic Infection</li><li>Allergies</li><li>Autoimmune disorders (ex. EGPA, IBD, RA, Sarcoidosis)</li><li>Chronic myelogenous leukemia</li><li>Hypereosinophilic syndromes</li><li>DRESS*</li></ul><p><small>*Denotes acutely life-threatening condition</small></p>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Reactive"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Neoplastic"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Reactive"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Neoplastic"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Granulocytosis"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Lymphocytosis"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Acute Leukemia"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Neutrophilia"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Basophilia"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Eosinophilia"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Reactive"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "c",
+     "t": "j",
+     "l": "Reactive"
+    },
+    {
+     "f": "c",
+     "t": "k",
+     "l": "Neoplastic"
+    }
+   ]
+  }
+ ]
+}

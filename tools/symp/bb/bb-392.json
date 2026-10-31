@@ -1,0 +1,102 @@
+{
+ "key": "392",
+ "en": "Sore Throat/Sore Mouth (Pediatric)",
+ "th": "เจ็บคอ/เจ็บในปาก (เด็ก)",
+ "pdf": "421",
+ "bookpg": "392",
+ "target": null,
+ "new": {
+  "id": "ped-sore-throat-sore-mouth",
+  "th": "เจ็บคอ/เจ็บในปาก (เด็ก)",
+  "en": "Sore Throat/Sore Mouth (Pediatric)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-392-scheme",
+   "h": "Sore Throat/Sore Mouth (Pediatric) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b392a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b392a",
+   "title": "Sore Throat/Sore Mouth",
+   "src": "fig",
+   "img": "bb-392-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Sore Throat/Sore Mouth"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Referred",
+     "d": "<ul><li>Neurological (neuralgias, <b>migraine*</b>)</li><li>Skull (mastoiditis, TMJ)</li><li>Ear (<b>otitis media*, otitis externa*</b>)</li><li>Teeth (<b>dental disease*</b>, abscesses)</li><li>Neck (<b>cervical adenitis*, reactive lymphadenopathy*</b>)</li><li>Skin and soft tissue (<b>cellulitis*, eczema*</b>)</li></ul>"
+    },
+    {
+     "id": "t",
+     "k": "q",
+     "t": "Throat/mouth"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Stomatitis (Non-Infectious)",
+     "d": "<ul><li>Canker sores</li><li>Inflammatory (SLE, <b>Crohn’s Disease*, Kawasaki Disease*</b>)</li><li><b>Drugs*</b> (Steven Johnson, Mucositis)</li><li>Allergy</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Infectious"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Bacterial",
+     "d": "<ul><li><b>Pharyngitis*</b> (Group A Streptococcal, other)</li><li><b>Retropharyngeal abscess/cellulitis*</b></li><li><b>Peritonsillar abscess*</b></li><li><b>Epiglottitis*</b></li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li><b>Viral*</b> (EBV, CMV, HSV, Coxsackie Virus, other viral)</li><li>Fungal (<b>oral thrush*</b>)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "r",
+     "l": "Referred"
+    },
+    {
+     "f": "a",
+     "t": "t",
+     "l": "Throat/mouth"
+    },
+    {
+     "f": "t",
+     "t": "s",
+     "l": "Stomatitis (non-infectious)"
+    },
+    {
+     "f": "t",
+     "t": "i",
+     "l": "Infectious"
+    },
+    {
+     "f": "i",
+     "t": "b",
+     "l": "Bacterial"
+    },
+    {
+     "f": "i",
+     "t": "o",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

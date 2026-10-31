@@ -1,0 +1,81 @@
+{
+ "key": "364",
+ "en": "Otalgia (Earache) (Pediatric)",
+ "th": "ปวดหู (เด็ก)",
+ "pdf": "393",
+ "bookpg": "364",
+ "target": null,
+ "new": {
+  "id": "ped-otalgia",
+  "th": "ปวดหู (เด็ก)",
+  "en": "Otalgia (Earache) — Pediatric",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-364-scheme",
+   "h": "Otalgia (Earache) (Pediatric) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b364a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b364a",
+   "title": "Otalgia (Earache)",
+   "src": "fig",
+   "img": "bb-364-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Otalgia (Earache)"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Ear"
+    },
+    {
+     "id": "rp",
+     "k": "dx",
+     "t": "Referred pain",
+     "d": "<ul><li>Neurological (neuralgias, <b>migraine*</b>)</li><li>Skull (mastoiditis, TMJ)</li><li>Teeth (<b>dental disease*</b>, abscesses)</li><li>Throat (<b>pharyngitis*, peritonsillar abscess*, retropharyngeal abscess/cellulitis*, stomatitis*</b>)</li><li>Neck (<b>cervical adenitis*, reactive lymphadenopathy*</b>)</li><li>Skin and soft tissue (<b>cellulitis*</b>, <b>eczema*</b>)</li></ul>"
+    },
+    {
+     "id": "ni",
+     "k": "dx",
+     "t": "Non-infectious",
+     "d": "<ul><li>Foreign body</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li><b>Otitis Media*</b></li><li><b>Otitis Externa*</b></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Ear"
+    },
+    {
+     "f": "a",
+     "t": "rp",
+     "l": "Referred pain"
+    },
+    {
+     "f": "e",
+     "t": "ni",
+     "l": "Non-infectious"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Infectious"
+    }
+   ]
+  }
+ ]
+}

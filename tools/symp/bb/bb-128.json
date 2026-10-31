@@ -1,0 +1,145 @@
+{
+ "key": "128",
+ "en": "Urinary Tract Obstruction",
+ "th": "ทางเดินปัสสาวะอุดกั้น",
+ "pdf": "157",
+ "bookpg": "128",
+ "target": null,
+ "new": {
+  "id": "urinary-tract-obstruction",
+  "th": "ทางเดินปัสสาวะอุดกั้น",
+  "en": "Urinary Tract Obstruction",
+  "g": "kub"
+ },
+ "sections": [
+  {
+   "id": "bb-128-scheme",
+   "h": "Urinary Tract Obstruction scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b128a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b128a",
+   "title": "Urinary Tract Obstruction",
+   "src": "fig",
+   "img": "bb-128-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Urinary Tract Obstruction"
+    },
+    {
+     "id": "up",
+     "k": "q",
+     "t": "Upper Tract — bladder NOT distended on ultrasound",
+     "d": "<p>Hematuria, flank pain, +/- N/V</p>"
+    },
+    {
+     "id": "lo",
+     "k": "q",
+     "t": "Lower Tract — distended bladder on ultrasound",
+     "d": "<p>Urgency, frequency, hesitancy, nocturia</p>"
+    },
+    {
+     "id": "ct",
+     "k": "act",
+     "t": "CT KUB"
+    },
+    {
+     "id": "il",
+     "k": "q",
+     "t": "Intraluminal"
+    },
+    {
+     "id": "el",
+     "k": "dx",
+     "t": "Extraluminal",
+     "d": "<ul><li>Retroperitoneal Fibrosis</li><li>Cancer</li></ul>"
+    },
+    {
+     "id": "im",
+     "k": "dx",
+     "t": "Intramural",
+     "d": "<ul><li>Ureteropelvic junction obstruction</li></ul>"
+    },
+    {
+     "id": "mass",
+     "k": "dx",
+     "t": "Mass",
+     "d": "<ul><li>Urothelial cell carcinoma</li><li>Squamous cell carcinoma</li></ul>"
+    },
+    {
+     "id": "stone",
+     "k": "dx",
+     "t": "Stone",
+     "d": "<ul><li>Calcium oxalate</li><li>Calcium phosphate</li><li>Uric acid [radiolucent on x-ray]</li><li>Struvite</li><li>Cysteine</li></ul>"
+    },
+    {
+     "id": "bl",
+     "k": "dx",
+     "t": "Bladder",
+     "d": "<ul><li>Carcinoma (until proven otherwise)</li><li>Bladder stone</li><li>Thrombus (frank hematuria)</li></ul>"
+    },
+    {
+     "id": "of",
+     "k": "dx",
+     "t": "Outflow Tract",
+     "d": "<ul><li>BPH</li><li>Prostate cancer</li><li>Urethral stricture</li><li>Posterior Urethral valves</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "up",
+     "l": "Upper tract"
+    },
+    {
+     "f": "a",
+     "t": "lo",
+     "l": "Lower tract"
+    },
+    {
+     "f": "up",
+     "t": "ct"
+    },
+    {
+     "f": "ct",
+     "t": "il",
+     "l": "Intraluminal"
+    },
+    {
+     "f": "ct",
+     "t": "el",
+     "l": "Extraluminal"
+    },
+    {
+     "f": "ct",
+     "t": "im",
+     "l": "Intramural"
+    },
+    {
+     "f": "il",
+     "t": "mass",
+     "l": "Mass"
+    },
+    {
+     "f": "il",
+     "t": "stone",
+     "l": "Stone"
+    },
+    {
+     "f": "lo",
+     "t": "bl",
+     "l": "Bladder"
+    },
+    {
+     "f": "lo",
+     "t": "of",
+     "l": "Outflow tract"
+    }
+   ]
+  }
+ ]
+}

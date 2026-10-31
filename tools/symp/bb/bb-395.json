@@ -1,0 +1,113 @@
+{
+ "key": "395",
+ "en": "Thrombocytopenia (Pediatric)",
+ "th": "เกล็ดเลือดต่ำ (เด็ก)",
+ "pdf": "424",
+ "bookpg": "395",
+ "target": null,
+ "new": {
+  "id": "ped-thrombocytopenia",
+  "th": "เกล็ดเลือดต่ำ (เด็ก)",
+  "en": "Thrombocytopenia (Pediatric)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-395-scheme",
+   "h": "Thrombocytopenia (Pediatric) scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b395a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b395a",
+   "title": "Thrombocytopenia",
+   "src": "fig",
+   "img": "bb-395-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Low Platelet Count"
+    },
+    {
+     "id": "dp",
+     "k": "q",
+     "t": "Decreased Production"
+    },
+    {
+     "id": "is",
+     "k": "dx",
+     "t": "Increased Sequestration",
+     "d": "<ul><li>Splenomegaly</li><li>Thrombus</li></ul>"
+    },
+    {
+     "id": "id",
+     "k": "q",
+     "t": "Increased Destruction"
+    },
+    {
+     "id": "dm",
+     "k": "dx",
+     "t": "Decreased Megakaryopoiesis",
+     "d": "<ul><li>Marrow displacement (e.g. <b>Leukemia*, lymphoma*, neuroblastoma*, other tumour*</b>)</li><li>Marrow Failure (Eg. Aplastic Anemia)</li><li>Toxic Damage (e.g. Chemotherapy)</li></ul>"
+    },
+    {
+     "id": "em",
+     "k": "dx",
+     "t": "Ineffective Megakaryopoiesis",
+     "d": "<ul><li>B12 Deficiency</li><li>Folate Deficiency</li><li>Drugs</li></ul>"
+    },
+    {
+     "id": "im",
+     "k": "dx",
+     "t": "Immune",
+     "d": "<ul><li><b>Immune Thrombocytopenia Purpura*</b></li><li>Lupus</li><li>Alloimmune destruction</li><li>Drugs</li></ul>"
+    },
+    {
+     "id": "ni",
+     "k": "dx",
+     "t": "Non-Immune",
+     "d": "<ul><li><b>Hemolytic Uremic Syndrome*</b></li><li>Thrombotic Thrombocytopenia Purpura</li><li>Disseminated Intravascular coagulation</li><li><b>Infection/sepsis*</b></li><li>Foreign Surface (e.g. Prosthetic Heart Valve)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "dp",
+     "l": "Decreased production"
+    },
+    {
+     "f": "a",
+     "t": "is",
+     "l": "Increased sequestration"
+    },
+    {
+     "f": "a",
+     "t": "id",
+     "l": "Increased destruction"
+    },
+    {
+     "f": "dp",
+     "t": "dm",
+     "l": "Decreased megakaryopoiesis"
+    },
+    {
+     "f": "dp",
+     "t": "em",
+     "l": "Ineffective megakaryopoiesis"
+    },
+    {
+     "f": "id",
+     "t": "im",
+     "l": "Immune"
+    },
+    {
+     "f": "id",
+     "t": "ni",
+     "l": "Non-immune"
+    }
+   ]
+  }
+ ]
+}

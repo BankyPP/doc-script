@@ -1,0 +1,250 @@
+{
+ "key": "077",
+ "en": "Abdominal Pain (Adult) — Acute",
+ "th": "ปวดท้องเฉียบพลัน (ผู้ใหญ่)",
+ "pdf": "106–107",
+ "bookpg": "77–78",
+ "target": "abdominal-pain",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-abd-approach",
+   "id": "bb-077-scheme",
+   "h": "Acute abdominal pain (<72 h) scheme — Diffuse / Localized (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b077a\"></div><div class=\"flow\" data-flow=\"b077b\"></div><p><small>* Denotes acutely life-threatening conditions</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b077a",
+   "title": "Abdominal Pain (Adult) — Acute · Diffuse",
+   "src": "fig",
+   "img": "bb-077-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Abdominal Pain (&lt;72 hours)"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Look For Surgical Abdomen",
+     "d": "<p><b>Upper Quadrant:</b> R/O Cardiac, Pulmonary, Renal, Musculoskeletal Causes</p><p><b>Lower Quadrant:</b> R/O Genitourinary Causes</p>"
+    },
+    {
+     "id": "dif",
+     "k": "dx",
+     "t": "Diffuse"
+    },
+    {
+     "id": "loc",
+     "k": "dx",
+     "t": "Localized",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Acute Abdominal Pain — Localized (flow b077b)</p>"
+    },
+    {
+     "id": "per",
+     "k": "stop",
+     "t": "Peritonitic*",
+     "d": "<ul><li>Pancreatitis</li><li>Bowel Obstruction</li><li>Viscus Perforation</li><li>Intraperitoneal Hemorrhage (ruptured AAA)</li></ul>"
+    },
+    {
+     "id": "non",
+     "k": "dx",
+     "t": "Non-Peritonitic",
+     "d": "<p>*Denotes acutely life-threatening conditions</p><ul><li>Gastroenteritis</li><li>Irritable Bowel Syndrome</li><li>Constipation</li><li>Metabolic Disease (eg. Diabetic Ketoacidosis)*</li><li>Mesenteric Ischemia*</li><li>Mesenteric Thrombus</li><li>Sickle Cell Anemia</li><li>Musculoskeletal</li><li>Trauma</li><li>Peptic Ulcer Disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "dif",
+     "l": "Diffuse"
+    },
+    {
+     "f": "q",
+     "t": "loc",
+     "l": "Localized (เส้นประ)"
+    },
+    {
+     "f": "dif",
+     "t": "per",
+     "l": "Peritonitic*"
+    },
+    {
+     "f": "dif",
+     "t": "non",
+     "l": "Non-Peritonitic"
+    }
+   ]
+  },
+  {
+   "id": "b077b",
+   "title": "Abdominal Pain (Adult) — Acute · Localized",
+   "src": "fig",
+   "img": "bb-077-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Abdominal Pain (&lt;72 hours)"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Look For Surgical Abdomen",
+     "d": "<p><b>Upper Quadrant:</b> R/O Cardiac, Pulmonary, Renal, Musculoskeletal Causes</p><p><b>Lower Quadrant:</b> R/O Genitourinary Causes</p>"
+    },
+    {
+     "id": "dif",
+     "k": "dx",
+     "t": "Diffuse",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Acute Abdominal Pain — Diffuse (flow b077a)</p>"
+    },
+    {
+     "id": "loc",
+     "k": "dx",
+     "t": "Localized"
+    },
+    {
+     "id": "uq",
+     "k": "q",
+     "t": "Upper Quadrant"
+    },
+    {
+     "id": "lq",
+     "k": "q",
+     "t": "Lower Quadrant"
+    },
+    {
+     "id": "uqn",
+     "k": "dx",
+     "t": "Non-Peritoneal (Upper Quadrant)"
+    },
+    {
+     "id": "uqp",
+     "k": "stop",
+     "t": "Peritoneal* (Upper Quadrant)",
+     "d": "<ul><li>Cholecystitis</li><li>Perforated Ulcer</li><li>Pancreatitis</li><li>Splenic Rupture</li></ul>"
+    },
+    {
+     "id": "lqn",
+     "k": "dx",
+     "t": "Non-Peritoneal (Lower Quadrant)",
+     "d": "<ul><li>Irritable Bowel Syndrome</li><li>Psoas Abscess</li><li>Urinary Tract Infection</li><li>Kidney Stones</li></ul>"
+    },
+    {
+     "id": "lqp",
+     "k": "dx",
+     "t": "Peritoneal (Lower Quadrant)"
+    },
+    {
+     "id": "ruq",
+     "k": "dx",
+     "t": "Right Upper Quadrant",
+     "d": "<ul><li>Biliary Colic</li><li>Hepatitis</li><li>Hepatic Abscess</li><li>Bowel Obstruction*</li><li>Pyelonephritis</li></ul>"
+    },
+    {
+     "id": "epi",
+     "k": "dx",
+     "t": "Epigastric",
+     "d": "<ul><li>Peptic Ulcer Disease</li><li>Gastritis</li><li>Esophageal Rupture*</li><li>Biliary Colic</li></ul>"
+    },
+    {
+     "id": "luq",
+     "k": "dx",
+     "t": "Left Upper Quadrant",
+     "d": "<ul><li>Splenic Infarct</li><li>Splenic Abscess</li><li>Splenic Rupture*</li></ul>"
+    },
+    {
+     "id": "bowel",
+     "k": "stop",
+     "t": "Bowel*",
+     "d": "<ul><li>Appendicitis</li><li>Diverticulitis</li><li>Incarcerated Hernia</li></ul>"
+    },
+    {
+     "id": "pelv",
+     "k": "dx",
+     "t": "Pelvic/Adrenal",
+     "d": "<p>*Denotes acutely life-threatening conditions</p><ul><li>Ectopic Pregnancy*</li><li>Ovarian Torsion</li><li>Pelvic Inflammatory Disease</li><li>Salpingitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "dif",
+     "l": "Diffuse (เส้นประ)"
+    },
+    {
+     "f": "q",
+     "t": "loc",
+     "l": "Localized"
+    },
+    {
+     "f": "loc",
+     "t": "uq",
+     "l": "Upper Quadrant"
+    },
+    {
+     "f": "loc",
+     "t": "lq",
+     "l": "Lower Quadrant"
+    },
+    {
+     "f": "uq",
+     "t": "uqn",
+     "l": "Non-Peritoneal"
+    },
+    {
+     "f": "uq",
+     "t": "uqp",
+     "l": "Peritoneal*"
+    },
+    {
+     "f": "lq",
+     "t": "lqn",
+     "l": "Non-Peritoneal"
+    },
+    {
+     "f": "lq",
+     "t": "lqp",
+     "l": "Peritoneal"
+    },
+    {
+     "f": "uqn",
+     "t": "ruq",
+     "l": "Right Upper Quadrant"
+    },
+    {
+     "f": "uqn",
+     "t": "epi",
+     "l": "Epigastric"
+    },
+    {
+     "f": "uqn",
+     "t": "luq",
+     "l": "Left Upper Quadrant"
+    },
+    {
+     "f": "lqp",
+     "t": "bowel",
+     "l": "Bowel*"
+    },
+    {
+     "f": "lqp",
+     "t": "pelv",
+     "l": "Pelvic/Adrenal"
+    }
+   ]
+  }
+ ]
+}

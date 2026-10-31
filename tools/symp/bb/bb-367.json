@@ -1,0 +1,93 @@
+{
+ "key": "367",
+ "en": "Pediatric Dyspnea",
+ "th": "เหนื่อยหอบในเด็ก",
+ "pdf": "396",
+ "bookpg": "367",
+ "target": null,
+ "new": {
+  "id": "ped-dyspnea",
+  "th": "เหนื่อยหอบในเด็ก",
+  "en": "Pediatric Dyspnea",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-367-scheme",
+   "h": "Pediatric Dyspnea scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b367a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b367a",
+   "title": "Pediatric Dyspnea",
+   "src": "fig",
+   "img": "bb-367-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pediatric Dyspnea"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Stridor",
+     "d": "<ul><li>Croup</li><li>Foreign Body</li><li>Tracheitis</li><li>Epiglottitis</li><li>Laryngospasm</li></ul>"
+    },
+    {
+     "id": "w",
+     "k": "dx",
+     "t": "Wheeze",
+     "d": "<ul><li>Asthma</li><li>Bronchiolitis</li><li>Foreign Body</li><li>Viral Induced Wheeze</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Crackles",
+     "d": "<ul><li>Pneumonia</li><li>Congestive Heart Failure</li><li>Bronchiolitis</li><li>Foreign Body</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Decreased Air Entry",
+     "d": "<ul><li>Pneumonia</li><li>Asthma</li><li>Bronchiolitis</li><li>Foreign Body</li><li>Pleural Effusion</li><li>Atelectasis</li><li>Pneumothorax</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Normal Breath Sounds",
+     "d": "<ul><li>Pneumonia</li><li>Foreign Body</li><li>Heart Disease</li><li>Diabetic Ketoacidosis</li><li>Pulmonary Embolism</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "s",
+     "l": "Stridor"
+    },
+    {
+     "f": "a",
+     "t": "w",
+     "l": "Wheeze"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Crackles"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Decreased air entry"
+    },
+    {
+     "f": "a",
+     "t": "n",
+     "l": "Normal breath sounds"
+    }
+   ]
+  }
+ ]
+}

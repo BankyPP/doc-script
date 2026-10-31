@@ -1,0 +1,114 @@
+{
+ "key": "153",
+ "en": "Hypophosphatemia",
+ "th": "ฟอสเฟตในเลือดต่ำ",
+ "pdf": "182",
+ "bookpg": "153",
+ "target": null,
+ "new": {
+  "id": "hypophosphatemia",
+  "th": "ฟอสเฟตในเลือดต่ำ",
+  "en": "Hypophosphatemia",
+  "g": "endo"
+ },
+ "sections": [
+  {
+   "id": "bb-153-scheme",
+   "h": "Hypophosphatemia — สาเหตุ",
+   "html": "<div class=\"flow\" data-flow=\"b153a\"></div><ul><li><b>Hypophosphatemia</b> <span class=\"muted\">— &lt; 0.8 mmol/L</span><ul><li><span class=\"tag\">Transcellular shift</span> <b>Transcellular Shift</b><ul><li>Recovery From DKA</li><li>Refeeding Syndrome</li><li>Acute Respiratory Alkalosis</li><li>Hypokalemia</li><li>Hypomagnesemia</li><li>Burns</li></ul></li><li><span class=\"tag\">Increased excretion</span> <b>Increased Excretion</b><ul><li><span class=\"tag\">GI</span> <b>GI</b><ul><li>Small bowel diarrhea</li><li>Enteric Fistula</li></ul></li><li><span class=\"tag\">Renal</span> <b>Renal</b> <span class=\"muted\">— Fe<sub>PO4</sub> &gt; 5%</span><ul><li>Hyperparathyroidism</li><li>Vitamin D Deficiency/Resistance</li><li>Hypophosphatemic Rickets</li><li>Oncogenic Osteomalacia</li><li>Fanconi Syndrome</li><li>Osmotic Diuresis</li><li>Acute Volume Expansion</li><li>Acetazolamide and Thiazide Diuretics</li></ul></li></ul></li><li><span class=\"tag\">Decreased intake</span> <b>Decreased Intake</b><ul><li><span class=\"tag\">Dietary deficiency</span> <b>Dietary deficiency</b><ul><li>Anorexia</li><li>Chronic Alcoholism</li></ul></li><li><span class=\"tag\">Malabsorption</span> <b>Malabsorption</b><ul><li>Aluminum/Magnesium Containing Antacids</li><li>Inflammatory Bowel Disease</li><li>Steatorrhea</li><li>Chronic Diarrhea</li></ul></li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b153a",
+   "title": "Hypophosphatemia",
+   "src": "fig",
+   "img": "bb-153-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hypophosphatemia",
+     "d": "<p>&lt; 0.8 mmol/L</p>"
+    },
+    {
+     "id": "a",
+     "k": "dx",
+     "t": "Transcellular Shift",
+     "d": "<ul><li>Recovery From DKA</li><li>Refeeding Syndrome</li><li>Acute Respiratory Alkalosis</li><li>Hypokalemia</li><li>Hypomagnesemia</li><li>Burns</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Increased Excretion"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Decreased Intake"
+    },
+    {
+     "id": "gi",
+     "k": "dx",
+     "t": "GI",
+     "d": "<ul><li>Small bowel diarrhea</li><li>Enteric Fistula</li></ul>"
+    },
+    {
+     "id": "re",
+     "k": "dx",
+     "t": "Renal",
+     "d": "<p>Fe<sub>PO4</sub> &gt; 5%</p><ul><li>Hyperparathyroidism</li><li>Vitamin D Deficiency/Resistance</li><li>Hypophosphatemic Rickets</li><li>Oncogenic Osteomalacia</li><li>Fanconi Syndrome</li><li>Osmotic Diuresis</li><li>Acute Volume Expansion</li><li>Acetazolamide and Thiazide Diuretics</li></ul>"
+    },
+    {
+     "id": "dd",
+     "k": "dx",
+     "t": "Dietary deficiency",
+     "d": "<ul><li>Anorexia</li><li>Chronic Alcoholism</li></ul>"
+    },
+    {
+     "id": "ma",
+     "k": "dx",
+     "t": "Malabsorption",
+     "d": "<ul><li>Aluminum/Magnesium Containing Antacids</li><li>Inflammatory Bowel Disease</li><li>Steatorrhea</li><li>Chronic Diarrhea</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "a",
+     "l": "Transcellular shift"
+    },
+    {
+     "f": "r",
+     "t": "b",
+     "l": "Increased excretion"
+    },
+    {
+     "f": "r",
+     "t": "c",
+     "l": "Decreased intake"
+    },
+    {
+     "f": "b",
+     "t": "gi",
+     "l": "GI"
+    },
+    {
+     "f": "b",
+     "t": "re",
+     "l": "Renal"
+    },
+    {
+     "f": "c",
+     "t": "dd",
+     "l": "Dietary deficiency"
+    },
+    {
+     "f": "c",
+     "t": "ma",
+     "l": "Malabsorption"
+    }
+   ]
+  }
+ ]
+}

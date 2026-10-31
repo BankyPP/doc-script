@@ -1,0 +1,82 @@
+{
+ "key": "044",
+ "en": "Approach to Anemia: Mean Corpuscular Volume",
+ "th": "แนวทางภาวะซีดตามขนาดเม็ดเลือดแดง (MCV)",
+ "pdf": "73",
+ "bookpg": "44",
+ "target": "anemia",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "ap-size",
+   "id": "bb-044-scheme",
+   "h": "Approach to Anemia by MCV scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b044a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-micro",
+   "html": "<p><b>Low MCV (&lt;80 fL)</b></p><ul><li>Iron Deficiency</li><li>Thalassemia</li><li>Lead Poisoning</li><li>Anemia of Chronic Disease</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-normo",
+   "html": "<p><b>Normal MCV (80-100 fL)</b></p><ul><li>Bleeding</li><li>Hemolysis</li><li>Marrow Failure</li><li>Anemia of Chronic Disease (e.g. Renal Disease, Liver Disease, Endocrinopathy, Chronic Inflammation, Chronic Infection)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-macro",
+   "html": "<p><b>High MCV (&gt;100 fL)</b></p><ul><li>B12 Deficiency</li><li>Folate Deficiency</li><li>Drugs</li><li>Reticulocytosis</li><li>Liver Disease</li><li>Hypothyroidism</li><li>Myelodysplasia</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b044a",
+   "title": "Approach to Anemia — Mean Corpuscular Volume",
+   "src": "fig",
+   "img": "bb-044-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Anemia"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Low Mean Corpuscular Volume (<80 fL)",
+     "d": "<ul><li>Iron Deficiency</li><li>Thalassemia</li><li>Lead Poisoning</li><li>Anemia of Chronic Disease</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Normal Mean Corpuscular Volume (80-100 fL)",
+     "d": "<ul><li>Bleeding</li><li>Hemolysis</li><li>Marrow Failure</li><li>Anemia of Chronic Disease (e.g. Renal Disease, Liver Disease, Endocrinopathy, Chronic Inflammation, Chronic Infection)</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "High Mean Corpuscular Volume (>100 fL)",
+     "d": "<ul><li>B12 Deficiency</li><li>Folate Deficiency</li><li>Drugs</li><li>Reticulocytosis</li><li>Liver Disease</li><li>Hypothyroidism</li><li>Myelodysplasia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Low MCV (<80 fL)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Normal MCV (80-100 fL)"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "High MCV (>100 fL)"
+    }
+   ]
+  }
+ ]
+}

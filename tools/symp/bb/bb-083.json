@@ -1,0 +1,159 @@
+{
+ "key": "083",
+ "en": "Acute Diarrhea",
+ "th": "ท้องเดินเฉียบพลัน",
+ "pdf": "112",
+ "bookpg": "83",
+ "target": "diarrhea-constipation",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "dia-def",
+   "html": "<p><b>Blackbook (Acute diarrhea):</b> &gt; 2-3 loose stools/day, &gt;175-235 g/day; &gt; 48 hours, &lt;14 days</p>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-cause",
+   "html": "<p><b>Blackbook — Acute diarrhea แยกตามกลุ่ม</b></p><h4>Infectious — Diarrhea Predominant: Watery/Large Volume (Small Bowel)</h4><ul><li>Viral</li><li>Bacterial (e.g. <i>C. perfringens, V. cholerae, E. coli, Salmonella, Yersinia</i>)</li><li>Parasitic (e.g. <i>Giardia</i>)</li><li>Drugs (Antibiotics, Laxatives, Antacids)</li><li>Toxins</li></ul><h4>Infectious — Diarrhea Predominant: Bloody/Pain/Small Volume/Urgency (Large Bowel)</h4><ul><li>Bacterial (e.g. <i>E. coli, C. difficile, Salmonella, Campylobacter, Shigella</i>)</li><li>Parasitic (e.g. <i>E. histolytica</i>)</li></ul><h4>Infectious — Nausea/Vomiting Predominant</h4><ul><li><i>Bacillus cereus</i></li><li><i>Staphylococcus aureus</i></li></ul><h4>Ischemic</h4><h4>Inflammatory — Non-Bloody</h4><ul><li>Crohn’s Ileitis</li><li>Crohn’s Colitis</li></ul><h4>Inflammatory — Bloody</h4><ul><li>Ulcerative Colitis</li><li>Crohn’s Colitis</li></ul><h4>Dietary</h4><p><small>**C. difficile is under “large bowel” but presents with non-bloody diarrhea usually.</small></p><p><small>Ischemic colitis is a self-limiting illness in most (due to vascular network from SMA, IMA, iliacs) whereas small bowel ischemia is an abdominal catastrophe (only one supply, SMA).</small></p>"
+  },
+  {
+   "op": "sub",
+   "sec": "yb-3-7-approach",
+   "id": "bb-083-scheme",
+   "h": "Acute Diarrhea scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b083a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b083a",
+   "title": "Acute Diarrhea",
+   "src": "fig",
+   "img": "bb-083-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Diarrhea"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "&gt; 2-3 loose stools/day, &gt;175-235 g/day; &gt; 48 hours, &lt;14 days"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infectious"
+    },
+    {
+     "id": "isch",
+     "k": "dx",
+     "t": "Ischemic",
+     "d": "<p>Ischemic colitis is a self-limiting illness in most (due to vascular network from SMA, IMA, iliacs) whereas small bowel ischemia is an abdominal catastrophe (only one supply, SMA).</p>"
+    },
+    {
+     "id": "infl",
+     "k": "dx",
+     "t": "Inflammatory"
+    },
+    {
+     "id": "diet",
+     "k": "dx",
+     "t": "Dietary"
+    },
+    {
+     "id": "dp",
+     "k": "dx",
+     "t": "Diarrhea Predominant"
+    },
+    {
+     "id": "nv",
+     "k": "dx",
+     "t": "Nausea/Vomiting Predominant",
+     "d": "<ul><li><i>Bacillus cereus</i></li><li><i>Staphylococcus aureus</i></li></ul>"
+    },
+    {
+     "id": "wat",
+     "k": "dx",
+     "t": "Watery/Large Volume (Small Bowel)",
+     "d": "<ul><li>Viral</li><li>Bacterial (e.g. <i>C. perfringens, V. cholerae, E. coli, Salmonella, Yersinia</i>)</li><li>Parasitic (e.g. <i>Giardia</i>)</li><li>Drugs (Antibiotics, Laxatives, Antacids)</li><li>Toxins</li></ul>"
+    },
+    {
+     "id": "lb",
+     "k": "dx",
+     "t": "Bloody/Pain/Small Volume/Urgency (Large Bowel)",
+     "d": "<p>**C. difficile is under “large bowel” but presents with non-bloody diarrhea usually.</p><ul><li>Bacterial (e.g. <i>E. coli, C. difficile, Salmonella, Campylobacter, Shigella</i>)</li><li>Parasitic (e.g. <i>E. histolytica</i>)</li></ul>"
+    },
+    {
+     "id": "nb",
+     "k": "dx",
+     "t": "Non-Bloody",
+     "d": "<ul><li>Crohn’s Ileitis</li><li>Crohn’s Colitis</li></ul>"
+    },
+    {
+     "id": "bl",
+     "k": "dx",
+     "t": "Bloody",
+     "d": "<ul><li>Ulcerative Colitis</li><li>Crohn’s Colitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "inf",
+     "l": "Infectious"
+    },
+    {
+     "f": "q",
+     "t": "isch",
+     "l": "Ischemic"
+    },
+    {
+     "f": "q",
+     "t": "infl",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "q",
+     "t": "diet",
+     "l": "Dietary"
+    },
+    {
+     "f": "inf",
+     "t": "dp",
+     "l": "Diarrhea Predominant"
+    },
+    {
+     "f": "inf",
+     "t": "nv",
+     "l": "Nausea/Vomiting Predominant"
+    },
+    {
+     "f": "dp",
+     "t": "wat",
+     "l": "Watery/Large Volume"
+    },
+    {
+     "f": "dp",
+     "t": "lb",
+     "l": "Bloody/Pain/Small Volume/Urgency"
+    },
+    {
+     "f": "infl",
+     "t": "nb",
+     "l": "Non-Bloody"
+    },
+    {
+     "f": "infl",
+     "t": "bl",
+     "l": "Bloody"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+ "key": "101",
+ "en": "Weight Loss",
+ "th": "น้ำหนักลด",
+ "pdf": "130",
+ "bookpg": "101",
+ "target": "weight-loss",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "cause-invol",
+   "html": "<p><b>Blackbook — Weight loss แยกตามกลไก</b></p><h4>Decreased Intake</h4><ul><li>GI illness (upper and lower)</li><li>Psychiatric (Depression, eating disorders)</li><li>Poverty</li><li>Abuse</li><li>Dementia</li><li>Anorexia as an Adverse Drug Effect</li></ul><h4>Malabsorption</h4><ul><li>Small Bowel Disease (e.g. Crohn’s Disease, Celiac Disease)</li><li>Pancreatic Insufficiency</li><li>Cholestatic Liver Disease</li><li>Protein-losing Enteropathy (e.g. Inflammatory Bowel Disease)</li></ul><h4>Increased Expenditure</h4><ul><li>Increased Protein/Energy Requirements (e.g. Post-Surgical, Infections, Trauma, Burns)</li><li>Cancer</li><li>Hyperthyroidism</li><li>Chronic Cardiac/Respiratory distress (e.g. COPD)</li><li>Chronic Renal Failure</li><li>Adrenal Insufficiency</li><li>Poorly Controlled Diabetes Mellitus</li><li>HIV</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "approach",
+   "id": "bb-101-scheme",
+   "h": "Weight Loss scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b101a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b101a",
+   "title": "Weight Loss",
+   "src": "fig",
+   "img": "bb-101-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Weight Loss"
+    },
+    {
+     "id": "di",
+     "k": "dx",
+     "t": "Decreased Intake",
+     "d": "<ul><li>GI illness (upper and lower)</li><li>Psychiatric (Depression, eating disorders)</li><li>Poverty</li><li>Abuse</li><li>Dementia</li><li>Anorexia as an Adverse Drug Effect</li></ul>"
+    },
+    {
+     "id": "ma",
+     "k": "dx",
+     "t": "Malabsorption",
+     "d": "<ul><li>Small Bowel Disease (e.g. Crohn’s Disease, Celiac Disease)</li><li>Pancreatic Insufficiency</li><li>Cholestatic Liver Disease</li><li>Protein-losing Enteropathy (e.g. Inflammatory Bowel Disease)</li></ul>"
+    },
+    {
+     "id": "ie",
+     "k": "dx",
+     "t": "Increased Expenditure",
+     "d": "<ul><li>Increased Protein/Energy Requirements (e.g. Post-Surgical, Infections, Trauma, Burns)</li><li>Cancer</li><li>Hyperthyroidism</li><li>Chronic Cardiac/Respiratory distress (e.g. COPD)</li><li>Chronic Renal Failure</li><li>Adrenal Insufficiency</li><li>Poorly Controlled Diabetes Mellitus</li><li>HIV</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "di",
+     "l": "Decreased Intake"
+    },
+    {
+     "f": "a",
+     "t": "ma",
+     "l": "Malabsorption"
+    },
+    {
+     "f": "a",
+     "t": "ie",
+     "l": "Increased Expenditure"
+    }
+   ]
+  }
+ ]
+}

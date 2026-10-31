@@ -1,0 +1,122 @@
+{
+ "key": "135",
+ "en": "Abnormal Serum TSH",
+ "th": "TSH ผิดปกติ",
+ "pdf": "164",
+ "bookpg": "135",
+ "target": "thyroid-function-test",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-5-3-approach",
+   "id": "bb-135-scheme",
+   "h": "Abnormal serum TSH — แนวทางเริ่มจาก TSH (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b135a\"></div><ul><li><b>Abnormal Serum TSH</b><ul><li><span class=\"tag\">Decreased TSH · free T4 ↓</span> <b>Decreased Free T4</b><ul><li>Hypopituitarism</li></ul></li><li><span class=\"tag\">Decreased TSH · free T4 normal</span> <b>Normal Free T4</b><ul><li><span class=\"tag\">Free T3 ↓</span> <b>Decreased Free T3</b><ul><li>Non-Thyroid Illness</li></ul></li><li><span class=\"tag\">Free T3 normal</span> <b>Normal Free T3</b><ul><li>Sub-Clinical Thyrotoxicosis</li></ul></li><li><span class=\"tag\">Free T3 ↑</span> <b>Increased Free T3</b><ul><li>T3 Toxicosis</li></ul></li></ul></li><li><span class=\"tag\">Decreased TSH · free T4 ↑</span> <b>Increased Free T4</b><ul><li>Thyrotoxicosis</li></ul></li><li><span class=\"tag\">Increased TSH · free T4 ↓</span> <b>Decreased Free T4</b><ul><li>Hypothyroidism*</li></ul><p><small>* Refer to Hyperthyroidism (1) on page 154 (ตามที่พิมพ์ในเล่ม)</small></p></li><li><span class=\"tag\">Increased TSH · free T4 normal</span> <b>Normal Free T4</b><ul><li>Sub-clinical Hypothyroidism**</li><li>Recovery from Non-Thyroid Illness</li></ul><p><small>** Refer to Hyperthyroidism (2) on page 155 (ตามที่พิมพ์ในเล่ม)</small></p></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b135a",
+   "title": "Abnormal Serum TSH",
+   "src": "fig",
+   "img": "bb-135-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Abnormal Serum TSH"
+    },
+    {
+     "id": "a1",
+     "k": "dx",
+     "t": "Decreased Free T4",
+     "d": "<ul><li>Hypopituitarism</li></ul>"
+    },
+    {
+     "id": "a2",
+     "k": "q",
+     "t": "Normal Free T4"
+    },
+    {
+     "id": "a3",
+     "k": "dx",
+     "t": "Increased Free T4",
+     "d": "<ul><li>Thyrotoxicosis</li></ul>"
+    },
+    {
+     "id": "b1",
+     "k": "dx",
+     "t": "Decreased Free T4",
+     "d": "<ul><li>Hypothyroidism*</li></ul><p><small>* Refer to Hyperthyroidism (1) on page 154 (ตามที่พิมพ์ในเล่ม)</small></p>"
+    },
+    {
+     "id": "b2",
+     "k": "dx",
+     "t": "Normal Free T4",
+     "d": "<ul><li>Sub-clinical Hypothyroidism**</li><li>Recovery from Non-Thyroid Illness</li></ul><p><small>** Refer to Hyperthyroidism (2) on page 155 (ตามที่พิมพ์ในเล่ม)</small></p>"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Decreased Free T3",
+     "d": "<ul><li>Non-Thyroid Illness</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Normal Free T3",
+     "d": "<ul><li>Sub-Clinical Thyrotoxicosis</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Increased Free T3",
+     "d": "<ul><li>T3 Toxicosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "a1",
+     "l": "Decreased TSH · free T4 ↓"
+    },
+    {
+     "f": "r",
+     "t": "a2",
+     "l": "Decreased TSH · free T4 normal"
+    },
+    {
+     "f": "r",
+     "t": "a3",
+     "l": "Decreased TSH · free T4 ↑"
+    },
+    {
+     "f": "r",
+     "t": "b1",
+     "l": "Increased TSH · free T4 ↓"
+    },
+    {
+     "f": "r",
+     "t": "b2",
+     "l": "Increased TSH · free T4 normal"
+    },
+    {
+     "f": "a2",
+     "t": "c1",
+     "l": "Free T3 ↓"
+    },
+    {
+     "f": "a2",
+     "t": "c2",
+     "l": "Free T3 normal"
+    },
+    {
+     "f": "a2",
+     "t": "c3",
+     "l": "Free T3 ↑"
+    }
+   ],
+   "note": "* Refer to Hyperthyroidism (1) on page 154 · ** Refer to Hyperthyroidism (2) on page 155 (ตามที่พิมพ์ในเล่ม)"
+  }
+ ]
+}

@@ -1,0 +1,110 @@
+{
+ "key": "051",
+ "en": "Fever in the Immunocompromised Host",
+ "th": "ไข้ในผู้ป่วยภูมิคุ้มกันบกพร่อง",
+ "pdf": "80",
+ "bookpg": "51",
+ "target": "fever",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "bb-051-scheme",
+   "h": "Fever in the Immunocompromised Host scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b051a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b051a",
+   "title": "Fever in the Immunocompromised Host",
+   "src": "fig",
+   "img": "bb-051-f1.webp",
+   "note": "\"oInfection\" ในหนังสือแก้เป็น Infection",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fever in the Immunocompromised Host"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Cellular Defect"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Structural Defect — Asplenia/Hyposplenism",
+     "d": "<ul><li>Bacteremia/Septic Shock<ul><li>Encapsulated Bacteria</li></ul></li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Protein Defect"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Cell Mediated Immunity — T-Cells Affected",
+     "d": "<ul><li>Pneumonia<ul><li><i>Aspergillus</i></li><li><i>Candida</i></li><li><i>Pneumocystis jirovecii</i></li></ul></li><li>CNS Infection</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Neutropenia or Neutrophil Dysfunction",
+     "d": "<ul><li>Aphthous Ulceration</li><li>Perirectal Infection</li><li>Abscess Formation</li><li>Soft Tissue and Visceral Infection</li><li>Periodontal Disease</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Complement Deficiency",
+     "d": "<ul><li>Encapsulated Bacteremia<ul><li><i>Streptococcus pneumoniae</i></li><li><i>Haemophilus influenzae</i></li><li><i>Neisseria</i> spp.</li></ul></li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Hypogammaglobulinemia",
+     "d": "<ul><li>Recurrent Sinusitis</li><li>Pneumonia</li><li>Bronchitis</li><li>Chronic Diarrhea<ul><li><i>Giardia</i> Infection</li></ul></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cellular Defect"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Structural Defect"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Protein Defect"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Cell Mediated Immunity"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Neutropenia or neutrophil dysfunction"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Complement Deficiency"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Hypogammaglobulinemia"
+    }
+   ]
+  }
+ ]
+}

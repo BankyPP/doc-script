@@ -1,0 +1,274 @@
+{
+ "key": "022",
+ "en": "Chest Discomfort",
+ "th": "เจ็บแน่นหน้าอก",
+ "pdf": "51–53",
+ "bookpg": "22–24",
+ "target": "chest-pain",
+ "note": "ชุดซ้ำของหน้า 5–7 (key 005): Cardiovascular และ Other เหมือนกัน (GERD เขียนย่อ) · Pulmonary ต่างกัน (Pleural processes / Processes that can affect the Pleura) → แยกไฟล์ ใส่ครบทั้ง 3 flow",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-1-1-approach",
+   "id": "bb-022-scheme",
+   "h": "Chest Discomfort — 3 schemes (Blackbook, Respiratory section)",
+   "html": "<p>ชุดที่สองในหมวด Respiratory — Cardiovascular และ Other เหมือนชุดในหมวด Cardiovascular; Pulmonary แบ่งต่างออกไป (Pleural processes / Processes that can affect the pleura) · * = acutely life-threatening</p>",
+   "sub": [
+    {
+     "id": "bb-022-cv",
+     "h": "Cardiovascular",
+     "html": "<div class=\"flow\" data-flow=\"b022a\"></div>"
+    },
+    {
+     "id": "bb-022-pulm",
+     "h": "Pulmonary",
+     "html": "<div class=\"flow\" data-flow=\"b022b\"></div>"
+    },
+    {
+     "id": "bb-022-oth",
+     "h": "Other",
+     "html": "<div class=\"flow\" data-flow=\"b022c\"></div>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "resp",
+   "html": "<h5>Pulmonary causes (Blackbook, Respiratory section)</h5><ul><li><b>Pleural processes</b>: Pneumothorax (Tension*); Pleuritis/Serositis; Pleural Effusion; Malignant Mesothelioma</li><li><b>Processes that can affect the pleura</b>: Pneumonia*; Pulmonary Embolism*; Malignancy; Sarcoidosis; Acute Chest Syndrome</li></ul><p><small>* Potentially acutely life-threatening</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b022a",
+   "title": "Chest Discomfort — Cardiovascular",
+   "src": "fig",
+   "img": "bb-022-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chest Discomfort"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Cardiovascular"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Pulmonary/Mediastinal",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Pulmonary\" scheme.</p>"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "Other",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Other\" scheme.</p>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Outflow Obstruction",
+     "d": "<ul><li>Aortic Stenosis</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Ischemic",
+     "d": "<ul><li>Myocardial Infarction*</li><li>Stable/Unstable Angina*</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Non-Ischemic",
+     "d": "<ul><li>Aortic Dissection*</li><li>Dilating Aneurysm*</li><li>Pericarditis</li><li>Myocarditis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiovascular"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Pulmonary/Mediastinal (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Other (dashed)"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Outflow obstruction"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Ischemic"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Non-ischemic"
+    }
+   ],
+   "note": "* Denotes acutely life-threatening causes · เส้นประ = ไปดู scheme อีกสองหน้าของ Chest Discomfort"
+  },
+  {
+   "id": "b022b",
+   "title": "Chest Discomfort — Pulmonary",
+   "src": "fig",
+   "img": "bb-022-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chest Discomfort"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Cardiovascular",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Cardiovascular\" scheme.</p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Pulmonary"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "Other",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Other\" scheme.</p>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Pleural Processes",
+     "d": "<ul><li>Pneumothorax (Tension*)</li><li>Pleuritis/Serositis</li><li>Pleural Effusion</li><li>Malignant Mesothelioma</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Processes that can affect the Pleura",
+     "d": "<ul><li>Pneumonia*</li><li>Pulmonary Embolism*</li><li>Malignancy</li><li>Sarcoidosis</li><li>Acute Chest Syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiovascular (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Pulmonary"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Other (dashed)"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Pleural processes"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Processes that can affect the pleura"
+    }
+   ],
+   "note": "* Potentially acutely life-threatening · เส้นประ = ไปดู scheme อีกสองหน้าของ Chest Discomfort"
+  },
+  {
+   "id": "b022c",
+   "title": "Chest Discomfort — Other",
+   "src": "fig",
+   "img": "bb-022-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chest Discomfort"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Cardiovascular",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Cardiovascular\" scheme.</p>"
+    },
+    {
+     "id": "c",
+     "k": "note",
+     "t": "Pulmonary/Mediastinal",
+     "d": "<p>Dashed branch in the book — shown in the \"Chest Discomfort — Pulmonary\" scheme.</p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Other"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Gastrointestinal",
+     "d": "<ul><li>GERD</li><li>Biliary Disease</li><li>Peptic Ulcer Disease</li><li>Pancreatitis*</li><li>Esophageal Spasm</li><li>Esophageal Perforation*</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Musculoskeletal",
+     "d": "<ul><li>Costochondritis</li><li>Muscular Injury</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Neurologic/Psychiatric",
+     "d": "<ul><li>Anxiety/Panic</li><li>Herpes Simplex Virus/Post-Herpetic Neuralgia</li><li>Somatoform Disorder</li><li>Spinal Radiculopathy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiovascular (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Pulmonary/Mediastinal (dashed)"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Other"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Gastrointestinal"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Musculoskeletal"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Neurologic/Psychiatric"
+    }
+   ],
+   "note": "* ตามที่พิมพ์ในหน้านี้ (หน้านี้ไม่มีคำอธิบาย *; หน้าอื่นของชุดเดียวกันใช้ * = acutely life-threatening) · เส้นประ = ไปดู scheme อีกสองหน้าของ Chest Discomfort"
+  }
+ ]
+}

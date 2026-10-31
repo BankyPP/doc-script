@@ -1,0 +1,176 @@
+{
+ "key": "015",
+ "en": "Syncope",
+ "th": "เป็นลม",
+ "pdf": "44",
+ "bookpg": "15",
+ "target": "syncope",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-1-3-approach",
+   "id": "bb-015-scheme",
+   "h": "Syncope scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b015a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "mech-t1",
+   "html": "<h5>Syncope causes by mechanism (Blackbook)</h5><ul><li><b>Neurocardiogenic</b>: Vasovagal; Orthostatic Hypotension; Autonomic Neuropathy; Situational (micturition, coughing, defecation)</li><li><b>Cardiac</b> (CO = SV × HR)<ul><li><b>Stroke volume</b><ul><li><b>Contractility</b>: MI; DCM</li><li><b>Afterload</b>: Mitral/Aortic Stenosis; HCM (LVOT)</li><li><b>Preload</b>: Blood Loss/Hypotension; Mitral Stenosis; Cardiac Tamponade; Constrictive Pericarditis</li></ul></li><li><b>Heart rate/rhythm</b><ul><li><b>Tachyarrhythmia</b>: VT/VFib; AFib/AFlutter; AVNRT/AVRT</li><li><b>Bradyarrhythmia</b>: Sick Sinus Syndrome (SA Node); 2<sup>nd</sup>/3<sup>rd</sup> degree AV Block; Pacemaker Malfunction; Tachy-Brady Syndrome</li></ul></li></ul></li><li><b>Respiratory</b>: Pulmonary Embolism; Hypoxia; Hypercapnia</li><li><b>Other</b>: Hypoglycemia; Anemia; Medications (CCB, βB, Nitrates, Diuretics); TIA; Psychiatric; Intoxication; Migraine</li></ul><p><small>Rule out seizure</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b015a",
+   "title": "Syncope",
+   "src": "fig",
+   "img": "bb-015-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Syncope"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Rule out Seizure"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Neurocardiogenic",
+     "d": "<ul><li>Vasovagal</li><li>Orthostatic Hypotension</li><li>Autonomic Neuropathy</li><li>Situational (micturition, coughing, defecation)</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Cardiac"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Respiratory",
+     "d": "<ul><li>Pulmonary Embolism</li><li>Hypoxia</li><li>Hypercapnia</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Hypoglycemia</li><li>Anemia</li><li>Medications (CCB, βB, Nitrates, Diuretics)</li><li>TIA</li><li>Psychiatric</li><li>Intoxication</li><li>Migraine</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "CO = SV × HR"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Stroke Volume"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Heart Rate/Rhythm"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Contractility",
+     "d": "<ul><li>MI</li><li>DCM</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Afterload",
+     "d": "<ul><li>Mitral/Aortic Stenosis</li><li>HCM (LVOT)</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Preload",
+     "d": "<ul><li>Blood Loss/Hypotension</li><li>Mitral Stenosis</li><li>Cardiac Tamponade</li><li>Constrictive Pericarditis</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Tachyarrhythmia",
+     "d": "<ul><li>VT/VFib</li><li>AFib/AFlutter</li><li>AVNRT/AVRT</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Bradyarrhythmia",
+     "d": "<ul><li>Sick Sinus Syndrome (SA Node)</li><li>2<sup>nd</sup>/3<sup>rd</sup> degree AV Block</li><li>Pacemaker Malfunction</li><li>Tachy-Brady Syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Rule out seizure"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Neurocardiogenic"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Cardiac"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Respiratory"
+    },
+    {
+     "f": "a",
+     "t": "f",
+     "l": "Other"
+    },
+    {
+     "f": "d",
+     "t": "g"
+    },
+    {
+     "f": "g",
+     "t": "h",
+     "l": "Stroke volume"
+    },
+    {
+     "f": "g",
+     "t": "i",
+     "l": "Heart rate/rhythm"
+    },
+    {
+     "f": "h",
+     "t": "j",
+     "l": "Contractility"
+    },
+    {
+     "f": "h",
+     "t": "k",
+     "l": "Afterload"
+    },
+    {
+     "f": "h",
+     "t": "l",
+     "l": "Preload"
+    },
+    {
+     "f": "i",
+     "t": "m",
+     "l": "Tachyarrhythmia"
+    },
+    {
+     "f": "i",
+     "t": "n",
+     "l": "Bradyarrhythmia"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,230 @@
+{
+ "key": "177",
+ "en": "Headache",
+ "th": "ปวดศีรษะ",
+ "pdf": "206–207",
+ "bookpg": "177–178",
+ "target": "headache",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-9-1-overview",
+   "id": "bb-177-primary",
+   "h": "Headache — Primary (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b177a\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-9-1-overview",
+   "id": "bb-177-secondary",
+   "h": "Headache — Secondary, without red flag symptoms (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b177b\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "sec",
+   "html": "<p><b>Red flag symptoms</b></p><p>Systemic symptoms, focal neurological signs, sudden onset, old age, progressive signs of increased intracranial pressure</p><p><b>Secondary headache without red flags</b></p><ul><li><b>Acute:</b> Sinusitis, Dental Abscess, Glaucoma, Traumatic Brain Injury, Acute Mountain Sickness</li><li><b>Chronic (drugs):</b> Analgesic Induced Headache, Substance Withdrawal</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "primary",
+   "html": "<p><b>Primary headache (usually episodic)</b></p><ul><li><b>No pattern — unilateral:</b> migraine (throbbing/pulsating)</li><li><b>No pattern — bilateral:</b> tension/stress headache (tightening, band-like, dull)</li><li><b>No pattern — other:</b> primary cough headache, primary exertional headache, primary stabbing headache</li><li><b>In clusters — autonomic cephalgias</b> (last minutes to hours, separated by hours, sudden onset): cluster headache (orbital, sharp, autonomic dysfunction), hemicranial continua</li><li><b>In clusters — other</b> (last seconds, separated by minutes to hours): trigeminal neuralgia (shooting, stabbing)</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b177a",
+   "title": "Headache — Primary",
+   "src": "fig",
+   "img": "bb-177-f1.webp",
+   "note": "เส้นประในต้นฉบับชี้ไป Secondary (แสดงในหน้า Secondary)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Headache"
+    },
+    {
+     "id": "pri",
+     "k": "q",
+     "t": "Primary",
+     "d": "<p>Usually episodic</p>"
+    },
+    {
+     "id": "sec",
+     "k": "q",
+     "t": "Secondary",
+     "d": "<p>Usually constant</p>"
+    },
+    {
+     "id": "nop",
+     "k": "q",
+     "t": "No pattern"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Primary Cough Headache</li><li>Primary Exertional Headache</li><li>Primary Stabbing Headache</li></ul>"
+    },
+    {
+     "id": "clu",
+     "k": "q",
+     "t": "In Clusters"
+    },
+    {
+     "id": "uni",
+     "k": "dx",
+     "t": "Unilateral",
+     "d": "<ul><li>Migraine (Throbbing/Pulsating)</li></ul>"
+    },
+    {
+     "id": "bil",
+     "k": "dx",
+     "t": "Bilateral",
+     "d": "<ul><li>Tension/Stress Headache (Tightening, Band-Like, Dull)</li></ul>"
+    },
+    {
+     "id": "aut",
+     "k": "dx",
+     "t": "Autonomic Cephalgias",
+     "d": "<p>Last for minutes to hours. Separated by hours. Sudden onset.</p><ul><li>Cluster Headache (Orbital, Sharp, Autonomic Dysfunction)</li><li>Hemicranial Continua</li></ul>"
+    },
+    {
+     "id": "ocl",
+     "k": "dx",
+     "t": "Other (clusters)",
+     "d": "<p>Last for seconds, separated by minutes to hours</p><ul><li>Trigeminal Neuralgia (Shooting, stabbing)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pri",
+     "l": "Primary"
+    },
+    {
+     "f": "a",
+     "t": "sec",
+     "l": "Secondary"
+    },
+    {
+     "f": "pri",
+     "t": "nop",
+     "l": "No pattern"
+    },
+    {
+     "f": "pri",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "pri",
+     "t": "clu",
+     "l": "In clusters"
+    },
+    {
+     "f": "nop",
+     "t": "uni",
+     "l": "Unilateral"
+    },
+    {
+     "f": "nop",
+     "t": "bil",
+     "l": "Bilateral"
+    },
+    {
+     "f": "clu",
+     "t": "aut",
+     "l": "Autonomic cephalgias"
+    },
+    {
+     "f": "clu",
+     "t": "ocl",
+     "l": "Other"
+    }
+   ]
+  },
+  {
+   "id": "b177b",
+   "title": "Headache — Secondary, without Red Flag Symptoms",
+   "src": "fig",
+   "img": "bb-177-f2.webp",
+   "note": "เส้นประในต้นฉบับ: Primary และ With Red Flag Symptoms เป็นกล่องที่ไม่ได้เน้นในหน้านี้",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Headache"
+    },
+    {
+     "id": "pri",
+     "k": "q",
+     "t": "Primary",
+     "d": "<p>Usually episodic</p>"
+    },
+    {
+     "id": "sec",
+     "k": "q",
+     "t": "Secondary",
+     "d": "<p>Usually constant</p>"
+    },
+    {
+     "id": "rf",
+     "k": "stop",
+     "t": "With Red Flag Symptoms",
+     "d": "<p>Systemic symptoms, focal neurological signs, sudden onset, old age, progressive signs of increased intracranial pressure</p>"
+    },
+    {
+     "id": "nrf",
+     "k": "q",
+     "t": "No Red Flag Symptoms"
+    },
+    {
+     "id": "ac",
+     "k": "dx",
+     "t": "Acute",
+     "d": "<ul><li>Sinusitis</li><li>Dental Abscess</li><li>Glaucoma</li><li>Traumatic Brain Injury</li><li>Acute Mountain Sickness</li></ul>"
+    },
+    {
+     "id": "ch",
+     "k": "dx",
+     "t": "Chronic — Drugs",
+     "d": "<ul><li>Analgesic Induced Headache</li><li>Substance Withdrawal</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pri",
+     "l": "Primary"
+    },
+    {
+     "f": "a",
+     "t": "sec",
+     "l": "Secondary"
+    },
+    {
+     "f": "sec",
+     "t": "rf",
+     "l": "With red flag symptoms"
+    },
+    {
+     "f": "sec",
+     "t": "nrf",
+     "l": "No red flag symptoms"
+    },
+    {
+     "f": "nrf",
+     "t": "ac",
+     "l": "Acute"
+    },
+    {
+     "f": "nrf",
+     "t": "ch",
+     "l": "Chronic (drugs)"
+    }
+   ]
+  }
+ ]
+}

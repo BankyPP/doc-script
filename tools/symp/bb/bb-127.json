@@ -1,0 +1,129 @@
+{
+ "key": "127",
+ "en": "Urinary Incontinence",
+ "th": "กลั้นปัสสาวะไม่ได้",
+ "pdf": "156",
+ "bookpg": "127",
+ "target": "abnormal-urination-dysuria",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "ui",
+   "id": "bb-127-scheme",
+   "h": "Urinary Incontinence scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b127a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "ui-acute",
+   "html": "<p>Transient (easily reversible cause) — mnemonic DIAPPERS:</p><ul><li><u>D</u>elirium/confusional states</li><li><u>I</u>nfection (UTI)</li><li><u>A</u>trophic urethritis/vaginitis</li><li><u>P</u>harmaceuticals</li><li><u>P</u>sychological/psychiatric</li><li><u>E</u>xcessive urine output</li><li><u>R</u>estricted mobility</li><li><u>S</u>tool impaction</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ui-stress",
+   "html": "<p>Failure of urethral sphincter to remain closed · small volume · precipitated by stress maneuvers · more common in multiparous women</p>"
+  },
+  {
+   "op": "append",
+   "sec": "ui-urge",
+   "html": "<p>Detrusor overactivity · abrupt urgency · moderate to large leakage of urine · precipitated by cold temperature &amp; running water</p>"
+  },
+  {
+   "op": "append",
+   "sec": "ui-overflow",
+   "html": "<p>Distended bladder with high post-void residual volume · continuous small volume leakage · +/- precipitated by stress maneuvers</p><ul><li>Impaired detrusor contraction: signs of autonomic neuropathy or spinal cord disease, cauda equina syndrome, anticholinergic medications</li><li>Bladder outlet obstruction</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b127a",
+   "title": "Urinary Incontinence",
+   "src": "fig",
+   "img": "bb-127-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Urinary Incontinence"
+    },
+    {
+     "id": "tr",
+     "k": "dx",
+     "t": "Transient — Easily reversible cause",
+     "d": "<ul><li><u>D</u>elirium/confusional states</li><li><u>I</u>nfection (UTI)</li><li><u>A</u>trophic urethritis/vaginitis</li><li><u>P</u>harmaceuticals</li><li><u>P</u>sychological/psychiatric</li><li><u>E</u>xcessive urine output</li><li><u>R</u>estricted mobility</li><li><u>S</u>tool impaction</li></ul>"
+    },
+    {
+     "id": "es",
+     "k": "q",
+     "t": "Established — Not easily reversible cause"
+    },
+    {
+     "id": "st",
+     "k": "dx",
+     "t": "Stress Incontinence",
+     "d": "<ul><li>Failure of urethral sphincter to remain closed</li><li>Small Volume</li><li>Precipitated by stress maneuvers</li><li>More common in multiparous women</li></ul>"
+    },
+    {
+     "id": "ov",
+     "k": "q",
+     "t": "Overflow Incontinence",
+     "d": "<ul><li>Distended bladder with high post-void residual volume</li><li>Continuous small volume leakage</li><li>+/- Precipitated by stress maneuvers</li></ul>"
+    },
+    {
+     "id": "ur",
+     "k": "dx",
+     "t": "Urge Incontinence",
+     "d": "<ul><li>Detrusor overactivity</li><li>Abrupt urgency</li><li>Moderate to large leakage of urine</li><li>Precipitated by cold temperature &amp; running water</li></ul>"
+    },
+    {
+     "id": "idc",
+     "k": "dx",
+     "t": "Impaired Detrusor Contraction",
+     "d": "<p>Signs of autonomic neuropathy or spinal cord disease, cauda equina syndrome, anticholinergic medications</p>"
+    },
+    {
+     "id": "boo",
+     "k": "dx",
+     "t": "Bladder Outlet Obstruction"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "tr",
+     "l": "Transient"
+    },
+    {
+     "f": "a",
+     "t": "es",
+     "l": "Established"
+    },
+    {
+     "f": "es",
+     "t": "st",
+     "l": "Stress incontinence"
+    },
+    {
+     "f": "es",
+     "t": "ov",
+     "l": "Overflow incontinence"
+    },
+    {
+     "f": "es",
+     "t": "ur",
+     "l": "Urge incontinence"
+    },
+    {
+     "f": "ov",
+     "t": "idc",
+     "l": "Impaired detrusor contraction"
+    },
+    {
+     "f": "ov",
+     "t": "boo",
+     "l": "Bladder outlet obstruction"
+    }
+   ]
+  }
+ ]
+}

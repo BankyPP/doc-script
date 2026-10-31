@@ -1,0 +1,121 @@
+{
+ "key": "047",
+ "en": "Anemia with Low MCV",
+ "th": "ซีดที่ MCV ต่ำ (microcytic)",
+ "pdf": "76",
+ "bookpg": "47",
+ "target": "anemia",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "ap-size",
+   "id": "bb-047-scheme",
+   "h": "Anemia with Low MCV scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b047a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b047a",
+   "title": "Anemia with Low MCV",
+   "src": "fig",
+   "img": "bb-047-f1.webp",
+   "note": "ตัวอักษรเกิน (D, N) หน้า \"Chronic Blood Loss / Occult Bleed / Dietary Deficiency / Inflammation\" ในหนังสือแก้เป็นคำที่ถูกต้อง",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Anemia with Low Mean Corpuscular Volume"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Decreased Heme Synthesis or Decreased Globin Synthesis"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Ferritin decreased, serum iron decreased, TIBC increased",
+     "d": "<p>Fe/TIBC &lt;18%, MCV/RBC &gt;13</p><ul><li>Iron Deficiency (Eg Causes: Chronic Blood Loss, Occult Bleed, Malabsorption, Dietary Deficiency)</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Ferritin normal/increased, serum iron decreased, TIBC normal/decreased",
+     "d": "<p>Fe/TIBC &gt;18%</p><ul><li>Anemia Secondary to Inflammation</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Ferritin normal/increased, Serum iron normal, TIBC Normal",
+     "d": "<p>MCV/RBC &lt;13, +/- basophilic stippling, +/- increased reticulocytes</p>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Increased HgbA2, Normal HgbA",
+     "d": "<ul><li>β-Thalassemia Minor</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Increased HgbA2, Increased HgbF, No HgbA",
+     "d": "<ul><li>β-Thalassemia Major</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Increased HgbH, HgbH inclusions in RBC",
+     "d": "<ul><li>α-Thalassemia 2-3 digene deletion</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>e.g. HgbE, HgbC, etc.</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Ferritin ↓, iron ↓, TIBC ↑"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Ferritin N/↑, iron ↓, TIBC N/↓"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Ferritin N/↑, iron N, TIBC N"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Increased HgbA2, normal HgbA"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Increased HgbA2, increased HgbF, no HgbA"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Increased HgbH, HgbH inclusions"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

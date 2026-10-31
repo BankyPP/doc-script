@@ -1,0 +1,157 @@
+{
+ "key": "180",
+ "en": "Mechanisms of Pain",
+ "th": "กลไกการเกิดความปวด",
+ "pdf": "209",
+ "bookpg": "180",
+ "target": null,
+ "new": {
+  "id": "mechanisms-of-pain",
+  "th": "กลไกการเกิดความปวด",
+  "en": "Mechanisms of Pain",
+  "g": "neuro"
+ },
+ "sections": [
+  {
+   "id": "bb-180-scheme",
+   "h": "Mechanisms of Pain — nociceptive / neuropathic / mixed",
+   "html": "<div class=\"flow\" data-flow=\"b180a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b180a",
+   "title": "Mechanisms of Pain",
+   "src": "fig",
+   "img": "bb-180-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pain"
+    },
+    {
+     "id": "noc",
+     "k": "q",
+     "t": "Nociceptive",
+     "d": "<p>Tissue Damage</p>"
+    },
+    {
+     "id": "mix",
+     "k": "q",
+     "t": "Mixed",
+     "d": "<p>Nociceptive/Neuropathic</p>"
+    },
+    {
+     "id": "neu",
+     "k": "q",
+     "t": "Neuropathic",
+     "d": "<p>Burning, shooting, gnawing, aching, lancinating</p>"
+    },
+    {
+     "id": "som",
+     "k": "q",
+     "t": "Somatic"
+    },
+    {
+     "id": "vis",
+     "k": "dx",
+     "t": "Visceral",
+     "d": "<p>(From organ/cavity lining) Poorly localized, crampy, diffuse, deep sensation</p>"
+    },
+    {
+     "id": "deep",
+     "k": "dx",
+     "t": "Deep",
+     "d": "<p>Less well-localized, dull, longer duration</p>"
+    },
+    {
+     "id": "sup",
+     "k": "dx",
+     "t": "Superficial",
+     "d": "<p>Well-localized, sharp, short duration</p>"
+    },
+    {
+     "id": "cns",
+     "k": "q",
+     "t": "Central Nervous System"
+    },
+    {
+     "id": "pns",
+     "k": "dx",
+     "t": "Peripheral Nervous System",
+     "d": "<ul><li>Post-Herpetic Neuralgia</li><li>Neuroma</li><li>Neuropathy</li></ul>"
+    },
+    {
+     "id": "def",
+     "k": "dx",
+     "t": "Deafferentation",
+     "d": "<p>Loss of sensory input</p><ul><li>Phantom Limb</li><li>Post-stroke</li><li>Spinal injury</li></ul>"
+    },
+    {
+     "id": "sym",
+     "k": "dx",
+     "t": "Sympathetic",
+     "d": "<ul><li>Complex regional pain syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "noc",
+     "l": "Nociceptive"
+    },
+    {
+     "f": "a",
+     "t": "mix",
+     "l": "Mixed"
+    },
+    {
+     "f": "a",
+     "t": "neu",
+     "l": "Neuropathic"
+    },
+    {
+     "f": "noc",
+     "t": "som",
+     "l": "Somatic"
+    },
+    {
+     "f": "noc",
+     "t": "vis",
+     "l": "Visceral"
+    },
+    {
+     "f": "som",
+     "t": "deep",
+     "l": "Deep"
+    },
+    {
+     "f": "som",
+     "t": "sup",
+     "l": "Superficial"
+    },
+    {
+     "f": "neu",
+     "t": "cns",
+     "l": "Central nervous system"
+    },
+    {
+     "f": "neu",
+     "t": "pns",
+     "l": "Peripheral nervous system"
+    },
+    {
+     "f": "cns",
+     "t": "def",
+     "l": "Deafferentation"
+    },
+    {
+     "f": "cns",
+     "t": "sym",
+     "l": "Sympathetic"
+    }
+   ]
+  }
+ ]
+}

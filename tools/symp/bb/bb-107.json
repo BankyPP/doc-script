@@ -1,0 +1,136 @@
+{
+ "key": "107",
+ "en": "Dysuria",
+ "th": "ปัสสาวะแสบขัด",
+ "pdf": "136",
+ "bookpg": "107",
+ "target": "abnormal-urination-dysuria",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dysuria",
+   "id": "bb-107-scheme",
+   "h": "Dysuria scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b107a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "dys-cause",
+   "html": "<ul><li><b>Pyuria</b> (leukocytes on dipstick/microscopy)<ul><li>Bacteriuria &amp; hematuria (dipstick positive for nitrites if infected with enterobacteria): upper UTI/pyelonephritis (WBC casts), lower UTI/cystitis (WBC clumps)</li><li>No bacteriuria &amp; no hematuria (dipstick negative for nitrites): gonococcal, non-gonococcal (e.g. <i>Chlamydia</i>, <i>Trichomonas</i>)</li></ul></li><li><b>No pyuria</b> (no leukocytes on dipstick/microscopy)<ul><li>Urethritis: <i>Candida</i>, herpes simplex virus</li><li>Vaginitis: <i>Candida</i>, <i>Gardnerella</i>, neoplasm</li><li>Non-pathogenic: estrogen deficiency, interstitial cystitis, radiation cystitis</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b107a",
+   "title": "Dysuria",
+   "src": "fig",
+   "img": "bb-107-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dysuria"
+    },
+    {
+     "id": "py",
+     "k": "q",
+     "t": "Pyuria (Leukocytes on dipstick/microscopy)"
+    },
+    {
+     "id": "np",
+     "k": "q",
+     "t": "No Pyuria (No leukocytes on dipstick/microscopy)"
+    },
+    {
+     "id": "bh",
+     "k": "q",
+     "t": "Bacteriuria & Hematuria",
+     "d": "<p>Dipstick positive for nitrites (if infected with enterobacteria).</p>"
+    },
+    {
+     "id": "nbh",
+     "k": "dx",
+     "t": "No Bacteriuria & No Hematuria",
+     "d": "<p>Dipstick negative for nitrites.</p><ul><li>Gonococcal</li><li>Non-Gonococcal (e.g. <i>Chlamydia</i>, <i>Trichomonas</i>)</li></ul>"
+    },
+    {
+     "id": "up",
+     "k": "dx",
+     "t": "Upper Urinary Tract Infection/Pyelonephritis",
+     "d": "<p>WBC Casts</p>"
+    },
+    {
+     "id": "lo",
+     "k": "dx",
+     "t": "Lower Urinary Tract Infection/Cystitis",
+     "d": "<p>WBC Clumps</p>"
+    },
+    {
+     "id": "ur",
+     "k": "dx",
+     "t": "Urethritis",
+     "d": "<ul><li><i>Candida</i></li><li>Herpes Simplex Virus</li></ul>"
+    },
+    {
+     "id": "va",
+     "k": "dx",
+     "t": "Vaginitis",
+     "d": "<ul><li><i>Candida</i></li><li><i>Gardnerella</i></li><li>Neoplasm</li></ul>"
+    },
+    {
+     "id": "nonp",
+     "k": "dx",
+     "t": "Non-Pathogenic",
+     "d": "<ul><li>Estrogen deficiency</li><li>Interstitial cystitis</li><li>Radiation cystitis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "py",
+     "l": "Pyuria"
+    },
+    {
+     "f": "a",
+     "t": "np",
+     "l": "No pyuria"
+    },
+    {
+     "f": "py",
+     "t": "bh",
+     "l": "Bacteriuria & hematuria"
+    },
+    {
+     "f": "py",
+     "t": "nbh",
+     "l": "No bacteriuria & no hematuria"
+    },
+    {
+     "f": "bh",
+     "t": "up",
+     "l": "Upper tract / pyelonephritis"
+    },
+    {
+     "f": "bh",
+     "t": "lo",
+     "l": "Lower tract / cystitis"
+    },
+    {
+     "f": "np",
+     "t": "ur",
+     "l": "Urethritis"
+    },
+    {
+     "f": "np",
+     "t": "va",
+     "l": "Vaginitis"
+    },
+    {
+     "f": "np",
+     "t": "nonp",
+     "l": "Non-pathogenic"
+    }
+   ]
+  }
+ ]
+}

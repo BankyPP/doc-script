@@ -1,0 +1,121 @@
+{
+ "key": "139",
+ "en": "Breast Discharge",
+ "th": "สารคัดหลั่งจากเต้านม",
+ "pdf": "168",
+ "bookpg": "139",
+ "target": "nipple-discharge",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-5-6-approach",
+   "id": "bb-139-scheme",
+   "h": "Breast discharge — galactorrhea (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b139a\"></div><ul><li><b>Breast Discharge</b><ul><li><span class=\"tag\">True galactorrhea (on microscopy)</span> <b>True Galactorrhea</b> <span class=\"muted\">— on microscopy</span><ul><li><span class=\"tag\">Abnormal TSH/prolactin</span> <b>Abnormal TSH/Prolactin</b><ul><li><span class=\"tag\">High prolactin + normal TSH</span> <b>High Prolactin + Normal TSH</b><ul><li>Microprolactinoma</li><li>Steroid Hormone Intake</li><li>Chronic Renal Failure</li><li>Stress (e.g. Pregnancy, Breast Stimulation, Trauma/Surgery)</li></ul></li><li><span class=\"tag\">High prolactin + normal/low TSH</span> <b>High Prolactin + Normal/Low TSH</b><ul><li>Pituitary Macroadenoma</li><li>Dopamine Inhibition</li><li>Pituitary Stalk Compression/Lesion</li></ul></li><li><span class=\"tag\">Autonomous production</span> <b>Autonomous Production</b><ul><li>Renal Cancer or Failure</li><li>Lactotroph Adenoma</li><li>Bronchogenic Tumor</li><li>Contraceptive Pill/Patch/Ring</li></ul></li><li><span class=\"tag\">High prolactin + high TSH</span> <b>High Prolactin + High TSH</b><ul><li>Primary Hypothyroidism</li></ul></li></ul></li><li><span class=\"tag\">Normal TSH/prolactin</span> <b>Normal TSH/Prolactin</b><ul><li>Idiopathic</li></ul></li></ul></li><li><span class=\"tag\">Other breast discharge</span> <b>Other Breast Discharge</b><ul><li>Neoplasm (usually blood)</li><li>Other Internal Breast Discharge</li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b139a",
+   "title": "Breast Discharge",
+   "src": "fig",
+   "img": "bb-139-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Breast Discharge"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "True Galactorrhea",
+     "d": "<p>on microscopy</p>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other Breast Discharge",
+     "d": "<ul><li>Neoplasm (usually blood)</li><li>Other Internal Breast Discharge</li></ul>"
+    },
+    {
+     "id": "ab",
+     "k": "q",
+     "t": "Abnormal TSH/Prolactin"
+    },
+    {
+     "id": "no",
+     "k": "dx",
+     "t": "Normal TSH/Prolactin",
+     "d": "<ul><li>Idiopathic</li></ul>"
+    },
+    {
+     "id": "a",
+     "k": "dx",
+     "t": "High Prolactin + Normal TSH",
+     "d": "<ul><li>Microprolactinoma</li><li>Steroid Hormone Intake</li><li>Chronic Renal Failure</li><li>Stress (e.g. Pregnancy, Breast Stimulation, Trauma/Surgery)</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "High Prolactin + Normal/Low TSH",
+     "d": "<ul><li>Pituitary Macroadenoma</li><li>Dopamine Inhibition</li><li>Pituitary Stalk Compression/Lesion</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Autonomous Production",
+     "d": "<ul><li>Renal Cancer or Failure</li><li>Lactotroph Adenoma</li><li>Bronchogenic Tumor</li><li>Contraceptive Pill/Patch/Ring</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "High Prolactin + High TSH",
+     "d": "<ul><li>Primary Hypothyroidism</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "g",
+     "l": "True galactorrhea (on microscopy)"
+    },
+    {
+     "f": "r",
+     "t": "o",
+     "l": "Other breast discharge"
+    },
+    {
+     "f": "g",
+     "t": "ab",
+     "l": "Abnormal TSH/prolactin"
+    },
+    {
+     "f": "g",
+     "t": "no",
+     "l": "Normal TSH/prolactin"
+    },
+    {
+     "f": "ab",
+     "t": "a",
+     "l": "High prolactin + normal TSH"
+    },
+    {
+     "f": "ab",
+     "t": "b",
+     "l": "High prolactin + normal/low TSH"
+    },
+    {
+     "f": "ab",
+     "t": "c",
+     "l": "Autonomous production"
+    },
+    {
+     "f": "ab",
+     "t": "d",
+     "l": "High prolactin + high TSH"
+    }
+   ]
+  }
+ ]
+}

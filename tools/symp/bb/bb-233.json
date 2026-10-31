@@ -1,0 +1,275 @@
+{
+ "key": "233",
+ "en": "Morphology of Skin Lesions",
+ "th": "ลักษณะรอยโรคผิวหนัง",
+ "pdf": "262–263",
+ "bookpg": "233–234",
+ "target": "common-skin-manifestations",
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "dx-morph",
+   "id": "bb-233-primary",
+   "h": "Primary skin lesions (Blackbook scheme)",
+   "html": "<p><b>Primary skin lesion</b> = Initial lesion not altered by trauma, manipulation (rubbing, scratching), complication (infection), or natural regression over time.</p><div class=\"flow\" data-flow=\"b233a\"></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "dx-morph",
+   "id": "bb-233-secondary",
+   "h": "Secondary skin lesions (Blackbook scheme)",
+   "html": "<p><b>Secondary skin lesion</b> = Lesion that develops from trauma, manipulation (rubbing, scratching), complication (infection) of initial lesion, or develops naturally over time</p><div class=\"flow\" data-flow=\"b233b\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "mo-flat",
+   "html": "<p><b>Blackbook — Flat (primary lesion)</b></p><ul><li>Macule (≤ 1 cm diameter)</li><li>Patch (&gt; 1 cm diameter)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "mo-raised",
+   "html": "<p><b>Blackbook — Elevated (primary lesion)</b></p><ul><li><b>Solid, no deep component:</b> Papule (≤ 1 cm diameter) · Plaque (&gt; 1 cm diameter)</li><li><b>Solid, deep component:</b> Nodule (1-3 cm diameter) · Tumor (&gt; 3 cm diameter)</li><li><b>Wheals/Hives:</b> firm/edematous (papule/plaque) or transient/itchy (nodule/tumor)</li><li><b>Fluid-filled OR semi-solid-filled:</b> Cyst</li><li><b>Fluid-filled, purulent:</b> Pustule</li><li><b>Fluid-filled, non-purulent fluid:</b> Vesicle (≤ 1 cm diameter) · Bulla (&gt; 1 cm diameter)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "mo-dep",
+   "html": "<p><b>Blackbook — Secondary lesion: Depressed</b></p><ul><li>Atrophic Scar (fibrotic replacement of tissue at site of injury)</li><li>Ulcer (complete loss of epidermis extending into dermis or deeper; heals with scar)</li><li>Erosion (partial loss of epidermis only; heals without scar)</li><li>Fissure (linear slit-like cleavage of skin)</li><li>Excoriation/Scratch (linear erosion induced by scratching)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "mo-surf",
+   "html": "<p><b>Blackbook — Secondary lesion: Elevated</b></p><ul><li>Crust/Scab (dried serum, blood, or pus overlying the lesion)</li><li>Scale (dry, thin or thick flakes of skin overlying the lesion)</li><li>Lichenification (thickened skin with accentuation of normal skin lines)</li><li>Hypertrophic Scar (within boundary of injury)</li><li>Keloid Scar (extend beyond boundary of injury)</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b233a",
+   "title": "Morphology of Skin Lesions — Primary Skin Lesions",
+   "src": "fig",
+   "img": "bb-233-f1.webp",
+   "note": "เส้นประ = แขนงที่ไปอีกหน้า (Secondary Skin Lesion)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Skin Lesion"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Primary Skin Lesion",
+     "d": "<p>Initial lesion not altered by trauma, manipulation (rubbing, scratching), complication (infection), or natural regression over time.</p>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Secondary Skin Lesion",
+     "d": "<p>Lesion that develops from trauma, manipulation (rubbing, scratching), complication (infection) of initial lesion, or develops naturally over time</p><p>ดูหน้า Secondary Skin Lesions</p>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Flat",
+     "d": "<ul><li>Macule (≤ 1 cm diameter)</li><li>Patch (&gt; 1 cm diameter)</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Elevated"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Solid"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Fluid-Filled OR Semi-Solid-Filled",
+     "d": "<ul><li>Cyst</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Fluid-Filled"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "No Deep Component",
+     "d": "<ul><li>Papule (≤ 1 cm diameter)</li><li>Plaque (&gt; 1 cm diameter)</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "q",
+     "t": "Deep Component",
+     "d": "<ul><li>Nodule (1-3 cm diameter)</li><li>Tumor (&gt; 3 cm diameter)</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Purulent",
+     "d": "<ul><li>Pustule</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Non-Purulent Fluid",
+     "d": "<ul><li>Vesicle (≤ 1 cm diameter)</li><li>Bulla (&gt; 1 cm diameter)</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "q",
+     "t": "Firm/Edematous"
+    },
+    {
+     "id": "n",
+     "k": "q",
+     "t": "Transient/Itchy"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Wheals/Hives"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Primary Skin Lesion"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "(dashed) see Secondary page"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Flat"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Elevated"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Solid"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Fluid- or semi-solid-filled"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Fluid-Filled"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "No deep component"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Deep component"
+    },
+    {
+     "f": "h",
+     "t": "k",
+     "l": "Purulent"
+    },
+    {
+     "f": "h",
+     "t": "l",
+     "l": "Non-purulent fluid"
+    },
+    {
+     "f": "i",
+     "t": "m",
+     "l": "Firm/Edematous"
+    },
+    {
+     "f": "j",
+     "t": "n",
+     "l": "Transient/Itchy"
+    },
+    {
+     "f": "m",
+     "t": "o",
+     "l": "Wheals/Hives"
+    },
+    {
+     "f": "n",
+     "t": "o",
+     "l": "Wheals/Hives"
+    }
+   ]
+  },
+  {
+   "id": "b233b",
+   "title": "Morphology of Skin Lesions — Secondary Skin Lesions",
+   "src": "fig",
+   "img": "bb-233-f2.webp",
+   "note": "เส้นประ = แขนงที่ไปอีกหน้า (Primary Skin Lesion)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Skin Lesion"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Primary Skin Lesion",
+     "d": "<p>Initial lesion not altered by trauma, manipulation (rubbing, scratching), complication (infection), or natural regression over time.</p><p>ดูหน้า Primary Skin Lesions</p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Secondary Skin Lesion",
+     "d": "<p>Lesion that develops from trauma, manipulation (rubbing, scratching), complication (infection) of initial lesion, or develops naturally over time</p>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Elevated",
+     "d": "<ul><li>Crust/Scab (dried serum, blood, or pus overlying the lesion)</li><li>Scale (dry, thin or thick flakes of skin overlying the lesion)</li><li>Lichenification (thickened skin with accentuation of normal skin lines)</li><li>Hypertrophic Scar (within boundary of injury)</li><li>Keloid Scar (extend beyond boundary of injury)</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Depressed",
+     "d": "<ul><li>Atrophic Scar (fibrotic replacement of tissue at site of injury)</li><li>Ulcer (complete loss of epidermis extending into dermis or deeper; heals with scar)</li><li>Erosion (partial loss of epidermis only; heals without scar)</li><li>Fissure (linear slit-like cleavage of skin)</li><li>Excoriation/Scratch (linear erosion induced by scratching)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "(dashed) see Primary page"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Secondary Skin Lesion"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Elevated"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Depressed"
+    }
+   ]
+  }
+ ]
+}

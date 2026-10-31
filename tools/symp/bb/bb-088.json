@@ -1,0 +1,127 @@
+{
+ "key": "088",
+ "en": "Constipation (Pediatric)",
+ "th": "ท้องผูก (เด็ก) — แผนผังหมวด GI",
+ "pdf": "117",
+ "bookpg": "88",
+ "target": null,
+ "new": {
+  "id": "ped-constipation",
+  "th": "ท้องผูก (เด็ก)",
+  "en": "Constipation (Pediatric)",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-088-scheme",
+   "h": "Constipation (Pediatric) scheme",
+   "html": "<div class=\"flow\" data-flow=\"b088a\"></div>"
+  },
+  {
+   "id": "bb-088-causes",
+   "h": "Causes by age group",
+   "html": "<p><b>History:</b> Infrequent Bowel Movements? Hard, Small stools? Painful evacuation? Encopresis?</p><h4>Neonate/Infant — Dietary/Functional</h4><ul><li>Insufficient Volume/ Bulk</li></ul><h4>Neonate/Infant — Neurologic</h4><ul><li>Hirschsprung’s Disease</li><li>Imperforate Anus</li><li>Anal Atresia</li><li>Intestinal Stenosis</li><li>Intestinal Atresia</li></ul><h4>Older Child — Dietary/Functional</h4><ul><li>Insufficient Bulk/Fluid</li><li>Withholding</li><li>Painful (e.g. Fissures)</li></ul><h4>Older Child — Anatomic</h4><ul><li>Bowel Obstruction</li><li>Pseudo-obstruction</li></ul><h4>Older Child — Neurologic</h4><ul><li>Hirschsprung’s Disease</li><li>Spinal Cord Lesions</li><li>Myotonia Congenita</li><li>Guillain-Barré Syndrome</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b088a",
+   "title": "Constipation (Pediatric)",
+   "src": "fig",
+   "img": "bb-088-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Constipation"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Infrequent Bowel Movements? Hard, Small stools? Painful evacuation? Encopresis?"
+    },
+    {
+     "id": "neo",
+     "k": "q",
+     "t": "Neonate/Infant"
+    },
+    {
+     "id": "old",
+     "k": "q",
+     "t": "Older Child"
+    },
+    {
+     "id": "ndf",
+     "k": "dx",
+     "t": "Dietary/Functional (Neonate/Infant)",
+     "d": "<ul><li>Insufficient Volume/ Bulk</li></ul>"
+    },
+    {
+     "id": "nneu",
+     "k": "dx",
+     "t": "Neurologic (Neonate/Infant)",
+     "d": "<ul><li>Hirschsprung’s Disease</li><li>Imperforate Anus</li><li>Anal Atresia</li><li>Intestinal Stenosis</li><li>Intestinal Atresia</li></ul>"
+    },
+    {
+     "id": "odf",
+     "k": "dx",
+     "t": "Dietary/Functional (Older Child)",
+     "d": "<ul><li>Insufficient Bulk/Fluid</li><li>Withholding</li><li>Painful (e.g. Fissures)</li></ul>"
+    },
+    {
+     "id": "oan",
+     "k": "dx",
+     "t": "Anatomic (Older Child)",
+     "d": "<ul><li>Bowel Obstruction</li><li>Pseudo-obstruction</li></ul>"
+    },
+    {
+     "id": "oneu",
+     "k": "dx",
+     "t": "Neurologic (Older Child)",
+     "d": "<ul><li>Hirschsprung’s Disease</li><li>Spinal Cord Lesions</li><li>Myotonia Congenita</li><li>Guillain-Barré Syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "neo",
+     "l": "Neonate/Infant"
+    },
+    {
+     "f": "q",
+     "t": "old",
+     "l": "Older Child"
+    },
+    {
+     "f": "neo",
+     "t": "ndf",
+     "l": "Dietary/Functional"
+    },
+    {
+     "f": "neo",
+     "t": "nneu",
+     "l": "Neurologic"
+    },
+    {
+     "f": "old",
+     "t": "odf",
+     "l": "Dietary/Functional"
+    },
+    {
+     "f": "old",
+     "t": "oan",
+     "l": "Anatomic"
+    },
+    {
+     "f": "old",
+     "t": "oneu",
+     "l": "Neurologic"
+    }
+   ]
+  }
+ ]
+}

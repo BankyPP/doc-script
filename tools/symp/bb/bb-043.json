@@ -1,0 +1,110 @@
+{
+ "key": "043",
+ "en": "Overall Approach to Anemia",
+ "th": "แนวทางภาวะซีดโดยรวม",
+ "pdf": "72",
+ "bookpg": "43",
+ "target": "anemia",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-1-algo",
+   "id": "bb-043-scheme",
+   "h": "Overall Approach to Anemia (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b043a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b043a",
+   "title": "Overall Approach to Anemia",
+   "src": "fig",
+   "img": "bb-043-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Anemia"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Blood Loss"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Decreased RBC Production — Normal/Decreased Reticulocytes",
+     "d": "<ul><li>Iron Deficiency</li><li>B12/Folate Deficiency</li><li>Aplastic Anemia</li><li>Anemia of Chronic Disease</li><li>Marrow Infiltration</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Increased RBC Destruction",
+     "d": "<p>Increased Reticulocytes, Increased Unconjugated Bilirubin, Spherocytes on Smear</p>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Normocytic/Normochromic RBCs on Smear",
+     "d": "<ul><li>Acute Bleed</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Any combination of: ↓ Reticulocytes, MCV, MCH, MCHC, Serum Iron, Ferritin; ↑ TIBC; Hypochromic RBCs",
+     "d": "<p>Any combination of: Decreased Reticulocytes, MCV, MCH, MCHC, Serum Iron, Ferritin; Increased TIBC; Hypochromic RBCs</p><ul><li>Chronic Bleed</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Hemoglobinopathy</li><li>Thalassemia</li><li>RBC Membrane Disorder</li><li>RBC Metabolism Disorder</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Acquired",
+     "d": "<ul><li>Immune</li><li>Non-Immune</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Blood Loss"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Decreased RBC Production"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Increased RBC Destruction"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Normocytic/normochromic RBCs"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Any combination of (indices)"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Congenital"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Acquired"
+    }
+   ]
+  }
+ ]
+}

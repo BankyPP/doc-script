@@ -1,0 +1,151 @@
+{
+ "key": "064",
+ "en": "Polycythemia",
+ "th": "เม็ดเลือดแดงสูง (Polycythemia)",
+ "pdf": "93",
+ "bookpg": "64",
+ "target": null,
+ "new": {
+  "id": "polycythemia",
+  "th": "เม็ดเลือดแดงสูง (Polycythemia)",
+  "en": "Polycythemia (Erythrocytosis)",
+  "g": "heme"
+ },
+ "sections": [
+  {
+   "id": "bb-064-scheme",
+   "h": "Polycythemia scheme",
+   "html": "<div class=\"flow\" data-flow=\"b064a\"></div>"
+  },
+  {
+   "id": "bb-064-list",
+   "h": "Classification (text)",
+   "html": "<ul><li><b>Polycythemia (Erythrocytosis)</b><ul><li><b>Relative — Normal RBC Mass / Decreased Plasma Volume</b><ul><li>Burns</li><li>Diarrhea</li><li>Dehydration</li><li>Idiopathic</li></ul></li><li><b>True — Elevated RBC Mass</b><ul><li><b>JAK-2 Negative</b> <span class=\"muted\">Elevated Erythropoietin; Reactive (Most Common); Rule out exogenous cause of high EPO</span><ul><li><b>High Affinity Hemoglobin</b> <span class=\"muted\">O<sub>2</sub> Saturation ≥ 90%; Increased carboxyhemoglobin; Abnormal P450 determination; Smoking, positive Family History, early onset</span><ul><li>Congenital Hemoglobinopathy</li><li>Familial Polycythemia</li><li>Carboxyhemoglobin</li></ul></li><li><b>Hypoxia — O2 saturation ≤ 90% (Most Common)</b><ul><li><b>Heart Murmur, Cyanosis without Pulmonary Disease</b><ul><li>Cyanotic Heart Disease</li></ul></li><li><b>Abnormal Chest X-Ray, Shortness of Breath, Cough, Smoking, Snoring, Chronic Chest Symptoms</b><ul><li>Sleep Apnea</li><li>Chronic Pulmonary Disease</li></ul></li></ul></li><li><b>Erythropoietin Secreting Tumor</b> <span class=\"muted\">O<sub>2</sub> Saturation ≥ 90%; Abnormal Abdominal Ultrasound</span></li><li><b>Exogenous agents — O2 Saturation ≥ 90%</b><ul><li>Androgen/anabolic steroid use</li><li>Recombinant EPO administration</li></ul></li></ul></li><li><b>JAK-2 Positive</b> <span class=\"muted\">Low/Normal Erythropoietin; O<sub>2</sub> Saturation ≥ 90%; Splenomegaly, Increased PMNs</span><ul><li>Polycythemia Vera</li></ul></li></ul></li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b064a",
+   "title": "Polycythemia",
+   "src": "fig",
+   "img": "bb-064-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Polycythemia (Erythrocytosis)"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Relative — Normal RBC Mass / Decreased Plasma Volume",
+     "d": "<ul><li>Burns</li><li>Diarrhea</li><li>Dehydration</li><li>Idiopathic</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "True — Elevated RBC Mass"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "JAK-2 Negative",
+     "d": "<p>Elevated Erythropoietin; Reactive (Most Common); Rule out exogenous cause of high EPO</p>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "JAK-2 Positive",
+     "d": "<p>Low/Normal Erythropoietin; O<sub>2</sub> Saturation ≥ 90%; Splenomegaly, Increased PMNs</p><ul><li>Polycythemia Vera</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "High Affinity Hemoglobin",
+     "d": "<p>O<sub>2</sub> Saturation ≥ 90%; Increased carboxyhemoglobin; Abnormal P450 determination; Smoking, positive Family History, early onset</p><ul><li>Congenital Hemoglobinopathy</li><li>Familial Polycythemia</li><li>Carboxyhemoglobin</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Hypoxia — O2 saturation ≤ 90% (Most Common)"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Erythropoietin Secreting Tumor",
+     "d": "<p>O<sub>2</sub> Saturation ≥ 90%; Abnormal Abdominal Ultrasound</p>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Exogenous agents — O2 Saturation ≥ 90%",
+     "d": "<ul><li>Androgen/anabolic steroid use</li><li>Recombinant EPO administration</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Heart Murmur, Cyanosis without Pulmonary Disease",
+     "d": "<ul><li>Cyanotic Heart Disease</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Abnormal Chest X-Ray, Shortness of Breath, Cough, Smoking, Snoring, Chronic Chest Symptoms",
+     "d": "<ul><li>Sleep Apnea</li><li>Chronic Pulmonary Disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Relative"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "True"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "JAK-2 negative"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "JAK-2 positive"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "High affinity hemoglobin"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Hypoxia"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Erythropoietin secreting tumor"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Exogenous agents"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "Heart murmur, cyanosis w/o lung disease"
+    },
+    {
+     "f": "g",
+     "t": "k",
+     "l": "Abnormal CXR, chronic chest symptoms"
+    }
+   ]
+  }
+ ]
+}

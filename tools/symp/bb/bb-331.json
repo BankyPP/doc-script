@@ -1,0 +1,142 @@
+{
+ "key": "331",
+ "en": "Developmental Delay",
+ "th": "พัฒนาการล่าช้า",
+ "pdf": "360",
+ "bookpg": "331",
+ "target": null,
+ "new": {
+  "id": "ped-developmental-delay",
+  "th": "พัฒนาการล่าช้า",
+  "en": "Developmental Delay",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-331-scheme",
+   "h": "Developmental Delay — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b331a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b331a",
+   "title": "Developmental Delay",
+   "src": "fig",
+   "img": "bb-331-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Developmental Delay (development at least 2 SD below expected for age)",
+     "d": "Development at least 2 Standard Deviations below expected for age"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Detailed medical and developmental history; physical examination; developmental observations",
+     "d": "Detailed medical and developmental history<br>Physical Examination<br>Developmental Observations<br>Consider social/environmental impacts"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Developmental Delay — No loss of milestones"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Developmental Delay — Loss of milestones",
+     "d": "<ul><li><b>Metabolic disease*</b></li><li>Malignancy (eg. <b>Brain tumor*</b>)</li><li>Neurodegenerative disease</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Delay in 2 or more domains"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Delay in single domain"
+    },
+    {
+     "id": "g",
+     "k": "act",
+     "t": "Delays in 2 or more domains include: motor, language, social",
+     "d": "Delays in 2 or more domains include:<ol><li>Motor (fine and/or gross motor)</li><li>Language</li><li>Social</li></ol>"
+    },
+    {
+     "id": "h",
+     "k": "note",
+     "t": "See “Development/Behavioural/Learning Problems: Clinical approach to Global Developmental Delay /Intellectual Disability”"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Motor Delay (Gross Motor and/or Fine Motor)*",
+     "d": "<ul><li><b>Cerebral Palsy*</b></li><li>Developmental Coordination Disorder</li><li>Benign Congenital Hypotonia</li><li>Neuromuscular disorder</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Speech/Language Delay*",
+     "d": "<ul><li><b>Hearing impairment*</b></li><li>Isolated speech delay</li><li>Selective Mutism</li><li>Mechanical (eg. dental, cleft palate)</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Social Delay*",
+     "d": "<ul><li><b>Autism Spectrum Disorder*</b> (Note that can often present with an associated speech delay as well)</li><li>Genetic disease</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "No loss of milestones"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Loss of milestones"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Delay in 2 or more domains"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Delay in single domain"
+    },
+    {
+     "f": "e",
+     "t": "g"
+    },
+    {
+     "f": "g",
+     "t": "h"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Motor Delay"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Speech/Language Delay"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Social Delay"
+    }
+   ]
+  }
+ ]
+}

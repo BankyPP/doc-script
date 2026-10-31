@@ -1,0 +1,380 @@
+{
+ "key": "073",
+ "en": "Abdominal Distention",
+ "th": "ท้องอืด/ท้องโต",
+ "pdf": "102–104",
+ "bookpg": "73–75",
+ "target": "abdominal-swelling",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "yb-3-9-swelling",
+   "html": "<div class=\"box\"><b>6 Fs of Abdominal Distention</b><ul><li>Fluid</li><li>Feces</li><li>Flatus</li><li>Fetus</li><li>Fibroids and benign masses</li><li>Fatal tumour</li></ul></div>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-3-9-swelling",
+   "id": "bb-073-scheme",
+   "h": "Abdominal Distention scheme — Bowel Dilatation (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b073a\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-3-9-swelling",
+   "id": "bb-073-other",
+   "h": "Abdominal Distention — Other Causes (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b073c\"></div><p><small>* Denotes acutely life-threatening conditions</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-3-9-ascites",
+   "html": "<div class=\"pearl\"><b>Clinical pearl: “rule of 97”</b> — SAAG 97% accurate. If high SAAG, 97% of time it is cirrhosis/portal hypertension. If low SAAG, 97% time carcinomatosis (and cytology 97% sensitive).</div><p><small>*Serum Ascites Albumin Gradient (SAAG) = [Serum albumin] – [Peritoneal fluid albumin]</small></p>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-3-9-ascites",
+   "id": "bb-073-ascites",
+   "h": "Abdominal Distention — Ascites (SAAG) (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b073b\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b073a",
+   "title": "Abdominal Distention",
+   "src": "fig",
+   "img": "bb-073-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Abdominal Distention"
+    },
+    {
+     "id": "asc",
+     "k": "dx",
+     "t": "Ascites",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Ascites (flow b073b)</p>"
+    },
+    {
+     "id": "bow",
+     "k": "dx",
+     "t": "Bowel Dilatation"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other Causes",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Other Causes (flow b073c)</p>"
+    },
+    {
+     "id": "mech",
+     "k": "dx",
+     "t": "Mechanical obstruction",
+     "d": "<ul><li>Adhesions 60%</li><li>Volvulus 3%</li><li>Malignancy 20%</li><li>Herniation 10%</li></ul>"
+    },
+    {
+     "id": "pseudo",
+     "k": "dx",
+     "t": "Pseudo-obstruction"
+    },
+    {
+     "id": "acute",
+     "k": "dx",
+     "t": "Acute Colonic"
+    },
+    {
+     "id": "ileus",
+     "k": "dx",
+     "t": "Paralytic Ileus",
+     "d": "<ul><li>Peritonitis</li><li>Post-surgical</li><li>Hypothyroidism</li></ul>"
+    },
+    {
+     "id": "chron",
+     "k": "dx",
+     "t": "Chronic Intestinal"
+    },
+    {
+     "id": "ogil",
+     "k": "dx",
+     "t": "Ogilvie's Syndrome",
+     "d": "<ul><li>Trauma/Surgery</li><li>Medical Conditions (e.g. Myocardial Infarction, Congestive Heart Failure)</li><li>Drugs</li><li>Retroperitoneal Hemorrhage/Malignancy</li></ul>"
+    },
+    {
+     "id": "toxic",
+     "k": "dx",
+     "t": "Toxic Megacolon",
+     "d": "<ul><li>Inflammatory</li><li>Infectious</li><li>Ischemic</li></ul>"
+    },
+    {
+     "id": "myo",
+     "k": "dx",
+     "t": "Myopathic",
+     "d": "<ul><li>Scleroderma</li><li>Familial Myopathy</li></ul>"
+    },
+    {
+     "id": "neuro",
+     "k": "dx",
+     "t": "Neuropathic",
+     "d": "<ul><li>Enteric (e.g. Amyloidosis, Paraneoplastic, Narcotics)</li><li>Extrinsic (e.g. Multiple Sclerosis, Spinal Injury, Stroke)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "asc",
+     "l": "Ascites (เส้นประ)"
+    },
+    {
+     "f": "a",
+     "t": "bow",
+     "l": "Bowel Dilatation"
+    },
+    {
+     "f": "a",
+     "t": "oth",
+     "l": "Other Causes (เส้นประ)"
+    },
+    {
+     "f": "bow",
+     "t": "mech",
+     "l": "Mechanical obstruction"
+    },
+    {
+     "f": "bow",
+     "t": "pseudo",
+     "l": "Pseudo-obstruction"
+    },
+    {
+     "f": "pseudo",
+     "t": "acute",
+     "l": "Acute Colonic"
+    },
+    {
+     "f": "pseudo",
+     "t": "ileus",
+     "l": "Paralytic Ileus"
+    },
+    {
+     "f": "pseudo",
+     "t": "chron",
+     "l": "Chronic Intestinal"
+    },
+    {
+     "f": "acute",
+     "t": "ogil",
+     "l": "Ogilvie's Syndrome"
+    },
+    {
+     "f": "acute",
+     "t": "toxic",
+     "l": "Toxic Megacolon"
+    },
+    {
+     "f": "chron",
+     "t": "myo",
+     "l": "Myopathic"
+    },
+    {
+     "f": "chron",
+     "t": "neuro",
+     "l": "Neuropathic"
+    }
+   ]
+  },
+  {
+   "id": "b073b",
+   "title": "Abdominal Distention — Ascites",
+   "src": "fig",
+   "img": "bb-073-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Abdominal Distention"
+    },
+    {
+     "id": "asc",
+     "k": "dx",
+     "t": "Ascites"
+    },
+    {
+     "id": "bow",
+     "k": "dx",
+     "t": "Bowel Dilatation",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Bowel Dilatation (flow b073a)</p>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other Causes",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Other Causes (flow b073c)</p>"
+    },
+    {
+     "id": "hi",
+     "k": "q",
+     "t": "High Albumin Gradient (SAAG)* — &gt;11 g/L serum-fluid albumin",
+     "d": "<p>*Serum Ascites Albumin Gradient (SAAG) = [Serum albumin] – [Peritoneal fluid albumin]</p><p>Clinical pearl: “rule of 97”: SAAG 97% accurate. If high SAAG, 97% of time it is cirrhosis/portal hypertension.</p>"
+    },
+    {
+     "id": "lo",
+     "k": "q",
+     "t": "Low Albumin Gradient (SAAG)* — &lt;11 g/L serum-albumin gradient",
+     "d": "<p>*Serum Ascites Albumin Gradient (SAAG) = [Serum albumin] – [Peritoneal fluid albumin]</p><p>Clinical pearl: “rule of 97”: If low SAAG, 97% time carcinomatosis (and cytology 97% sensitive).</p>"
+    },
+    {
+     "id": "portal",
+     "k": "dx",
+     "t": "Portal Hypertension",
+     "d": "<ul><li>Cirrhosis</li><li>Alcoholic Hepatitis</li><li>Portal vein thrombus</li><li>Budd-Chiari Syndrome</li></ul>"
+    },
+    {
+     "id": "cardiac",
+     "k": "dx",
+     "t": "Cardiac",
+     "d": "<ul><li>Congestive Heart Failure</li><li>Constrictive Pericarditis</li></ul>"
+    },
+    {
+     "id": "perit",
+     "k": "dx",
+     "t": "Peritoneal",
+     "d": "<ul><li>Carcinomatosis</li><li>Infection (Neutrophils &gt; 250/cc)</li></ul>"
+    },
+    {
+     "id": "other",
+     "k": "dx",
+     "t": "Other Causes",
+     "d": "<ul><li>Pancreatitis</li><li>Serositis</li><li>Nephrotic Syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "asc",
+     "l": "Ascites"
+    },
+    {
+     "f": "a",
+     "t": "bow",
+     "l": "Bowel Dilatation (เส้นประ)"
+    },
+    {
+     "f": "a",
+     "t": "oth",
+     "l": "Other Causes (เส้นประ)"
+    },
+    {
+     "f": "asc",
+     "t": "hi",
+     "l": "High SAAG (&gt;11 g/L)"
+    },
+    {
+     "f": "asc",
+     "t": "lo",
+     "l": "Low SAAG (&lt;11 g/L)"
+    },
+    {
+     "f": "hi",
+     "t": "portal",
+     "l": "Portal Hypertension"
+    },
+    {
+     "f": "hi",
+     "t": "cardiac",
+     "l": "Cardiac"
+    },
+    {
+     "f": "lo",
+     "t": "perit",
+     "l": "Peritoneal"
+    },
+    {
+     "f": "lo",
+     "t": "other",
+     "l": "Other Causes"
+    }
+   ]
+  },
+  {
+   "id": "b073c",
+   "title": "Abdominal Distention — Other Causes",
+   "src": "fig",
+   "img": "bb-073-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Abdominal Distention",
+     "d": "<p><b>6 Fs of Abdominal Distention</b> (กล่องในหน้านี้)</p><ul><li>Fluid</li><li>Feces</li><li>Flatus</li><li>Fetus</li><li>Fibroids and benign masses</li><li>Fatal tumour</li></ul>"
+    },
+    {
+     "id": "asc",
+     "k": "dx",
+     "t": "Ascites",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Ascites (flow b073b)</p>"
+    },
+    {
+     "id": "bow",
+     "k": "dx",
+     "t": "Bowel Dilatation",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Bowel Dilatation (flow b073a)</p>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other Causes"
+    },
+    {
+     "id": "pelvic",
+     "k": "dx",
+     "t": "Pelvic Mass",
+     "d": "<ul><li>Pregnancy</li><li>Fibroids</li><li>Ovarian Mass</li><li>Bladder Mass</li><li>Malignancy</li><li>Obesity</li></ul>"
+    },
+    {
+     "id": "feces",
+     "k": "dx",
+     "t": "Feces/Flatus",
+     "d": "<ul><li>Constipation</li><li>Irritable Bowel Syndrome</li><li>Carbohydrate Malabsorption</li><li>Diet (Lactose Intolerance)</li><li>Chronic Obstruction</li></ul>"
+    },
+    {
+     "id": "organ",
+     "k": "dx",
+     "t": "Organomegaly",
+     "d": "<p>*Denotes acutely life-threatening conditions</p><ul><li>Hepatomegaly</li><li>Splenomegaly</li><li>Hydronephrosis</li><li>Renal Cysts</li><li>Aortic Aneurysm*</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "asc",
+     "l": "Ascites (เส้นประ)"
+    },
+    {
+     "f": "a",
+     "t": "bow",
+     "l": "Bowel Dilatation (เส้นประ)"
+    },
+    {
+     "f": "a",
+     "t": "oth",
+     "l": "Other Causes"
+    },
+    {
+     "f": "oth",
+     "t": "pelvic",
+     "l": "Pelvic Mass"
+    },
+    {
+     "f": "oth",
+     "t": "feces",
+     "l": "Feces/Flatus"
+    },
+    {
+     "f": "oth",
+     "t": "organ",
+     "l": "Organomegaly"
+    }
+   ]
+  }
+ ]
+}

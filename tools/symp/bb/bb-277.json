@@ -1,0 +1,132 @@
+{
+ "key": "277",
+ "en": "Obsessive-Compulsive & Related Disorders",
+ "th": "โรคย้ำคิดย้ำทำและโรคที่เกี่ยวข้อง",
+ "pdf": "306",
+ "bookpg": "277",
+ "target": null,
+ "new": {
+  "id": "ocd-related-disorders",
+  "th": "โรคย้ำคิดย้ำทำและโรคที่เกี่ยวข้อง",
+  "en": "Obsessive-Compulsive & Related Disorders",
+  "g": "psych"
+ },
+ "sections": [
+  {
+   "id": "bb-277-scheme",
+   "h": "Obsessive-compulsive & related disorders (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b277a\"></div><p><small>American Psychiatric Association (2013). Diagnostic and Statistical Manual of Mental Disorders (5th ed. DSM-V).</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b277a",
+   "title": "Obsessive-Compulsive & Related Disorders",
+   "src": "fig",
+   "img": "bb-277-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Recurrent, Persistent Thoughts, Urges or Images Associated with Repetitive Behaviours"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Rule out Obsessive-Compulsive and Related Disorder due to Another Medical Condition (e.g. hyperthyroidism, anemia, CHF), Another Mental Disorder, or Substance/Medication-Induced Obsessive-Compulsive and Related Disorder"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Non-Specific Obsessions and/or Compulsions"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Specific Obsessions or Compulsions Associated with:"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Obsessive Compulsive Disorder",
+     "d": "Intrusive/Inappropriate/Distressing Thoughts With Repetitive Behaviour Meant to Neutralize Anxiety"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Body Dysmorphic Disorder",
+     "d": "Preoccupation with Perceived Physical Appearance"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Trichotillomania",
+     "d": "Hair Pulling"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Excoriation Disorder",
+     "d": "Skin Picking"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Hoarding Disorder",
+     "d": "Difficulty Discarding Possessions"
+    },
+    {
+     "id": "j",
+     "k": "note",
+     "t": "NB: criteria not met for a specific disorder",
+     "d": "If the symptoms are clinically significant but do not meet the criteria for a specific Obsessive-Compulsive or Related Disorder consider Other Specified Obsessive-Compulsive or Related Disorder or Unspecified Obsessive-Compulsive or Related Disorder"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Non-specific obsessions/compulsions"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Specific obsessions/compulsions"
+    },
+    {
+     "f": "b",
+     "t": "j",
+     "l": "Clinically significant, criteria not met"
+    },
+    {
+     "f": "c",
+     "t": "e"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Perceived physical appearance"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Hair pulling"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Skin picking"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Difficulty discarding possessions"
+    }
+   ]
+  }
+ ]
+}

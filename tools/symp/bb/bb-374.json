@@ -1,0 +1,207 @@
+{
+ "key": "374",
+ "en": "Preterm Infant Complications",
+ "th": "ภาวะแทรกซ้อนในทารกคลอดก่อนกำหนด",
+ "pdf": "403–404",
+ "bookpg": "374–375",
+ "target": null,
+ "new": {
+  "id": "ped-preterm-infant-complications",
+  "th": "ภาวะแทรกซ้อนในทารกคลอดก่อนกำหนด",
+  "en": "Preterm Infant Complications",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-374-scheme",
+   "h": "Preterm Infant Complications scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b374a\"></div><div class=\"flow\" data-flow=\"b374b\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b374a",
+   "title": "Preterm Infant Complications (<34 Weeks)",
+   "src": "fig",
+   "img": "bb-374-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Complications Associated with the Extreme Preterm Infant (<34 weeks Gestational Age)"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Neurologic",
+     "d": "<ul><li>Intraventricular Hemorrhage (IVH)</li><li>Retinopathy of Prematurity (ROP)</li><li>Neurodevelopmental Impairments (NDI)</li><li>Apnea of Prematurity (AOP)</li></ul>"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Respiratory",
+     "d": "<ul><li>Respiratory Distress Syndrome (RDS)</li><li>Chronic Lung Disease (CLD)</li><li>Pulmonary Hypertension</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Cardiovascular",
+     "d": "<ul><li><b>Congenital heart disease*</b> (Eg. Persistent Ductus Arteriosis)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Gastrointestinal",
+     "d": "<ul><li>Necrotizing Enterocolitis (NEC)</li><li>Oral Aversion and other feeding difficulties</li><li>TPN cholestasis</li></ul>"
+    },
+    {
+     "id": "re",
+     "k": "dx",
+     "t": "Renal",
+     "d": "<ul><li>Nephrocalcinosis</li><li>Electrolyte disturbances</li><li>Hypertension</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Hematology",
+     "d": "<ul><li><b>Anemia*</b></li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li><b>Hypoglycemia*</b></li><li>Metabolic bone disease</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Infectious Diseases",
+     "d": "<ul><li><b>Sepsis*</b></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "n",
+     "l": "Neurologic"
+    },
+    {
+     "f": "a",
+     "t": "r",
+     "l": "Respiratory"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Cardiovascular"
+    },
+    {
+     "f": "a",
+     "t": "g",
+     "l": "Gastrointestinal"
+    },
+    {
+     "f": "a",
+     "t": "re",
+     "l": "Renal"
+    },
+    {
+     "f": "a",
+     "t": "h",
+     "l": "Hematology"
+    },
+    {
+     "f": "a",
+     "t": "m",
+     "l": "Metabolic"
+    },
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Infectious diseases"
+    }
+   ]
+  },
+  {
+   "id": "b374b",
+   "title": "Preterm Infant Complications (34-36 Weeks)",
+   "src": "fig",
+   "img": "bb-374-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Complications Associated with the Late Preterm Infant (34-36 weeks Gestational Age)"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Neurologic",
+     "d": "<ul><li>Apnea of Prematurity (AOP)</li></ul>"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Respiratory",
+     "d": "<ul><li>Transient Tachypnea of the Newborn</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Gastrointestinal",
+     "d": "<ul><li>Feeding difficulties</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Hematology",
+     "d": "<ul><li><b>Neonatal Jaundice*</b></li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li><b>Hypoglycemia*</b></li><li>Temperature instability</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Infectious Diseases",
+     "d": "<ul><li><b>Sepsis*</b></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "n",
+     "l": "Neurologic"
+    },
+    {
+     "f": "a",
+     "t": "r",
+     "l": "Respiratory"
+    },
+    {
+     "f": "a",
+     "t": "g",
+     "l": "Gastrointestinal"
+    },
+    {
+     "f": "a",
+     "t": "h",
+     "l": "Hematology"
+    },
+    {
+     "f": "a",
+     "t": "m",
+     "l": "Metabolic"
+    },
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Infectious diseases"
+    }
+   ]
+  }
+ ]
+}

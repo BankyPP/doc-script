@@ -1,0 +1,278 @@
+{
+ "key": "287",
+ "en": "Hoarseness",
+ "th": "เสียงแหบ",
+ "pdf": "316–317",
+ "bookpg": "287–288",
+ "target": null,
+ "new": {
+  "id": "hoarseness",
+  "th": "เสียงแหบ",
+  "en": "Hoarseness",
+  "g": "eent"
+ },
+ "sections": [
+  {
+   "id": "bb-287-acute",
+   "h": "Hoarseness — Acute",
+   "html": "<div class=\"flow\" data-flow=\"b287a\"></div>"
+  },
+  {
+   "id": "bb-287-nonacute",
+   "h": "Hoarseness — Non-Acute",
+   "html": "<div class=\"flow\" data-flow=\"b287b\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b287a",
+   "title": "Hoarseness — Acute",
+   "src": "fig",
+   "img": "bb-287-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hoarseness"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "If hoarseness persists > 3 months, refer to ENT"
+    },
+    {
+     "id": "ac",
+     "k": "q",
+     "t": "Acute (< 3 weeks)"
+    },
+    {
+     "id": "na",
+     "k": "note",
+     "t": "Non-Acute (> 3 weeks) (dashed — see the Non-Acute scheme)"
+    },
+    {
+     "id": "co",
+     "k": "q",
+     "t": "Constant"
+    },
+    {
+     "id": "va",
+     "k": "q",
+     "t": "Variable"
+    },
+    {
+     "id": "i1",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Viral Laryngitis</li><li>Fungal Laryngitis (Monilia)</li><li>Bacterial Laryngitis</li><li>Bacterial Tracheitis</li></ul>"
+    },
+    {
+     "id": "i2",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Acute Nonspecific Laryngitis (GERD, Smoking, Allergies, Vocal Abuse)</li><li>Inhaled Steroids</li></ul>"
+    },
+    {
+     "id": "i3",
+     "k": "dx",
+     "t": "Trauma",
+     "d": "<ul><li>External Laryngeal Trauma</li><li>Iatrogenic<ul><li>Endoscopy</li><li>Endotracheal intubation</li></ul></li></ul>"
+    },
+    {
+     "id": "v1",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Voice Overuse</li></ul>"
+    },
+    {
+     "id": "v2",
+     "k": "dx",
+     "t": "Hyperfunction",
+     "d": "<ul><li>Muscle Tension Dysphonia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "ac",
+     "l": "Acute (< 3 weeks)"
+    },
+    {
+     "f": "b",
+     "t": "na",
+     "l": "Non-acute (> 3 weeks) (dashed)"
+    },
+    {
+     "f": "ac",
+     "t": "co",
+     "l": "Constant"
+    },
+    {
+     "f": "ac",
+     "t": "va",
+     "l": "Variable"
+    },
+    {
+     "f": "co",
+     "t": "i1",
+     "l": "Infectious"
+    },
+    {
+     "f": "co",
+     "t": "i2",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "co",
+     "t": "i3",
+     "l": "Trauma"
+    },
+    {
+     "f": "va",
+     "t": "v1",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "va",
+     "t": "v2",
+     "l": "Hyperfunction"
+    }
+   ]
+  },
+  {
+   "id": "b287b",
+   "title": "Hoarseness — Non-Acute",
+   "src": "fig",
+   "img": "bb-287-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hoarseness"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "If hoarseness persists > 3 months, refer to ENT"
+    },
+    {
+     "id": "ac",
+     "k": "note",
+     "t": "Acute (< 3 weeks) (dashed — see the Acute scheme)"
+    },
+    {
+     "id": "na",
+     "k": "q",
+     "t": "Non-Acute (> 3 weeks)"
+    },
+    {
+     "id": "co",
+     "k": "q",
+     "t": "Constant"
+    },
+    {
+     "id": "va",
+     "k": "dx",
+     "t": "Variable",
+     "d": "<ul><li>Functional</li></ul>"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Infectious",
+     "d": "<ul><li>Bacterial Infection</li><li>Fungal Infection (Monilia)</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Inflammatory",
+     "d": "<ul><li>Chronic Laryngitis</li><li>GERD</li><li>Smoking</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Trauma",
+     "d": "<ul><li>External</li><li>Internal (Surgery, Intubation)</li></ul>"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Benign Mucosal Changes",
+     "d": "<ul><li>Nodules</li><li>Polyps</li><li>Granuloma Cysts</li><li>Reinke's Edema</li></ul>"
+    },
+    {
+     "id": "c5",
+     "k": "dx",
+     "t": "Neoplastic",
+     "d": "<ul><li>Malignancy: Squamous Cell Carcinoma</li><li>Benign: Papilloma (HPV 6 & 11)</li><li>Dysplasia: Leukoplakia</li></ul>"
+    },
+    {
+     "id": "c6",
+     "k": "dx",
+     "t": "Neurological",
+     "d": "<ul><li>Vocal Cord Paralysis</li><li>Spasmodic Dysphonia</li><li>Tremor</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "ac",
+     "l": "Acute (< 3 weeks) (dashed)"
+    },
+    {
+     "f": "b",
+     "t": "na",
+     "l": "Non-acute (> 3 weeks)"
+    },
+    {
+     "f": "na",
+     "t": "co",
+     "l": "Constant"
+    },
+    {
+     "f": "na",
+     "t": "va",
+     "l": "Variable"
+    },
+    {
+     "f": "co",
+     "t": "c1",
+     "l": "Infectious"
+    },
+    {
+     "f": "co",
+     "t": "c2",
+     "l": "Inflammatory"
+    },
+    {
+     "f": "co",
+     "t": "c3",
+     "l": "Trauma"
+    },
+    {
+     "f": "co",
+     "t": "c4",
+     "l": "Benign Mucosal Changes"
+    },
+    {
+     "f": "co",
+     "t": "c5",
+     "l": "Neoplastic"
+    },
+    {
+     "f": "co",
+     "t": "c6",
+     "l": "Neurological"
+    }
+   ]
+  }
+ ]
+}

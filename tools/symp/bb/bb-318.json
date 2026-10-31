@@ -1,0 +1,177 @@
+{
+ "key": "318",
+ "en": "Acute Abdominal Pain",
+ "th": "ปวดท้องเฉียบพลัน (เด็ก)",
+ "pdf": "347",
+ "bookpg": "318",
+ "target": null,
+ "new": {
+  "id": "ped-acute-abdominal-pain",
+  "th": "ปวดท้องเฉียบพลัน (เด็ก)",
+  "en": "Acute Abdominal Pain",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-318-scheme",
+   "h": "Acute Abdominal Pain — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b318a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b318a",
+   "title": "Acute Abdominal Pain (< 72 hours)",
+   "src": "fig",
+   "img": "bb-318-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute Abdominal Pain (&lt; 72 hours)"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Evaluate for Red Flags suggestive of Surgical/Acute Abdomen",
+     "d": "<ul><li>History and physical exam</li><li>Consider Labs (selection depends on clinical history and exam)</li><li>Consider Imaging (X-ray, ultrasound)</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Focal"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Generalized",
+     "d": "<ul><li>Metabolic (eg. <b>Diabetic Ketoacidosis*</b>)</li><li><b>Henoch-Schonlein Purpura*</b></li><li>Sickle cell disease</li><li><b>Gastroenteritis*</b></li><li><b>Functional*</b></li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Upper Abdominal Pain"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Periumbilical/ Lower Abdominal Pain"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Biliary/Hepatic",
+     "d": "<ul><li>Biliary Colic</li><li>Cholecystitis</li><li>Choledocholithiasis</li><li>Hepatitis</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Upper GI tract",
+     "d": "<ul><li><b>Gastroesophageal reflux/gastroesophageal reflux disease*</b></li><li><b>Malrotation/Volvulus*</b></li><li><b>Gastroenteritis*</b></li><li>Peptic Ulcer</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Pancreatic",
+     "d": "<ul><li>Pancreatitis</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Other (upper abdominal pain)",
+     "d": "<ul><li>Referred pain (eg. <b>Pneumonia*</b>)</li><li>Musculoskeletal injury</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "GI tract",
+     "d": "<ul><li><b>Acute Abdomen*</b><ul><li><b>Appendicitis*</b></li><li><b>Intussusception*</b></li><li><b>Malrotation/Volvulus*</b></li><li>Incarcerated Hernia</li><li>Obstruction</li></ul></li><li><b>Constipation*</b></li><li><b>Gastroenteritis*</b></li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Genitourinary",
+     "d": "<ul><li><b>Pregnancy*</b>/Ectopic pregnancy</li><li><b>Ovarian/Testicular Torsion*</b></li><li>Dysmenorrhea</li><li><b>Sexually transmitted Infections*</b> (eg. Pelvic Inflammatory Disease)</li><li><b>Urinary tract infection*</b></li><li>Renal Colic</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Spleen",
+     "d": "<ul><li>Splenic rupture</li><li>Acute splenic enlargement (eg. Infectious, sequestration)</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other (periumbilical/lower abdominal pain)",
+     "d": "<ul><li><b>Functional*</b></li><li>Musculoskeletal injury</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Focal"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Generalized"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Upper abdominal pain"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Periumbilical/lower abdominal pain"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Biliary/Hepatic"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Upper GI tract"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Pancreatic"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "Other"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "GI tract"
+    },
+    {
+     "f": "f",
+     "t": "l",
+     "l": "Genitourinary"
+    },
+    {
+     "f": "f",
+     "t": "m",
+     "l": "Spleen"
+    },
+    {
+     "f": "f",
+     "t": "o",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

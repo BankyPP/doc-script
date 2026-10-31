@@ -1,0 +1,127 @@
+{
+ "key": "082",
+ "en": "Anorectal Pain",
+ "th": "ปวดบริเวณทวารหนัก",
+ "pdf": "111",
+ "bookpg": "82",
+ "target": null,
+ "new": {
+  "id": "anorectal-pain",
+  "th": "ปวดบริเวณทวารหนัก",
+  "en": "Anorectal Pain",
+  "g": "gi"
+ },
+ "sections": [
+  {
+   "id": "bb-082-scheme",
+   "h": "Anorectal Pain scheme",
+   "html": "<div class=\"flow\" data-flow=\"b082a\"></div>"
+  },
+  {
+   "id": "bb-082-causes",
+   "h": "Causes by category",
+   "html": "<p><b>Exclude first:</b> Poor Hygiene, Dietary, Anal Trauma</p><h4>Internal Lesion — Proctitis</h4><ul><li>Inflammation</li><li>Infection (Including Sexually Transmitted)</li></ul><h4>Internal Lesion — Other</h4><ul><li>Malignancy</li><li>Solitary Rectal Ulcer</li></ul><h4>Diagnosis of Exclusion</h4><ul><li>Proctalgia</li></ul><h4>External Lesion — Dermatologic</h4><ul><li>Dermatitis</li><li>Psoriasis</li></ul><h4>External Lesion — Anorectal Disease</h4><ul><li>Fissure</li><li>Fistula/Abscess (Crohn’s)</li><li>Hemorrhoid</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b082a",
+   "title": "Anorectal Pain",
+   "src": "fig",
+   "img": "bb-082-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Anorectal Pain"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Exclude: Poor Hygiene, Dietary, Anal Trauma"
+    },
+    {
+     "id": "int",
+     "k": "dx",
+     "t": "Internal Lesion"
+    },
+    {
+     "id": "excl",
+     "k": "dx",
+     "t": "Diagnosis of Exclusion",
+     "d": "<ul><li>Proctalgia</li></ul>"
+    },
+    {
+     "id": "ext",
+     "k": "dx",
+     "t": "External Lesion"
+    },
+    {
+     "id": "proc",
+     "k": "dx",
+     "t": "Proctitis",
+     "d": "<ul><li>Inflammation</li><li>Infection (Including Sexually Transmitted)</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Malignancy</li><li>Solitary Rectal Ulcer</li></ul>"
+    },
+    {
+     "id": "derm",
+     "k": "dx",
+     "t": "Dermatologic",
+     "d": "<ul><li>Dermatitis</li><li>Psoriasis</li></ul>"
+    },
+    {
+     "id": "ano",
+     "k": "dx",
+     "t": "Anorectal Disease",
+     "d": "<ul><li>Fissure</li><li>Fistula/Abscess (Crohn’s)</li><li>Hemorrhoid</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "q"
+    },
+    {
+     "f": "q",
+     "t": "int",
+     "l": "Internal Lesion"
+    },
+    {
+     "f": "q",
+     "t": "excl",
+     "l": "Diagnosis of Exclusion"
+    },
+    {
+     "f": "q",
+     "t": "ext",
+     "l": "External Lesion"
+    },
+    {
+     "f": "int",
+     "t": "proc",
+     "l": "Proctitis"
+    },
+    {
+     "f": "int",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "ext",
+     "t": "derm",
+     "l": "Dermatologic"
+    },
+    {
+     "f": "ext",
+     "t": "ano",
+     "l": "Anorectal Disease"
+    }
+   ]
+  }
+ ]
+}

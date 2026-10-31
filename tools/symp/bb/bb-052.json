@@ -1,0 +1,153 @@
+{
+ "key": "052",
+ "en": "Hemolysis",
+ "th": "เม็ดเลือดแดงแตก",
+ "pdf": "81",
+ "bookpg": "52",
+ "target": "anemia",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-6-2-algo",
+   "id": "bb-052-scheme",
+   "h": "Hemolysis scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b052a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b052a",
+   "title": "Hemolysis",
+   "src": "fig",
+   "img": "bb-052-f1.webp",
+   "note": "ชื่อกล่อง 3 กล่องใต้ Intrinsic to RBC (Infections / Complement-Mediated / Mechanical Shearing) เป็นตามที่พิมพ์ในหนังสือ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hemolysis",
+     "d": "<p>(Increased unconjugated bilirubin and reticulocytosis and polychromasia on PBS)</p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Extravascular — Spleen and RES-mediated hemolysis"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Intravascular — Hemolysis within circulation"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Extrinsic to RBC"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Intrinsic to RBC"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Immune-Mediated",
+     "d": "<ul><li>Warm AIHA (Spherocytes on PBS)</li><li>Cold AIHA (Agglutination on PBS)</li><li>Alloimmune delayed HTR</li><li>Drug-induced AIHA</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Infections",
+     "d": "<ul><li>Thalassemia</li><li>Sickle cell</li><li>Unstable Hgb</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Complement-Mediated",
+     "d": "<ul><li>Hereditary spherocytosis</li><li>Hereditary elliptocytosis</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Mechanical Shearing",
+     "d": "<ul><li>G6PD deficiency (Bite cells/Heinz bodies on PBS)</li><li>PK deficiency</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Infections",
+     "d": "<ul><li>Malaria</li><li>Babesiosis</li><li><i>C. perfringens</i></li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Complement-Mediated",
+     "d": "<ul><li>Cold AIHA (Agglutination on PBS)</li><li>PCH</li><li>PNH</li><li>Drug-induced immune-complex hemolytic anemia</li><li>Acute HTR</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Mechanical Shearing — (Schistocytes on PBS)",
+     "d": "<ul><li>MAHA (TTP, DIC, HUS)</li><li>Prosthetic heart valves</li><li>Arteriovenous malformations</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Extravascular"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Intravascular"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Extrinsic to RBC"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Intrinsic to RBC"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Immune-mediated"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Infections"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Complement-mediated"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Mechanical shearing"
+    },
+    {
+     "f": "c",
+     "t": "j",
+     "l": "Infections"
+    },
+    {
+     "f": "c",
+     "t": "k",
+     "l": "Complement-mediated"
+    },
+    {
+     "f": "c",
+     "t": "l",
+     "l": "Mechanical shearing"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,247 @@
+{
+ "key": "097",
+ "en": "Nausea & Vomiting",
+ "th": "คลื่นไส้ อาเจียน",
+ "pdf": "126–127",
+ "bookpg": "97–98",
+ "target": "nausea-vomiting-hiccups",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Blackbook — Nausea and vomiting แยกตามสาเหตุ</b></p><h4>Gastrointestinal — Upper GI: Acute</h4><ul><li>Infectious Gastroenteritis</li><li>Gastric/Duodenal Obstruction*</li><li>Gastric Volvulus*</li></ul><h4>Gastrointestinal — Upper GI: Chronic</h4><ul><li>Gastroesophageal Reflux Disease</li><li>Peptic Ulcer Disease</li><li>Gastroparesis</li></ul><h4>Gastrointestinal — Hepatobiliary</h4><ul><li>Acute Hepatitis</li><li>Acute Cholecystitis*</li><li>Cholelithiasis</li><li>Choledocholithiasis/cholangitis</li><li>Acute Pancreatitis*</li></ul><h4>Gastrointestinal — Lower GI: Acute</h4><ul><li>Infectious Gastroenteritis</li><li>Small/Large Bowel Obstruction*</li><li>Acute Appendicitis*</li><li>Mesenteric Ischemia*</li><li>Acute Diverticulitis</li></ul><h4>Gastrointestinal — Lower GI: Chronic</h4><ul><li>Inflammatory Bowel Disease</li><li>Colonic Neoplasm</li></ul><h4>Other systemic — Endocrine/Metabolic</h4><ul><li>Pregnancy</li><li>Diabetes/ DKA*</li><li>Uremia</li><li>Hypercalcemia</li><li>Addison’s Disease</li><li>Thyroid Disease</li></ul><h4>Other systemic — Other</h4><ul><li>Sepsis (eg. Pyelonephritis, Pneumonia)*</li><li>Radiation Sickness</li><li>Acute Myocardial Infarction*</li></ul><h4>Other systemic — Drugs/Toxins</h4><ul><li>Chemotherapy</li><li>Antibiotics</li><li>Ethanol</li><li>Carbon Monoxide</li><li>Heavy Metal</li><li>Nicotine</li></ul><h4>Other systemic — CNS: High Intracranial Pressure</h4><ul><li>Hemorrhage*</li><li>Meningitis</li><li>Infarction*</li><li>Malignancy</li><li>Head Trauma</li></ul><h4>Other systemic — CNS: Vestibular (Inner Ear)</h4><ul><li>Ear Infection</li><li>Motion Sickness</li><li>Vestibular Migraine</li><li>Ménière’s Disease</li></ul><h4>Other systemic — CNS: Psychiatric</h4><ul><li>Self-Induced (Bulimia)</li><li>Cyclic Vomiting</li><li>Psychogenic</li></ul><p><small>* Denotes acutely life-threatening conditions</small></p>"
+  },
+  {
+   "op": "sec",
+   "after": "yb-3-3-approach",
+   "id": "bb-097-scheme",
+   "h": "Nausea and Vomiting schemes — Gastrointestinal / Other systemic disease (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b097a\"></div><div class=\"flow\" data-flow=\"b097b\"></div><p><small>* Denotes acutely life-threatening conditions</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b097a",
+   "title": "Nausea and Vomiting — Gastrointestinal Disease",
+   "src": "fig",
+   "img": "bb-097-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Nausea and Vomiting"
+    },
+    {
+     "id": "gi",
+     "k": "dx",
+     "t": "Gastrointestinal Disease"
+    },
+    {
+     "id": "sys",
+     "k": "dx",
+     "t": "Other Systemic Disease",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Nausea and Vomiting — Other Systemic Disease (flow b097b)</p>"
+    },
+    {
+     "id": "up",
+     "k": "dx",
+     "t": "Upper Gastrointestinal"
+    },
+    {
+     "id": "hb",
+     "k": "dx",
+     "t": "Hepatobiliary",
+     "d": "<ul><li>Acute Hepatitis</li><li>Acute Cholecystitis*</li><li>Cholelithiasis</li><li>Choledocholithiasis/cholangitis</li><li>Acute Pancreatitis*</li></ul>"
+    },
+    {
+     "id": "lo",
+     "k": "dx",
+     "t": "Lower Gastrointestinal"
+    },
+    {
+     "id": "ua",
+     "k": "dx",
+     "t": "Acute (Upper GI)",
+     "d": "<ul><li>Infectious Gastroenteritis</li><li>Gastric/Duodenal Obstruction*</li><li>Gastric Volvulus*</li></ul>"
+    },
+    {
+     "id": "uc",
+     "k": "dx",
+     "t": "Chronic (Upper GI)",
+     "d": "<ul><li>Gastroesophageal Reflux Disease</li><li>Peptic Ulcer Disease</li><li>Gastroparesis</li></ul>"
+    },
+    {
+     "id": "la",
+     "k": "dx",
+     "t": "Acute (Lower GI)",
+     "d": "<ul><li>Infectious Gastroenteritis</li><li>Small/Large Bowel Obstruction*</li><li>Acute Appendicitis*</li><li>Mesenteric Ischemia*</li><li>Acute Diverticulitis</li></ul>"
+    },
+    {
+     "id": "lc",
+     "k": "dx",
+     "t": "Chronic (Lower GI)",
+     "d": "<ul><li>Inflammatory Bowel Disease</li><li>Colonic Neoplasm</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "gi",
+     "l": "Gastrointestinal Disease"
+    },
+    {
+     "f": "a",
+     "t": "sys",
+     "l": "Other Systemic Disease (เส้นประ)"
+    },
+    {
+     "f": "gi",
+     "t": "up",
+     "l": "Upper Gastrointestinal"
+    },
+    {
+     "f": "gi",
+     "t": "hb",
+     "l": "Hepatobiliary"
+    },
+    {
+     "f": "gi",
+     "t": "lo",
+     "l": "Lower Gastrointestinal"
+    },
+    {
+     "f": "up",
+     "t": "ua",
+     "l": "Acute"
+    },
+    {
+     "f": "up",
+     "t": "uc",
+     "l": "Chronic"
+    },
+    {
+     "f": "lo",
+     "t": "la",
+     "l": "Acute"
+    },
+    {
+     "f": "lo",
+     "t": "lc",
+     "l": "Chronic"
+    }
+   ]
+  },
+  {
+   "id": "b097b",
+   "title": "Nausea and Vomiting — Other Systemic Disease",
+   "src": "fig",
+   "img": "bb-097-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Nausea and Vomiting"
+    },
+    {
+     "id": "gi",
+     "k": "dx",
+     "t": "Gastrointestinal Disease",
+     "d": "<p>เส้นประในต้นฉบับ: ขยายต่อในแผนภูมิ Nausea and Vomiting — Gastrointestinal Disease (flow b097a)</p>"
+    },
+    {
+     "id": "sys",
+     "k": "dx",
+     "t": "Other Systemic Disease"
+    },
+    {
+     "id": "endo",
+     "k": "dx",
+     "t": "Endocrine/Metabolic",
+     "d": "<ul><li>Pregnancy</li><li>Diabetes/ DKA*</li><li>Uremia</li><li>Hypercalcemia</li><li>Addison’s Disease</li><li>Thyroid Disease</li></ul>"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Sepsis (eg. Pyelonephritis, Pneumonia)*</li><li>Radiation Sickness</li><li>Acute Myocardial Infarction*</li></ul>"
+    },
+    {
+     "id": "drug",
+     "k": "dx",
+     "t": "Drugs/Toxins",
+     "d": "<ul><li>Chemotherapy</li><li>Antibiotics</li><li>Ethanol</li><li>Carbon Monoxide</li><li>Heavy Metal</li><li>Nicotine</li></ul>"
+    },
+    {
+     "id": "cns",
+     "k": "dx",
+     "t": "Central Nervous System"
+    },
+    {
+     "id": "icp",
+     "k": "dx",
+     "t": "High Intracranial Pressure",
+     "d": "<ul><li>Hemorrhage*</li><li>Meningitis</li><li>Infarction*</li><li>Malignancy</li><li>Head Trauma</li></ul>"
+    },
+    {
+     "id": "ves",
+     "k": "dx",
+     "t": "Vestibular (Inner Ear)",
+     "d": "<ul><li>Ear Infection</li><li>Motion Sickness</li><li>Vestibular Migraine</li><li>Ménière’s Disease</li></ul>"
+    },
+    {
+     "id": "psy",
+     "k": "dx",
+     "t": "Psychiatric",
+     "d": "<ul><li>Self-Induced (Bulimia)</li><li>Cyclic Vomiting</li><li>Psychogenic</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "gi",
+     "l": "Gastrointestinal Disease (เส้นประ)"
+    },
+    {
+     "f": "a",
+     "t": "sys",
+     "l": "Other Systemic Disease"
+    },
+    {
+     "f": "sys",
+     "t": "endo",
+     "l": "Endocrine/Metabolic"
+    },
+    {
+     "f": "sys",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "sys",
+     "t": "drug",
+     "l": "Drugs/Toxins"
+    },
+    {
+     "f": "sys",
+     "t": "cns",
+     "l": "Central Nervous System"
+    },
+    {
+     "f": "cns",
+     "t": "icp",
+     "l": "High Intracranial Pressure"
+    },
+    {
+     "f": "cns",
+     "t": "ves",
+     "l": "Vestibular (Inner Ear)"
+    },
+    {
+     "f": "cns",
+     "t": "psy",
+     "l": "Psychiatric"
+    }
+   ]
+  }
+ ]
+}

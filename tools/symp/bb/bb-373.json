@@ -1,0 +1,193 @@
+{
+ "key": "373",
+ "en": "Pediatric Vomiting",
+ "th": "อาเจียนในเด็ก",
+ "pdf": "402",
+ "bookpg": "373",
+ "target": null,
+ "new": {
+  "id": "ped-vomiting",
+  "th": "อาเจียนในเด็ก",
+  "en": "Pediatric Vomiting",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-373-scheme",
+   "h": "Pediatric Vomiting scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b373a\"></div><p><small>*Indicates Key Condition. This is not an exhaustive list of medical conditions.</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b373a",
+   "title": "Pediatric Vomiting",
+   "src": "fig",
+   "img": "bb-373-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Vomiting"
+    },
+    {
+     "id": "b",
+     "k": "note",
+     "t": "Bilious emesis (green emesis): Red Flag*"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "Evaluate for Surgical/Acute Abdomen: history and physical exam"
+    },
+    {
+     "id": "bil",
+     "k": "dx",
+     "t": "Bilious (Surgical/Acute Abdomen)",
+     "d": "<ul><li><b>Malrotation/Volvulus*</b></li><li><b>Intussusception*</b></li><li>Obstruction <b>(Eg. Intestinal atresia*)</b></li></ul>"
+    },
+    {
+     "id": "nb",
+     "k": "q",
+     "t": "Non-Bilious"
+    },
+    {
+     "id": "ac",
+     "k": "q",
+     "t": "Acute"
+    },
+    {
+     "id": "ch",
+     "k": "q",
+     "t": "Chronic"
+    },
+    {
+     "id": "agi",
+     "k": "dx",
+     "t": "Gastrointestinal Disease",
+     "d": "<ul><li><b>Appendicitis*</b></li><li><b>Obstruction (eg. Pyloric stenosis*, intestinal atresia*, etc.)</b></li><li><b>Intussusception*</b></li><li><b>Gastroenteritis*</b></li><li>Gastroparesis/ileus</li><li>Hepatitis</li><li>Pancreatitis</li><li>Cholecystitis</li></ul>"
+    },
+    {
+     "id": "aos",
+     "k": "dx",
+     "t": "Other Systemic Disease",
+     "d": "<ul><li>Infection (eg. <b>Meningitis*, encephalitis*, sepsis*, urinary tract infection*, pneumonia*</b>)</li><li>CNS disease (eg. <b>Head injury*, concussion*, increased intracranial pressure*, brain tumor*, abusive head trauma*, migraine*</b>)</li><li>Middle ear disease <b>(eg. Otitis media*)</b></li><li>Endocrine (eg. <b>Diabetic ketoacidosis/Diabetes mellitus*</b>)</li></ul>"
+    },
+    {
+     "id": "ev",
+     "k": "act",
+     "t": "Evaluate for Red Flags",
+     "d": "Bloody emesis, morning emesis, weight loss/failure to thrive, systemic symptoms (fever, unwell, etc.)"
+    },
+    {
+     "id": "rf",
+     "k": "q",
+     "t": "Red Flags present"
+    },
+    {
+     "id": "nrf",
+     "k": "q",
+     "t": "No Red Flags"
+    },
+    {
+     "id": "rgi",
+     "k": "dx",
+     "t": "Gastrointestinal Disease",
+     "d": "<ul><li><b>Inflammatory bowel disease*</b> (eg. Crohn’s Disease)</li><li>Peptic ulcer</li></ul>"
+    },
+    {
+     "id": "ros",
+     "k": "dx",
+     "t": "Other Systemic Disease",
+     "d": "<ul><li>CNS disease (<b>Increased intracranial pressure*, brain tumor*</b>)</li><li>Renal Disease (eg. <b>Renal failure*</b>)</li><li>Endocrine (eg. <b>Diabetes mellitus*</b>, Addison’s disease, thyroid disease)</li><li><b>Metabolic disease*</b></li></ul>"
+    },
+    {
+     "id": "ngi",
+     "k": "dx",
+     "t": "Gastrointestinal Disease",
+     "d": "<ul><li><b>Gastroesophageal reflux disease*</b></li><li>Cyclic Vomiting Syndrome</li></ul>"
+    },
+    {
+     "id": "nos",
+     "k": "dx",
+     "t": "Other Systemic Disease",
+     "d": "<ul><li>CNS disease (eg. <b>Head injury*, concussion*, migraine*</b>)</li><li>Respiratory <b>(eg. Asthma*)</b></li><li>Middle ear disease <b>(eg. Otitis media*)</b></li><li>Drugs/Toxins (eg. <b>Substance use and abuse*, poisoning/intoxication*</b>, antibiotics)</li><li>Psychiatric <b>(eg. Disordered eating*,</b> rumination)</li><li>Endocrine (eg. <b>Pregnancy*</b>)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "bil",
+     "l": "Bilious"
+    },
+    {
+     "f": "c",
+     "t": "nb",
+     "l": "Non-bilious"
+    },
+    {
+     "f": "nb",
+     "t": "ac",
+     "l": "Acute"
+    },
+    {
+     "f": "nb",
+     "t": "ch",
+     "l": "Chronic"
+    },
+    {
+     "f": "ac",
+     "t": "agi",
+     "l": "Gastrointestinal disease"
+    },
+    {
+     "f": "ac",
+     "t": "aos",
+     "l": "Other systemic disease"
+    },
+    {
+     "f": "ch",
+     "t": "ev"
+    },
+    {
+     "f": "ev",
+     "t": "rf",
+     "l": "Red flags present"
+    },
+    {
+     "f": "ev",
+     "t": "nrf",
+     "l": "No red flags"
+    },
+    {
+     "f": "rf",
+     "t": "rgi",
+     "l": "Gastrointestinal disease"
+    },
+    {
+     "f": "rf",
+     "t": "ros",
+     "l": "Other systemic disease"
+    },
+    {
+     "f": "nrf",
+     "t": "ngi",
+     "l": "Gastrointestinal disease"
+    },
+    {
+     "f": "nrf",
+     "t": "nos",
+     "l": "Other systemic disease"
+    }
+   ]
+  }
+ ]
+}

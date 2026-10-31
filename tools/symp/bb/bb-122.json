@@ -1,0 +1,157 @@
+{
+ "key": "122",
+ "en": "Proteinuria",
+ "th": "โปรตีนในปัสสาวะ",
+ "pdf": "151",
+ "bookpg": "122",
+ "target": "asymptomatic-proteinuria",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-4-8-algo",
+   "id": "bb-122-scheme",
+   "h": "Persistent Proteinuria scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b122a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-4-8-inter",
+   "html": "<ul><li>Transient proteinuria (excluded on history/with repeat testing): exercise, fever, UTI</li><li>Orthostatic proteinuria: tall adolescents</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-4-8-persist",
+   "html": "<p>Persistent proteinuria = &gt;150 mg/d protein present on repeat testing including overnight testing</p><ul><li><b>Tubular proteinuria</b> (negative urine dip = no albuminuria) → urine protein electrophoresis<ul><li>Monoclonal protein → overflow: multiple myeloma, MGUS</li><li>Negative → poor reabsorption: RTA, Fanconi’s syndrome, drugs</li></ul></li><li><b>Glomerular proteinuria</b> (positive urine dip = albuminuria) → urine microscopy<ul><li>Active urine sediment (WBC/RBC casts): IgA nephropathy, membranoproliferative GN, mesangial proliferative, anti-GBM antibodies, GPA/MPA, SLE, HSP, post-infectious GN</li><li>Bland urine sediment: FSGS, minimal change disease, membranous nephropathy, HTN, diabetes, protein deposition (eg. amyloidosis)</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b122a",
+   "title": "Persistent Proteinuria",
+   "src": "fig",
+   "img": "bb-122-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Persistent Proteinuria"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": ">150 mg/d protein present on repeat testing including overnight testing"
+    },
+    {
+     "id": "tr",
+     "k": "dx",
+     "t": "Transient Proteinuria",
+     "d": "<ul><li>Exercise</li><li>Fever</li><li>UTI</li></ul>"
+    },
+    {
+     "id": "or",
+     "k": "dx",
+     "t": "Orthostatic Proteinuria",
+     "d": "<ul><li>Tall adolescents</li></ul>"
+    },
+    {
+     "id": "tub",
+     "k": "q",
+     "t": "Tubular Proteinuria (Negative urine dip = no albuminuria)"
+    },
+    {
+     "id": "glo",
+     "k": "q",
+     "t": "Glomerular Proteinuria (Positive urine dip = albuminuria)"
+    },
+    {
+     "id": "upe",
+     "k": "act",
+     "t": "Urine Protein Electrophoresis"
+    },
+    {
+     "id": "um",
+     "k": "act",
+     "t": "Urine Microscopy"
+    },
+    {
+     "id": "ovf",
+     "k": "dx",
+     "t": "Overflow",
+     "d": "<ul><li>Multiple Myeloma</li><li>MGUS</li></ul>"
+    },
+    {
+     "id": "por",
+     "k": "dx",
+     "t": "Poor reabsorption",
+     "d": "<ul><li>RTA</li><li>Fanconi's syndrome</li><li>Drugs</li></ul>"
+    },
+    {
+     "id": "act",
+     "k": "dx",
+     "t": "Active urine sediment (WBC/RBC casts)",
+     "d": "<ul><li>IgA nephropathy</li><li>Membranoproliferative GN</li><li>Mesangial proliferative</li><li>Anti-GBM antibodies</li><li>Granulomatosis with polyangiitis (GPA)/microscopic polyangiitis (MPA)</li><li>SLE</li><li>HSP</li><li>Post-infectious GN</li></ul>"
+    },
+    {
+     "id": "bl",
+     "k": "dx",
+     "t": "Bland urine sediment",
+     "d": "<ul><li>FSGS</li><li>Minimal change disease</li><li>Membranous nephropathy</li><li>HTN</li><li>Diabetes</li><li>Protein deposition (eg. Amyloidosis)</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "tr",
+     "l": "Excluded on history / repeat testing"
+    },
+    {
+     "f": "b",
+     "t": "or",
+     "l": "Excluded on history / repeat testing"
+    },
+    {
+     "f": "b",
+     "t": "tub",
+     "l": "Tubular proteinuria"
+    },
+    {
+     "f": "b",
+     "t": "glo",
+     "l": "Glomerular proteinuria"
+    },
+    {
+     "f": "tub",
+     "t": "upe"
+    },
+    {
+     "f": "upe",
+     "t": "ovf",
+     "l": "Monoclonal protein"
+    },
+    {
+     "f": "upe",
+     "t": "por",
+     "l": "Negative"
+    },
+    {
+     "f": "glo",
+     "t": "um"
+    },
+    {
+     "f": "um",
+     "t": "act",
+     "l": "Active urine sediment"
+    },
+    {
+     "f": "um",
+     "t": "bl",
+     "l": "Bland urine sediment"
+    }
+   ]
+  }
+ ]
+}

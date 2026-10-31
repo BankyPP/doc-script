@@ -1,0 +1,146 @@
+{
+ "key": "263",
+ "en": "Inflammatory Joint Pain",
+ "th": "ปวดข้อจากการอักเสบ",
+ "pdf": "292",
+ "bookpg": "263",
+ "target": "arthralgia-arthritis",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-8-1-algo",
+   "id": "bb-263-scheme",
+   "h": "Inflammatory joint pain (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b263a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-8-1-pattern",
+   "html": "<p><b>Inflammatory joint pain (Blackbook)</b></p><ul><li><b>Monoarticular</b>:<ul><li>Gout (Podagra, Tophi)</li><li>Pseudogout</li><li>Early Rheumatic Disease</li><li>Reactive (e.g. Genitourinary Infection)</li></ul></li><li><b>Oligoarticular (1-4 joints)</b>:<ul><li>Gout</li><li>Psoriatic (Nail Changes, Plaques)</li><li>Enteropathic (e.g. Inflammatory Bowel Disease)</li><li>Reactive</li><li>Rheumatic Fever (recent Pharyngitis, Carditis)</li><li>Lyme Disease (Tick bite, Migratory red Macules)</li></ul></li><li><b>Polyarticular (&gt;4 joints)</b> — peripheral only: <b>subacute &amp; symmetrical</b><ul><li>Rheumatoid Arthritis</li><li>Systemic Lupus Erythematosus</li><li>Sjögren’s (a.k.a. Sicca) Syndrome</li><li>Scleroderma</li><li>Henoch-Schonlein Purpura</li><li>Polymyalgia Rheumatica</li><li>Wegener’s Granulomatosis</li></ul><b>insidious monoarticular</b><ul><li>Symmetric (Polymyositis/Dermatomyositis)</li><li>Asymmetric (Psoriatic Arthritis)</li></ul><b>migratory</b>: Rheumatic Fever; peripheral &amp; axial: <b>acute onset</b>: Reactive; <b>insidious onset</b><ul><li>Ankylosing Spondylitis</li><li>Enteropathic (e.g. Inflammatory Bowel Disease)</li><li>Psoriatic Arthritis</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b263a",
+   "title": "Inflammatory Joint Pain",
+   "src": "fig",
+   "img": "bb-263-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Inflammatory Joint Pain"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Monoarticular",
+     "d": "<ul><li>Gout (Podagra, Tophi)</li><li>Pseudogout</li><li>Early Rheumatic Disease</li><li>Reactive (e.g. Genitourinary Infection)</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Oligoarticular (1-4 joints)",
+     "d": "<ul><li>Gout</li><li>Psoriatic (Nail Changes, Plaques)</li><li>Enteropathic (e.g. Inflammatory Bowel Disease)</li><li>Reactive</li><li>Rheumatic Fever (recent Pharyngitis, Carditis)</li><li>Lyme Disease (Tick bite, Migratory red Macules)</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Polyarticular (&gt;4 joints)"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Peripheral Only"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Peripheral &amp; Axial"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Subacute &amp; Symmetrical",
+     "d": "<ul><li>Rheumatoid Arthritis</li><li>Systemic Lupus Erythematosus</li><li>Sjögren’s (a.k.a. Sicca) Syndrome</li><li>Scleroderma</li><li>Henoch-Schonlein Purpura</li><li>Polymyalgia Rheumatica</li><li>Wegener’s Granulomatosis</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Insidious Monoarticular",
+     "d": "<ul><li>Symmetric (Polymyositis/Dermatomyositis)</li><li>Asymmetric (Psoriatic Arthritis)</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Migratory",
+     "d": "<ul><li>Rheumatic Fever</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Acute Onset",
+     "d": "<ul><li>Reactive</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Insidious Onset",
+     "d": "<ul><li>Ankylosing Spondylitis</li><li>Enteropathic (e.g. Inflammatory Bowel Disease)</li><li>Psoriatic Arthritis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Monoarticular"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Oligoarticular (1-4 joints)"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Polyarticular (>4 joints)"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Peripheral only"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Peripheral & axial"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Subacute & symmetrical"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Insidious monoarticular"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Migratory"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Acute onset"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Insidious onset"
+    }
+   ]
+  }
+ ]
+}

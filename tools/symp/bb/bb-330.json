@@ -1,0 +1,92 @@
+{
+ "key": "330",
+ "en": "Depressed / Lethargic Newborn",
+ "th": "ทารกแรกเกิดซึม/อ่อนแรง",
+ "pdf": "359",
+ "bookpg": "330",
+ "target": null,
+ "new": {
+  "id": "ped-depressed-lethargic-newborn",
+  "th": "ทารกแรกเกิดซึม/อ่อนแรง",
+  "en": "Depressed / Lethargic Newborn",
+  "g": "ped"
+ },
+ "sections": [
+  {
+   "id": "bb-330-scheme",
+   "h": "Depressed / Lethargic Newborn — scheme",
+   "html": "<div class=\"flow\" data-flow=\"b330a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b330a",
+   "title": "Depressed/Lethargic Newborn",
+   "src": "fig",
+   "img": "bb-330-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Depressed/Lethargic Newborn"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Child Related"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Maternal Related",
+     "d": "<ul><li>Drugs (Ex. SSRI)</li><li>Diabetes Mellitus</li><li>Gestational Hypertension</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Birth Injury</li><li>Congenital Malformation</li><li>TORCH Infection</li><li>Congenital Heart Defect</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Respiratory",
+     "d": "<ul><li>Respiratory Distress Syndrome</li><li>Birth Asphyxia</li><li>Pneumothorax</li><li>Meconium Aspiration</li><li>Sepsis</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Anemia</li><li>Shock</li><li>Hypothermia</li><li>Hypoglycemia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Child Related"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Maternal Related"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Congenital"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Respiratory"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

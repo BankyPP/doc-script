@@ -1,0 +1,82 @@
+{
+ "key": "278",
+ "en": "Personality Disorder",
+ "th": "ความผิดปกติของบุคลิกภาพ",
+ "pdf": "307",
+ "bookpg": "278",
+ "target": null,
+ "new": {
+  "id": "personality-disorder",
+  "th": "ความผิดปกติของบุคลิกภาพ",
+  "en": "Personality Disorder",
+  "g": "psych"
+ },
+ "sections": [
+  {
+   "id": "bb-278-scheme",
+   "h": "Personality disorder — clusters A / B / C (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b278a\"></div><div class=\"box\"><b>Diagnostic criteria</b><ul><li>Enduring pattern of experience and behaviour that deviates from cultural expectations, manifest in two or more of the following areas: cognition, affectivity, interpersonal functioning, and impulse control</li><li>The pattern is inflexible and pervasive across many social and personal situations</li><li>The pattern leads to distress or impairment in important areas of functioning</li><li>The pattern is stable and of long duration, with an onset that can be traced back to childhood or adolescence</li><li>The pattern is not due to another mental illness, a general medical condition, or substance use</li></ul></div><p><small>1. Black, D.W., and N.C. Andreasen (2011). Introductory Textbook of Psychiatry, 5th Ed. Washington: American Psychiatric Publishing, Inc. pp. 285-317</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b278a",
+   "title": "Personality Disorder",
+   "src": "fig",
+   "img": "bb-278-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Personality Disorder"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Enduring pattern that deviates from cultural expectations (diagnostic criteria)",
+     "d": "<ul><li>Enduring pattern of experience and behaviour that deviates from cultural expectations, manifest in two or more of the following areas: cognition, affectivity, interpersonal functioning, and impulse control</li><li>The pattern is inflexible and pervasive across many social and personal situations</li><li>The pattern leads to distress or impairment in important areas of functioning</li><li>The pattern is stable and of long duration, with an onset that can be traced back to childhood or adolescence</li><li>The pattern is not due to another mental illness, a general medical condition, or substance use</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Cluster A: Odd or Eccentric",
+     "d": "<ul><li><b>Paranoid</b> - irrational suspicion or mistrust</li><li><b>Schizoid</b> - emotional detachment, lack of interest in social relationships</li><li><b>Schizotypal</b> - Odd beliefs</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Cluster B: Dramatic, Emotional, or Social",
+     "d": "<ul><li><b>Antisocial</b> - disregard for social norms, the law, and rights of others</li><li><b>Borderline</b> - instability of identity, relationships, and behaviour</li><li><b>Histrionic</b> - attention-seeking, exaggerated emotional expression</li><li><b>Narcissistic</b> - grandiosity, need for admiration, lack of empathy</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Cluster C: Anxious or Fearful",
+     "d": "<ul><li><b>Avoidant</b> - social inhibition, inadequacy, hypersensitivity</li><li><b>Dependent</b> - psychological dependence on others</li><li><b>Obsessive-Compulsive</b> - rigid, inflexible conformity to rules, order, and codes</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Cluster A: odd or eccentric"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Cluster B: dramatic, emotional, or social"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Cluster C: anxious or fearful"
+    }
+   ],
+   "note": "ในเล่มพิมพ์ \")\" เกินท้ายบรรทัด Dependent — ตัดออก"
+  }
+ ]
+}

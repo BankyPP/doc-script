@@ -1,0 +1,190 @@
+{
+ "key": "126",
+ "en": "Suspected Acid-Base Disturbance",
+ "th": "สงสัยความผิดปกติของกรด-ด่าง",
+ "pdf": "155",
+ "bookpg": "126",
+ "target": null,
+ "new": {
+  "id": "acid-base-disturbance",
+  "th": "ความผิดปกติของสมดุลกรด-ด่าง",
+  "en": "Suspected Acid-Base Disturbance",
+  "g": "kub"
+ },
+ "sections": [
+  {
+   "id": "bb-126-scheme",
+   "h": "Suspected Acid-Base Disorder scheme (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b126a\"></div>",
+   "sub": [
+    {
+     "id": "bb-126-comp",
+     "h": "Appropriate compensation",
+     "html": "<div class=\"tbl\"><table><thead><tr><th>Appropriate Compensation</th><th>Ratio (CO<sub>2</sub>:HCO<sub>3</sub><sup>-</sup>)</th></tr></thead><tbody><tr><td>Metabolic Acidosis</td><td>12:10</td></tr><tr><td>Metabolic Alkalosis</td><td>7:10</td></tr><tr><td>Acute Respiratory Acidosis</td><td>10:1</td></tr><tr><td>Chronic Respiratory Acidosis</td><td>10:3</td></tr><tr><td>Acute Respiratory Alkalosis</td><td>10:2</td></tr><tr><td>Chronic Respiratory Alkalosis</td><td>10:4</td></tr></tbody></table></div>"
+    },
+    {
+     "id": "bb-126-ag",
+     "h": "Anion gap and mixed metabolic disorders",
+     "html": "<div class=\"box\"><p><i>Anion Gap = Na – (Cl + HCO<sub>3</sub>)</i> (normal AG ~12)</p><p><b><i>Diagnosis of Mixed Metabolic Disorders in Patients with Metabolic Acidosis:</i></b></p><ul><li><i>Anion Gap Not Increased</i> → Non-Anion Gap Acidosis Alone</li><li><i>ΔAnion Gap = ΔHCO<sub>3</sub></i> → Anion Gap Acidosis Alone</li><li><i>ΔAnion Gap &lt; ΔHCO<sub>3</sub></i> → Mixed Anion Gap Acidosis + Non-Anion Gap Acidosis</li><li><i>ΔAnion Gap &gt; ΔHCO<sub>3</sub></i> → Mixed Anion Gap Acidosis + Metabolic Alkalosis</li></ul></div>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "b126a",
+   "title": "Suspected Acid-Base Disorder",
+   "src": "fig",
+   "img": "bb-126-f1.webp",
+   "note": "ตัวเลข CO2:HCO3 (12:10, 7:10, 10:1, 10:3, 10:2, 10:4) คือสัดส่วน Appropriate compensation ในต้นฉบับ — ดูตารางใต้ flow",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Suspected Acid-Base Disorder"
+    },
+    {
+     "id": "ac",
+     "k": "q",
+     "t": "Acidemia (pH < 7.35)"
+    },
+    {
+     "id": "np",
+     "k": "dx",
+     "t": "Normal pH",
+     "d": "<ul><li>Normal Arterial Blood Gas</li><li>Mixed Acid-Base Disorder</li></ul>"
+    },
+    {
+     "id": "al",
+     "k": "q",
+     "t": "Alkalemia (pH > 7.45)"
+    },
+    {
+     "id": "ma",
+     "k": "q",
+     "t": "Metabolic Acidosis (HCO<sub>3</sub> < 24 mmol/L)",
+     "d": "<p><i>CO<sub>2</sub> : HCO<sub>3</sub> = 12:10</i></p>"
+    },
+    {
+     "id": "ra",
+     "k": "q",
+     "t": "Respiratory Acidosis (pCO<sub>2</sub> > 40 mmHg)"
+    },
+    {
+     "id": "mal",
+     "k": "dx",
+     "t": "Metabolic Alkalosis (HCO<sub>3</sub> > 28 mmol/L)",
+     "d": "<p><i>CO<sub>2</sub> : HCO<sub>3</sub> = 7:10</i></p>"
+    },
+    {
+     "id": "ral",
+     "k": "q",
+     "t": "Respiratory Alkalosis (pCO<sub>2</sub> < 35 mmHg)"
+    },
+    {
+     "id": "ag",
+     "k": "dx",
+     "t": "Anion Gap",
+     "d": "<ul><li>Methanol</li><li>Uremia</li><li>Diabetic Ketoacidosis</li><li>Propylene Glycol</li><li>Isoniazid</li><li>Lactic Acidosis</li><li>Ethylene Glycol</li><li>Acetylsalicylic Acid</li></ul>"
+    },
+    {
+     "id": "nag",
+     "k": "dx",
+     "t": "Non-Anion Gap",
+     "d": "<ul><li>Renal</li><li>Gastrointestinal (diarrhea)</li></ul>"
+    },
+    {
+     "id": "raa",
+     "k": "dx",
+     "t": "Acute",
+     "d": "<p><i>CO<sub>2</sub> : HCO<sub>3</sub> = 10:1</i></p>"
+    },
+    {
+     "id": "rac",
+     "k": "dx",
+     "t": "Chronic",
+     "d": "<p><i>CO<sub>2</sub> : HCO<sub>3</sub> = 10:3</i></p>"
+    },
+    {
+     "id": "rla",
+     "k": "dx",
+     "t": "Acute",
+     "d": "<p><i>CO<sub>2</sub> : HCO<sub>3</sub> = 10:2</i></p>"
+    },
+    {
+     "id": "rlc",
+     "k": "dx",
+     "t": "Chronic",
+     "d": "<p><i>CO<sub>2</sub> : HCO<sub>3</sub> = 10:4</i></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ac",
+     "l": "Acidemia"
+    },
+    {
+     "f": "a",
+     "t": "np",
+     "l": "Normal pH"
+    },
+    {
+     "f": "a",
+     "t": "al",
+     "l": "Alkalemia"
+    },
+    {
+     "f": "ac",
+     "t": "ma",
+     "l": "Metabolic acidosis"
+    },
+    {
+     "f": "ac",
+     "t": "ra",
+     "l": "Respiratory acidosis"
+    },
+    {
+     "f": "al",
+     "t": "mal",
+     "l": "Metabolic alkalosis"
+    },
+    {
+     "f": "al",
+     "t": "ral",
+     "l": "Respiratory alkalosis"
+    },
+    {
+     "f": "ma",
+     "t": "ag",
+     "l": "Anion gap"
+    },
+    {
+     "f": "ma",
+     "t": "nag",
+     "l": "Non-anion gap"
+    },
+    {
+     "f": "ra",
+     "t": "raa",
+     "l": "Acute"
+    },
+    {
+     "f": "ra",
+     "t": "rac",
+     "l": "Chronic"
+    },
+    {
+     "f": "ral",
+     "t": "rla",
+     "l": "Acute"
+    },
+    {
+     "f": "ral",
+     "t": "rlc",
+     "l": "Chronic"
+    }
+   ]
+  }
+ ]
+}

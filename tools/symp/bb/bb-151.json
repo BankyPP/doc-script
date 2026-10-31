@@ -1,0 +1,74 @@
+{
+ "key": "151",
+ "en": "Hypoglycemia",
+ "th": "น้ำตาลในเลือดต่ำ",
+ "pdf": "180",
+ "bookpg": "151",
+ "target": "hypoglycemia",
+ "ops": [
+  {
+   "op": "sec",
+   "after": "yb-5-4-nondm",
+   "id": "bb-151-scheme",
+   "h": "Hypoglycemia — fasting / post-prandial / other causes (Blackbook)",
+   "html": "<div class=\"flow\" data-flow=\"b151a\"></div><ul><li><b>Hypoglycemia</b> <span class=\"muted\">— &lt; 4 mmol/L</span><div class=\"warn\"><p>Potentially acutely life-threatening presentation</p></div><ul><li><span class=\"tag\">Fasting hypoglycemia</span> <b>Fasting Hypoglycemia</b><ul><li>Excess Insulin</li><li>Medications (eg. Insulin Secretagogues, β-Adrenergic Antagonists, Quinine, Salicylates, Pentamidine)</li><li>Alcohol</li></ul></li><li><span class=\"tag\">Post-prandial (reactive)</span> <b>Post-Prandial</b> <span class=\"muted\">— (Reactive)</span><ul><li>Alimentary (eg. in the setting of Gastric Surgery)</li><li>Congenital Enzyme Deficiencies</li><li>Idiopathic</li></ul></li><li><span class=\"tag\">Other causes</span> <b>Other Causes</b><ul><li>Critical Illness (eg. Hepatic Failure, Renal Failure, Cardiac Failure)</li><li>Sepsis</li><li>Hypopituitarism</li><li>Adrenal Insufficiency</li><li>Hyperinsulinemic States (eg. Glucagon, Catecholamine Deficiency, Insulinoma)</li><li>Malnutrition/Anorexia Nervosa</li></ul></li></ul></li></ul><div class=\"warn\"><p>Potentially acutely life-threatening presentation</p></div>"
+  },
+  {
+   "op": "append",
+   "sec": "yb-5-4-approach",
+   "html": "<p><b>Signs/Symptoms of Hypoglycemia:</b></p><ul><li>Neurogenic: irritability, tremor, anxiety, palpitations, tachycardia, sweating, pallor, paresthesias</li><li>Neuroglycopenia: confusion, lethargy, abnormal behaviour, amnesia, weakness, blurred vision, seizures</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "b151a",
+   "title": "Hypoglycemia",
+   "src": "fig",
+   "img": "bb-151-f1.webp",
+   "nodes": [
+    {
+     "id": "r",
+     "k": "start",
+     "t": "Hypoglycemia",
+     "d": "<p>&lt; 4 mmol/L</p><div class=\"warn\"><p>Potentially acutely life-threatening presentation</p></div>"
+    },
+    {
+     "id": "fa",
+     "k": "dx",
+     "t": "Fasting Hypoglycemia",
+     "d": "<ul><li>Excess Insulin</li><li>Medications (eg. Insulin Secretagogues, β-Adrenergic Antagonists, Quinine, Salicylates, Pentamidine)</li><li>Alcohol</li></ul>"
+    },
+    {
+     "id": "pp",
+     "k": "dx",
+     "t": "Post-Prandial",
+     "d": "<p>(Reactive)</p><ul><li>Alimentary (eg. in the setting of Gastric Surgery)</li><li>Congenital Enzyme Deficiencies</li><li>Idiopathic</li></ul>"
+    },
+    {
+     "id": "oc",
+     "k": "dx",
+     "t": "Other Causes",
+     "d": "<ul><li>Critical Illness (eg. Hepatic Failure, Renal Failure, Cardiac Failure)</li><li>Sepsis</li><li>Hypopituitarism</li><li>Adrenal Insufficiency</li><li>Hyperinsulinemic States (eg. Glucagon, Catecholamine Deficiency, Insulinoma)</li><li>Malnutrition/Anorexia Nervosa</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "r",
+     "t": "fa",
+     "l": "Fasting hypoglycemia"
+    },
+    {
+     "f": "r",
+     "t": "pp",
+     "l": "Post-prandial (reactive)"
+    },
+    {
+     "f": "r",
+     "t": "oc",
+     "l": "Other causes"
+    }
+   ],
+   "note": "Potentially acutely life-threatening presentation"
+  }
+ ]
+}
