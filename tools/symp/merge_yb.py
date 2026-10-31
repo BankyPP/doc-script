@@ -7,6 +7,7 @@
 ต้นทาง (อยู่ใน repo ทั้งหมด จึงรันซ้ำได้เสมอ):
   tools/symp/si/chNN.json   ตำราศิริราช 44 บท ฉบับเดิม (อย่าแก้ — แก้เนื้อหาศิริราชที่นี่ได้ถ้าจำเป็น)
   tools/symp/yb/yb-*.json   เล่มเหลือง หนึ่งไฟล์ต่อหัวข้อ (+ รูป yb/img/) — รูปแบบใน /home/claude/yb/BRIEF.md
+  tools/symp/bb/bb-NNN.json Blackbook หนึ่งไฟล์ต่อ presentation (+ รูป bb/img/) — target เป็น id บท (string) ได้ · รูปแบบใน tools/symp/bb-tools/BRIEF.md
   tools/symp/ai/*.json      เนื้อหาที่ Claude เขียนเพิ่ม (รูปแบบเดียวกับไฟล์เล่มเหลือง + "book": "ai")
   รูปของศิริราชเอาจาก docs/symp/img/ (ชื่อ chNN-fK.webp)
 
@@ -21,7 +22,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 T = os.path.join(ROOT, 'tools', 'symp')
 OUT = sys.argv[1] if len(sys.argv) > 1 else '/home/claude/symp/out'
 SI_IMG = os.path.join(ROOT, 'docs', 'symp', 'img')
-ORDER = ['si', 'yb', 'ai']
+ORDER = ['si', 'yb', 'bb', 'ai']
+BOOK_RANK = {'yb': 0, 'bb': 1, 'ai': 2}
 
 
 def key_order(k):
@@ -87,6 +89,8 @@ def main():
         if im.startswith('ch'): shutil.copy2(os.path.join(SI_IMG, im), os.path.join(OUT, 'img', im))
     for im in os.listdir(os.path.join(T, 'yb', 'img')):
         shutil.copy2(os.path.join(T, 'yb', 'img', im), os.path.join(OUT, 'img', im))
+    if os.path.isdir(os.path.join(T, 'bb', 'img')):
+        for im in os.listdir(os.path.join(T, 'bb', 'img')): shutil.copy2(os.path.join(T, 'bb', 'img', im), os.path.join(OUT, 'img', im))
     if os.path.isdir(os.path.join(T, 'ai', 'img')):
         for im in os.listdir(os.path.join(T, 'ai', 'img')): shutil.copy2(os.path.join(T, 'ai', 'img', im), os.path.join(OUT, 'img', im))
 
@@ -99,8 +103,10 @@ def main():
         for fl in d.get('flows', []): fl.setdefault('book', 'si')
         chaps[d['no']] = d
 
-    tops = load(os.path.join(T, 'yb'), 'yb') + load(os.path.join(T, 'ai'), 'ai')
-    tops.sort(key=lambda t: (t['_book'] != 'yb', key_order(t['key'])))
+    tops = load(os.path.join(T, 'yb'), 'yb') + load(os.path.join(T, 'bb'), 'bb') + load(os.path.join(T, 'ai'), 'ai')
+    tops.sort(key=lambda t: (BOOK_RANK[t['_book']], key_order(t['key'])))
+    byid = {d['id']: d for d in chaps.values()}
+    bb_order = {t['key']: i + 1 for i, t in enumerate(x for x in tops if x['_book'] == 'bb')}
     nxt = max(chaps) + 1
     yb_order = {t['key']: i + 1 for i, t in enumerate(x for x in tops if x['_book'] == 'yb')}
     newc = {}
@@ -109,11 +115,17 @@ def main():
         b = t['_book']
         flows = copy.deepcopy(t.get('flows', []))
         for fl in flows: fl['book'] = b
-        ref = {'k': t['key'].replace('-', '.') if t['key'] not in ('abd', 'abbr', '0') else {'abd': 'หน้าแทรก abdominal pain', 'abbr': 'ภาคผนวก', '0': 'ปก/สารบัญ'}[t['key']],
-               'o': yb_order.get(t['key'], 0), 'p': t.get('pdf', '')}
-        if t.get('target'):
-            d = chaps[t['target']]
-            if b == 'yb': d['b'].setdefault('yb', []).append(ref)
+        if b == 'bb':
+            ref = {'k': 'หน้า ' + str(t.get('bookpg') or int(t['key'])), 'o': bb_order.get(t['key'], 0), 'p': t.get('pdf', '')}
+        else:
+            ref = {'k': t['key'].replace('-', '.') if t['key'] not in ('abd', 'abbr', '0') else {'abd': 'หน้าแทรก abdominal pain', 'abbr': 'ภาคผนวก', '0': 'ปก/สารบัญ'}[t['key']],
+                   'o': yb_order.get(t['key'], 0), 'p': t.get('pdf', '')}
+        tg = t.get('target')
+        if not tg and t.get('new') and t['new']['id'] in byid:   # บทใหม่ id ซ้ำกับบทที่มีแล้ว → ต่อท้ายบทนั้น
+            tg = t['new']['id']; t = dict(t, ops=[dict(op='sec', after=None, **{k: v for k, v in s.items()}) for s in t['sections']])
+        if tg:
+            d = byid[tg] if isinstance(tg, str) else chaps[tg]
+            if b in ('yb', 'bb'): d['b'].setdefault(b, []).append(ref)
             else: d['b']['ai'] = 1
             d['flows'] = d.get('flows', []) + flows
             for op in t['ops']:
@@ -140,20 +152,20 @@ def main():
                     else:   # วางหลัง a — ถ้ามีหัวข้อที่เพิ่มไว้หลัง a แล้ว ให้ต่อท้ายกลุ่มนั้น (คงลำดับเล่มเหลือง)
                         ids = [x['id'] for x in d['sections']]
                         i = ids.index(a) + 1
-                        while i < len(ids) and ids[i] in added.get(t['target'], ()): i += 1
+                        while i < len(ids) and ids[i] in added.get(d['id'], ()): i += 1
                         d['sections'].insert(i, n)
-                    added.setdefault(t['target'], set()).add(n['id'])
+                    added.setdefault(d['id'], set()).add(n['id'])
         else:
             n = t['new']
             secs = copy.deepcopy(t['sections']); mark(secs, b)
             d = {'no': nxt, 'id': n['id'], 'th': n['th'], 'en': n['en'], 'pages': '', 'g': n['g'],
-                 'b': {'yb': [ref]} if b == 'yb' else {'ai': 1}, 'sections': secs, 'flows': flows}
-            chaps[nxt] = d; newc[nxt] = t['_f']; nxt += 1
+                 'b': {b: [ref]} if b in ('yb', 'bb') else {'ai': 1}, 'sections': secs, 'flows': flows}
+            chaps[nxt] = d; byid[d['id']] = d; newc[nxt] = t['_f']; nxt += 1
     for no, d in chaps.items():
-        finalize(d['sections'], 'si' if 'si' in d['b'] else ('yb' if 'yb' in d['b'] else 'ai'))
+        finalize(d['sections'], [k for k in ORDER if k in d['b']][0])
         with open(os.path.join(OUT, 'ch%02d.json' % no), 'w', encoding='utf-8') as w:
             json.dump(d, w, ensure_ascii=False, indent=1)
-    print('บท', len(chaps), '· บทใหม่', len(newc), '· หัวข้อเล่มเหลือง', sum(1 for t in tops if t['_book'] == 'yb'), '· ส่วน Claude', sum(1 for t in tops if t['_book'] == 'ai'))
+    print('บท', len(chaps), '· บทใหม่', len(newc), '· หัวข้อเล่มเหลือง', sum(1 for t in tops if t['_book'] == 'yb'), '· Blackbook', sum(1 for t in tops if t['_book'] == 'bb'), '· ส่วน Claude', sum(1 for t in tops if t['_book'] == 'ai'))
     for no, f in newc.items(): print('  ch%02d ← %s' % (no, f))
 
 

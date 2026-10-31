@@ -240,6 +240,7 @@ body.gated .burger,body.gated .search,body.gated #acct,body.gated footer,body.ga
 .src.mdcu{color:#7A2E3A;border-color:#D9B3B8;background:#F6E9EA}
 .src.si{color:#1F4E6E;border-color:#B4CADB;background:#E6EFF5}
 .src.both{color:#2F5E4A;border-color:#B9D6C6;background:#E5F1EA}
+.src.intl{color:#3A3A3A;border-color:#BDBDBD;background:#EEEDEA}
 .grp-h{padding:22px 0 4px;border-bottom:1px solid var(--rule)}
 .nlset{display:flex;flex-direction:column;gap:26px}
 .xset{margin:0;min-width:0;max-width:100%;padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:18px}
@@ -971,6 +972,7 @@ a.spo{text-decoration:none}
 .bk{font-family:'Kanit',sans-serif;font-weight:500;font-size:11.5px;line-height:1.5;letter-spacing:.02em;padding:0 8px;border-radius:999px;border:1px solid;white-space:nowrap}
 .bk.si{color:#1F4E6E;border-color:#B4CADB;background:#E6EFF5}
 .bk.yb{color:#7A5800;border-color:#E5C766;background:#FBF0C6}
+.bk.bb{color:#F4F1EA;border-color:#2B2B2B;background:#2B2B2B}
 .bk.ai{color:#4F3F80;border-color:#C9BEE6;background:#EFEBF8}
 .sxsec>summary .bks,.sxbox>summary .bks{max-width:42%;justify-content:flex-end}
 .sxs2 h4 .bks{margin-left:4px}
@@ -981,6 +983,7 @@ a.spo{text-decoration:none}
 .sx .sb::before{display:block;font-family:'Kanit',sans-serif;font-weight:500;font-size:11.5px;letter-spacing:.03em;margin-bottom:4px}
 .sx .sb.si{border-color:#B4CADB}.sx .sb.si::before{content:'ตำราศิริราช';color:#1F4E6E}
 .sx .sb.yb{border-color:#E5C766}.sx .sb.yb::before{content:'เล่มเหลือง';color:#7A5800}
+.sx .sb.bb{border-color:#2B2B2B}.sx .sb.bb::before{content:'Blackbook';color:#2B2B2B}
 .sx .sb.ai{border-color:#C9BEE6}.sx .sb.ai::before{content:'เพิ่มโดย Claude';color:#4F3F80}
 .sx .hw,.fbox .hw{color:#2D5DA8;font-style:italic}
 @media (max-width:640px){.sxsec>summary,.sxbox>summary{flex-wrap:wrap;row-gap:4px}.sxsec>summary .bks,.sxbox>summary .bks{order:5;max-width:none;flex-basis:100%;justify-content:flex-start}.sxsec>summary .bks{padding-left:46px}}
