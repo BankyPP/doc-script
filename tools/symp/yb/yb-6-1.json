@@ -1,0 +1,173 @@
+{
+ "key": "6-1",
+ "en": "Anemia",
+ "th": "ซีด (anemia)",
+ "pdf": "75–77",
+ "target": 8,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "yb-6-1-algo",
+   "h": "Algorithm: Anemia (แบ่งตามกลไก: ผลิตลด / ทำลายเพิ่ม / เสียเลือด)",
+   "html": "<div class=\"flow\" data-flow=\"y61a\"></div><p><b>Anemia</b> — Anemic sx: Fatigue, Dyspnea · Signs: Pallor · Lab: Hb↓ in same population (เทียบกับ Normal Hb ของกลุ่มประชากรนั้น)</p><p>แบ่งสาเหตุเป็น 3 กลุ่ม:</p><ul><li><b>Decrease production</b> — Nutritional deficiency anemia (Fe deficiency, Megaloblastic: B12 / Folic deficiency) · Anemia in systemic dz (ACD, Anemia of CKD) · BM disorder (Intrinsic: AA, PRCA, MDS · Extrinsic: marrow invasion CA/Fungus/TB, radiation, drug, toxin: alcohol) · Ineffective hematopoiesis (Thalassemia)</li><li><b>Increase destruction</b> (Hemolytic anemia) — ดูหน้าถัดไป (6.2)</li><li><b>Blood loss</b> — Menstruation, GI bleeding, Trauma</li></ul><p><span class=\"hw\">Thalassemia (ลายมือ)</span></p><ul><li><span class=\"hw\">Severe → Hypersplenism → Plt มักต่ำ</span></li><li><span class=\"hw\">Target cell, NRBC</span></li><li><span class=\"hw\">if ตัดม้าม → Plt↑, target↑, jelly body (พวกตัดม้าม) <small>(jelly body ตามที่เขียน = Howell-Jolly body)</small></span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-cbc",
+   "html": "<p><b>Normal Hb ตามกลุ่มประชากร</b> (ตารางใน algorithm ของเล่มเหลือง)</p><div class=\"tbl\"><table><thead><tr><th>Population</th><th>Normal Hb</th></tr></thead><tbody><tr><td>6 – 59 mo; Pregnant woman</td><td>&gt; 11 g/dl</td></tr><tr><td>5 – 11 year</td><td>&gt; 11.5 g/dl</td></tr><tr><td>12 – 14 year; Non-pregnant woman</td><td>&gt; 12 g/dl</td></tr><tr><td>Men &gt; 15 year</td><td>&gt; 13 g/dl</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "lab",
+   "id": "yb-6-1-cells",
+   "h": "ภาพเซลล์เม็ดเลือด (รูปถ่ายสไลด์ที่แทรกในเล่มเหลือง)",
+   "html": "<small>(หน้าแทรกเป็นรูปถ่ายภาพสไลด์เซลล์เม็ดเลือด)</small><figure><img src=\"symp/img/yb-6-1-f1.webp\" alt=\"myeloblast, promyelocyte, myelocyte, metamyelocyte\"><figcaption>Myeloblast · Promyelocyte · Myelocyte · Metamyelocyte (ซ้ายบน → ขวาบน → ซ้ายล่าง → ขวาล่าง)</figcaption></figure><figure><img src=\"symp/img/yb-6-1-f2.webp\" alt=\"band form, neutrophil, eosinophil, basophil\"><figcaption>Band form · Neutrophil · Eosinophil · Basophil</figcaption></figure><figure><img src=\"symp/img/yb-6-1-f3.webp\" alt=\"lymphoblast, small lymphocyte, large lymphocyte\"><figcaption>Lymphoblast · Small lymphocyte · Large lymphocyte</figcaption></figure>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-micro",
+   "html": "<p><b>Thalassemia — โน้ตลายมือในเล่มเหลือง</b> (เขียนใต้กล่อง Ineffective Hematopoiesis)</p><ul><li><span class=\"hw\">Severe → Hypersplenism → Plt มักต่ำ</span></li><li><span class=\"hw\">Target cell, NRBC</span></li><li><span class=\"hw\">if ตัดม้าม → Plt↑, target↑, jelly body (พวกตัดม้าม) <small>(jelly body ตามที่เขียน = Howell-Jolly body)</small></span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-chronic",
+   "html": "<p><b>Nutritional deficiency anemia</b> (เล่มเหลือง): Fe deficiency anemia · Megaloblastic anemia (B12 deficiency, Folic deficiency)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-subacute",
+   "html": "<p><b>เล่มเหลือง</b> — Anemia in systemic dz: ACD, Anemia of CKD · BM disorder</p><ul><li><b>Intrinsic cause</b> (Abnormal Hematopoietic stem cell): AA (Aplastic anemia), PRCA (Pure Red cell aplasia), MDS (MyeloDysplastic Syndrome)</li><li><b>Extrinsic cause</b>: Marrow invasion (CA, Fungus, TB), Radiation, Drug, Toxin: Alcohol</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ap-acute",
+   "html": "<p><b>เล่มเหลือง</b> — Blood loss: Menstruation, GI bleeding, Trauma · Increase destruction (Hemolytic anemia) ดู 6.2</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y61a",
+   "title": "Anemia",
+   "src": "fig",
+   "img": "yb-6-1-f4.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Anemia: Anemic sx = Fatigue, Dyspnea · Signs = Pallor · Lab = Hb↓ in same population",
+     "d": "<p>ค่า Normal Hb ตามกลุ่มประชากร (ตารางในกล่อง algorithm)</p><div class=\"tbl\"><table><thead><tr><th>Population</th><th>Normal Hb</th></tr></thead><tbody><tr><td>6 – 59 mo; Pregnant woman</td><td>&gt; 11 g/dl</td></tr><tr><td>5 – 11 year</td><td>&gt; 11.5 g/dl</td></tr><tr><td>12 – 14 year; Non-pregnant woman</td><td>&gt; 12 g/dl</td></tr><tr><td>Men &gt; 15 year</td><td>&gt; 13 g/dl</td></tr></tbody></table></div>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Decrease production"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Increase destruction (Hemolytic anemia)",
+     "d": "<p>ดู 6.2 Hemolytic anemia</p>"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "ดูหน้าถัดไป (6.2 Hemolytic anemia)"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Blood loss",
+     "d": "<ul><li>Menstruation</li><li>GI bleeding</li><li>Trauma</li></ul><p><span class=\"hw\">เจ้าของเล่มไฮไลต์/ขีดคร่อมกล่อง Blood loss นี้ไว้</span></p>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Nutritional deficiency anemia",
+     "d": "<ul><li>Fe deficiency anemia</li><li>Megaloblastic anemia<ul><li>B12 deficiency</li><li>Folic deficiency</li></ul></li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Anemia in systemic dz",
+     "d": "<ul><li>ACD</li><li>Anemia of CKD</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "BM disorder"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Ineffective Hematopoiesis",
+     "d": "<ul><li>Thalassemia</li></ul><ul><li><span class=\"hw\">Severe → Hypersplenism → Plt มักต่ำ</span></li><li><span class=\"hw\">Target cell, NRBC</span></li><li><span class=\"hw\">if ตัดม้าม → Plt↑, target↑, jelly body (พวกตัดม้าม) <small>(jelly body ตามที่เขียน = Howell-Jolly body)</small></span></li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Intrinsic cause (Abnormal Hematopoietic stem cell)",
+     "d": "<ul><li>AA: Aplastic anemia</li><li>PRCA: Pure Red cell aplasia</li><li>MDS: MyeloDysplastic Syndrome</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Extrinsic cause",
+     "d": "<ul><li>Marrow invasion: CA, Fungus, TB</li><li>Radiation</li><li>Drug</li><li>Toxin: Alcohol</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Decrease production"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Increase destruction"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Blood loss"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Nutritional deficiency anemia"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Anemia in systemic dz"
+    },
+    {
+     "f": "b",
+     "t": "h",
+     "l": "BM disorder"
+    },
+    {
+     "f": "b",
+     "t": "i",
+     "l": "Ineffective hematopoiesis"
+    },
+    {
+     "f": "h",
+     "t": "j",
+     "l": "Intrinsic cause"
+    },
+    {
+     "f": "h",
+     "t": "k",
+     "l": "Extrinsic cause"
+    }
+   ],
+   "note": "ลายมือเพิ่มโน้ต Thalassemia ใต้กล่อง Ineffective Hematopoiesis"
+  }
+ ]
+}

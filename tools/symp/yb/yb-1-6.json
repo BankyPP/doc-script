@@ -1,0 +1,197 @@
+{
+ "key": "1-6",
+ "en": "Hypertension in the young",
+ "th": "ความดันโลหิตสูงในคนอายุน้อย",
+ "pdf": "18",
+ "target": null,
+ "new": {
+  "id": "htn-young",
+  "th": "ความดันโลหิตสูงในคนอายุน้อย",
+  "en": "Hypertension in the young",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "yb-1-6-approach",
+   "h": "Algorithm: Hypertension in the young",
+   "html": "<div class=\"flow\" data-flow=\"y16a\"></div><p><small>ตามแผนภาพ: SBP ≥ 140 or DBP ≥ 90 mmHg ในผู้ป่วยที่มีอายุน้อยกว่า 35 ปี → Essential HT ยังพบบ่อยที่สุด (still most common) · ถ้าอายุน้อยให้คิดถึง secondary HT: CVS, Renal, Endocrine, Miscellaneous</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y16a",
+   "title": "HT in the young",
+   "src": "fig",
+   "img": "yb-1-6-f1.webp",
+   "note": "มีเครื่องหมายถูกสีเขียวข้าง “Still most common” (ไม่มีข้อความลายมือ)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "HT in the young",
+     "d": "<p>SBP ≥ 140 or DBP ≥ 90 mmHg ในผู้ป่วยที่มีอายุน้อยกว่า 35 ปี</p>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Essential HT",
+     "d": "<p>Still most common</p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Consider secondary HT"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "CVS",
+     "d": "<ul><li>Coarctation of aorta</li><li>Takayasu arteritis</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Renal"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Endocrine"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Miscellaneous"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Renovascular HT",
+     "d": "<ul><li>Atherosclerosis</li><li>Fibromuscular dysplasia</li><li>PAN</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Abnormal kidney",
+     "d": "<ul><li>CKD</li><li>Abnormal structure<ul><li>PCKD</li><li>Horseshoe</li></ul></li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Glomerulonephritis"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Adrenal",
+     "d": "<ul><li>Hyperaldosteronism</li><li>Pheochromocytoma</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Pituitary",
+     "d": "<ul><li>Cushing</li><li>Acromegaly</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Thyrotoxicosis"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "OSA"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Drug",
+     "d": "<ul><li>NSAIDs</li><li>Decongestant</li><li>OCP, steroid</li><li>Cocaine, TCA</li></ul>"
+    },
+    {
+     "id": "q",
+     "k": "dx",
+     "t": "Genetic",
+     "d": "<ul><li>Neurofibromatosis</li><li>Von-hippel-lindau</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Essential HT"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Secondary HT"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "CVS"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Renal"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Endocrine"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Miscellaneous"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Renovascular HT"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Abnormal kidney"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "Glomerulonephritis"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Adrenal"
+    },
+    {
+     "f": "f",
+     "t": "l",
+     "l": "Pituitary"
+    },
+    {
+     "f": "f",
+     "t": "m",
+     "l": "Thyrotoxicosis"
+    },
+    {
+     "f": "g",
+     "t": "o",
+     "l": "OSA"
+    },
+    {
+     "f": "g",
+     "t": "p",
+     "l": "Drug"
+    },
+    {
+     "f": "g",
+     "t": "q",
+     "l": "Genetic"
+    }
+   ]
+  }
+ ]
+}

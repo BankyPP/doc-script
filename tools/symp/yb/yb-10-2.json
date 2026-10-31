@@ -1,0 +1,360 @@
+{
+ "key": "10-2",
+ "en": "Weight gain and obesity",
+ "th": "น้ำหนักตัวเพิ่ม และโรคอ้วน",
+ "pdf": "144–146",
+ "target": 40,
+ "ops": [
+  {
+   "op": "append",
+   "sec": "cause-fluid",
+   "html": "<p><b>Fluid Retention</b> (เล่มเหลือง · ติดดาวสีม่วง)</p><ul><li>Congestive Heart failure</li><li>Cirrhosis</li><li>CKD</li><li>Nephrotic syndrome</li><li>hypoalbuminemia</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "yb-10-2-lymph",
+   "h": "Lymphatic Obstruction (เล่มเหลือง)",
+   "html": "<p>กลุ่มสาเหตุของ Weight Gain ในแผนภูมิเล่มเหลือง (ติดดาวสีม่วง)</p><ul><li>Filariasis</li><li>Metastatic CA</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-muscle",
+   "html": "<p><b>Excess Muscle</b> (เล่มเหลือง) · <b>Exclude: pregnancy</b> ในแผนภูมิ Weight Gain</p><ul><li>Weightlifter</li><li>Androgenic steroid</li><li>Growth hormone</li><li>Precocious puberty</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-obese",
+   "html": "<p><b>Fat excess → Obesity</b> (เล่มเหลือง) · Obesity: BMI &gt; 25 kg/m² in Asian · <b>Exclude: Simple obesity</b> (Low exercise, High food intake)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "primary",
+   "html": "<p><b>Genetic</b> (เล่มเหลือง)</p><ul><li>Prader-Willi syn.</li><li>Beckwith-Wiedemann syn.</li><li>Laurence-Moon-Biedl syn.</li><li>Alström's syn</li><li>Angelman syn.</li><li>Turner syn.</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "secondary",
+   "html": "<p><b>Neuro</b> (เล่มเหลือง)</p><ul><li><b>Hypothalamic lesion</b><ul><li>Trauma</li><li>Tumor: Craniopharyngioma · Astrocytoma</li><li>Inflammation: Meningitis · Encephalitis</li><li>Infiltration: Sarcoidosis · Histiocytosis X</li></ul></li></ul><p><b>Endocrine</b> (เล่มเหลือง)</p><ul><li>Pituitary: Cushing's disease</li><li>Thyroid: Hypothyroid</li><li>Parathyroid: Pseudohypo PTH · Pseudo-Pseudo Hypo PTH</li><li>Adrenal: Cushing's syndrome</li><li>Pancreas: Insulinoma</li></ul><p><b>Medication</b> (เล่มเหลือง)</p><ul><li>Insulin</li><li>SU, TZD</li><li>Antidepressant: TCA, Li</li><li>Anticonvulsant: Valproic acid · Carbamazepine</li><li>Steroid</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "yb-10-2-organ",
+   "h": "Organ enlargement (เล่มเหลือง)",
+   "html": "<ul><li>Ovarian cyst</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "approach",
+   "id": "yb-10-2-algo-gain",
+   "h": "Algorithm Weight Gain (เล่มเหลือง 10.2)",
+   "html": "<figure><img src=\"symp/img/yb-10-2-f1.webp\" alt=\"แผนภูมิ Weight Gain ของเล่มเหลือง (10.2)\"><figcaption>Weight Gain — แผนภูมิในเล่มเหลือง (ไฮไลต์สีชมพูและดาวสีม่วงเป็นของเจ้าของเล่ม)</figcaption></figure><div class=\"flow\" data-flow=\"y102a\"></div><p>คำอธิบายใต้แผนภาพ (เล่มเหลือง): จากแผนภาพด้านบนจะเห็นได้ว่าในผู้ป่วยที่มีปัญหาน้ำหนักตัวขึ้นนั้น ไม่ได้เกิดจากภาวะอ้วนเพียงอย่างเดียว แต่เกิดได้จากหลายสาเหตุ ทั้งการที่มีภาวะการคั่งของสารน้ำ การอุดตันของทางเดินน้ำดี การเพิ่มขึ้นของกล้ามเนื้อ และการที่มีอวัยวะบางอย่างโตผิดปกติ ส่วนสาเหตุของภาวะอ้วนนั้นแสดงดังแผนภาพด้านล่างนี้</p><small>(ข้อความในเล่มพิมพ์ \"การอุดตันของทางเดินน้ำดี\" ทั้งที่แผนภาพเขียน Lymphatic Obstruction — คงตามเล่ม)</small>"
+  },
+  {
+   "op": "sub",
+   "sec": "approach",
+   "id": "yb-10-2-algo-ob",
+   "h": "Algorithm Obesity (เล่มเหลือง 10.2)",
+   "html": "<figure><img src=\"symp/img/yb-10-2-f2.webp\" alt=\"แผนภูมิ Obesity ของเล่มเหลือง (10.2)\"><figcaption>Obesity — แผนภูมิในเล่มเหลือง</figcaption></figure><div class=\"flow\" data-flow=\"y102b\"></div>"
+  },
+  {
+   "op": "sec",
+   "after": null,
+   "id": "yb-10-2-cancer",
+   "h": "โน้ตลายมือ: Cancer carcinoma มะเร็ง (เล่มเหลือง หน้าลายมือ)",
+   "html": "<figure><img src=\"symp/img/yb-10-2-f3.webp\" alt=\"หน้าลายมือ Cancer carcinoma มะเร็ง (เล่มเหลือง หน้า 145)\"><figcaption>หน้าลายมือล้วนของเจ้าของเล่ม: Cancer carcinoma มะเร็ง (ต้นฉบับ — ถอดข้อความด้านล่าง)</figcaption></figure><p><small>หน้านี้เป็นลายมือล้วนที่แทรกในเล่มเหลือง ถอดตามที่เขียน ตัวที่อ่านไม่แน่ใจใส่ (?)</small></p>",
+   "sub": [
+    {
+     "id": "yb-10-2-ca-basic",
+     "h": "ธรรมชาติของมะเร็ง · พันธุกรรม · ปัจจัยเสี่ยง",
+     "html": "<ul><li><span class=\"hw\">Cancer carcinoma มะเร็ง</span></li><li><span class=\"hw\">ขาด protein → ms. สลาย (กล้ามเนื้อสลาย) · กิน protein มาก → ย่อย &amp; เก็บพลังงานในรูปแบบอื่น</span></li><li><span class=\"hw\">มีความมหัศจรรย์ → แบ่งตัวไม่ตาย</span></li><li><span class=\"hw\">Pluri → Multi → Differentiated cell</span></li><li><span class=\"hw\">Onco cell – Dedifferentiate</span></li><li><span class=\"hw\"><b>risk</b>: carcinogen, radiation, virus — ต่อท้ายเขียน \"LAS(in สัตว์ปีก\" (อ่านไม่ออกชัด: LAS(in(?) สัตว์ปีก) · X-ray, cobalt, UV (esp. พวกผิวขาว) → หลีกเลี่ยงได้ แต่แม้หลีกเลี่ยงก็ยังเป็น cancer</span></li><li><span class=\"hw\">Genome: 30,000 ล้าน base pair · 30,000 gene → 1 gene = 10,000–100,000 base pair · มี intron / exon (เขียนว่า \"extron\") → silence mutation → ไม่เป็นไร</span></li><li><span class=\"hw\"><span class=\"hi\">คุณอยู่ได้ 6 เดือน</span> = มีผลกับการวางแผนการใช้ชีวิตของคนไข้ (median)</span></li><li><span class=\"hw\">มะเร็ง<span class=\"hi\">หลอกภูมิคุ้มกัน</span>โดยให้คิดว่าเป็นพวกเดียวกัน</span></li></ul>"
+    },
+    {
+     "id": "yb-10-2-ca-dna",
+     "h": "Free radical → DNA damage → multistep carcinogenesis",
+     "html": "<ul><li><span class=\"hw\">★ ปัจจัยสำคัญ: Free radical จาก electron transport → DNA damage</span></li><li><span class=\"hw\">→ ถ้า repair ดี → recovery → cell ปกติ</span></li><li><span class=\"hw\">→ ถ้าซ่อมไม่ดี → cell death → aging</span></li><li><span class=\"hw\">→ repair พลาด / ซ่อมไม่ไหว → multistep carcinogenesis: ผิดปกติหลายตำแหน่งสะสมกัน</span></li></ul>"
+    },
+    {
+     "id": "yb-10-2-ca-hallmark",
+     "h": "Hallmark of cancer",
+     "html": "<p><span class=\"hw\"><b>Hallmark of cancer</b> → นำไปสู่การรักษา</span></p><ul><li><span class=\"hw\">โตมากไม่มีที่สิ้นสุด</span></li><li><span class=\"hw\">telomerase function — การทำโคลน = telomere ของแกะต้นแบบมีความแก่อยู่แล้</span></li><li><span class=\"hw\">genomic instability มี 2 แบบ → เสื่อมถอย / ดีขึ้น</span></li><li><span class=\"hw\">หยุด cell death signal</span></li><li><span class=\"hw\">มี metabolism แปลก: มะเร็งชอบ fermentation → ได้ 2 ATP</span></li><li><span class=\"hw\">(ข้างซ้าย) ทั้ง cell ปกติ &amp; CA ก็ไม่ชอบ: cell ไม่ชอบ O<sub>2</sub> แต่พอถูกดูดซึม มันไปให้ cell น้อยมาก (?)</span></li><li><span class=\"hw\">มะเร็งชอบกรด แต่ cell ปกติก็ชอบกรดเช่นกัน → เป็นแบบกรดอ่อน ๆ แต่ cell CA ทนกรดเก่งกว่าด้วย :3</span></li><li><span class=\"hw\">endothelial · skin &amp; hair · GI · Bone marrow ← ไวสุด (ลูกศรยาวชี้ไปทางซ้ายตั้งแต่ Bone marrow ไปถึง endothelial)</span></li></ul>"
+    },
+    {
+     "id": "yb-10-2-ca-tx",
+     "h": "การรักษา: ผ่าตัด · CMT · RT · stereotactic",
+     "html": "<ul><li><span class=\"hw\">pregnancy related, HCC: Dx by clinical (ขีดเส้นใต้ Dx by clinical) ★ ///</span></li><li><span class=\"hw\">การผ่าตัดมีความหวังสูงสุดให้หายขาด</span></li><li><span class=\"hw\">Sx บางทีก็ผ่าตัดแล้วใช้ chemo ในคนที่คิดว่าให้ remission สูงขึ้น</span></li><li><span class=\"hw\">CMT ใน(จน.? / กรณี?)ไม่ตอบสนองก็หยุดให้หรอก → cure ได้ ex. CA เด็ก, แต่ทำได้ไม่กี่ type</span></li><li><span class=\"hw\"><b>RT</b> การฉายแสง: ใน ตน.(ตำแหน่ง?) ที่ไม่ค่อยมี organ สำคัญ ex larynx, cervix · toxic เป็นตามที่โดน ex สมอง – ผมร่วง แต่ไม่มีท้องเสีย</span></li><li><span class=\"hw\"><b>stereotactic</b>: concentrate tumor มากกว่าจุดอื่น → ↓SE</span></li></ul>"
+    },
+    {
+     "id": "yb-10-2-ca-cmt",
+     "h": "ชนิดของการให้ CMT (neoad / ad / palliative / concurrent / sequential)",
+     "html": "<p><span class=\"hw\">ชนิดของการให้ CMT (ลายมือสีน้ำเงิน)</span></p><ul><li><span class=\"hw\"><b>neoad</b>: CMT ก่อนผ่าตัด (โน้ตสีเทาเชื่อมกับ neoad: บอกความ work · micrometas… · หลัง Sx ก็ใช้ยาตัวเดิม (ลูกศรชี้จากตัวเลขในวงกลม ①(?)) · ไม่ผ่าได้ ยา(ก)ตอบสนองดี (conservative))</span></li><li><span class=\"hw\"><b>ad</b> (adjuvant): หลังผ่าตัด</span></li><li><span class=\"hw\"><b>palliative</b>: ได้เกือบทุกโรค</span></li><li><span class=\"hw\"><b>concurrent</b> (CMT+RT): ★ 5 วัน พัก 2 ก็ได้ → ฉายรังสีเสริมฤทธิ์ ↑ efficacy</span></li><li><span class=\"hw\"><b>sequential</b>: ใช้ตามลำดับ อันหนึ่งเสร็จค่อยให้อีกอัน ↓toxicity</span></li></ul>"
+    },
+    {
+     "id": "yb-10-2-ca-supp",
+     "h": "อาการที่ต้องดูแล · หลักคิดก่อนให้ CMT",
+     "html": "<ul><li><span class=\"hw\">★ Pain, Dyspnea, Obstruction, Nutrition, Psychosocial</span></li><li><span class=\"hw\">↳ 1.5–2x — กลัวอาหาร(?), SE CMT, CA กลืนลำบาก (เขียนสีม่วง ไฮไลต์เหลืองเขียวที่ 1.5–2x)</span></li><li><span class=\"hw\">① Sure ว่า CA</span></li><li><span class=\"hw\">② CMT มีประโยชน์กับ CA นั้น ๆ — เลือกสูตรที่ benefit จริง · ดู SE แต่ละตัว: บางตัวก็ฆ่า CA ได้ แต่ก็ทำลายตัวเราเอง · 10000 → 10 → มี 2 ตัวชนะการรักษาของแต่ก่อน · ☺ ยาแพงมาก ☺</span></li><li><span class=\"hw\">③ Education บอกการรักษา — SE ของยาที่พบได้</span></li></ul>"
+    },
+    {
+     "id": "yb-10-2-ca-drug",
+     "h": "กราฟประโยชน์ของ chemo · การประเมินยาวิจัย",
+     "html": "<p><span class=\"hw\">กราฟ (วาดมือ, แกนเวลา/การรอดชีวิต): เส้นบน \"ตายอยู่ดี(?) กับ chemo ด้วย\" · เส้นล่าง \"ไม่รอดอยู่ดี(?)\" · เส้นสีฟ้าชี้ช่วงห่างระหว่างสองเส้น: \"จุดที่ chemo มีประโยชน์ 11-ก็ยังดี(?) :)\"</span></p><ul><li><span class=\"hw\">★ ยาที่วิจัยทำให้ตาย? ①</span></li><li><span class=\"hw\">↓ ดู activity ยา / ประโยชน์ต่อคนไข้ ②</span></li><li><span class=\"hw\">โดยเทียบกับอื่น ๆ ③</span></li><li><span class=\"hw\">↳ ดู SE ระยะยาว – ยาบางตัวถูกถอนจากตลาด ④</span></li></ul>"
+    },
+    {
+     "id": "yb-10-2-ca-ps",
+     "h": "Performance status",
+     "html": "<ul><li><span class=\"hw\"><b>Performance status</b> บอกว่าแข็งแรงพอจะรักษาหรือไม่ · use ในงานวิจัย</span></li><li><span class=\"hw\">cut point: 60/50 ⌐ 2/3 (วงเล็บเชื่อมสองค่า; ตัวเลขแรกอ่านยากเล็กน้อย) · 2 ลงมา – รักษาแล้วคุ้มค่า</span></li><li><span class=\"hw\">ถาม: นอน? ตื่นกี่ ชม. → ทำอะไรบ้าง · ดูความสมบ่วย(?) / ช่วยเหลือตนเองได้</span></li><li><span class=\"hw\">ต้องให้คนอื่นช่วยเหลือตลอด = <u>ไม่แข็งแรง</u></span></li></ul>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "y102a",
+   "title": "Weight Gain",
+   "src": "fig",
+   "img": "yb-10-2-f1.webp",
+   "note": "ลายมือในเล่ม = ไฮไลต์สีชมพู และดาวสีม่วงเล็ก ๆ ที่ Fluid Retention กับ Lymphatic Obstruction (ไม่มีข้อความเพิ่ม)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Weight Gain"
+    },
+    {
+     "id": "x",
+     "k": "note",
+     "t": "Exclude: pregnancy"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Fluid Retention",
+     "d": "<ul><li>Congestive Heart failure</li><li>Cirrhosis</li><li>CKD</li><li>Nephrotic syndrome</li><li>hypoalbuminemia</li></ul><p><small>ติดดาวสีม่วงในเล่ม</small></p>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Lymphatic Obstruction",
+     "d": "<ul><li>Filariasis</li><li>Metastatic CA</li></ul><p><small>ติดดาวสีม่วงในเล่ม</small></p>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Excess Muscle",
+     "d": "<ul><li>Weightlifter</li><li>Androgenic steroid</li><li>Growth hormone</li><li>Precocious puberty</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Fat excess",
+     "d": "<ul><li>Obesity</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Organ enlargement",
+     "d": "<ul><li>Ovarian cyst</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "x",
+     "l": "Exclude"
+    },
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Fluid Retention"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Lymphatic Obstruction"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Excess Muscle"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Fat excess"
+    },
+    {
+     "f": "a",
+     "t": "f",
+     "l": "Organ enlargement"
+    }
+   ]
+  },
+  {
+   "id": "y102b",
+   "title": "Obesity",
+   "src": "fig",
+   "img": "yb-10-2-f2.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Obesity: BMI > 25 kg/m² in Asian"
+    },
+    {
+     "id": "x",
+     "k": "note",
+     "t": "Exclude: Simple obesity",
+     "d": "<p>(Low exercise, High food intake)</p>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Genetic",
+     "d": "<ul><li>Prader-Willi syn.</li><li>Beckwith-Wiedemann syn.</li><li>Laurence-Moon-Biedl syn.</li><li>Alström's syn</li><li>Angelman syn.</li><li>Turner syn.</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Neuro: Hypothalamic lesion"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Trauma"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Tumor",
+     "d": "<ul><li>Craniopharyngioma</li><li>Astrocytoma</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Inflammation",
+     "d": "<ul><li>Meningitis</li><li>Encephalitis</li></ul>"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Infiltration",
+     "d": "<ul><li>Sarcoidosis</li><li>Histiocytosis X</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Endocrine"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "Pituitary",
+     "d": "<ul><li>Cushing's disease</li></ul>"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Thyroid",
+     "d": "<ul><li>Hypothyroid</li></ul>"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Parathyroid",
+     "d": "<ul><li>Pseudohypo PTH</li><li>Pseudo-Pseudo Hypo PTH</li></ul>"
+    },
+    {
+     "id": "d4",
+     "k": "dx",
+     "t": "Adrenal",
+     "d": "<ul><li>Cushing's syndrome</li></ul>"
+    },
+    {
+     "id": "d5",
+     "k": "dx",
+     "t": "Pancreas",
+     "d": "<ul><li>Insulinoma</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Medication",
+     "d": "<ul><li>Insulin</li><li>SU, TZD</li><li>Antidepressant<ul><li>TCA, Li</li></ul></li><li>Anticonvulsant<ul><li>Valproic acid</li><li>Carbamazepine</li></ul></li><li>Steroid</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "x",
+     "l": "Exclude"
+    },
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Genetic"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Neuro"
+    },
+    {
+     "f": "c",
+     "t": "c1",
+     "l": "Trauma"
+    },
+    {
+     "f": "c",
+     "t": "c2",
+     "l": "Tumor"
+    },
+    {
+     "f": "c",
+     "t": "c3",
+     "l": "Inflammation"
+    },
+    {
+     "f": "c",
+     "t": "c4",
+     "l": "Infiltration"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Endocrine"
+    },
+    {
+     "f": "d",
+     "t": "d1",
+     "l": "Pituitary"
+    },
+    {
+     "f": "d",
+     "t": "d2",
+     "l": "Thyroid"
+    },
+    {
+     "f": "d",
+     "t": "d3",
+     "l": "Parathyroid"
+    },
+    {
+     "f": "d",
+     "t": "d4",
+     "l": "Adrenal"
+    },
+    {
+     "f": "d",
+     "t": "d5",
+     "l": "Pancreas"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Medication"
+    }
+   ]
+  }
+ ]
+}

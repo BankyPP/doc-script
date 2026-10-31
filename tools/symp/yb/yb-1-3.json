@@ -1,0 +1,338 @@
+{
+ "key": "1-3",
+ "en": "Syncope",
+ "th": "เป็นลม",
+ "pdf": "13–14",
+ "target": 5,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "mech",
+   "id": "yb-1-3-approach",
+   "h": "Algorithm: Syncope — reflex / orthostatic / cardiac (เล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y13a\"></div><div class=\"box\"><b><span class=\"hw\">ลายมือสรุปท้ายแผนภาพ: syncope</span></b><ol><li><span class=\"hw\">① cardiac — cardiac → arrhythmia, structural · non-cardiac → พวก VSS: PE, aortic dissection, PHT</span></li><li><span class=\"hw\">② orthostatic — ส่วนมากเป็นพวก volume ลด, ยาลดความดันบางตัว, alcohol</span></li><li><span class=\"hw\">③ carotid / vasovagal reflex จาก emotional แบบตื่นเต้น/กลัว · situation แบบ ถ่ายเบ่ง(?), จาม</span></li></ol></div>"
+  },
+  {
+   "op": "append",
+   "sec": "def",
+   "html": "<div class=\"box\"><b><span class=\"hw\">Triad of syncope</span></b><ul><li><span class=\"hw\">① Transcient Loss of conscious(ness)</span></li><li><span class=\"hw\">② Loss of postural tone</span></li><li><span class=\"hw\">③ Brief episode, spontaneous recoverage</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "eval-is",
+   "html": "<h5>แยก syncope กับ seizure (ลายมือเล่มเหลือง)</h5><ul><li><span class=\"hw\">= ชัก (เหมือนชัก): มี jerking ได้ · ตอนเป็น จำเหตุการณ์ไม่ได้</span></li><li><span class=\"hw\">≠ ชัก: ไม่มี post ictal paralysis · ไม่มี post-ictal dysorientation · เป็นสั้นกว่า seizure (&lt;5 min) · visual aura ทวดำ ← Migraine</span></li><li><span class=\"hw\">แยกกับ seizure — หลังชัก: Postictal dysorientation · muscle sore (, มี aura เป็นภาพสี) · cyanosis ปากเขียว · ซึม >1 ชม. · motor manifes &lt;15 sec</span></li></ul><h5>อาการที่นำไปสู่ syncope (ลายมือ)</h5><p><span class=\"hw\">ปากซีด หน้ามืด ภาพมัวขาวดำ Bradycardia</span></p><p><span class=\"hw\">เลือดไปเลี้ยงสมองไม่พอ → syncope</span></p><p><span class=\"hw\">หายใจเร็ว เหงื่อออก เวียนศีรษะ นอน → ดีขึ้น</span></p>"
+  },
+  {
+   "op": "append",
+   "sec": "mech-reflex",
+   "html": "<ul><li><span class=\"hw\">Vasovagal = neuromediated syncope · 2° parasym. over activity · CO = SV × HR</span></li><li><span class=\"hw\">Fear — ex. ดีใจ อยู่ดี ๆ HR เต้นแรงมาก(?) · ♥ เต้นแรง</span></li><li><span class=\"hw\">③ carotid / vasovagal reflex จาก emotional แบบตื่นเต้น/กลัว · situation แบบ ถ่ายเบ่ง(?), จาม</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "mech-ortho",
+   "html": "<ul><li><span class=\"hw\">ท่าทางมีผล</span></li><li><span class=\"hw\">ส่วนมากเป็นพวก volume ลด, ยาลดความดันบางตัว, alcohol</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "mech-cardiac",
+   "html": "<ul><li><span class=\"hw\">♡ คือมันบีบเลือดไปเลี้ยงไม่ทัน · คนไข้ต้อง(?) ออกกำลังกายไม่ได้อยู่แล้ว</span></li><li><span class=\"hw\">cardiac → arrhythmia, structural (พยาธิสภาพต่าง ๆ) · non-cardiac → พวก VSS: PE, aortic dissection, PHT</span></li></ul><h5>โน้ตโรคลิ้นหัวใจ (ลายมือ)</h5><ul><li><span class=\"hw\">AS: มา syncope ได้</span></li><li><span class=\"hw\">AR: คนไข้มักมาด้วย HF ก่อน เพราะ ♥ มันบีบออก แล้วเลือดไหลกลับ เยอะ(?)</span></li><li><span class=\"hw\">MS: มาด้วย syncope ได้ แต่มักมาด้วย HF มากกว่า เหนื่อยง่าย, แน่นหน้าอก</span></li><li><span class=\"hw\">Tricuspid valve: มักมาด้วย ขาบวม, ตับบวม มากกว่า</span></li><li><span class=\"hw\">Pulmonic valve: ไม่ค่อยสำคัญ ถ้า valve อยู่ดีหมด(?) · ไม่มี pulmonic ก็ได้</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "mech-cardiac",
+   "id": "yb-1-3-ecg",
+   "h": "ตัวอย่าง ECG: 2nd degree AV block (Mobitz type 2) — ลายมือล้วน",
+   "html": "<figure><img src=\"symp/img/yb-1-3-f2.webp\" alt=\"ECG 12 lead ตัวอย่าง 2nd degree AV block Mobitz type 2 พร้อมลายมือ\"><figcaption>ECG ตัวอย่าง (ภาพถ่ายในเล่มเหลือง) พร้อมลายมือกำกับ — หน้าลายมือล้วน ไม่มีข้อความพิมพ์</figcaption></figure><ul><li><small>ข้อความพิมพ์บน ECG (เครื่อง): QRS Int 88 ms · QT/QTc Int 425/431 ms · P/QRS/T Axis 80/64/39 deg · RV5/SV1 Value 1.94/0.44 mV · RV5+SV1 Value 2.38 mV</small></li><li><span class=\"hw\">[คำสั้นสีแดงอ่านไม่ออก คล้าย “ผล”] 137/66 · P = 32</span> <small>(สีแดง มุมบนกลางภาพ)</small></li><li><span class=\"hw\">Normal axis</span></li><li><span class=\"hw\">2nd degree AV block · PR interval ≈ 3–5 ช่องเล็ก · QRS ไม่เกิน 3 ช่องเล็ก = ปกติ</span></li><li><span class=\"hw\">2nd degree Mobitz type 2 แต่ว่า [อ่านไม่ชัด], หายไปเลย [อ่านไม่ชัด] ไปเลย</span></li><li><span class=\"hw\">T wave ตัวที่ ② สูงกว่าตัวที่ ① ⇒ มี P on T → หลังจากนั้นเกิด compensate → ก็ไม่เกิด QRS</span></li><li><span class=\"hw\">★ การรักษา Heart block → ใส่เครื่องช่วยกระตุ้นการเต้นของ ♥ · หลีกเลี่ยงไม่ให้ β-blocker → จะทำให้ ♥ เต้นช้า</span></li><li><span class=\"hw\">9 × 6 = 54</span> <small>(วิธีนับ rate: 9 QRS × 6)</small></li><li><small>ขีดแดง/ม่วง บน ECG: ขีดสีแดงที่ lead II ชี้ตำแหน่ง P wave และ QRS (ลูกศรโค้ง) · วงเลข ① ② ที่ T wave 2 ตัว · ขีดม่วงใต้ rhythm strip</small></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y13a",
+   "title": "Syncope",
+   "src": "fig",
+   "img": "yb-1-3-f1.webp",
+   "note": "ลายมือเพิ่ม: Triad of syncope, แยกกับ seizure, สรุปท้ายหน้า ① cardiac ② orthostatic ③ reflex และโน้ต valvular disease ฝั่งขวา",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Syncope",
+     "d": "<p><span class=\"hw\">ปากซีด หน้ามืด ภาพมัวขาวดำ Bradycardia</span></p><p><span class=\"hw\">เลือดไปเลี้ยงสมองไม่พอ → syncope</span></p><p><span class=\"hw\">หายใจเร็ว เหงื่อออก เวียนศีรษะ นอน → ดีขึ้น</span></p><div class=\"box\"><b><span class=\"hw\">Triad of syncope</span></b><ul><li><span class=\"hw\">① Transcient Loss of conscious(ness)</span></li><li><span class=\"hw\">② Loss of postural tone</span></li><li><span class=\"hw\">③ Brief episode, spontaneous recoverage</span></li></ul></div><h5>แยกกับ seizure (ลายมือ)</h5><ul><li><span class=\"hw\">= ชัก (เหมือนชัก): มี jerking ได้ · ตอนเป็น จำเหตุการณ์ไม่ได้</span></li><li><span class=\"hw\">≠ ชัก: ไม่มี post ictal paralysis · ไม่มี post-ictal dysorientation · เป็นสั้นกว่า seizure (&lt;5 min) · visual aura ทวดำ ← Migraine</span></li><li><span class=\"hw\">แยกกับ seizure — หลังชัก: Postictal dysorientation · muscle sore (, มี aura เป็นภาพสี) · cyanosis ปากเขียว · ซึม >1 ชม. · motor manifes &lt;15 sec</span></li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Reflex syncope"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Orthostatic hypotension",
+     "d": "<p><span class=\"hw\">ท่าทางมีผล</span></p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Cardiac syncope",
+     "d": "<p><span class=\"hw\">♡ คือมันบีบเลือดไปเลี้ยงไม่ทัน · คนไข้ต้อง(?) ออกกำลังกายไม่ได้อยู่แล้ว</span></p>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Vasovagal",
+     "d": "<p>Mediated by: Emotion · Pain · Fear · Phobia</p><ul><li><span class=\"hw\">neuromediated syncope</span></li><li><span class=\"hw\">2° parasym. over activity · CO = SV × HR</span></li><li><span class=\"hw\">Fear — ex. ดีใจ อยู่ดี ๆ HR เต้นแรงมาก(?) · ♥ เต้นแรง</span></li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Situational",
+     "d": "<ul><li>Sneeze</li><li>GI stimulate: swallow, defecation, visceral pain</li><li>Micturition</li><li>Post exercise</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Carotid sinus syncope"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Drug-induced",
+     "d": "<ul><li>Alcohol</li><li>Vasodilator</li><li>Diuretic</li><li>Antidepress</li><li>Phenotiazine</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Autonomic failure",
+     "d": "<p>Primary</p><ul><li>Parkinson</li><li>Pure ANS failure</li></ul><p>Secondary</p><ul><li>DM, Amyloid</li><li>Uremia</li><li>Cord injury</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Volume depletion",
+     "d": "<ul><li>Bleed</li><li>Diarrhea</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "q",
+     "t": "Non-cardiac",
+     "d": "<p><span class=\"hw\">พวก VSS</span></p>"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "Cardiac"
+    },
+    {
+     "id": "m",
+     "k": "stop",
+     "t": "Massive PE"
+    },
+    {
+     "id": "n",
+     "k": "stop",
+     "t": "Aortic dissection"
+    },
+    {
+     "id": "o",
+     "k": "stop",
+     "t": "PHT"
+    },
+    {
+     "id": "p",
+     "k": "q",
+     "t": "Arrhythmia"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Structural",
+     "d": "<p><span class=\"hw\">พยาธิสภาพต่าง ๆ</span></p><ul><li><span class=\"hw\">AS: มา syncope ได้</span></li><li><span class=\"hw\">AR: คนไข้มักมาด้วย HF ก่อน เพราะ ♥ มันบีบออก แล้วเลือดไหลกลับ เยอะ(?)</span></li><li><span class=\"hw\">MS: มาด้วย syncope ได้ แต่มักมาด้วย HF มากกว่า เหนื่อยง่าย, แน่นหน้าอก</span></li><li><span class=\"hw\">Tricuspid valve: มักมาด้วย ขาบวม, ตับบวม มากกว่า</span></li><li><span class=\"hw\">Pulmonic valve: ไม่ค่อยสำคัญ ถ้า valve อยู่ดีหมด(?) · ไม่มี pulmonic ก็ได้</span></li></ul>"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Brady",
+     "d": "<ul><li>SSS</li><li>AV block</li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Tachy",
+     "d": "<ul><li>SVT</li><li>VT</li></ul>"
+    },
+    {
+     "id": "t",
+     "k": "q",
+     "t": "Endocardium"
+    },
+    {
+     "id": "t1",
+     "k": "dx",
+     "t": "VHD"
+    },
+    {
+     "id": "t2",
+     "k": "dx",
+     "t": "Atrial myxoma"
+    },
+    {
+     "id": "u",
+     "k": "q",
+     "t": "Myocardium"
+    },
+    {
+     "id": "u1",
+     "k": "dx",
+     "t": "HOCM"
+    },
+    {
+     "id": "u2",
+     "k": "dx",
+     "t": "MI"
+    },
+    {
+     "id": "v",
+     "k": "q",
+     "t": "Pericardium"
+    },
+    {
+     "id": "v1",
+     "k": "dx",
+     "t": "Cardiac tamponade"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Reflex syncope"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Orthostatic hypotension"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Cardiac syncope"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Vasovagal"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Situational"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Carotid sinus syncope"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Drug-induced"
+    },
+    {
+     "f": "c",
+     "t": "i",
+     "l": "Autonomic failure"
+    },
+    {
+     "f": "c",
+     "t": "j",
+     "l": "Volume depletion"
+    },
+    {
+     "f": "d",
+     "t": "k",
+     "l": "Non-cardiac"
+    },
+    {
+     "f": "d",
+     "t": "l",
+     "l": "Cardiac"
+    },
+    {
+     "f": "k",
+     "t": "m",
+     "l": "Massive PE"
+    },
+    {
+     "f": "k",
+     "t": "n",
+     "l": "Aortic dissection"
+    },
+    {
+     "f": "k",
+     "t": "o",
+     "l": "PHT"
+    },
+    {
+     "f": "l",
+     "t": "p",
+     "l": "Arrhythmia"
+    },
+    {
+     "f": "l",
+     "t": "q",
+     "l": "Structural"
+    },
+    {
+     "f": "p",
+     "t": "r",
+     "l": "Brady"
+    },
+    {
+     "f": "p",
+     "t": "s",
+     "l": "Tachy"
+    },
+    {
+     "f": "q",
+     "t": "t",
+     "l": "Endocardium"
+    },
+    {
+     "f": "q",
+     "t": "u",
+     "l": "Myocardium"
+    },
+    {
+     "f": "q",
+     "t": "v",
+     "l": "Pericardium"
+    },
+    {
+     "f": "t",
+     "t": "t1",
+     "l": "VHD"
+    },
+    {
+     "f": "t",
+     "t": "t2",
+     "l": "Atrial myxoma"
+    },
+    {
+     "f": "u",
+     "t": "u1",
+     "l": "HOCM"
+    },
+    {
+     "f": "u",
+     "t": "u2",
+     "l": "MI"
+    },
+    {
+     "f": "v",
+     "t": "v1",
+     "l": "Cardiac tamponade"
+    }
+   ]
+  }
+ ]
+}

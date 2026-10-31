@@ -239,6 +239,7 @@ body.gated .burger,body.gated .search,body.gated #acct,body.gated footer,body.ga
 .src{font-family:'Kanit',sans-serif;font-weight:500;font-size:12px;letter-spacing:.03em;display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;border:1px solid;white-space:nowrap;vertical-align:1px}
 .src.mdcu{color:#7A2E3A;border-color:#D9B3B8;background:#F6E9EA}
 .src.si{color:#1F4E6E;border-color:#B4CADB;background:#E6EFF5}
+.src.both{color:#2F5E4A;border-color:#B9D6C6;background:#E5F1EA}
 .grp-h{padding:22px 0 4px;border-bottom:1px solid var(--rule)}
 .nlset{display:flex;flex-direction:column;gap:26px}
 .xset{margin:0;min-width:0;max-width:100%;padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:18px}
@@ -964,3 +965,22 @@ button.kbtag{cursor:pointer;font:inherit;font-family:'Kanit',sans-serif;font-wei
 .spo.dim{opacity:.6}
 .spgo{font-size:20px;color:var(--ink-2)}
 a.spo{text-decoration:none}
+
+/* Symptomatology & Approach — ป้ายที่มา (ตำราศิริราช · เล่มเหลือง · เพิ่มโดย Claude) */
+.bks{display:inline-flex;flex-wrap:wrap;gap:4px;vertical-align:2px;flex:none}
+.bk{font-family:'Kanit',sans-serif;font-weight:500;font-size:11.5px;line-height:1.5;letter-spacing:.02em;padding:0 8px;border-radius:999px;border:1px solid;white-space:nowrap}
+.bk.si{color:#1F4E6E;border-color:#B4CADB;background:#E6EFF5}
+.bk.yb{color:#7A5800;border-color:#E5C766;background:#FBF0C6}
+.bk.ai{color:#4F3F80;border-color:#C9BEE6;background:#EFEBF8}
+.sxsec>summary .bks,.sxbox>summary .bks{max-width:42%;justify-content:flex-end}
+.sxs2 h4 .bks{margin-left:4px}
+.sxcard .bks{margin-top:4px}
+.sxlegend{font-size:14px;color:var(--muted);margin:0}
+.sx .sb{position:relative;margin:10px 0;padding:6px 0 4px 14px;border-left:3px solid}
+.sx .sb:first-child{margin-top:0}
+.sx .sb::before{display:block;font-family:'Kanit',sans-serif;font-weight:500;font-size:11.5px;letter-spacing:.03em;margin-bottom:4px}
+.sx .sb.si{border-color:#B4CADB}.sx .sb.si::before{content:'ตำราศิริราช';color:#1F4E6E}
+.sx .sb.yb{border-color:#E5C766}.sx .sb.yb::before{content:'เล่มเหลือง';color:#7A5800}
+.sx .sb.ai{border-color:#C9BEE6}.sx .sb.ai::before{content:'เพิ่มโดย Claude';color:#4F3F80}
+.sx .hw,.fbox .hw{color:#2D5DA8;font-style:italic}
+@media (max-width:640px){.sxsec>summary,.sxbox>summary{flex-wrap:wrap;row-gap:4px}.sxsec>summary .bks,.sxbox>summary .bks{order:5;max-width:none;flex-basis:100%;justify-content:flex-start}.sxsec>summary .bks{padding-left:46px}}

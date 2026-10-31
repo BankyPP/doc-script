@@ -1,0 +1,203 @@
+{
+ "key": "8-1",
+ "en": "Joint pain",
+ "th": "ปวดข้อ",
+ "pdf": "98",
+ "target": 29,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "approach",
+   "id": "yb-8-1-algo",
+   "h": "Joint pain — แผนผังแยก extra-articular / arthritis",
+   "html": "<div class=\"flow\" data-flow=\"y81a\"></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "appr-nonin",
+   "id": "yb-8-1-extra",
+   "h": "Extra-articular pain (referred / periarticular)",
+   "html": "<ul><li><b>Referred pain</b></li><li><b>Periarticular</b>: Myofascial pain, Tendinitis, Bursitis</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "appr-arthritis",
+   "id": "yb-8-1-pattern",
+   "h": "Arthritis — ระยะเวลา · จำนวนข้อ · pattern การเกิด",
+   "html": "<p>Acute (&lt; 6 weeks) / Chronic (&gt; 6 weeks) แล้วแยก Mono / Oligo / Poly:</p><div class=\"tbl\"><table><thead><tr><th></th><th>Mono</th><th>Oligo</th><th>Poly</th></tr></thead><tbody><tr><th>Acute (&lt; 6 weeks)</th><td><b>Infection</b>: Bacteria<br><b>Crystal</b>: Gout, CPPD<br><b>Trauma</b></td><td><b>Migratory pattern</b> (ข้อหนึ่งหาย แล้วเป็นใหม่อีกข้อ): Rheumatic fever<br><b>Additive pattern</b> (เพิ่มทีละข้อ): GC, Reactive, Early RA<br><b>Intermittent</b> (เป็นๆหายๆ): Crystal, Reactive, Palindromic</td><td><b>Infection</b>: virus<br>Early RA<br>CNT dz<br>PsA</td></tr><tr><th>Chronic (&gt; 6 weeks)</th><td><b>Infection</b>: TB, Fungus<br><b>Crystal</b></td><td>SpA, RA, Crystal</td><td>RA, SpA, CNT, Crystal</td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y81a",
+   "title": "Joint pain",
+   "src": "fig",
+   "img": "yb-8-1-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Joint pain"
+    },
+    {
+     "id": "ex",
+     "k": "dx",
+     "t": "Extra articular"
+    },
+    {
+     "id": "ref",
+     "k": "dx",
+     "t": "Referred pain"
+    },
+    {
+     "id": "per",
+     "k": "dx",
+     "t": "Periarticular"
+    },
+    {
+     "id": "myo",
+     "k": "dx",
+     "t": "Myofascial pain"
+    },
+    {
+     "id": "ten",
+     "k": "dx",
+     "t": "Tendinitis"
+    },
+    {
+     "id": "bur",
+     "k": "dx",
+     "t": "Bursitis"
+    },
+    {
+     "id": "art",
+     "k": "dx",
+     "t": "Arthritis"
+    },
+    {
+     "id": "ac",
+     "k": "q",
+     "t": "Acute (&lt; 6 weeks)"
+    },
+    {
+     "id": "ch",
+     "k": "q",
+     "t": "Chronic (&gt; 6 weeks)"
+    },
+    {
+     "id": "acm",
+     "k": "dx",
+     "t": "Acute — Mono",
+     "d": "<b>Infection</b><ul><li>Bacteria</li></ul><b>Crystal</b><ul><li>Gout</li><li>CPPD</li></ul><b>Trauma</b>"
+    },
+    {
+     "id": "aco",
+     "k": "dx",
+     "t": "Acute — Oligo",
+     "d": "<b>Migratory pattern</b> (ข้อหนึ่งหาย แล้วเป็นใหม่อีกข้อ)<ul><li>Rheumatic fever</li></ul><b>Additive pattern</b> (เพิ่มทีละข้อ)<ul><li>GC</li><li>Reactive</li><li>Early RA</li></ul><b>Intermittent</b> (เป็นๆหายๆ)<ul><li>Crystal</li><li>Reactive</li><li>Palindromic</li></ul>"
+    },
+    {
+     "id": "acp",
+     "k": "dx",
+     "t": "Acute — Poly",
+     "d": "<b>Infection</b><ul><li>virus</li></ul>Early RA<br>CNT dz<br>PsA"
+    },
+    {
+     "id": "chm",
+     "k": "dx",
+     "t": "Chronic — Mono",
+     "d": "<b>Infection</b><ul><li>TB</li><li>Fungus</li></ul><b>Crystal</b>"
+    },
+    {
+     "id": "cho",
+     "k": "dx",
+     "t": "Chronic — Oligo",
+     "d": "<ul><li>SpA</li><li>RA</li><li>Crystal</li></ul>"
+    },
+    {
+     "id": "chp",
+     "k": "dx",
+     "t": "Chronic — Poly",
+     "d": "<ul><li>RA</li><li>SpA</li><li>CNT</li><li>Crystal</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ex",
+     "l": "Extra articular"
+    },
+    {
+     "f": "a",
+     "t": "art",
+     "l": "Arthritis"
+    },
+    {
+     "f": "ex",
+     "t": "ref",
+     "l": "Referred pain"
+    },
+    {
+     "f": "ex",
+     "t": "per",
+     "l": "Periarticular"
+    },
+    {
+     "f": "per",
+     "t": "myo",
+     "l": "Myofascial pain"
+    },
+    {
+     "f": "per",
+     "t": "ten",
+     "l": "Tendinitis"
+    },
+    {
+     "f": "per",
+     "t": "bur",
+     "l": "Bursitis"
+    },
+    {
+     "f": "art",
+     "t": "ac",
+     "l": "Acute (&lt; 6 weeks)"
+    },
+    {
+     "f": "art",
+     "t": "ch",
+     "l": "Chronic (&gt; 6 weeks)"
+    },
+    {
+     "f": "ac",
+     "t": "acm",
+     "l": "Mono"
+    },
+    {
+     "f": "ac",
+     "t": "aco",
+     "l": "Oligo"
+    },
+    {
+     "f": "ac",
+     "t": "acp",
+     "l": "Poly"
+    },
+    {
+     "f": "ch",
+     "t": "chm",
+     "l": "Mono"
+    },
+    {
+     "f": "ch",
+     "t": "cho",
+     "l": "Oligo"
+    },
+    {
+     "f": "ch",
+     "t": "chp",
+     "l": "Poly"
+    }
+   ]
+  }
+ ]
+}

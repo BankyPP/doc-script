@@ -1,0 +1,674 @@
+{
+ "key": "9-3",
+ "en": "Stepwise approach to seizure and epilepsy",
+ "th": "ชักและโรคลมชัก",
+ "pdf": "107–110",
+ "target": 6,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "first",
+   "id": "yb-9-3-stepwise",
+   "h": "Stepwise approach to seizure and epilepsy (9.3)",
+   "html": "<div class=\"flow\" data-flow=\"y93a\"></div><figure><img src=\"symp/img/yb-9-3-f1.webp\" alt=\"Stepwise approach to seizure and epilepsy พร้อมลายมือ\"><figcaption>Stepwise approach to seizure and epilepsy — Step 1 exclude seizure like · Step 2 precipitating factor · Step 3 new onset vs recurrent unprovoked seizure (พร้อมลายมือหลายสี)</figcaption></figure>"
+  },
+  {
+   "op": "append",
+   "sec": "def",
+   "html": "<p><b>นิยาม (เล่มเหลือง)</b></p><ul><li>Seizure = transient s/s of abnormal excessive hypersynchronous activity in brain</li><li>Epilepsy = ≥ 2 unprovoked seizure</li></ul><ul><li><span class=\"hw\">transient = มีขอบเขตแน่นอน start → end</span></li><li><span class=\"hw\">excitation &gt; inhibition</span></li><li><span class=\"hw\">tonic เกร็ง · clonic กระตุก · absence เหม่อ</span></li><li><span class=\"hw\">nystagmus</span></li><li><span class=\"hw\">ชัก = paroxysmal event — epileptic ↔ non-epileptic (organic, psychosis)</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "class",
+   "html": "<p><b>Seizure classification (ลายมือในเล่มเหลือง)</b></p><ul><li><b>1 Focal onset</b>: <span class=\"hw\">Motor · Non motor · aware/impaired/unknown (สามารถตอบได้ไหมว่าเกิดอะไร ตอนนั้นรู้สึกตัวไหม)</span></li><li><b>2 Generalized onset</b>: <span class=\"hw\">Motor · Absence</span></li><li><b>3 Unknown onset</b>: <span class=\"hw\">Motor · Nonmotor · ไม่ทราบว่าเป็น focal/generalize ในตอนแรก · aware/impaired/unknown</span></li></ul><ul><li><span class=\"hw\">ชักปกติไม่เกิน 5 นาที เกิน → status</span></li><li><span class=\"hw\">Tonic: เกร็ง ↑ ms contraction</span></li><li><span class=\"hw\">Atonic: loss tone ex. neck drop, ล้มทั้งตัว</span></li><li><span class=\"hw\">Myoclonic: proximal เด่น, asym, สะดุ้ง จึ๊ก ๆ jerk</span></li><li><span class=\"hw\">Clonic: repetitive, jerk</span></li><li><span class=\"hw\">Epileptic spasm: sudden move ⊢ flex / extend</span></li><li><span class=\"hw\">Hypermotor: ตอนชักจะมี movement มาก ex เตะ, ยกสะโพก · มีคล้ายโวยวายตอนกลางคืน</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>Step 2: Precipitating factor (provoke vs. non provoke) — เล่มเหลือง</b></p><ul><li><span class=\"hw\">ปัจจัยที่มากระตุ้น</span></li></ul><ul><li>Neurologic disorder (ดูต่อด้านล่าง)</li><li>Metabolic/Drug/toxin (ดูต่อด้านล่าง)</li><li>Other <span class=\"hw\">พักผ่อน, ยา, แสง, เมน</span></li><li>Sleep deprivation</li><li>Menstrual period (Catamenial seizure)</li><li>Flashing light (Pokemon seizure)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "ddx",
+   "html": "<p><b>Step 1: Exclude seizure like — เล่มเหลือง</b> <span class=\"hw\">R/O พวกที่คล้ายชักออกก่อน</span></p><ul><li>Syncope</li><li>Migraine</li><li>Sleep Disorders <span class=\"hw\">, hyperventilation</span></li><li>Paroxysmal Movement Disorders <span class=\"hw\">, tremor ตัวก(?)</span> <span class=\"hw\">(คล้ายชักแต่จริง ๆ แค่ abnormal movement)</span></li><li>Psychogenic Nonepileptic Seizures</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "hx-sz",
+   "html": "<p><b>ซักประวัติ LOC (ลายมือส้มในเล่มเหลือง)</b></p><ul><li><span class=\"hw\">onset: ตอน? ทำไรอยู่? accident? ปากซีด?</span></li><li><span class=\"hw\">มีเกร็ง / กระตุก?</span></li><li><span class=\"hw\">prodrome? ตาพร่า เห็นแสง ชา/จมูก(?)</span></li><li><span class=\"hw\">post ictal: ซึม? orientated? ปวดหัว(?)</span></li><li><span class=\"hw\">ทำอะไรดีขึ้น(?)</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "first",
+   "html": "<p><b>Step 3 และสาเหตุของ new onset seizure — เล่มเหลือง</b></p><ul><li>Step 3: New onset seizure VS Recurrent unprovoked seizure</li><li>Recurrent unprovoked seizure → ดูต่อเรื่อง epilepsy</li><li>New onset seizure <span class=\"hw\">→ หาสาเหตุ: intracranial / systemic (drug, hyper/hypogly, E'lyte บางตัว, HT encep, eclampsia)</span></li><li><b>Neurologic disorder</b> <span class=\"hw\">(infection, trauma, tumor, vascular)</span>: Stroke (ischemic, hemorrhagic) <span class=\"hw\">มี focal neuro def.</span> · Head trauma · Vascular (vascular malformation) · Infection (encephalitis, meningitis, cysticercosis) · Brain tumor</li><li><b>Systemic disorder</b>: Metabolic — hypo/perglycemia, Na ↓, Ca ↓, Mg ↓, uremia <span class=\"hw\">(renal failure)</span> <span class=\"hw\">- Na</span> · Medication — AED poor compliance, drug interaction with AED, BZD withdrawal, sympathomimetic drug · Drug abuse and toxin — alcohol intoxication, alcohol withdrawal, drug withdrawal, cocaine · Other — HT encephalopathy, eclampsia <span class=\"hw\">(PRES synd., ♀ u/d SLE)</span></li></ul><ul><li><span class=\"hw\">ถาม U/D · ถาม Hx ยากันชักเก่า · เจาะ drug level</span></li><li><span class=\"hw\">ถามปัจจัยกระตุ้น, trauma</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "first",
+   "id": "yb-9-3-febrile",
+   "h": "Febrile seizure และ lab ที่ส่ง (ลายมือท้ายหน้า)",
+   "html": "<ul><li><span class=\"hw\">Febrile seizure: 6 เดือน–5 ปี มีไข้นำมาก่อน ตอนกลางคืนไม่ค่อยเช็ดตัว (ถาม FamHx)</span></li><li><span class=\"hw\">* กินยาเช็ดตัวลดไข้ตลอด เฝ้าระวัง esp. ไข้สูง</span></li><li><span class=\"hw\">* CBC, E'lyte, DTX, Ca, Mg, PO4, BUN/Cr</span></li></ul>"
+  },
+  {
+   "op": "sec",
+   "after": "epi",
+   "id": "yb-9-3-adult",
+   "h": "Epilepsy in adult (9.3 — ต่อ)",
+   "html": "<div class=\"flow\" data-flow=\"y93c\"></div><figure><img src=\"symp/img/yb-9-3-f4.webp\" alt=\"Epilepsy in adult algorithm\"><figcaption>Epilepsy in adult — recurrent (≥ 2) unprovoked seizure: genetic / structural-metabolic / unknown cause</figcaption></figure><ul><li><span class=\"hw\">(Genetic) ครอบครัว / onset</span></li><li><span class=\"hw\">(Structural/metabolic) seizure หลัง 20 ปี ↑ นึกถึง structural cause มากกว่า</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "ddx",
+   "id": "yb-9-3-paroxysmal",
+   "h": "Paroxysmal event: epileptic vs non-epileptic (mind map ลายมือ)",
+   "html": "<small>หน้าลายมือล้วนของเจ้าของเล่ม</small><div class=\"flow\" data-flow=\"y93b\"></div><figure><img src=\"symp/img/yb-9-3-f2.webp\" alt=\"Mind map paroxysmal event ลายมือ\"><figcaption>Paroxysmal event — epileptic (seizure classification) / non epileptic (organic ① syncope ② TIA, stroke ③ migraine ④ sleep disorder ⑤ abnormal movement ⑥ metabolic disturbance ⑦ cataplexy; psychy)</figcaption></figure>",
+   "sub": [
+    {
+     "id": "yb-9-3-ddx-syncope",
+     "h": "① Syncope (ลายมือ)",
+     "html": "<ul><li><span class=\"hw\">loss conscious / ms.tone แต่คนไข้มักมี Prodrome (ปากซีด, เหงื่อ, ตาพร่า, เวียนหัว, Bradycar, หายใจไว)</span></li><li><span class=\"hw\">ตอนล้มพอมีกระตุก / ตาเหลือกได้ แต่เป็นไม่นาน recovery ไว ≠ seizure</span></li><li><span class=\"hw\">triggers: อารมณ์, valsalva, ♥ (หัวใจ), orthostatic hypotension</span></li><li><span class=\"hw\">cause = อะไรก็ตามที่ cerebral blood flow ลดลง</span></li><li><span class=\"hw\">นอนราบ → cerebral BF ↑ → อาการดีขึ้น</span></li><li><span class=\"hw\">ปากซีด syncope ≠ เขียว seizure (เขา…, มากกว่า) [อ่านไม่ออกบางส่วน]</span></li><li><span class=\"hw\">อุจจาระ/ปัสสาวะราดได้</span></li><li><span class=\"hw\">ไม่ค่อยปวดหัว, มีเพลีย, ไม่ค่อยกัดลิ้น</span></li><li><span class=\"hw\">no post ictal</span></li></ul>"
+    },
+    {
+     "id": "yb-9-3-ddx-tia",
+     "h": "② TIA, stroke (ลายมือ)",
+     "html": "<ul><li><span class=\"hw\">บางอย่างมี loss of conscious ~ seizure — brainstem, bilat thalamus, bilat cortical</span></li><li><span class=\"hw\">ไม่สามารถตั้งมือได้(?): post circulation / diencephalon</span></li><li><span class=\"hw\">hemiballism: proximal เด่น → เหวี่ยงแรง</span></li><li><span class=\"hw\">chorea: เหวี่ยง distal สะบัดข้อมือ → subthalamic, striatal, thalamic nuclei</span></li><li><span class=\"hw\">ชักจะบ่อยกว่า &amp; สั้นกว่า TIA · ตรวจ neuro มี Ataxia, Vertigo, ชา</span></li><li><span class=\"hw\">\"อย่าลืม CTG infarct / hemorrhage\" · ถาม risk factors atherosclerosis → ถ้ามี → ให้ ASA</span></li></ul>"
+    },
+    {
+     "id": "yb-9-3-ddx-migraine",
+     "h": "③ Migraine (ลายมือ)",
+     "html": "<ul><li><span class=\"hw\">ปวดหัว chr. มานาน — premonitory phase</span></li><li><span class=\"hw\">ชัดเจน ≠ seizure (ไม่ค่อยชัดมาก) · migraine เป็นมาก่อนหลายวันเช่น หงุดหงิด, กินเก่ง, depress, active ↑, …</span></li><li><span class=\"hw\">มี hemiplegic migraine</span></li><li><span class=\"hw\">aura²: ชักก็มี / focal</span></li><li><span class=\"hw\">conscious migraine ดีกว่า เป็นนานกว่า</span></li><li><span class=\"hw\">เป็นปุ๊บกินทันที (มี) Prodrome มาก็กินเลย(?)</span></li><li><span class=\"hw\">EEG ไม่ specific ≠ seizure (ex spike wave)</span></li><li><span class=\"hw\">เห็นแสง ขาว-ดำ ≠ epilepsy (สี)</span></li><li><span class=\"hw\">aura epilepsy สั้นกว่า migraine</span></li><li><span class=\"hw\">gradual กว่า seizure (min vs sec)</span></li></ul>"
+    },
+    {
+     "id": "yb-9-3-ddx-other",
+     "h": "④–⑦ Sleep disorder, abnormal movement, metabolic disturbance, cataplexy (ลายมือ)",
+     "html": "<ul><li>④ Sleep disorder</li><li>⑤ Abnormal movement</li><li>⑥ Metabolic disturbance</li><li>⑦ Cataplexy <span class=\"hw\">ตอนกลางคืนไม่นอน กลางวันอยู่ดี ๆ หลับ — daytime somnolence</span></li></ul><ul><li><span class=\"hw\">DDx กับ Psychy อีก</span></li><li><span class=\"hw\">Sleep paralysis: conscious ดี แต่ขยับเองไม่ได้ ปากอ้า ☺ ไม่มี tone</span></li></ul>"
+    }
+   ]
+  },
+  {
+   "op": "sub",
+   "sec": "inv",
+   "id": "yb-9-3-labs",
+   "h": "ส่งตรวจเมื่อชัก — intra/extracranial (ลายมือหน้า 109)",
+   "html": "<ul><li><span class=\"hw\">seizure: ชักมีไข้ – LP, CT with contrast</span></li><li><span class=\"hw\">intra: infect, non infect — ดู neurodeficit</span></li><li><span class=\"hw\">extra: hypo/hyperglycemia(?), hypo/hyperNa, K, Ca, PO4, Mg → BUN/Cr, E'lyte, Ca, Mg, PO4, DTX, CT contrast</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "tx",
+   "id": "yb-9-3-mgmt",
+   "h": "การดูแลเมื่อกำลังชัก และยาใน status epilepticus (ลายมือ)",
+   "html": "<div class=\"flow\" data-flow=\"y93d\"></div><figure><img src=\"symp/img/yb-9-3-f3.webp\" alt=\"ลายมือเรื่องยาและการดูแล seizure / status epilepticus\"><figcaption>ลายมือหน้า 109 — seizure: ส่งตรวจ, ยา status epilepticus, ยากันชักอื่น</figcaption></figure><ul><li><span class=\"hw\">management: generalized seizure / พวกไม่รู้สึก — ABC → IV, DTX; O2 (ชักนาน → ขาด O2 → สมองพัง(?))</span></li><li><span class=\"hw\">tube กันการสำลัก, เสมหะอุดตัน</span></li><li><span class=\"hw\">recovery position — นอนตะแคงกันลิ้นตกลงคอ, ให้เสมหะออก</span></li><li><span class=\"hw\">status epilep: ชักต่อเนื่อง(?) &gt; 30 min</span></li><li><span class=\"hw\">(ชัก) &gt; 5 นาทีไม่หยุดเอง → มักหยุดเองยาก, โอกาส damage ↑</span></li><li><span class=\"hw\">☺ ยังไม่ให้ยากันชักก่อน 4–5 นาที(แรก) หลังชักเพื่อ Dx โรค → ไม่หยุดใน 5 min จึงมีการให้ยากันชัก valium (Diazepam) → ไม่ดีก็ phenytoin</span></li><li><span class=\"hw\">Diazepam ✱ 1st · ใช้/ห้ามใน arrhy(?) · ยาหยุดชัก: Benzodiazepam, Lorazepam</span></li><li><span class=\"hw\">TH(?) … PO → ไม่ use [อ่านไม่ออกบางส่วน]</span></li><li><span class=\"hw\">kepa – ห้ามใน CKD</span></li><li><span class=\"hw\">status epilepticus: Phenytoin (dilantin; ห้ามใน arrhy, ตับ(?)) → phenobar → ยา anes · 20 mg/kg → 10 mg → 20 → 10</span></li><li><span class=\"hw\">kepa, Na valproate (depakin) — SE: bicytopenia ex. Plt ↓ · if ↓ → ห้ามใช้(?)</span></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y93a",
+   "title": "Stepwise approach to seizure and epilepsy (9.3)",
+   "src": "fig",
+   "img": "yb-9-3-f1.webp",
+   "note": "หน้านี้มีลายมือหลายสี — ใส่ใน d ของกล่องที่อยู่ใกล้ที่สุด (span ลายมือ) · ลายมือชุด \"management\" ทางขวาอยู่ใน flow y93d ในหัวข้อการรักษา · ไฮไลต์ส้ม/เทา = ของเจ้าของเล่ม",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Seizure / Epilepsy — definition",
+     "d": "<ul><li>Seizure = transient s/s of abnormal excessive hypersynchronous activity in brain</li><li>Epilepsy = ≥ 2 unprovoked seizure</li></ul><p><span class=\"hw\">transient = มีขอบเขตแน่นอน start → end</span><br><span class=\"hw\">excitation &gt; inhibition</span><br><span class=\"hw\">tonic เกร็ง · clonic กระตุก · absence เหม่อ</span><br><span class=\"hw\">nystagmus</span></p><p><span class=\"hw\">ชัก = paroxysmal event · epileptic ↔ non-epileptic (organic, psychosis)</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "Step 1: Exclude seizure like",
+     "d": "<p><b>Seizure like symptoms</b> <span class=\"hw\">R/O พวกที่คล้ายชักออกก่อน</span></p><ul><li>Syncope</li><li>Migraine</li><li>Sleep Disorders <span class=\"hw\">, hyperventilation</span></li><li>Paroxysmal Movement Disorders <span class=\"hw\">, tremor ตัวก(?)</span> <span class=\"hw\">(คล้ายชักแต่จริง ๆ แค่ abnormal movement)</span></li><li>Psychogenic Nonepileptic Seizures</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "Step 2: Precipitating factor (provoke vs. non provoke)",
+     "d": "<p><span class=\"hw\">ปัจจัยที่มากระตุ้น</span></p><ul><li>Neurologic disorder (ดูต่อด้านล่าง)</li><li>Metabolic/Drug/toxin (ดูต่อด้านล่าง)</li><li>Other <span class=\"hw\">พักผ่อน, ยา, แสง, เมน</span></li><li>Sleep deprivation</li><li>Menstrual period (Catamenial seizure)</li><li>Flashing light (Pokemon seizure)</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Step 3: New onset seizure VS Recurrent unprovoked seizure"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Recurrent unprovoked seizure → ดูต่อเรื่อง epilepsy",
+     "d": "ดูต่อเรื่อง epilepsy (flow y93c: Epilepsy in adult)"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "New onset seizure",
+     "d": "<p><span class=\"hw\">new onset: หา cause ← intracranial / systemic: drug, hyper/hypogly, E'lyte บางตัว, HT encep, eclampsia</span></p><p><span class=\"hw\">หาสาเหตุ</span></p>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Neurologic disorder",
+     "d": "<p><span class=\"hw\">infection, trauma, tumor, vascular</span></p>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Systemic disorder",
+     "d": "<p><span class=\"hw\">ถาม U/D · ถาม Hx ยากันชักเก่า · เจาะ drug level</span><br><span class=\"hw\">ถามปัจจัยกระตุ้น, trauma</span></p><p><span class=\"hw\">Febrile seizure: 6 เดือน–5 ปี มีไข้นำมาก่อน ตอนกลางคืนไม่ค่อยเช็ดตัว (ถาม FamHx)</span><br><span class=\"hw\">* กินยาเช็ดตัวลดไข้ตลอด เฝ้าระวัง esp. ไข้สูง</span></p><p><span class=\"hw\">* CBC, E'lyte, DTX, Ca, Mg, PO4, BUN/Cr</span></p>"
+    },
+    {
+     "id": "g1",
+     "k": "dx",
+     "t": "Stroke",
+     "d": "<ul><li>Ischemic stroke</li><li>Hemorrhagic stroke</li></ul><p><span class=\"hw\">มี focal neuro def.</span></p>"
+    },
+    {
+     "id": "g2",
+     "k": "dx",
+     "t": "Head trauma"
+    },
+    {
+     "id": "g3",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Vascular malformation</li></ul>"
+    },
+    {
+     "id": "g4",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Encephalitis</li><li>Meningitis</li><li>Cysticercosis</li></ul>"
+    },
+    {
+     "id": "g5",
+     "k": "dx",
+     "t": "Brain tumor"
+    },
+    {
+     "id": "h1",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Hypo/perglycemia</li><li>Na ↓, Ca ↓, Mg ↓</li><li>Uremia <span class=\"hw\">(Renal failure)</span></li><li><span class=\"hw\">- Na</span></li></ul>"
+    },
+    {
+     "id": "h2",
+     "k": "dx",
+     "t": "Medication",
+     "d": "<ul><li>AED poor compliance</li><li>Drug interaction with AED</li><li>BZD withdrawal</li><li>Sympathomimetic drug</li></ul>"
+    },
+    {
+     "id": "h3",
+     "k": "dx",
+     "t": "Drug abuse and toxin",
+     "d": "<ul><li>Alcohol intoxication</li><li>Alcohol withdrawal</li><li>Drug withdrawal</li><li>Cocaine</li></ul>"
+    },
+    {
+     "id": "h4",
+     "k": "dx",
+     "t": "Other (systemic)",
+     "d": "<ul><li>HT encephalopathy</li><li>Eclampsia</li></ul><p><span class=\"hw\">PRES synd., ♀ u/d SLE</span></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Recurrent unprovoked seizure"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "New onset seizure"
+    },
+    {
+     "f": "f",
+     "t": "g",
+     "l": "Neurologic disorder"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Systemic disorder"
+    },
+    {
+     "f": "g",
+     "t": "g1",
+     "l": "Stroke"
+    },
+    {
+     "f": "g",
+     "t": "g2",
+     "l": "Head trauma"
+    },
+    {
+     "f": "g",
+     "t": "g3",
+     "l": "Vascular"
+    },
+    {
+     "f": "g",
+     "t": "g4",
+     "l": "Infection"
+    },
+    {
+     "f": "g",
+     "t": "g5",
+     "l": "Brain tumor"
+    },
+    {
+     "f": "h",
+     "t": "h1",
+     "l": "Metabolic"
+    },
+    {
+     "f": "h",
+     "t": "h2",
+     "l": "Medication"
+    },
+    {
+     "f": "h",
+     "t": "h3",
+     "l": "Drug abuse and toxin"
+    },
+    {
+     "f": "h",
+     "t": "h4",
+     "l": "Other"
+    }
+   ]
+  },
+  {
+   "id": "y93b",
+   "title": "Paroxysmal event — epileptic vs non-epileptic (แผนผังลายมือล้วน)",
+   "src": "fig",
+   "img": "yb-9-3-f2.webp",
+   "note": "หน้าลายมือล้วน (mind map ของเจ้าของเล่ม) · ข้อความที่อ่านไม่ชัดทำเครื่องหมาย (?)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Paroxysmal event"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "epileptic"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "non epileptic"
+    },
+    {
+     "id": "l",
+     "k": "note",
+     "t": "LOC — ซักประวัติ",
+     "d": "<ul><li><span class=\"hw\">onset: ตอน? ทำไรอยู่? accident? ปากซีด?</span></li><li><span class=\"hw\">มีเกร็ง / กระตุก?</span></li><li><span class=\"hw\">prodrome? ตาพร่า เห็นแสง ชา/จมูก(?)</span></li><li><span class=\"hw\">post ictal: ซึม? orientated? ปวดหัว(?)</span></li><li><span class=\"hw\">ทำอะไรดีขึ้น(?)</span></li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "q",
+     "t": "Seizure classification"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Focal onset (1)",
+     "d": "<ul><li><span class=\"hw\">Motor</span></li><li><span class=\"hw\">Non motor</span></li><li><span class=\"hw\">aware / impaired / unknown</span></li><li><span class=\"hw\">(เทา) สามารถตอบได้ไหมว่าเกิดอะไร ตอนนั้นรู้สึกตัวไหม</span></li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Generalized onset (2)",
+     "d": "<ul><li><span class=\"hw\">Motor</span></li><li><span class=\"hw\">Absence</span></li></ul>"
+    },
+    {
+     "id": "u",
+     "k": "dx",
+     "t": "Unknown onset (3)",
+     "d": "<ul><li><span class=\"hw\">Motor</span></li><li><span class=\"hw\">Nonmotor</span></li><li><span class=\"hw\">ไม่ทราบว่าเป็น focal / generalize ในตอนแรก</span></li><li><span class=\"hw\">aware / impaired / unknown</span></li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "note",
+     "t": "Motor seizure types",
+     "d": "<ul><li><span class=\"hw\">ชักปกติไม่เกิน 5 นาที เกิน → status</span></li><li><span class=\"hw\">Tonic: เกร็ง ↑ ms contraction</span></li><li><span class=\"hw\">Atonic: loss tone ex. neck drop, ล้มทั้งตัว</span></li><li><span class=\"hw\">Myoclonic: proximal เด่น, asym, สะดุ้ง จึ๊ก ๆ jerk</span></li><li><span class=\"hw\">Clonic: repetitive, jerk</span></li><li><span class=\"hw\">Epileptic spasm: sudden move ⊢ flex / extend</span></li><li><span class=\"hw\">Hypermotor: ตอนชักจะมี movement มาก ex เตะ, ยกสะโพก · มีคล้ายโวยวายตอนกลางคืน</span></li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "q",
+     "t": "organic"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "psychy"
+    },
+    {
+     "id": "o1",
+     "k": "dx",
+     "t": "① Syncope",
+     "d": "<ul><li><span class=\"hw\">loss conscious / ms.tone แต่คนไข้มัก มี Prodrome (ปากซีด, เหงื่อ, ตาพร่า, เวียนหัว, Bradycar, หายใจไว)</span></li><li><span class=\"hw\">ตอนล้มพอมีกระตุก / ตาเหลือกได้ แต่เป็นไม่นาน recovery ไว ≠ seizure</span></li><li><span class=\"hw\">triggers: อารมณ์, valsalva, ♥ (หัวใจ), orthostatic hypotension</span></li><li><span class=\"hw\">cause = อะไรก็ตามที่ cerebral blood flow ลดลง</span></li><li><span class=\"hw\">นอนราบ → cerebral BF ↑ → อาการดีขึ้น</span></li><li><span class=\"hw\">ปากซีด syncope ≠ เขียว seizure (เขา…, มากกว่า) [อ่านไม่ออกบางส่วน]</span></li><li><span class=\"hw\">อุจจาระ/ปัสสาวะราดได้</span></li><li><span class=\"hw\">ไม่ค่อยปวดหัว, มีเพลีย, ไม่ค่อยกัดลิ้น</span></li><li><span class=\"hw\">no post ictal</span></li></ul>"
+    },
+    {
+     "id": "o2",
+     "k": "dx",
+     "t": "② TIA, stroke",
+     "d": "<ul><li><span class=\"hw\">บางอย่างมี loss of conscious ~ seizure — brainstem, bilat thalamus, bilat cortical</span></li><li><span class=\"hw\">ไม่สามารถตั้งมือได้(?): post circulation / diencephalon</span></li><li><span class=\"hw\">hemiballism: proximal เด่น → เหวี่ยงแรง</span></li><li><span class=\"hw\">chorea: เหวี่ยง distal สะบัดข้อมือ → subthalamic, striatal, thalamic nuclei</span></li><li><span class=\"hw\">(ส้ม) ชักจะบ่อยกว่า &amp; สั้นกว่า TIA · ตรวจ neuro มี Ataxia, Vertigo, ชา</span></li><li><span class=\"hw\">(ม่วง) \"อย่าลืม CTG infarct / hemorrhage\" · ถาม risk factors atherosclerosis → ถ้ามี → ให้ ASA</span></li></ul>"
+    },
+    {
+     "id": "o3",
+     "k": "dx",
+     "t": "③ Migraine",
+     "d": "<ul><li><span class=\"hw\">(ส้ม) ปวดหัว chr. มานาน — premonitory phase</span></li><li><span class=\"hw\">(เทา) ชัดเจน ≠ seizure (ไม่ค่อยชัดมาก) · migraine เป็นมาก่อนหลายวันเช่น หงุดหงิด, กินเก่ง, depress, active ↑, …</span></li><li><span class=\"hw\">(ส้ม) มี hemiplegic migraine</span></li><li><span class=\"hw\">aura²: ชักก็มี / focal</span></li><li><span class=\"hw\">conscious migraine ดีกว่า เป็นนานกว่า</span></li><li><span class=\"hw\">เป็นปุ๊บกินทันที (มี) Prodrome มาก็กินเลย(?)</span></li><li><span class=\"hw\">EEG ไม่ specific ≠ seizure (ex spike wave)</span></li><li><span class=\"hw\">เห็นแสง ขาว-ดำ ≠ epilepsy (สี)</span></li><li><span class=\"hw\">aura epilepsy สั้นกว่า migraine</span></li><li><span class=\"hw\">(ส้ม) gradual กว่า seizure (min vs sec)</span></li></ul>"
+    },
+    {
+     "id": "o4",
+     "k": "dx",
+     "t": "④ Sleep disorder"
+    },
+    {
+     "id": "o5",
+     "k": "dx",
+     "t": "⑤ Abnormal movement"
+    },
+    {
+     "id": "o6",
+     "k": "dx",
+     "t": "⑥ Metabolic disturbance"
+    },
+    {
+     "id": "o7",
+     "k": "dx",
+     "t": "⑦ Cataplexy",
+     "d": "<ul><li><span class=\"hw\">ตอนกลางคืนไม่นอน กลางวันอยู่ดี ๆ หลับ — daytime somnolence</span></li><li><span class=\"hw\">DDx กับ Psychy อีก</span></li><li><span class=\"hw\">Sleep paralysis: conscious ดี แต่ขยับเองไม่ได้ ปากอ้า ☺ ไม่มี tone</span></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "epileptic"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "non epileptic"
+    },
+    {
+     "f": "a",
+     "t": "l",
+     "l": "LOC — ซักประวัติ"
+    },
+    {
+     "f": "b",
+     "t": "s"
+    },
+    {
+     "f": "s",
+     "t": "f",
+     "l": "Focal onset"
+    },
+    {
+     "f": "s",
+     "t": "g",
+     "l": "Generalized onset"
+    },
+    {
+     "f": "s",
+     "t": "u",
+     "l": "Unknown onset"
+    },
+    {
+     "f": "s",
+     "t": "m",
+     "l": "Motor seizure types"
+    },
+    {
+     "f": "c",
+     "t": "o",
+     "l": "organic"
+    },
+    {
+     "f": "c",
+     "t": "p",
+     "l": "psychy"
+    },
+    {
+     "f": "o",
+     "t": "o1",
+     "l": "Syncope"
+    },
+    {
+     "f": "o",
+     "t": "o2",
+     "l": "TIA, stroke"
+    },
+    {
+     "f": "o",
+     "t": "o3",
+     "l": "Migraine"
+    },
+    {
+     "f": "o",
+     "t": "o4",
+     "l": "Sleep disorder"
+    },
+    {
+     "f": "o",
+     "t": "o5",
+     "l": "Abnormal movement"
+    },
+    {
+     "f": "o",
+     "t": "o6",
+     "l": "Metabolic disturbance"
+    },
+    {
+     "f": "o",
+     "t": "o7",
+     "l": "Cataplexy"
+    }
+   ]
+  },
+  {
+   "id": "y93c",
+   "title": "Epilepsy in adult",
+   "src": "fig",
+   "img": "yb-9-3-f4.webp",
+   "note": "ไฮไลต์เขียวอ่อนและลายมือเขียว 2 จุดเป็นของเจ้าของเล่ม",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Recurrent (≥ 2) unprovoked seizure"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Genetic (เดิม Idiopathic)",
+     "d": "<ul><li>Idiopathic generalized epilepsy — Childhood absence epilepsy</li><li>Benign childhood with centrotemperal seizure</li><li>Neurocutaneous — Tuberous sclerosis, Sturge-weber syndrome, Neurofibromatosis</li><li>Epileptic encephalopathies — Lennox-Gastaut syndrome</li></ul><p><span class=\"hw\">ครอบครัว / onset</span></p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Structural/metabolic (เดิม symptomatic)",
+     "d": "<p><span class=\"hw\">seizure หลัง 20 ปี ↑ นึกถึง structural cause มากกว่า</span></p>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Unknown cause (เดิม Cryptogenic)"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Mesial temporal lobe epilepsy"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Localized lesional epilepsies",
+     "d": "<ul><li>Glioma</li><li>Cavernoma</li><li>Focal cortical dysplasia</li><li>Dysembryoplastic NeuroEpithelial Tumor (DNET)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Hemispheric epilepsies",
+     "d": "<ul><li>Hemimegalocephaly</li><li>Rasmussen's encephalitis</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Other (structural)",
+     "d": "<ul><li>Post hypoxic encephalopathy</li><li>Post traumatic encephalomalacia</li><li>Large AVM</li><li>Old stroke</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Genetic"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Structural/metabolic"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Unknown cause"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Mesial temporal lobe epilepsy"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Localized lesional"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Hemispheric"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Other"
+    }
+   ]
+  },
+  {
+   "id": "y93d",
+   "title": "การดูแลเมื่อกำลังชัก / status epilepticus (ลายมือ)",
+   "src": "text",
+   "note": "สร้างจากลายมือล้วน (หน้า 107 ขวา + หน้า 109) — ลำดับขั้นตามที่เขียน · ข้อความที่อ่านไม่ชัดมี (?)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Generalized seizure / พวกไม่รู้สึกตัว",
+     "d": "<p><span class=\"hw\">management: generalized seizure / พวกไม่รู้สึก</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "ABC → IV, DTX",
+     "d": "<p><span class=\"hw\">O2: ชักนาน → ขาด O2 → สมองพัง(?)</span></p>"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "Airway: tube กันการสำลัก, เสมหะอุดตัน · recovery position",
+     "d": "<p><span class=\"hw\">tube กันการสำลัก, เสมหะอุดตัน</span></p><p><span class=\"hw\">recovery position — นอนตะแคงกันลิ้นตกลงคอ, ให้เสมหะออก</span></p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "ชัก &gt; 5 นาทีไม่หยุดเอง?",
+     "d": "<p><span class=\"hw\">status epilep: ชักต่อเนื่อง(?) &gt; 30 min</span></p><p><span class=\"hw\">(ชัก) &gt; 5 นาทีไม่หยุดเอง → มักหยุดเองยาก, โอกาส damage ↑</span></p><p><span class=\"hw\">☺ ยังไม่ให้ยากันชักก่อน 4–5 นาที(แรก) หลังชักเพื่อ Dx โรค → ไม่หยุดใน 5 min จึงมีการให้ยากันชัก</span></p>"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "Diazepam (valium) ✱ 1st — ยาหยุดชัก: Benzodiazepam, Lorazepam",
+     "d": "<p><span class=\"hw\">Diazepam ✱ 1st</span></p><p><span class=\"hw\">(แดง) ใช้/ห้ามใน arrhy(?) · ยาหยุดชัก: Benzodiazepam, Lorazepam</span></p><p><span class=\"hw\">TH(?) … PO → ไม่ use [อ่านไม่ออกบางส่วน]</span></p><p><span class=\"hw\">kepa – ห้ามใน CKD</span></p>"
+    },
+    {
+     "id": "f",
+     "k": "act",
+     "t": "ไม่ดี → Phenytoin (dilantin)",
+     "d": "<p><span class=\"hw\">status epilepticus: Phenytoin (dilantin) — ห้ามใน arrhy, ตับ(?)</span></p><p><span class=\"hw\">20 mg/kg → 10 mg → 20 → 10 (ลูกศรชี้ไป phenobar)</span></p>"
+    },
+    {
+     "id": "g",
+     "k": "act",
+     "t": "Phenobarbital",
+     "d": "<p><span class=\"hw\">Phenytoin → phenobar → ยา anes</span></p>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "ยา anes (anesthetic)"
+    },
+    {
+     "id": "i",
+     "k": "note",
+     "t": "ยากันชักต่อเนื่อง: kepa, Na valproate (Depakin)",
+     "d": "<p><span class=\"hw\">kepa, Na valproate (depakin)</span></p><p><span class=\"hw\">SE: bicytopenia ex. Plt ↓ · if ↓ → ห้ามใช้(?)</span></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "ไม่หยุดเอง &gt; 5 นาที"
+    },
+    {
+     "f": "e",
+     "t": "f"
+    },
+    {
+     "f": "f",
+     "t": "g"
+    },
+    {
+     "f": "g",
+     "t": "h"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "ยากันชักอื่น"
+    }
+   ]
+  }
+ ]
+}

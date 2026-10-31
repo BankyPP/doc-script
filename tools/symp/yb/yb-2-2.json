@@ -1,0 +1,147 @@
+{
+ "key": "2-2",
+ "en": "Cough",
+ "th": "ไอ",
+ "pdf": "26–27",
+ "target": 15,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "hxpe",
+   "id": "yb-2-2-approach",
+   "h": "Algorithm: Cough แยกตามระยะเวลาและระบบ (เล่มเหลือง 2.2)",
+   "html": "<div class=\"flow\" data-flow=\"y22a\"></div><div class=\"box\"><b><span class=\"hw\">ลายมือ: cough – RS / – non RS</span></b><ul><li><span class=\"hw\">non RS: CVS, GI, ENT, drug (ACEI)</span></li></ul></div><p>สาเหตุของการไอ มีด้วยกันหลากหลายสาเหตุและหลากหลายระบบ แต่ถ้าหากเราแยกสาเหตุที่พบได้บ่อยตามระยะเวลาของการดำเนินโรค เราสามารถจำแนกสาเหตุที่พบได้บ่อย ๆ ดังตารางในหัวข้อการจำแนกตามระยะเวลา</p>"
+  },
+  {
+   "op": "append",
+   "sec": "duration",
+   "html": "<div class=\"tbl\"><table><thead><tr><th>Duration of cough</th><th>Acute</th><th>Subacute</th><th>Chronic</th></tr></thead><tbody><tr><td>Common causes</td><td>URI<br>Acute decompensate HF<br>Exacerbate COPD, Asthma, LRTI</td><td>Post infectious cough</td><td>ACEI, Asthma, GERD<br>Upper Airway Cough syndrome</td></tr></tbody></table></div><p><small>ตารางสรุปสาเหตุที่พบบ่อยตามระยะเวลา ใต้ algorithm Cough ในเล่มเหลือง (Acute / Subacute / Chronic มีไฮไลต์ชมพู)</small></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y22a",
+   "title": "Cough — Respiratory vs Other",
+   "src": "fig",
+   "img": "yb-2-2-f1.webp",
+   "note": "ลายมือแดงมุมบนซ้าย: cough – RS / – non RS; CVS, GI, ENT, drug (ACEI) · ไฮไลต์ชมพูที่ Acute / Subacute / Chronic และกล่องหมวดต่าง ๆ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Cough",
+     "d": "<p><span class=\"hw\">cough – RS · – non RS</span></p><p><span class=\"hw\">CVS, GI, ENT, drug (ACEI)</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Duration of cough",
+     "d": "<ul><li>Acute: &lt; 3 weeks</li><li>Subacute: 3 – 8 weeks</li><li>Chronic: &gt; 8 weeks</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Respiratory"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Other"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Airway",
+     "d": "<ul><li>COPD/Asthma</li><li>Bronchitis</li><li>Air way irritant: smoke, dust</li><li>Foreign body</li><li>Upper airway cough syndrome</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Parenchyma",
+     "d": "<ul><li>Infection<ul><li>Pneumonia</li><li>TB</li></ul></li><li>CA: 1° or Metas</li><li>ILD</li><li>Bronchiectasis</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Cardio",
+     "d": "<ul><li>CHF</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "GI",
+     "d": "<ul><li>GERD</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "ENT",
+     "d": "<ul><li>Allergic rhinitis</li><li>Sinusitis</li><li>Ear Foreign body</li><li>Laryngopharyngeal reflux</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Drug",
+     "d": "<ul><li>ACEI</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Mediastinal mass</li><li>Psychi</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Respiratory"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Other"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Airway"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Parenchyma"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Cardio"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "GI"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "ENT"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Drug"
+    },
+    {
+     "f": "d",
+     "t": "k",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

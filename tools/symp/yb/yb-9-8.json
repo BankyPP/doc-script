@@ -1,0 +1,539 @@
+{
+ "key": "9-8",
+ "en": "Movement disorder",
+ "th": "การเคลื่อนไหวผิดปกติ (movement disorder)",
+ "pdf": "127–130",
+ "target": 36,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "phenom",
+   "id": "yb-9-8-class",
+   "h": "Classification of movement disorder (ตามเล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y98a\"></div><p><b>Athetosis:</b> Involuntary, Slow, Writhing movement เด่น distal limb (จะคล้าย Chorea บางครั้งใช้แทนกัน)</p><p>Mnemonic “ABCD-MT” (non-rhythmic hyperkinetic): A: Athetosis · B: Ballism / C: Chorea · D: Dystonia · M: Myoclonus / T: Tic</p>"
+  },
+  {
+   "op": "sub",
+   "sec": "tremor",
+   "id": "yb-9-8-tremor",
+   "h": "Tremor algorithm (resting / postural / intention)",
+   "html": "<div class=\"flow\" data-flow=\"y98b\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "tremor-def",
+   "html": "<p>Tremor (เล่มเหลือง): Rhythmic, involuntary oscillatory movement of body part — Resting (สั่นขณะอยู่นิ่ง) · Postural (สั่นเมื่อพยายามยกแขนหรือขาค้างไว้) · Intention (สั่นขณะเคลื่อนไหว)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "tremor-cause",
+   "html": "<ul><li><b>Resting:</b> Parkinson disease (PD), <i>Wilson disease</i></li><li><b>Postural:</b> Essential tremor (ET) · Physiologic tremor (anxiety/fear, sleep deprivation, alcohol/drug withdrawal, thyrotoxicosis) · <i>Wilson disease</i></li><li><b>Intention:</b> Cerebellar disease · Drug and toxin · <i>Wilson disease</i></li></ul><p>ตารางแยก Parkinson disease กับ essential tremor ตามลักษณะทางคลินิก (เล่มเหลือง)</p><div class=\"tbl\"><table><thead><tr><th>Clinical Feature</th><th>Parkinson disease</th><th>Essential Tremor</th></tr></thead><tbody><tr><td>Type tremor</td><td>Resting tremor</td><td>Action (Postural/kinetic)</td></tr><tr><td>Family history</td><td>5%</td><td>60%</td></tr><tr><td>Unilateral or bilateral involvement</td><td>สั่นข้างใดข้างหนึ่งมากกว่า (Unilateral)</td><td>สั่นสองข้างพอกัน (Bilateral)</td></tr><tr><td>Response to treatment</td><td>Response Levodopa</td><td>Response Alcohol, Beta-blocker, neurontin</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "append",
+   "sec": "tremor-drug",
+   "html": "<p>ยาที่เป็นสาเหตุของอาการ tremor (เล่มเหลือง)</p><div class=\"tbl\"><table><thead><tr><th>ยา / สาร</th><th>ยา / สาร</th></tr></thead><tbody><tr><td>Alcohol consumption</td><td>Alcohol withdrawal</td></tr><tr><td>BZD withdrawal</td><td>AED: carbamazepine, Valproic acid</td></tr><tr><td>Antiarrhythmia: amiodarone</td><td>Stimulant: B-agonist, amphetamine, cocaine, caffeine</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "chorea",
+   "id": "yb-9-8-chorea",
+   "h": "Chorea algorithm (primary / secondary)",
+   "html": "<div class=\"flow\" data-flow=\"y98c\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "chorea-def",
+   "html": "<p>Chorea (เล่มเหลือง): Quick, irregular, involuntary, semi or non purposive, predominant distal movement</p>"
+  },
+  {
+   "op": "append",
+   "sec": "chorea-cause",
+   "html": "<ul><li><b>Primary “Hereditary”:</b> AD — Huntington, SCA · AR — Wilson, Neuroacanthocytosis · Mitochondrial disease</li><li><b>Secondary, extracranial:</b> Metabolic (hypo/perglycemia, hyperthyroid, hypoPTH, Ca<span class=\"down\">↓</span>, Mg<span class=\"down\">↓</span>, Na<span class=\"up\">↑</span>, O<sub>2</sub><span class=\"down\">↓</span>) · Drug (neuroleptic, anticonvulsant, antiparkinson) · Toxin (CO, Mn)</li><li><b>Secondary, intracranial (basal ganglion lesion):</b> Vascular (vasculitis) · Tumor · Autoimmune (SLE, antiphospholipid, Sydenham) · Infection (encephalitis, AIDS, CJD, PANDAS) · Other (cerebral palsy, pregnancy)</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "myoclonus",
+   "id": "yb-9-8-myoclonus",
+   "h": "Myoclonus algorithm (essential / epileptic / symptomatic)",
+   "html": "<div class=\"flow\" data-flow=\"y98d\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "myo-def",
+   "html": "<p>Myoclonus (เล่มเหลือง): Sudden, brief, shock-like jerks (กระตุกอย่างแรง) — ต้อง exclude physiologic myoclonus (hypnic jerk, hiccup, physiologic startle) และ psychogenic myoclonus ก่อน</p>"
+  },
+  {
+   "op": "append",
+   "sec": "myo-cause",
+   "html": "<ul><li><b>Essential myoclonus</b> (myoclonus อย่างเดียว): sporadic · familial (no gene identified) · myoclonic dystonia (gene DYT5 or DYT11)</li><li><b>Epileptic myoclonus</b>: myoclonus ร่วมกับมี epilepsy</li><li><b>Symptomatic / secondary</b> (มีโรคอย่างอื่นแล้วเกิด myoclonus):<ul><li>Neuro: posthypoxic myoclonus (Lance-Adam syndrome) · neurodegenerative dz (Wilson, PSP, MSA) · spinocerebellar ataxia (Rumsay-Hunt, Friedreich, ataxia-telangiectasia) · dementia (PD c dementia, dementia c Lewy bodies)</li><li>Autoimmune: limbic encephalitis, Hashimoto encephalopathy, eosinophilic encephalopathy, celiac disease</li><li>Storage: Gaucher’s dz, Tay-Sachs dz, Lafora body dz</li><li>Metabolic: endocrine (thyrotoxicosis, glucose <span class=\"down\">↓</span> or <span class=\"up\">↑</span>) · renal (renal failure, electrolyte Na<span class=\"down\">↓</span>, Ca<span class=\"down\">↓</span>, Mg<span class=\"down\">↓</span>) · liver failure · nutrition (vit E/biotin def) · mitochondrial dysfunction</li><li>ID/Post ID: CJD, herpes encephalitis, HIV, HTLV-1, malaria, Sy</li><li>Other: toxin (alcohol, aluminium, toluene) · drug (levodopa, BZD, TCA, SSRI) · paraneoplastic</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y98a",
+   "title": "Movement disorder classification",
+   "src": "fig",
+   "img": "yb-9-8-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Movement disorder classification",
+     "d": "<ol><li>Hyperkinetic vs. Hypokinetic</li><li>Rhythmic vs. Non-Rhythmic</li><li>Voluntary vs. Involuntary</li><li>Characteristic:<ul><li>Distribution: Proximal/distal</li><li>Speed: Slow/Fast</li><li>Relation: Posture</li></ul></li></ol>"
+    },
+    {
+     "id": "hk",
+     "k": "q",
+     "t": "Hyperkinetic"
+    },
+    {
+     "id": "pk",
+     "k": "dx",
+     "t": "Parkinsonism"
+    },
+    {
+     "id": "tr",
+     "k": "dx",
+     "t": "Tremor"
+    },
+    {
+     "id": "nr",
+     "k": "q",
+     "t": "Non-Rhythmic — Mnemonic “ABCD-MT”",
+     "d": "<ul><li>A: Athetosis</li><li>B: Ballism / C: Chorea</li><li>D: Dystonia</li><li>M: Myoclonus / T: Tic</li></ul>"
+    },
+    {
+     "id": "iq",
+     "k": "q",
+     "t": "Involuntary, Quick, semipurposive"
+    },
+    {
+     "id": "ba",
+     "k": "dx",
+     "t": "Ballism"
+    },
+    {
+     "id": "ch",
+     "k": "dx",
+     "t": "Chorea"
+    },
+    {
+     "id": "dy",
+     "k": "dx",
+     "t": "Dystonia"
+    },
+    {
+     "id": "rj",
+     "k": "q",
+     "t": "Rapid Jerky movement"
+    },
+    {
+     "id": "my",
+     "k": "dx",
+     "t": "Myoclonus"
+    },
+    {
+     "id": "ti",
+     "k": "dx",
+     "t": "Tic"
+    },
+    {
+     "id": "at",
+     "k": "note",
+     "t": "Athetosis: Involuntary, Slow, Writhing movement เด่น distal limb (จะคล้าย Chorea บางครั้งใช้แทนกัน)"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "hk",
+     "l": "Hyperkinetic"
+    },
+    {
+     "f": "a",
+     "t": "pk",
+     "l": "Hypokinetic"
+    },
+    {
+     "f": "hk",
+     "t": "tr",
+     "l": "Rhythmic"
+    },
+    {
+     "f": "hk",
+     "t": "nr",
+     "l": "Non-Rhythmic"
+    },
+    {
+     "f": "nr",
+     "t": "iq",
+     "l": "Involuntary, Quick, semipurposive"
+    },
+    {
+     "f": "nr",
+     "t": "dy",
+     "l": "Sustain muscle contraction"
+    },
+    {
+     "f": "nr",
+     "t": "rj",
+     "l": "Rapid Jerky movement"
+    },
+    {
+     "f": "nr",
+     "t": "at",
+     "l": "Athetosis"
+    },
+    {
+     "f": "iq",
+     "t": "ba",
+     "l": "Proximal limb"
+    },
+    {
+     "f": "iq",
+     "t": "ch",
+     "l": "Distal limb"
+    },
+    {
+     "f": "rj",
+     "t": "my",
+     "l": "No premonitory urge"
+    },
+    {
+     "f": "rj",
+     "t": "ti",
+     "l": "Premonitory urge"
+    }
+   ]
+  },
+  {
+   "id": "y98b",
+   "title": "Tremor",
+   "src": "fig",
+   "img": "yb-9-8-f2.webp",
+   "note": "Wilson disease พิมพ์เป็นตัวเอียงในหนังสือ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Tremor",
+     "d": "<p>Rhythmic, involuntary oscillatory movement of body part</p>"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Resting — สั่นขณะอยู่นิ่ง",
+     "d": "<ul><li>Parkinson disease (PD)</li><li><i>Wilson disease</i></li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Postural — สั่นเมื่อพยายามยกแขนหรือขาค้างไว้",
+     "d": "<ul><li>Essential tremor (ET)</li><li>Physiologic tremor<ul><li>Anxiety, fear</li><li>Sleep deprivation</li><li>Alc/Drug withdrawal</li><li>Thyrotoxicosis</li></ul></li><li><i>Wilson disease</i></li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Intention — สั่นขณะเคลื่อนไหว",
+     "d": "<ul><li>Cerebellar disease</li><li>Drug and toxin</li><li><i>Wilson disease</i></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "r",
+     "l": "Resting"
+    },
+    {
+     "f": "a",
+     "t": "p",
+     "l": "Postural"
+    },
+    {
+     "f": "a",
+     "t": "i",
+     "l": "Intention"
+    }
+   ]
+  },
+  {
+   "id": "y98c",
+   "title": "Chorea",
+   "src": "fig",
+   "img": "yb-9-8-f3.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chorea",
+     "d": "<p>Quick, irregular, involuntary semi or non purposive, Predominant distal movement</p>"
+    },
+    {
+     "id": "pr",
+     "k": "dx",
+     "t": "Primary “Hereditary”",
+     "d": "<ul><li>AD: Huntington, SCA</li><li>AR: Wilson, Neuroacanthocytosis</li><li>Mitochondrial disease</li></ul>"
+    },
+    {
+     "id": "se",
+     "k": "q",
+     "t": "Secondary"
+    },
+    {
+     "id": "ex",
+     "k": "q",
+     "t": "Extracranial"
+    },
+    {
+     "id": "in",
+     "k": "q",
+     "t": "Intracranial",
+     "d": "<p>Basal ganglion Lesion</p>"
+    },
+    {
+     "id": "me",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Hypo/perglycemia</li><li>Hyperthyroid</li><li>HypoPTH, Ca<span class=\"down\">↓</span></li><li>Mg<span class=\"down\">↓</span>, Na<span class=\"up\">↑</span>, O<sub>2</sub><span class=\"down\">↓</span></li></ul>"
+    },
+    {
+     "id": "dr",
+     "k": "dx",
+     "t": "Drug",
+     "d": "<ul><li>Neuroleptic</li><li>Anticonvulsant</li><li>Antiparkinson</li></ul>"
+    },
+    {
+     "id": "tx",
+     "k": "dx",
+     "t": "Toxin",
+     "d": "<ul><li>CO</li><li>Mn</li></ul>"
+    },
+    {
+     "id": "va",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Vasculitis</li></ul>"
+    },
+    {
+     "id": "tu",
+     "k": "dx",
+     "t": "Tumor"
+    },
+    {
+     "id": "au",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li>SLE</li><li>Antiphospholipid</li><li>Sydenham</li></ul>"
+    },
+    {
+     "id": "if",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Encephalitis</li><li>AIDS, CJD</li><li>PANDAS</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Cerebral palsy</li><li>Pregnancy</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pr",
+     "l": "Primary “Hereditary”"
+    },
+    {
+     "f": "a",
+     "t": "se",
+     "l": "Secondary"
+    },
+    {
+     "f": "se",
+     "t": "ex",
+     "l": "Extracranial"
+    },
+    {
+     "f": "se",
+     "t": "in",
+     "l": "Intracranial"
+    },
+    {
+     "f": "ex",
+     "t": "me",
+     "l": "Metabolic"
+    },
+    {
+     "f": "ex",
+     "t": "dr",
+     "l": "Drug"
+    },
+    {
+     "f": "ex",
+     "t": "tx",
+     "l": "Toxin"
+    },
+    {
+     "f": "in",
+     "t": "va",
+     "l": "Vascular"
+    },
+    {
+     "f": "in",
+     "t": "tu",
+     "l": "Tumor"
+    },
+    {
+     "f": "in",
+     "t": "au",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "in",
+     "t": "if",
+     "l": "Infection"
+    },
+    {
+     "f": "in",
+     "t": "ot",
+     "l": "Other"
+    }
+   ]
+  },
+  {
+   "id": "y98d",
+   "title": "Myoclonus",
+   "src": "fig",
+   "img": "yb-9-8-f4.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Myoclonus: Sudden, brief, shock-like jerks (กระตุกอย่างแรง)"
+    },
+    {
+     "id": "ph",
+     "k": "note",
+     "t": "Exclude Physiologic myoclonus",
+     "d": "<ul><li>Hypnic jerk</li><li>Hiccup</li><li>Physiologic startle</li></ul>"
+    },
+    {
+     "id": "ps",
+     "k": "note",
+     "t": "Exclude Psychogenic myoclonus"
+    },
+    {
+     "id": "es",
+     "k": "dx",
+     "t": "Essential myoclonus: Myoclonus อย่างเดียว",
+     "d": "<ul><li>Sporadic</li><li>Familial (no gene identified)</li><li>Myoclonic dystonia (Gene: DYT5 or DYT11)</li></ul>"
+    },
+    {
+     "id": "ep",
+     "k": "dx",
+     "t": "Epileptic myoclonus: Myoclonus ร่วมกับมี epilepsy"
+    },
+    {
+     "id": "sy",
+     "k": "q",
+     "t": "Symptomatic or Secondary Myoclonus: มีโรคอย่างอื่นแล้วเกิด Myoclonus"
+    },
+    {
+     "id": "ne",
+     "k": "dx",
+     "t": "Neuro",
+     "d": "<ul><li><b>Posthypoxic myoclonus</b> (Lance-Adam syndrome)</li><li><b>Neurodegenerative dz</b>: Wilson, PSP, MSA</li><li><b>Spinocerebellar Ataxia</b>: Rumsay-Hunt, Friedreich, Ataxia-telangiectasia</li><li><b>Dementia</b>: PD c dementia, Dementia c lewy bodies</li></ul>"
+    },
+    {
+     "id": "au",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li>Limbic encephalitis</li><li>Hashimoto encephalopathy</li><li>Eosinophilic encephalopathy</li><li>Celiac disease</li></ul>"
+    },
+    {
+     "id": "st",
+     "k": "dx",
+     "t": "Storage",
+     "d": "<ul><li>Gaucher’s dz</li><li>Tay-Sachs dz</li><li>Lafora body dz</li></ul>"
+    },
+    {
+     "id": "mt",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li><b>Endocrine</b>: Thyrotoxicosis · Glucose <span class=\"down\">↓</span> or <span class=\"up\">↑</span></li><li><b>Renal</b>: Renal failure · Electrolyte: Na<span class=\"down\">↓</span>, Ca<span class=\"down\">↓</span>, Mg<span class=\"down\">↓</span></li><li><b>Liver failure</b></li><li><b>Nutrition</b>: Vit E/ Biotin def</li><li><b>Mitochondrial dysfunction</b></li></ul>"
+    },
+    {
+     "id": "id",
+     "k": "dx",
+     "t": "ID/Post ID",
+     "d": "<ul><li>CJD</li><li>Herpes encephalitis</li><li>HIV, HTLV-1</li><li>Malaria, Sy</li></ul>"
+    },
+    {
+     "id": "ot",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li><b>Toxin</b>: Alcohol, Aluminium, Toluene</li><li><b>Drug</b>: Levodopa, BZD, TCA, SSRI</li><li><b>Paraneoplastic</b></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ph",
+     "l": "Exclude"
+    },
+    {
+     "f": "a",
+     "t": "ps",
+     "l": "Exclude"
+    },
+    {
+     "f": "a",
+     "t": "es",
+     "l": "Essential myoclonus"
+    },
+    {
+     "f": "a",
+     "t": "ep",
+     "l": "Epileptic myoclonus"
+    },
+    {
+     "f": "a",
+     "t": "sy",
+     "l": "Symptomatic or Secondary"
+    },
+    {
+     "f": "sy",
+     "t": "ne",
+     "l": "Neuro"
+    },
+    {
+     "f": "sy",
+     "t": "au",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "sy",
+     "t": "st",
+     "l": "Storage"
+    },
+    {
+     "f": "sy",
+     "t": "mt",
+     "l": "Metabolic"
+    },
+    {
+     "f": "sy",
+     "t": "id",
+     "l": "ID/Post ID"
+    },
+    {
+     "f": "sy",
+     "t": "ot",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

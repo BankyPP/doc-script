@@ -1,0 +1,153 @@
+{
+ "key": "1-7",
+ "en": "Pericardial effusion",
+ "th": "น้ำในเยื่อหุ้มหัวใจ",
+ "pdf": "19",
+ "target": null,
+ "new": {
+  "id": "pericardial-effusion",
+  "th": "น้ำในเยื่อหุ้มหัวใจ",
+  "en": "Pericardial effusion",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "yb-1-7-approach",
+   "h": "Algorithm: Pericardial effusion",
+   "html": "<div class=\"flow\" data-flow=\"y17a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y17a",
+   "title": "Pericardial effusion",
+   "src": "fig",
+   "img": "yb-1-7-f1.webp",
+   "note": "มีดาวสีม่วงข้าง “Blunt injury” (ไม่มีข้อความลายมือ)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Pericardial effusion",
+     "d": "<ul><li>No specific s/s until tamponade</li><li>ถ้ามี Cardiac tamponade: Pulsus paradoxus: SBP &gt; 20 mmHg</li><li>หรือมี Beck triad: JVP distension, BP<span class=\"down\">↓</span>, distant heart sound</li><li>EKG: electrical alternans หรือ low voltage EKG</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Infection"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Non-Infection"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Infectious causes",
+     "d": "<ul><li><b>Virus</b>: Coxsackie, Adeno, Echo</li><li><b>Bact</b>: Staph, Strep,…</li><li><b>High bact</b>: Nocardia, actino</li><li><b>Ricketsia</b>, Borrelia</li><li><b>Mycobacteria</b></li><li><b>Fungus</b>: Histo, Coccidio</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Trauma"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Non-Trauma"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Blunt injury"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Tumor",
+     "d": "<ul><li>Lymphoma</li><li>Metastatic CA<ul><li>Lung</li><li>Breast</li></ul></li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "CNT",
+     "d": "<ul><li>SLE</li><li>Vasculitis<ul><li>PAN</li><li>Wegener</li></ul></li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Uremia</li><li>Hypothyroid</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Drug &amp; toxin",
+     "d": "<ul><li>INH</li><li>Hydralazine</li><li>Procainamide</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "CVS",
+     "d": "<ul><li>Dressler's syndrome</li><li>Dissecting aortic anurysm</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Infection"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Non-Infection"
+    },
+    {
+     "f": "b",
+     "t": "d"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Trauma"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "Non-Trauma"
+    },
+    {
+     "f": "e",
+     "t": "g"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Tumor"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "CNT"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Metabolic"
+    },
+    {
+     "f": "f",
+     "t": "k",
+     "l": "Drug & toxin"
+    },
+    {
+     "f": "f",
+     "t": "l",
+     "l": "CVS"
+    }
+   ]
+  }
+ ]
+}

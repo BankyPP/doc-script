@@ -1,0 +1,126 @@
+{
+ "key": "2-5",
+ "en": "Clubbing of finger",
+ "th": "นิ้วปุ้ม (clubbing of finger)",
+ "pdf": "30",
+ "target": null,
+ "new": {
+  "id": "clubbing-of-finger",
+  "th": "นิ้วปุ้ม",
+  "en": "Clubbing of finger",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "yb-2-5-approach",
+   "h": "Algorithm: Clubbing of finger (เล่มเหลือง 2.5)",
+   "html": "<div class=\"flow\" data-flow=\"y25a\"></div>",
+   "sub": [
+    {
+     "id": "yb-2-5-signs",
+     "h": "5 signs of clubbing of fingers",
+     "html": "<ul><li>Floating nail sign</li><li>Shammerot’s sign</li><li>Diameter of nail Bed &gt; DIP</li><li>Profile sign (earliest sign)</li><li>Drumstick-like of terminal phalanx</li></ul>"
+    },
+    {
+     "id": "yb-2-5-primary",
+     "h": "Primary",
+     "html": "<ul><li>Familial or idiopathic</li></ul>"
+    },
+    {
+     "id": "yb-2-5-secondary",
+     "h": "Secondary — สาเหตุแยกตามระบบ",
+     "html": "<div class=\"tbl\"><table><thead><tr><th>ระบบ</th><th>สาเหตุ</th></tr></thead><tbody><tr><td>Cardio</td><td>Cyanotic heart disease · Infective endocarditis</td></tr><tr><td>Pulmonary</td><td><b>Neoplasm</b>: Bronchial carcinoma, Lung metastasis, Mesothelioma<br><b>Chronic lung disease</b>: Bronchiectasis, Emphysema, IPF<br><b>Infection</b>: Lung abscess, Empyema</td></tr><tr><td>GI</td><td>Cirrhosis · IBD: Crohn’s disease, Ulcerative colitis · Celiac disease · Esophagus: CA, achalasia</td></tr><tr><td>Miscellaneous</td><td><b>Endocrine</b>: Thyrotoxicosis, POEMS<br><b>Hematologic</b>: PV with Hypoxia, Methemoglobinemia, Lymphoma<br><b>Autoimmune</b>: PAN, SLE</td></tr></tbody></table></div>"
+    }
+   ]
+  },
+  {
+   "id": "yb-2-5-mnemonic",
+   "h": "Causes of Clubbing — mnemonic “CLUBBING” (รูปแทรกในเล่มเหลือง)",
+   "html": "<figure><img src=\"symp/img/yb-2-5-f2.webp\" alt=\"รูปแทรก Causes of Clubbing: mnemonic CLUBBING และภาพนิ้วปกติ 160° เทียบนิ้วปุ้ม &gt;180°\"><figcaption>Causes of Clubbing (รูปแทรกในเล่มเหลือง) — นิ้วปกติ 160° · clubbed finger &gt;180°</figcaption></figure><ul><li><b>C</b> → Cyanotic Heart dis. · Cystic Fibrosis</li><li><b>L</b> → Lung Cancer · Lung abscess</li><li><b>U</b> → Ulcerative Colitis</li><li><b>B</b> → Bronchiectasis</li><li><b>B</b> → Benign mesothelioma</li><li><b>I</b> → Infective Endocarditis · Idiopathic Pulmonary fibrosis</li><li><b>N</b> → Neurogenic tumors</li><li><b>G</b> → Gastrointestinal dis.</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y25a",
+   "title": "Clubbing of fingers",
+   "src": "fig",
+   "img": "yb-2-5-f1.webp",
+   "note": "มีรูปแทรก “Causes of Clubbing” (CLUBBING mnemonic) ติดอยู่ข้างกล่อง Secondary — แยกเป็นรูปในหัวข้อ mnemonic",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Clubbing of fingers",
+     "d": "<p><b>5 signs of clubbing of fingers</b></p><ul><li>Floating nail sign</li><li>Shammerot’s sign</li><li>Diameter of nail Bed &gt; DIP</li><li>Profile sign (earliest sign)</li><li>Drumstick-like of terminal phalanx</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Primary",
+     "d": "Familial or idiopathic"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Secondary"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Cardio",
+     "d": "<ul><li>Cyanotic heart disease</li><li>Infective endocarditis</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Pulmonary",
+     "d": "<ul><li>Neoplasm<ul><li>Bronchial carcinoma</li><li>Lung metastasis</li><li>Mesothelioma</li></ul></li><li>Chronic lung disease<ul><li>Bronchiectasis</li><li>Emphysema</li><li>IPF</li></ul></li><li>Infection<ul><li>Lung abscess</li><li>Empyema</li></ul></li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "GI",
+     "d": "<ul><li>Cirrhosis</li><li>IBD: Crohn’s disease, Ulcerative colitis</li><li>Celiac disease</li><li>Esophagus: CA, achalasia</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Miscellaneous",
+     "d": "<ul><li>Endocrine<ul><li>Thyrotoxicosis</li><li>POEMS</li></ul></li><li>Hematologic<ul><li>PV with Hypoxia</li><li>Methemoglobinemia</li><li>Lymphoma</li></ul></li><li>Autoimmune<ul><li>PAN, SLE</li></ul></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Primary"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Secondary"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Cardio"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Pulmonary"
+    },
+    {
+     "f": "c",
+     "t": "f",
+     "l": "GI"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Miscellaneous"
+    }
+   ]
+  }
+ ]
+}

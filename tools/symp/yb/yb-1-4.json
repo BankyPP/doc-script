@@ -1,0 +1,166 @@
+{
+ "key": "1-4",
+ "en": "Claudication",
+ "th": "ขาเจ็บเมื่อเดิน (claudication)",
+ "pdf": "15",
+ "target": null,
+ "new": {
+  "id": "claudication",
+  "th": "ขาเจ็บเมื่อเดิน",
+  "en": "Claudication",
+  "g": "cvr"
+ },
+ "sections": [
+  {
+   "id": "yb-1-4-approach",
+   "h": "Algorithm: Claudication — vascular vs neurogenic",
+   "html": "<div class=\"flow\" data-flow=\"y14a\"></div><div class=\"box\"><b><span class=\"hw\">ลายมือเล่มเหลือง</span></b><ul><li><span class=\"hw\">Claudication = เดินแล้วปวดขา พักแล้วดีขึ้น</span></li><li><span class=\"hw\">vascular 6P — พักแล้วเดินได้เท่า ๆ เดิม · ระยะเดินเท่าเดิมตลอด</span><ul><li><span class=\"hw\">cause — itis / athero</span></li><li><span class=\"hw\">thrombosis/embolic</span></li><li><span class=\"hw\">vasospasm</span></li></ul></li><li><span class=\"hw\">neuro progress ขาอ่อนแรง · ระยะเดินน้อยลงเรื่อย ๆ · พวก nerve ต่าง ๆ จะโดนกด</span></li><li><span class=\"hw\">Abnormal vessel (1): อักเสบ/อุดตัน · Thrombophilia (2): clot — thrombolic/embolic · Vasospasm (3): Ergotamine (ยากระตุ้นการบีบของมดลูกได้ด้วย)</span></li></ul></div>"
+  },
+  {
+   "id": "yb-1-4-vasc",
+   "h": "Vascular claudication",
+   "html": "<div class=\"tbl\"><table><tbody><tr><th>Cause</th><td>เลือดเลี้ยงขาไม่พอ</td></tr><tr><th>PE</th><td>“Signs of 6P”: Pain, Pallor, Poikilothermia, Paresthesia, Paralysis, Pulseless</td></tr><tr><th>Hx</th><td>เดินแล้วปวด จนต้องพัก · หลังจากพัก <i>ระยะเดินได้จะน้อยคงที่</i> · เดินขึ้นที่ลาดปวด</td></tr></tbody></table></div><ol><li><b>Abnormal vessel</b> <span class=\"hw\">(อักเสบ/อุดตัน)</span>: Atherosclerosis · Vasculitis (Takayasu arteritis, Giant cell arteritis, Thromboangiitis obliterans (Berger's disease))</li><li><b>Thrombophillia</b> <span class=\"hw\">(clot — thrombolic/embolic)</span>: Thrombosis · Embolic (Cardiac origin, artery to artery origin)</li><li><b>Vasospasm</b>: Ergotamine <span class=\"hw\">(ยากระตุ้นการบีบของมดลูกได้ด้วย)</span></li></ol>"
+  },
+  {
+   "id": "yb-1-4-neuro",
+   "h": "Neurogenic claudication",
+   "html": "<div class=\"tbl\"><table><tbody><tr><th>Cause</th><td>เส้นประสาทเลี้ยงขาถูกกด</td></tr><tr><th>PE</th><td>Paresthesia of leg, weakness of leg</td></tr><tr><th>Hx</th><td>เดินแล้วปวด จนต้องพัก · หลังจากพักระยะเดินได้จะ<u>น้อยลงเรื่อย ๆ</u> · เดินลงที่ลาดปวด</td></tr></tbody></table></div><p><b>LS radiculopathy</b> <span class=\"hw\">(พวก nerve ต่าง ๆ จะโดนกด)</span></p><ul><li>Spinal stenosis</li><li>Herniated disc</li><li>Leriche's syndrome</li><li>Iliac, femoral or popliteal stenosis</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y14a",
+   "title": "Claudication",
+   "src": "fig",
+   "img": "yb-1-4-f1.webp",
+   "note": "ลายมือ: เลข 1–3 ข้าง Abnormal vessel / Thrombophillia / Vasospasm และโน้ตเพิ่มเติม",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Claudication",
+     "d": "<p><span class=\"hw\">เดินแล้วปวดขา พักแล้วดีขึ้น</span></p><p>มีอาการปวดขาโดยเฉพาะบริเวณน่อง · มีอาการขณะเดิน · ระยะทางในการเดินน้อยกว่าปกติ</p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Vascular claudication",
+     "d": "<p><b>Cause</b>: เลือดเลี้ยงขาไม่พอ</p><p><b>PE</b>: “Signs of 6P” — Pain, Pallor, Poikilothermia, Paresthesia, Paralysis, Pulseless</p><p><b>Hx</b>: เดินแล้วปวด จนต้องพัก หลังจากพัก ระยะเดินได้จะน้อยคงที่ · เดินขึ้นที่ลาดปวด</p><ul><li><span class=\"hw\">vascular 6P — พักแล้วเดินได้เท่า ๆ เดิม</span></li><li><span class=\"hw\">ระยะเดินเท่าเดิมตลอด</span></li><li><span class=\"hw\">cause — itis / athero · thrombosis/embolic · vasospasm</span></li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Neurogenic claudication",
+     "d": "<p><b>Cause</b>: เส้นประสาทเลี้ยงขาถูกกด</p><p><b>PE</b>: Paresthesia of leg, weakness of leg</p><p><b>Hx</b>: เดินแล้วปวด จนต้องพัก หลังจากพักระยะเดินได้จะน้อยลงเรื่อย ๆ · เดินลงที่ลาดปวด</p><ul><li><span class=\"hw\">ระยะเดินน้อยลงเรื่อย ๆ</span></li><li><span class=\"hw\">neuro progress ขาอ่อนแรง</span></li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Abnormal vessel",
+     "d": "<p><span class=\"hw\">(1) อักเสบ/อุดตัน</span></p>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Thrombophillia",
+     "d": "<p><span class=\"hw\">(2) clot — thrombolic/embolic</span></p>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Vasospasm",
+     "d": "<p><span class=\"hw\">(3)</span></p>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Atherosclerosis"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Vasculitis",
+     "d": "<ul><li>Takayasu arteritis</li><li>Giant cell arteritis</li><li>Thromboangiitis obliterans (Berger's disease)</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Thrombosis"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Embolic",
+     "d": "<ul><li>Cardiac origin</li><li>artery to artery origin</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Ergotamine",
+     "d": "<p><span class=\"hw\">(ยากระตุ้นการบีบของมดลูกได้ด้วย)</span></p>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "LS radiculopathy",
+     "d": "<ul><li>Spinal stenosis</li><li>Herniated disc</li><li>Leriche's syndrome</li><li>Iliac, femoral or popliteal stenosis</li></ul><p><span class=\"hw\">พวก nerve ต่าง ๆ จะโดนกด</span></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Vascular claudication"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Neurogenic claudication"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Abnormal vessel"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Thrombophillia"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Vasospasm"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Atherosclerosis"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Vasculitis"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Thrombosis"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "Embolic"
+    },
+    {
+     "f": "f",
+     "t": "k"
+    },
+    {
+     "f": "c",
+     "t": "l"
+    }
+   ]
+  }
+ ]
+}

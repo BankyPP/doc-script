@@ -1,0 +1,151 @@
+{
+ "key": "2-3",
+ "en": "Hemoptysis",
+ "th": "ไอเป็นเลือด",
+ "pdf": "28",
+ "target": 16,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "yb-2-3-approach",
+   "h": "Algorithm: Hemoptysis (เล่มเหลือง 2.3)",
+   "html": "<div class=\"flow\" data-flow=\"y23a\"></div><div class=\"box\"><b><span class=\"hw\">ลายมือแดง: Hemoptysis</span></b><ul><li><span class=\"hw\">local vs systemic</span></li><li><span class=\"hw\">true vs pseudo</span></li><li><span class=\"hw\">ปอด — ยกเว้น pleura → infection, tumor, vascular</span><ul><li><span class=\"hw\">airway, parenchyma</span></li></ul></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-confirm",
+   "html": "<div class=\"box\"><b>Local vs Systemic · True vs Pseudohemoptysis (เล่มเหลือง 2.3)</b><ul><li>Systemic bleeding: Thrombocytopenia, Coagulopathy — <span class=\"hw\">ตรวจร่างกาย: petechia, purpura</span></li><li>Pseudohemoptysis: Epistaxis, Hematemesis</li><li><span class=\"hw\">ซักประวัติ: มีน้ำมูก เวียนหัว มั้ย</span></li><li><span class=\"hw\">ขนาด ? → เหรียญ 1, 5, 10 (เทียบขนาดด้วยเหรียญ)</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-sev",
+   "html": "<div class=\"box\"><b>Massive hemoptysis (เล่มเหลือง 2.3)</b><p>มี Massive hemoptysis หรือไม่ โดยมี criteria ดังนี้</p><ol><li><span class=\"hi\">ไอออกมาเป็นเลือดสด &gt; 200 ml/ครั้ง</span> หรือ</li><li><span class=\"hi\">ไอออกมาเป็นเลือดสด &gt; 600 ml/24 hr</span></li></ol><p>หากมีควรรีบ <span class=\"hi\">resuscitation</span> และ <span class=\"hi\">close observe</span> การหายใจ</p><p><span class=\"hw\">dead space (ลูกศรชี้ที่ข้อเกณฑ์ปริมาณเลือด)</span></p></div>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-cause",
+   "html": "<div class=\"box\"><b>โน้ตลายมือเล่มเหลือง (2.3) — ซักประวัติ/ตรวจร่างกาย</b><ul><li><span class=\"hw\">ชื่อ, นามสกุล</span></li><li><span class=\"hw\">social hx ถามหมด แม้จะไม่เกี่ยว</span></li><li><span class=\"hw\">HIV → lymphoma คลำ LN เสมอ</span></li><li><span class=\"hw\">cap. refill</span></li><li><span class=\"hw\">clubbing – bronchiectasis</span></li><li><span class=\"hw\">Orthopnea vs PND: orthopnea = ต้องนอนไม่ได้เลย · PND = ต้องนอนได้ก่อน แล้วตื่นมา</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<div class=\"box\"><b>สาเหตุตาม algorithm เล่มเหลือง (2.3)</b><ul><li><b>Airway</b><ul><li>Infection: Bronchitis, Bronchiectasis</li><li>Tumor: Bronchogenic CA</li></ul></li><li><b>Parenchyma</b><ul><li>Infection: Lung abscess, Pneumonia</li><li>Tumor: Primary vs Metas</li><li>Trauma: Lung contusion</li><li>Small vascular: Good Pasture’s, Wegener</li></ul></li><li><b>Vascular</b><ul><li>Pulmonary embolism</li><li>AVM</li></ul></li><li><b>Miscellaneous</b><ul><li>Pulmonary endometriosis</li><li>Idiopathic pulmonary hemosiderosis</li></ul></li></ul><p><span class=\"hw\">ลูกศรแดงโยง Infection (Airway) ↔ Infection (Parenchyma) และ Tumor (Airway) ↔ Tumor (Parenchyma) · ลูกศรแดงจาก Small vascular (Good Pasture’s, Wegener) ไปที่กลุ่ม Vascular (AVM) พร้อมเครื่องหมาย ≠</span></p><ul><li><span class=\"hw\">bleed จาก bronchial a. vs pul a. — ใต้ “bronchial a.” มีวงเล็บ ( แล้วเขียน “bleed &gt;” (น่าจะ bleed มากกว่า — ไม่มีข้อความต่อ)</span></li><li><span class=\"hw\">pul a.</span></li></ul></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y23a",
+   "title": "Hemoptysis",
+   "src": "fig",
+   "img": "yb-2-3-f1.webp",
+   "note": "ลายมือแดงด้านซ้าย + ลายมือน้ำเงินตัวเล็กบนหัวกระดาษ/ข้างกล่อง (ใส่ไว้ในรายละเอียดกล่องที่เกี่ยวข้อง) · ลูกศรแดงเชื่อม Infection ↔ Infection และ Tumor ↔ Tumor ระหว่าง Airway กับ Parenchyma · ลูกศรแดงจาก Small vascular ไป Vascular (AVM) มีเครื่องหมาย ≠",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hemoptysis",
+     "d": "<p><span class=\"hw\">มีน้ำมูก เวียนหัว มั้ย</span></p><p><span class=\"hw\">ขนาด ? → เหรียญ 1, 5, 10</span></p><p><span class=\"hw\">Hemoptysis – local vs systemic – true vs pseudo – ปอด ยกเว้น pleura → infection, tumor, vascular; airway, parenchyma</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Local v.s. Systemic bleeding"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Systemic bleeding",
+     "d": "<ul><li>Thrombocytopenia</li><li>Coagulopathy</li></ul><p><span class=\"hw\">ตรวจร่างกาย — petechia, purpura</span></p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "True v.s. Pseudohemoptysis"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Pseudohemoptysis",
+     "d": "<ul><li>Epistaxis</li><li>Hematemesis</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "True hemoptysis: มี Massive hemoptysis หรือไม่",
+     "d": "<p>โดยมี criteria ดังนี้</p><ol><li>ไอออกมาเป็นเลือดสด &gt; 200 ml/ครั้ง หรือ</li><li>ไอออกมาเป็นเลือดสด &gt; 600 ml/24 hr</li></ol><p>หากมีควรรีบ resuscitation และ close observe การหายใจ</p><p><span class=\"hw\">dead space (ลูกศรชี้ที่เกณฑ์ปริมาณเลือด)</span></p>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Airway",
+     "d": "<ul><li>Infection<ul><li>Bronchitis</li><li>Bronchiectasis</li></ul></li><li>Tumor<ul><li>Bronchogenic CA</li></ul></li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Parenchyma",
+     "d": "<ul><li>Infection<ul><li>Lung abscess</li><li>Pneumonia</li></ul></li><li>Tumor<ul><li>Primary vs Metas</li></ul></li><li>Trauma<ul><li>Lung contusion</li></ul></li><li>Small vascular<ul><li>Good Pasture’s</li><li>Wegener</li></ul></li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Pulmonary embolism</li><li>AVM</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Miscellaneous",
+     "d": "<ul><li>Pulmonary endometriosis</li><li>Idiopathic pulmonary hemosiderosis</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Systemic bleeding"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Local"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Pseudohemoptysis"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "True hemoptysis"
+    },
+    {
+     "f": "f",
+     "t": "g",
+     "l": "Airway"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Parenchyma"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Vascular"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Miscellaneous"
+    }
+   ]
+  }
+ ]
+}

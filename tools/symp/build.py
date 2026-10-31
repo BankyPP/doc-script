@@ -19,6 +19,11 @@ BOOK = {
     'ed': 'พิมพ์ครั้งที่ 3 (ฉบับปรับปรุงใหม่) พ.ศ. 2559',
     'inst': 'si'
 }
+BOOKS = {
+    'si': BOOK,
+    'yb': {'title': 'Differential diagnostic algorithm in internal medicine (เล่มเหลือง — Approach algorithms)',
+           'by': 'ณัฐพล ปัทมินทร์', 'ed': 'พร้อมลายมือ/โน้ตที่เขียนเพิ่มในเล่ม', 'inst': 'both'},
+}
 GROUPS = [
     ('base', 'พื้นฐานการดูแลผู้ป่วย', '#7A5C3E', [1, 2]),
     ('gen', 'อาการทั่วไป · ภาวะเร่งด่วน', '#A44A2A', [7, 10, 39, 40, 44]),
@@ -28,6 +33,7 @@ GROUPS = [
     ('heme', 'เลือด · ต่อมน้ำเหลือง', '#8A3D22', [8, 11, 24]),
     ('kub', 'ไต · ทางเดินปัสสาวะ · อวัยวะเพศ', '#2F7466', [25, 26, 27, 28, 42, 43]),
     ('msk', 'กระดูก · ข้อ · ผิวหนัง', '#C9952E', [29, 30, 41]),
+    ('endo', 'ต่อมไร้ท่อ · การเจริญเติบโต', '#7A4E86', []),
 ]
 GOF = {n: g[0] for g in GROUPS for n in g[3]}
 
@@ -60,13 +66,13 @@ def main():
             nonlocal n
             for s in secs:
                 n += 1
-                search.append({'c': no, 's': s['id'], 'h': ' › '.join(path + [s['h']]), 'x': strip(s.get('html', ''))})
+                search.append({'c': no, 's': s['id'], 'h': ' › '.join(path + [s['h']]), 'x': strip(s.get('html', '')), 'b': s.get('src') or ['si']})
                 walk(s.get('sub') or [], path + [s['h']])
         walk(d['sections'], [])
         for fl in d.get('flows', []):
-            search.append({'c': no, 's': '', 'f': fl['id'], 'h': 'Algorithm › ' + fl['title'],
+            search.append({'c': no, 's': '', 'f': fl['id'], 'h': 'Algorithm › ' + fl['title'], 'b': [fl.get('book', 'si')],
                            'x': ' · '.join(strip(x.get('t', '')) + (' ' + strip(x['d']) if x.get('d') else '') for x in fl['nodes'])})
-        chapters.append({'no': no, 'id': d['id'], 'th': d['th'], 'en': d['en'], 'pages': d['pages'], 'g': GOF.get(no, 'gen'),
+        chapters.append({'no': no, 'id': d['id'], 'th': d['th'], 'en': d['en'], 'pages': d['pages'], 'g': GOF.get(no) or d.get('g') or 'gen', 'b': d.get('b') or {'si': {'no': no, 'pages': d['pages']}},
                          'file': f, 'n': n, 'f': len(d.get('flows', [])), 'i': len(imgs),
                          'kb': round(os.path.getsize(os.path.join(OUT, f)) / 1024)})
     # ลบรูปเก่าที่ไม่ได้ใช้แล้ว
@@ -74,11 +80,14 @@ def main():
         if im not in used: os.remove(os.path.join(OUT, 'img', im))
     chapters.sort(key=lambda c: c['no'])
     v = int(time.time())
-    meta = {'v': v, 'book': BOOK, 'total': 44,
-            'groups': [{'id': g[0], 't': g[1], 'c': g[2], 'ch': g[3]} for g in GROUPS], 'chapters': chapters}
+    for g in GROUPS:   # บทใหม่ (เล่มเหลือง) เข้ากลุ่มตาม "g" ในไฟล์บท
+        for c in chapters:
+            if c['g'] == g[0] and c['no'] not in g[3]: g[3].append(c['no'])
+    meta = {'v': v, 'book': BOOK, 'books': BOOKS, 'total': len(chapters),
+            'groups': [{'id': g[0], 't': g[1], 'c': g[2], 'ch': g[3]} for g in GROUPS if g[3]], 'chapters': chapters}
     with open(os.path.join(DOCS, 'data', 'symp.js'), 'w', encoding='utf-8') as w:
         w.write('/* Clinic › Symptomatology & Approach — สร้างอัตโนมัติด้วย tools/symp/build.py (อย่าแก้ด้วยมือ)\n'
-                '   เนื้อหาแต่ละบทอยู่ใน docs/symp/chNN.json · รูปใน docs/symp/img/ */\n')
+                '   ตำราศิริราช + เล่มเหลือง (รวมด้วย tools/symp/merge_yb.py) · เนื้อหาแต่ละบทอยู่ใน docs/symp/chNN.json · รูปใน docs/symp/img/ */\n')
         w.write('window.POY_SYMP = ' + json.dumps(meta, ensure_ascii=False, indent=1) + ';\n')
     with open(os.path.join(OUT, 'search.json'), 'w', encoding='utf-8') as w:
         json.dump(search, w, ensure_ascii=False, separators=(',', ':'))

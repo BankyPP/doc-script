@@ -1,0 +1,297 @@
+{
+ "key": "6-7",
+ "en": "Coagulopathy",
+ "th": "ความผิดปกติของการแข็งตัวของเลือด (coagulopathy)",
+ "pdf": "84",
+ "target": 24,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-6-7-algo",
+   "h": "Algorithm: Coagulopathy (Isolated PT ↑ / PT &amp; aPTT ↑ / Isolated PTT ↑)",
+   "html": "<div class=\"flow\" data-flow=\"y67a\"></div><p><b>Coagulopathy</b> แบ่งตามผล screening: Isolated PT ↑ · PT &amp; aPTT ↑ · Isolated PTT ↑</p><ul><li><b>Isolated PT ↑</b> (<span class=\"hw\">extrinsic (3, 7) — เลข 7 อยู่ในวงกลมแดง</span>)<ul><li>Congenital: Factor VII deficiency</li><li>Acquire: Liver disease, DIC, Warfarin, FVII inhibitor</li></ul></li><li><b>PT &amp; aPTT ↑</b> → TT<ul><li><b>TT normal</b>: Inhibitor (Factor 10,5,2 inhibitor) · Deficiency (Factor 10, 5, 2 def: Liver disease, Vit K def/Warfarin, Amyloid/DIC)</li><li><b>TT ↑</b> (Exclude: Heparin): Congenital (Afibrinogenemia, Hypofibrinogenemia, Dysfibrinogenemia) · Acquire (DIC, Liver disease, Massive transfusion, Venom)</li></ul></li><li><b>Isolated PTT ↑</b> (Exclude: Heparin — <span class=\"hw\">Heparin contaminate โดยมัก prolong PTT มาก ๆ แบบ 1XX sec.</span>)<ul><li><b>Bleed</b> → Mixing test: Correct = Factor 8,9,11 Deficiency, vWD · Not correct = Factor 8,9,11 inhibitor</li><li><b>Clot</b> → Mixing test: Correct = Factor 12 def, HMWK def, PK def · Not correct = Antiphospholipid (<span class=\"hw\">lupus anticoagulant</span>)</li></ul></li></ul><p><b>โน้ตลายมือบนหัวกระดาษ</b></p><ul><li><span class=\"hw\">11 → vary</span></li><li><span class=\"hw\">7, 9, 10 → bleeding</span></li><li><span class=\"hw\">12 → prolong coagu + no bleeding</span></li></ul>",
+   "sub": [
+    {
+     "id": "yb-6-7-hemo",
+     "h": "Hemophilia / vWD (โน้ตลายมือข้าง algorithm)",
+     "html": "<p><b>Hemophilia</b></p><ul><li><span class=\"hw\">Cryo, factor 8, FFP, DDAVP (เส้นโยงไปที่ A)</span></li><li><span class=\"hw\">FFP, PCC, Fac 9 (เส้นโยงไปที่ B)</span></li><li><span class=\"hw\">8 · 9 · 11 → A · B · C = Hemophilia</span></li></ul><p><b>vWB disease</b></p><ul><li><span class=\"hw\">vWB disease กก.(?) Factor 8</span></li><li><span class=\"hw\">เลือดหยุดยาก, ปจด. มาก</span></li><li><span class=\"hw\">Plt dysf(n) Factor 8 ทำงานไม่ดี</span></li><li><span class=\"hw\">MisDx กับ Hemophilia</span></li><li><span class=\"hw\">มัก(ซีด/ตาย?) ตอนอายุน้อย ☺ chronic blood loss.</span></li><li><span class=\"hw\">Rx: cryo, DDAVP, Factor 8 · FFP, estrogen, transamine</span></li></ul><p><b>Hemophilia ที่มี inhibitor</b> (ข้าง Not correct ของ Bleed)</p><ul><li><span class=\"hw\">Hemophilia ที่ได้ cryo, FFP → สร้าง anti (ลูกศรชี้ที่เลข 8 วงกลม)</span></li><li><span class=\"hw\">เด็กผู้ชาย (allo) → Tx plasmapheresis</span></li><li><span class=\"hw\">คนแก่ (autoimmune) → Tx steroid ลดภูมิ</span></li></ul>"
+    },
+    {
+     "id": "yb-6-7-warfarin",
+     "h": "Vit K def / Warfarin (โน้ตลายมือใต้ algorithm)",
+     "html": "<ul><li><span class=\"hw\">ชมพู 5 mg · ฟ้า 3 mg.</span></li><li><span class=\"hw\">หาก Bleed มาแล้ว จะ scope จะรอ INR &lt;1–1.5 ก่อน</span></li><li><span class=\"hw\">กลัว scope แล้ว Bleed หรือจะ Rx ก็ Rx ไม่ได้</span></li></ul>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "lab-pt",
+   "html": "<p><b>เล่มเหลือง (ลายมือ)</b></p><ul><li><span class=\"hw\">extrinsic (3, 7) — เลข 7 อยู่ในวงกลมแดง</span></li><li>Warfarin: <span class=\"hw\">ชมพู 5 mg · ฟ้า 3 mg.</span></li><li><span class=\"hw\">หาก Bleed มาแล้ว จะ scope จะรอ INR &lt;1–1.5 ก่อน</span></li><li><span class=\"hw\">กลัว scope แล้ว Bleed หรือจะ Rx ก็ Rx ไม่ได้</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-aptt",
+   "html": "<p><b>เล่มเหลือง (ลายมือ)</b></p><ul><li><span class=\"hw\">Heparin contaminate โดยมัก prolong PTT มาก ๆ แบบ 1XX sec.</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-mix",
+   "html": "<p><b>เล่มเหลือง — Mixing test ใน Isolated PTT ↑</b></p><ul><li>Bleed: Correct = Factor 8,9,11 deficiency, vWD · Not correct = Factor 8,9,11 inhibitor</li><li>Clot: Correct = Factor 12 def, HMWK def, PK def · Not correct = Antiphospholipid (<span class=\"hw\">lupus anticoagulant</span>)</li><li><span class=\"hw\">Hemophilia ที่ได้ cryo, FFP → สร้าง anti (ลูกศรชี้ที่เลข 8 วงกลม)</span></li><li><span class=\"hw\">เด็กผู้ชาย (allo) → Tx plasmapheresis</span></li><li><span class=\"hw\">คนแก่ (autoimmune) → Tx steroid ลดภูมิ</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-tt",
+   "html": "<p><b>เล่มเหลือง</b> — TT ↑ (Exclude: Heparin): Congenital (Afibrinogenemia, Hypofibrinogenemia, Dysfibrinogenemia) · Acquire (DIC, Liver disease, Massive transfusion, Venom) · <span class=\"hw\">คำว่า “Exclude” ถูกขีดฆ่า และ “Heparin” ถูกขีดเส้นใต้ (ปากกาน้ำเงิน)</span></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y67a",
+   "title": "Coagulopathy",
+   "src": "fig",
+   "img": "yb-6-7-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Coagulopathy",
+     "d": "<ul><li><span class=\"hw\">11 → vary</span></li><li><span class=\"hw\">7, 9, 10 → bleeding</span></li><li><span class=\"hw\">12 → prolong coagu + no bleeding</span></li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Isolated PT ↑",
+     "d": "<ul><li><span class=\"hw\">extrinsic (3, 7) — เลข 7 อยู่ในวงกลมแดง</span></li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "PT &amp; aPTT ↑"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Isolated PTT ↑"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Congenital (Isolated PT ↑)",
+     "d": "<ul><li>Factor VII deficiency</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Acquire (Isolated PT ↑)",
+     "d": "<ul><li>Liver disease</li><li>DIC</li><li>Warfarin</li><li>FVII inhibitor</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "act",
+     "t": "Exclude: Heparin",
+     "d": "<ul><li><span class=\"hw\">Heparin contaminate โดยมัก prolong PTT มาก ๆ แบบ 1XX sec.</span></li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Bleed"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Clot"
+    },
+    {
+     "id": "j",
+     "k": "act",
+     "t": "Mixing test (Bleed)"
+    },
+    {
+     "id": "k",
+     "k": "act",
+     "t": "Mixing test (Clot)"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Factor 8, 9, 11 Deficiency · vWD",
+     "d": "<ul><li>Factor 8,9,11 Deficiency</li><li>vWD</li></ul><p>ลายมือ (ข้างซ้ายของผัง):</p><ul><li><span class=\"hw\">Cryo, factor 8, FFP, DDAVP (เส้นโยงไปที่ A)</span></li><li><span class=\"hw\">FFP, PCC, Fac 9 (เส้นโยงไปที่ B)</span></li><li><span class=\"hw\">8 · 9 · 11 → A · B · C = Hemophilia</span></li><li><span class=\"hw\">vWB disease กก.(?) Factor 8</span></li><li><span class=\"hw\">เลือดหยุดยาก, ปจด. มาก</span></li><li><span class=\"hw\">Plt dysf(n) Factor 8 ทำงานไม่ดี</span></li><li><span class=\"hw\">MisDx กับ Hemophilia</span></li><li><span class=\"hw\">มัก(ซีด/ตาย?) ตอนอายุน้อย ☺ chronic blood loss.</span></li><li><span class=\"hw\">Rx: cryo, DDAVP, Factor 8 · FFP, estrogen, transamine</span></li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Factor 8, 9, 11 inhibitor",
+     "d": "<ul><li>Factor 8,9,11 inhibitor</li></ul><ul><li><span class=\"hw\">Hemophilia ที่ได้ cryo, FFP → สร้าง anti (ลูกศรชี้ที่เลข 8 วงกลม)</span></li><li><span class=\"hw\">เด็กผู้ชาย (allo) → Tx plasmapheresis</span></li><li><span class=\"hw\">คนแก่ (autoimmune) → Tx steroid ลดภูมิ</span></li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Factor 12 def · HMWK def · PK def",
+     "d": "<ul><li>Factor 12 def</li><li>HMWK def</li><li>PK def</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Antiphospholipid",
+     "d": "<ul><li>Antiphospholipid</li></ul><ul><li><span class=\"hw\">lupus anticoagulant</span></li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "act",
+     "t": "TT"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "TT normal"
+    },
+    {
+     "id": "r",
+     "k": "q",
+     "t": "TT ↑"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Inhibitor",
+     "d": "<ul><li>Factor 10,5,2 inhibitor</li></ul>"
+    },
+    {
+     "id": "t",
+     "k": "dx",
+     "t": "Deficiency: Factor 10, 5, 2 def",
+     "d": "<ul><li>Liver disease</li><li>Vit K def, Warfarin</li><li>Amyloid, DIC</li></ul><ul><li><span class=\"hw\">ชมพู 5 mg · ฟ้า 3 mg.</span></li><li><span class=\"hw\">หาก Bleed มาแล้ว จะ scope จะรอ INR &lt;1–1.5 ก่อน</span></li><li><span class=\"hw\">กลัว scope แล้ว Bleed หรือจะ Rx ก็ Rx ไม่ได้</span></li></ul>"
+    },
+    {
+     "id": "u",
+     "k": "act",
+     "t": "Exclude: Heparin (TT ↑)",
+     "d": "<ul><li>Heparin</li></ul><ul><li><span class=\"hw\">คำว่า “Exclude” ถูกขีดฆ่า และ “Heparin” ถูกขีดเส้นใต้ (ปากกาน้ำเงิน)</span></li></ul>"
+    },
+    {
+     "id": "v",
+     "k": "dx",
+     "t": "Congenital (TT ↑)",
+     "d": "<ul><li>Afibrinogenemia</li><li>Hypofibrinogenemia</li><li>Dysfibrinogenemia</li></ul>"
+    },
+    {
+     "id": "w",
+     "k": "dx",
+     "t": "Acquire (TT ↑)",
+     "d": "<ul><li>DIC</li><li>Liver disease</li><li>Massive transfusion</li><li>Venom</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Isolated PT ↑"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "PT & aPTT ↑"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Isolated PTT ↑"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Congenital"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Acquire"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Exclude"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Bleed"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Clot"
+    },
+    {
+     "f": "h",
+     "t": "j"
+    },
+    {
+     "f": "i",
+     "t": "k"
+    },
+    {
+     "f": "j",
+     "t": "l",
+     "l": "Correct"
+    },
+    {
+     "f": "j",
+     "t": "m",
+     "l": "Not correct"
+    },
+    {
+     "f": "k",
+     "t": "n",
+     "l": "Correct"
+    },
+    {
+     "f": "k",
+     "t": "o",
+     "l": "Not correct"
+    },
+    {
+     "f": "c",
+     "t": "p"
+    },
+    {
+     "f": "p",
+     "t": "q",
+     "l": "TT normal"
+    },
+    {
+     "f": "p",
+     "t": "r",
+     "l": "TT ↑"
+    },
+    {
+     "f": "q",
+     "t": "s",
+     "l": "Inhibitor"
+    },
+    {
+     "f": "q",
+     "t": "t",
+     "l": "Deficiency"
+    },
+    {
+     "f": "r",
+     "t": "u",
+     "l": "Exclude"
+    },
+    {
+     "f": "r",
+     "t": "v",
+     "l": "Congenital"
+    },
+    {
+     "f": "r",
+     "t": "w",
+     "l": "Acquire"
+    }
+   ],
+   "note": "ลายมือรอบ algorithm อยู่ในรายละเอียดของกล่อง · Mixing test ปรากฏสองครั้งในผัง (แขนง Bleed และ Clot)"
+  }
+ ]
+}

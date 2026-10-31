@@ -1,0 +1,127 @@
+{
+ "key": "3-6",
+ "en": "Lower Gastrointestinal Hemorrhage",
+ "th": "เลือดออกทางเดินอาหารส่วนล่าง",
+ "pdf": "44",
+ "target": 23,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "yb-3-6-approach",
+   "h": "Algorithm Lower GI hemorrhage (เล่มเหลือง)",
+   "html": "<figure><img src=\"symp/img/yb-3-6-f1.webp\" alt=\"Algorithm Lower gastrointestinal bleeding\"><figcaption>3.6 Lower Gastrointestinal Hemorrhage — เล่มเหลือง</figcaption></figure><div class=\"flow\" data-flow=\"y36a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "sx-hematochezia",
+   "html": "<p><b>เล่มเหลือง</b> — LGIB: Hx hematochezia · Stools: fresh blood per rectum, maroon · ต้อง exclude systemic bleeding · หา anogenital cause (Hemorrhoid, Rectal ulcer)</p>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<p><b>เล่มเหลือง</b> — สาเหตุ LGIB: Diverticular disease · Angiodysplasia · Colitis (Infection, Ischemic colitis, IBD: Crohn/UC, Radiation) · Neoplasm (Polyp, Carcinoma) · <b>Don't forget UGI bleeding and small intestine bleeding</b></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y36a",
+   "title": "Lower Gastrointestinal bleeding",
+   "src": "fig",
+   "img": "yb-3-6-f1.webp",
+   "note": "ไม่มีลายมือในหน้านี้ · วงเล็บปีกกาใต้สาเหตุทั้งสี่ชี้ไปที่กล่อง \"Don't forget UGI bleeding and small intestine bleeding\"",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Lower Gastrointestinal bleeding — Hx: Hematochezia · Stools: Fresh blood per rectum, Maroon",
+     "d": "<ul><li><b>Hx:</b> Hematochezia</li><li><b>Stools:</b> Fresh blood per rectum, Maroon</li></ul>"
+    },
+    {
+     "id": "x",
+     "k": "act",
+     "t": "Exclude: systemic bleeding"
+    },
+    {
+     "id": "y",
+     "k": "act",
+     "t": "Look for anogenital cause",
+     "d": "<ul><li>Hemorrhoid</li><li>Rectal ulcer</li></ul>"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "Diverticular disease"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Angiodysplasia"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Colitis",
+     "d": "<ul><li>Infection</li><li>Ischemic colitis</li><li>IBD: Crohn, UC</li><li>Radiation</li></ul>"
+    },
+    {
+     "id": "d4",
+     "k": "dx",
+     "t": "Neoplasm",
+     "d": "<ul><li>Polyp</li><li>Carcinoma</li></ul>"
+    },
+    {
+     "id": "z",
+     "k": "note",
+     "t": "Don't forget UGI bleeding and small intestine bleeding"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "x"
+    },
+    {
+     "f": "a",
+     "t": "y"
+    },
+    {
+     "f": "a",
+     "t": "d1",
+     "l": "Diverticular disease"
+    },
+    {
+     "f": "a",
+     "t": "d2",
+     "l": "Angiodysplasia"
+    },
+    {
+     "f": "a",
+     "t": "d3",
+     "l": "Colitis"
+    },
+    {
+     "f": "a",
+     "t": "d4",
+     "l": "Neoplasm"
+    },
+    {
+     "f": "d1",
+     "t": "z"
+    },
+    {
+     "f": "d2",
+     "t": "z"
+    },
+    {
+     "f": "d3",
+     "t": "z"
+    },
+    {
+     "f": "d4",
+     "t": "z"
+    }
+   ]
+  }
+ ]
+}

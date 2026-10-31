@@ -13,7 +13,7 @@
 | `docs/gdoc.js` | ตัวแปลง HTML ของ Google Docs → หน้าเว็บ (ใช้ทั้งตอนดึงสดและตอนสร้างฉบับเก็บ) |
 | `docs/gdoc/*.json` + `docs/gdoc/img/` | ฉบับเก็บ (snapshot) ของ Doc/Sheet — ใช้ตอนดึงสดไม่ได้ และสำหรับไฟล์ที่ไม่อัปเดตเอง |
 | `docs/data/clinic.js` | วอร์ด (ชื่อ สี ค่า Ward ในชีต 1000 MAI คำที่ใช้จับชื่อแท็บ) + approach ตามอาการนำ |
-| `docs/data/symp.js` + `docs/symp/` | Clinic › Symptomatology & Approach — ตำราอาการวิทยา (ศิริราช) 44 บท: `chNN.json` เนื้อหา+algorithm, `img/` รูป, `search.json` ค้นทุกบท · สร้างด้วย `tools/symp/build.py` (อย่าแก้ symp.js ด้วยมือ) |
+| `docs/data/symp.js` + `docs/symp/` | Medical Soil › Symptomatology & Approach — ตำราศิริราช (อาการวิทยา 44 บท) + เล่มเหลือง (Differential diagnostic algorithm in internal medicine + ลายมือ) merge กันตามหัวข้อ: `chNN.json` เนื้อหา+algorithm, `img/` รูป, `search.json` ค้นทุกบท · สร้างด้วย `tools/symp/merge_yb.py` แล้ว `tools/symp/build.py` (อย่าแก้ symp.js / docs/symp ด้วยมือ) |
 | `docs/data/nl.js` | ติว NL & Compre — สรุปเนื้อหา (กำกับที่มา จุฬาฯ / ศิริราช ทุกเรื่อง) |
 | `docs/data/topics.js` | Random Topic Summary — รายการหัวข้อ (ไฟล์ของแต่ละหัวข้ออยู่ใน `docs/topics/<id>/`) |
 | `docs/app.js`, `docs/app.css` | ตัวเว็บ |
@@ -192,8 +192,16 @@ match /poymor_shared/{topic}/items/{id} {
 - ทุกครั้งที่แก้ `app.js` / `app.css` / `data/*.js` ให้เพิ่มเลข `?v=` ใน `docs/index.html` ทุกบรรทัด เพื่อไม่ให้เบราว์เซอร์ใช้ไฟล์เก่าที่จำไว้
 
 ## Medical Soil › Symptomatology & Approach (`#/kb/symp`)
-- ที่มา: ตำราอายุรศาสตร์ อาการวิทยา ภาควิชาอายุรศาสตร์ ศิริราช พิมพ์ครั้งที่ 3 (2559) — 44 บท
+- ที่มา 2 เล่ม (ผู้ใช้สั่ง 1 พ.ย. 2026: merge เนื้อหา ไม่เอาเล่มใดเป็นหลัก · **ทุกจุดบอกที่มา** ชื่อป้าย "ตำราศิริราช" / "เล่มเหลือง" · ลายมือในเล่มเหลืองสำคัญเท่าตัวพิมพ์):
+  - **ตำราศิริราช** = ตำราอายุรศาสตร์ อาการวิทยา ศิริราช พิมพ์ครั้งที่ 3 (2559) 44 บท — แท็กสถาบัน "ศิริราช"
+  - **เล่มเหลือง** = Differential diagnostic algorithm in internal medicine (ณัฐพล ปัทมินทร์) + ลายมือ/หน้าแทรกของเจ้าของเล่ม — แท็กสถาบัน **"จุฬาฯ + ศิริราช"** (`src both`, approach จากทั้งสองสถาบัน — ไม่ใช่ของจุฬาฯ อย่างเดียว)
+  - ส่วนที่ Claude เขียนเพิ่ม (ตอนนี้: approach ปวดท้องเป็นระบบ anatomy + etiology ในบทปวดท้อง) ป้าย "เพิ่มโดย Claude"
+- ต้นทางทั้งหมดอยู่ใน repo: `tools/symp/si/` (ศิริราชฉบับเดิม), `tools/symp/yb/yb-<key>.json` + `yb/img/` (หนึ่งไฟล์ต่อหัวข้อเล่มเหลือง: ระบุ `target` บทศิริราช + `ops` append/sub/sec ว่าวางตรงไหน หรือ `target: null` = บทใหม่), `tools/symp/ai/` (ส่วนที่ Claude เพิ่ม)
+- สร้างเว็บ: `python3 tools/symp/merge_yb.py /home/claude/symp/out && python3 tools/symp/build.py /home/claude/symp/out`
+  - merge ห่อเนื้อหาแต่ละเล่มใน `<div class="sb si|yb|ai">` (เว็บติดป้ายให้) · ทุก section มี `src` · ทุก flow มี `book` · บทมี `b` (เลขอ้างอิงแต่ละเล่ม) — บทใหม่ได้เลข 45+ ตามลำดับเล่มเหลือง
+  - ลายมือ = `<span class="hw">` (ตัวเอียงสีน้ำเงิน)
 - แต่ละบท: หัวข้อเป็น toggle, หัวข้อย่อยเป็นกล่องหลายคอลัมน์, algorithm กดกล่องดูรายละเอียด/ไฮไลต์เส้นทาง หรือโหมดทีละขั้น, รูปต้นฉบับ, ออกข้อสอบจากบท (`#/exam?src=y:<id>`)
-- แก้เนื้อหา: แก้ `/home/claude/symp/out/chNN.json` (หรือ `docs/symp/chNN.json` แล้ว copy กลับ) → `python3 tools/symp/validate.py NN` → `python3 tools/symp/build.py <โฟลเดอร์>`
-- รูปแบบไฟล์บทและกติกาเนื้อหา: `tools/symp/BRIEF.md`
+- แก้เนื้อหาศิริราช: แก้ `tools/symp/si/chNN.json` · แก้เล่มเหลือง: แก้ `tools/symp/yb/yb-<key>.json` (ตรวจด้วย `tools/symp/yb-tools/vyb.py` — แก้ path OUT/SI ในไฟล์ก่อน) → รันสองคำสั่งด้านบน
+- รูปแบบไฟล์และกติกาเนื้อหา: ศิริราช `tools/symp/BRIEF.md` · เล่มเหลือง `tools/symp/yb-tools/BRIEF.md`
+- Medical Soil › นอก system · เฉพาะวอร์ด (`#/kb/x/<กลุ่ม>[/<บท>]`): กลุ่ม "Ped Exclusive" (ตั้งใน `KB_EXCL` ใน app.js) — บท Neonatology clone จากติว NL (`nl2-neonatology-mdcu`) ใช้ `data-ann` เดียวกัน แก้/โน้ตที่ไหนก็ตรงกันทั้งสองที่ · ติดป้ายวอร์ด ped อย่างเดียว · บท exclusive ที่ลง NL ต่อไปให้ clone มาเพิ่มใน `KB_EXCL`
 - Clinical skills (`#/kb/skills`)

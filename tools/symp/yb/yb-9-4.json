@@ -1,0 +1,361 @@
+{
+ "key": "9-4",
+ "en": "Alteration of consciousness",
+ "th": "การรู้สึกตัวผิดปกติ",
+ "pdf": "111–112",
+ "target": 3,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "def",
+   "id": "yb-9-4-overview",
+   "h": "Alteration of consciousness: level vs content (9.4)",
+   "html": "<p>ก่อนจะทำการสืบหาสาเหตุของภาวะ Alteration of consciousness ควรจะทราบก่อนว่า ความรู้สึกตัว (Consciousness) มีองค์ประกอบที่สำคัญอยู่ด้วยกัน 2 อย่างคือ</p><ol><li><b>Level of consciousness</b>: ระดับความรู้สึกตัว หรือความตื่นตัว (Arousal) คือความสามารถของร่างกายในการตอบสนองต่อสิ่งเร้าภายนอก ความผิดปกติที่เจอได้บ่อย ๆ เช่น Drowsiness, stupor และ coma</li><li><b>Content</b>: ความสามารถในการรับรู้ (Cognitive function) อันได้แก่ การรับรู้เกี่ยวกับ บุคคล เวลาและสถานที่, ความจำ, สมาธิ, ความคิด และอารมณ์ ความผิดปกติที่เจอบ่อยคือ Delirium โดยสิ่งผิดปกติที่พบได้เด่นชัดที่สุดในภาวะดังกล่าวนี้คือเรื่องของ attention deficit</li></ol><p>ดังนั้นความผิดปกติของความรู้สึกตัว (Alteration of consciousness) จึงต้องแยกออกเป็น 2 ชนิด คือ Abnormal level of consciousness และ abnormal cognitive function ดังแสดงในแผนภาพด้านล่าง</p><div class=\"flow\" data-flow=\"y94a\"></div><figure><img src=\"symp/img/yb-9-4-f1.webp\" alt=\"Alteration of consciousness: abnormal level vs abnormal cognitive function\"><figcaption>Alteration of consciousness — Abnormal level of consciousness (drowsiness, stupor, coma) / Abnormal cognitive function (delirium)</figcaption></figure><p>ในหัวข้อ 9.5.1 แผนภาพจะแสดงสาเหตุของการเกิดภาวะ stupor/coma โดยการแบ่งผู้ป่วยออกเป็น 3 กลุ่มคือ without focal neurological signs, with signs of meningeal irritation และ with focal neurological signs</p><p>ส่วนในหัวข้อที่ 9.5.2 แผนภาพจะแสดงสาเหตุของการเกิดภาวะ delirium โดยจะสังเกตได้ว่ามีสาเหตุคล้ายคลึงกับกลุ่มที่เป็น stupor หรือ coma without focal neurosigns</p><p><span class=\"hw\">Stupor: only by vigorous stimuli — Deep pain</span></p>"
+  },
+  {
+   "op": "append",
+   "sec": "ddx",
+   "html": "<p><b>Exclude condition mimic coma (เล่มเหลือง 9.4.1)</b></p><ul><li>Locked-in syndrome</li><li>Persistent vegetative state</li><li>Abulia/Akinetic mutism</li><li>Catatonia</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "delirium",
+   "html": "<p><b>Delirium ในแผนผังเล่มเหลือง</b> — \"ภาวะหนึ่งที่ควรรู้จัก\"</p><ul><li>Delirium: acute mental status change</li><li>abnormal and fluctuating attention</li><li>ดูเรื่อง Delirium (9.4.2)</li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "yb-9-4-approach",
+   "h": "Approach สาเหตุของ Drowsiness / Stupor / Coma (9.4.1 พร้อมลายมือ)",
+   "html": "<div class=\"flow\" data-flow=\"y94b\"></div><figure><img src=\"symp/img/yb-9-4-f2.webp\" alt=\"Abnormal level of consciousness algorithm พร้อมลายมือ\"><figcaption>Abnormal level of consciousness (9.4.1) — drowsiness/stupor/coma: without focal neurological signs, with signs of meningeal irritation, with focal neurological signs</figcaption></figure>",
+   "sub": [
+    {
+     "id": "yb-9-4-hw",
+     "h": "ลายมือในหน้า 9.4.1",
+     "html": "<h5>มุมซ้ายบน (ข้างกล่อง Exclude condition mimic coma)</h5><ul><li><span class=\"hw\">foreign body ⇒ mechanism ไม่ใช่ FO ตัน(?) แต่เกิด bronchospasm</span></li><li><span class=\"hw\">* wheezing เฉพาะที่(?)</span></li></ul><h5>Electrolyte (Na, Ca) และ Endocrine</h5><ul><li><span class=\"hw\">hypo, hyper gly · hypo, hyper nat (ข้าง Na ↑,↓)</span></li><li><span class=\"hw\">hyper Cal เกิน(?)!! (ข้าง Ca ↑)</span></li><li><span class=\"hw\">(ฟ้า) &lt;8.5 → hypo &amp; hyper Cal ก็ทำให้เกิดชักได้(?)</span></li><li><span class=\"hw\">hypokalemia → เกร็ง</span> <small>(ตามลายมือ — Trousseau/Chvostek มักเป็นของ hypocalcemia)</small></li><li><span class=\"hw\">Trousseau → วัด cup ด้วย pressure ที่ &gt; SBP 20 mmHg วัด 3 นาที → มือจีบ</span></li><li><span class=\"hw\">Chvostek's sign → มุมปากจะกระตุก ถ้าเอานิ้ว(?)ไปเคาะแถวหู(?)</span></li><li><span class=\"hw\">corrected albumin = [0.8 × (4 − alb)] + Ca²⁺ ที่วัดได้</span></li></ul><h5>Severe sepsis</h5><ul><li><span class=\"hw\">ex. pneumonia</span></li></ul>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "y94a",
+   "title": "Alteration of consciousness (9.4) — ภาพรวม",
+   "src": "fig",
+   "img": "yb-9-4-f1.webp",
+   "note": "ลายมือ 1 จุด (\"Deep pain\") ใส่ใน d ของกล่อง level of consciousness",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Alteration of consciousness"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Abnormal level of consciousness: แบ่งความรุนแรงคร่าว ๆ ได้ 3 ระดับ",
+     "d": "<ol><li><b>Drowsiness</b>: easy arousal; Alertness in brief period</li><li><b>Stupor</b>: transient awake; only by vigorous stimuli <span class=\"hw\">(Deep pain)</span></li><li><b>Coma</b>: can not be aroused</li></ol>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Abnormal cognitive function: ภาวะหนึ่งที่ควรรู้จัก = Delirium",
+     "d": "<b>Delirium</b><ul><li>acute mental status change</li><li>abnormal and fluctuating attention</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "ดูเรื่อง Abnormal level of consciousness (9.4.1)",
+     "d": "ดูแผนผัง Abnormal level of consciousness (flow y94b ด้านล่าง)"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "ดูเรื่อง Delirium (9.4.2)",
+     "d": "ดูหัวข้อ Delirium (เล่มเหลือง 9.4.2) ในบท เพ้อ"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Abnormal level of consciousness"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Abnormal cognitive function"
+    },
+    {
+     "f": "b",
+     "t": "d"
+    },
+    {
+     "f": "c",
+     "t": "e"
+    }
+   ]
+  },
+  {
+   "id": "y94b",
+   "title": "Abnormal level of consciousness (9.4.1) — Drowsiness / Stupor / Coma",
+   "src": "fig",
+   "img": "yb-9-4-f2.webp",
+   "note": "ลายมือม่วง/ชมพู/เขียวอยู่ใน d ของกล่องที่เกี่ยวข้อง · ลายมือมุมซ้ายบน (foreign body) ใส่ที่กล่องเริ่ม",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Drowsiness / Stupor / Coma",
+     "d": "<p><span class=\"hw\">(ลายมือชมพูมุมซ้ายบน) foreign body ⇒ mechanism ไม่ใช่ FO ตัน(?) แต่เกิด bronchospasm · * wheezing เฉพาะที่(?)</span></p>"
+    },
+    {
+     "id": "x",
+     "k": "act",
+     "t": "Exclude condition mimic coma",
+     "d": "<ul><li>Locked-in syndrome</li><li>Persistent vegetative state</li><li>Abulia/Akinetic mutism</li><li>Catatonia</li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Without focal neurological signs"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "With signs of meningeal irritation"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "With focal neurological signs"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Meningitis (Infection)"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "SAH due to: rupture aneurysm, rupture AVM, trauma (Vascular)",
+     "d": "<ul><li>Rupture aneurysm</li><li>Rupture AVM</li><li>Trauma</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Other: Carcinomatous meningitis · Fat/Cholesterol embolism",
+     "d": "<ul><li>Carcinomatous meningitis</li><li>Fat/Cholesterol embolism</li></ul>"
+    },
+    {
+     "id": "d1",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Brain abscess</li><li>Subdural empyema</li></ul>"
+    },
+    {
+     "id": "d2",
+     "k": "dx",
+     "t": "Vascular: Ischemic/Hemorrhage",
+     "d": "<ul><li>Cerebral hemisphere</li><li>Brain stem</li></ul>"
+    },
+    {
+     "id": "d3",
+     "k": "dx",
+     "t": "Tumor: Brain tumor with surrounding edema"
+    },
+    {
+     "id": "d4",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Pituitary apoplexy</li><li>Venous sinus thrombosis</li><li>Cerebral vasculitis</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Neurologic d/o"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Systemic d/o"
+    },
+    {
+     "id": "e1",
+     "k": "dx",
+     "t": "Infection: Encephalitis"
+    },
+    {
+     "id": "e2",
+     "k": "dx",
+     "t": "Trauma: Brain concussion"
+    },
+    {
+     "id": "e3",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>HT encephalopathy</li><li>Eclampsia</li></ul>"
+    },
+    {
+     "id": "e4",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Status epilepticus</li><li>Hydrocephalus</li><li>TTP</li></ul>"
+    },
+    {
+     "id": "f1",
+     "k": "dx",
+     "t": "Intoxication",
+     "d": "<ul><li>Alcohol</li><li>Sedative</li><li>Opiate</li></ul>"
+    },
+    {
+     "id": "f2",
+     "k": "dx",
+     "t": "Electrolyte",
+     "d": "<ul><li>Na ↑, ↓</li><li>Ca ↑</li></ul><p><span class=\"hw\">(ข้าง Na) hypo, hyper gly · hypo, hyper nat</span><br><span class=\"hw\">(ข้าง Ca ↑) hyper Cal เกิน(?)!!</span><br><span class=\"hw\">(ฟ้า) &lt;8.5 → hypo &amp; hyper Cal ก็ทำให้เกิดชักได้(?)</span></p><p><span class=\"hw\">hypokalemia → เกร็ง</span> <small>(ตามลายมือ — Trousseau/Chvostek มักเป็นของ hypocalcemia)</small><br><span class=\"hw\">Trousseau → วัด cup ด้วย pressure ที่ &gt; SBP 20 mmHg วัด 3 นาที → มือจีบ</span><br><span class=\"hw\">Chvostek's sign → มุมปากจะกระตุก ถ้าเอานิ้ว(?)ไปเคาะแถวหู(?)</span></p><p><span class=\"hw\">corrected albumin = [0.8 × (4 − alb)] + Ca²⁺ ที่วัดได้</span></p>"
+    },
+    {
+     "id": "f3",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>Hypoglycemia</li><li>HHS/DKA</li><li>Thyroid storm</li><li>Myxedema coma</li><li>Adrenal crisis</li></ul>"
+    },
+    {
+     "id": "f4",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Uremic encephalopathy</li><li>Hepatic encephalopathy</li><li>Hyoxemia</li><li>Hypercapnia</li></ul>"
+    },
+    {
+     "id": "f5",
+     "k": "dx",
+     "t": "Severe sepsis",
+     "d": "<p><span class=\"hw\">ex. pneumonia</span></p>"
+    },
+    {
+     "id": "f6",
+     "k": "dx",
+     "t": "Other (systemic)",
+     "d": "<ul><li>Shock</li><li>Hypothermia</li><li>Hyperthermia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "x",
+     "l": "ตัดภาวะที่เลียนแบบ coma"
+    },
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Without focal neurological signs"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "With signs of meningeal irritation"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "With focal neurological signs"
+    },
+    {
+     "f": "c",
+     "t": "c1",
+     "l": "Infection"
+    },
+    {
+     "f": "c",
+     "t": "c2",
+     "l": "Vascular"
+    },
+    {
+     "f": "c",
+     "t": "c3",
+     "l": "Other"
+    },
+    {
+     "f": "d",
+     "t": "d1",
+     "l": "Infection"
+    },
+    {
+     "f": "d",
+     "t": "d2",
+     "l": "Vascular"
+    },
+    {
+     "f": "d",
+     "t": "d3",
+     "l": "Tumor"
+    },
+    {
+     "f": "d",
+     "t": "d4",
+     "l": "Other"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Neurologic d/o"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Systemic d/o"
+    },
+    {
+     "f": "e",
+     "t": "e1",
+     "l": "Infection"
+    },
+    {
+     "f": "e",
+     "t": "e2",
+     "l": "Trauma"
+    },
+    {
+     "f": "e",
+     "t": "e3",
+     "l": "Vascular"
+    },
+    {
+     "f": "e",
+     "t": "e4",
+     "l": "Other"
+    },
+    {
+     "f": "f",
+     "t": "f1",
+     "l": "Intoxication"
+    },
+    {
+     "f": "f",
+     "t": "f2",
+     "l": "Electrolyte"
+    },
+    {
+     "f": "f",
+     "t": "f3",
+     "l": "Endocrine"
+    },
+    {
+     "f": "f",
+     "t": "f4",
+     "l": "Metabolic"
+    },
+    {
+     "f": "f",
+     "t": "f5",
+     "l": "Severe sepsis"
+    },
+    {
+     "f": "f",
+     "t": "f6",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

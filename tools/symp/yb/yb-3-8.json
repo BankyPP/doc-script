@@ -1,0 +1,387 @@
+{
+ "key": "3-8",
+ "en": "Chronic diarrhea",
+ "th": "ท้องเสียเรื้อรัง",
+ "pdf": "46–47",
+ "target": 22,
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "dia-chronic",
+   "id": "yb-3-8-approach",
+   "h": "Algorithm Chronic diarrhea (เล่มเหลือง + ลายมือ)",
+   "html": "<figure><img src=\"symp/img/yb-3-8-f1.webp\" alt=\"Approach to chronic diarrhea (1) พร้อมลายมือ\"><figcaption>3.8 Chronic diarrhea — Approach (1): organic vs functional, HIV vs non-HIV</figcaption></figure><div class=\"flow\" data-flow=\"y38a\"></div><figure><img src=\"symp/img/yb-3-8-f2.webp\" alt=\"Approach to chronic diarrhea (2) พร้อมลายมือ\"><figcaption>3.8 Chronic diarrhea — Approach (2): watery / bloody / fatty</figcaption></figure><div class=\"flow\" data-flow=\"y38b\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-chronic",
+   "html": "<p><b>เล่มเหลือง</b> (ลายมือ) — Diarrhea &gt; 4 weeks: <span class=\"hw\">PI, onset, duration, character of stool (frequency, consistency, color, volume)</span></p><ul><li>Exclude: Fecal incontinence, Feces impact</li><li>Step 1 Organic vs Functional — <b>Functional</b> <span class=\"hw\">ถ่ายตอนกลางวัน(?)</span>: IBS (ROME III: Abd. discomfort 3 d/mo in last 3 mo + 2/3 — improve with defecation, change frequency of stool, change form of stool) · <b>Organic</b>: Continuous, sudden onset <span class=\"hw\">(3 เดือน)</span>, Nocturnal diarrhea <span class=\"hw\">ถ่ายกลางคืน</span>, Weight loss/malnutrition, Signs of systemic disease; <span class=\"hw\">Lab: ถ่าย > 400 g/day(?), ESR ↑, Hb ↓, Alb ↓</span></li><li>Step 2 HIV vs non-HIV — HIV <span class=\"hw\">(PPE) papular pruritic eruption, oral thrush</span>: Infection (Bacteria: Salmonella · Mycobact: TB · Parasite: Strongyloidiasis · Protozoa: Isospora belli, Cryptosporidium parvum, Cyclospora cayetanensis <span class=\"hw\">modify AFB</span>) · Malignancy (Lymphoma, Kaposi) · Drug (Protease inhibitor) · AIDS enteropathy</li><li>Step 3 Watery vs Bloody vs Fatty → ดูแผนภูมิ (2)</li></ul><p><span class=\"hw\">* ปวดเบ่งไม่สุด(?) (tenesmus) → lesion @ rectosigmoid/rectum · * fever ← malabsorp infect, autoimmune, CA, IBD · * น.น.ลด ← CA, thyroid goiter(?), TB, IBD, malabsorp, Whipple d/s</span></p><p><span class=\"hw\">RBC: microcytic anemia → [..] blood loss · megaloblastic anemia ← small bowel bac. overgrowth, [ผ่าตัด?/ใน?] terminal ileum, พยาธิ(?) diphyllobothrium latum · normocytic → anemia of chronic dz. (IBD)</span></p><p><span class=\"hw\">Bloody: melena → upper · Maroon → lower · occult blood ++ → IBD, CA, celiac sprue</span></p>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-hx",
+   "html": "<p><b>เล่มเหลือง</b> (ลายมือ — chronic diarrhea): <span class=\"hw\">PI, onset, duration, character of stool (frequency, consistency, color, volume)</span> · <span class=\"hw\">* ปวดเบ่งไม่สุด(?) (tenesmus) → lesion @ rectosigmoid/rectum · * fever · * น.น.ลด</span></p>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-osm",
+   "html": "<p><b>เล่มเหลือง</b> — Osmotic (Step 4.1): Fasting แล้วถ่ายลดลง <span class=\"hw\">ดีขึ้นหลังอด · Osmotic ตามกิน(?)</span> · Laxative agent · Other drug (Colchicine, Antacid; Cholestyramine) · Lactose/Maltose/Fructose/Sucrose intolerance · Hyperosmol enteral feeding</p>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-sec",
+   "html": "<p><b>เล่มเหลือง</b> — Secretory (Step 4.1): Fasting ไม่ดีขึ้น, Dehydrate, Stool large vol · Endocrine (Thyrotoxicosis, DM c autonomic neuro.) · Neuroendocrine (VIPoma, ZE (MEN1), Pheochromocytoma) · Infection</p>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-exu",
+   "html": "<p><b>เล่มเหลือง</b> — Bloody (Step 4.2: etiology?): Cancer · Infection (TB, Amebic; PMC) · IBD: Crohn, UC <span class=\"hw\">+ปวดท้อง</span> · Ischemic bowel · Autoimmune (SLE, SpA) · Radiation · <span class=\"hw\">melena → upper; maroon → lower; occult blood ++ → IBD, CA, celiac sprue</span></p>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-cause",
+   "html": "<p><b>เล่มเหลือง</b> — Fatty (Step 4.3: Malabsorb vs Maldigest) <span class=\"hw\">ถ่ายหลังกินอาหาร · ผายลมง่าย, ท้องอืด, borborygmus</span></p><ul><li><b>Intraluminal maldigestion</b> (D-xylose test: normal): Pancreatic enz ↓ (Pancreatitis, Pancreatic duct obstruction) · Bile ↓ (Cirrhosis, Biliary obs.) · Bacteria overgrowth</li><li><b>Mucosal malabsorption</b> (D-xylose test: abnormal): Diffuse mucosa (Colchicine, Alcohol) · Local mucosa · Parasite (Capillaria, Giardia, Strongyloides)</li><li><b>Post-mucosal:</b> Lymph obstruction</li></ul><p><span class=\"hw\">* AST, ALT ↑ ∴ celiac dz. · ALP ↑ ∴ malabsorp, cholestasis liver dz.</span></p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y38a",
+   "title": "Approach to Chronic diarrhea (1)",
+   "src": "fig",
+   "img": "yb-3-8-f1.webp",
+   "note": "ไฮไลต์ฟ้า: Diarrhea > 4 weeks, Functional · เทา: Exclude fecal incontinence/feces impact · ส้ม: Organic, Continuous/Sudden onset, ถ่ายกลางคืน",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Diarrhea > 4 weeks",
+     "d": "<span class=\"hw\">PI, onset, duration, character of stool (frequency, consistency, color, volume)</span>"
+    },
+    {
+     "id": "x",
+     "k": "act",
+     "t": "Exclude: Fecal incontinence · Feces impact",
+     "d": "<ul><li>Fecal incontinence</li><li>Feces impact</li></ul>"
+    },
+    {
+     "id": "s1",
+     "k": "q",
+     "t": "Step 1: Organic vs Functional",
+     "d": "<span class=\"hw\">Lab: ถ่าย > 400 g/day(?) · ESR ↑ · Hb ↓ · Alb ↓</span>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Functional",
+     "d": "<span class=\"hw\">ถ่ายตอนกลางวัน(?) (ลายมือดำเหนือกล่อง IBS) · [อ่านไม่ออก] (ลายมือดำข้างกล่อง Functional)</span>"
+    },
+    {
+     "id": "ibs",
+     "k": "dx",
+     "t": "IBS: Irritate bowel syndrome → ROME III criteria",
+     "d": "<p><b>Abd. Discomfort: 3 d/mo in last 3 mo + 2/3</b></p><ul><li>Improve with defecation</li><li>Change frequency of stool</li><li>Change form of stool</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "q",
+     "t": "Organic (Continuous, Sudden onset · Nocturnal diarrhea · Weight loss, malnutrition · Signs of systemic disease)",
+     "d": "<ul><li>Continuous, Sudden onset <span class=\"hw\">(3 เดือน)</span></li><li>Nocturnal diarrhea <span class=\"hw\">ถ่ายกลางคืน</span></li><li>Weight loss, malnutrition</li><li>Signs of systemic disease</li></ul>"
+    },
+    {
+     "id": "s2",
+     "k": "q",
+     "t": "Step 2: HIV vs non-HIV"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "HIV",
+     "d": "<span class=\"hw\">(PPE) papular pruritic eruption · oral thrush</span>"
+    },
+    {
+     "id": "nh",
+     "k": "q",
+     "t": "Non-HIV"
+    },
+    {
+     "id": "s3",
+     "k": "q",
+     "t": "Step 3: Watery vs Bloody vs Fatty"
+    },
+    {
+     "id": "z",
+     "k": "note",
+     "t": "ดูหน้าถัดไป (แผนภูมิ y38b)"
+    },
+    {
+     "id": "h1",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Bacteria → Salmonella</li><li>Mycobact → TB</li><li>Parasite → Stongyloidiasis (Strongyloidiasis)</li><li>Protozoa → Isospora Belli, Crytosporidium parvum, Cyclospora cayetanensis</li></ul><p><span class=\"hw\">modify AFB (วงปีกกาครอบ TB และ protozoa ทั้งสามชนิด)</span></p>"
+    },
+    {
+     "id": "h2",
+     "k": "dx",
+     "t": "Malignancy → Lymphoma, Kaposi",
+     "d": "<ul><li>Lymphoma</li><li>Kaposi</li></ul>"
+    },
+    {
+     "id": "h3",
+     "k": "dx",
+     "t": "Drug → Protease inhibitor"
+    },
+    {
+     "id": "h4",
+     "k": "dx",
+     "t": "AIDS enteropathy"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "x"
+    },
+    {
+     "f": "a",
+     "t": "s1"
+    },
+    {
+     "f": "s1",
+     "t": "f",
+     "l": "Functional"
+    },
+    {
+     "f": "f",
+     "t": "ibs"
+    },
+    {
+     "f": "s1",
+     "t": "o",
+     "l": "Organic"
+    },
+    {
+     "f": "o",
+     "t": "s2"
+    },
+    {
+     "f": "s2",
+     "t": "h",
+     "l": "HIV"
+    },
+    {
+     "f": "s2",
+     "t": "nh",
+     "l": "Non-HIV"
+    },
+    {
+     "f": "nh",
+     "t": "s3"
+    },
+    {
+     "f": "s3",
+     "t": "z"
+    },
+    {
+     "f": "h",
+     "t": "h1",
+     "l": "Infection"
+    },
+    {
+     "f": "h",
+     "t": "h2",
+     "l": "Malignancy"
+    },
+    {
+     "f": "h",
+     "t": "h3",
+     "l": "Drug"
+    },
+    {
+     "f": "h",
+     "t": "h4",
+     "l": "AIDS enteropathy"
+    }
+   ]
+  },
+  {
+   "id": "y38b",
+   "title": "Approach to Chronic diarrhea (2)",
+   "src": "fig",
+   "img": "yb-3-8-f2.webp",
+   "note": "ลายมือดำเหนือกรอบ (หัวกระดาษ) และใต้กรอบ ใส่ใน d · ไฮไลต์ชมพู Malabsorb และม่วง IBD · Step 4.3 ชมพูล้อมลายมือ \"ถ่ายหลังกินอาหาร ...\"",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Step 3: Watery vs Bloody vs Fatty",
+     "d": "<p><span class=\"hw\">* ปวดเบ่งไม่สุด(?) (tenesmus) → lesion @ rectosigmoid/rectum</span></p><p><span class=\"hw\">* fever ← malabsorp infect, Autoimmune, CA, IBD</span></p><p><span class=\"hw\">* น.น.ลด ← CA, thyroid goiter(?), TB, IBD, malabsorp, Whipple d/s</span></p><p><span class=\"hw\">RBC: microcytic anemia → [..] blood loss · megaloblastic anemia ← small bowel bac. overgrowth, [ผ่าตัด?/ใน?] terminal ileum, พยาธิ(?) diphyllobothrium latum · normocytic → anemia of chronic dz. (IBD)</span></p>"
+    },
+    {
+     "id": "w",
+     "k": "q",
+     "t": "Watery"
+    },
+    {
+     "id": "bl",
+     "k": "q",
+     "t": "Bloody",
+     "d": "<span class=\"hw\">melena → upper · Maroon (สีแดงเข้ม?) → lower · occult blood ++ → IBD, CA, celiac sprue</span>"
+    },
+    {
+     "id": "ft",
+     "k": "q",
+     "t": "Fatty"
+    },
+    {
+     "id": "s41",
+     "k": "q",
+     "t": "Step 4.1: Osmotic vs Secretory"
+    },
+    {
+     "id": "s42",
+     "k": "q",
+     "t": "Step 4.2: etiology ?"
+    },
+    {
+     "id": "s43",
+     "k": "q",
+     "t": "Step 4.3: Malabsorb vs Maldigest",
+     "d": "<span class=\"hw\">ถ่ายหลังกินอาหาร · ผายลมง่าย, ท้องอืด, borborygmus (เสียงลำไส้ท้อง(?))</span>"
+    },
+    {
+     "id": "os",
+     "k": "dx",
+     "t": "Osmotic — Fasting แล้วถ่ายลดลง",
+     "d": "<p><span class=\"hw\">Osmotic ตามกิน(?)</span> · Fasting แล้วถ่ายลดลง <span class=\"hw\">ดีขึ้นหลังอด</span></p><ul><li>Laxative agent</li><li>Other drug<ul><li>Colchicine, Antacid</li><li>Cholestyramine</li></ul></li><li>Lactose/Maltose/Fructose/Sucrose intolerance</li><li>Hyperosmol enteral feeding</li></ul>"
+    },
+    {
+     "id": "sc",
+     "k": "dx",
+     "t": "Secretory — Fasting ไม่ดีขึ้น, Dehydrate, Stool large vol",
+     "d": "<p>Fasting ไม่ดีขึ้น, Dehydrate, Stool large vol</p><ul><li><b>Endocrine</b><ul><li>Thyrotoxicosis</li><li>DM c autonomic neuro.</li></ul></li><li><b>Neuroendocrine</b><ul><li>VIPoma, ZE (MEN1)</li><li>Pheochromocytoma</li></ul></li><li><b>Infection</b></li></ul>"
+    },
+    {
+     "id": "bd",
+     "k": "dx",
+     "t": "Bloody etiology: Cancer · Infection (TB, Amebic; PMC) · IBD · Ischemic bowel · Autoimmune · Radiation",
+     "d": "<ul><li>Cancer</li><li>Infection<ul><li>TB, Amebic</li><li>PMC</li></ul></li><li>IBD: Crohn, UC <span class=\"hw\">+ปวดท้อง</span></li><li>Ischemic bowel</li><li>Autoimmune<ul><li>SLE, SpA</li></ul></li><li>Radiation</li></ul>"
+    },
+    {
+     "id": "im",
+     "k": "q",
+     "t": "Intraluminal maldigestion — D-xylose test: normal"
+    },
+    {
+     "id": "mm",
+     "k": "q",
+     "t": "Mucosal malabsorption — D-xylose test: abnormal"
+    },
+    {
+     "id": "pm",
+     "k": "dx",
+     "t": "Post-mucosal: Lymph obstruction"
+    },
+    {
+     "id": "im1",
+     "k": "dx",
+     "t": "Pancreatic enz ↓",
+     "d": "<ul><li>Pancreatitis</li><li>Pancreatic duct obstruction</li></ul>"
+    },
+    {
+     "id": "im2",
+     "k": "dx",
+     "t": "Bile ↓",
+     "d": "<ul><li>Cirrhosis</li><li>Biliary obs.</li></ul>"
+    },
+    {
+     "id": "im3",
+     "k": "dx",
+     "t": "Bacteria overgrowth"
+    },
+    {
+     "id": "mm1",
+     "k": "dx",
+     "t": "Mucosal malabsorption causes",
+     "d": "<ul><li>Diffuse mucosa: Colchicine, Alcohol</li><li>Local mucosa</li><li>Parasite: Capillaria, Giardia, Strongyloides</li></ul><p><span class=\"hw\">* AST, ALT ↑ ∴ celiac dz. · ALP ↑ ∴ malabsorp, cholestasis liver dz.</span></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "w",
+     "l": "Watery"
+    },
+    {
+     "f": "a",
+     "t": "bl",
+     "l": "Bloody"
+    },
+    {
+     "f": "a",
+     "t": "ft",
+     "l": "Fatty"
+    },
+    {
+     "f": "w",
+     "t": "s41"
+    },
+    {
+     "f": "bl",
+     "t": "s42"
+    },
+    {
+     "f": "ft",
+     "t": "s43"
+    },
+    {
+     "f": "s41",
+     "t": "os",
+     "l": "Osmotic"
+    },
+    {
+     "f": "s41",
+     "t": "sc",
+     "l": "Secretory"
+    },
+    {
+     "f": "s42",
+     "t": "bd"
+    },
+    {
+     "f": "s43",
+     "t": "im",
+     "l": "Intraluminal maldigestion"
+    },
+    {
+     "f": "s43",
+     "t": "mm",
+     "l": "Mucosal malabsorption"
+    },
+    {
+     "f": "s43",
+     "t": "pm",
+     "l": "Post-mucosal Lymph obstruction"
+    },
+    {
+     "f": "im",
+     "t": "im1",
+     "l": "Pancreatic enz ↓"
+    },
+    {
+     "f": "im",
+     "t": "im2",
+     "l": "Bile ↓"
+    },
+    {
+     "f": "im",
+     "t": "im3",
+     "l": "Bacteria overgrowth"
+    },
+    {
+     "f": "mm",
+     "t": "mm1"
+    }
+   ]
+  }
+ ]
+}

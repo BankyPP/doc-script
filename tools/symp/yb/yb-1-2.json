@@ -1,0 +1,193 @@
+{
+ "key": "1-2",
+ "en": "Palpitation",
+ "th": "ใจสั่น",
+ "pdf": "12",
+ "target": 14,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-1-2-approach",
+   "h": "Algorithm: Palpitation — organic vs psychiatric (เล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y12a\"></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y12a",
+   "title": "Palpitation",
+   "src": "fig",
+   "img": "yb-1-2-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Palpitation"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Organic"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Psychiatric",
+     "d": "<ul><li>Panic attack</li><li>Anxiety</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Cardiac"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Non-Cardiac"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "High output state",
+     "d": "<ul><li>Anemia, fever</li><li>pregnancy</li><li>Stress, exercise</li><li>Volume depletion</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Hypoglycemia</li><li>Thyrotoxicosis</li><li>Pheochromocytoma</li><li>K<span class=\"down\">↓</span>, Mg<span class=\"down\">↓</span>, Ca<span class=\"down\">↓</span></li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Drug &amp; Med",
+     "d": "<ul><li>Coffee, smoke, alcohol</li><li>Cocaine, amphetamine</li><li>Sympathetic<span class=\"up\">↑</span> : B2-agonist</li><li>Anitcholinergic: ephredine</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Arrhythmia"
+    },
+    {
+     "id": "j",
+     "k": "q",
+     "t": "Non-Arrhythmia"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Structural",
+     "d": "<ul><li>ASD, VSD, VHD</li><li>Cardiomyopathy</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Functional",
+     "d": "<ul><li>CHF</li><li>MI</li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Premature beat",
+     "d": "<ul><li>PAC</li><li>PVC</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Irregular",
+     "d": "<ul><li>AF</li><li>MAT</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Tachyarrhythmia",
+     "d": "<ul><li>SVT</li><li>VT</li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Bradyarrhythmia",
+     "d": "<ul><li>AV block</li><li>SSS</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Organic"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Psychiatric"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Cardiac"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Non-Cardiac"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "High output state"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Metabolic"
+    },
+    {
+     "f": "e",
+     "t": "h",
+     "l": "Drug & Med"
+    },
+    {
+     "f": "d",
+     "t": "i",
+     "l": "Arrhythmia"
+    },
+    {
+     "f": "d",
+     "t": "j",
+     "l": "Non-Arrhythmia"
+    },
+    {
+     "f": "j",
+     "t": "k",
+     "l": "Structural"
+    },
+    {
+     "f": "j",
+     "t": "l",
+     "l": "Functional"
+    },
+    {
+     "f": "i",
+     "t": "m",
+     "l": "Premature beat"
+    },
+    {
+     "f": "i",
+     "t": "n",
+     "l": "Irregular"
+    },
+    {
+     "f": "i",
+     "t": "o",
+     "l": "Tachyarrhythmia"
+    },
+    {
+     "f": "i",
+     "t": "p",
+     "l": "Bradyarrhythmia"
+    }
+   ]
+  }
+ ]
+}

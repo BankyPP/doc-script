@@ -1,0 +1,110 @@
+{
+ "key": "3-4",
+ "en": "Hiccup",
+ "th": "สะอึก",
+ "pdf": "40",
+ "target": 20,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "hic-cause",
+   "id": "yb-3-4-approach",
+   "h": "Algorithm Hiccup — สาเหตุตามกลไก",
+   "html": "<figure><img src=\"symp/img/yb-3-4-f1.webp\" alt=\"Algorithm Hiccup สะอึก แยกสาเหตุ\"><figcaption>3.4 Hiccup — เล่มเหลือง (ลายมือ: สะอึก)</figcaption></figure><div class=\"flow\" data-flow=\"y34a\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "hic-def",
+   "html": "<p><b>เล่มเหลือง</b> <span class=\"hw\">สะอึก</span> — Transient: 2–3 minutes · Benign: Usually &lt; 1 Hr · Intractable: &gt; 1 Hr <b>*ต้องหาสาเหตุ*</b></p>"
+  },
+  {
+   "op": "append",
+   "sec": "hic-long",
+   "html": "<p><b>เล่มเหลือง</b> — สาเหตุแยกตามกลไก: <b>Diaphragm irritation</b> (Subphrenic abscess, Peritonitis) · <b>Mediastinum irritation</b> (Mediastinitis, Aortic aneurysm) · <b>CNS</b> (Vascular: Ischemic, ICH · Infection: Meningitis, Encephalitis · Tumor · Autoimmune: MS) · <b>Metabolic</b> (Uremia, Electrolyte Na↓ Ca↓ K↓, Hyperglycemia) · <b>Drug & toxin</b> (Alcohol, BZD, Barbiturate, Dexamethasone)</p><p>หากแยกภาวะ organic ออกไปได้ ก็อาจจะเป็นภาวะ 'Psychogenic': Stress, Anxiety, Malingering</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y34a",
+   "title": "Hiccup",
+   "src": "fig",
+   "img": "yb-3-4-f1.webp",
+   "note": "ลายมือม่วงเขียน \"สะอึก\" ข้างคำว่า Hiccup · ลูกศรสุดท้ายคือกล่องหมายเหตุใต้แผนภูมิ (หากแยก organic ออกไปได้)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hiccup (สะอึก)",
+     "d": "<ul><li>Transient: 2–3 minutes</li><li>Benign: Usually &lt; 1 Hr</li><li>Intractable: &gt; 1 Hr *ต้องหาสาเหตุ*</li></ul><p><span class=\"hw\">สะอึก</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Diaphragm Irritation",
+     "d": "<ul><li>Subphrenic abscess</li><li>Peritonitis</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "dx",
+     "t": "Mediastinum Irritation",
+     "d": "<ul><li>Mediastinitis</li><li>Aortic Aneurysm</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "CNS",
+     "d": "<ul><li><b>Vascular</b><ul><li>Ischemic</li><li>ICH</li></ul></li><li><b>Infection</b><ul><li>Meningitis</li><li>Encephalitis</li></ul></li><li><b>Tumor</b></li><li><b>Autoimmune</b><ul><li>MS</li></ul></li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Uremia</li><li>Electrolyte: Na↓, Ca↓, K↓</li><li>Hyperglycemia</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Drug & toxin",
+     "d": "<ul><li>Alcohol</li><li>BZD</li><li>Barbiturate</li><li>Dexamethasone</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "หากแยกภาวะ organic ออกไปได้ ก็อาจจะเป็นภาวะ 'Psychogenic': Stress, Anxiety, Malingering"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Diaphragm irritation"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Mediastinum irritation"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "CNS"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Metabolic"
+    },
+    {
+     "f": "a",
+     "t": "f",
+     "l": "Drug & toxin"
+    },
+    {
+     "f": "a",
+     "t": "g",
+     "l": "แยก organic ไม่ได้"
+    }
+   ]
+  }
+ ]
+}

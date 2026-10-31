@@ -1,0 +1,87 @@
+{
+ "key": "7-2",
+ "en": "Fever with jaundice",
+ "th": "ไข้ร่วมกับตัวเหลือง",
+ "pdf": "95",
+ "target": 7,
+ "ops": [
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "yb-7-2-jaundice",
+   "h": "ไข้ร่วมกับตัวเหลือง (Fever with jaundice)",
+   "html": "<div class=\"flow\" data-flow=\"y72a\"></div><ul><li><b>Infection</b> — Hepatobiliary infection: Viral hepatitis, Liver abscess, Cholangitis, Cholecystitis with CBD stone</li><li><b>Infection</b> — Systemic infection: Virus (Infectious mononucleosis) · Severe bacterial sepsis (Streptococcus, Klebseilla, E. coli, Salmonella) · Mycobacteria (Miliary TB) · Tropical dz (Leptospirosis, Melioidosis, Malaria)</li><li><b>Infection</b> — Sepsis with other cause of jaundice: Hemolytic jaundice (HbH, HS, AIHA) · Hepatocellular jaundice (Liver cirrhosis, Medication toxicity: Rifam, INH, Gilbert syndrome, Dubin-Johson, Rotor syndrome)</li><li><b>Non-Infection</b>: Lymphoma, Alcoholic hepatitis, Malignant histiocytosis, Hemophagocytic syndrome</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y72a",
+   "title": "Fever with jaundice",
+   "src": "fig",
+   "img": "yb-7-2-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Fever with jaundice"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infection"
+    },
+    {
+     "id": "non",
+     "k": "dx",
+     "t": "Non-Infection",
+     "d": "<ul><li>Lymphoma</li><li>Alcoholic hepatitis</li><li>Malignant histiocytosis</li><li>Hemophagocytic syndrome</li></ul>"
+    },
+    {
+     "id": "hep",
+     "k": "dx",
+     "t": "Hepatobiliary infection",
+     "d": "<ul><li>Viral hepatitis</li><li>Liver abscess</li><li>Cholangitis</li><li>Cholecystitis with CBD stone</li></ul>"
+    },
+    {
+     "id": "sys",
+     "k": "dx",
+     "t": "Systemic infection",
+     "d": "<b>Virus</b><ul><li>Infectious mononucleosis</li></ul><b>Severe bacterial sepsis</b><ul><li>Streptococcus</li><li>Klebseilla, E. coli</li><li>Salmonella</li></ul><b>Mycobacteria</b><ul><li>Miliary TB</li></ul><b>Tropical dz</b><ul><li>Leptospirosis</li><li>Melioidosis</li><li>Malaria</li></ul>"
+    },
+    {
+     "id": "sep",
+     "k": "dx",
+     "t": "Sepsis with other cause of jaundice",
+     "d": "<b>Hemolytic jaundice</b><ul><li>HbH, HS</li><li>AIHA</li></ul><b>Hepatocellular jaundice</b><ul><li>Liver cirrhosis</li><li>Medication toxicity — Rifam, INH</li><li>Gilbert syndrome</li><li>Dubin-Johson</li><li>Rotor syndrome</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "inf",
+     "l": "Infection"
+    },
+    {
+     "f": "a",
+     "t": "non",
+     "l": "Non-Infection"
+    },
+    {
+     "f": "inf",
+     "t": "hep",
+     "l": "Hepatobiliary infection"
+    },
+    {
+     "f": "inf",
+     "t": "sys",
+     "l": "Systemic infection"
+    },
+    {
+     "f": "inf",
+     "t": "sep",
+     "l": "Sepsis with other cause of jaundice"
+    }
+   ]
+  }
+ ]
+}

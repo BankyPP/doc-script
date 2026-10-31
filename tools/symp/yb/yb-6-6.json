@@ -1,0 +1,325 @@
+{
+ "key": "6-6",
+ "en": "Thrombocytopenia",
+ "th": "เกล็ดเลือดต่ำ (thrombocytopenia)",
+ "pdf": "83",
+ "target": 24,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-6-6-algo",
+   "h": "Algorithm: Thrombocytopenia (Production ↓ / Destruction ↑ / Splenic sequestration / Dilutional)",
+   "html": "<div class=\"flow\" data-flow=\"y66a\"></div><p><b>Thrombocytopenia</b> — Exclude: PseudoThrombocytopenia ก่อน แล้วแบ่งสาเหตุเป็น Production ↓ · Destruction ↑ · Splenic sequestration · Dilutional Thrombocytopenia</p><ul><li><b>Production ↓</b><ul><li><b>Congenital</b>: Wiskott-Aldrich, May-Hegglin anomaly, Thrombocytopenia with absent radii</li><li><b>Acquire</b><ul><li>Primary BM dz: Aplastic anemia, MDS</li><li>Secondary to systemic disease: Malignancy (Solid tumor, Leukemia, Lymphoma, Myeloma) · Nutritional deficiency (B12, Folic deficiency, Alcohol) · Infection (HIV, CMV) · Medication (Chemotherapy, Sulfonamide, Thiazide, Estrogen, Procainamide) · Other (Alcohol, Radiation)</li></ul></li></ul></li><li><b>Destruction ↑</b><ul><li><b>Non-Immune</b>: DIC · TTP/HUS · Severe Preeclampsia</li><li><b>Immune</b><ul><li>Idiopathic → ITP</li><li>Secondary → Autoimmune (SLE) · Infection (HIV, HCV, <span class=\"hw\">H.pylori (ลายมือเพิ่ม)</span>) · Drug (HIT, Quinidine, Gold, Penicillin, Methyldopa)</li></ul></li></ul></li><li><b>Splenic sequestration</b></li><li><b>Dilutional Thrombocytopenia</b>: Massive transfusion</li></ul>",
+   "sub": [
+    {
+     "id": "yb-6-6-hw",
+     "h": "โน้ตลายมือรอบ algorithm (ใส่ไว้ในกล่องของ flow ด้วย)",
+     "html": "<ul><li><span class=\"hw\">ปกติควรจำนวน &gt;150,000 แต่ &lt;100,000 พบแล้วมักจะหา disease เจอมากกว่า</span></li><li><span class=\"hw\">R/O ก่อน ต่ำปลอม ([อ่านไม่ออก: คำแรกในวงเล็บ], PBS, Dilutional)</span></li><li><span class=\"hw\">Platelet clumping. เปลี่ยน EDTA → heparin, citrate, or ไถเอง ☺ บางที เลือด react กับสาร มักอยู่ปลาย slide (ขอบบน/ล่าง/ปลายลิ้นหมา) ✳ ดูด้วย</span></li><li><span class=\"hw\">มาแบบ Plt↓ อย่างเดียว.</span></li><li><span class=\"hw\">มีพวก anemia, WBC abn ด้วย · BM, autoimm, nutrition, …</span></li><li><span class=\"hw\">infect, CA, liver fail (ลูกศรขึ้นจาก DIC)</span></li><li><span class=\"hw\">fibrinogen ↓ (ลูกศรลง), Plt↓, coag prolong, ±MAHA, พบมี cause (เส้นลูกศรสีชมพูโยงจาก DIC)</span></li><li><span class=\"hw\">→ Tx แก้ cause ⊕ FFP, platelet · support life (ต่อจากบรรทัด “พบมี cause” ของ DIC — ลูกศรสีชมพูชุดเดียวกัน)</span></li><li><span class=\"hw\">มี(?) pentad, triad</span></li><li><span class=\"hw\">ไตวาย,</span></li><li><span class=\"hw\">MAHA, schis, plt, fever, .</span></li><li><span class=\"hw\">cirrhosis, … (ลูกศรชี้ที่ Splenic sequestration)</span></li><li><span class=\"hw\">แบบ 5 liter · Redcell only</span></li><li><span class=\"hw\">IVIG, ตัดม้าม</span></li><li><span class=\"hw\">rash.</span></li><li><span class=\"hw\">หาก treat infection → ITP หาย (วงเล็บรวม HIV, HCV, H. pylori)</span></li><li><span class=\"hw\">AIHA + ITP: polychro, spherocyte, autoagglutination → EVAN syndrome: (Plt ต่ำด้วย)</span></li><li><span class=\"hw\">HELLP, preeclampsia พวกสูติ มี Plt↓</span></li><li><span class=\"hw\">Malignancy: vss (vessel) tear ได้, BM โดนกด เป็นต้น นะ?</span></li><li><span class=\"hw\">(วาดรูป hypersegmented neutrophil) → Hypersegmented neutrophil · ขาดทั้ง B12, folate: (ทน)(?) พัง(?) → ผิดปกติ(?)ทุก series</span></li><li><span class=\"hw\">✳ Keep Hct &gt;30% · └ ☺ หากซีด → Plt ทำงานไม่ดี</span></li><li><span class=\"hw\">✳ HIT, TTP อย่าให้ Plt → thrombosis → แย่กว่าเดิม</span></li></ul>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "lab-cbc",
+   "html": "<p><b>เล่มเหลือง — Thrombocytopenia:</b> Exclude PseudoThrombocytopenia ก่อน</p><ul><li><span class=\"hw\">ปกติควรจำนวน &gt;150,000 แต่ &lt;100,000 พบแล้วมักจะหา disease เจอมากกว่า</span></li><li><span class=\"hw\">R/O ก่อน ต่ำปลอม ([อ่านไม่ออก: คำแรกในวงเล็บ], PBS, Dilutional)</span></li><li><span class=\"hw\">Platelet clumping. เปลี่ยน EDTA → heparin, citrate, or ไถเอง ☺ บางที เลือด react กับสาร มักอยู่ปลาย slide (ขอบบน/ล่าง/ปลายลิ้นหมา) ✳ ดูด้วย</span></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y66a",
+   "title": "Thrombocytopenia",
+   "src": "fig",
+   "img": "yb-6-6-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Thrombocytopenia",
+     "d": "<ul><li><span class=\"hw\">ปกติควรจำนวน &gt;150,000 แต่ &lt;100,000 พบแล้วมักจะหา disease เจอมากกว่า</span></li><li><span class=\"hw\">R/O ก่อน ต่ำปลอม ([อ่านไม่ออก: คำแรกในวงเล็บ], PBS, Dilutional)</span></li><li><span class=\"hw\">✳ Keep Hct &gt;30% · └ ☺ หากซีด → Plt ทำงานไม่ดี</span></li></ul>"
+    },
+    {
+     "id": "x",
+     "k": "note",
+     "t": "Exclude: PseudoThrombocytopenia",
+     "d": "<ul><li><span class=\"hw\">Platelet clumping. เปลี่ยน EDTA → heparin, citrate, or ไถเอง ☺ บางที เลือด react กับสาร มักอยู่ปลาย slide (ขอบบน/ล่าง/ปลายลิ้นหมา) ✳ ดูด้วย</span></li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Production ↓"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Destruction ↑",
+     "d": "<ul><li><span class=\"hw\">มาแบบ Plt↓ อย่างเดียว.</span></li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Splenic sequestration",
+     "d": "<ul><li><span class=\"hw\">cirrhosis, … (ลูกศรชี้ที่ Splenic sequestration)</span></li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Dilutional Thrombocytopenia"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Massive transfusion",
+     "d": "<ul><li><span class=\"hw\">แบบ 5 liter · Redcell only</span></li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Congenital",
+     "d": "<ul><li>Wiskott-Aldrich</li><li>May-Hegglin anomaly</li><li>Thrombocytopenia with absent radii</li></ul><ul><li><span class=\"hw\">มีพวก anemia, WBC abn ด้วย · BM, autoimm, nutrition, …</span></li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Acquire",
+     "d": "<ul><li><span class=\"hw\">มีพวก anemia, WBC abn ด้วย · BM, autoimm, nutrition, …</span></li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Primary BM dz",
+     "d": "<ul><li>Aplastic anemia</li><li>MDS</li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "q",
+     "t": "Secondary to systemic disease"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Malignancy",
+     "d": "<ul><li>Solid tumor</li><li>Leukemia</li><li>Lymphoma</li><li>Myeloma</li></ul><ul><li><span class=\"hw\">Malignancy: vss (vessel) tear ได้, BM โดนกด เป็นต้น นะ?</span></li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Nutritional deficiency",
+     "d": "<ul><li>B12 deficiency</li><li>Folic deficiency</li><li>Alcohol</li></ul><ul><li><span class=\"hw\">(วาดรูป hypersegmented neutrophil) → Hypersegmented neutrophil · ขาดทั้ง B12, folate: (ทน)(?) พัง(?) → ผิดปกติ(?)ทุก series</span></li></ul>"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>HIV, CMV</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "dx",
+     "t": "Medication",
+     "d": "<ul><li>Chemotherapy</li><li>Sulfonamide</li><li>Thiazide</li><li>Estrogen</li><li>Procainamide</li></ul>"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Alcohol</li><li>Radiation</li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "q",
+     "t": "Non-Immune"
+    },
+    {
+     "id": "q",
+     "k": "q",
+     "t": "Immune"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "DIC",
+     "d": "<ul><li><span class=\"hw\">infect, CA, liver fail (ลูกศรขึ้นจาก DIC)</span></li><li><span class=\"hw\">fibrinogen ↓ (ลูกศรลง), Plt↓, coag prolong, ±MAHA, พบมี cause (เส้นลูกศรสีชมพูโยงจาก DIC)</span></li><li><span class=\"hw\">→ Tx แก้ cause ⊕ FFP, platelet · support life (ต่อจากบรรทัด “พบมี cause” ของ DIC — ลูกศรสีชมพูชุดเดียวกัน)</span></li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "TTP/HUS",
+     "d": "<ul><li><span class=\"hw\">มี(?) pentad, triad</span></li><li><span class=\"hw\">ไตวาย,</span></li><li><span class=\"hw\">MAHA, schis, plt, fever, .</span></li><li><span class=\"hw\">✳ HIT, TTP อย่าให้ Plt → thrombosis → แย่กว่าเดิม</span></li></ul>"
+    },
+    {
+     "id": "t",
+     "k": "dx",
+     "t": "Severe Preeclampsia",
+     "d": "<ul><li><span class=\"hw\">HELLP, preeclampsia พวกสูติ มี Plt↓</span></li></ul>"
+    },
+    {
+     "id": "u",
+     "k": "q",
+     "t": "Idiopathic"
+    },
+    {
+     "id": "v",
+     "k": "q",
+     "t": "Secondary"
+    },
+    {
+     "id": "w",
+     "k": "dx",
+     "t": "ITP",
+     "d": "<ul><li><span class=\"hw\">IVIG, ตัดม้าม</span></li></ul>"
+    },
+    {
+     "id": "y",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li>SLE — <span class=\"hw\">rash.</span></li></ul><ul><li><span class=\"hw\">AIHA + ITP: polychro, spherocyte, autoagglutination → EVAN syndrome: (Plt ต่ำด้วย)</span></li></ul>"
+    },
+    {
+     "id": "z",
+     "k": "dx",
+     "t": "Infection (Immune)",
+     "d": "<ul><li>HIV</li><li>HCV</li><li><span class=\"hw\">H.pylori (ลายมือเพิ่ม)</span></li></ul><ul><li><span class=\"hw\">หาก treat infection → ITP หาย (วงเล็บรวม HIV, HCV, H. pylori)</span></li></ul>"
+    },
+    {
+     "id": "zz",
+     "k": "dx",
+     "t": "Drug",
+     "d": "<ul><li>HIT</li><li>Quinidine</li><li>Gold</li><li>Penicillin</li><li>Methyldopa</li></ul><ul><li><span class=\"hw\">✳ HIT, TTP อย่าให้ Plt → thrombosis → แย่กว่าเดิม</span></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "x",
+     "l": "Exclude"
+    },
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Production ↓"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Destruction ↑"
+    },
+    {
+     "f": "a",
+     "t": "d",
+     "l": "Splenic sequestration"
+    },
+    {
+     "f": "a",
+     "t": "e",
+     "l": "Dilutional"
+    },
+    {
+     "f": "e",
+     "t": "f"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Congenital"
+    },
+    {
+     "f": "b",
+     "t": "h",
+     "l": "Acquire"
+    },
+    {
+     "f": "h",
+     "t": "i",
+     "l": "Primary BM dz"
+    },
+    {
+     "f": "h",
+     "t": "j",
+     "l": "Secondary to systemic disease"
+    },
+    {
+     "f": "j",
+     "t": "k",
+     "l": "Malignancy"
+    },
+    {
+     "f": "j",
+     "t": "l",
+     "l": "Nutritional deficiency"
+    },
+    {
+     "f": "j",
+     "t": "m",
+     "l": "Infection"
+    },
+    {
+     "f": "j",
+     "t": "n",
+     "l": "Medication"
+    },
+    {
+     "f": "j",
+     "t": "o",
+     "l": "Other"
+    },
+    {
+     "f": "c",
+     "t": "p",
+     "l": "Non-Immune"
+    },
+    {
+     "f": "c",
+     "t": "q",
+     "l": "Immune"
+    },
+    {
+     "f": "p",
+     "t": "r",
+     "l": "DIC"
+    },
+    {
+     "f": "p",
+     "t": "s",
+     "l": "TTP/HUS"
+    },
+    {
+     "f": "p",
+     "t": "t",
+     "l": "Severe Preeclampsia"
+    },
+    {
+     "f": "q",
+     "t": "u",
+     "l": "Idiopathic"
+    },
+    {
+     "f": "q",
+     "t": "v",
+     "l": "Secondary"
+    },
+    {
+     "f": "u",
+     "t": "w",
+     "l": "ITP"
+    },
+    {
+     "f": "v",
+     "t": "y",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "v",
+     "t": "z",
+     "l": "Infection"
+    },
+    {
+     "f": "v",
+     "t": "zz",
+     "l": "Drug"
+    }
+   ],
+   "note": "ลายมือรอบ algorithm จำนวนมาก ใส่ไว้ในรายละเอียดของกล่องที่เกี่ยวข้อง · Infection ในแขนง Production↓ กับ Immune เป็นคนละกล่อง"
+  }
+ ]
+}

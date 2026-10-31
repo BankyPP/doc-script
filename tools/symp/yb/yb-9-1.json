@@ -1,0 +1,399 @@
+{
+ "key": "9-1",
+ "en": "Headache",
+ "th": "ปวดศีรษะ",
+ "pdf": "102–103",
+ "target": 31,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "class",
+   "id": "yb-9-1-overview",
+   "h": "Algorithm ภาพรวม: Primary vs Secondary headache (9.1)",
+   "html": "<div class=\"flow\" data-flow=\"y91a\"></div><figure><img src=\"symp/img/yb-9-1-f1.webp\" alt=\"Headache algorithm: primary vs secondary headache\"><figcaption>Headache (9.1) — Primary headache / Secondary headache (organic: non-trauma, head or neck trauma; psychiatric)</figcaption></figure>"
+  },
+  {
+   "op": "sec",
+   "after": "sec",
+   "id": "yb-9-1-intracranial",
+   "h": "Intracranial cause of headache (9.1 — พร้อมลายมือ)",
+   "html": "<div class=\"flow\" data-flow=\"y91b\"></div><figure><img src=\"symp/img/yb-9-1-f2.webp\" alt=\"Intracranial cause of Headache พร้อมลายมือ\"><figcaption>Intracranial cause of Headache — Infection / Non-infection (Vascular, Non-vascular) พร้อมลายมือ</figcaption></figure>"
+  },
+  {
+   "op": "append",
+   "sec": "class",
+   "html": "<p><b>ลายมือเรื่อง onset</b></p><ul><li><span class=\"hw\">ถาม onset: sudden = peak @ the onset · acute = เร็ว</span></li><li><span class=\"hw\">ถามว่า \"คุณเคยปวดหัวเป็นอย่างนี้มาก่อนมั้ย\"</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "hx-assoc",
+   "html": "<ul><li><span class=\"hw\">มีไข้แล้วปวดหัว อาจจะเป็นเรื่องธรรมดา</span></li><li><span class=\"hw\">↳ ปวดหัวแล้วมีไข้ ป่วย(?)</span> (เทียบกับ meningitis, brain abscess, encephalitis, subdural empyema ในกลุ่ม infection)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "sec",
+   "html": "<p><b>Secondary headache (เล่มเหลือง): organic / psychiatric</b></p><ul><li>Organic non-trauma: paracranial (eye, ear, nose, other), intracranial, systemic</li><li>Organic head or neck trauma: post-traumatic headache, intracranial hematoma (SDH, EDH), post-craniotomy</li><li>Psychiatric</li><li>Systemic: infection (bacteria, virus); non-infection (hypertension: HT crisis, HT encephalopathy, pheochromocytoma, pre-eclampsia · substance: use — alcohol, PDE inhibitor, food-MSG; withdraw — caffeine, opioid, estrogen · homeostasis disorder: hypoxia, dialysis, fasting)</li></ul><p><b>ลายมือข้าง intracranial cause</b></p><ul><li><span class=\"hw\">① (ใกล้ ICH/SAH) … role ของ fibrinolytic … เพื่อละลาย clot … minimum เพื่อ remove clot · risk &amp; benefit ↓ → เกิดเลือดออก(?) [อ่านไม่ออกบางส่วน]</span></li><li><span class=\"hw\">② (ใกล้ Neoplasm) Secondary pain(?) — [อ่านไม่ออก]: 1. เ…(?) ไม่…ที่ progress… 2. ปวด… ทันที(?) [อ่านไม่ออกบางส่วน แม้ซูม 900 dpi]</span></li><li><span class=\"hw\">HT(?) : low salt (ข้างรายการ benign neoplasm)</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "primary",
+   "id": "yb-9-1-primary-other",
+   "h": "Primary headache อื่น ๆ ที่เล่มเหลืองระบุ",
+   "html": "<p>เล่มเหลืองจัด primary headache = tension-type headache, migraine, cluster headache และ \"other\" ได้แก่</p><ul><li>Exertional headache</li><li>Stabbing headache</li><li>Cough headache</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y91a",
+   "title": "Headache (9.1) — Primary vs Secondary headache",
+   "src": "fig",
+   "img": "yb-9-1-f1.webp",
+   "note": "หน้า 9.1 ฉบับพิมพ์ ไม่มีลายมือ · กล่องที่เป็นแค่รายชื่อโรคยุบไว้ใน d ของกล่องหัวข้อ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Headache"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Primary headache",
+     "d": "<ul><li>Tension-type headache</li><li>Migraine</li><li>Cluster headache</li><li>Other: Exertional headache, Stabbing headache, Cough headache</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Secondary headache"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Organic"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Psychiatric"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Non-trauma"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Head or Neck Trauma",
+     "d": "<ul><li>Post-traumatic headache</li><li>Intracranial hematoma: SDH, EDH</li><li>Post-craniotomy</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "q",
+     "t": "Paracranial"
+    },
+    {
+     "id": "i",
+     "k": "act",
+     "t": "Intracranial → ดูต่อเรื่อง intracranial cause of headache",
+     "d": "ดูต่อเรื่อง intracranial cause of headache (หน้า 87 ของเล่ม · flow y91b)"
+    },
+    {
+     "id": "j",
+     "k": "q",
+     "t": "Systemic"
+    },
+    {
+     "id": "h1",
+     "k": "dx",
+     "t": "Eye",
+     "d": "<ul><li>Glaucoma</li><li>Refractive error</li><li>Ocular inflam</li></ul>"
+    },
+    {
+     "id": "h2",
+     "k": "dx",
+     "t": "Ear",
+     "d": "<ul><li>Otitis media</li></ul>"
+    },
+    {
+     "id": "h3",
+     "k": "dx",
+     "t": "Nose",
+     "d": "<ul><li>Rhinosinusitis</li></ul>"
+    },
+    {
+     "id": "h4",
+     "k": "dx",
+     "t": "Other (paracranial)",
+     "d": "<ul><li>Toothache</li><li>Neck pain</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Systemic Infection",
+     "d": "<ul><li>Bacteria</li><li>Virus</li></ul>"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "Non-Infection"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Hypertension",
+     "d": "<ul><li>HT crisis</li><li>HT encephalopathy</li><li>Pheochromocytoma</li><li>Pre-eclampsia</li></ul>"
+    },
+    {
+     "id": "n",
+     "k": "q",
+     "t": "Substance"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Homeostasis disorder",
+     "d": "<ul><li>Hypoxia</li><li>Dialysis</li><li>Fasting</li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Use",
+     "d": "<ul><li>Alcohol</li><li>PDE inhibitor</li><li>Food-MSG</li><li>Other…</li></ul>"
+    },
+    {
+     "id": "q",
+     "k": "dx",
+     "t": "Withdraw",
+     "d": "<ul><li>Caffeine</li><li>Opioid</li><li>Estrogen</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Primary headache"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Secondary headache"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Organic"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Psychiatric"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Non-trauma"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Head or Neck Trauma"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Paracranial"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Intracranial"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Systemic"
+    },
+    {
+     "f": "h",
+     "t": "h1",
+     "l": "Eye"
+    },
+    {
+     "f": "h",
+     "t": "h2",
+     "l": "Ear"
+    },
+    {
+     "f": "h",
+     "t": "h3",
+     "l": "Nose"
+    },
+    {
+     "f": "h",
+     "t": "h4",
+     "l": "Other"
+    },
+    {
+     "f": "j",
+     "t": "k",
+     "l": "Systemic Infection"
+    },
+    {
+     "f": "j",
+     "t": "l",
+     "l": "Non-Infection"
+    },
+    {
+     "f": "l",
+     "t": "m",
+     "l": "Hypertension"
+    },
+    {
+     "f": "l",
+     "t": "n",
+     "l": "Substance"
+    },
+    {
+     "f": "l",
+     "t": "o",
+     "l": "Homeostasis disorder"
+    },
+    {
+     "f": "n",
+     "t": "p",
+     "l": "Use"
+    },
+    {
+     "f": "n",
+     "t": "q",
+     "l": "Withdraw"
+    }
+   ]
+  },
+  {
+   "id": "y91b",
+   "title": "Intracranial cause of Headache",
+   "src": "fig",
+   "img": "yb-9-1-f2.webp",
+   "note": "ลายมือม่วง/ชมพูของเจ้าของเล่มใส่ไว้ใน d ของกล่องที่เกี่ยวข้อง · ลายมือส่วนที่อ่านไม่ออกทำเครื่องหมาย (?) หรือ [อ่านไม่ออก]",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Intracranial cause of Headache",
+     "d": "<ul><li><span class=\"hw\">คุณเคยปวดหัวเป็นอย่างนี้มาก่อนมั้ย</span></li><li><span class=\"hw\">ถาม onset: sudden = peak @ the onset; acute = เร็ว</span></li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Meningitis</li><li>Brain abscess</li><li>Encephalitis</li><li>Subdural empyema</li></ul><p><span class=\"hw\">มีไข้แล้วปวดหัว อาจจะเป็นเรื่องธรรมดา</span><br><span class=\"hw\">↳ ปวดหัวแล้วมีไข้ ป่วย(?)</span></p>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Non-Infection"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Vascular"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Non-vascular"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Hemorrhage",
+     "d": "<ul><li>ICH</li><li>SAH</li></ul><p><span class=\"hw\">① (ลายมือ ชมพู) … role ของ fibrinolytic … เพื่อละลาย clot … minimum เพื่อ remove clot · risk &amp; benefit ↓ → เกิดเลือดออก(?) · ↓ … หวังว่า clot … [อ่านไม่ออกบางส่วน]</span></p>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Vascular malformation",
+     "d": "<ul><li>AVM</li><li>Aneurysm</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Arteritis",
+     "d": "<ul><li>Giant cell arteritis</li><li>Cerebral angiitis</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Neoplasm",
+     "d": "<ul><li>Benign: Meningioma, Grade 1-2 Glioma, Pituitary adenoma, Acoustic neuroma</li><li>Malignant: Primary grade 3-4 glioma, Metastatic carcinoma</li></ul><p><span class=\"hw\">② Secondary pain(?) — [อ่านไม่ออก]: 1. เ…(?) ไม่…ที่ progress… 2. ปวด… ทันที(?) [อ่านไม่ออกบางส่วน แม้ซูม 900 dpi]</span></p><p><span class=\"hw\">HT(?) : low salt</span></p>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "High CSF pressure",
+     "d": "<ul><li>Secondary to Hydrocephalus</li><li>Idiopathic intracranial hypertension (Pseudotumor cerebri)</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Low CSF pressure",
+     "d": "<ul><li>Post-dural puncture</li><li>CSF fistula</li><li>Idiopathic intracranial hypotension</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Infection"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Non-Infection"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "Vascular"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Non-vascular"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Hemorrhage"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "Vascular malformation"
+    },
+    {
+     "f": "d",
+     "t": "h",
+     "l": "Arteritis"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Neoplasm"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "High CSF pressure"
+    },
+    {
+     "f": "e",
+     "t": "k",
+     "l": "Low CSF pressure"
+    }
+   ]
+  }
+ ]
+}

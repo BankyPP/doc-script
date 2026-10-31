@@ -1,0 +1,201 @@
+{
+ "key": "9-4-2",
+ "en": "Delirium",
+ "th": "เพ้อ (delirium)",
+ "pdf": "113–114",
+ "target": 4,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "ix",
+   "id": "yb-9-4-2-cause",
+   "h": "สาเหตุของ Delirium: neurologic vs systemic disorder (9.4.2)",
+   "html": "<div class=\"flow\" data-flow=\"y942a\"></div><figure><img src=\"symp/img/yb-9-4-2-f1.webp\" alt=\"Delirium algorithm: DSM-V criteria and causes\"><figcaption>Delirium (9.4.2) — DSM-V 2013 criteria → neurologic disorder (cerebrovascular, autoimmune, tumor, infection) / systemic disorder (medication-drug/toxin, electrolyte, endocrine, metabolic, sepsis, other)</figcaption></figure>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-dsm5",
+   "html": "<p><b>DSM-V 2013 criteria for delirium due to a general medical condition (เล่มเหลือง)</b></p><ol><li>Reduced ability to direct, focus, sustain, and shift attention</li><li>Change in cognition</li><li>Caused by consequences of general medical condition</li><li>Develops over a short period of time (hour - day)</li><li>Fluctuate in severity during the course of a day</li></ol>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y942a",
+   "title": "Delirium (9.4.2)",
+   "src": "fig",
+   "img": "yb-9-4-2-f1.webp",
+   "note": "หน้า 9.4.2 ฉบับพิมพ์ ไม่มีลายมือ (หน้า 114 เป็นเอกสารอ้างอิงล้วน จึงไม่มีเนื้อหา)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "DSM-V 2013 criteria for delirium due to a general medical condition",
+     "d": "<ol><li>Reduced ability to direct, focus, sustain, and shift attention</li><li>Change in cognition</li><li>Caused by consequences of general medical condition</li><li>Develops over a short period of time (hour - day); Fluctuate in severity during the course of a day</li></ol>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Neurologic disorder"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Systemic disorder"
+    },
+    {
+     "id": "b1",
+     "k": "dx",
+     "t": "Cerebrovascular disorder",
+     "d": "<ul><li>Hypoperfusion</li><li>HT encephalopathy</li><li>Stroke</li></ul>"
+    },
+    {
+     "id": "b2",
+     "k": "dx",
+     "t": "Autoimmune",
+     "d": "<ul><li>CNS vasculitis</li><li>CNS lupus</li></ul>"
+    },
+    {
+     "id": "b3",
+     "k": "dx",
+     "t": "Tumor",
+     "d": "<ul><li>Diffuse brain metastasis</li><li>Gliomatosis cerebri</li></ul>"
+    },
+    {
+     "id": "b4",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Meningitis</li><li>Encephalitis</li><li>Brain abscess</li></ul>"
+    },
+    {
+     "id": "c1",
+     "k": "q",
+     "t": "Medication Drug/toxin"
+    },
+    {
+     "id": "c1a",
+     "k": "dx",
+     "t": "Medication",
+     "d": "<ul><li>BZD</li><li>Narcotic</li><li>Anticholinergic</li></ul>"
+    },
+    {
+     "id": "c1b",
+     "k": "dx",
+     "t": "Drug abuse",
+     "d": "<ul><li>Alcohol</li><li>Cocaine</li><li>opiates</li><li>Ketamine</li></ul>"
+    },
+    {
+     "id": "c1c",
+     "k": "dx",
+     "t": "Toxin",
+     "d": "<ul><li>Inhalant</li><li>CO</li><li>Pesticide</li></ul>"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Electrolyte",
+     "d": "<ul><li>Na ↑,↓</li><li>Ca ↑,↓</li><li>Mg ↓</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Endocrine",
+     "d": "<ul><li>BS ↑,↓</li><li>Thyroid ↑,↓</li><li>PTH ↑</li><li>Adrenal insuff.</li></ul>"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Uremic encephalopathy</li><li>Hepatic encephalopathy</li><li>Hyoxemia</li><li>Hypercapnia</li><li>Thiamine/Niacin/B12/folic deficiency</li></ul>"
+    },
+    {
+     "id": "c5",
+     "k": "dx",
+     "t": "Sepsis"
+    },
+    {
+     "id": "c6",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Perioperative</li><li>Dehydration</li><li>Malnutrition</li><li>Hypothermia</li><li>Hyperthermia</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Neurologic disorder"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Systemic disorder"
+    },
+    {
+     "f": "b",
+     "t": "b1",
+     "l": "Cerebrovascular disorder"
+    },
+    {
+     "f": "b",
+     "t": "b2",
+     "l": "Autoimmune"
+    },
+    {
+     "f": "b",
+     "t": "b3",
+     "l": "Tumor"
+    },
+    {
+     "f": "b",
+     "t": "b4",
+     "l": "Infection"
+    },
+    {
+     "f": "c",
+     "t": "c1",
+     "l": "Medication Drug/toxin"
+    },
+    {
+     "f": "c",
+     "t": "c2",
+     "l": "Electrolyte"
+    },
+    {
+     "f": "c",
+     "t": "c3",
+     "l": "Endocrine"
+    },
+    {
+     "f": "c",
+     "t": "c4",
+     "l": "Metabolic"
+    },
+    {
+     "f": "c",
+     "t": "c5",
+     "l": "Sepsis"
+    },
+    {
+     "f": "c",
+     "t": "c6",
+     "l": "Other"
+    },
+    {
+     "f": "c1",
+     "t": "c1a",
+     "l": "Medication"
+    },
+    {
+     "f": "c1",
+     "t": "c1b",
+     "l": "Drug abuse"
+    },
+    {
+     "f": "c1",
+     "t": "c1c",
+     "l": "Toxin"
+    }
+   ]
+  }
+ ]
+}

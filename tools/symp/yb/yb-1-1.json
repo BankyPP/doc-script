@@ -1,0 +1,531 @@
+{
+ "key": "1-1",
+ "en": "Chest pain",
+ "th": "เจ็บหน้าอก",
+ "pdf": "10–11",
+ "target": 13,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-1-1-approach",
+   "h": "Algorithm: Chest pain — cardiac vs non-cardiac (เล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y11a\"></div><div class=\"box\"><b><span class=\"hw\">ลายมือสรุปท้ายแผนภาพ</span></b><ul><li><span class=\"hw\">chest pain: cardiac</span></li><li><span class=\"hw\">non-cardiac: GI · RS · skin/MS · VSS</span></li></ul></div><h5>ลายมือ: ลักษณะ typical angina (ขวาบนของแผนภาพ)</h5><ol><li><span class=\"hw\">typical — ปวดตื้อ ๆ บีบ ๆ ร้าวกราม</span></li><li><span class=\"hw\">ออกแรง → เป็นมากขึ้น</span></li><li><span class=\"hw\">หายไปตอนอมยา/พัก</span></li></ol><ul><li><span class=\"hw\">3/3 = typical</span></li><li><span class=\"hw\">2/3 = atypical</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cvs-mi",
+   "html": "<h5>ลายมือเล่มเหลือง: ACS และ stable angina</h5><ul><li><span class=\"hw\">angina (กล่อง): ① costosternal pain, rad. · ② ⊕ have exert, stress · ③ ⊖(?) relav &lt; nitroglycerin อม, rest</span></li><li><b>ACS</b> <span class=\"hw\">(acute coronary syndrome)</span> = STEMI · NSTEMI · unstable angina</li><li><b>STEMI</b> <span class=\"hw\">เห็นชัด · การรักษา: thrombolytic / PCI 2 hr</span></li><li><b>NSTEMI</b> <span class=\"hw\">ไม่ STEMI แต่ cardiac enzyme ↑ ออกมา · มี ST depress ได้ · Trop I / Trop T = 14–53 · Flu 3 hr if ↑50% = ⊕ · Flu 3 hr ↑20% = ⊕ · change EKG → ดูว่า EKG เปลี่ยน</span></li><li><b>Unstable angina</b> <span class=\"hw\">ischemia ชั่วคราว → plaque ruptured ไม่เคยเป็นมาก่อน</span></li><li><b>Stable angina</b> <span class=\"hw\">ออกแรง → chest pain; >6 mo = chronic</span><ul><li><span class=\"hw\">A Aspirin, Antiangina, ACEI</span></li><li><span class=\"hw\">B BB, Blood pressure control</span></li><li><span class=\"hw\">C Cholesterol, Cigarette</span></li><li><span class=\"hw\">D Diet, DM</span></li><li><span class=\"hw\">E Education, Exercise</span></li></ul></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cvs-mi",
+   "id": "yb-1-1-ecg",
+   "h": "ECG ของ MI (ลายมือในเล่มเหลือง)",
+   "html": "<p><span class=\"hw\">ก่อน → T สูง → STE (0–12 hr) → patho Q wave → T wave invert (2–5 d) → หลัง</span></p><p><span class=\"hw\">T wave invert ⊙ chronic</span></p><div class=\"tbl\"><table><thead><tr><th>ECG</th><th>ตำแหน่ง</th><th>เกณฑ์ (ตามลายมือ)</th></tr></thead><tbody><tr><td rowspan=\"4\"><span class=\"hw\">ST elevated — แยกเพศอายุ</span></td><td rowspan=\"3\"><span class=\"hw\">V2/V3 (ต่างที่)</span></td><td><span class=\"hw\">♀ 1.5 ช่อง</span></td></tr><tr><td><span class=\"hw\">♂ &lt;40 ปี 2 ช่องครึ่ง</span></td></tr><tr><td><span class=\"hw\">♂ >40 ปี 2 ช่อง</span></td></tr><tr><td><span class=\"hw\">lead อื่น ๆ</span></td><td><span class=\"hw\">1 mm / 1 ช่องเล็ก</span></td></tr><tr><td rowspan=\"2\"><span class=\"hw\">ST depress</span></td><td><span class=\"hw\">V2 V3</span></td><td><span class=\"hw\">0.5 ช่องเล็ก / mm</span></td></tr><tr><td><span class=\"hw\">lead อื่น ๆ</span></td><td><span class=\"hw\">1 ช่อง</span></td></tr></tbody></table></div><p><small>สัญลักษณ์เพศในลายมือวาดเป็น ♀ สำหรับ 1.5 ช่อง และสัญลักษณ์อีกแบบ (น่าจะ ♂) สำหรับ &lt;40 / >40 ปี</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "cvs-peri",
+   "html": "<ul><li><span class=\"hw\">sharp + pleuritis · นั่ง ๆ ฟุบหน้า(?) ดีขึ้น</span></li><li><span class=\"hw\">± friction rub</span></li><li><span class=\"hw\">tamponade — Distant heart sound · Hypotension · Engorged neck vein</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cvs-ad",
+   "html": "<ul><li><span class=\"hw\">pulse 2 ข้าง ไม่เท่ากัน</span></li><li><span class=\"hw\">BP Rt↑ 200/100 · Lt 120/80</span></li><li><span class=\"hw\">sudden, severe, tearing ร้าวไป ท้อง–ท–หลัง(?) → เจ็บร้าวไปหลัง</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cvs-other",
+   "html": "<p>ตาม algorithm เล่มเหลือง (Non-ischemic): <b>Endocardium</b> → Severe AS · <b>Myocardium</b> → HOCM · <b>Pericardium</b> → Pericarditis</p>"
+  },
+  {
+   "op": "append",
+   "sec": "resp-pe",
+   "html": "<ul><li><span class=\"hw\">sudden onset</span></li><li><span class=\"hw\">chest pain ไม่ใช่ CC</span></li><li><span class=\"hw\">หายใจลำบาก</span></li><li><span class=\"hw\">pleuritic chest pain</span></li><li><span class=\"hw\">lung clear</span></li><li><span class=\"hw\">O2 sat drop!</span></li><li><span class=\"hw\">risk: DVT, immobilized, post sur., malignancy abd, pelvic</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "resp-ptx",
+   "html": "<ul><li><span class=\"hw\">absent BS · เคาะโปร่ง</span></li><li><span class=\"hw\">CXR</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "resp-pna",
+   "html": "<p>ตาม algorithm เล่มเหลือง หมวด Pleura: Pneumothorax · <b>Pneumonia</b> · <b>Empyema thoracis</b> · หมวด Vascular: Pulmonary embolism</p>"
+  },
+  {
+   "op": "append",
+   "sec": "gi",
+   "html": "<p>ตาม algorithm เล่มเหลือง: <b>Esophagus</b> → GERD, Mallory-Weiss tear, Boerhaave syndrome · <b>Stomach</b> → Dyspepsia, PU perforate · <b>Pancreatitis</b> → Pancreatitis</p><ul><li><span class=\"hw\">Esophagus: แสบร้อน (burn) กลางอก · ปว. dyspepsia</span></li><li><span class=\"hw\">GERD: ปว. เรอเปรี้ยว, ไอ, แสบกลางอก เป็นตอนกินข้าว → นอน</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "msk",
+   "html": "<p>ตาม algorithm เล่มเหลือง: Costochondritis · Rib fracture</p><ul><li><span class=\"hw\">⊕ ชี้จุดเจ็บ ได้ชัดเจน</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "skin",
+   "html": "<ul><li><span class=\"hw\">Herpes zoster: ตาม dermatome · skin lesion</span></li></ul>"
+  },
+  {
+   "op": "sec",
+   "after": "lab",
+   "id": "yb-1-1-ins",
+   "h": "หน้าแทรกจากตำราอื่นในเล่มเหลือง: Chest pain",
+   "html": "<p><small>(หน้าแทรกจากตำราอื่นในเล่มเหลือง — ตารางภาษาอังกฤษ 2 ส่วนที่มีลายมือกำกับ และบทที่ 21 Chest pain จาก “คู่มือการวินิจฉัยอายุรศาสตร์ (Manual of Medical Diagnosis)”)</small></p>",
+   "sub": [
+    {
+     "id": "yb-1-1-ins-harrison",
+     "h": "ตารางแยก chest pain ตามระบบ (ภาษาอังกฤษ)",
+     "sub": [
+      {
+       "id": "yb-1-1-ins-h1",
+       "h": "ตาราง 1: Cardiac และ Vascular",
+       "html": "<div class=\"tbl\"><table><thead><tr><th>System</th><th>Syndrome</th><th>Clinical description</th><th>Key distinguishing features</th></tr></thead><tbody><tr><td rowspan=\"4\">Cardiac <span class=\"hw\">①</span></td><td>Angina <span class=\"hw\">(1.1)</span></td><td>Retrosternal chest pressure, burning, or heaviness; radiating occasionally to the neck, jaw, epigastrium, shoulders, left arm</td><td>Precipitated by exercise, cold weather, or emotional stress; duration of 2-10 min</td></tr><tr><td>Rest or unstable angina</td><td>Same as angina, but may be more severe</td><td>Typically &lt;20 min; lower tolerance for exertion; crescendo pattern</td></tr><tr><td>Acute myocardial infarction</td><td>Same as angina, but may be more severe</td><td>Sudden onset, usually lasting ≥30 min; often associated with shortness of breath, weakness, nausea, vomiting</td></tr><tr><td>Pericarditis<br><span class=\"hw\">แน่นหน่วงอก (sharp pain)</span></td><td>Sharp, pleuritic pain aggravated by changes in position; highly variable duration<br><span class=\"hw\">เจ็บแปล๊บ ๆ · นอน → เจ็บ · นั่งโน้มไปข้างหน้า → หายเจ็บ · ⊕ จากการเปลี่ยนท่า</span></td><td>Pericardial friction rub</td></tr><tr><td rowspan=\"3\">Vascular</td><td>Aortic dissection</td><td>Excruciating, ripping pain of <span class=\"hi\">sudden onset in the anterior aspect of the chest, often radiating to the back</span><br><span class=\"hw\">ทันที · ร้าวไปหลัง</span></td><td>Marked severity of unrelenting pain; usually occurs in the setting of hypertension or underlying connective tissue disorder such as Marfan syndrome<br><span class=\"hw\">เช็ค BP 2 ข้าง ดู pulse แขนทั้ง 2 (+ อีกบรรทัดอ่านไม่ออก)</span></td></tr><tr><td>Pulmonary embolism</td><td><span class=\"hi\">Sudden onset of dyspnea and pain</span>, usually pleuritic with pulmonary infarction<br><span class=\"hw\">มีเหนื่อยด้วย</span></td><td><span class=\"hi\">Dyspnea, tachypnea, tachycardia</span>, signs of right-sided heart failure<br><span class=\"hw\">หายใจเร็ว · (บรรทัดใต้ อ่านไม่ชัด: …เจ็บหน่วง(?))</span></td></tr><tr><td>Pulmonary hypertension</td><td>Substernal chest pressure, exacerbated by exertion</td><td>Pain associated with dyspnea and signs of pulmonary hypertension</td></tr></tbody></table></div>"
+      },
+      {
+       "id": "yb-1-1-ins-h2",
+       "h": "ตาราง 2: Pulmonary, GI, Musculoskeletal",
+       "html": "<div class=\"tbl\"><table><thead><tr><th>System</th><th>Syndrome</th><th>Clinical description</th><th>Key distinguishing features</th></tr></thead><tbody><tr><td rowspan=\"3\">Pulmonary <span class=\"hw\">②</span></td><td>Pleuritis and/or pneumonia <span class=\"hw\">(2.1)</span><br><span class=\"hw\">ไข้ → ปวดหน่วงอก + ไอ(?) ร่วมด้วย → หายใจหอบเร็ว</span></td><td>Pleuritic pain, usually brief, over the involved area</td><td>Pain pleuritic and lateral to the midline, associated with dyspnea</td></tr><tr><td>Tracheobronchitis<br><span class=\"hw\">[อ่านไม่ออก]</span></td><td>Burning discomfort in the midline</td><td>Midline location, associated with coughing</td></tr><tr><td>Spontaneous pneumothorax<br><span class=\"hw\">↓ breath sound</span></td><td>Sudden onset of unilateral pleuritic pain, with dyspnea</td><td>Abrupt onset of dyspnea and pain</td></tr><tr><td rowspan=\"4\">Gastrointestinal</td><td>Esophageal reflux<br><span class=\"hw\">แสบขึ้นหน้าอก</span></td><td>Burning substernal and epigastric discomfort, 10-60 min in duration</td><td>Aggravated by a large meal and postprandial recumbency; relieved by antacid</td></tr><tr><td>Peptic ulcer<br><span class=\"hw\">ปวดท้องเหนือสะดือ → *ระวัง MI* · ล่างสะดือ → ไม่ใช่ MI(?)</span></td><td>Prolonged epigastric or substernal burning</td><td>Relieved by antacid or food</td></tr><tr><td>Gallbladder disease</td><td>Prolonged epigastric or right upper quadrant pain</td><td>Unprovoked or following a meal</td></tr><tr><td>Pancreatitis</td><td>Prolonged, intense epigastric and substernal pain</td><td>Risk factors, including alcohol, hypertriglyceridemia, medications</td></tr><tr><td rowspan=\"3\">Musculoskeletal</td><td>Costochondritis<br><span class=\"hw\">เจ็บบ่อย ๆ(?) · เจ็บตอนขยับ → บางท่า · [บรรทัดล่างอ่านไม่ออกชัด: ตามเจ็บหน้าอกตามไหน → ขยับตัวได้ จับได้ → พบบ่อยเจ็บทะ!!]</span></td><td><span class=\"hi\">Sudden onset of intense fleeting pain</span><br><span class=\"hw\">⊕ เจ็บโดน(?) ตอนกด → MI ↓</span></td><td>May be reproduced by pressure over the affected joint; occasionally, swelling and inflammation over the costochondral joint</td></tr><tr><td>Cervical disc disease</td><td>Sudden onset of fleeting pain</td><td>May be reproduced with movement of the neck</td></tr><tr><td>Trauma or strain</td><td>Constant pain</td><td>Reproduced by palpation or movement of the chest wall or arms</td></tr></tbody></table></div>"
+      }
+     ]
+    },
+    {
+     "id": "yb-1-1-ins-manual",
+     "h": "Manual of Medical Diagnosis บทที่ 21 Chest pain (จักรพันธ์ ชัยพรหมประสิทธิ์ หน้า 111–114)",
+     "html": "<p><b>คำจำกัดความ</b>: อาการเจ็บหน้าอกเป็นอาการที่ผู้ป่วยบรรยายถึงความรู้สึกเจ็บที่บริเวณหน้าอกหรือใกล้เคียง แต่ผู้ป่วยจะบ่งว่าเจ็บที่บริเวณหน้าอก ซึ่งจริง ๆ แล้วอาจจะเจ็บที่บริเวณท้องส่วนบนหรือหลังก็ได้</p><p><b>การวินิจฉัย</b>: อาการเจ็บหน้าอกเป็นผลจากการที่มีความผิดปกติของอวัยวะที่อยู่ในบริเวณช่องอกหรือใกล้เคียง เช่น ปอด หัวใจ หลอดเลือดแดงใหญ่ aorta รวมไปถึงผิวหนัง เส้นประสาท กล้ามเนื้อ ที่อยู่ร่วมด้วย ผู้ป่วยจะบรรยายลักษณะที่เจ็บได้หลายแบบ เช่น รู้สึกเจ็บจี๊ด ๆ เจ็บตื้อ ๆ เจ็บแน่น ๆ ตามความรู้สึกที่ผู้ป่วยเคยรับรู้มาก่อน หรืออาจบรรยายเป็นคำพูดที่ไม่สามารถเข้าใจได้ เช่น เจ็บแปลก ๆ เจ็บเหมือนไฟช็อต เจ็บแน่นเหมือนจมน้ำ ในกลุ่มโรคที่ทำให้เกิดอาการเจ็บหน้าอกอาจเป็นโรคที่มีความรุนแรงน้อยหรือมากก็ได้ การวินิจฉัยที่ผิดอาจก่อให้เกิดอันตรายถึงชีวิตได้อย่างรวดเร็ว หรืออาจทำให้อยู่โรงพยาบาลนานขึ้น จึงเป็นหน้าที่ของแพทย์ที่จะรวบรวมประวัติอย่างถูกต้องและรวดเร็ว เพื่อที่จะให้การวินิจฉัยโรคและวางแนวทางการตรวจรักษาเพิ่มเติมที่เหมาะสมต่อไป</p>",
+     "sub": [
+      {
+       "id": "yb-1-1-man-cause",
+       "h": "ตารางที่ 1 สาเหตุของอาการเจ็บหน้าอก",
+       "html": "<ol><li><b>Cardiac origin</b><ul><li>Pericarditis</li><li>Pericardial effusion</li><li>Myocardial ischemia: chronic stable angina · unstable angina · acute myocardial infarction · สาเหตุอื่น ๆ ที่ลด coronary blood flow ได้แก่ severe aortic stenosis, aortic regurgitation, severe anemia</li><li>Left-sided heart failure</li><li>Mitral valve prolapse syndrome</li></ul></li><li><b>Pulmonary origin</b><ul><li>Pleuritis and pneumonia</li><li>Pulmonary embolism with or without pulmonary infarction</li><li>Pneumothorax</li></ul></li><li><b>Esophagus origin</b><ul><li>Esophageal spasm</li><li>Esophageal rupture</li><li>Reflux esophagitis</li></ul></li><li><b>Abdominal origin</b><ul><li>Peptic ulcer</li><li>Cholecystitis, gall stone</li><li>Pancreatitis</li></ul></li><li><b>Miscellaneous</b><ul><li>Aortic dissection and aortic syndrome</li><li>Herpes zoster infection</li><li>Emotional and psychic disorder</li><li>Costochondritis (Tietze's syndrome)</li><li>Chest wall pain and tenderness</li></ul></li></ol>"
+      },
+      {
+       "id": "yb-1-1-man-app",
+       "h": "แนวทางการวินิจฉัย",
+       "html": "<ol><li>การซักประวัติอาการเจ็บหน้าอก เป็นขั้นตอนที่สำคัญที่สุดที่จะช่วยวินิจฉัยโรค โดยถามให้ได้ในรายละเอียดถึงลักษณะของการเจ็บหน้าอก ระยะเวลา ความถี่ จำนวนครั้งที่เป็น ความรุนแรงของความเจ็บปวด ตำแหน่งที่เป็นมากที่สุด อาการอื่นที่สัมพันธ์กับการเจ็บหน้าอก การตอบสนองต่อการรักษาหรือการทำให้อาการดีขึ้น ผู้ป่วยเหนื่อยหรือ functional class change ร่วมด้วยหรือไม่ (ตารางที่ 2) และจะต้องไม่ลืมถึงบริเวณของท้องส่วนบนที่ผู้ป่วยอาจจะให้ประวัติที่สับสนกับอาการเจ็บหน้าอก</li><li>พยายามแยกโรคที่มีความรุนแรงและอาจมีอันตรายถึงชีวิตออกมาให้ได้ เพราะจำเป็นต้องให้การรักษาทันทีและต้องอยู่โรงพยาบาล ได้แก่ acute coronary syndrome (ACS), acute aortic dissection, pneumothorax, pulmonary embolism และ acute heart failure ผู้ป่วยเหล่านี้อาจจะมาที่ห้องตรวจผู้ป่วยปกติหรือห้องฉุกเฉินก็ได้ แพทย์จำเป็นต้องให้การวินิจฉัยและรีบให้การรักษาที่เหมาะสมทันที</li><li>การตรวจร่างกายควรทำให้เหมาะสมกับความรุนแรงของผู้ป่วยในขณะนั้น ในกรณีที่ผู้ป่วยมีอาการเจ็บหน้าอกอย่างรุนแรงอาจจะไม่สามารถให้ความร่วมมือในการตรวจได้เต็มที่ ควรตรวจอย่างรวดเร็วและเท่าที่จำเป็น โดยเฉพาะบริเวณ chest wall ว่ามีรอยแผล โดยครอบคลุมถึง blood pressure ชีพจรทั้งแขนและขาทั้งซ้ายและขวา นอกจากนี้จะต้องดู jugular venous pressure, heart murmur, pericardial rub เสียง S3, S4 และต้องตรวจระบบทางเดินหายใจด้วย</li><li>การตรวจทางห้องปฏิบัติการเพิ่มเติมเพื่อให้ได้การวินิจฉัยโรค ควรทำเท่าที่จำเป็น โดยอาศัยข้อมูลจากการซักประวัติและตรวจร่างกายมาวิเคราะห์ว่าผู้ป่วยน่าจะเป็นโรคใดมากที่สุดก่อน แล้วจึงสั่งตรวจเพิ่มเติม ในกรณีที่ผู้ป่วยมาด้วยอาการที่รุนแรงให้เลือกส่งตรวจที่จำเป็นและได้ผลอย่างรวดเร็ว ซึ่งขึ้นกับว่าในสถานพยาบาลนั้นจะมีเครื่องมือตรวจชนิดใด สามารถให้ผลการตรวจรวดเร็วเพียงใด ความแม่นยำในการตรวจเป็นที่น่าเชื่อถือเพียงใด เพื่อที่จะได้ให้การวินิจฉัยโรคให้ผู้ป่วยอย่างทันที</li><li>ผู้ป่วยที่มีอาการรุนแรงและมักมาที่ห้องฉุกเฉิน ควรที่จะส่งตรวจดังนี้<ul><li><b>5.1</b> ในกรณีที่คิดถึงโรค acute coronary syndrome ซึ่งประกอบด้วย acute myocardial infarction (MI) คือ acute ST elevation MI และ non-ST elevation MI หรือ unstable angina การส่งตรวจที่จำเป็นที่สุดคือ 12-lead electrocardiogram ซึ่งสามารถทำได้อย่างรวดเร็วและแปลผลได้ทันที จะมีผลต่อการตัดสินใจที่จะเลือกชนิดการรักษาที่เหมาะสม การส่ง cardiac markers คือ cardiac troponin T หรือ I, creatine kinase (CK) หรือ CK-MB จะมีประโยชน์น้อยกว่าเพราะต้องใช้เวลาในการรอผลนานกว่า ซึ่งอาจจะทำให้การรักษาโดยการให้ perfusion ช้าเกินไป ถ้ายังไม่ได้คำตอบชัดเจนการส่งตรวจทาง imaging คือ transthoracic echocardiogram จะช่วยได้ โดยที่ในผู้ป่วยที่มาด้วย ACS ขณะที่มีอาการเจ็บหน้าอกมักจะมีการบีบตัวของกล้ามเนื้อหัวใจที่ขาดเลือดผิดปกติร่วมด้วย คือมีลักษณะที่เรียกว่า regional wall motion abnormality ในกล้ามเนื้อหัวใจที่ขาดเลือดโดยเฉพาะในผู้ป่วยกลุ่มที่เป็น acute MI</li><li><b>5.2</b> ในผู้ป่วยที่สงสัย acute aortic dissection การส่งตรวจที่สมควรส่งเป็นอันดับแรก คือ multi slice computed tomogram (CT) with angiogram หรือ transesophageal echocardiogram หรือ magnetic resonance imaging (MRI) ซึ่งขึ้นกับว่าผู้ป่วยอาการรุนแรงแค่ไหน สภาพ hemodynamics ในขณะนั้นเป็นอย่างไร และการตรวจใดสามารถทำได้เร็วและให้ผลการตรวจได้ดีที่สุด การตรวจ chest X-ray อย่างเดียวไม่เพียงพอที่จะให้ความมั่นใจในการวินิจฉัยโรค การทำ 12-lead electrocardiogram (ECG) จะช่วยแยกผู้ป่วยที่เป็น ACS ออกไปได้</li><li><b>5.3</b> ในผู้ป่วยที่สงสัย acute pericarditis การส่ง 12-lead electrocardiogram เพื่อดูลักษณะเฉพาะการเปลี่ยนแปลงของคลื่นไฟฟ้าหัวใจจะช่วยในการวินิจฉัย แต่อย่างไรก็ต้องพิจารณาให้ละเอียดเพราะในบางครั้งจะแยกความแตกต่างยากจาก ผู้ป่วยที่มาด้วย acute ST elevation MI การตรวจ transthoracic echocardiogram อาจจะช่วยได้ โดยดูลักษณะการบีบตัวของกล้ามเนื้อหัวใจว่ามี regional wall motion abnormality หรือไม่ ในผู้ป่วย acute pericarditis บางรายอาจมี pericardial effusion ร่วมด้วย</li><li><b>5.4</b> ในผู้ป่วยที่เป็น pneumothorax การตรวจร่างกายทางปอดร่วมกับ chest X-ray มักจะเพียงพอที่จะให้การวินิจฉัยโรค</li><li><b>5.5</b> ในผู้ป่วยที่มาด้วยอาการเจ็บหน้าอกร่วมกับหอบเหนื่อย ร่วมกับมี unexplained hypoxemia ให้คิดว่าอาจจะเป็น pulmonary embolism การตรวจทางห้องปฏิบัติการที่เหมาะสม คือ D-dimer, CT angiogram ของ ทรวงอก และ echocardiogram ซึ่งขึ้นกับสภาพผู้ป่วยในขณะนั้นว่าเหมาะสมกับการตรวจอะไร</li></ul></li></ol>"
+      },
+      {
+       "id": "yb-1-1-man-t2",
+       "h": "ตารางที่ 2 ลักษณะทางคลินิกของการเจ็บหน้าอกจากสาเหตุต่าง ๆ ที่สำคัญ",
+       "html": "<div class=\"tbl\"><table><thead><tr><th>Condition</th><th>Duration</th><th>Quality</th><th>Location</th><th>Associated features</th></tr></thead><tbody><tr><td>1. Angina</td><td>2-10 min</td><td>Pressure, tightness, squeezing, heaviness</td><td>Retrosternal, often with radiation to or isolated discomfort in neck, jaw, shoulders, or left arms</td><td>Precipitated by exertion, exposure to cold, psychologic stress; S4 gallop or mitral regurgitation murmur during pain</td></tr><tr><td>2. Unstable angina</td><td>10-20 min</td><td>Similar to angina but often more severe</td><td>Similar to angina</td><td>Similar to angina, but occurs with low levels of exertion or even at rest</td></tr><tr><td>3. Acute myocardial infarction</td><td>Variable, often 30 min</td><td>Similar to angina but often more severe</td><td>Similar to angina</td><td>Unrelieved by nitroglycerin, may be associated with evidence of heart failure or arrhythmia</td></tr><tr><td>4. Aortic stenosis</td><td>Recurrent episodes as described for angina</td><td>As described for angina</td><td>As described for angina</td><td>Late-peaking systolic murmur radiating to carotid arteries</td></tr><tr><td>5. Pericarditis</td><td>Hours to days, may be episodic</td><td>Sharp</td><td>Retrosternal or toward cardiac apex, may radiate to left shoulder</td><td>May be relieved by sitting up and leaning forward; pericardial friction rub</td></tr><tr><td>6. Aortic dissection</td><td>Abrupt onset of unrelenting pain</td><td>Tearing or ripping sensation, knifelike</td><td>Anterior chest, often radiating to back, between shoulder blades</td><td>Associated with hypertension and/or underlying connective tissue disorder; murmur of aortic insufficiency, pericardial rub, pericardial tamponade, or loss of peripheral pulses</td></tr><tr><td>7. Pulmonary embolism</td><td>Abrupt onset, several minutes to a few hours</td><td>Pleuritic</td><td>Often lateral, on the side of the embolism</td><td>Dyspnea, tachypnea, tachycardia, and hypotension</td></tr><tr><td>8. Pulmonary hypertension</td><td>Variable</td><td>Pressure</td><td>Substernal</td><td>Dyspnea, signs of increased venous pressure including edema and jugular venous distention</td></tr><tr><td>9. Pneumonia or pleuritis</td><td>Variable</td><td>Pleuritic</td><td>Unilateral, often localized</td><td>Dyspnea, cough, fever, rales, occasional rub</td></tr></tbody></table></div><p><small>min: minute</small></p>"
+      },
+      {
+       "id": "yb-1-1-man-angina",
+       "h": "Angina pectoris",
+       "html": "<p>อาการเจ็บหน้าอก (angina pectoris) เป็นอาการที่สำคัญของ chronic stable angina โดยมีลักษณะเฉพาะ ได้แก่</p><ol><li>มีความรู้สึกแน่น เจ็บ อึดอัดที่หน้าอก มักจะเป็นบริเวณกึ่งกลางหน้าอกใต้กระดูก sternum หรือค่อนไปทางซ้าย หรือเป็นที่บริเวณ กราม หลัง แขน</li><li>ถูกกระตุ้นให้เกิดจากการทำงานที่เพิ่มมากขึ้นหรือความเครียดในจิตใจ</li><li>อาการเจ็บแน่นหน้าอกจะดีขึ้นหลังจากได้พักหรืออมยา nitroglycerin อาการมักจะหายไปในเวลาไม่เกิน 5 นาที</li></ol><p>ในกรณีที่ผู้ป่วยมีอาการครบทั้ง 3 ลักษณะ เราจะเรียกว่า <b>typical angina</b> ถ้ามีเพียง 2 ลักษณะ จะเรียกว่า <b>atypical angina</b> ถ้ามีเพียง 1 หรือไม่มีลักษณะเช่นนี้จะเรียกว่าเป็น <b>non-cardiac chest pain</b></p><p>ข้อสังเกตที่สำคัญ คือ ในผู้ป่วยที่ขณะมีอาการ angina pectoris มักจะมีอาการเหนื่อยร่วมด้วย โดยอาจจะมี functional class change ร่วมด้วย และขณะที่มี angina pectoris ก็จะไม่เป็นมากกว่า 5-10 นาที ขณะที่หายอาการเจ็บหน้าอกจะหายเป็นปกติ ถ้าได้ทำ ECG ขณะมี angina pectoris ก็จะพบการเปลี่ยนแปลงที่มีลักษณะเฉพาะของ myocardial ischemia และจะหายกลับเป็นปกติเมื่ออาการ angina pectoris ดีขึ้น</p><p>ในผู้ป่วยที่มีอาการ angina pectoris แพทย์สามารถแยกความรุนแรงของอาการตามการจำแนกของ Canadian Cardiovascular Society ซึ่งจะแบ่งว่ามีอาการเจ็บหน้าอกที่ระดับการทำงานเป็น 4 ระดับ อาการเจ็บหน้าอกจะเกิดซ้ำเมื่อมีการออกกำลังมากถึงระดับนั้น ซึ่งจะมีอาการคงที่ การแบ่งนี้จะช่วยในการวางแผนการรักษาต่อไป</p><p>ผู้ป่วยที่บรรยายอาการว่า เจ็บหน้าอกแปลบ ๆ เจ็บขณะอยู่เฉย ๆ เจ็บเป็นเวลาที่สั้นมาก ๆ เป็น 1-2 วินาที เจ็บขณะกดหรือ ขยับแขนหรือไหล่ ออกกำลังแล้วอาการเจ็บดีขึ้นและหายไป มักจะไม่เป็นอาการของ myocardial ischemia ให้หาสาเหตุอื่นต่อไป</p><p><span class=\"hw\">cont.</span> ในผู้ป่วยที่มีอาการ typical angina แต่มีความรุนแรงมากกว่าและเป็นนานกว่าให้ระวังว่าผู้ป่วยอาจเป็น ACS เช่น unstable angina หรือ acute MI ได้</p><p>สิ่งที่ต้องระวังอยู่เสมอคือผู้ป่วยที่เป็น chronic stable angina อาจจะมีอาการที่ไม่เป็น typical angina ก็ได้ และผู้ป่วยที่มีอาการครบของ typical angina อาจจะไม่ได้เป็น coronary artery disease แต่ต้องพิจารณาแยกโรค coronary artery disease ให้ได้ก่อนเสมอ</p>"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "y11a",
+   "title": "Chest pain",
+   "src": "fig",
+   "img": "yb-1-1-f1.webp",
+   "note": "ลายมือ: ลำดับ ECG ของ MI, เกณฑ์ typical angina, ABCDE ของ stable angina ฯลฯ ใส่ในกล่องที่เกี่ยวข้อง และรายละเอียดซ้ำอยู่ในหัวข้อของบทด้วย",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Chest pain",
+     "d": "<p><span class=\"hw\">ลายมือท้ายแผนภาพ: chest pain: cardiac / non-cardiac — GI · RS · skin/MS · VSS</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Cardiac"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Non-Cardiac"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "Ischemic"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Non-Ischemic"
+    },
+    {
+     "id": "acs",
+     "k": "stop",
+     "t": "ACS (acute coronary syndrome)",
+     "d": "<p><span class=\"hw\">acute coronary syndrome</span> — รวม STEMI, NSTEMI, unstable angina</p>"
+    },
+    {
+     "id": "stemi",
+     "k": "dx",
+     "t": "STEMI",
+     "d": "<p><span class=\"hw\">เห็นชัด (ST elevation)</span></p><p><span class=\"hw\">การรักษา: thrombolytic / PCI 2 hr</span></p><p><span class=\"hw\">EKG: ST elevated แยกเพศอายุ — V2/V3: ♀ 1.5 ช่อง · ♂ &lt;40 ปี 2 ช่องครึ่ง · ♂ >40 ปี 2 ช่อง · lead อื่น ๆ 1 mm/1 ช่องเล็ก</span></p>"
+    },
+    {
+     "id": "nstemi",
+     "k": "dx",
+     "t": "NSTEMI",
+     "d": "<p><span class=\"hw\">ไม่ STEMI แต่ cardiac enzyme ↑ ออกมา</span></p><ul><li><span class=\"hw\">มี ST depress ได้ (V2 V3 0.5 ช่องเล็ก/mm · lead อื่น ๆ 1 ช่อง)</span></li><li><span class=\"hw\">Trop I · Trop T = 14–53</span></li><li><span class=\"hw\">Flu 3 hr if ↑50% = ⊕</span></li><li><span class=\"hw\">Flu 3 hr ↑20% = ⊕</span></li><li><span class=\"hw\">change EKG → ดูว่า EKG เปลี่ยน ★</span></li></ul>"
+    },
+    {
+     "id": "ua",
+     "k": "dx",
+     "t": "Unstable angina",
+     "d": "<ul><li><span class=\"hw\">ischemia ชั่วคราว</span></li><li><span class=\"hw\">plaque ruptured ไม่เคยเป็นมาก่อน</span></li></ul>"
+    },
+    {
+     "id": "stable",
+     "k": "dx",
+     "t": "Stable angina",
+     "d": "<ul><li><span class=\"hw\">ออกแรง → chest pain</span></li><li><span class=\"hw\">>6 mo = chronic</span></li><li><span class=\"hw\">A Aspirin, Antiangina, ACEI · B BB, Blood pressure control · C Cholesterol, Cigarette · D Diet, DM · E Education, Exercise</span></li></ul>"
+    },
+    {
+     "id": "endo",
+     "k": "q",
+     "t": "Endocardium"
+    },
+    {
+     "id": "as",
+     "k": "dx",
+     "t": "Severe AS"
+    },
+    {
+     "id": "myo",
+     "k": "q",
+     "t": "Myocardium"
+    },
+    {
+     "id": "hocm",
+     "k": "dx",
+     "t": "HOCM"
+    },
+    {
+     "id": "peri",
+     "k": "q",
+     "t": "Pericardium"
+    },
+    {
+     "id": "pcd",
+     "k": "dx",
+     "t": "Pericarditis",
+     "d": "<ul><li><span class=\"hw\">sharp + pleuritis · นั่ง ๆ ฟุบหน้า(?) ดีขึ้น</span></li><li><span class=\"hw\">± friction rub</span></li><li><span class=\"hw\">tamponade — Distant heart sound, Hypotension, Engorged neck vein</span></li></ul>"
+    },
+    {
+     "id": "gv",
+     "k": "q",
+     "t": "Great vessel"
+    },
+    {
+     "id": "ad",
+     "k": "stop",
+     "t": "Aortic dissection",
+     "d": "<ul><li><span class=\"hw\">pulse 2 ข้าง ไม่เท่ากัน</span></li><li><span class=\"hw\">BP Rt↑ 200/100 · Lt 120/80</span></li><li><span class=\"hw\">sudden, severe, tearing ร้าวไป ท้อง–ท–หลัง(?)</span></li><li><span class=\"hw\">→ เจ็บร้าวไปหลัง</span></li></ul>"
+    },
+    {
+     "id": "pul",
+     "k": "q",
+     "t": "Pulmonary"
+    },
+    {
+     "id": "pleura",
+     "k": "q",
+     "t": "Pleura"
+    },
+    {
+     "id": "ptx",
+     "k": "stop",
+     "t": "Pneumothorax",
+     "d": "<ul><li><span class=\"hw\">absent BS · เคาะโปร่ง</span></li><li><span class=\"hw\">CXR</span></li></ul>"
+    },
+    {
+     "id": "pna",
+     "k": "dx",
+     "t": "Pneumonia"
+    },
+    {
+     "id": "emp",
+     "k": "dx",
+     "t": "Empyema thoracis"
+    },
+    {
+     "id": "vasc",
+     "k": "q",
+     "t": "Vascular"
+    },
+    {
+     "id": "pe",
+     "k": "stop",
+     "t": "Pulmonary embolism",
+     "d": "<ul><li><span class=\"hw\">sudden onset</span></li><li><span class=\"hw\">chest pain ไม่ใช่ CC</span></li><li><span class=\"hw\">หายใจลำบาก</span></li><li><span class=\"hw\">pleuritic chest pain</span></li><li><span class=\"hw\">lung clear</span></li><li><span class=\"hw\">O2 sat drop!</span></li><li><span class=\"hw\">risk: DVT, immobilized, post sur., malignancy abd, pelvic</span></li></ul>"
+    },
+    {
+     "id": "gi",
+     "k": "q",
+     "t": "GI"
+    },
+    {
+     "id": "eso",
+     "k": "q",
+     "t": "Esophagus",
+     "d": "<p><span class=\"hw\">แสบร้อน (burn) กลางอก · ปว. dyspepsia</span></p>"
+    },
+    {
+     "id": "gerd",
+     "k": "dx",
+     "t": "GERD",
+     "d": "<p><span class=\"hw\">ปว. เรอเปรี้ยว, ไอ, แสบกลางอก เป็นตอนกินข้าว → นอน</span></p>"
+    },
+    {
+     "id": "mw",
+     "k": "dx",
+     "t": "Mallory-Weiss tear"
+    },
+    {
+     "id": "boe",
+     "k": "dx",
+     "t": "Boerhaave syndrome"
+    },
+    {
+     "id": "stom",
+     "k": "q",
+     "t": "Stomach"
+    },
+    {
+     "id": "dysp",
+     "k": "dx",
+     "t": "Dyspepsia"
+    },
+    {
+     "id": "pu",
+     "k": "dx",
+     "t": "PU perforate"
+    },
+    {
+     "id": "panc",
+     "k": "dx",
+     "t": "Pancreatitis"
+    },
+    {
+     "id": "msk",
+     "k": "q",
+     "t": "Musculoskeletal",
+     "d": "<p><span class=\"hw\">⊕ ชี้จุดเจ็บ ได้ชัดเจน</span></p>"
+    },
+    {
+     "id": "costo",
+     "k": "dx",
+     "t": "Costochondritis"
+    },
+    {
+     "id": "rib",
+     "k": "dx",
+     "t": "Rib fracture"
+    },
+    {
+     "id": "skin",
+     "k": "q",
+     "t": "Skin"
+    },
+    {
+     "id": "hz",
+     "k": "dx",
+     "t": "Herpes zoster",
+     "d": "<p><span class=\"hw\">ตาม dermatome · skin lesion</span></p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Cardiac"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Non-Cardiac"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Ischemic"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Non-Ischemic"
+    },
+    {
+     "f": "d",
+     "t": "acs",
+     "l": "ACS"
+    },
+    {
+     "f": "d",
+     "t": "stable",
+     "l": "Stable angina"
+    },
+    {
+     "f": "acs",
+     "t": "stemi",
+     "l": "STEMI"
+    },
+    {
+     "f": "acs",
+     "t": "nstemi",
+     "l": "NSTEMI"
+    },
+    {
+     "f": "acs",
+     "t": "ua",
+     "l": "Unstable angina"
+    },
+    {
+     "f": "e",
+     "t": "endo",
+     "l": "Endocardium"
+    },
+    {
+     "f": "e",
+     "t": "myo",
+     "l": "Myocardium"
+    },
+    {
+     "f": "e",
+     "t": "peri",
+     "l": "Pericardium"
+    },
+    {
+     "f": "endo",
+     "t": "as"
+    },
+    {
+     "f": "myo",
+     "t": "hocm"
+    },
+    {
+     "f": "peri",
+     "t": "pcd"
+    },
+    {
+     "f": "c",
+     "t": "gv",
+     "l": "Great vessel"
+    },
+    {
+     "f": "c",
+     "t": "pul",
+     "l": "Pulmonary"
+    },
+    {
+     "f": "c",
+     "t": "gi",
+     "l": "GI"
+    },
+    {
+     "f": "c",
+     "t": "msk",
+     "l": "Musculoskeletal"
+    },
+    {
+     "f": "c",
+     "t": "skin",
+     "l": "Skin"
+    },
+    {
+     "f": "gv",
+     "t": "ad"
+    },
+    {
+     "f": "pul",
+     "t": "pleura",
+     "l": "Pleura"
+    },
+    {
+     "f": "pul",
+     "t": "vasc",
+     "l": "Vascular"
+    },
+    {
+     "f": "pleura",
+     "t": "ptx",
+     "l": "Pneumothorax"
+    },
+    {
+     "f": "pleura",
+     "t": "pna",
+     "l": "Pneumonia"
+    },
+    {
+     "f": "pleura",
+     "t": "emp",
+     "l": "Empyema thoracis"
+    },
+    {
+     "f": "vasc",
+     "t": "pe"
+    },
+    {
+     "f": "gi",
+     "t": "eso",
+     "l": "Esophagus"
+    },
+    {
+     "f": "gi",
+     "t": "stom",
+     "l": "Stomach"
+    },
+    {
+     "f": "gi",
+     "t": "panc",
+     "l": "Pancreatitis"
+    },
+    {
+     "f": "eso",
+     "t": "gerd",
+     "l": "GERD"
+    },
+    {
+     "f": "eso",
+     "t": "mw",
+     "l": "Mallory-Weiss tear"
+    },
+    {
+     "f": "eso",
+     "t": "boe",
+     "l": "Boerhaave syndrome"
+    },
+    {
+     "f": "stom",
+     "t": "dysp",
+     "l": "Dyspepsia"
+    },
+    {
+     "f": "stom",
+     "t": "pu",
+     "l": "PU perforate"
+    },
+    {
+     "f": "msk",
+     "t": "costo",
+     "l": "Costochondritis"
+    },
+    {
+     "f": "msk",
+     "t": "rib",
+     "l": "Rib fracture"
+    },
+    {
+     "f": "skin",
+     "t": "hz"
+    }
+   ]
+  }
+ ]
+}

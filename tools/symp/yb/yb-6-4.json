@@ -1,0 +1,163 @@
+{
+ "key": "6-4",
+ "en": "Bleeding disorder",
+ "th": "ภาวะเลือดออกผิดปกติ (bleeding disorder)",
+ "pdf": "80–81",
+ "target": 24,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "yb-6-4-algo",
+   "h": "Algorithm: Bleeding disorder (Platelet vs Coagulation disorder)",
+   "html": "<div class=\"flow\" data-flow=\"y64a\"></div><p><b>ควรคิดถึง Bleeding disorder</b> เมื่อมีภาวะเลือดออกในลักษณะ:</p><ul><li>Generalized bleeding: มีเลือดออกในหลายตำแหน่ง</li><li>Inappropriate bleeding: มีเลือดออกรุนแรง มากกว่าบาดแผลที่ได้รับ</li><li>Spontaneous bleeding: เลือดออกเองโดยไม่มีการฉีกขาดของเส้นเลือด</li></ul><div class=\"tbl\"><table><thead><tr><th>Platelet disorder</th><th>Coagulation disorder</th></tr></thead><tbody><tr><td><b>Clinical feature</b><ul><li>Mucocutaneous bleeding: oral cavity, nasal, GI, GU</li><li>Petechiae</li></ul>→ Platelets count: ↓↓ ดูเรื่อง Thrombocytopenia · Normal ดูเรื่อง Platelet dysfunction</td><td><b>Clinical Feature</b><ul><li>Deep tissue bleeding (muscle/ joint)</li><li>Echymosis</li><li>Hemarthrosis, Muscle hematoma</li></ul>→ ดูเรื่อง coagulopathy</td></tr></tbody></table></div><p><b>โน้ตลายมือรอบ algorithm</b></p><ul><li><span class=\"hw\">Bleeding: Systemic vs local vs trauma</span></li><li><span class=\"hw\">ความรุนแรงแผล &amp; trauma? (ลูกศรชี้ไปที่ Bleeding)</span> </li><li><span class=\"hw\">1° &amp; 2°: Petechiae, superficial ecchymosis, skin, mucosa, mens</span></li><li><span class=\"hw\">Bleed ลึก, in joint, delay, กรณีแรกเลือดออก (Hemophilia) เป็น big หนา / Hematoma ๆ (เขียนต่อจาก 1° &amp; 2°)</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-hx",
+   "html": "<p><b>เล่มเหลือง — ลายมือ “ถาม”</b></p><ul><li><span class=\"hw\">ถาม ✳ เคยเป็นมาก่อน, ถอนฟัน/ผ่าตัด, FamHx, onset, โรคประจำตัว, การใช้ยา</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "dx-pe",
+   "html": "<p><b>เล่มเหลือง — ลายมือ</b></p><ul><li><span class=\"hw\">Bleeding: Systemic vs local vs trauma → 1° &amp; 2°</span></li><li><b>Platelet disorder (1°)</b>: <span class=\"hw\">Petechiae, superficial ecchymosis; skin, mucosa, mens</span></li><li><b>Coagulation disorder (2°)</b>: <span class=\"hw\">Bleed ลึก, in joint, delay, กรณีแรกเลือดออก (Hemophilia) เป็น big หนา / Hematoma ๆ</span></li><li><span class=\"hw\">ความรุนแรงแผล &amp; trauma?</span></li><li><span class=\"hw\">vss ฝอย(?) ที่ริมฝีปาก/สมอง/ปอด/เล็บ</span> → <span class=\"hw\">“Osler weber rendu syndrome”</span> (HHT)</li><li><span class=\"hw\">GI → chronic blood loss → iron def</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-cbc",
+   "html": "<p><b>เล่มเหลือง — ลายมือ: CBC, Bleeding time, venous clotting time และระดับเกล็ดเลือด</b></p><ul><li><span class=\"hw\">&lt;100,000 → Bleeding time prolong</span></li><li><span class=\"hw\">&lt;50,000 → ผ่าตัด แผลซึมไม่หยุด → (หน้ายิ้ม) minor OR เอามากกว่า 50,000</span></li><li><span class=\"hw\">&lt;20,000 → spontaneous bleeding</span></li><li><span class=\"hw\">&lt;5,000 → CNS bleed</span></li><li><span class=\"hw\">if มี coag ผิด(?)ด้วย → Disease อื่น ex DIC</span></li><li><span class=\"hw\">มี Bleeding &amp; Plt &lt;50,000 → transfusion</span></li><li><span class=\"hw\">Plt ↓ &amp; anemia → risk retinal bleeding</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-vct",
+   "html": "<p><b>เล่มเหลือง — ลายมือ</b></p><ul><li><span class=\"hw\">ใส่เลือดที่ syringe แก้ว: 20 นาที → ถ้าไม่ clot → prolong</span></li><li><span class=\"hw\">เลือดทำปฏิกิริยากับแก้วแล้วมีการ clot (เน้นขีดเส้นใต้คำว่า “แก้ว”)</span></li><li><span class=\"hw\">สงสัยงูกัด → antivenom ✳</span></li><li><span class=\"hw\">ในเมืองมี INR ตัดที่ 1.2 → anti venom</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-pt",
+   "html": "<p><b>เล่มเหลือง — ลายมือ</b></p><ul><li><span class=\"hw\">PT : extrinsic</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-aptt",
+   "html": "<p><b>เล่มเหลือง — ลายมือ</b></p><ul><li><span class=\"hw\">PTT : intrinsic</span></li><li><span class=\"hw\">หล่อ(?) heparin → coag prolong</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-tt",
+   "html": "<p><b>เล่มเหลือง — ลายมือ</b></p><ul><li><span class=\"hw\">TT : fibrinogen level</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-mix",
+   "html": "<p><b>เล่มเหลือง — ลายมือ: Mixing test</b></p><ul><li><span class=\"hw\">เหลือ coag 30% → ยัง clot ได้</span></li><li><span class=\"hw\">เอา FFB(FFP) ของ Blood bank or จนท.</span></li><li><span class=\"hw\">→ if ผสมแล้ว 1:1 → correct ค่า normal = ขาดจริง &amp; no inhibitor</span></li><li><span class=\"hw\">หาก prolong = ขาด &amp; มี inhibitor</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "lab",
+   "id": "yb-6-4-smear",
+   "h": "ลักษณะ blood smear ที่จดไว้ (โน้ตลายมือ)",
+   "html": "<ul><li><b>Leukoerythroblastic blood picture</b>: <span class=\"hw\">NRBC, Metamyelocyte &amp; โตกว่านั้น → BM โดนเบียดให้ออกมา</span></li><li><b>Lymphoblast</b> <span class=\"hw\">(leukemia)</span></li><li><b>Toxic granule</b>: <span class=\"hw\">DIC ?</span></li><li><b>Dohle body</b>: <span class=\"hw\">(วาดรูป neutrophil ที่มี Dohle body) neutrophil</span></li><li><b>Aplastic anemia</b>: <span class=\"hw\">lymph เด่น ๆ(?), WBC น้อย</span></li><li><b>CLL</b>: <span class=\"hw\">lymph แก่ ๆ มาก ๆ · induce AIHA, ITP ได้ ✓</span></li><li><b>MDS</b>: <span class=\"hw\">neutrophil 2 หัว</span></li><li><b>Giant Plt</b>: <span class=\"hw\">คนอายุน้อย ๆ FamHx · หา cause ไม่พบ, ตัดม้าม → BMA</span></li><li><b>Rouleaux</b>: <span class=\"hw\">MM</span></li><li><b>Ovalocyte</b>: <span class=\"hw\">Band abn. · MCV เล็ก (วาดรูปเซลล์รี ลูกศรชี้ “รี”)</span></li><li><b>AML</b>: <span class=\"hw\">Auer rod (ขีดเส้นใต้)</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "yb-6-4-ttpdic",
+   "h": "TTP vs DIC (โน้ตลายมือ — เกล็ดเลือดต่ำ)",
+   "html": "<p><b>TTP</b></p><ul><li><span class=\"hw\">congen: Adam AR</span></li><li><span class=\"hw\">acquire: Ab ท้อง(?) Plt↓ ร่วม(?) MAHA</span></li><li><span class=\"hw\">SLE</span></li><li><span class=\"hw\">ex cause เช่น chemodrug</span></li></ul><div class=\"tbl\"><table><thead><tr><th></th><th>TTP</th><th>DIC</th></tr></thead><tbody><tr><td>Schistocyte</td><td><span class=\"hw\">มาก ๆ</span></td><td><span class=\"hw\">+/-</span></td></tr><tr><td>LDH</td><td><span class=\"hw\">มาก ๆ</span></td><td><span class=\"hw\">+/-</span></td></tr><tr><td>Jaundice</td><td><span class=\"hw\">indirect</span></td><td><span class=\"hw\">direct</span></td></tr><tr><td>Reticulocyte</td><td><span class=\"hw\">↑↑</span></td><td><span class=\"hw\">[อ่านไม่ออก: “คนน้อย”(?)]</span></td></tr><tr><td>PT, PTT</td><td><span class=\"hw\">Normal</span></td><td><span class=\"hw\">มัก prolong</span></td></tr><tr><td>แถวที่ 6 (ตามที่เขียน)</td><td><span class=\"hw\">DIC +/-</span></td><td><span class=\"hw\">↑↑</span></td></tr><tr><td>เกร็ดเลือด</td><td><span class=\"hw\">ห้ามให้เกร็ดเลือด</span></td><td><span class=\"hw\">ให้แล้วมีประโยชน์</span></td></tr></tbody></table></div><p><b>HUS</b></p><ul><li><span class=\"hw\">supportive ง่ายกว่า TTP → dialysis แบบ TTP</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause",
+   "id": "yb-6-4-itp",
+   "h": "ITP — โน้ตลายมือ (ความสำคัญ/การรักษา)",
+   "html": "<p><b>ธรรมชาติและการตัดสินใจรักษา</b></p><ul><li><span class=\"hw\">ITP เด็กมักหายเอง · adult มักไม่หาย</span></li><li><span class=\"hw\">IC treat steroid: Plt &lt;30,000 or &lt;50,000 มี Bleed</span></li><li><span class=\"hw\">หา 2 cause ex SLE</span></li><li><span class=\"hw\">IC BMA try steroid ก่อน แต่แก่ ๆ กลัว(?)</span></li><li><span class=\"hw\">Malignancy อื่น ๆ if severe ann(?), anemia, fever, ….</span></li><li><span class=\"hw\">Try steroid อาการไม่ดีขึ้น, ตัดม้ามก็ต้องยืนยัน BMA ว่ายังพอทำงานได้อยู่</span></li><li><span class=\"hw\">อย่าลืม H. pylori</span></li></ul><p><b>การรักษา</b></p><ul><li><span class=\"hw\">steroid, IVIG (ขีดเส้นใต้ IVIG) → onset ไวกว่า เผื่อจะไปผ่าตัด</span></li><li><span class=\"hw\">Prednisolone 4–6 wk, stool parasite ตรวจ(?) → ค่อย ๆ ลด dose</span></li><li><span class=\"hw\">anti D ในคน RH+ → RBC แตก → ม้ามทำลาย (RBC แทนทำลาย Plt → SE anemia) · [อ่านไม่ออก: “ในคน”(?)]</span></li></ul><p><b>ITP รักษา (ต่อ)</b></p><ul><li><span class=\"hw\">IVIG: (E) — ตัว E อยู่ในวงกลม</span></li><li><span class=\"hw\">ตัดม้ามอย่าลืม ฉีด vaccine</span></li><li><span class=\"hw\">eltrombopag, rituximab (rituximab → กด BM)</span></li><li><span class=\"hw\">eltrombopag → หยุดกิน → Plt ตกได้</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "lab",
+   "id": "yb-6-4-page",
+   "h": "หน้าลายมือล้วนของเล่มเหลือง (Bleeding disorder, หน้า 81)",
+   "html": "<small>(ภาพหน้าลายมือในเล่มเหลือง สำหรับเทียบกับที่ถอดไว้ข้างต้น)</small><figure><img src=\"symp/img/yb-6-4-f2.webp\" alt=\"หน้าลายมือเรื่อง Bleeding disorder: CBC, mixing test, ITP, TTP/DIC\"><figcaption>โน้ตลายมือเรื่อง Bleeding disorder / Thrombocytopenia</figcaption></figure>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y64a",
+   "title": "Bleeding disorder",
+   "src": "fig",
+   "img": "yb-6-4-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "ควรคิดถึง Bleeding disorder เมื่อมีภาวะเลือดออกในลักษณะดังต่อไปนี้",
+     "d": "<ul><li>Generalized bleeding: มีเลือดออกในหลายตำแหน่ง</li><li>Inappropriate bleeding: มีเลือดออกรุนแรง มากกว่าบาดแผลที่ได้รับ</li><li>Spontaneous bleeding: เลือดออกเองโดยไม่มีการฉีกขาดของเส้นเลือด</li></ul><p>ลายมือรอบกล่อง:</p><ul><li><span class=\"hw\">Bleeding: Systemic vs local vs trauma</span></li><li><span class=\"hw\">ความรุนแรงแผล &amp; trauma? (ลูกศรชี้ไปที่ Bleeding)</span></li><li><span class=\"hw\">1° &amp; 2°: Petechiae, superficial ecchymosis, skin, mucosa, mens</span></li><li><span class=\"hw\">Bleed ลึก, in joint, delay, กรณีแรกเลือดออก (Hemophilia) เป็น big หนา / Hematoma ๆ (เขียนต่อจาก 1° &amp; 2°)</span></li><li><span class=\"hw\">ถาม ✳ เคยเป็นมาก่อน, ถอนฟัน/ผ่าตัด, FamHx, onset, โรคประจำตัว, การใช้ยา</span></li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Platelet disorder",
+     "d": "<p><b>Clinical feature</b></p><ul><li>Mucocutaneous bleeding: oral cavity, nasal, GI, GU</li><li>Petechiae</li></ul><p>ลายมือ:</p><ul><li><span class=\"hw\">1° &amp; 2°: Petechiae, superficial ecchymosis, skin, mucosa, mens</span></li><li><span class=\"hw\">vss ฝอย(?) ที่ริมฝีปาก/สมอง/ปอด/เล็บ</span></li><li><span class=\"hw\">GI → chronic blood loss → iron def</span></li><li><span class=\"hw\">“Osler weber rendu syndrome”</span></li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Coagulation disorder",
+     "d": "<p><b>Clinical Feature</b></p><ul><li>Deep tissue bleeding (muscle/ joint)</li><li>Echymosis</li><li>Hemarthrosis, Muscle hematoma</li></ul><p>ลายมือ:</p><ul><li><span class=\"hw\">Bleed ลึก, in joint, delay, กรณีแรกเลือดออก (Hemophilia) เป็น big หนา / Hematoma ๆ (เขียนต่อจาก 1° &amp; 2°)</span></li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "Platelets count"
+    },
+    {
+     "id": "e",
+     "k": "note",
+     "t": "ดูเรื่อง Thrombocytopenia (6.6)"
+    },
+    {
+     "id": "f",
+     "k": "note",
+     "t": "ดูเรื่อง Platelet dysfunction (6.5)"
+    },
+    {
+     "id": "g",
+     "k": "note",
+     "t": "ดูเรื่อง coagulopathy (6.7)"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Platelet disorder"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Coagulation disorder"
+    },
+    {
+     "f": "b",
+     "t": "d"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "Platelets ↓↓"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "Platelets normal"
+    },
+    {
+     "f": "c",
+     "t": "g"
+    }
+   ],
+   "note": "ลายมือรอบ algorithm อยู่ในรายละเอียดของกล่อง · เนื้อหาลายมือหน้าถัดไป (หน้า 81) อยู่ในหัวข้อย่อยของบทนี้"
+  }
+ ]
+}

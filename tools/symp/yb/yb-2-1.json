@@ -1,0 +1,503 @@
+{
+ "key": "2-1",
+ "en": "Dyspnea and positional related dyspnea",
+ "th": "เหนื่อย/หอบเหนื่อย และ positional related dyspnea",
+ "pdf": "21–25",
+ "target": 12,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-2-1-approach",
+   "h": "Algorithm: Dyspnea (เหนื่อย) แยกตามระบบ",
+   "html": "<div class=\"flow\" data-flow=\"y21a\"></div><p>จากแผนภาพจะสังเกตได้ว่า ภาวะหอบเหนื่อยมีสาเหตุได้จากหลายระบบ ทั้งจากระบบทางเดินหายใจเอง และระบบอื่นที่สามารถทำให้เกิดการหอบเหนื่อยได้ อันได้แก่ ระบบ cardiovascular, Neuromuscular, ภาวะ metabolic เช่น ภาวะโลหิตจาง, ภาวะไทรอยด์เป็นพิษ และภาวะเลือดเป็นกรด ซึ่งการซักประวัติและการตรวจร่างกายจะเกี่ยวข้องกับหลายระบบมาก</p><div class=\"box\"><b><span class=\"hw\">ลายมือ: จัดกลุ่มสาเหตุของ Dyspnea (เหนื่อย) เป็น 5 กลุ่ม</span></b><ol><li><span class=\"hw\">RS — airway, parenchyma, vascular, pleura</span></li><li><span class=\"hw\">cardiovascular</span></li><li><span class=\"hw\">neuromuscular</span></li><li><span class=\"hw\">metabolic</span></li><li><span class=\"hw\">psychy</span></li></ol></div><ul><li><span class=\"hw\">ลายมือท้ายหน้า (แผนภาพแยกกลุ่ม): Endocrine → hyperthyroid, hypo/hyperglycemia · Neuro · Psychi</span></li><li><span class=\"hw\">ลายมือส้ม “non-cardio” เหนือกล่อง Metabolic · ติ๊กถูก ✓ ที่ Cardio และ Metabolic · ขีดฆ่า ✗ ที่ Neuromuscular และ Psychi (ไม่มีข้อความ)</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "c-airway",
+   "html": "<div class=\"box\"><b>Airway — โน้ตลายมือเล่มเหลือง (2.1)</b><ul><li>แยก <span class=\"hw\">upper / lower</span> · <span class=\"hw\">upper: obstruction, laryngeal oedema</span></li><li>อาการ: <span class=\"hw\">wheezing</span></li><li>COPD — <span class=\"hw\">smoking, job</span></li><li>Asthma — <span class=\"hw\">UD, wheez</span></li><li><span class=\"hw\">เพิ่มเติมด้วยลายมือ: bronchitis, bronchiectasis</span></li><li><span class=\"hw\">history: sudden · foreign body · mass / บวม · epiglottitis · anaphylaxis</span></li><li><span class=\"hw\">PE (ตรวจร่างกาย): stridor</span></li><li><span class=\"hw\">airway PE: wheezing, ronchi (วงกลม ชี้ไปที่ “airway”)</span></li><li><span class=\"hw\">cardiac ex. HF — “airway บวมจาก congestion”</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "c-paren",
+   "html": "<div class=\"box\"><b>Parenchyma — โน้ตลายมือเล่มเหลือง (2.1)</b><ul><li>Infection — <span class=\"hw\">Fever, risk</span></li><li>Pneumonia — <span class=\"hw\">ไข้ ไอ หอบ (มีเครื่องหมายแดง ! กำกับ) · HIV contact</span></li><li>ILD — <span class=\"hw\">interstitial lung disease</span></li><li><span class=\"hw\">PE (ตรวจร่างกาย): bronchial breath sound · crepitation &amp; egophony</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "c-pleural",
+   "html": "<div class=\"box\"><b>Pleura — โน้ตลายมือเล่มเหลือง (2.1)</b><ul><li><span class=\"hw\">ปี 4 ต้องรู้ !</span></li><li>Pneumothorax — <span class=\"hw\">hyperresonance · trachea shift opposite (?) · ↓chest expansion</span></li><li>Hemothorax / Pleural effusion — <span class=\"hw\">↓breath sound · dullness percussion · bad lung down</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "c-wall",
+   "html": "<div class=\"box\"><b>Neuromuscular — จากแผนภาพเล่มเหลือง (2.1)</b><ul><li>Diaphragm paralysis</li><li>RS m. weak: HypoK</li><li>NMJ: MG</li><li>PNS: GBS</li><li>ALS</li><li>C-cord inj (Upper C3)</li><li><span class=\"hw\">hypophosphatemia → mm. weakness (เขียนไว้ระหว่างกล่อง Metabolic กับ Neuromuscular)</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "c-vasc",
+   "html": "<div class=\"box\"><b>Vascular — โน้ตลายมือเล่มเหลือง (2.1)</b><ul><li>PE, PHT</li><li><span class=\"hw\">BP drop</span></li><li><span class=\"hw\">typical → ปกติ PE (common)</span></li><li><span class=\"hw\">atypical → pleural effusion etc.</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-cv",
+   "html": "<div class=\"box\"><b>Cardio — โน้ตลายมือเล่มเหลือง (2.1)</b><ul><li>CHF</li><li><span class=\"hw\">Lt side HF: PND, orthopnea</span></li><li><span class=\"hw\">Rt. เด่นบวม</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-meta",
+   "html": "<div class=\"box\"><b>Metabolic — โน้ตลายมือเล่มเหลือง (2.1)</b><ul><li><span class=\"hw\">hypophosphatemia → mm. weakness</span></li><li>Anemia — <span class=\"hw\">เพลีย, เหนื่อย</span></li><li>Acidosis <span class=\"hw\">(ดาวคู่ ★★ กำกับ)</span> — <span class=\"hw\">infection, ยา ๆ</span></li><li>Thyrotoxicosis</li><li>DKA — <span class=\"hw\">เกิดจาก DM type I หรือ II ก็ได้: คนไข้มักจะผอม (type I) · เป็นได้ในคนไข้ที่อ้วน (type II) · มีภาวะ stress, infection on top กระตุ้นได้</span></li></ul><p><span class=\"hw\">Acidosis ทำให้คนหอบเหนื่อย เพราะมี Acidosis เกินขีดในเลือด compensate ด้วย Resp. alkalosis</span></p><p><span class=\"hw\">สาเหตุของ metabolic acidosis (toxin / DKA) จำเป็นอักษร KUSMALE:</span></p><ul><li><span class=\"hw\">K : ketosis</span></li><li><span class=\"hw\">U : uremic</span></li><li><span class=\"hw\">S : salicylate</span></li><li><span class=\"hw\">M : methanol</span></li><li><span class=\"hw\">A : Alcohol, Acid</span></li><li><span class=\"hw\">L : lactate</span></li><li><span class=\"hw\">E : ethylene glycol</span></li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-psy",
+   "html": "<div class=\"box\"><b>Psychi — จากแผนภาพเล่มเหลือง (2.1)</b><ul><li>Anxiety</li><li>Panic</li><li>Hyperventilation</li></ul></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "hx",
+   "id": "yb-2-1-positional",
+   "h": "Positional related dyspnea (Orthopnea · Trepopnea · Platypnea)",
+   "html": "<div class=\"flow\" data-flow=\"y21b\"></div><p>เพื่อให้การวินิจฉัยแยกโรคเฉพาะเจาะจงมากยิ่งขึ้น เราสามารถจำแนกสาเหตุของอาการหอบเหนื่อย โดยอาศัยว่าอาการหอบเหนื่อยนั้นมากขึ้นเมื่อผู้ป่วยอยู่ในท่าทางลักษณะใด (Positional related dyspnea) ซึ่งจำแนกได้เป็น 3 กลุ่มอาการ ได้แก่ Orthopnea, Trepopnea และ Platypnea</p><ol><li><b>Orthopnea</b> คือ มีอาการเหนื่อยเมื่อนอนราบ</li><li><b>Trepopnea</b> คือ มีอาการเหนื่อยเมื่อนอนตะแคงไปด้านใดด้านหนึ่ง</li><li><b>Platypnea-Orthodeoxia</b> คือ นอนแล้วดีขึ้น แต่เมื่อนั่งแล้วจะแย่เหนื่อยมากขึ้น</li></ol><p>ส่วนสาเหตุที่ทำให้เกิดภาวะหอบเหนื่อยในแต่ละกลุ่มอาการ ได้แสดงไว้ดังแผนภาพด้านล่าง</p><div class=\"tbl\"><table><thead><tr><th>กลุ่ม</th><th>สาเหตุที่แสดงในแผนภาพ</th></tr></thead><tbody><tr><td>Orthopnea (นอนราบแล้วเหนื่อย)</td><td>Cardio: CHF · RS: Airway: Asthma, Pleura: effusion · NM: Diaphragm weakness · Abd: Massive ascites</td></tr><tr><td>Trepopnea (นอนตะแคงข้างหนึ่งแล้วเหนื่อย นอนตะแคงอีกข้างแล้วดีขึ้น)</td><td>Unilateral lung disease · CHF from DCM · Mediastinal tumor · Endobronchial tumor</td></tr><tr><td>Platypnea-orthodeoxia (นั่งแล้วเหนื่อยมากขึ้น นอนแล้วดีขึ้น)</td><td>เกิดจาก Rt to Lt shunt ผ่านทาง Intracardiac shunt (PFO or ASD ร่วมกับ Pulmonary embolism / Pericardial effusion / Pneumonectomy ซึ่งทำให้เกิด Rt to Lt shunt) หรือ Intrapulmonary shunt (ในผู้ป่วยที่เป็น hepatopulmonary syndrome)</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause-resp",
+   "id": "yb-2-1-asthma",
+   "h": "Asthma — sign, phenotype และการวินิจฉัย (โน้ตลายมือเล่มเหลือง)",
+   "html": "<p><small>หน้าลายมือล้วนในเล่มเหลือง (ท้ายหน้า 2.1 และหน้า asthma phenotype)</small></p><div class=\"box\"><b><span class=\"hw\">asthma: sign of chronic airway inflam.</span></b><ol><li><span class=\"hw\">vary in time</span></li><li><span class=\"hw\">vary intensity</span></li><li><span class=\"hw\">vary expiratory flow</span></li><li><span class=\"hw\">Th2 → IL-4 → eosinophil</span></li></ol><p><span class=\"hw\">วงเล็บ: obesity · allergic · late onset (ชี้ไปที่ asthma — คือ phenotype ที่เขียนต่อในหน้าถัดไป)</span></p></div><h4>Asthma phenotypes</h4><div class=\"tbl\"><table><thead><tr><th>#</th><th>Phenotype</th><th>รายละเอียด (ลายมือ)</th></tr></thead><tbody><tr><td>1</td><td>allergic asthma <span class=\"hw\">(m/c)</span></td><td><span class=\"hw\">food → eczema → AR → asthma (allergic march) · respond to steroid</span></td></tr><tr><td>2</td><td>non-allergic</td><td><span class=\"hw\">Ø assoc. allergy (ไม่สัมพันธ์กับภูมิแพ้) · neutrophil response</span></td></tr><tr><td>3</td><td>late onset asthma</td><td><span class=\"hw\">m/c F (วงกลม F — ?) · stim. by: infection (ex. Aspergillus → ABPA = allergic bronchopulmonary aspergillosis) · autoimmune dz</span></td></tr><tr><td>4</td><td>(late stage) asthma w/ fixed airflow limitation</td><td></td></tr><tr><td>5</td><td>asthma w/ obesity</td><td><span class=\"hw\">แย่ (อ่านไม่ชัด: แย่น/แย่ลง?) · Mx: weight loss</span></td></tr></tbody></table></div><h4>Diagnosis ที่เขียนท้ายหน้า</h4><ul><li><span class=\"hw\">reversible spirometry: ↑FEV₁ &gt; 12% และ &gt; 200 ml</span></li><li><span class=\"hw\">Peak expi. flow diurnal variation = เป่า 2 ครั้ง/วัน</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause-resp",
+   "id": "yb-2-1-asthma-ctrl",
+   "h": "Asthma — severity → treatment: การประเมิน control ตอน F/U (GINA)",
+   "html": "<p><small>หน้าลายมือล้วนในเล่มเหลือง</small></p><div class=\"flow\" data-flow=\"y21d\"></div><ul><li><span class=\"hw\">severity of asthma → treatment · GINA guideline</span></li><li><span class=\"hw\">ตอนที่มา F/U 1 ครั้ง: control ดีไหม?</span><ul><li><span class=\"hw\">1 mo. ใช้ยา/มีอาการอะไรบ้าง — กลางวัน &gt; 2/wk</span></li><li><span class=\"hw\">กลางคืนตื่นบ่อย (? อ่านคำหลังไม่ชัด)</span></li><li><span class=\"hw\">↓ กิจวัตรประจำวัน</span></li><li><span class=\"hw\">activity → asthma ?</span></li></ul></li><li><span class=\"hw\">↓ well / partial / poor controlled</span></li><li><span class=\"hw\">find cause: technique การพ่น · ยังมีปัจจัยกระตุ้นอยู่ไหม · โรคแทรกซ้อน/โรคร่วม (?) · dx ถูกไหม</span></li><li><span class=\"hw\">control ดี for 3 mo. → ↓ 25-30% ของ dose เดิม</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "cause-meta",
+   "id": "yb-2-1-dka",
+   "h": "DKA vs HHS และการรักษา hyperglycemic crisis (หน้าแทรกจากตำราอื่น)",
+   "html": "<p><small>(หน้าแทรกจากตำราอื่นในเล่มเหลือง — เจ้าของเล่มเขียนลายมือกำกับ และติ๊กถูกที่เกณฑ์ pH &lt; 7.3 และ serum ketones positive ของ DKA)</small></p><div class=\"tbl\"><table><thead><tr><th></th><th>DKA</th><th>HHS</th></tr></thead><tbody><tr><td></td><td><span class=\"hw\">มักมาด้วย หายใจหอบเหนื่อย · DM มัก type I</span></td><td><span class=\"hw\">มักมาด้วย ซึม · DM มัก type II</span></td></tr><tr><td>Diagnostic criteria</td><td>PG &gt; 250 mg/dL<br>pH &lt; 7.3<br>Serum HCO₃ &lt; 15 mEq/L<br>Anion gap &gt; 12 mEq/L<br>Serum ketones positive<br>Serum osmolarity &lt; 320 mOsm/L</td><td>PG &gt; 600 mg/dL<br>pH &gt; 7.3<br>Serum HCO₃ &gt; 15 mEq/L<br>Anion gap &lt; 12 mEq/L<br>Serum ketones negative<br>Serum osmolarity &gt; 320 mOsm/L</td></tr><tr><td>Type of Diabetes (most common)</td><td>DM type 1 · Ketosis prone DM</td><td>DM type 2</td></tr><tr><td>Pathophysiology</td><td>Absolute insulin deficiency<ul><li>Hyperglycemia</li><li>Lipolysis → ketones formation</li></ul>Dehydration from hyperglycemia → osmotic diuresis</td><td>Relative insulin deficiency<ul><li>Hyperglycemia</li><li>No Lipolysis = no ketones</li></ul>Dehydration from hyperglycemia → osmotic diuresis</td></tr><tr><td>Presentation onset</td><td>acute</td><td>Subacute</td></tr><tr><td>Symptoms</td><td>Acidemia → Kussmaul respirations, fruity breath = acetone &amp; abdominal pain (correlate with degree of academia)<br>Hyperglycemia (polyuria, polydipsia, blurry vision, dehydration)</td><td>Hyperglycemia<br>Dehydration<br>More mental status change due to more hyperosmolality</td></tr></tbody></table></div>",
+   "sub": [
+    {
+     "id": "yb-2-1-crisis",
+     "h": "Hyperglycemic crisis: Step 1 fluid · Step 2 potassium · Step 3 insulin",
+     "html": "<div class=\"box\"><b>Step 1 IV fluid</b><ol><li>Infuse 0.9% NaCl 1-1.5 L/hr in first hour</li><li>Evaluate corrected Na⁺ → 0.9% NaCl vs 0.45% NaCl</li><li>When PG reach goal → change to 5% dextrose with 0.45% NaCl at 150-250 ml/hr</li></ol><ul><li>1-1.5 L/hr in 1st hour · 0.5-1 L/hr 2nd to 3rd hr · 200 ml/hr 4th to 8th hr</li></ul></div><div class=\"box\"><b>Step 2 Potassium</b> — establish adequate renal function (urine output &gt; 50 ml/hr)<ol><li>K⁺ &lt; 3.3 mEq/L → correct K⁺ before start insulin</li><li>K⁺ 3.3-5.2 mEq/L → give 20-30 mEq K⁺ in each liter of IV fluid</li><li>K⁺ &gt; 5.2 mEq/L → do not give K⁺, monitor serum K⁺ every 2 hr</li></ol><ul><li>Goal keep K⁺ 4-5 mEq/L</li></ul></div><div class=\"box\"><b>Step 3 Insulin</b><ol><li>RI drip 0.14 unit/kg as IV continuous infusion หรือ RI 0.1 unit/kg IV bolus แล้วตามด้วย 0.1 unit/kg/hr infusion</li><li>Target: ↓ PG 10% หรือ 50-70 mg/dl → ถ้า PG ไม่ลด ให้ปรับ insulin (double rate IV drip หรือให้ insulin 0.14 unit/kg IV bolus)</li><li>When PG reach goal → reduce regular insulin infusion เป็น 0.02-0.05 unit/kg/hr</li><li>After resolution of DKA or HHS initiate SC multiple dose เริ่มที่ 0.5-0.8 unit/kg/day (IV insulin infusion ต่ออีก 1-2 hr after SC insulin)</li></ol><ul><li>Goal PG: DKA 150-200 mg/dL · HHS 200-300 mg/dL</li></ul></div><div class=\"box\"><b>Resolution criteria</b><ul><li>DKA: PG &lt; 200 mg/dL + HCO₃ &gt; 18 + pH &gt; 7.3 + Anion gap &lt; 12</li><li>HHS: osmolarity &lt; 320 mOsm/L + gain conscious</li></ul></div><ul><li>Check DTX every 1 hour / electrolyte every 4 hrs until stable</li><li>Give Bicarbonate → only if pH &lt; 6.9, keep pH &gt; 7 (100 mmol in 400 ml H₂O + 20 mEq KCl infusion for 2 hours)</li><li>Correct precipitating factor</li></ul><div class=\"warn\"><b>Pitfalls</b><ul><li>Inadequate hydration</li><li>Hypoglycemia</li><li>Hypokalemia</li><li>Cerebral edema</li></ul></div>"
+    },
+    {
+     "id": "yb-2-1-case",
+     "h": "ตัวอย่างผู้ป่วย: DKA/HHS 50 ปี BW 50 kg",
+     "html": "<div class=\"flow\" data-flow=\"y21c\"></div>"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "y21a",
+   "title": "Dyspnea (เหนื่อย) — Respiratory vs Other",
+   "src": "fig",
+   "img": "yb-2-1-f1.webp",
+   "note": "ลายมือเพิ่มข้อความ/โน้ตรอบกล่องเกือบทุกกล่อง (ใส่ไว้ในรายละเอียดของกล่องนั้น) · ลายมือเพิ่ม bronchitis, bronchiectasis ใต้ Airway",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Dyspnea เหนื่อย",
+     "d": "<ul><li><span class=\"hw\">1. RS — airway, parenchyma, vascular, pleura</span></li><li><span class=\"hw\">2. cardiovascular</span></li><li><span class=\"hw\">3. neuromuscular</span></li><li><span class=\"hw\">4. metabolic</span></li><li><span class=\"hw\">5. psychy</span></li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Respiratory",
+     "d": "<span class=\"hw\">PE (ตรวจร่างกาย): bronchial breath sound · crepitation &amp; egophony</span>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Other",
+     "d": "<span class=\"hw\">non-cardio (Metabolic / Neuromuscular / Psychi) · ติ๊ก ✓ Cardio, Metabolic · ขีดฆ่า ✗ Neuromuscular, Psychi</span>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Airway",
+     "d": "<ul><li>COPD <span class=\"hw\">smoking, job</span></li><li>Asthma <span class=\"hw\">UD, wheez</span></li><li><span class=\"hw\">bronchitis</span></li><li><span class=\"hw\">bronchiectasis</span></li></ul><p><span class=\"hw\">แยก upper / lower — upper: obstruction, laryngeal oedema · อาการ wheezing</span></p><p><span class=\"hw\">history: sudden · foreign body · mass / บวม · epiglottitis · anaphylaxis · PE: stridor</span></p><p><span class=\"hw\">airway PE: wheezing, ronchi · cardiac ex. HF — airway บวมจาก congestion</span></p>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Parenchyma",
+     "d": "<ul><li>Infection <span class=\"hw\">Fever, risk</span><ul><li>Pneumonia <span class=\"hw\">ไข้ ไอ หอบ (มีเครื่องหมายแดง ! กำกับ) · HIV contact</span></li><li>PCP, TB, other</li></ul></li><li>CA: 1° or Metas</li><li>ILD <span class=\"hw\">interstitial lung disease</span></li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Pleura",
+     "d": "<p><span class=\"hw\">ปี 4 ต้องรู้ !</span></p><ul><li>Pneumothorax <span class=\"hw\">hyperresonance · trachea shift opposite (?) · ↓chest expansion</span></li><li>Hemothorax</li><li>Pleural effusion <span class=\"hw\">↓breath sound · dullness percussion · bad lung down</span></li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>PE</li><li>PHT</li></ul><p><span class=\"hw\">BP drop · typical → ปกติ PE (common) · atypical → pleural effusion etc.</span></p>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Cardio",
+     "d": "<ul><li>CHF <span class=\"hw\">Lt side HF: PND, orthopnea</span></li></ul><p><span class=\"hw\">Rt. เด่นบวม</span></p>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Metabolic",
+     "d": "<ul><li>Anemia <span class=\"hw\">เพลีย, เหนื่อย</span></li><li>Acidosis <span class=\"hw\">★★ infection, ยา ๆ</span></li><li>Thyrotoxicosis</li><li>DKA <span class=\"hw\">เกิดจาก DM type I หรือ II ก็ได้ (คนไข้มักจะผอม / เป็นได้ในคนไข้ที่อ้วน) · มี stress, infection on top กระตุ้นได้</span></li></ul><p><span class=\"hw\">hypophosphatemia → mm. weakness</span></p><p><span class=\"hw\">ทำให้คนหอบเหนื่อย เพราะมี Acidosis เกินขีดในเลือด compensate ด้วย Resp. alkalosis · toxin / DKA → K ketosis, U uremic, S salicylate, M methanol, A Alcohol/Acid, L lactate, E ethylene glycol</span></p>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Neuromuscular",
+     "d": "<ul><li>Diaphragm paralysis</li><li>RS m. weak: HypoK</li><li>NMJ: MG</li><li>PNS: GBS</li><li>ALS</li><li>C-cord inj (Upper C3)</li></ul>"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Psychi",
+     "d": "<ul><li>Anxiety</li><li>Panic</li><li>Hyperventilation</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Respiratory"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Other"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Airway"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Parenchyma"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Pleura"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Vascular"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Cardio"
+    },
+    {
+     "f": "c",
+     "t": "i",
+     "l": "Metabolic"
+    },
+    {
+     "f": "c",
+     "t": "j",
+     "l": "Neuromuscular"
+    },
+    {
+     "f": "c",
+     "t": "k",
+     "l": "Psychi"
+    }
+   ]
+  },
+  {
+   "id": "y21b",
+   "title": "Positional related dyspnea",
+   "src": "fig",
+   "img": "yb-2-1-f2.webp",
+   "note": "เครื่องหมายสีแดงในหน้านี้ไม่มีข้อความ: ติ๊กถูก ✓ ที่ CHF, RS, NM, Abd · วงรีแดงรอบ “Rt to Lt shunt” และขีดเส้นใต้แดง Intracardiac shunt / Intrapulmonary shunt",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Positional related dyspnea"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Lying -> Dyspnea"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Sitting -> Dyspnea"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "นอนราบแล้วเหนื่อย"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "นอนตะแคงข้างหนึ่งแล้วเหนื่อย นอนตะแคงอีกข้างแล้วดีขึ้น"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "นั่งแล้วมีอาการเหนื่อยมากขึ้น นอนแล้วอาการจะดีขึ้น"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Orthopnea",
+     "d": "<ul><li>Cardio: CHF</li><li>RS<ul><li>Airway: Asthma</li><li>Pleura: effusion</li></ul></li><li>NM<ul><li>Diaphragm weakness</li></ul></li><li>Abd: Massive ascites</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Trepopnea",
+     "d": "<ul><li>Unilateral lung disease</li><li>CHF from DCM</li><li>Mediastinal tumor</li><li>Endobronchial tumor</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Platypnea-orthodeoxia"
+    },
+    {
+     "id": "j",
+     "k": "note",
+     "t": "เกิดจาก Rt to Lt shunt ผ่านทาง Intracardiac shunt หรือ Intrapulmonary shunt"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "Intracardiac shunt: PFO or ASD",
+     "d": "ร่วมกับ Pulmonary embolism / Pericardial effusion / Pneumonectomy ซึ่งจะทำให้เกิด Rt to Lt shunt"
+    },
+    {
+     "id": "l",
+     "k": "dx",
+     "t": "Intrapulmonary shunt",
+     "d": "ในผู้ป่วยที่เป็น hepatopulmonary syndrome"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Lying -> Dyspnea"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Sitting -> Dyspnea"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "นอนราบ"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "นอนตะแคง"
+    },
+    {
+     "f": "c",
+     "t": "f"
+    },
+    {
+     "f": "d",
+     "t": "g"
+    },
+    {
+     "f": "e",
+     "t": "h"
+    },
+    {
+     "f": "f",
+     "t": "i"
+    },
+    {
+     "f": "i",
+     "t": "j"
+    },
+    {
+     "f": "j",
+     "t": "k",
+     "l": "Intracardiac shunt"
+    },
+    {
+     "f": "j",
+     "t": "l",
+     "l": "Intrapulmonary shunt"
+    }
+   ]
+  },
+  {
+   "id": "y21c",
+   "title": "ตัวอย่างการรักษา DKA/HHS: 50 year-old-woman BW 50 kg (หน้าแทรกจากตำราอื่น)",
+   "src": "fig",
+   "img": "yb-2-1-f3.webp",
+   "note": "หน้าแทรกจากตำราอื่นในเล่มเหลือง · Lab: PG 600, corrected Na 140, K 4.5, HCO₃ 5, ketone +, VBG: pH 7.2",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "50 year-old-woman BW 50 kg",
+     "d": "Lab: PG 600, corrected Na 140, K 4.5, HCO<sub>3</sub> 5, ketone +, VBG: pH 7.2"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "First hour: Fluid resuscitation 0.9% NaCl 1 L in 1 hr",
+     "d": "<span class=\"tag\">Beware</span> Inadequate hydration"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "At the start of second hour: Rehydration fluids",
+     "d": "<p>2<sup>nd</sup>-3<sup>rd</sup> hr:</p><ol><li>0.9% NaCl + 20 mEq/L KCl rate 100 ml/hr</li><li>0.9% NaCl rate 400 ml/hr</li></ol><p>4<sup>th</sup>-8<sup>th</sup> hr:</p><ol><li>0.9% NaCl + 20 mEq/L KCl rate 100 ml/hr</li><li>0.9% NaCl rate 100 ml/hr</li></ol><p><span class=\"tag\">Beware</span> Hypokalemia</p><p>ติดตาม: V/S, I/O q 1 hr · DTX q 1 hr · Electrolyte q 4 hr</p>"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "RI 0.14 unit/kg/hr Continuous infusion (ex: RI IV drip 7 unit/hr)",
+     "d": "The goal for correction is a decrease in PG at a rate of 50-70 mg/dL"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "When PG &lt; 200: Change fluid to 5%DN/2 + 20 mEq/L KCl rate 150 ml/hr"
+    },
+    {
+     "id": "f",
+     "k": "act",
+     "t": "When DKA in resolution: Discontinue IV fluids after patient tolerates oral fluids"
+    },
+    {
+     "id": "g",
+     "k": "act",
+     "t": "When PG &lt; 200: decrease RI to 0.02-0.05 unit/kg/hr (ex: RI IV drip 1 unit/hr)"
+    },
+    {
+     "id": "h",
+     "k": "act",
+     "t": "When DKA in resolution: Give SQ insulin 0.5-0.8 u/kg/day",
+     "d": "ex: RI 5 unit sc premeal, NPH 10 unit hs · Discontinue IV insulin after SQ insulin 1 hr · <span class=\"tag\">Beware</span> Hypoglycemia"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "Rehydration fluids"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Insulin infusion"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "When PG < 200"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "When DKA in resolution"
+    },
+    {
+     "f": "d",
+     "t": "g",
+     "l": "When PG < 200"
+    },
+    {
+     "f": "g",
+     "t": "h",
+     "l": "When DKA in resolution"
+    }
+   ]
+  },
+  {
+   "id": "y21d",
+   "title": "Asthma: การประเมิน control ตอน F/U → ปรับยา (ลายมือ)",
+   "src": "text",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "severity of asthma → treatment (GINA guideline)"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "ตอนที่มา F/U 1 ครั้ง: control ดีไหม?",
+     "d": "<ul><li><span class=\"hw\">1 mo. ใช้ยา/มีอาการอะไรบ้าง — กลางวัน &gt; 2/wk</span></li><li><span class=\"hw\">กลางคืนตื่นบ่อย (? อ่านคำหลังไม่ชัด)</span></li><li><span class=\"hw\">↓ กิจวัตรประจำวัน</span></li><li><span class=\"hw\">activity → asthma ?</span></li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "well / partial / poor controlled"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "find cause",
+     "d": "<ul><li><span class=\"hw\">technique การพ่น</span></li><li><span class=\"hw\">ยังมีปัจจัยกระตุ้นอยู่ไหม</span></li><li><span class=\"hw\">โรคแทรกซ้อน/โรคร่วม (?)</span></li><li><span class=\"hw\">dx ถูกไหม</span></li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "control ดี for 3 mo."
+    },
+    {
+     "id": "f",
+     "k": "act",
+     "t": "↓ 25-30% ของ dose เดิม"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "find cause"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "control ดี"
+    },
+    {
+     "f": "e",
+     "t": "f"
+    }
+   ]
+  }
+ ]
+}

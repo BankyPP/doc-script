@@ -1,0 +1,137 @@
+{
+ "key": "6-5",
+ "en": "Platelet dysfunction",
+ "th": "เกล็ดเลือดทำงานผิดปกติ (platelet dysfunction)",
+ "pdf": "82",
+ "target": 24,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-6-5-algo",
+   "h": "Algorithm: Platelet dysfunction",
+   "html": "<div class=\"flow\" data-flow=\"y65a\"></div><p><b>Platelet dysfunction</b> — Platelet count ปกติแต่การทำงานของเกล็ดเลือดผิดปกติ (ดูจาก 6.4: Platelets count Normal → Platelet dysfunction)</p><ul><li><b>Congenital</b><ul><li><b>Defect in Coagulation factor</b>: von Willerband disease, Afibrinogenemia — <span class=\"hw\">mens มาก, ถอนฟัน, เลือดหยุดยาก (ลูกศรจาก von Willerband disease → ครอบคลุม Afibrinogenemia ด้วย)</span></li><li><b>Defect in Platelet receptor</b>: Glanzmann’s thrombasthenia (AR) → <span class=\"hw\">2B3A</span> · Bernard-Soulier syndrome (AR) — <span class=\"hw\">ต่ำนิดหน่อย แต่ dysf(n)</span></li><li><b>Defect in granule content</b>: Gray platelet syndrome (AR/AD), Quebec platelet disorder (AD), Hermansky-Pudlak syndrome (AR), Chediak-Higashi syndrome (AR), Wiskott-Aldrich syndrome (XR)</li></ul></li><li><b>Acquire</b><ul><li><b>Extrinsic Platelet d/o</b><ul><li>Systemic dz: Uremia, Liver dysfunction, Paraproteinemia, DIC, Hypothermia, Cardiopulmonary bypass</li><li>Drug induced — Antiplatelet: Inh TXA2: ASA · Inh ADP: Clopidogrel · Inh GpIIbIIIa: Abciximab; Other: Inh TXA2: NSAIDs, Fish oil · Inh Ca influx: CCB · Inh serotonin: TCA, SSRI</li></ul></li><li><b>Intrinsic Platelet d/o</b>: PV, ET · MDS/ Leukemia</li></ul></li></ul><p><b>โน้ตลายมือ</b></p><ul><li><span class=\"hw\">APDE: Eosinophilia</span></li><li><span class=\"hw\">Pale platelet stain</span></li><li><span class=\"hw\">ต่อด้วยลูกศรขึ้นตามลำดับ: จำเลือดตามต่อ(?) ↑ รักษาตาม cause ที่เจอมาก ↑ พยาธิ, Asthma</span></li><li><span class=\"hw\">mens มาก, ถอนฟัน, เลือดหยุดยาก (ลูกศรจาก von Willerband disease → ครอบคลุม Afibrinogenemia ด้วย)</span></li><li><span class=\"hw\">ต่ำนิดหน่อย แต่ dysf(n)</span></li><li><span class=\"hw\">2B3A</span></li><li><span class=\"hw\">ปริมาณปกติ แต่ dysf(n)</span></li><li><span class=\"hw\">Drug: ASA, NSAIDs, Copidogrel → ให้ Tx FFP(?) ทดแทน</span></li><li><span class=\"hw\">Uremia, Malignancy</span></li><li><span class=\"hw\">HL นานกว่า ASA ☺ แก้ได้ช้ากว่า (เขียนใต้ Copidogrel)</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "lab-bt",
+   "html": "<p><b>เล่มเหลือง</b></p><p>Platelet count ปกติแต่สงสัยเกล็ดเลือดทำงานผิดปกติ → Platelet dysfunction (ดู 6.5)</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y65a",
+   "title": "Platelet dysfunction",
+   "src": "fig",
+   "img": "yb-6-5-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Platelet dysfunction",
+     "d": "<ul><li><span class=\"hw\">ปริมาณปกติ แต่ dysf(n)</span></li></ul>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Congenital"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Acquire",
+     "d": "<p><span class=\"hw\">ข้างกล่อง Acquire:</span></p><ul><li><span class=\"hw\">APDE: Eosinophilia</span></li><li><span class=\"hw\">Pale platelet stain</span></li><li><span class=\"hw\">ต่อด้วยลูกศรขึ้นตามลำดับ: จำเลือดตามต่อ(?) ↑ รักษาตาม cause ที่เจอมาก ↑ พยาธิ, Asthma</span></li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Defect in Coagulation factor",
+     "d": "<ul><li>von Willerband disease</li><li>Afibrinogenemia</li></ul><ul><li><span class=\"hw\">mens มาก, ถอนฟัน, เลือดหยุดยาก (ลูกศรจาก von Willerband disease → ครอบคลุม Afibrinogenemia ด้วย)</span></li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "dx",
+     "t": "Defect in Platelet receptor",
+     "d": "<ul><li><span class=\"hi\">Glanzmann’s thrombasthenia (AR)</span> → <span class=\"hw\">2B3A</span></li><li><span class=\"hi\">Bernard-Soulier syndrome (AR)</span></li></ul><ul><li><span class=\"hw\">ต่ำนิดหน่อย แต่ dysf(n)</span></li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "dx",
+     "t": "Defect in granule content",
+     "d": "<ul><li>Gray platelet syndrome (AR/AD)</li><li>Quebec platelet disorder (AD)</li><li>Hermansky-Pudlak syndrome (AR)</li><li>Chediak-Higashi syndrome (AR)</li><li>Wiskott-Aldrich syndrome (XR)</li></ul>"
+    },
+    {
+     "id": "g",
+     "k": "q",
+     "t": "Extrinsic Platelet d/o"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Intrinsic Platelet d/o",
+     "d": "<ul><li>PV, ET</li><li>MDS/ Leukemia</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Systemic dz",
+     "d": "<ul><li>Uremia</li><li>Liver dysfunction</li><li>Paraproteinemia</li><li>DIC</li><li>Hypothermia</li><li>Cardiopulmonary bypass</li></ul><ul><li><span class=\"hw\">Uremia, Malignancy</span></li></ul>"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Drug induced",
+     "d": "<p><b>Antiplatelet</b></p><ul><li>Inh TXA2: ASA</li><li>Inh ADP: Clopidogrel</li><li>Inh GpIIbIIIa: Abciximab</li></ul><p><b>Other</b></p><ul><li>Inh TXA2: NSAIDs, Fish oil</li><li>Inh Ca influx: CCB</li><li>Inh serotonin: TCA, SSRI</li></ul><ul><li><span class=\"hw\">Drug: ASA, NSAIDs, Copidogrel → ให้ Tx FFP(?) ทดแทน</span></li><li><span class=\"hw\">HL นานกว่า ASA ☺ แก้ได้ช้ากว่า (เขียนใต้ Copidogrel)</span></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Congenital"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Acquire"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "Defect in Coagulation factor"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Defect in Platelet receptor"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Defect in granule content"
+    },
+    {
+     "f": "c",
+     "t": "g",
+     "l": "Extrinsic Platelet d/o"
+    },
+    {
+     "f": "c",
+     "t": "h",
+     "l": "Intrinsic Platelet d/o"
+    },
+    {
+     "f": "g",
+     "t": "i",
+     "l": "Systemic dz"
+    },
+    {
+     "f": "g",
+     "t": "j",
+     "l": "Drug induced"
+    }
+   ],
+   "note": "ลายมือรอบ algorithm อยู่ในรายละเอียดของกล่อง · เกล็ดเลือดจำนวนปกติแต่ทำงานผิดปกติ"
+  }
+ ]
+}

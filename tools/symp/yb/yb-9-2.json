@@ -1,0 +1,140 @@
+{
+ "key": "9-2",
+ "en": "Drop attack and T-LOC",
+ "th": "วูบ หมดสติชั่วครู่ (drop attack / T-LOC)",
+ "pdf": "104–106",
+ "target": 5,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "def",
+   "id": "yb-9-2-droptloc",
+   "h": "Drop attack และ T-LOC (9.2)",
+   "html": "<div class=\"flow\" data-flow=\"y92a\"></div><figure><img src=\"symp/img/yb-9-2-f1.webp\" alt=\"Drop attack and T-LOC algorithm\"><figcaption>Drop attack and T-LOC — sudden fall without warning: without LOC / loss of consciousness → T-LOC (non-trauma: syncope, seizure, psychogenic; trauma: brain concussion)</figcaption></figure><p>สำหรับภาวะหมดสติชั่วครู่ ที่เจอได้บ่อยและมีความสำคัญทางเวชปฏิบัติ คือ ภาวะวูบ (syncope) กับภาวะชัก (seizure) โดยสิ่งที่สำคัญที่สุดคือการอาศัยประวัติจากผู้เห็นเหตุการณ์เป็นสำคัญ โดยประวัติที่สำคัญที่ใช้ในการแยกสองภาวะนี้ จะแบ่งออกเป็น 3 ส่วน คือ</p><ol><li>Before spell (ก่อนมีอาการหมดสติ)</li><li>During spell (ช่วงขณะหมดสติ)</li><li>After spell (ช่วงหลังหมดสติ)</li></ol><p>ซึ่งรายละเอียดของประวัติที่สำคัญได้แสดงดังในตารางหน้าถัดไป (ตารางเทียบ syncope กับ seizure — ดูหัวข้อ \"การประเมิน syncope: หมดสติเป็น syncope หรือไม่\")</p><p><span class=\"hw\">(ลายมือข้าง TIA) เป็นหลายครั้งได้ มักเกิดจาก plt., plaque ไปอุด(?)</span></p>"
+  },
+  {
+   "op": "sub",
+   "sec": "eval-is",
+   "id": "yb-9-2-table",
+   "h": "ตารางเทียบ Syncope vs Seizure (Before / During / After spell)",
+   "html": "<small>ตารางจากเล่มเหลืองหน้า 9.2 (ต่อ) · ไฮไลต์เหลือง = ของเจ้าของเล่ม</small><div class=\"tbl\"><table><thead><tr><th></th><th>Syncope<br><span class=\"hw\">อาการนำเยอะ ๆ ใจสั่น มึน ๆ(?)</span></th><th>Seizure<br><span class=\"hw\">อาการนำแปลก ๆ ex. กลิ่น, สีแสง</span></th></tr></thead><tbody><tr><td colspan=\"3\"><b>Before spell (ช่วงก่อนมีอาการหมดสติ)</b></td></tr><tr><td><span class=\"hi\">Trigger</span> (position, emotion, Valsalva)</td><td><span class=\"hi\">Common</span></td><td>Rare</td></tr><tr><td><span class=\"hi\">Sweating and nausea</span></td><td><span class=\"hi\">Common</span></td><td>Rare</td></tr><tr><td><span class=\"hi\">Aura</span> (e.g., déjà vu, smell) or unilateral symptoms</td><td>Rare</td><td><span class=\"hi\">Common</span></td></tr><tr><td colspan=\"3\"><b>During Spell (ช่วงมีอาการหมดสติ)</b></td></tr><tr><td><span class=\"hi\">Pallor</span></td><td><span class=\"hi\">Common</span></td><td>Rare</td></tr><tr><td><span class=\"hi\">Cyanosis</span></td><td>Rare</td><td><span class=\"hi\">Common</span></td></tr><tr><td>Duration of LOC <span class=\"hw\">(Loss of conscious)</span></td><td><span class=\"hi\">&lt;20 sec</span></td><td>&gt;60 sec</td></tr><tr><td>Movements</td><td>A few clonic or myoclonic jerks; brief tonic posturing (few seconds); duration &lt;15 sec; always begin after LOC</td><td>Prolonged tonic phase, transitioning to rhythmic <span class=\"hi\">clonic phase;</span> duration &gt;1 min; may begin at onset of LOC or before; unilateral jerking (partial seizure)</td></tr><tr><td><span class=\"hi\">Automatisms</span></td><td>Occasional</td><td><span class=\"hi\">Common</span> (in complex partial and secondarily generalized seizures)</td></tr><tr><td><span class=\"hi\">Tongue biting, lateral</span></td><td>Rare</td><td><span class=\"hi\">Occasional</span></td></tr><tr><td><span class=\"hi\">Frothing/hypersalivation</span></td><td>Rare</td><td><span class=\"hi\">Common</span></td></tr><tr><td colspan=\"3\"><b>After Spell (ช่วงหลังมีอาการหมดสติ)</b></td></tr><tr><td><span class=\"hi\">Confusion/disorientation</span></td><td>Rare; &lt;30 sec <span class=\"hw\">(มึนแป๊บ(?))</span></td><td><span class=\"hi\">Common;</span> several minutes or longer <span class=\"hw\">(postictal)</span></td></tr><tr><td><span class=\"hi\">Diffuse myalgias</span></td><td>Rare, brief, usually shoulders/chest</td><td><span class=\"hi\">Common,</span> hours to days</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "sub",
+   "sec": "eval-is",
+   "id": "yb-9-2-hand",
+   "h": "ลายมือแยก syncope กับ seizure (หน้า 1.3 ฉบับไฮไลต์)",
+   "html": "<small>หน้านี้เป็นหน้า 1.3 Syncope ซ้ำ (ลายมือเหมือนหน้า 13 ทุกจุด) แต่เจ้าของเล่มไฮไลต์เหลืองเพิ่ม — algorithm syncope ฉบับพิมพ์อยู่ในหัวข้อ 1.3 แล้ว ในที่นี้ใส่เฉพาะลายมือที่เกี่ยวกับการแยกกับ seizure และส่วนที่ไฮไลต์</small><h5>แยกกับ seizure</h5><ul><li><span class=\"hw\">= ชัก { มี jerking ได้ · ตอนเป็นจำเหตุการณ์ไม่ได้(?) }</span></li><li><span class=\"hw\">≠ ชัก { ไม่มี post ictal paralysis → (มี) disorientation · เป็นสั้นกว่า seizure (&lt;5 min) · visual aura ทวดำ(?) ← Migraine }</span></li><li><span class=\"hw\">หลังชัก → Postictal disorientation · muscle sore (, มี aura เป็นภาพสี) · cyanosis ปากเขียว · ซึม &gt;1 ชม.</span></li><li><span class=\"hw\">Syncope: motor manifest &lt;15 sec</span></li></ul><h5>Triad of syncope (ลายมือ — ไฮไลต์เหลือง)</h5><ol><li><span class=\"hw\">Transient loss of conscious</span></li><li><span class=\"hw\">Loss of postural tone</span></li><li><span class=\"hw\">Brief episode, spontaneous recovery</span></li></ol><h5>ส่วนที่ไฮไลต์เหลืองในหน้านี้</h5><ul><li>Syncope (ชื่อ algorithm)</li><li>Reflex syncope · Orthostatic hypotension · Cardiac syncope</li><li>ลายมือ \"แยกกับ seizure\" และโน้ต = ชัก / ≠ ชัก ทั้งสองชุด</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y92a",
+   "title": "Drop attack (9.2) — Drop attack and T-LOC",
+   "src": "fig",
+   "img": "yb-9-2-f1.webp",
+   "note": "ไฮไลต์เหลืองในรูป = ของเจ้าของเล่ม · ลายมือ 1 จุดข้าง TIA ใส่ใน d ของกล่อง Without loss of consciousness",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Drop attack: Sudden fall occurring without warning"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Without loss of consciousness",
+     "d": "<ul><li>Presyncope</li><li>TIA: Transient ischemic attack — Vertebrobasilar artery, ACA <span class=\"hw\">(ลายมือ) เป็นหลายครั้งได้ มักเกิดจาก plt., plaque ไปอุด(?)</span></li><li>3rd ventricle/posterior fossa tumor</li><li>Chiari malformation</li><li>Otolithic crisis (Vestibular drop attack in Meniere disease)</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Transient, rapid onset, short duration, spontaneous recovery?",
+     "d": "<ul><li>Transient</li><li>Rapid onset</li><li>Short duration</li><li>Spontaneous recovery</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "dx",
+     "t": "Coma · Aborted SCD"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "T-LOC: Transient Loss of consciousness"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Non-trauma"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Brain concussion"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Syncope"
+    },
+    {
+     "id": "i",
+     "k": "dx",
+     "t": "Seizure"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Psychgenic"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Without loss of consciousness"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Loss of consciousness"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "No"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "Yes"
+    },
+    {
+     "f": "e",
+     "t": "f",
+     "l": "Non-trauma"
+    },
+    {
+     "f": "e",
+     "t": "g",
+     "l": "Trauma"
+    },
+    {
+     "f": "f",
+     "t": "h",
+     "l": "Syncope"
+    },
+    {
+     "f": "f",
+     "t": "i",
+     "l": "Seizure"
+    },
+    {
+     "f": "f",
+     "t": "j",
+     "l": "Psychgenic"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,154 @@
+{
+ "key": "4-7",
+ "en": "Hematuria",
+ "th": "ปัสสาวะเป็นเลือด (Hematuria)",
+ "pdf": "59",
+ "target": 28,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-4-7-algo",
+   "h": "Hematuria — algorithm (เล่มเหลือง)",
+   "html": "<div class=\"flow\" data-flow=\"y47a\"></div><ul><li>Microscopic hematuria: RBC &gt; 3 /HPF · Macroscopic hematuria: Grossly visible</li><li>Exclude: Bleeding disorder (Plt↓, Plt dysfunction, Coagulopathy) · Exclude: Menstruation</li></ul><div class=\"tbl\"><table><thead><tr><th></th><th>Glomerular</th><th>Non-Glomerular</th></tr></thead><tbody><tr><td><b>Micro</b></td><td>dysmorphic RBC, RBC cast</td><td>No dysmorphic RBC/ RBC cast</td></tr><tr><td><b>Proteinuria</b></td><td>variable</td><td>usually &lt; 500 mg/d</td></tr><tr><td><b>Appearance</b></td><td>no clot</td><td>Clot</td></tr></tbody></table></div><p><small>เจ้าของเล่มไฮไลต์สีชมพู: RBC &gt; 3 /HPF, Grossly visible, Bleeding disorder, Menstruation, Glomerular, dysmorphic RBC/RBC cast, Non-Glomerular, Clot, Isolated, proteinuria · ไฮไลต์สีฟ้า: IgA nephropathy, Alport syndrome, Thin basement membrane dz</small></p>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-glom",
+   "html": "<ul><li><span class=\"tag\">เล่มเหลือง</span> Glomerular<ul><li>Isolated hematuria: <span class=\"hi\">IgA nephropathy, Alport syndrome, Thin basement membrane dz</span></li><li>With proteinuria: IgM nephropathy · FSGS, MN · PSGN, LN</li></ul></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-nonglom",
+   "html": "<ul><li><span class=\"tag\">เล่มเหลือง</span> Non-Glomerular<ul><li>Vascular: Arterial thrombosis or embolism · Renal v thrombosis · AV malformation</li><li>Interstitial: Renal cystic disease · Interstitial nephritis · Analgesic nephropathy</li><li>Uroepithelium: Infection: cystitis · Trauma · Tumor: CA bladder · Urinary calculi · Exercise</li><li>Site unspecified: Hypercalciuria · Hyperuricosuria</li></ul></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y47a",
+   "title": "Hematuria",
+   "src": "fig",
+   "img": "yb-4-7-f1.webp",
+   "note": "เจ้าของเล่มไฮไลต์สีชมพู/ฟ้าบนหลายกล่อง (ใส่ไฮไลต์ไว้ในรายละเอียดกล่อง)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Hematuria",
+     "d": "<ul><li>Microscopic hematuria: <span class=\"hi\">RBC &gt; 3 /HPF</span></li><li>Macroscopic hematuria: <span class=\"hi\">Grossly visible</span></li></ul>"
+    },
+    {
+     "id": "ex1",
+     "k": "stop",
+     "t": "Exclude: Bleeding disorder",
+     "d": "<p>Plt↓, Plt dysfunction, Coagulopathy</p>"
+    },
+    {
+     "id": "ex2",
+     "k": "stop",
+     "t": "Exclude: Menstruation"
+    },
+    {
+     "id": "glo",
+     "k": "q",
+     "t": "Glomerular",
+     "d": "<ul><li>Micro: <span class=\"hi\">dysmorphic RBC, RBC cast</span></li><li>Proteinuria: variable</li><li>Appearance: no clot</li></ul>"
+    },
+    {
+     "id": "ng",
+     "k": "q",
+     "t": "Non-Glomerular",
+     "d": "<ul><li>Micro: No dysmorphic RBC/ RBC cast</li><li>Proteinuria: usually &lt; 500 mg/d</li><li>Appearance: <span class=\"hi\">Clot</span></li></ul>"
+    },
+    {
+     "id": "iso",
+     "k": "dx",
+     "t": "Isolated hematuria",
+     "d": "<ul><li>IgA nephropathy</li><li>Alport syndrome</li><li>Thin basement membrane dz</li></ul>"
+    },
+    {
+     "id": "wp",
+     "k": "dx",
+     "t": "With proteinuria",
+     "d": "<ul><li>IgM nephropathy</li><li>FSGS, MN</li><li>PSGN, LN</li></ul>"
+    },
+    {
+     "id": "vas",
+     "k": "dx",
+     "t": "Vascular",
+     "d": "<ul><li>Arterial thrombosis or embolism</li><li>Renal v thrombosis</li><li>AV malformation</li></ul>"
+    },
+    {
+     "id": "int",
+     "k": "dx",
+     "t": "Interstitial",
+     "d": "<ul><li>Renal cystic disease</li><li>Interstitial nephritis</li><li>Analgesic nephropathy</li></ul>"
+    },
+    {
+     "id": "uro",
+     "k": "dx",
+     "t": "Uroepithelium",
+     "d": "<ul><li>Infection: cystitis</li><li>Trauma</li><li>Tumor: CA bladder</li><li>Urinary calculi</li><li>Exercise</li></ul>"
+    },
+    {
+     "id": "su",
+     "k": "dx",
+     "t": "Site unspecified",
+     "d": "<ul><li>Hypercalciuria</li><li>Hyperuricosuria</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ex1",
+     "l": "Exclude"
+    },
+    {
+     "f": "a",
+     "t": "ex2",
+     "l": "Exclude"
+    },
+    {
+     "f": "a",
+     "t": "glo",
+     "l": "Glomerular"
+    },
+    {
+     "f": "a",
+     "t": "ng",
+     "l": "Non-Glomerular"
+    },
+    {
+     "f": "glo",
+     "t": "iso",
+     "l": "Isolated hematuria"
+    },
+    {
+     "f": "glo",
+     "t": "wp",
+     "l": "With proteinuria"
+    },
+    {
+     "f": "ng",
+     "t": "vas",
+     "l": "Vascular"
+    },
+    {
+     "f": "ng",
+     "t": "int",
+     "l": "Interstitial"
+    },
+    {
+     "f": "ng",
+     "t": "uro",
+     "l": "Uroepithelium"
+    },
+    {
+     "f": "ng",
+     "t": "su",
+     "l": "Site unspecified"
+    }
+   ]
+  }
+ ]
+}

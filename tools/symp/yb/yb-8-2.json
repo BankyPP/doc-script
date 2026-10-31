@@ -1,0 +1,98 @@
+{
+ "key": "8-2",
+ "en": "Low back pain",
+ "th": "ปวดหลังส่วนล่าง",
+ "pdf": "99",
+ "target": 30,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-8-2-algo",
+   "h": "Low back pain — แผนผังแยกโรค (mechanical / non-mechanical / referred)",
+   "html": "<div class=\"flow\" data-flow=\"y82a\"></div><ul><li><b>Mechanical LBP (97%)</b>: Lumbar sprain/strain · Lumbar disc (Degeneration, Herniated disc) · Bone (Osteoporotic compression Fx, Spondylolisthesis, Traumatic Fx, severe Kyphosis/scoliosis)</li><li><b>Non-mechanical spinal condition (1%)</b> — Neoplasm: Multiple myeloma, Metastatic CA, Lymphoma/leukemia, Cord tumor, 1<sup>0</sup> vertebral tumor · Infection: Osteomyelitis, Septic diskitis, Paraspinous abscess, Epidural abscess · Inflammatory arthritis: Ankylosing spondylitis, Psoriatic spondylitits, Reiter syndrome, Inflammatory bowel dz</li><li><b>Referred pain (2%)</b> — Pelvic organ: Prostatitis, Endometritis, Chronic PID · Renal disease: Nephrolithiasis, Pyelonephritis, Perinephric abscess · AAA · GI disease: Pancreatitis, Penetrating ulcer</li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y82a",
+   "title": "Low back pain",
+   "src": "fig",
+   "img": "yb-8-2-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Low back pain"
+    },
+    {
+     "id": "mech",
+     "k": "dx",
+     "t": "Mechanical LBP (97%)",
+     "d": "<b>Lumbar sprain/strain</b><br><b>Lumbar Disc</b><ul><li>Degeneration</li><li>Herniated disc</li></ul><b>Bone</b><ul><li>Osteoporotic compression Fx</li><li>Spondylolisthesis</li><li>Traumatic Fx</li><li>severe Kyphosis/scoliosis</li></ul>"
+    },
+    {
+     "id": "non",
+     "k": "dx",
+     "t": "Non-mechanical spinal condition (1%)"
+    },
+    {
+     "id": "ref",
+     "k": "dx",
+     "t": "Referred pain (2%)",
+     "d": "<b>Pelvic organ</b><ul><li>Prostatitis</li><li>Endometritis</li><li>Chronic PID</li></ul><b>Renal disease</b><ul><li>Nephrolithiasis</li><li>Pyelonephritis</li><li>Perinephric abscess</li></ul><b>AAA</b><br><b>GI disease</b><ul><li>Pancreatitis</li><li>Penetrating ulcer</li></ul>"
+    },
+    {
+     "id": "neo",
+     "k": "dx",
+     "t": "Neoplasm",
+     "d": "<ul><li>Multiple myeloma</li><li>Metastatic CA</li><li>Lymphoma/leukemia</li><li>Cord tumor</li><li>1<sup>0</sup> vertebral tumor</li></ul>"
+    },
+    {
+     "id": "inf",
+     "k": "dx",
+     "t": "Infection",
+     "d": "<ul><li>Osteomyelitis</li><li>Septic diskitis</li><li>Paraspinous abscess</li><li>Epidural abscess</li></ul>"
+    },
+    {
+     "id": "inflam",
+     "k": "dx",
+     "t": "Inflammatory arthritis",
+     "d": "<ul><li>Ankylosing spondylitis</li><li>Psoriatic spondylitits</li><li>Reiter syndrome</li><li>Inflammatory bowel dz</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "mech",
+     "l": "Mechanical LBP (97%)"
+    },
+    {
+     "f": "a",
+     "t": "non",
+     "l": "Non-mechanical spinal condition (1%)"
+    },
+    {
+     "f": "a",
+     "t": "ref",
+     "l": "Referred pain (2%)"
+    },
+    {
+     "f": "non",
+     "t": "neo",
+     "l": "Neoplasm"
+    },
+    {
+     "f": "non",
+     "t": "inf",
+     "l": "Infection"
+    },
+    {
+     "f": "non",
+     "t": "inflam",
+     "l": "Inflammatory arthritis"
+    }
+   ]
+  }
+ ]
+}

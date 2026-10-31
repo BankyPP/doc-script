@@ -1,0 +1,542 @@
+{
+ "key": "3-7",
+ "en": "Acute diarrhea",
+ "th": "ท้องเสียเฉียบพลัน",
+ "pdf": "45",
+ "target": 22,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dia-cause",
+   "id": "yb-3-7-approach",
+   "h": "Algorithm Acute diarrhea (เล่มเหลือง + ลายมือ)",
+   "html": "<figure><img src=\"symp/img/yb-3-7-f1.webp\" alt=\"Algorithm Acute diarrhea พร้อมลายมือ\"><figcaption>3.7 Acute diarrhea — เล่มเหลือง (ลายมือหลายสี)</figcaption></figure><div class=\"flow\" data-flow=\"y37a\"></div><h4>History / PE / Lab (ลายมือรอบแผนภูมิ)</h4><div class=\"flow\" data-flow=\"y37c\"></div>",
+   "sub": [
+    {
+     "id": "yb-3-7-slide",
+     "h": "สไลด์แทรก: Infectious diarrhea",
+     "html": "<p><small>(หน้าแทรกจากตำราอื่นในเล่มเหลือง)</small></p><figure><img src=\"symp/img/yb-3-7-f2.webp\" alt=\"สไลด์ Infectious diarrhea\"><figcaption>สไลด์แทรก — Infectious diarrhea (มีลายมือเล็ก ๆ)</figcaption></figure><div class=\"flow\" data-flow=\"y37b\"></div>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "dia-hx",
+   "html": "<p><b>เล่มเหลือง</b> (ลายมือน้ำเงิน — ซักประวัติ)</p><ul><li><span class=\"hw\">onset: เริ่มเป็นเมื่อไร? · duration · character: กลิ่นเหม็นคาว? กลิ่นหน่วงๆเน่า(?)? ลักษณะ น้ำ, มูกเลือด? · ปริมาณ/กี่ครั้ง?</span></li><li><span class=\"hw\">กินอาหารไม่สะอาด? คนที่กินด้วยเป็นป่ะ?</span></li><li><span class=\"hw\">ไข้? N/V? · ปวดท้อง? กี่นาที ปวดที่ส่วนไหน? บิด, เสียด?</span></li><li><span class=\"hw\">* ประวัติยา (colchicine) · ประวัติ ATB ต่าง ๆ</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-pe",
+   "html": "<p><b>เล่มเหลือง</b> (ลายมือชมพู — PE)</p><ul><li><span class=\"hw\">PE: VS, BMI, GA</span></li><li><span class=\"hw\">sign of dehydration — dry lip? sunken eyeball? skin turgor? cap. refill?</span></li><li><span class=\"hw\">surgical condition: guarding? tenderness?</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-acute",
+   "html": "<p><b>เล่มเหลือง</b> (ลายมือม่วง — Lab)</p><ul><li><b>Lab for diagnosis:</b> <span class=\"hw\">stool culture, stool exam · stool conc. for parasite · C. diff toxin · Sigmoido-/Colonoscope · Thyroid function test</span></li><li><b>Lab for management:</b> <span class=\"hw\">CBC · E'lyte · BUN/Cr ดูการทำงานของไต</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-cause",
+   "html": "<p><b>เล่มเหลือง</b> — Acute diarrhea: Infection (&gt; 90%) / Non-Infection (&lt; 10%)</p><ul><li><b>Infection — Watery diarrhea (Non-inflammatory)</b><ul><li>Vomiting dominant → Disease caused by Toxin → Food poisoning: Enterotoxin from S. aureus, B. cereus, C. perfringen</li><li>Diarrhea/Abd pain dominant → Disease caused by Organism: Virus (Norovirus, Rotavirus <span class=\"hw\">ใน adult</span>) · Bacteria (ETEC, Vibrio; Yersinia, Aeromonas; Campylobacter; C. difficile <span class=\"hw\">chemo, ATB(?), on PPI</span>) · Protozoa (Giardia lambia, Cryptosporidium, Cyclospora)</li></ul></li><li><b>Infection — Mucous bloody diarrhea (Inflammatory)</b>: Virus (CMV <span class=\"hw\">→ immunocompromised, HIV, organ transplant</span>) · Bacteria — Cytotoxin (EHEC, C. difficile <span class=\"hw\">toxin megacolon, ท้องอืด</span>; V. parahemolyticus <span class=\"hw\">→ อาหารทะเล</span>) · Mucosal invasion (EIEC, Shigella, Salmonella <span class=\"hw\">→ arthritis</span>; Aeromonas, yersinia; Plesiomonas) · Protozoa (E. Histolytica <span class=\"hw\">liver abscess; ลำไส้ใหญ่: flask shape ulcer</span>)</li><li><b>Non-Infection</b>: Drug (Colchicine, laxative) · Toxin (Organophosphate, Mushroom, Seafood: shellfish) · Food Allergy (Anaphylaxis) · Inflam. (diverticulitis, IBD, Radiation) · Infarct (Ischemic colitis) · Endocrine (Hyperthyroidism)</li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "dia-def",
+   "html": "<p><b>เล่มเหลือง</b> — &lt; 2 wk: Acute / 2–4 wk: Persistent / &gt; 4 wk: Chronic</p>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y37a",
+   "title": "3.7 Acute diarrhea",
+   "src": "fig",
+   "img": "yb-3-7-f1.webp",
+   "note": "ลายมือหลายสี (น้ำเงิน=ซักประวัติ, ม่วง=lab, ชมพู/แดง=PE, น้ำตาล/ดำ=โน้ตเล็ก) ใส่ใน d ของกล่อง · ไฮไลต์เหลือง: Watery diarrhea, Vomiting dominant, by Toxin, Food poisoning, S. aureus/B. cereus/C. perfringen · ส่วน Lab/PE ลายมือแยกเป็นแผนภูมิ y37c · วงเล็บ (1) มุมซ้ายบนเป็นหมายเลขหน้า",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Acute diarrhea — < 2 wk: Acute / 2–4 wk: Persistent / > 4 wk: Chronic",
+     "d": "<p><span class=\"hw\">onset: เริ่มเป็นเมื่อไร? · duration · character: กลิ่นเหม็นคาว? กลิ่นหน่วงๆเน่า(?)? ลักษณะ น้ำ, มูกเลือด? · ปริมาณ/กี่ครั้ง?</span></p>"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Infection (> 90%)",
+     "d": "<span class=\"hw\">กินอาหารไม่สะอาด? คนที่กินด้วยเป็นป่ะ? · ไข้? N/V? · ปวดท้อง? กี่นาที ปวดที่ส่วนไหน? บิด, เสียด?</span>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Non-Infection (< 10%)",
+     "d": "<span class=\"hw\">* ประวัติยา (colchicine) · ประวัติ ATB ต่าง ๆ</span>"
+    },
+    {
+     "id": "w",
+     "k": "q",
+     "t": "Watery diarrhea (Non-inflammatory)"
+    },
+    {
+     "id": "m",
+     "k": "q",
+     "t": "Mucous bloody diarrhea (Inflammatory)",
+     "d": "<span class=\"hw\">[อ่านไม่ออก] (ตัวหนังสือเล็กสีชมพูเหนือกล่อง)</span>"
+    },
+    {
+     "id": "w1",
+     "k": "q",
+     "t": "Vomiting dominant"
+    },
+    {
+     "id": "w2",
+     "k": "q",
+     "t": "Diarrhea/Abd pain dominant"
+    },
+    {
+     "id": "w1a",
+     "k": "dx",
+     "t": "Disease caused by Toxin → Food poisoning: Enterotoxin from 1. S. aureus · 2. B. cereus · C. perfringen",
+     "d": "<ul><li>Enterotoxin from<ol><li>S. aureus</li><li>B. cereus</li></ol></li><li>C. perfringen</li></ul>"
+    },
+    {
+     "id": "w2a",
+     "k": "q",
+     "t": "Disease caused by Organism"
+    },
+    {
+     "id": "w2v",
+     "k": "dx",
+     "t": "Virus: Norovirus, Rotavirus",
+     "d": "<ul><li>Norovirus, Rotavirus</li></ul><p><span class=\"hw\">ถ้ามีอาเจียนด้วย(?) · ใน adult · (Rotavirus ไฮไลต์ฟ้า)</span></p>"
+    },
+    {
+     "id": "w2b",
+     "k": "dx",
+     "t": "Bacteria: ETEC, Vibrio · Yersinia, Aeromonas · Campylobacter · C. difficile",
+     "d": "<ul><li>ETEC, Vibrio</li><li>Yersinia, Aeromonas</li><li>Campylobacter</li><li>C. difficile</li></ul><p><span class=\"hw\">Vibrio: severe มาก / มัก epidemic · 20–30 ปี past. · มักระบาด(?) · ถ่ายมาก ๆ · watery ตลอดเวลา(?) · ถ่ายมาก จน shock</span></p><p><span class=\"hw\">C. difficile: chemo, ATB(?), on PPI</span></p>"
+    },
+    {
+     "id": "w2p",
+     "k": "dx",
+     "t": "Protozoa: Giardia lambia, Cryptosporidium, Cyclospora",
+     "d": "<ul><li>Giardia lambia</li><li>Cryptosporidium</li><li>Cyclospora</li></ul>"
+    },
+    {
+     "id": "m1",
+     "k": "dx",
+     "t": "Virus: CMV",
+     "d": "<ul><li>CMV</li></ul><p><span class=\"hw\">→ immunocompromised (# มักพบใน HIV, organ transplant)</span></p>"
+    },
+    {
+     "id": "m2",
+     "k": "dx",
+     "t": "Bacteria — Cytotoxin: EHEC, C. difficile · V. parahemolyticus",
+     "d": "<ul><li><i>Cytotoxin</i><ul><li>EHEC, C. difficile</li><li>V. parahemolyticus</li></ul></li></ul><p><span class=\"hw\">toxin megacolon · ท้องอืด · Lab ส่งตรวจ stool < 1 hr. → ∴ [อ่านไม่ออก] spec [อ่านไม่ออก]</span></p><p><span class=\"hw\">V. parahemolyticus → อาหารทะเล</span></p>"
+    },
+    {
+     "id": "m3",
+     "k": "dx",
+     "t": "Mucosal invasion: EIEC, Shigella · Salmonella · Aeromonas, yersinia · Plesiomonas",
+     "d": "<ul><li>EIEC, Shigella (ไฮไลต์ชมพู)</li><li>Salmonella (ไฮไลต์ชมพู)</li><li>Aeromonas, yersinia</li><li>Plesiomonas</li></ul><p><span class=\"hw\">Shigella, Salmonella → arthritis</span></p><p><span class=\"hw\">Plesiomonas: [อ่านไม่ออก] อาหารทะเล(?)</span></p>"
+    },
+    {
+     "id": "m4",
+     "k": "dx",
+     "t": "Protozoa: E. Histolytica",
+     "d": "<ul><li>E. Histolytica</li></ul><p><span class=\"hw\">liver abscess: [ปวด/ตับโต อ่านไม่ออกบางส่วน] · ลำไส้ใหญ่: flask shape ulcer</span></p>"
+    },
+    {
+     "id": "c1",
+     "k": "dx",
+     "t": "Drug: Colchicine, laxative"
+    },
+    {
+     "id": "c2",
+     "k": "dx",
+     "t": "Toxin: Organophosphate · Mushroom · Seafood: shellfish",
+     "d": "<ul><li>Organophosphate</li><li>Mushroom</li><li>Seafood: shellfish</li></ul>"
+    },
+    {
+     "id": "c3",
+     "k": "dx",
+     "t": "Food Allergy: Anaphylaxis"
+    },
+    {
+     "id": "c4",
+     "k": "dx",
+     "t": "Inflam.: diverticulitis · IBD · Radiation",
+     "d": "<ul><li>diverticulitis</li><li>IBD</li><li>Radiation</li></ul>"
+    },
+    {
+     "id": "c5",
+     "k": "dx",
+     "t": "Infarct: Ischemic colitis"
+    },
+    {
+     "id": "c6",
+     "k": "dx",
+     "t": "Endocrine: Hyperthyroidism"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "a",
+     "t": "c"
+    },
+    {
+     "f": "b",
+     "t": "w",
+     "l": "Watery diarrhea"
+    },
+    {
+     "f": "b",
+     "t": "m",
+     "l": "Mucous bloody diarrhea"
+    },
+    {
+     "f": "w",
+     "t": "w1",
+     "l": "Vomiting dominant"
+    },
+    {
+     "f": "w",
+     "t": "w2",
+     "l": "Diarrhea/Abd pain dominant"
+    },
+    {
+     "f": "w1",
+     "t": "w1a"
+    },
+    {
+     "f": "w2",
+     "t": "w2a"
+    },
+    {
+     "f": "w2a",
+     "t": "w2v",
+     "l": "Virus"
+    },
+    {
+     "f": "w2a",
+     "t": "w2b",
+     "l": "Bacteria"
+    },
+    {
+     "f": "w2a",
+     "t": "w2p",
+     "l": "Protozoa"
+    },
+    {
+     "f": "m",
+     "t": "m1",
+     "l": "Virus"
+    },
+    {
+     "f": "m",
+     "t": "m2",
+     "l": "Bacteria: Cytotoxin"
+    },
+    {
+     "f": "m",
+     "t": "m3",
+     "l": "Mucosal invasion"
+    },
+    {
+     "f": "m",
+     "t": "m4",
+     "l": "Protozoa"
+    },
+    {
+     "f": "c",
+     "t": "c1",
+     "l": "Drug"
+    },
+    {
+     "f": "c",
+     "t": "c2",
+     "l": "Toxin"
+    },
+    {
+     "f": "c",
+     "t": "c3",
+     "l": "Food Allergy"
+    },
+    {
+     "f": "c",
+     "t": "c4",
+     "l": "Inflam."
+    },
+    {
+     "f": "c",
+     "t": "c5",
+     "l": "Infarct"
+    },
+    {
+     "f": "c",
+     "t": "c6",
+     "l": "Endocrine"
+    }
+   ]
+  },
+  {
+   "id": "y37b",
+   "title": "Infectious diarrhea (สไลด์แทรก)",
+   "src": "fig",
+   "img": "yb-3-7-f2.webp",
+   "note": "หน้าแทรกเป็นสไลด์พื้นดำจากแหล่งอื่น มีลายมือสีเล็กเขียนทับ · เส้นใต้สีแดง/ส้ม ไม่มีข้อความ",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Diarrhea"
+    },
+    {
+     "id": "ac",
+     "k": "q",
+     "t": "Acute"
+    },
+    {
+     "id": "ch",
+     "k": "q",
+     "t": "Chronic (ภูมิต่ำ)"
+    },
+    {
+     "id": "bl",
+     "k": "q",
+     "t": "Bloody"
+    },
+    {
+     "id": "nb",
+     "k": "q",
+     "t": "Non-Bloody"
+    },
+    {
+     "id": "b1",
+     "k": "dx",
+     "t": "Salmonella-Shigella Agar: *fever* Shigella, EHEC/EIEC, Salmonella, Yersinia (GNR)",
+     "d": "<ul><li><b>Salmonella-Shigella Agar:</b> *fever* Shigella, EHEC/EIEC, Salmonella, Yersinia (GNR)</li></ul><p><span class=\"hw\">ติดสี(ดำ?) = Entamoeba(?) · ไม่ติดสี = Shigella (ลายมือเล็กเหนือสไลด์ อ่านชื่อแรกได้ไม่ชัด) · ดำ ↑ Salmonella · ใส ↑ Shigella · Hemor. E. coli (EHEC) · invasive E. coli (EIEC)</span></p>"
+    },
+    {
+     "id": "b2",
+     "k": "dx",
+     "t": "Campylobacter (GNR Gullwing appearance)"
+    },
+    {
+     "id": "b3",
+     "k": "dx",
+     "t": "Clostridium difficile (GPR, ATB) → Pseudomembranous colitis, toxin",
+     "d": "<span class=\"hw\">→ long use of β-lactams AB. · toxin</span>"
+    },
+    {
+     "id": "b4",
+     "k": "dx",
+     "t": "Parasite (Entamoeba histolytica)"
+    },
+    {
+     "id": "v",
+     "k": "dx",
+     "t": "Viral — Norovirus (Adult), Rotavirus (Kids): Cruise ship, Conference, Cafeteria",
+     "d": "<span class=\"hw\">คนที่กินร่วมกันเป็นด้วย(?) (ลายมือเล็กเหนือ Norovirus)</span>"
+    },
+    {
+     "id": "vi",
+     "k": "q",
+     "t": "Vibrio (Watery) — Shooting star"
+    },
+    {
+     "id": "vc",
+     "k": "dx",
+     "t": "Vibrio cholerae",
+     "d": "<p>V. cholerae — cholera toxin (ภาพ: จาก prophage → ganglioside receptor → A1 coupled to G-protein → adenylate cyclase → cAMP → H<sub>2</sub>O, NaCl ออก)</p><p>ภาพถ่ายถังอุจจาระน้ำซาวข้าว (rice-water stool)</p>"
+    },
+    {
+     "id": "vp",
+     "k": "dx",
+     "t": "Vibrio parahaemolyticus (with fever)"
+    },
+    {
+     "id": "vv",
+     "k": "dx",
+     "t": "Vibrio vulnificus (Oyster)",
+     "d": "<span class=\"hw\">คนไข้โรคตับกินหอยนางรม(?) → sepsis</span>"
+    },
+    {
+     "id": "et",
+     "k": "dx",
+     "t": "ETEC (Adult) · EPEC (Kids)",
+     "d": "<span class=\"hw\">ETEC: toxin, traveler · EPEC: patho</span>"
+    },
+    {
+     "id": "he",
+     "k": "dx",
+     "t": "Helminths",
+     "d": "<span class=\"hw\">[อ่านไม่ออก]</span>"
+    },
+    {
+     "id": "pc",
+     "k": "dx",
+     "t": "Cystoisospora · Cryptosporidium · Cyclospora · Microsporidia · Giardia (P. = protozoa) · Capillaria",
+     "d": "<ul><li>Cystoisospora</li><li>Cryptosporidium</li><li>Cyclospora</li><li>Microsporidia</li><li>Giardia</li><li>Capillaria</li></ul><p><span class=\"hw\">P. (protozoa)</span></p>"
+    },
+    {
+     "id": "tb",
+     "k": "dx",
+     "t": "Tuberculous colitis",
+     "d": "<span class=\"hw\">TB.</span>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ac",
+     "l": "Acute"
+    },
+    {
+     "f": "a",
+     "t": "ch",
+     "l": "Chronic"
+    },
+    {
+     "f": "ac",
+     "t": "bl",
+     "l": "Bloody"
+    },
+    {
+     "f": "ac",
+     "t": "nb",
+     "l": "Non-Bloody"
+    },
+    {
+     "f": "bl",
+     "t": "b1"
+    },
+    {
+     "f": "bl",
+     "t": "b2"
+    },
+    {
+     "f": "bl",
+     "t": "b3"
+    },
+    {
+     "f": "bl",
+     "t": "b4"
+    },
+    {
+     "f": "nb",
+     "t": "v",
+     "l": "Viral"
+    },
+    {
+     "f": "nb",
+     "t": "vi",
+     "l": "Vibrio"
+    },
+    {
+     "f": "nb",
+     "t": "et",
+     "l": "ETEC/EPEC"
+    },
+    {
+     "f": "nb",
+     "t": "he",
+     "l": "Helminths"
+    },
+    {
+     "f": "vi",
+     "t": "vc"
+    },
+    {
+     "f": "vi",
+     "t": "vp"
+    },
+    {
+     "f": "vi",
+     "t": "vv"
+    },
+    {
+     "f": "ch",
+     "t": "pc"
+    },
+    {
+     "f": "ch",
+     "t": "tb"
+    }
+   ]
+  },
+  {
+   "id": "y37c",
+   "title": "Approach acute diarrhea — ลายมือ (history, PE, lab)",
+   "src": "text",
+   "note": "เรียบเรียงจากลายมือรอบ algorithm 3.7 (ลำดับตามที่เขียน ไม่มีลูกศรในเล่ม)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "ซักประวัติ (ลายมือน้ำเงิน)",
+     "d": "<span class=\"hw\">onset · duration · character · ปริมาณ/กี่ครั้ง · กินอาหารไม่สะอาด/คนที่กินด้วยกันเป็นไหม · ไข้ N/V · ปวดท้อง · ประวัติยา (colchicine) ATB</span>"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "PE: VS, BMI, GA",
+     "d": "<span class=\"hw\">PE: VS, BMI, GA</span>"
+    },
+    {
+     "id": "b1",
+     "k": "act",
+     "t": "sign of dehydration: dry lip? sunken eyeball? skin turgor? cap. refill?",
+     "d": "<span class=\"hw\">sign of dehydration — dry lip? sunken eyeball? skin turgor? cap. refill?</span>"
+    },
+    {
+     "id": "b2",
+     "k": "act",
+     "t": "surgical condition: guarding? tenderness?",
+     "d": "<span class=\"hw\">surgical condition: guarding? tenderness?</span>"
+    },
+    {
+     "id": "c",
+     "k": "act",
+     "t": "Lab for diagnosis",
+     "d": "<span class=\"hw\">stool culture, stool exam · stool conc. for parasite · C. diff toxin · Sigmoido-/Colonoscope · Thyroid function test</span>"
+    },
+    {
+     "id": "d",
+     "k": "act",
+     "t": "Lab for management",
+     "d": "<span class=\"hw\">CBC · E'lyte · BUN/Cr ดูการทำงานของไต</span>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "b1"
+    },
+    {
+     "f": "b",
+     "t": "b2"
+    },
+    {
+     "f": "b1",
+     "t": "c"
+    },
+    {
+     "f": "b2",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,245 @@
+{
+ "key": "6-9",
+ "en": "Lymphadenopathy",
+ "th": "ต่อมน้ำเหลืองโต (lymphadenopathy)",
+ "pdf": "86–88",
+ "target": 11,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "yb-6-9-algo",
+   "h": "Algorithm: Lymphadenopathy (Generalized vs Localized)",
+   "html": "<div class=\"flow\" data-flow=\"y69a\"></div><ul><li><b>Generalized</b><ul><li><b>Malignancy</b>: Hematologic (ALL/CLL · Lymphoma → Hodgkin dz / NHL: Indolent = SLL, FCL, MZL; Aggressive = DLCL, Mantle cell) · Metastasis</li><li><b>Infection</b>: Virus (HIV, Infectious mononucleosis) · Bacteria (Streptococcus) · Mycobacteria (TB, NTM: MAC) · Other (Toxoplasma)</li><li><b>Immunologic</b>: SLE</li><li><b>Miscellaneous</b>: Amyloidosis, Sarcoidosis, Castleman disease, Kikuchi disease, Kimura disease</li></ul></li><li><b>Localized</b> → ดูหน้าถัดไป (ตารางตามตำแหน่งอยู่ในหัวข้อต่อมน้ำเหลืองโตเฉพาะที่)</li></ul><p>SLL: Small Lymphocytic Lymphoma · FCL: Follicular Central cell Lymphoma · MZL: Marginal Zone Lymphoma · DLCL: Diffuse Large Cell lymphoma</p>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-cervical",
+   "html": "<p><b>เล่มเหลือง — Localized Lymphadenopathy of head and neck region</b></p><figure><img src=\"symp/img/yb-6-9-f2.webp\" alt=\"ตำแหน่งต่อมน้ำเหลืองบริเวณศีรษะและคอ\"><figcaption>ตำแหน่งต่อมน้ำเหลืองศีรษะและคอ: Preauricular, Occipital, Posterior auricular, Tonsillar, Superficial cervical, Posterior cervical, Supraclavicular, Submental, Submandibular, Deep cervical chain</figcaption></figure><div class=\"tbl\"><table><thead><tr><th>Location</th><th>Drainage</th><th>Etiology</th></tr></thead><tbody><tr><td>Submandibular</td><td>Tongue, submaxillary gland, lips and mouth, conjunctivae</td><td>Infections of head, neck, sinuses, ears, eyes, scalp, pharynx</td></tr><tr><td>Submental</td><td>Lower lip, floor of mouth, tip of tongue, skin of cheek</td><td>Mononucleosis syndromes, Epstein-Barr virus, cytomegalovirus, toxoplasmosis</td></tr><tr><td>Jugular</td><td>Tongue, tonsil, pinna, parotid</td><td>Pharyngitis organisms, rubella</td></tr><tr><td>Posterior cervical</td><td>Scalp and neck, skin of arms and pectorals, thorax, cervical and axillary nodes</td><td>Tuberculosis, lymphoma, head and neck malignancy</td></tr><tr><td>Suboccipital</td><td>Scalp and head</td><td>Local infection</td></tr><tr><td>Postauricular</td><td>External auditory meatus, pinna, scalp</td><td>Local infection</td></tr><tr><td>Preauricular</td><td>Eyelids and conjunctivae, temporal region, pinna</td><td>External auditory canal</td></tr><tr><td>Right supraclavicular node</td><td>Mediastinum, lungs, esophagus</td><td>Lung, retroperitoneal or gastrointestinal cancer</td></tr><tr><td>Left supraclavicular node</td><td>Thorax, abdomen via thoracic duct</td><td>Lymphoma, thoracic or retroperitoneal cancer, bacterial or fungal infection</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-axillary",
+   "html": "<p><b>เล่มเหลือง — Localized Lymphadenopathy of upper limb region</b></p><div class=\"tbl\"><table><thead><tr><th>Location</th><th>Drainage</th><th>Etiology</th></tr></thead><tbody><tr><td>Axillary</td><td>Arm, thoracic wall, breast</td><td>Infections, cat-scratch disease, lymphoma, breast cancer, silicone implants, brucellosis, melanoma</td></tr><tr><td>Epitrochlear</td><td>Ulnar aspect of forearm and hand</td><td>Infections, lymphoma, sarcoidosis, tularemia, secondary syphilis</td></tr></tbody></table></div>"
+  },
+  {
+   "op": "append",
+   "sec": "loc-inguinal",
+   "html": "<p><b>เล่มเหลือง — Localized Lymphadenopathy of lower limb region</b></p><div class=\"tbl\"><table><thead><tr><th>Location</th><th>Drainage</th><th>Etiology</th></tr></thead><tbody><tr><td>Inguinal</td><td>Penis, scrotum, vulva, vagina, perineum, gluteal region, lower abdominal wall, lower anal canal</td><td>Infections of the leg or foot, STDs (e.g., herpes simplex virus, gonococcal infection, syphilis, chancroid, granuloma inguinale, lymphogranuloma venereum), lymphoma, pelvic malignancy, bubonic plague</td></tr></tbody></table></div>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y69a",
+   "title": "Lymphadenopathy",
+   "src": "fig",
+   "img": "yb-6-9-f1.webp",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Lymphadenopathy"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "Generalized"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Localized"
+    },
+    {
+     "id": "d",
+     "k": "note",
+     "t": "ดูหน้าถัดไป (Localized lymphadenopathy ตามตำแหน่ง: หัว-คอ, แขน, ขา)"
+    },
+    {
+     "id": "e",
+     "k": "q",
+     "t": "Malignancy"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "Infection"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "Immunologic",
+     "d": "<ul><li>SLE</li></ul>"
+    },
+    {
+     "id": "h",
+     "k": "dx",
+     "t": "Miscellaneous",
+     "d": "<ul><li>Amyloidosis</li><li>Sarcoidosis</li><li>Castleman disease</li><li>Kikuchi disease</li><li>Kimura disease</li></ul>"
+    },
+    {
+     "id": "i",
+     "k": "q",
+     "t": "Hematologic"
+    },
+    {
+     "id": "j",
+     "k": "dx",
+     "t": "Metastasis"
+    },
+    {
+     "id": "k",
+     "k": "dx",
+     "t": "ALL/CLL"
+    },
+    {
+     "id": "l",
+     "k": "q",
+     "t": "Lymphoma"
+    },
+    {
+     "id": "m",
+     "k": "dx",
+     "t": "Hodgkin dz"
+    },
+    {
+     "id": "n",
+     "k": "q",
+     "t": "NHL"
+    },
+    {
+     "id": "o",
+     "k": "dx",
+     "t": "Indolent",
+     "d": "<ul><li>SLL: Small Lymphocytic Lymphoma</li><li>FCL: Follicular Central cell Lymphoma</li><li>MZL: Marginal Zone Lymphoma</li></ul>"
+    },
+    {
+     "id": "p",
+     "k": "dx",
+     "t": "Aggressive",
+     "d": "<ul><li>DLCL: Diffuse Large Cell lymphoma</li><li>Mantle cell</li></ul>"
+    },
+    {
+     "id": "q",
+     "k": "dx",
+     "t": "Virus",
+     "d": "<ul><li>HIV</li><li>Infectious mononucleosis</li></ul>"
+    },
+    {
+     "id": "r",
+     "k": "dx",
+     "t": "Bacteria",
+     "d": "<ul><li>Streptococcus</li></ul>"
+    },
+    {
+     "id": "s",
+     "k": "dx",
+     "t": "Mycobacteria",
+     "d": "<ul><li>TB</li><li>NTM: MAC</li></ul>"
+    },
+    {
+     "id": "t",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Toxoplasma</li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b",
+     "l": "Generalized"
+    },
+    {
+     "f": "a",
+     "t": "c",
+     "l": "Localized"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    },
+    {
+     "f": "b",
+     "t": "e",
+     "l": "Malignancy"
+    },
+    {
+     "f": "b",
+     "t": "f",
+     "l": "Infection"
+    },
+    {
+     "f": "b",
+     "t": "g",
+     "l": "Immunologic"
+    },
+    {
+     "f": "b",
+     "t": "h",
+     "l": "Miscellaneous"
+    },
+    {
+     "f": "e",
+     "t": "i",
+     "l": "Hematologic"
+    },
+    {
+     "f": "e",
+     "t": "j",
+     "l": "Metastasis"
+    },
+    {
+     "f": "i",
+     "t": "k",
+     "l": "ALL/CLL"
+    },
+    {
+     "f": "i",
+     "t": "l",
+     "l": "Lymphoma"
+    },
+    {
+     "f": "l",
+     "t": "m",
+     "l": "Hodgkin dz"
+    },
+    {
+     "f": "l",
+     "t": "n",
+     "l": "NHL"
+    },
+    {
+     "f": "n",
+     "t": "o",
+     "l": "Indolent"
+    },
+    {
+     "f": "n",
+     "t": "p",
+     "l": "Aggressive"
+    },
+    {
+     "f": "f",
+     "t": "q",
+     "l": "Virus"
+    },
+    {
+     "f": "f",
+     "t": "r",
+     "l": "Bacteria"
+    },
+    {
+     "f": "f",
+     "t": "s",
+     "l": "Mycobacteria"
+    },
+    {
+     "f": "f",
+     "t": "t",
+     "l": "Other"
+    }
+   ]
+  }
+ ]
+}

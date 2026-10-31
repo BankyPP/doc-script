@@ -1,0 +1,283 @@
+{
+ "key": "4-1",
+ "en": "Reduction in urine volume",
+ "th": "ปัสสาวะออกน้อย (Oliguria/Anuria)",
+ "pdf": "51",
+ "target": 25,
+ "ops": [
+  {
+   "op": "sec",
+   "after": "dx",
+   "id": "yb-4-1-algo",
+   "h": "Reduction in urine volume — algorithm",
+   "html": "<div class=\"flow\" data-flow=\"y41a\"></div><ul><li>Exclude: Urinary retention (PE: show full bladder)</li><li><b>Anuria</b> — Urine &lt; 50 ml/day <span class=\"hw\">(ลายมือแก้จาก 100 เป็น 50)</span>: Total urinary tract obstruction (Bilateral UVJ or UPJ obstruction: Stone, Tumor) · Bilateral renal a or v occlusion · Other (Shock, Cortical necrosis, ATN, RPGN)</li><li><b>Oliguria</b> — Urine &lt; 400 ml/day: Prerenal + Intrinsic renal → ดูต่อ Stepwise approach to azotemia · Post renal obstruction → ดูต่อ Urinary tract obstruction</li></ul><div class=\"box\"><p><b>AKI</b> <span class=\"hw\">(ลายมือข้าง Oliguria)</span></p><ul><li><span class=\"hw\">Cr ≥ 1.5–1.9x ใน 48 hrs</span></li><li><span class=\"hw\">Cr ≥ 0.3 mg/dL ใน 7 days</span></li><li><span class=\"hw\">urine &lt; 0.5 ml/kg/h 6 hrs</span></li></ul></div>",
+   "sub": [
+    {
+     "id": "yb-4-1-ascites",
+     "h": "Approach: Oliguria in ascites (ลายมือ)",
+     "html": "<div class=\"flow\" data-flow=\"y41b\"></div><p><small>แผนผังที่เจ้าของเล่มเขียนเองใต้เอกสารอ้างอิง</small></p><ul><li><b>Prerenal</b>: <span class=\"hw\">septic, sepsis shock · hypovolemic shock · Cardiorenal synd. · Hepatorenal synd.</span></li><li><b>Renal</b>: <span class=\"hw\">glom dis · ATN · AIN</span></li><li><b>Post renal</b>: <span class=\"hw\">คิดถึงน้อย เพราะถ้า post renal แล้วจะต้อง(ตัน?) ท่อทั้ง 2 ข้างเลย · เป็นไปได้ เพราะ ascite ท้องใหญ่ มีโอกาสไปกดเบียด ureter</span></li></ul>"
+    }
+   ]
+  },
+  {
+   "op": "append",
+   "sec": "def",
+   "html": "<div class=\"box\"><p><b>เกณฑ์ AKI</b> <span class=\"hw\">(ลายมือในเล่มเหลือง ข้าง Oliguria)</span></p><ul><li><span class=\"hw\">Cr ≥ 1.5–1.9x ใน 48 hrs</span></li><li><span class=\"hw\">Cr ≥ 0.3 mg/dL ใน 7 days</span></li><li><span class=\"hw\">urine &lt; 0.5 ml/kg/h 6 hrs</span></li></ul></div><p>เล่มเหลืองระบุ Anuria = Urine &lt; 50 ml/day <span class=\"hw\">(แก้ลายมือจาก 100)</span> และ Oliguria = Urine &lt; 400 ml/day</p>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-pre",
+   "html": "<p><b>Pre-renal ในผู้ป่วยมี ascites</b> <small>(ลายมือเล่มเหลือง)</small></p><ul><li><span class=\"hw\">septic, sepsis shock</span></li><li><span class=\"hw\">hypovolemic shock</span></li><li><b>Cardiorenal synd.</b> — <span class=\"hw\">♡ บีบตัวไม่ดี(?) เลือดคั่ง IVC → efferent arteriole vaso… glom ทำให้ glom pressure ↑ , GFR drop ⇒ Anuria (บางคำอ่านไม่ออก)</span></li><li><b>Hepatorenal synd.</b> — <span class=\"hw\">คนไข้ cirrhosis → น้ำในท้องเยอะ → เกิด SBP เกิด infection &amp; inflam. → ทำให้หลั่ง cytokine → เกิด splanchnic vasodilate → เลือด pool → เลือดไปไตน้อยลง</span></li></ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cause-post",
+   "html": "<ul><li><span class=\"tag\">เล่มเหลือง</span> <span class=\"hw\">Post renal ในผู้ป่วย ascites: คิดถึงน้อย เพราะถ้า post renal แล้วจะต้อง(ตัน?) ท่อทั้ง 2 ข้างเลย · เป็นไปได้ เพราะ ascite ท้องใหญ่ มีโอกาสไปกดเบียด ureter</span></li></ul>"
+  },
+  {
+   "op": "sub",
+   "sec": "tx",
+   "id": "yb-4-1-lasix",
+   "h": "Lasix กับ albumin ในผู้ป่วย acute (โน้ตลายมือ)",
+   "html": "<ul><li><span class=\"hw\">★ คนไข้ acute ให้ lasix แล้วมักจะให้ albumin ด้วย</span><ul><li><span class=\"hw\">เพราะ lasix จะอยู่ในรูป protein bound จับกับ alb. จะได้เกาะกันไปผ่านการกรองที่ glomerulus สามารถผ่านไปถึง vasa recta ได้</span></li><li><span class=\"hw\">lasix ได้ไปออกฤทธิ์ @ MTAL (Na<sup>+</sup>/K<sup>+</sup>/2Cl<sup>-</sup>)</span></li><li><span class=\"hw\">(ข้างลูกศรไป MTAL) lasix ขับเกลือออกเยอะ(?) · แต่สรุป(?)รวมขับเกลือ &gt; น้ำ เกิด hyponat.</span></li></ul></li><li><span class=\"hw\">คนไข้ cirrhosis มัก albumin ต่ำ (เขียนไว้เหนือข้อความ ★ มีลูกศรชี้ลงมาที่ข้อความนั้น)</span></li></ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "y41a",
+   "title": "Reduction in urine volume",
+   "src": "fig",
+   "img": "yb-4-1-f1.webp",
+   "note": "ลายมือเพิ่ม: แก้ Anuria จาก < 100 เป็น < 50 ml/day และเขียนเกณฑ์ AKI ข้าง Oliguria",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Reduction in urine volume"
+    },
+    {
+     "id": "ex",
+     "k": "stop",
+     "t": "Exclude: Urinary retention",
+     "d": "<p>PE: show full bladder</p>"
+    },
+    {
+     "id": "an",
+     "k": "q",
+     "t": "Anuria — Urine < 50 ml/day",
+     "d": "<p>ในหนังสือพิมพ์ว่า Urine &lt; 100 ml/day — <span class=\"hw\">ลายมือขีดฆ่า 100 แล้วเขียน 50 ทับ</span></p>"
+    },
+    {
+     "id": "ol",
+     "k": "q",
+     "t": "Oliguria — Urine < 400 ml/day",
+     "d": "<p><span class=\"hw\">ลายมือ: AKI = Cr ≥ 1.5–1.9x ใน 48 hrs · Cr ≥ 0.3 mg/dL ใน 7 days · urine < 0.5 ml/kg/h 6 hrs</span></p>"
+    },
+    {
+     "id": "tot",
+     "k": "dx",
+     "t": "Total urinary tract obstruction"
+    },
+    {
+     "id": "uvj",
+     "k": "dx",
+     "t": "Bilateral UVJ or UPJ obstruction",
+     "d": "<ul><li>Stone</li><li>Tumor</li></ul>"
+    },
+    {
+     "id": "bil",
+     "k": "dx",
+     "t": "Bilateral renal a or v occlusion"
+    },
+    {
+     "id": "oth",
+     "k": "dx",
+     "t": "Other",
+     "d": "<ul><li>Shock</li><li>Cortical necrosis</li><li>ATN</li><li>RPGN</li></ul>"
+    },
+    {
+     "id": "pre",
+     "k": "q",
+     "t": "Prerenal"
+    },
+    {
+     "id": "int",
+     "k": "q",
+     "t": "Intrinsic renal"
+    },
+    {
+     "id": "post",
+     "k": "q",
+     "t": "Post renal obstruction"
+    },
+    {
+     "id": "step",
+     "k": "act",
+     "t": "ดูต่อ: Stepwise approach to azotemia",
+     "d": "<p>(หัวข้อ 4.3)</p>"
+    },
+    {
+     "id": "uto",
+     "k": "act",
+     "t": "ดูต่อ: Urinary tract obstruction",
+     "d": "<p>(หัวข้อ 4.2)</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "ex",
+     "l": "Exclude ก่อน"
+    },
+    {
+     "f": "a",
+     "t": "an",
+     "l": "Anuria"
+    },
+    {
+     "f": "a",
+     "t": "ol",
+     "l": "Oliguria"
+    },
+    {
+     "f": "an",
+     "t": "tot",
+     "l": "Total urinary tract obstruction"
+    },
+    {
+     "f": "an",
+     "t": "bil",
+     "l": "Bilateral renal a or v occlusion"
+    },
+    {
+     "f": "an",
+     "t": "oth",
+     "l": "Other"
+    },
+    {
+     "f": "tot",
+     "t": "uvj"
+    },
+    {
+     "f": "ol",
+     "t": "pre",
+     "l": "Prerenal"
+    },
+    {
+     "f": "ol",
+     "t": "int",
+     "l": "Intrinsic renal"
+    },
+    {
+     "f": "ol",
+     "t": "post",
+     "l": "Post renal obstruction"
+    },
+    {
+     "f": "pre",
+     "t": "step"
+    },
+    {
+     "f": "int",
+     "t": "step"
+    },
+    {
+     "f": "post",
+     "t": "uto"
+    }
+   ]
+  },
+  {
+   "id": "y41b",
+   "title": "Approach: Oliguria in ascites (ลายมือ)",
+   "src": "fig",
+   "img": "yb-4-1-f2.webp",
+   "note": "แผนผังลายมือของเจ้าของเล่ม (ไม่ใช่ตัวพิมพ์ในหนังสือ)",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "Approach: Oliguria in ascites",
+     "d": "<p><span class=\"hw\">ลายมือล้วน</span></p>"
+    },
+    {
+     "id": "pre",
+     "k": "q",
+     "t": "Prerenal",
+     "d": "<ul><li><span class=\"hw\">septic, sepsis shock</span></li><li><span class=\"hw\">hypovolemic shock</span></li><li><span class=\"hw\">Cardiorenal synd.</span></li><li><span class=\"hw\">Hepatorenal synd.</span></li></ul>"
+    },
+    {
+     "id": "sep",
+     "k": "dx",
+     "t": "Septic, sepsis shock"
+    },
+    {
+     "id": "hyp",
+     "k": "dx",
+     "t": "Hypovolemic shock"
+    },
+    {
+     "id": "car",
+     "k": "dx",
+     "t": "Cardiorenal syndrome",
+     "d": "<p><span class=\"hw\">♡ บีบตัวไม่ดี(?) เลือดคั่ง IVC ทันไป(?) → efferent arteriole vaso… glom ทำให้ glom pressure ↑ , GFR drop ⇒ Anuria (บางคำอ่านไม่ออก)</span></p>"
+    },
+    {
+     "id": "hep",
+     "k": "dx",
+     "t": "Hepatorenal syndrome",
+     "d": "<ul><li><span class=\"hw\">คนไข้ cirrhosis → น้ำในท้องเยอะ</span></li><li><span class=\"hw\">เกิด SBP เกิด infection &amp; inflam.</span></li><li><span class=\"hw\">ทำให้หลั่ง cytokine → เกิด splanchnic vasodilate</span></li><li><span class=\"hw\">เลือด pool → เลือดไปไตน้อยลง</span></li></ul>"
+    },
+    {
+     "id": "ren",
+     "k": "q",
+     "t": "Renal",
+     "d": "<ul><li><span class=\"hw\">glom dis</span></li><li><span class=\"hw\">ATN</span></li><li><span class=\"hw\">AIN</span></li></ul>"
+    },
+    {
+     "id": "pos",
+     "k": "q",
+     "t": "Post renal",
+     "d": "<ul><li><span class=\"hw\">คิดถึงน้อย เพราะถ้า post renal แล้วจะต้อง(ตัน?) ท่อทั้ง 2 ข้างเลย</span></li><li><span class=\"hw\">เป็นไปได้ เพราะ ascite ท้องใหญ่ มีโอกาสไปกดเบียด ureter</span></li></ul>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "pre",
+     "l": "Prerenal"
+    },
+    {
+     "f": "a",
+     "t": "ren",
+     "l": "Renal"
+    },
+    {
+     "f": "a",
+     "t": "pos",
+     "l": "Post renal"
+    },
+    {
+     "f": "pre",
+     "t": "sep",
+     "l": "Septic shock"
+    },
+    {
+     "f": "pre",
+     "t": "hyp",
+     "l": "Hypovolemic shock"
+    },
+    {
+     "f": "pre",
+     "t": "car",
+     "l": "Cardiorenal"
+    },
+    {
+     "f": "pre",
+     "t": "hep",
+     "l": "Hepatorenal"
+    }
+   ]
+  }
+ ]
+}
