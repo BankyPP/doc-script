@@ -208,6 +208,7 @@ match /poymor_shared/{topic}/items/{id} {
 - สร้างเว็บ: `python3 tools/symp/merge_yb.py /home/claude/symp/out && python3 tools/symp/build.py /home/claude/symp/out`
   - merge ห่อเนื้อหาแต่ละเล่มใน `<div class="sb si|yb|ai">` (เว็บติดป้ายให้) · ทุก section มี `src` · ทุก flow มี `book` · บทมี `b` (เลขอ้างอิงแต่ละเล่ม) — บทใหม่ได้เลข 45+ ตามลำดับเล่มเหลือง
   - ลายมือ = `<span class="hw">` (ตัวเอียงสีน้ำเงิน)
+- **ก่อนอัปเดตบทไหน เช็กฉบับแก้ในเว็บก่อน** — ฉบับแก้ (`poymor_edit/y:<บท>`) เก็บ HTML ทั้งบทและแสดงทับไฟล์ เนื้อหาใหม่จะไม่ขึ้น · รัน workflow `edits-export.yml` แล้วดู `overlays` ใน `edits/pending.json` → ถ้ามี ให้ลอกสิ่งที่แก้เข้าไฟล์ต้นทาง แล้วเพิ่มบท + เวลา `at` ใน `SH_FOLDED` (app.js)
 - แต่ละบท: หัวข้อเป็น toggle, หัวข้อย่อยเป็นกล่องหลายคอลัมน์, algorithm กดกล่องดูรายละเอียด/ไฮไลต์เส้นทาง หรือโหมดทีละขั้น, รูปต้นฉบับ, ออกข้อสอบจากบท (`#/exam?src=y:<id>`)
 - แก้เนื้อหาศิริราช: แก้ `tools/symp/si/chNN.json` · แก้เล่มเหลือง: แก้ `tools/symp/yb/yb-<key>.json` (ตรวจด้วย `tools/symp/yb-tools/vyb.py` — แก้ path OUT/SI ในไฟล์ก่อน) → รันสองคำสั่งด้านบน
 - รูปแบบไฟล์และกติกาเนื้อหา: ศิริราช `tools/symp/BRIEF.md` · เล่มเหลือง `tools/symp/yb-tools/BRIEF.md`

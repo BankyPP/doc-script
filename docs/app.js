@@ -3990,9 +3990,12 @@
   var SH = {}, shFetched = {}, shWaitFB = [], shAt = 0;
   function shId(k) { return encodeURIComponent(k).replace(/\./g, '%2E').slice(0, 700); }
   function shRef(k) { return FB.fs.doc(FB.db, 'poymor_edit', shId(k)); }
+  /* ฉบับแก้ในเว็บที่รวมเข้าไฟล์ต้นทางแล้ว: ไม่เอามาทับต้นฉบับอีก (ฉบับที่แก้ทีหลังเวลานี้ยังใช้ตามปกติ) */
+  var SH_FOLDED = { 'y:chest-pain': Date.parse('2026-11-03T04:30:05.204Z') };
+  function shFolded(k, at) { return !!(SH_FOLDED[k] && at && at <= SH_FOLDED[k]); }
   function shCache(k, v) {
     try {
-      if (arguments.length < 2) { var x = localStorage.getItem('poy-sh:' + k); return x == null ? undefined : JSON.parse(x); }
+      if (arguments.length < 2) { var x = localStorage.getItem('poy-sh:' + k); if (x == null) return undefined; x = JSON.parse(x); return shFolded(k, x && x.at) ? null : x; }
       localStorage.setItem('poy-sh:' + k, JSON.stringify(v));
     } catch (e) { }
   }
@@ -4003,7 +4006,7 @@
     return SH[k] || null;
   }
   function shRec(d) {
-    if (!d || d.h == null) return null;
+    if (!d || d.h == null || shFolded(d.k, tsMs(d.at))) return null;
     return { h: d.h, b: d.b || '', by: d.by || '', name: d.name || '', at: tsMs(d.at), sync: d.sync || null };
   }
   function shFetch(k) {
