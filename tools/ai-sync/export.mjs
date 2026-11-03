@@ -27,11 +27,13 @@ async function all(col) {
   } while (tok);
   return out;
 }
-const edits = (await all('poymor_edit')).filter(e => e.h != null && e.sync && e.sync.st !== 'ok' && e.sync.st !== 'notai')
+const allEdits = await all('poymor_edit');
+const overlays = allEdits.filter(e => e.h != null).map(e => ({ key: e.k, by: e.name, at: e.at, base: e.b || '', len: e.h.length, sync: e.sync ? e.sync.st : '' }));   // ทุกหน้าที่มีฉบับแก้ในเว็บทับต้นฉบับอยู่ (รวมที่ไม่ใช่ไฟล์ [AI])
+const edits = allEdits.filter(e => e.h != null && e.sync && e.sync.st !== 'ok' && e.sync.st !== 'notai')
   .map(e => ({ key: e.k, by: e.name, at: e.at, status: e.sync.st, msg: e.sync.msg || '', target: e.sync.tg, ops: e.sync.ops || [] }));
 const struct = (await all('poymor_struct')).filter(x => x.st !== 'ok' && x.st !== 'web' && x.st !== 'notai')
   .map(x => ({ id: x.id, act: x.act, by: x.byName, at: x.at, status: x.st, msg: x.msg || '', title: x.title, name: x.name, ppath: x.ppath, path: x.path, row: x.row, vals: x.vals }));
-const out = { at: new Date().toISOString(), edits, struct };
+const out = { at: new Date().toISOString(), edits, struct, overlays };
 fs.mkdirSync('edits', { recursive: true });
 fs.writeFileSync('edits/pending.json', JSON.stringify(out, null, 1));
 console.log('edits', edits.length, 'struct', struct.length);
