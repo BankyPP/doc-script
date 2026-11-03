@@ -2886,7 +2886,7 @@
     var out = [];
     d.pages.forEach(function (p) {
       p.cols.forEach(function (c, ci) {
-        if (c.boxes.length) c.boxes.forEach(function (b, bi) { out.push({ key: p.n + '-' + ci + '-' + bi, p: p.n, pt: p.t, head: c.h, hc: c.c, title: b.t || c.h || ('คอลัมน์ ' + (ci + 1)), text: b.x, bb: b.bb, sz: b.sz, cells: b.cells }); });
+        if (c.boxes.length) c.boxes.forEach(function (b, bi) { out.push({ key: p.n + '-' + ci + '-' + bi, p: p.n, pt: p.t, head: c.h, hc: c.c, title: b.t || c.h || ('คอลัมน์ ' + (ci + 1)), text: b.x, bb: b.bb, sz: b.sz, cells: b.cells, chk: b.chk, links: b.links }); });
         else out.push({ key: p.n + '-' + ci, p: p.n, pt: p.t, head: c.h, hc: c.c, title: c.h || ('คอลัมน์ ' + (ci + 1)), text: c.x || '', bb: c.bb });
       });
     });
@@ -2905,7 +2905,16 @@
     if (u.cells) return rowHTML(t, u);
     var wh = pageWH(t, u.p), bb = u.bb, w = u.sz ? u.sz[0] : Math.round(bb[2] * wh[0]), h = u.sz ? u.sz[1] : Math.round(bb[3] * wh[1]);
     return '<figure class="crop" id="u' + u.key + '"><button type="button" class="cimg" data-zoom="' + u.p + '" data-bb="' + bb.join(',') + '" style="max-width:' + Math.round(w * 1.15) + 'px;min-width:' + Math.round(w * 0.6) + 'px" aria-label="ขยายภาพ: ' + esc(u.title) + '">' +
-      '<img src="' + t.dir + 'c/' + u.key + '.webp?v=' + (t.v || 1) + '" width="' + w + '" height="' + h + '" alt="" loading="lazy" decoding="async"></button></figure>';
+      '<img src="' + t.dir + 'c/' + u.key + '.webp?v=' + (t.v || 1) + '" width="' + w + '" height="' + h + '" alt="" loading="lazy" decoding="async"></button>' + cropExtra(u) + '</figure>';
+  }
+  /* ใต้กล่อง: ผลตรวจข้อมูล (ภาพต้นฉบับไม่ถูกแก้) + ลิงก์จาก QR ในไฟล์ */
+  function cropExtra(u) {
+    var h = (u.chk || []).map(function (c) {
+      return '<div class="cchk ' + (c.lv === 'fix' ? 'fix' : 'note') + '"><span class="cchk-l">' + (c.lv === 'fix' ? 'ตรวจแล้ว · ควรแก้' : 'ตรวจแล้ว · หมายเหตุ') + '</span>' + esc(c.tx) +
+        (c.src && c.src.length ? ' <span class="cchk-s">' + c.src.map(function (x) { return '<a href="' + esc(x.u) + '" target="_blank" rel="noopener">' + esc(x.t) + '</a>'; }).join(' · ') + '</span>' : '') + '</div>';
+    }).join('');
+    if (u.links && u.links.length) h += '<div class="clinks">' + u.links.map(function (x) { return '<a class="chip" href="' + esc(x.u) + '" target="_blank" rel="noopener">' + esc(x.t) + ' ↗</a>'; }).join('') + '</div>';
+    return h;
   }
   /* แถวของตาราง: ช่องแรก (ชื่อ) เป็นหัวการ์ด ช่องที่เหลือเรียงเป็นกล่องพร้อมชื่อคอลัมน์ — ทุกช่องเป็นภาพตัดจากต้นฉบับ */
   function rowHTML(t, u) {
@@ -2998,18 +3007,20 @@
   /* ---------- สรุป ---------- */
   function topicSummary(t, r) {
     var s = TD[t.id] || {}, d = tLoad(t, 'data');
-    var dl = '<a class="chip" href="' + t.dir + encodeURIComponent(t.pdf) + '" download>ไฟล์ต้นฉบับ (PDF)</a>';
+    var dl = (t.pdfs || [{ f: t.pdf, t: 'ไฟล์ต้นฉบับ (PDF)' }]).map(function (x) { return '<a class="chip" href="' + t.dir + encodeURIComponent(x.f) + '" download>' + esc(x.t) + '</a>'; }).join('');
     if (!d) return { title: t.title, html: topicHead(t, 'sum', dl) + '<section class="wrap" style="padding-bottom:80px">' + loadingHTML(TD[t.id], 'data') + '</section>' };
     var n = Math.max(1, Math.min(d.pages.length, +r.args[2] || 1)), p = d.pages[n - 1], g = groupOf(d, n);
     var full = r.q.get('v') === 'page', qq = (r.q.get('q') || '').trim();
     remember({ href: '#/topics/' + t.id + '/sum/' + n, title: t.title + ' · หน้า ' + n, crumb: 'Random Topic Summary › ' + p.t, c: t.c });
     var units = tUnitsCached(t, d), mine = units.filter(function (u) { return u.p === n; });
     var tree = d.groups.map(function (gr) {
-      return '<div class="grp">' + esc(gr.t) + '</div>' + gr.pages.map(function (pn) {
+      var items = gr.pages.map(function (pn) {
         var pp = d.pages[pn - 1], on = pn === n;
         return '<a href="#/topics/' + t.id + '/sum/' + pn + '"' + (on ? ' class="on" aria-current="page"' : '') + '><span class="pn">' + pn + '</span><span>' + esc(pp.t) + '</span></a>' +
           (on && !full ? '<div class="tsub">' + mine.map(function (u) { return '<a href="#/topics/' + t.id + '/sum/' + pn + '?to=u' + u.key + '">' + esc(u.title) + '</a>'; }).join('') + '</div>' : '');
       }).join('');
+      if (gr.fold) return '<details class="tfold"' + (gr.pages.indexOf(n) >= 0 ? ' open' : '') + '><summary class="grp">' + esc(gr.t) + '</summary>' + items + '</details>';
+      return '<div class="grp">' + esc(gr.t) + '</div>' + items;
     }).join('');
     var body;
     var pwh = pageWH(t, n);

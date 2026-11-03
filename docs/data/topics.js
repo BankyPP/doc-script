@@ -58,5 +58,32 @@ window.POY_TOPICS = [
       other: 'ถามเรื่องอื่นในเนื้อหาได้ เช่น pathophysiology ทีละขั้น ความหมายของคำ (word-by-word) ตำแหน่งและวิธีฟัง (bell/diaphragm, ท่า) maneuver, Levine grading, red flags ที่ต้องส่ง echo หรือ key pearl'
     },
     flash: []
+  },
+  {
+    /* 2 เล่ม A3: การ์ดแต่ละใบตัดเป็นภาพ (ตามต้นฉบับ) · chk = ผลตรวจข้อมูลใต้กล่อง · links = ลิงก์จาก QR
+       สร้างด้วย tools/topic-from-pdf/ekg_build.py (ekg_glyphs.json, ekg_qr.json, ekg_checks.json) */
+    id: 'ekg',
+    title: 'EKG',
+    th: 'การอ่านคลื่นไฟฟ้าหัวใจ',
+    c: '#1F6F8B',
+    dir: 'topics/ekg/',
+    v: 1,
+    pages: 26,
+    pdf: 'AI_EKG1_God_A3_Field_Manual.pdf',
+    pdfs: [{ f: 'AI_EKG1_God_A3_Field_Manual.pdf', t: 'เล่ม 1 (PDF)' }, { f: 'AI_EKG2_God_Vol2_Deep_Dive.pdf', t: 'เล่ม 2 (PDF)' }],
+    source: 'EKG God เล่ม 1 Field Manual + เล่ม 2 Deep Dive (สรุปโดย AI · ตรวจข้อมูลแล้ว 3 พ.ย. 2026)',
+    added: '3 พ.ย. 2026',
+    selftest: false,
+    testPages: [25, 26],
+    searchPh: 'เช่น Wellens, Sgarbossa, Mobitz II',
+    focusPh: 'เช่น AV block, posterior MI, hyperK',
+    /* โจทย์ AI: case-based MCQ 5 ตัวเลือกเหมือนค่าเริ่มต้น แต่หัวข้อนี้ไม่มีเรื่องเชื้อ/ยาเป็นหลัก จึงเน้นอ่าน ECG */
+    mix: {
+      p: 0.8,
+      main: 'เน้นการอ่าน ECG จากเคส — บรรยายลักษณะ ECG เป็นคำในโจทย์ (rate, rhythm, ความสัมพันธ์ P–QRS, PR, QRS, QT, ST–T และ lead ที่พบ) ร่วมกับอาการและบริบท แล้วถามการวินิจฉัย ตำแหน่ง/หลอดเลือดที่เกี่ยวข้อง หรือขั้นต่อไป (stable/unstable, ยาที่ควรให้หรือห้ามให้, ต้อง pace หรือช็อกไหม)',
+      hint: '(ถ้าเนื้อหาด้านล่างไม่ได้พูดถึงตรง ๆ ให้ใช้เนื้อหานี้เป็นบริบทของเคส แล้วให้คำถามจบที่การอ่าน ECG หรือการจัดการจาก ECG)',
+      other: 'ถามเรื่องอื่นในเนื้อหาได้ เช่น กลไก (action potential, vector, arrhythmogenesis) เกณฑ์และ score (Sgarbossa, Schwartz, Shanghai, VT score) ขนาดยา การวัด QT สาเหตุของ pattern หรือกับดักในการอ่าน'
+    },
+    flash: []
   }
 ];

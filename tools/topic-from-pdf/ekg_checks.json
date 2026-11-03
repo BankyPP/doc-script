@@ -1,0 +1,15 @@
+{
+ "1-4": [
+  {"find":"= VT แน่นอน","lv":"note","tx":"คำว่า “แน่นอน” แรงไปเล็กน้อย: AV dissociation พบใน junctional tachycardia ที่มี BBB ได้ และ fusion เกิดได้เมื่อมี PVC แทรกระหว่าง SVT — ถือเป็นหลักฐานที่ specific มากของ VT (เล่ม 2 หน้า 8 ใช้คำนี้)","src":[]},
+  {"find":"coved STE ≥2 mm","lv":"note","tx":"ฉบับนี้เขียน V1–V3 ตามเกณฑ์เดิม · ESC 2022 นิยามที่ V1–V2 (ICS 2–4) ตามที่เล่ม 2 หน้า 9 ใช้ — ยึด V1–V2","src":[{"t":"ESC 2022 VA guideline","u":"https://academic.oup.com/eurheartj/article/43/40/3997/6675633"}]}
+ ],
+ "1-5": [
+  {"find":"STE ≥1 mm = RV","lv":"fix","tx":"เกณฑ์ขัดกับตาราง STEMI ในหน้าเดียวกัน: 4th UDMI ใช้ V3R–V4R ≥0.5 mm (ชายอายุ <30 ปี ≥1 mm) · ตัวเลข ≥1 mm ในกล่องนี้เป็นเกณฑ์เดิมของ LITFL — ยึด ≥0.5 mm ถ้าอิงเกณฑ์ UDMI","src":[{"t":"4th UDMI (AHA)","u":"https://professional.heart.org/en/science-news/fourth-universal-definition-of-myocardial-infarction-2018"},{"t":"LITFL RV MI","u":"https://litfl.com/right-ventricular-infarction-ecg-library/"}]}
+ ],
+ "1-7": [
+  {"find":"STE convex/horizontal เกิดจาก STEMI เท่านั้น","lv":"note","tx":"ประโยคนี้ใช้ในบริบทแยก pericarditis กับ STEMI (ตาม LITFL) ไม่ใช่กฎทั่วไป — LV aneurysm, Takotsubo และ Brugada type 1 ในหน้าเดียวกันก็ไม่ใช่รูป concave","src":[{"t":"LITFL Pericarditis","u":"https://litfl.com/pericarditis-ecg-library/"}]}
+ ],
+ "1-9": [
+  {"find":"PMID 30165617","lv":"note","tx":"เลข PMID น่าจะสลับฉบับ: 30165617 คือฉบับ Eur Heart J 2019;40:237 ส่วนฉบับ Circulation ที่อ้างคือ 30571511 — เนื้อหาเหมือนกัน ไม่กระทบการอ่าน","src":[]}
+ ]
+}

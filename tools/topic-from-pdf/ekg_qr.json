@@ -1,0 +1,592 @@
+{
+"1-1": [
+{
+"x": 368.6,
+"y": 754.4,
+"u": "https://litfl.com/ecg-axis-interpretation/",
+"t": "Axis (LITFL)"
+}
+],
+"1-2": [
+{
+"x": 765.0,
+"y": 117.4,
+"u": "https://litfl.com/av-block-3rd-degree-complete-heart-block/",
+"t": "CHB (LITFL)"
+},
+{
+"x": 792.0,
+"y": 577.2,
+"u": "https://litfl.com/av-block-2nd-degree-mobitz-i-wenckebach-phenomenon/",
+"t": "Mobitz I (LITFL)"
+},
+{
+"x": 500.6,
+"y": 855.8,
+"u": "https://litfl.com/left-bundle-branch-block-lbbb-ecg-library/",
+"t": "LBBB (LITFL)"
+}
+],
+"1-3": [
+{
+"x": 792.0,
+"y": 414.0,
+"u": "https://litfl.com/atrial-fibrillation-ecg-library/",
+"t": "AF (LITFL)"
+},
+{
+"x": 395.6,
+"y": 561.4,
+"u": "https://litfl.com/atrial-flutter-ecg-library/",
+"t": "Flutter (LITFL)"
+},
+{
+"x": 395.6,
+"y": 708.8,
+"u": "https://litfl.com/supraventricular-tachycardia-svt-ecg-library/",
+"t": "SVT (LITFL)"
+},
+{
+"x": 302.3,
+"y": 967.8,
+"u": "https://litfl.com/wolff-parkinson-white-syndrome/",
+"t": "WPW (LITFL)"
+},
+{
+"x": 765.0,
+"y": 967.8,
+"u": "https://litfl.com/atrial-fibrillation-in-pre-excitation/",
+"t": "Pre-AF (LITFL)"
+}
+],
+"1-4": [
+{
+"x": 792.0,
+"y": 201.0,
+"u": "https://litfl.com/vt-versus-svt-ecg-library/",
+"t": "VT vs SVT (LITFL)"
+},
+{
+"x": 762.4,
+"y": 541.1,
+"u": "https://litfl.com/brugada-syndrome-ecg-library/",
+"t": "Brugada (LITFL)"
+}
+],
+"1-5": [
+{
+"x": 764.6,
+"y": 259.4,
+"u": "https://litfl.com/inferior-stemi-ecg-library/",
+"t": "Inferior (LITFL)"
+},
+{
+"x": 765.0,
+"y": 747.8,
+"u": "https://litfl.com/right-ventricular-infarction-ecg-library/",
+"t": "RV MI (LITFL)"
+}
+],
+"1-6": [
+{
+"x": 405.4,
+"y": 117.4,
+"u": "https://litfl.com/omi-replacing-the-stemi-misnomer/",
+"t": "OMI (LITFL)"
+},
+{
+"x": 469.9,
+"y": 117.4,
+"u": "https://drsmithsecgblog.com/",
+"t": "Dr Smith"
+},
+{
+"x": 363.0,
+"y": 243.4,
+"u": "https://litfl.com/posterior-myocardial-infarction-ecg-library/",
+"t": "Posterior (LITFL)"
+},
+{
+"x": 692.3,
+"y": 243.4,
+"u": "https://litfl.com/de-winter-t-wave/",
+"t": "de Winter (LITFL)"
+},
+{
+"x": 763.8,
+"y": 243.4,
+"u": "https://litfl.com/wellens-syndrome-ecg-library/",
+"t": "Wellens (LITFL)"
+},
+{
+"x": 360.4,
+"y": 733.8,
+"u": "https://litfl.com/sgarbossa-criteria-ecg-library/",
+"t": "Sgarbossa (LITFL)"
+}
+],
+"1-7": [
+{
+"x": 688.9,
+"y": 117.4,
+"u": "https://litfl.com/benign-early-repolarisation-ecg-library/",
+"t": "BER (LITFL)"
+},
+{
+"x": 753.4,
+"y": 117.4,
+"u": "https://litfl.com/pericarditis-ecg-library/",
+"t": "Pericarditis (LITFL)"
+},
+{
+"x": 434.6,
+"y": 947.3,
+"u": "https://litfl.com/ecg-changes-in-pulmonary-embolism/",
+"t": "PE (LITFL)"
+}
+],
+"1-8": [
+{
+"x": 434.6,
+"y": 284.3,
+"u": "https://litfl.com/left-ventricular-hypertrophy-lvh-ecg-library/",
+"t": "LVH (LITFL)"
+},
+{
+"x": 500.6,
+"y": 608.6,
+"u": "https://litfl.com/hyperkalaemia-ecg-library/",
+"t": "HyperK (LITFL)"
+},
+{
+"x": 765.0,
+"y": 608.6,
+"u": "https://litfl.com/hypokalaemia-ecg-library/",
+"t": "HypoK (LITFL)"
+},
+{
+"x": 368.6,
+"y": 924.0,
+"u": "https://litfl.com/qt-interval-ecg-library/",
+"t": "QT (LITFL)"
+},
+{
+"x": 765.0,
+"y": 924.0,
+"u": "https://litfl.com/tricyclic-overdose-sodium-channel-blocker-toxicity/",
+"t": "TCA (LITFL)"
+}
+],
+"1-9": [
+{
+"x": 760.1,
+"y": 624.4,
+"u": "https://litfl.com/omi-replacing-the-stemi-misnomer/",
+"t": "OMI vs STEMI"
+},
+{
+"x": 478.1,
+"y": 707.6,
+"u": "https://litfl.com/vt-versus-svt-ecg-library/",
+"t": "VT vs SVT"
+},
+{
+"x": 572.3,
+"y": 707.6,
+"u": "https://litfl.com/hyperkalaemia-ecg-library/",
+"t": "Hyperkalaemia"
+},
+{
+"x": 666.4,
+"y": 707.6,
+"u": "https://litfl.com/posterior-myocardial-infarction-ecg-library/",
+"t": "Posterior MI"
+},
+{
+"x": 760.1,
+"y": 707.6,
+"u": "https://litfl.com/sgarbossa-criteria-ecg-library/",
+"t": "Sgarbossa"
+},
+{
+"x": 572.1,
+"y": 624.2,
+"u": "https://litfl.com/top-100/ecg/",
+"t": "LITFL Top 150"
+},
+{
+"x": 477.9,
+"y": 624.2,
+"u": "https://litfl.com/ecg-library/diagnosis/",
+"t": "LITFL ECG A–Z"
+},
+{
+"x": 666.3,
+"y": 624.3,
+"u": "https://drsmithsecgblog.com/",
+"t": "Dr. Smith's ECG Blog"
+}
+],
+"2-1": [],
+"2-2": [
+{
+"x": 370.2,
+"y": 111.8,
+"u": "https://litfl.com/sinus-node-dysfunction-sick-sinus-syndrome/",
+"t": "SSS (LITFL)"
+},
+{
+"x": 762.7,
+"y": 111.8,
+"u": "https://litfl.com/sinoatrial-exit-block-ecg-library/",
+"t": "SA block (LITFL)"
+},
+{
+"x": 762.7,
+"y": 636.7,
+"u": "https://litfl.com/atrial-tachycardia-ecg-library/",
+"t": "Focal AT (LITFL)"
+},
+{
+"x": 370.1,
+"y": 653.3,
+"u": "https://litfl.com/multifocal-atrial-tachycardia-mat-ecg-library/",
+"t": "MAT (LITFL)"
+}
+],
+"2-3": [
+{
+"x": 370.2,
+"y": 111.8,
+"u": "https://litfl.com/atrial-flutter-ecg-library/",
+"t": "Flutter (LITFL)"
+},
+{
+"x": 370.2,
+"y": 417.7,
+"u": "https://litfl.com/atrial-fibrillation-ecg-library/",
+"t": "AF (LITFL)"
+},
+{
+"x": 757.1,
+"y": 417.7,
+"u": "https://litfl.com/junctional-escape-rhythm-ecg-library/",
+"t": "Junctional (LITFL)"
+}
+],
+"2-4": [
+{
+"x": 766.1,
+"y": 124.4,
+"u": "https://litfl.com/supraventricular-tachycardia-svt-ecg-library/",
+"t": "SVT (LITFL)"
+},
+{
+"x": 766.2,
+"y": 390.7,
+"u": "https://litfl.com/atrioventricular-re-entry-tachycardia-avrt/",
+"t": "AVRT (LITFL)"
+},
+{
+"x": 354.0,
+"y": 688.6,
+"u": "https://litfl.com/pre-excitation-syndromes-ecg-library/",
+"t": "Pre-excitation (LITFL)"
+}
+],
+"2-5": [
+{
+"x": 436.2,
+"y": 124.6,
+"u": "https://litfl.com/right-bundle-branch-block-rbbb-ecg-library/",
+"t": "RBBB (LITFL)"
+},
+{
+"x": 766.1,
+"y": 459.4,
+"u": "https://litfl.com/left-posterior-fascicular-block-lpfb-ecg-library/",
+"t": "LPFB (LITFL)"
+},
+{
+"x": 436.2,
+"y": 459.4,
+"u": "https://litfl.com/left-bundle-branch-block-lbbb-ecg-library/",
+"t": "LBBB (LITFL)"
+}
+],
+"2-6": [
+{
+"x": 358.2,
+"y": 124.6,
+"u": "https://litfl.com/bifascicular-block-ecg-library/",
+"t": "Bifascicular (LITFL)"
+}
+],
+"2-7": [
+{
+"x": 370.1,
+"y": 124.4,
+"u": "https://litfl.com/premature-ventricular-complex-pvc-ecg-library/",
+"t": "PVC (LITFL)"
+},
+{
+"x": 759.0,
+"y": 392.2,
+"u": "https://litfl.com/vt-versus-svt-its-as-easy-as-abcde/",
+"t": "VT vs SVT (LITFL)"
+},
+{
+"x": 363.4,
+"y": 688.9,
+"u": "https://litfl.com/polymorphic-vt-and-torsades-de-pointes-tdp/",
+"t": "PVT / TdP (LITFL)"
+}
+],
+"2-8": [
+{
+"x": 432.0,
+"y": 124.4,
+"u": "https://litfl.com/right-ventricular-outflow-tract-rvot-tachycardia/",
+"t": "RVOT VT (LITFL)"
+},
+{
+"x": 750.0,
+"y": 124.4,
+"u": "https://litfl.com/idiopathic-fascicular-left-ventricular-tachycardia/",
+"t": "Fascicular VT (LITFL)"
+},
+{
+"x": 354.0,
+"y": 418.1,
+"u": "https://litfl.com/bidirectional-ventricular-tachycardia-bvt-ecg-library/",
+"t": "Bidirectional VT (LITFL)"
+}
+],
+"2-9": [
+{
+"x": 436.1,
+"y": 111.7,
+"u": "https://litfl.com/long-qt-syndrome/",
+"t": "LQTS (LITFL)"
+},
+{
+"x": 761.6,
+"y": 130.6,
+"u": "https://litfl.com/short-qt-syndrome-ecg-library/",
+"t": "Short QT (LITFL)"
+},
+{
+"x": 763.4,
+"y": 420.0,
+"u": "https://litfl.com/brugada-syndrome-ecg-library/",
+"t": "Brugada (LITFL)"
+},
+{
+"x": 766.2,
+"y": 684.0,
+"u": "https://litfl.com/le-syndrome-dhaissaguerre/",
+"t": "ERS (LITFL)"
+},
+{
+"x": 370.1,
+"y": 941.3,
+"u": "https://litfl.com/arrhythmogenic-right-ventricular-dysplasia-arvd/",
+"t": "ARVC (LITFL)"
+}
+],
+"2-10": [
+{
+"x": 689.6,
+"y": 111.8,
+"u": "https://litfl.com/hypertrophic-cardiomyopathy-hcm-ecg-library/",
+"t": "HCM (LITFL)"
+},
+{
+"x": 754.6,
+"y": 111.8,
+"u": "https://litfl.com/apical-hypertrophic-cardiomyopathy-ahc/",
+"t": "Apical HCM (LITFL)"
+},
+{
+"x": 615.8,
+"y": 369.4,
+"u": "https://litfl.com/dilated-cardiomyopathy-dcm-ecg-library/",
+"t": "DCM (LITFL)"
+},
+{
+"x": 680.6,
+"y": 369.4,
+"u": "https://litfl.com/myocarditis-ecg-library/",
+"t": "Myocarditis (LITFL)"
+},
+{
+"x": 757.4,
+"y": 369.4,
+"u": "https://litfl.com/takotsubo-cardiomyopathy-ecg-library/",
+"t": "Takotsubo (LITFL)"
+}
+],
+"2-11": [
+{
+"x": 423.4,
+"y": 146.6,
+"u": "https://litfl.com/ecg-criteria-for-left-ventricular-hypertrophy/",
+"t": "LVH criteria (LITFL)"
+},
+{
+"x": 370.1,
+"y": 360.4,
+"u": "https://litfl.com/right-ventricular-hypertrophy-rvh-ecg-library/",
+"t": "RVH (LITFL)"
+},
+{
+"x": 766.1,
+"y": 360.4,
+"u": "https://litfl.com/ecg-in-chronic-obstructive-pulmonary-disease/",
+"t": "COPD (LITFL)"
+},
+{
+"x": 370.2,
+"y": 846.4,
+"u": "https://litfl.com/biventricular-hypertrophy-ecg-library/",
+"t": "BVH (LITFL)"
+},
+{
+"x": 750.4,
+"y": 846.4,
+"u": "https://litfl.com/dextrocardia-ecg-library/",
+"t": "Dextrocardia (LITFL)"
+}
+],
+"2-12": [
+{
+"x": 691.4,
+"y": 124.6,
+"u": "https://litfl.com/omi-replacing-the-stemi-misnomer/",
+"t": "OMI (LITFL)"
+},
+{
+"x": 756.4,
+"y": 124.4,
+"u": "https://drsmithsecgblog.com/",
+"t": "Smith blog"
+},
+{
+"x": 366.0,
+"y": 253.2,
+"u": "https://litfl.com/aslanger-pattern/",
+"t": "Aslanger (LITFL)"
+},
+{
+"x": 753.4,
+"y": 253.1,
+"u": "https://litfl.com/high-lateral-stemi-ecg-library/",
+"t": "High lateral (LITFL)"
+}
+],
+"2-13": [
+{
+"x": 353.3,
+"y": 270.7,
+"u": "https://litfl.com/tricyclic-overdose-sodium-channel-blocker-toxicity/",
+"t": "Na-channel/TCA (LITFL)"
+},
+{
+"x": 433.9,
+"y": 270.8,
+"u": "https://litfl.com/ecg-in-toxicology/",
+"t": "Tox ECG (LITFL)"
+},
+{
+"x": 766.1,
+"y": 270.8,
+"u": "https://litfl.com/qt-interval-ecg-library/",
+"t": "QT (LITFL)"
+},
+{
+"x": 274.9,
+"y": 1009.4,
+"u": "https://litfl.com/hypothyroidism-ecg-library/",
+"t": "Hypothyroid (LITFL)"
+},
+{
+"x": 354.0,
+"y": 1009.4,
+"u": "https://litfl.com/hyperthyroidism-ecg-library/",
+"t": "Hyperthyroid (LITFL)"
+}
+],
+"2-14": [
+{
+"x": 672.0,
+"y": 124.6,
+"u": "https://litfl.com/pacemaker-rhythms-normal-patterns/",
+"t": "Paced rhythms (LITFL)"
+},
+{
+"x": 752.6,
+"y": 124.6,
+"u": "https://litfl.com/pacemaker-malfunction-ecg-library/",
+"t": "Malfunction (LITFL)"
+}
+],
+"2-15": [
+{
+"x": 427.2,
+"y": 124.4,
+"u": "https://litfl.com/normal-paediatric-ecg/",
+"t": "Paeds ECG (LITFL)"
+},
+{
+"x": 750.0,
+"y": 142.9,
+"u": "https://litfl.com/ecg-limb-lead-reversal-ecg-library/",
+"t": "Limb reversal (LITFL)"
+},
+{
+"x": 424.9,
+"y": 374.2,
+"u": "https://www.acsep.org.au/content/Document/Drezner%20et%20al_%2C%20International%20Criteria%20for%20ECG%20Interpretation%20in%20Athletes.pdf",
+"t": "Intl criteria"
+}
+],
+"2-16": [],
+"2-17": [
+{
+"x": 603.0,
+"y": 739.4,
+"u": "https://litfl.com/top-100/ecg/",
+"t": "LITFL Top 150"
+},
+{
+"x": 684.7,
+"y": 739.4,
+"u": "https://litfl.com/ecg-library/diagnosis/",
+"t": "ECG A–Z"
+},
+{
+"x": 766.6,
+"y": 739.4,
+"u": "https://drsmithsecgblog.com/",
+"t": "Dr Smith blog"
+},
+{
+"x": 766.6,
+"y": 809.3,
+"u": "https://www.acsep.org.au/content/Document/Drezner%20et%20al_%2C%20International%20Criteria%20for%20ECG%20Interpretation%20in%20Athletes.pdf",
+"t": "Athlete criteria"
+},
+{
+"x": 603.0,
+"y": 809.3,
+"u": "https://litfl.com/omi-replacing-the-stemi-misnomer/",
+"t": "OMI concept"
+},
+{
+"x": 684.7,
+"y": 809.3,
+"u": "https://litfl.com/killer-ecg-patterns-part-2/",
+"t": "Killer ECG 2"
+}
+]
+}

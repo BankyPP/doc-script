@@ -214,3 +214,9 @@ match /poymor_shared/{topic}/items/{id} {
 - รูปแบบไฟล์และกติกาเนื้อหา: ศิริราช `tools/symp/BRIEF.md` · เล่มเหลือง `tools/symp/yb-tools/BRIEF.md`
 - Medical Soil › นอก system · เฉพาะวอร์ด (`#/kb/x/<กลุ่ม>[/<บท>]`): กลุ่ม "Ped Exclusive" (ตั้งใน `KB_EXCL` ใน app.js) — บท Neonatology clone จากติว NL (`nl2-neonatology-mdcu`) ใช้ `data-ann` เดียวกัน แก้/โน้ตที่ไหนก็ตรงกันทั้งสองที่ · ติดป้ายวอร์ด ped อย่างเดียว · บท exclusive ที่ลง NL ต่อไปให้ clone มาเพิ่มใน `KB_EXCL`
 - Clinical skills (`#/kb/skills`)
+
+## Random Topic Summary › EKG (3 พ.ย. 2026)
+
+- ต้นฉบับ 2 เล่ม A3 (Field Manual 9 หน้า + Deep Dive 17 หน้า) → บนเว็บเป็นหน้า 1–26 · แต่ละหน้าบอก "เล่ม X หน้า Y" เพราะเนื้อหาอ้างเลขหน้าในเล่ม
+- สร้างด้วย `python3 tools/topic-from-pdf/ekg_build.py <EKG1.pdf> <EKG2.pdf>` — ภาพตัดตามต้นฉบับ ไม่แก้เนื้อหา · `ekg_glyphs.json` = สัญลักษณ์ vector (≥ → β ฯลฯ) · `ekg_qr.json` = ลิงก์จาก QR · `ekg_checks.json` = ผลตรวจข้อมูลที่แสดงใต้กล่อง (`chk`, ใส่ในข้อความให้ AI ด้วย)
+- รันสคริปต์แล้วให้เพิ่ม `v` ของหัวข้อใน data/topics.js และ build + publish ห้องฝึกใหม่
