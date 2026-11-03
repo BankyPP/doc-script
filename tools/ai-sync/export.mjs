@@ -28,7 +28,7 @@ async function all(col) {
   return out;
 }
 const allEdits = await all('poymor_edit');
-const overlays = allEdits.filter(e => e.h != null).map(e => ({ key: e.k, by: e.name, at: e.at, base: e.b || '', len: e.h.length, sync: e.sync ? e.sync.st : '' }));   // ทุกหน้าที่มีฉบับแก้ในเว็บทับต้นฉบับอยู่ (รวมที่ไม่ใช่ไฟล์ [AI])
+const overlays = allEdits.filter(e => e.h != null).map(e => ({ key: e.k, by: e.name, at: e.at, base: e.b || '', len: e.h.length, sync: e.sync ? e.sync.st : '', h: e.h }));   // ทุกหน้าที่มีฉบับแก้ในเว็บทับต้นฉบับอยู่ (รวมที่ไม่ใช่ไฟล์ [AI])
 const edits = allEdits.filter(e => e.h != null && e.sync && e.sync.st !== 'ok' && e.sync.st !== 'notai')
   .map(e => ({ key: e.k, by: e.name, at: e.at, status: e.sync.st, msg: e.sync.msg || '', target: e.sync.tg, ops: e.sync.ops || [] }));
 const struct = (await all('poymor_struct')).filter(x => x.st !== 'ok' && x.st !== 'web' && x.st !== 'notai')
