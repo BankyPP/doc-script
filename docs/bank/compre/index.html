@@ -1302,7 +1302,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 <script>
 const IMGS={};const WARDS={};
 const CONFIG={"title": "คลังข้อสอบเก่า Compre · โพยหมอ", "brand": "AC Compre", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-compre-v1", "setLabel": "ปี", "roLabel": "สถาบัน", "chipStrip": "", "files": {}, "siteUrl": "https://bankypp.github.io/doc-script/bank/compre/", "siteName": "คลังข้อสอบเก่า Compre", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "compre"], "sharedPrefix": "poy_compre_", "homeBrand": "AC {short} MDCU79 by BankyPP", "quizBrand": "AC {short} {type}", "artifactUrl": "", "subjects": [{"id": "compre", "name": "Comprehensive (Compre)", "wards": ["c1", "c2", "c3"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "inst": {"id": "compre", "name": "Compre", "th": "Compre", "en": "Comprehensive examination", "enShort": "Compre", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"c1": "#/nl/x/c1", "c2": "#/nl/x/c2", "c3": "#/nl/x/c3"}}, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "brand": "AC Compre 1 MCQ", "dir": "data_c1", "scope": "Comprehensive 1 (จุฬาฯ เท่านั้น — ศิริราชไม่มี) ใช้ blueprint NL1 เก่า", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "brand": "AC Compre 2 MCQ", "dir": "data_c2", "scope": "Comprehensive 2 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "brand": "AC Compre 3 MCQ", "dir": "data_c3", "scope": "Comprehensive 3 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="03/11/2026 20:34";
+const BUILD="03/11/2026 20:36";
 WARDS["c1"]={QB:[],HY:null};
 WARDS["c1"].MQ=[];
 WARDS["c1"].OS=[];
@@ -3701,7 +3701,7 @@ function rStaff(){
 /* ---------------- Service round: pick by Tag (every exam type, ward and site) ----------------
    g={on,tags:[id…],mode:"min"|"max"} · Minimum = the question has at least one chosen Tag · Maximum = the question has no Tag outside the chosen ones · ticked with nothing chosen = no filter */
 const TG_COL=["#C62828","#00796B","#6A1B9A","#B45309","#1565C0","#AD1457","#2E7D32","#3949AB","#C2410C","#00838F","#7B1FA2","#6B7A00","#BE185D","#0277BD","#1B6E4B","#8E24AA","#A1401F","#4F5BD5"];
-function tgSort(a){return a.slice().sort((x,y)=>String(x[1]).localeCompare(String(y[1]),"en",{sensitivity:"base"}));}
+function tgSort(a){return a.slice().sort((x,y)=>String(x[1]).localeCompare(String(y[1]),"en",{sensitivity:"base",numeric:true}));}
 function tgNorm(g,all){g=g&&typeof g==="object"?g:{};const T=Array.isArray(g.tags)?g.tags:[];return {on:!!g.on,tags:all?T.filter(t=>all.some(a=>a[0]===t)):T,mode:g.mode==="max"?"max":"min"};}
 function tgActive(g){return !!(g&&g.on&&g.tags&&g.tags.length);}
 function tgPass(t,g){if(!tgActive(g))return true;return g.mode==="max"?t.length>0&&t.every(x=>g.tags.includes(x)):t.some(x=>g.tags.includes(x));}

@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 5e22d05 2026-11-03 Service round ทุกวอร์ด ทุกเว็บ: เลือกหัวข้อตาม Tag (Minimum / Maximum)
+BankyPP/ac-mdcu 921e8d2 2026-11-03 Service round Tag: เรียงเลขในชื่อ Tag ตามค่าตัวเลข (2.3.3 มาก่อน 2.3.16)

@@ -555,7 +555,7 @@ function rStaff(){
 /* ---------------- Service round: pick by Tag (every exam type, ward and site) ----------------
    g={on,tags:[id…],mode:"min"|"max"} · Minimum = the question has at least one chosen Tag · Maximum = the question has no Tag outside the chosen ones · ticked with nothing chosen = no filter */
 const TG_COL=["#C62828","#00796B","#6A1B9A","#B45309","#1565C0","#AD1457","#2E7D32","#3949AB","#C2410C","#00838F","#7B1FA2","#6B7A00","#BE185D","#0277BD","#1B6E4B","#8E24AA","#A1401F","#4F5BD5"];
-function tgSort(a){return a.slice().sort((x,y)=>String(x[1]).localeCompare(String(y[1]),"en",{sensitivity:"base"}));}
+function tgSort(a){return a.slice().sort((x,y)=>String(x[1]).localeCompare(String(y[1]),"en",{sensitivity:"base",numeric:true}));}
 function tgNorm(g,all){g=g&&typeof g==="object"?g:{};const T=Array.isArray(g.tags)?g.tags:[];return {on:!!g.on,tags:all?T.filter(t=>all.some(a=>a[0]===t)):T,mode:g.mode==="max"?"max":"min"};}
 function tgActive(g){return !!(g&&g.on&&g.tags&&g.tags.length);}
 function tgPass(t,g){if(!tgActive(g))return true;return g.mode==="max"?t.length>0&&t.every(x=>g.tags.includes(x)):t.some(x=>g.tags.includes(x));}
