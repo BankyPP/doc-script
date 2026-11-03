@@ -33,7 +33,7 @@ const hsProgTxt=p=>`<span class="sprog${p.n&&p.d===p.n&&!p.w?" full":""}">ทำ
 function hsRef(type,o){const ss=hsStatus(type,o),q=o.q,lab=type==="MCQ"?"ข้อ "+q.id:esc(mqNum(q))+"."+(o.s._i+1);
   return `<button class="ref s-${ss}" type="button" data-hsu="${esc(q.uid)}" data-hsp="${o.s?o.s._p:""}" title="${esc(hsRot(q))} — ${HS_STN[ss]}"><span class="si">${HS_ICON[ss]}</span>${lab}<small>${esc(hsShortRot(q))}</small></button>`;}
 function hsOpenRef(type,u,pi){if(type==="MCQ")return openQ(u);
-  const P=P_();P.type=type;mqVset({r:"service",set:"all",style:"all",status:"all"});mqOpen(u,pi===""||pi==null?undefined:+pi,"service");}
+  const P=P_();P.type=type;mqVset({r:"service",set:"all",style:"all",status:"all",tg:Object.assign({},mqS().v.tg,{on:false})});mqOpen(u,pi===""||pi==null?undefined:+pi,"service");}
 /* how many Service-round items are not yet in any summary section (shown on the Phase 2 button) */
 function hsPendingN(type){const W=W_();if(!W)return 0;const its=hsItems(type);if(!its.length)return 0;const S=(W.SUMM||{})[type]||[],m=new Set();
   S.forEach(t=>t.groups.forEach(g=>g.sections.forEach(x=>(x.members||[]).forEach(k=>m.add(k)))));return its.filter(o=>!m.has(o.key)).length;}

@@ -41,11 +41,20 @@ WL.forEach(w=>{
   W.byU={};QB.forEach(q=>{W.byU[q.uid]=q;});
   W.NOTE.forEach(q=>{q.id=0;q.uid="NOTE|"+q.set+"|"+q.ro;q.opts=q.opts||["ปิด"];W.byU[q.uid]=q;});
   /* related questions (data/dups.js: groups of set|ro|orig) → W.REL[uid] = [other uids] */
-  {const k2u={};QB.forEach(q=>{k2u[q.set+"|"+q.ro+"|"+q.orig]=q.uid;});W.REL={};(W.DUP||[]).forEach(g=>{const us=g.map(k=>k2u[k]).filter(Boolean);us.forEach(u=>{W.REL[u]=us.filter(x=>x!==u);});});}
+  {const k2u={};QB.forEach(q=>{k2u[q.set+"|"+q.ro+"|"+q.orig]=q.uid;});W.REL={};(W.DUP||[]).forEach(g=>{const us=g.map(k=>k2u[k]).filter(Boolean);us.forEach(u=>{W.REL[u]=us.filter(x=>x!==u);});});
+    /* list related questions in the same order as the Service round year picker (newest year first, then RoA→RoD…) — QB is already sorted that way, so q.id order = picker order */
+    Object.values(W.REL).forEach(a=>a.sort((x,y)=>(W.byU[x]?W.byU[x].id:1e9)-(W.byU[y]?W.byU[y].id:1e9)));}
   W.sets=[...new Set(QB.map(setKey))];
   W.R=s=>String(s==null?"":s).replace(/(ข้อ(?:ถัดไป)?\s*)(\d[\d,\s]*(?:\([^()]*\)[\d,\s]*)*)/g,(m,p,nums)=>p+nums.replace(/\([^()]*\)|\d+/g,t=>t[0]==="("?W.R(t):((+t>=10&&W.RID2ID[+t])?W.RID2ID[+t]:t)));
   /* Unit round banks (<dir>/unit_*.js → W.UNIT.push({id,title,short,src,QB:[…]})): new case-based questions per lecture, shared by both phases */
-  W.UNIT=(W.UNIT||[]).filter(x=>x&&x.id&&Array.isArray(x.QB));W.byLec={};
+  W.UNIT=(W.UNIT||[]).filter(x=>x&&x.id&&Array.isArray(x.QB));
+  /* Unit round: always list lectures by L number ascending (every ward, every site) — L02 < L07.1 < L07.2 < L10 < L99.03 */
+  const numKey=c=>{const m=/^[A-Z]*(\d+(?:\.\d+)*)/i.exec(String(c||""));return m?m[1].split(".").map(Number):null;};
+  const numCmp=(x,y)=>{if(!x||!y)return (x?0:1)-(y?0:1);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]??-1)-(y[i]??-1);if(d)return d;}return 0;};
+  W.UNIT.sort((a,b)=>codeCmp(a.id||a.title,b.id||b.title));
+  /* Round I/O: every code (L / R / T / N) always listed by number ascending within its kind — L02 < L07.1 < L10 < L99.03 · R01 < R22 · T01 < T03 (also orders "รวมตามเรื่อง" and Specialty-round lists) */
+  if(W.IO&&Array.isArray(W.IO.docs)){const KO={L:0,R:1,T:2,N:3};W.IO.docs.sort((a,b)=>((KO[a.kind]??9)-(KO[b.kind]??9))||numCmp(numKey(a.code),numKey(b.code)));}
+  W.byLec={};
   W.UNIT.forEach(Lc=>{W.byLec[Lc.id]=Lc;Lc.QB.forEach((q,i)=>{q.unit=Lc.id;q.n=q.n||i+1;q.id="U"+q.n;q.set=Lc.short||Lc.title;q.ro="Unit";q.uid="U|"+Lc.id+"|"+q.n;W.byU[q.uid]=q;});});
 });
 
@@ -149,7 +158,7 @@ function route(){
   if(h.w==="grades"){ward=null;return show("grades");}
   if(!h.w||!WARDS[h.w]||!WL.some(x=>x.id===h.w)){if(QR)qStop();ward=null;return show("wards");}
   if(QR&&QR.ward!==h.w)qStop();
-  ward=h.w;
+  ward=h.w;qRestore();
   let v=h.v||"home";
   if(v==="sess"&&!validSess())v="home";
   if(v==="result"&&!P_().sess)v="home";
@@ -299,7 +308,7 @@ const ROUNDS=[
   {k:"unit",n:"Unit round",d:"โจทย์ใหม่แบบ case-based จาก lecture แต่ละบท สุ่มใหม่ทุกครั้งที่เข้า"},
   {k:"quality",n:"Quality round",d:"Speedrun ข้อสอบเก่า จับเวลาเป็นเซต · เลือกปีที่จะทำ หรือสุ่มจากทั้งคลัง ตั้งค่าเองได้ทั้งหมด"},
   {k:"admission",n:"Admission round",d:"เคสใหม่ที่ AI สร้างให้ทีละข้อ เนื้อหาเหมาะกับชั้นปีในวอร์ดนี้ · เก็บทุกข้อไว้ในคลังของคุณ"},
-  {k:"specialty",n:"Specialty round",d:"โจทย์ใหม่ที่ AI สร้างทีละข้อแบบ Admission round แต่เนื้อหาเฉพาะไฟล์ของวอร์ดนี้ · เลือกเรื่อง / R / N เอง หรือสุ่มทั้งหมด · ใช้ร่วมกับ MEQ / OSCE"},
+  {k:"specialty",n:"Specialty round",d:"โจทย์ใหม่ที่ AI สร้างทีละข้อแบบ Admission round แต่เนื้อหาเฉพาะไฟล์ของวอร์ดนี้ · เลือกเรื่อง / R / T / N เอง หรือสุ่มทั้งหมด · ใช้ร่วมกับ MEQ / OSCE"},
   {k:"io",n:"Round I/O",d:"อ่านสรุปเนื้อหาจาก Lecture (L) · Resource (R) · โน้ตวอร์ด (N) และรวมตามเรื่อง ที่ Claude สรุปให้ · ใช้ร่วมกับ MEQ / OSCE"},
   {k:"longcase",n:"Long case",d:"AI ให้ chief complaint มา แล้วดำเนินเคสเองทีละขั้นแบบสอบ long case เฉลยทีละขั้นสไตล์ MEQ"}
 ];
@@ -438,8 +447,9 @@ function rHome(){
     if(!QB.length)h+=`<div class="card"><h3>ยังไม่มีข้อสอบในคลัง</h3><span class="rd" style="margin:0">ส่งไฟล์ข้อสอบเก่า (PDF/รูป/เอกสาร) ให้ Claude แล้วให้เพิ่มเข้าเว็บ ปุ่มด้านล่างจะใช้ได้เมื่อมีข้อสอบ</span></div>`;
     const done=QB.filter(q=>atts(P,p,q.uid).length),right=done.filter(q=>lastA(P,p,q.uid)[0]===q.ans);
     h+=`<p class="statline">คลังมี <b>${totalN(ward)}</b> ข้อ · ข้อสอบเก่า <b>${QB.length}</b> ข้อ · Phase ${p} ทำแล้ว <b>${done.length}</b> ข้อ · ล่าสุดถูก <b>${done.length?Math.round(right.length/done.length*100)+"%":"–"}</b> · <span style="white-space:nowrap">มี lecture <b>${(w.lectures||[]).length}</b> บท</span></p>`;
-    const s=P.sess;
-    if(s&&s.list&&s.list.length&&s.ph===p){const a=Object.keys(s.ans).length;if(a<s.list.length)h+=`<button class="resume" id="resume"><span>ทำต่อ: <b>${esc(s.title)}</b><span class="rd">ทำไป ${a}/${s.list.length} ข้อ</span></span><span class="go">→</span></button>`;}
+    {const R=homeResume(P,p);if(R.length){const [a,b]=R;
+      h+=`<div class="rswrap"><button class="resume" id="resume" data-rs="${a.k}"><span>ทำต่อ: <b>${esc(a.title)}</b><span class="rd">${a.d}</span></span><span class="go">→</span></button><button class="rsx" data-rsx="${a.k}" aria-label="ซ่อนกล่องนี้" title="ซ่อน (ขึ้นใหม่เมื่อกลับไปทำรอบนี้อีก)">×</button></div>`;
+      if(b)h+=`<div class="rswrap"><button class="linkbtn rs2" data-rs="${b.k}">หรือทำต่อ: <b>${esc(b.title)}</b> · ${b.d} →</button><button class="rsx sm" data-rsx="${b.k}" aria-label="ซ่อน">×</button></div>`;}}
     if(p===2){const l=p2lists();
       h+=`<div class="card"><h3>ทบทวนก่อนสอบ</h3><span class="rd">สรุปจากข้อสอบเก่าทุกปี และเลือกทวนเฉพาะกลุ่มข้อ</span><div class="tools">
       <button class="tool" data-go="hy">📘 สรุป High-yield${(n=>n?`<span class="n" title="ข้อใหม่ที่ Claude ยังไม่ได้สรุป">🆕 ${n}</span>`:"")(hsPendingN("MCQ"))}</button><button class="tool" data-go="kw">🔑 Keyword ตอบข้อสอบ</button>
@@ -449,9 +459,9 @@ function rHome(){
       <button class="tool" data-p2="nop1">○ ไม่เคยทำใน Phase 1<span class="n">${l.nop1.length}</span></button></div></div>`;}
     const sc=staffList().length;
     const rCount=k=>{const t=k==="service"?`มี <b>${QB.length}</b> ข้อ`:k==="unit"?`มี <b>${unitN(ward)}</b> ข้อ · ${W.UNIT.length} บท`:k==="admission"?`มี <b>${aiN("adm",ward)}</b> เคส`:k==="specialty"?`มี <b>${aiN("spc",ward)}</b> ข้อ · ไฟล์ ${spcUnits().filter(u=>u.kind!=="L").length} เรื่อง`:k==="staff"?`มีข้อให้ทวน <b>${sc}</b> ข้อ`:k==="advisor"?`อ่านเฉลยได้ <b>${QB.filter(q=>atts(P,1,q.uid).length||atts(P,2,q.uid).length).length}</b> ข้อ`:"";return t?`<span class="rcnt">${t}</span>`:"";};
-    const mm=morning(false),ma=mm?mm.list.filter(u=>mm.ans[u]!==undefined).length:0,mr=mm?mm.list.filter(u=>W.byU[u]&&mm.ans[u]===W.byU[u].ans).length:0,MG=mornGame(),mOn=QB.length+unitN(ward)>0,mfx=mOn?mornFx(mDay(),MG,ma):[];
+    const mm=morning(false),ma=mm?mm.list.filter(u=>mm.ans[u]!==undefined).length:0,mr=mm?mm.list.filter(u=>W.byU[u]&&mm.ans[u]===W.byU[u].ans).length:0,MG=mornGame(),mOn=QB.length+unitN(ward)>0,mfx=mornFx(mDay(),MG,ma);   /* same Morning box look in every ward, old or new (user 31 Oct 2026) — a ward with no questions yet still shows 🔥/🏅 and the red/green state */
     const badge=r=>r.soon?'<span class="soon">เร็ว ๆ นี้</span>':r.k==="legend"&&P.leg?'<span class="badge">กำลังสอบ</span>':r.k==="staff"&&sc?`<span class="badge">${sc}</span>`:r.k==="morning"&&mm?`<span class="badge">${ma}/${mm.list.length}</span>`:"";
-    h+=`<div class="rounds">${ROUNDS.map((r,i)=>`<button class="round${r.k==="morning"?mfx.map(c=>" "+(c==="mred"?"mwarn":c)).join(""):""}" data-round="${r.k}" aria-disabled="${!!r.soon}"${r.k==="morning"&&mfx.includes("maura")?` style="${auraVars(mDay())}"`:""}>${badge(r)}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}${r.k==="morning"&&mOn?mGameHTML(MG):""}</b><span class="rd">${r.soon?"รายละเอียดจะเพิ่มภายหลัง":r.d}</span>${rCount(r.k)}${r.k==="legend"?(()=>{const E=examCfg();return `<span class="lgspec">${E?`<b>${E.n}</b> ข้อ · <b>${E.min}</b> นาที`:"ยังไม่ได้ตั้งจำนวนข้อ/เวลา"}</span>`;})():""}${r.k==="morning"&&mOn?`<span class="mtodo${ma>=MF_LIT?" ok":""}">${!mm?"🎁 ยังไม่ได้เปิดกล่องวันนี้":!ma?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":ma<MF_LIT?`วันนี้ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ) — อีก ${MF_LIT-ma} ข้อไฟติด 🔥`:ma<mm.list.length?`🔥 ไฟติดแล้ว · ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ)`:`✓ ครบ ${ma}/${mm.list.length} ข้อแล้ว (ถูก ${mr} ข้อ)`}</span>`:""}${r.k==="morning"?`<span class="mclock">ชุดใหม่ใน <b id="mClock">${hms(mNext()-now())}</b></span><span class="mhist" data-mhist="1">📅 ประวัติรายวัน →</span>`:""}</button>`).join("")}</div>`;
+    h+=`<div class="rounds">${ROUNDS.map((r,i)=>`<button class="round${r.k==="morning"?mfx.map(c=>" "+(c==="mred"?"mwarn":c)).join(""):""}" data-round="${r.k}" aria-disabled="${!!r.soon}"${r.k==="morning"&&mfx.includes("maura")?` style="${auraVars(mDay())}"`:""}>${badge(r)}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}${r.k==="morning"?mGameHTML(MG):""}</b><span class="rd">${r.soon?"รายละเอียดจะเพิ่มภายหลัง":r.d}</span>${rCount(r.k)}${r.k==="legend"?(()=>{const E=examCfg();return `<span class="lgspec">${E?`<b>${E.n}</b> ข้อ · <b>${E.min}</b> นาที`:"ยังไม่ได้ตั้งจำนวนข้อ/เวลา"}</span>`;})():""}${r.k==="morning"?`<span class="mtodo${ma>=MF_LIT?" ok":""}">${!mOn?"🎁 ยังไม่มีข้อให้เปิดกล่อง — รอเพิ่มข้อสอบเก่า / Unit round":!mm?"🎁 ยังไม่ได้เปิดกล่องวันนี้":!ma?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":ma<MF_LIT?`วันนี้ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ) — อีก ${MF_LIT-ma} ข้อไฟติด 🔥`:ma<mm.list.length?`🔥 ไฟติดแล้ว · ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ)`:`✓ ครบ ${ma}/${mm.list.length} ข้อแล้ว (ถูก ${mr} ข้อ)`}</span>`:""}${r.k==="morning"?`<span class="mclock">ชุดใหม่ใน <b id="mClock">${hms(mNext()-now())}</b></span><span class="mhist" data-mhist="1">📅 ประวัติรายวัน →</span>`:""}</button>`).join("")}</div>`;
   }
   h+=gradeCard(ward);
   if(IN_FRAME&&HAS_CLAUDE())h+=clStartCard();
@@ -473,7 +483,8 @@ function rHome(){
   bindGrades();
   document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(ward+"/"+b.dataset.go));
   document.querySelectorAll("[data-p2]").forEach(b=>b.onclick=()=>{const k=b.dataset.p2,l=p2lists()[k];const t={wrong:"ข้อที่ยังผิดอยู่",right:"ข้อที่ทำถูกแล้ว",flag:"ข้อที่ยังไม่มั่นใจ",nop1:"ข้อที่ไม่เคยทำใน Phase 1"}[k];startSess("p2"+k,t,l.map(q=>q.uid));});
-  const rs=$("resume");if(rs)rs.onclick=()=>go(ward+"/sess");
+  document.querySelectorAll("[data-rsx]").forEach(b=>b.onclick=()=>{const P=P_();P.rsHide=P.rsHide||{};P.rsHide[b.dataset.rsx+"|"+ph()]=now();save();toast("ซ่อนแล้ว · จะขึ้นอีกเมื่อกลับไปทำรอบนั้น");rHome();});
+  document.querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{if(b.dataset.rs==="svc"){svcQ();go(ward+"/svc");}else go(ward+"/sess");});
   const mc=$("mClock");if(mc){let lastDay=mDay();show._t=setInterval(()=>{if(!document.body.contains(mc)){clearInterval(show._t);return;}mc.textContent=hms(mNext()-now());if(mDay()!==lastDay){lastDay=mDay();rHome();}},1000);}
   document.querySelectorAll("[data-round]").forEach(b=>b.onclick=e=>{if(e&&e.target&&e.target.closest&&e.target.closest("[data-mhist]"))return go(ward+"/mhist");const k=b.dataset.round;const R=ROUNDS.find(r=>r.k===k);if(R.soon){toast("โหมดนี้จะเพิ่มภายหลัง");return;}
     if(k==="io")return go(ward+"/io");if(k==="teach")return go(ward+"/teach");if(k==="unit")return go(ward+"/unit");if(k==="admission")return go(ward+"/adm");if(k==="specialty")return go(ward+"/spc");if(k==="morning")return startMorning();if(k==="longcase")return go(ward+"/lcase");
@@ -483,6 +494,14 @@ function rHome(){
     else if(k==="staff")go(ward+"/staff");
     else toast("โหมดนี้จะเพิ่มภายหลัง");});
 }
+/* home "ทำต่อ" box: the unfinished round (a session, or the Service round sheet) used most recently first, the other one as a small link under it */
+function homeResume(P,p){qRestore();const W=W_(),out=[],s=P.sess;
+  if(s&&s.list&&s.list.length&&s.ph===p){const a=Object.keys(s.ans).length;if(a<s.list.length)out.push({k:"sess",t:Math.max(s.vt||0,s.ts||0),title:s.title,d:`ทำไป ${a}/${s.list.length} ข้อ · ล่าสุดอยู่ข้อ ${s.cur+1}${QR&&!QR.done&&QR.ward===ward&&s.kind==="quality"?" · กำลังจับเวลา":""}`});}
+  const sv=P.svc[p];
+  if(sv&&(sv.vt||sv.cur)&&W.QB.length){const L=svcList().filter(q=>!q.notice),d=L.filter(q=>lockedAns(P,p,q.uid)!==undefined).length,c=W.byU[sv.cur];
+    if(L.length&&d<L.length){const ss=selSets(),nm=(sv.set==="all"?"ทุกชุด":ss.length>2?`${ss.slice(0,2).join(", ")} +${ss.length-2} ชุด`:ss.join(", "))+(tgActive(sv.tg)?` · ${sv.tg.tags.length} Tag`:"");
+      out.push({k:"svc",t:sv.vt||0,title:"Service round · "+nm,d:`ทำไป ${d}/${L.length} ข้อ${c&&!c.notice?` · ล่าสุดอยู่${ss.length===1?"":" "+esc(setKey(c))} ข้อ ${c.id}`:""}`});}}
+  const H=P.rsHide||{};return out.filter(x=>!(H[x.k+"|"+p]>=x.t)).sort((a,b)=>b.t-a.t);}
 function startSess(kind,title,uids,extra){
   if(!uids.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}
   if(kind!=="quality")qStop();
@@ -501,7 +520,7 @@ function rLaunch(){
   let h=`<div class="whead"><h1 class="h2">จะไปหน้าไหน?</h1><a href="#/">เปลี่ยนวอร์ด</a></div><p class="sub" style="margin:0 0 12px">${esc(w.name)} · หน้าที่ต้องใช้ AI เปิดใน Claude ได้เลย</p><div class="stack" style="margin-top:0">`;
   if(WL.some(x=>mqL(x.id).length))h+=it("mqin","ตรวจคำตอบ MEQ จากเว็บ","วางรหัสที่คัดลอกจากเว็บ แล้วให้ Claude ประเมินทุก Part","MEQ");
   h+=it("adm","Admission round",`เคสใหม่ที่ AI สร้างให้ทีละข้อ${nAdm?` · คลังของคุณมี ${nAdm} เคส`:""}`);
-  h+=it("spc","Specialty round",`โจทย์ใหม่จากไฟล์ของวอร์ด เลือกเรื่อง / R / N ได้${bankItems("spc",ward).length?` · คลังของคุณมี ${bankItems("spc",ward).length} ข้อ`:""}`);
+  h+=it("spc","Specialty round",`โจทย์ใหม่จากไฟล์ของวอร์ด เลือกเรื่อง / R / T / N ได้${bankItems("spc",ward).length?` · คลังของคุณมี ${bankItems("spc",ward).length} ข้อ`:""}`);
   h+=it("lcase","Long case",`AI ให้ chief complaint แล้วดำเนินเคสทีละขั้น${nLc?` · ทำไปแล้ว ${nLc} เคส`:""}`);
   h+=it(P.leg?"exam":"legend","Legendary round",P.leg?`กำลังสอบอยู่ใน Claude · เหลือเวลา ${hms(P.leg.end-now())}`:"จำลองสอบจริง พร้อมโจทย์ใหม่จาก AI",P.leg?"กำลังสอบ":"");
   if(!(w.noExam||[]).includes("OSCE")){const oc=typeof osRunCur==="function"&&osRunCur();h+=it(oc?"osx":"osl","Legendary round · OSCE",oc?"กำลังสอบ OSCE อยู่ใน Claude — กดเพื่อสอบต่อ":"จำลองสอบ OSCE จริง พร้อมโจทย์ใหม่จาก AI",oc?"กำลังสอบ":"OSCE");}
@@ -533,6 +552,36 @@ function rStaff(){
   $("saGo").onclick=()=>{const l=staffList();if(!l.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}startSess("staff",all?"Ward staff round · รวมทุกแหล่ง":"Ward staff round",l);};
 }
 
+/* ---------------- Service round: pick by Tag (every exam type, ward and site) ----------------
+   g={on,tags:[id…],mode:"min"|"max"} · Minimum = the question has at least one chosen Tag · Maximum = the question has no Tag outside the chosen ones · ticked with nothing chosen = no filter */
+const TG_COL=["#C62828","#00796B","#6A1B9A","#B45309","#1565C0","#AD1457","#2E7D32","#3949AB","#C2410C","#00838F","#7B1FA2","#6B7A00","#BE185D","#0277BD","#1B6E4B","#8E24AA","#A1401F","#4F5BD5"];
+function tgSort(a){return a.slice().sort((x,y)=>String(x[1]).localeCompare(String(y[1]),"en",{sensitivity:"base"}));}
+function tgNorm(g,all){g=g&&typeof g==="object"?g:{};const T=Array.isArray(g.tags)?g.tags:[];return {on:!!g.on,tags:all?T.filter(t=>all.some(a=>a[0]===t)):T,mode:g.mode==="max"?"max":"min"};}
+function tgActive(g){return !!(g&&g.on&&g.tags&&g.tags.length);}
+function tgPass(t,g){if(!tgActive(g))return true;return g.mode==="max"?t.length>0&&t.every(x=>g.tags.includes(x)):t.some(x=>g.tags.includes(x));}
+function tgColor(all,id){const i=all.findIndex(a=>a[0]===id);return TG_COL[(i<0?0:i)%TG_COL.length];}
+function tgPanel(all,g,cnt,n){
+  let h=`<div class="tgbox"><label class="tgon"><input type="checkbox" id="tgOn"${g.on?" checked":""}><span class="tgt"><b>เลือกหัวข้อด้วย</b><span class="hint">ติ้กเพื่อทำเฉพาะบางหัวข้อตาม Tag · ไม่ติ้ก = ทุกหัวข้อ</span></span></label>`;
+  if(g.on){
+    h+=`<div class="tgs">${all.map(([k,t])=>{const c=cnt[k]||0;return `<button class="tg${c?"":" zero"}" type="button" data-tg="${esc(k)}" aria-pressed="${g.tags.includes(k)}" style="--tg:${tgColor(all,k)}">${esc(t)}<span class="n">${c}</span></button>`;}).join("")}</div>`;
+    h+=`<div class="tgmh">Mode</div><div class="tgms">
+      <button class="tgm" type="button" data-tgm="min" aria-pressed="${g.mode!=="max"}"><b>Minimum</b><span>มี Tag ที่เลือกอย่างน้อย 1 อัน มี Tag อื่นปนได้</span></button>
+      <button class="tgm" type="button" data-tgm="max" aria-pressed="${g.mode==="max"}"><b>Maximum</b><span>มีได้แค่ Tag ที่เลือก ห้ามมี Tag อื่นปน</span></button></div>`;
+    h+=`<div class="tgfoot"><span>${g.tags.length?`เลือก ${g.tags.length} Tag · ตรงเงื่อนไข <b>${n}</b> ข้อ`:`ยังไม่ได้เลือก Tag = ทุกข้อ (<b>${n}</b> ข้อ)`}</span>${g.tags.length?`<span class="spacer"></span><button class="link" type="button" id="tgClr">ล้าง Tag</button>`:""}</div>`;}
+  return h+`</div>`;}
+function tgWire(root,g,after){
+  const ref=sel=>{after();const e=document.querySelector(sel);if(e)e.focus({preventScroll:true});};
+  const on=root.querySelector("#tgOn");if(on)on.onchange=()=>{g.on=on.checked;ref("#tgOn");};
+  root.querySelectorAll("[data-tg]").forEach(b=>b.onclick=()=>{const k=b.dataset.tg,i=g.tags.indexOf(k);if(i>=0)g.tags.splice(i,1);else g.tags.push(k);ref(`[data-tg="${CSS.escape(k)}"]`);});
+  root.querySelectorAll("[data-tgm]").forEach(b=>b.onclick=()=>{g.mode=b.dataset.tgm;ref(`[data-tgm="${g.mode}"]`);});
+  const c=root.querySelector("#tgClr");if(c)c.onclick=()=>{g.tags.length=0;ref("#tgOn");};}
+/* the line in the answer sheet: which Tag filter is on, with edit / remove */
+function tgLine(all,g,onOff,onEdit){const el=$("tgLine");if(!el)return;if(!tgActive(g)){el.hidden=true;el.innerHTML="";return;}
+  const nm=k=>(all.find(a=>a[0]===k)||[k,k])[1];
+  el.innerHTML=`<span class="tgl-h">${g.mode==="max"?"Maximum":"Minimum"}</span>${tgSort(g.tags.map(k=>[k,nm(k)])).map(([k,t])=>`<span class="tg sm" style="--tg:${tgColor(all,k)}">${esc(t)}</span>`).join("")}<button class="link" type="button" id="tgLEdit">แก้</button><button class="link" type="button" id="tgLOff">เอาออก</button>`;
+  el.hidden=false;$("tgLEdit").onclick=onEdit;$("tgLOff").onclick=onOff;}
+function tgAllQ(W){if(!W._tgAll){const s=new Set();W.QB.forEach(q=>qTags(q).forEach(t=>s.add(t)));W._tgAll=tgSort([...s].map(t=>[t,t]));}return W._tgAll;}
+
 /* ---------------- service round: choose sets ---------------- */
 function rService(){
   const W=W_(),P=P_(),p=ph(),QB=W.QB;
@@ -542,11 +591,16 @@ function rService(){
   let h=`<h1 class="h2">Service round</h1><p class="sub">เลือกปีและ rotation ที่อยากทำ เลือกได้หลายชุด ไม่เลือกเลย = ทุกชุด</p>`;
   h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=qs.filter(q=>lockedAns(P,p,q.uid)!==undefined).length;const full=d===qs.length,pc=Math.round(d/qs.length*100);return `<button class="chip svchip${full?" done":""}" data-k="${esc(k)}" aria-pressed="${sel.has(k)}" style="--pc:${pc}%">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${full?"✓ ครบ ":""}${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");
   h+=`<p class="hint">แถบสีในปุ่ม = สัดส่วนที่ทำแล้วใน Phase ${p} · ✓ ครบ = ทำครบทุกข้อในชุดนั้นแล้ว</p>`;
+  h+=`<div id="tgWrap"></div>`;
   h+=`<div class="row2"><button class="btn ghost" id="spClear">ล้างที่เลือก</button><span class="spacer"></span><button class="btn primary" id="spGo">เริ่มทำ</button></div>`;
   $("main").innerHTML=h;
-  document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else sel.add(k);b.setAttribute("aria-pressed",sel.has(k));});
-  $("spClear").onclick=()=>{sel.clear();document.querySelectorAll("[data-k]").forEach(b=>b.setAttribute("aria-pressed","false"));};
-  $("spGo").onclick=()=>{const order=W.sets;P.pick=[...sel].sort((a,b)=>order.indexOf(a)-order.indexOf(b));const s=P.svc[p];s.set=P.pick.length?P.pick.join("|"):"all";
+  const allT=tgAllQ(W),tg=tgNorm(P.svc[p].tg,allT),tgPool=()=>QB.filter(q=>!sel.size||sel.has(setKey(q))),
+    paintTg=()=>{const el=$("tgWrap");if(!el||!allT.length)return;const pool=tgPool(),cnt={};pool.forEach(q=>qTags(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));el.innerHTML=tgPanel(allT,tg,cnt,pool.filter(q=>tgPass(qTags(q),tg)).length);tgWire(el,tg,paintTg);};
+  paintTg();
+  document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else sel.add(k);b.setAttribute("aria-pressed",sel.has(k));paintTg();});
+  $("spClear").onclick=()=>{sel.clear();tg.tags.length=0;document.querySelectorAll("[data-k]").forEach(b=>b.setAttribute("aria-pressed","false"));paintTg();};
+  $("spGo").onclick=()=>{if(!tgPool().some(q=>tgPass(qTags(q),tg))){toast("ไม่มีข้อที่ตรงกับชุดและ Tag ที่เลือก");return;}
+    const order=W.sets;P.pick=[...sel].sort((a,b)=>order.indexOf(a)-order.indexOf(b));const s=P.svc[p];s.set=P.pick.length?P.pick.join("|"):"all";s.tg=tg;
     {const nx=svcNextTodo();if(nx)s.cur=nx.uid;else{toast("ทำครบทุกข้อในชุดที่เลือกแล้ว");const c=W.byU[s.cur];if(!c||!inSet(c)){const v=svcVisible();s.cur=(svcStart(v)||svcList()[0]).uid;}}}save();go(ward+"/svc");};
 }
 
@@ -576,7 +630,8 @@ const selSets=()=>{const s=svcS().set;return s==="all"?[]:String(s).split("|").f
 const chOf=q=>String(q.orig).split(".")[0];
 const chSets=()=>selSets().filter(k=>(W_().CHAP||{})[k]);
 const chOk=q=>{const sv=svcS();if(!sv.ch||sv.ch==="all")return true;const k=setKey(q);if(!(W_().CHAP||{})[k]||!selSets().includes(k))return true;return sv.ch.split("|").includes(chOf(q));};
-const inSet=q=>svcS().set==="all"||selSets().includes(setKey(q))&&chOk(q);
+const tgOk=q=>!!q.notice||tgPass(qTags(q),svcS().tg);
+const inSet=q=>tgOk(q)&&(svcS().set==="all"||selSets().includes(setKey(q))&&chOk(q));
 function svcPass(q){const P=P_(),p=ph(),f=svcS().status,a=lockedAns(P,p,q.uid);
   switch(f){case"todo":return a===undefined;case"wrong":return a!==undefined&&a!==q.ans;case"right":return a!==undefined&&a===q.ans;case"flag":return flagged(P,q.uid);case"nop1":return !atts(P,1,q.uid).length;default:return true;}}
 const svcList=()=>W_().QB.filter(inSet);
@@ -635,23 +690,30 @@ function cleanTags(W,a,txt){const v=broadOf(W),lc=v.map(x=>x.toLowerCase()),o=[]
 function qTags(q){const W=W_();let t=[];
   if(q.adm)t=Array.isArray(q.tags)&&q.tags.length?q.tags:guessTags(W,q.topic||"")||[];else if(q.unit){const Lc=W.byLec[q.unit]||{};t=Array.isArray(q.tags)&&q.tags.length?q.tags:[].concat(Lc.tags||Lc.topic||[]);}
   else t=(W.TAGS&&W.TAGS[q.set+"|"+q.ro+"|"+q.orig])||[];return t;}
+/* ordering of file codes everywhere (user, 3 Nov 2026): code L, then R, then T, then N — each group by number (L02 < L07.1 < L07.2 < L10 < L99.03 · R01 < R22 · T01 < T03) */
+function codeKey(c){c=String(c||"").trim();const K={L:0,R:1,T:2,N:3},k=/^([A-Za-z])/.exec(c),m=/^[A-Za-z]*(\d+(?:\.\d+)*)/.exec(c);return [k&&K[k[1].toUpperCase()]!==undefined?K[k[1].toUpperCase()]:9,m?m[1].split(".").map(Number):null];}
+function codeCmp(a,b){const x=codeKey(a),y=codeKey(b);if(x[0]!==y[0])return x[0]-y[0];const p=x[1],q=y[1];if(!p||!q)return (p?0:1)-(q?0:1);for(let i=0;i<Math.max(p.length,q.length);i++){const d=(p[i]??-1)-(q[i]??-1);if(d)return d;}return 0;}
 /* attached resources outside the lectures (<dir>/resources.js → W.RES=[{code,title,topic,tags,type,url,note,points:[…]}]) */
 const resOf=W=>(W&&W.RES||[]).filter(r=>r&&r.title);
-function resFor(q){const W=W_(),tg=qTags(q),tp=q.adm||q.unit?"":topicOf(W,q);return resOf(W).filter(r=>(r.tags||[]).some(t=>tg.includes(t))||(tp&&r.topic===tp));}
+/* textbooks (code T, <dir>/textbooks.js → W.TXT, same shape as W.RES, one entry per chapter) — everything R gets, always in its own box apart from R */
+const txtOf=W=>(W&&W.TXT||[]).filter(r=>r&&r.title);
+const isTxt=r=>!!r&&/^T\d/.test(r.code||"");
+function resFor(q,T){const W=W_(),tg=qTags(q),tp=q.adm||q.unit?"":topicOf(W,q);return (T?txtOf(W):resOf(W)).filter(r=>(r.tags||[]).some(t=>tg.includes(t))||(tp&&r.topic===tp));}
+const txtFor=q=>resFor(q,1);
 const resLabel=r=>(r.code?r.code+" ":"")+r.title;
 const resPts=(r,n)=>(Array.isArray(r.points)?r.points:[]).slice(0,n||99);
 /* where an AI-written question takes its content from: picked uniformly at random among "anywhere" and every attached resource that has content */
-function pickSrc(W){const rs=resOf(W).filter(r=>resPts(r).length),o=[null].concat(rs);return o[Math.floor(Math.random()*o.length)];}
-/* Admission round may use anything: general knowledge, or any lecture (L) / resource (R) / ward note (N) summary of this ward — one of these 4 groups at random (equal chance), then one page inside it */
-const IOKN={L:"lecture summary",R:"resource summary",N:"ward note (checked and corrected)"};
+function pickSrc(W){const rs=resOf(W).concat(txtOf(W)).filter(r=>resPts(r).length),o=[null].concat(rs);return o[Math.floor(Math.random()*o.length)];}
+/* Admission round may use anything: general knowledge, or any lecture (L) / resource (R) / textbook (T) / ward note (N) summary of this ward — one of these groups at random (equal chance), then one page inside it */
+const IOKN={L:"lecture summary",R:"resource summary",T:"textbook chapter summary",N:"ward note (checked and corrected)"};
 function ioSrcs(W){const o=[];((W&&W.IO&&W.IO.docs)||[]).forEach(d=>(d.pages||[]).forEach(p=>{
   const t=String(p.html||"").replace(/<span class="iowas">[\s\S]*?<\/span>/g,"").replace(/\{\{[^}]*\}\}/g,"").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&").replace(/\s+/g," ").trim();
   if(t)o.push({io:1,kind:d.kind,code:d.code,title:(d.kind==="N"?"โน้ตวอร์ด":d.title)+" — "+p.title,text:t.slice(0,7000)});}));return o;}
-function pickSrcAdm(W){const rs=resOf(W).filter(r=>resPts(r).length),io=ioSrcs(W);
-  const G=[[null],io.filter(x=>x.kind==="L"),rs.concat(io.filter(x=>x.kind==="R")),io.filter(x=>x.kind==="N")].filter(g=>g.length);
+function pickSrcAdm(W){const rs=resOf(W).filter(r=>resPts(r).length),ts=txtOf(W).filter(r=>resPts(r).length),io=ioSrcs(W);
+  const G=[[null],io.filter(x=>x.kind==="L"),rs.concat(io.filter(x=>x.kind==="R")),ts.concat(io.filter(x=>x.kind==="T")),io.filter(x=>x.kind==="N")].filter(g=>g.length);
   const g=G[Math.floor(Math.random()*G.length)];return g[Math.floor(Math.random()*g.length)];}
 const srcPrompt=r=>!r?"":r.io?`\nContent source for this question: build it mainly on the ${IOKN[r.kind]||"summary"} below from this ward (you may add standard textbook or guideline knowledge, but the key point tested must come from it; where it marks a correction, use the corrected statement).\nSource ${r.code} ${r.title}:\n${r.text}\n`
-  :`\nContent source for this question: build it mainly on the attached resource below (you may add standard textbook or guideline knowledge, but the key point tested must come from it).\nResource ${resLabel(r)}:\n- ${resPts(r).join("\n- ")}\n`;
+  :`\nContent source for this question: build it mainly on the attached ${isTxt(r)?"textbook chapter":"resource"} below (you may add standard textbook or guideline knowledge, but the key point tested must come from it).\n${isTxt(r)?"Textbook":"Resource"} ${resLabel(r)}:\n- ${resPts(r).join("\n- ")}\n`;
 function tagRow(q){const W=W_();let t=[];
   if(q.adm)t=Array.isArray(q.tags)&&q.tags.length?q.tags:guessTags(W,q.topic||"")||[];else if(q.unit){const Lc=W.byLec[q.unit]||{};t=Array.isArray(q.tags)&&q.tags.length?q.tags:[].concat(Lc.tags||Lc.topic||[]);}
   else t=(W.TAGS&&W.TAGS[q.set+"|"+q.ro+"|"+q.orig])||[];
@@ -678,6 +740,7 @@ function seenHistHTML(q,rk){const P=P_(),W=W_(),g={},L_=[];
   return h+`</div>`;}
 function rQuiz(){
   const W=W_(),P=P_(),R=W.R,q=curQ();
+  {const o=view==="svc"?svcS():isSess()?P.sess:null;if(o&&(now()-(o.vt||0)>30000||(o.vt||0)<=((P.rsHide||{})[(view==="svc"?"svc|":"sess|")+ph()]||0))){o.vt=now();persist();}}   /* last visit — the home "ทำต่อ" box shows whichever was used last */
   if(!q){$("main").innerHTML=`<div class="empty">ไม่มีข้อในชุดนี้</div>`;return;}
   if(q.notice){rNotice(q);return;}
   const done=doneAns(q);if(done!==undefined)pick=done!=null&&done>=0?done:null;const locked=done!==undefined;
@@ -841,7 +904,9 @@ function explain(q,done,R,p){
   h+=sec(q.unit?"สไลด์/ลายมือใน lecture เขียนไว้ว่า":"สิ่งที่เขียนไว้ในไฟล์",q.notes?`<div class="box">${rich(q.notes)}</div>`:"","notes");
   if(q.kimg){const KL=Array.isArray(q.kimg)?q.kimg:[q.kimg];h+=sec(q.unit?"สไลด์/รูปอ้างอิงจาก lecture":"สไลด์/รูปอ้างอิงจากไฟล์เฉลย",`<div class="kimg">${KL.map((k,i)=>{const im=imgHTML(k,q.unit?"สไลด์อ้างอิงจาก lecture":"สไลด์อ้างอิงจากไฟล์เฉลย",1);return q.kcap&&q.kcap[i]?`<figure class="kcap"><figcaption>${esc(q.kcap[i])}</figcaption>${im}</figure>`:im;}).join("")}</div>`);}
   h+=sec("ช่วยจำ",q.mnemonic?`<p>${q.mnemonic}</p>`:"");
-  {const rs=resFor(q);if(rs.length)h+=sec("อ่านเพิ่มจาก resource ที่แนบไว้",rs.map(r=>`<div class="resitem"><b>${esc(resLabel(r))}</b>${r.url?` · <a href="${esc(r.url)}" target="_blank" rel="noopener">เปิด</a>`:""}${resPts(r,6).length?`<ul>${resPts(r,6).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:r.note?`<p>${esc(r.note)}</p>`:""}</div>`).join(""));}
+  {const it=r=>`<div class="resitem"><b>${esc(resLabel(r))}</b>${r.url?` · <a href="${esc(r.url)}" target="_blank" rel="noopener">เปิด</a>`:""}${resPts(r,6).length?`<ul>${resPts(r,6).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:r.note?`<p>${esc(r.note)}</p>`:""}</div>`;
+   const rs=resFor(q);if(rs.length)h+=sec("อ่านเพิ่มจาก resource ที่แนบไว้",rs.map(it).join(""));
+   const ts=txtFor(q);if(ts.length)h+=sec("อ่านเพิ่มจากตำรา (T)",ts.map(it).join(""));}
   h+=sec("ความเห็นของผม",q.opinion?`<div class="box">${R(q.opinion)}</div>`:"","opinion");
   /* "โจทย์แบบใหม่ที่อาจออก" = old exams only (user 27 Oct 2026); AI-written questions (Unit / Admission / Specialty / Legendary AI) never show it */
   if(!q.adm&&!q.unit&&(q.variants||[]).length)h+=sec("โจทย์แบบใหม่ที่อาจออก",`<ul>${q.variants.map(s=>`<li>${R(s)}</li>`).join("")}</ul>`);
@@ -870,6 +935,7 @@ function askPrompt(q,done,ask,cut){
     `คำอธิบายในคลัง: ${why}`,
     wr?`ทำไมข้ออื่นผิด: ${wr}`:"",
     (()=>{const rs=resFor(q);if(!rs.length)return "";return "ข้อมูลจาก resource ที่ฉันแนบไว้ (ใช้ประกอบคำตอบได้ ถ้าขัดกับ guideline ให้บอก):\n"+rs.slice(0,3).map(r=>`- ${resLabel(r)}: ${c(Math.round(cut/2))(resPts(r).join(" · ")||r.note||"")}`).join("\n");})(),
+    (()=>{const ts=txtFor(q);if(!ts.length)return "";return "ข้อมูลจากตำรา (T) ที่ฉันแนบไว้ (ใช้ประกอบคำตอบได้ ถ้าตำราเก่ากว่า guideline ล่าสุดให้บอก):\n"+ts.slice(0,3).map(r=>`- ${resLabel(r)}: ${c(Math.round(cut/2))(resPts(r).join(" · ")||r.note||"")}`).join("\n");})(),
     "",`คำถามของฉัน: ${ask||"ช่วยอธิบายเพิ่มให้เข้าใจลึกขึ้น"}`,
     "",`กติกา: ตอบภาษาไทยปนศัพท์แพทย์ภาษาอังกฤษ อธิบายให้เข้าใจง่าย อิงหลักฐานหรือ guideline ล่าสุดที่ระบุชื่อได้ (ถ้าค้นเว็บได้ให้ตรวจ guideline ล่าสุดก่อนตอบ) ถ้าไม่แน่ใจหรือหลักฐานยังไม่ชัดให้บอกตรง ๆ ห้ามแต่งตัวเลข แหล่งอ้างอิง หรือข้อมูลที่ไม่มีจริง ถ้าคิดว่าเฉลยในคลังอาจผิด ให้บอกพร้อมเหตุผล`
   ].filter(x=>x!=="").join("\n").replace(/\n\n+/g,"\n\n");
@@ -1054,9 +1120,18 @@ function qNavOK(i){if(mLocked(i))return false;if(!qOn()||!QR.mand)return true;co
 function qStart(pg,mand){qStop();SND.init();const {S,total}=qSegs(pg);
   QR={pg,mand,S,total,el0:0,t0:performance.now(),paused:false,i:-1,front:0,done:false,alarm:false,ward};
   const s=P_().sess;if(s){const i=s.list.findIndex(u=>s.ans[u]===undefined);QR.front=i<0?s.list.length:i;}
-  QR.iv=setInterval(qTick,200);qTick();}
-function qStop(){if(QR){clearInterval(QR.iv);QR=null;}paintQR();}
-function qTick(){if(!QR)return;if(QR.paused||QR.done){paintQR();return;}
+  QR.iv=setInterval(qTick,200);qTick();qSnap(1);}
+function qStop(){if(QR){qSnap();clearInterval(QR.iv);QR=null;}paintQR();}
+/* the timer is kept in the round itself (sess.qr) so it survives a reload / closing the page / switching ward — it comes back paused where it was */
+function qSnap(force){if(!QR)return;const s=PWof(st,QR.ward).sess;if(!s||s.kind!=="quality")return;
+  s.qr={pg:QR.pg,mand:QR.mand,el:qEl(),i:QR.i,front:QR.front,done:QR.done};if(force||now()-(qSnap._t||0)>10000){qSnap._t=now();persist();}}
+function qRestore(){if(!ward||(QR&&QR.ward===ward))return;const s=P_().sess;if(!s||s.kind!=="quality"||!s.list||(s.qr&&s.qr.done))return;
+  /* a round started before the timer was saved (no sess.qr): give it back a timer from the selected set, paused at the start */
+  if(!s.qr||!s.qr.pg){const a=s.list.findIndex(u=>s.ans[u]===undefined);if(a<0)return;s.qr={pg:qProg(qpS().sel),mand:qpS().mand,el:0,i:-1,front:a,done:false};}
+  if(QR)qStop();const r=s.qr,{S,total}=qSegs(r.pg);if(r.el>=total)return;
+  QR={pg:r.pg,mand:!!r.mand,S,total,el0:r.el,t0:performance.now(),paused:true,i:Math.min(r.i,S.length-1),front:r.front,done:false,alarm:false,ward,restored:true};
+  QR.iv=setInterval(qTick,200);}
+function qTick(){if(!QR)return;if(QR.paused||QR.done){paintQR();return;}qSnap();
   const el=qEl();
   if(el>=QR.total){if(QR.i>=0)qEnd(QR.S[QR.i]);qFinish("หมดเวลา "+QR.pg.name);return;}
   let i=QR.i;
@@ -1071,21 +1146,54 @@ function qEnd(g){if(!QR.mand||QR.ward!==ward)return;const s=P_().sess;if(!s||s.k
       else{s.ans[u]=-1;s.ts=now();save();QR.alarm=true;if(view==="sess"&&s.cur===QR.front)rQuiz();}}}
   else if(g.kind==="rest"){QR.front++;if(QR.front>=s.list.length)qFinish("ทำครบทุกข้อในรอบนี้แล้ว");}}
 function qGoFront(){const s=P_().sess;if(!s||QR.front>=s.list.length)return;if(s.cur!==QR.front){s.cur=QR.front;s.ts=now();save();if(view==="sess"){pick=null;rQuiz();window.scrollTo(0,0);}}}
-function qFinish(msg){if(!QR||QR.done)return;QR.done=true;clearInterval(QR.iv);SND.play(QR.pg.end||"triple");toast(msg);paintQR();if(view==="sess")paintNav();}
-function qPause(){if(!QR||QR.done)return;if(QR.paused){QR.t0=performance.now();QR.paused=false;SND.init();}else{QR.el0=qEl();QR.paused=true;}paintQR();if(view==="sess")paintNav();}
+function qFinish(msg){if(!QR||QR.done)return;QR.done=true;qSnap(1);clearInterval(QR.iv);SND.play(QR.pg.end||"triple");toast(msg);paintQR();if(view==="sess")paintNav();}
+function qPause(){if(!QR||QR.done)return;QR.restored=false;if(QR.paused){QR.t0=performance.now();QR.paused=false;SND.init();}else{QR.el0=qEl();QR.paused=true;}qSnap(1);paintQR();if(view==="sess")paintNav();}
 async function qReset(){if(!QR)return;if(!await uiAsk("เริ่มจับเวลาใหม่ตั้งแต่ต้น (รวม warm up)? ข้อที่ตอบไปแล้วยังเก็บไว้"))return;qStart(QR.pg,QR.mand);if(QR.front>=P_().sess.list.length)qFinish("ทำครบทุกข้อในรอบนี้แล้ว");}
 function paintQR(){const b=$("qbar");if(!b)return;
-  const on=!!(QR&&ward&&QR.ward===ward&&view==="sess"&&P_().sess&&P_().sess.kind==="quality");
-  b.hidden=!on;document.body.classList.toggle("qon",on);if(!on)return;
-  const g=qSeg(),el=qEl();let ph="",t="",meta="";
-  if(QR.done){ph="จบแล้ว";t="0:00";meta=QR.pg.name;}
-  else if(g){ph=g.name;t=mmss(g.t1-el);const w0=QR.S[0].kind==="warm"?QR.S[0].t1:0;
-    meta=g.kind==="warm"?`${QR.pg.name} · warm up`:`${g.bname} ${g.rep}/${g.reps} · รอบ ${g.loop}/${nz(QR.pg.loops,1)} · เหลือ ${mmss(QR.total-Math.max(el,w0))}`;}
-  $("qbPh").textContent=ph+(QR.paused?" · หยุดอยู่":"");$("qbT").textContent=t;$("qbMeta").textContent=meta+(QR.mand?" · mandatory":"");
+  const on=!!(QR&&ward&&QR.ward===ward&&view==="sess"&&P_().sess&&P_().sess.kind==="quality"),was=!b.hidden;
+  b.hidden=!on;document.body.classList.toggle("qon",on);if(!on){qPad(false);return;}
+  const g=qSeg(),el=qEl();let ph="",t="",meta="",fr=0;
+  if(QR.done){ph="จบแล้ว";t="0:00";meta=esc(QR.pg.name);fr=1;}
+  else if(g){ph=g.name;t=mmss(g.t1-el);fr=Math.min(1,Math.max(0,(el-g.t0)/Math.max(1,g.t1-g.t0)));const w0=QR.S[0].kind==="warm"?QR.S[0].t1:0;
+    meta=g.kind==="warm"?`${esc(QR.pg.name)}<br>warm up`:`${esc(g.bname)} <b>${g.rep}/${g.reps}</b><br>รอบ <b>${g.loop}/${nz(QR.pg.loops,1)}</b><br>เหลือ <b>${mmss(QR.total-Math.max(el,w0))}</b>`;}
+  /* ring = time left in this phase (full at the start, empties as it runs) */
+  b.style.setProperty("--qp",(1-fr).toFixed(4));b.classList.toggle("paused",!!QR.paused&&!QR.done);
+  $("qbPh").textContent=ph;$("qbSt").textContent=QR.paused&&!QR.done?(QR.restored?"หยุดไว้ · กด ▶ ต่อ":"⏸ หยุดอยู่"):"";
+  $("qbT").textContent=t;$("qbMeta").innerHTML=meta+(QR.mand?"<br>mandatory":"");
   $("qbPause").textContent=QR.paused?"▶ ต่อ":"⏸ พัก";$("qbPause").disabled=QR.done;b.dataset.k=QR.done?"done":g?g.kind:"";
-  const v=$("qbVol");if(document.activeElement!==v)v.value=qpS().vol;}
+  const v=$("qbVol");if(document.activeElement!==v)v.value=qpS().vol;
+  const fk=[ph,$("qbSt").textContent,meta,$("qbPause").textContent].join("|");if(!was||fk!==paintQR._k){paintQR._k=fk;qFit();}}
+/* timer box size: the user's (drag the bottom-left grip; double-tap it = back to default), kept per screen kind (narrow / wide).
+   qFit picks --qw, the unit every size inside is made from, as large as fits the box with no scrolling; a box wider than tall goes side by side */
+const qMode=()=>innerWidth>=1000?"w":"n";
+function qBoxDef(){return qMode()==="w"?{w:Math.round(Math.max(120,Math.min(300,(innerWidth-760)/2*.8))),h:null}:{w:96,h:null};}
+let QDRAG=null;
+function qFit(){const b=$("qbar");if(!b||b.hidden)return;
+  const maxW=Math.max(90,innerWidth-24),maxH=Math.max(160,innerHeight-150),u=QDRAG||(qpS().box||{})[qMode()]||qBoxDef();
+  const W=Math.round(Math.max(72,Math.min(maxW,u.w))),H=u.h?Math.round(Math.max(140,Math.min(maxH,u.h))):null,row=!!H&&W>H*.9;
+  b.style.width=W+"px";b.style.height=H?H+"px":"auto";b.style.maxHeight=maxH+"px";
+  b.classList.toggle("row",row);b.classList.toggle("float",qMode()==="w"||W>130);
+  const fits=()=>b.scrollHeight<=b.clientHeight+1&&b.scrollWidth<=b.clientWidth+1&&[...b.querySelectorAll(".qb-side,.qb-main,.qb-btns .chip,.qb-meta")].every(e=>e.scrollWidth<=e.clientWidth+1);
+  let lo=28,hi=row?Math.min(H,W*.5):W;
+  for(let k=0;k<12;k++){const m=(lo+hi)/2;b.style.setProperty("--qw",m+"px");if(fits())lo=m;else hi=m;}
+  b.style.setProperty("--qw",Math.floor(lo)+"px");qPad(true);}
+/* keep the question clear of the timer box */
+function qPad(on){const m=$("main"),b=$("qbar");if(!m)return;m.style.paddingRight="";if(!on||!b||b.hidden)return;
+  const r=b.getBoundingClientRect(),mr=m.getBoundingClientRect(),pr=parseFloat(getComputedStyle(m).paddingRight)||16,over=(mr.right-pr)-(r.left-12);
+  if(over>0)m.style.paddingRight=(pr+over)+"px";}
+addEventListener("resize",()=>{clearTimeout(qFit._t);qFit._t=setTimeout(qFit,120);});
+{const g=$("qbGrip"),b=$("qbar");let st0=null,lastTap=0,moved=false,raf=0;
+  g.addEventListener("pointerdown",e=>{e.preventDefault();g.setPointerCapture(e.pointerId);moved=false;st0={x:e.clientX,y:e.clientY,w:b.offsetWidth,h:b.offsetHeight};});
+  g.addEventListener("pointermove",e=>{if(!st0)return;const dx=st0.x-e.clientX,dy=e.clientY-st0.y;if(!moved&&Math.hypot(dx,dy)<4)return;moved=true;b.classList.add("drag");
+    QDRAG={w:st0.w+dx,h:st0.h+2*dy};if(!raf)raf=requestAnimationFrame(()=>{raf=0;qFit();});});
+  const end=async e=>{if(!st0)return;st0=null;b.classList.remove("drag");const q=qpS();q.box=q.box||{};
+    if(moved&&QDRAG){const W=parseFloat(b.style.width),H=parseFloat(b.style.height)||null;q.box[qMode()]={w:W,h:H};QDRAG=null;save();qFit();return;}
+    QDRAG=null;const t=now();if(t-lastTap<400){delete q.box[qMode()];save();qFit();toast("คืนขนาดเดิมแล้ว");lastTap=0;}else lastTap=t;};
+  g.addEventListener("pointerup",end);g.addEventListener("pointercancel",end);}
 $("qbPause").onclick=qPause;$("qbReset").onclick=qReset;
-$("qbStop").onclick=async()=>{if(QR&&!QR.done&&!await uiAsk("หยุดจับเวลาและจบรอบนี้?"))return;qStop();go(ward+"/result");};
+/* ⚙ ตั้งค่า: pause the timer and open the Quality setup page — from there: back to the same round, or switch the timer set while keeping the questions */
+$("qbSet").onclick=()=>{if(QR&&!QR.done&&!QR.paused){qPause();QR.autoP=true;}go(ward+"/quality");};
+$("qbStop").onclick=async()=>{if(QR&&!QR.done&&!await uiAsk("หยุดจับเวลาและจบรอบนี้?"))return;qStop();const s=P_().sess;if(s&&s.qr){delete s.qr;save();}go(ward+"/result");};
 $("qbVol").oninput=e=>{qpS().vol=+e.target.value;persist();};
 $("qbVol").onchange=()=>{save();SND.play("ding");};
 
@@ -1095,7 +1203,8 @@ function rQuality(){
   const base=q.mode==="sets"?W.QB.filter(x=>!q.sets.length||q.sets.includes(setKey(x))):W.QB,pool=q.fresh?base.filter(x=>!atts(P,p,x.uid).length):base;
   if(!PG.some(x=>x.id===q.sel))q.sel=PG[0].id;
   let h=`<h1 class="h2">Quality round</h1><p class="sub">Speedrun ข้อสอบเก่า จับเวลาเป็นเซตแบบ OSCE · เลือกชุดจับเวลา แล้วเลือกว่าจะทำปีไหน หรือสุ่มจากทั้งคลัง</p>`;
-  if(QR&&!QR.done&&QR.ward===ward)h+=`<button class="resume" id="qBack"><span>กำลังจับเวลา: <b>${esc(QR.pg.name)}</b><span class="rd">กลับไปทำต่อ</span></span><span class="go">→</span></button>`;
+  const live=!!(QR&&!QR.done&&QR.ward===ward&&P.sess&&P.sess.kind==="quality");
+  if(live){const a=Object.keys(P.sess.ans).length;h+=`<button class="resume" id="qBack"><span>กำลังจับเวลา: <b>${esc(QR.pg.name)}</b>${QR.paused?" · หยุดอยู่":""}<span class="rd">ทำไป ${a}/${P.sess.list.length} ข้อ · กลับไปทำต่อ${QR.paused?" (เวลาเดินต่อเมื่อกลับไป)":""}</span></span><span class="go">→</span></button>`;}
   h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">ชุดจับเวลา</div><div class="stack" style="margin-top:0">`+PG.map(pg=>`<button class="resume qprog" data-pg="${esc(pg.id)}" aria-pressed="${pg.id===q.sel}"><span><b>${esc(pg.name)}</b>${pg.builtin?' <span class="tag">preset</span>':''}<span class="rd">${qDesc(pg)}</span></span><span class="go">${pg.id===q.sel?"✓":""}</span></button>`).join("")+`</div>`;
   {const chips=(id,list,cur)=>`<div class="chips" id="${id}">${list.map(([v,t])=>`<button class="chip" data-v="${esc(v)}" aria-pressed="${String(v)===String(cur)}">${t}</button>`).join("")}</div>`;
     h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">ข้อสอบที่จะทำ</div>${chips("qMode",[["all","สุ่มจากข้อสอบเก่าทั้งหมด"],["sets","เลือกปีที่จะทำ"]],q.mode)}`;
@@ -1106,9 +1215,11 @@ function rQuality(){
     h+=`<p class="statline" style="margin-top:10px">รอบนี้มี <b>${pool.length}</b> ข้อ</p>`;}
   h+=`<label class="chk"><input type="checkbox" id="qMand" ${q.mand?"checked":""}><span><b>Mandatory</b> — หมดเวลาแล้วเปลี่ยนหน้าจอให้อัตโนมัติ: หมดเวลาตอบ = ส่งคำตอบที่เลือกไว้ (ไม่ได้เลือก = ข้าม + เสียง alarm) · จบช่วงพัก = ไปข้อต่อไป · ช่วงอ่านเฉลยเลื่อนดูข้อที่ทำไปแล้วได้</span></label>`;
   h+=`<div class="card"><h3>เสียง</h3><div class="qrow"><span>🔊</span><input type="range" id="qVol" min="0" max="1" step="0.05" value="${q.vol}" style="flex:1"></div><div class="chips" style="margin-top:8px">${SOUNDS.filter(x=>x[0]!=="none").map(([k,t])=>`<button class="chip" data-snd="${k}">▶ ${t}</button>`).join("")}</div></div>`;
-  h+=`<div class="row2"><button class="btn" id="qEdit">แก้ไขชุดนี้</button><button class="btn" id="qNew">สร้างชุดใหม่</button><span class="spacer"></span><button class="btn primary" id="qGo">Start</button></div>`;
+  h+=`<div class="row2"><button class="btn" id="qEdit">แก้ไขชุดนี้</button><button class="btn" id="qNew">สร้างชุดใหม่</button><span class="spacer"></span><button class="btn primary" id="qGo">${live?"Start รอบใหม่":"Start"}</button></div>`;
+  if(live)h+=`<div class="row2" style="margin-top:6px"><span class="spacer"></span><button class="btn" id="qSwap">ใช้ชุดจับเวลาที่เลือก + Mandatory กับรอบที่กำลังทำ</button></div><p class="hint" style="margin:4px 0 0;text-align:right">ทำข้อเดิมต่อ ข้อที่ตอบแล้วยังเก็บไว้ · เวลาเริ่มนับใหม่ตามชุดที่เลือก</p>`;
   $("main").innerHTML=h;
-  const qb=$("qBack");if(qb)qb.onclick=()=>go(ward+"/sess");
+  const qb=$("qBack");if(qb)qb.onclick=()=>{if(QR&&QR.paused){qPause();}if(QR)QR.autoP=false;go(ward+"/sess");};
+  {const b=$("qSwap");if(b)b.onclick=()=>{const pg=qProg(q.sel),s=P_().sess;qStart(pg,q.mand);if(QR.front>=s.list.length)qFinish("ทำครบทุกข้อในรอบนี้แล้ว");toast("ใช้ชุด "+pg.name+" กับรอบนี้แล้ว · เริ่มจับเวลาใหม่ ข้อที่ตอบไปแล้วยังเก็บไว้");go(ward+"/sess");};}
   document.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>{q.sel=b.dataset.pg;save();rQuality();});
   $("qMand").onchange=e=>{q.mand=e.target.checked;save();};
   document.querySelectorAll("#qMode [data-v]").forEach(b=>b.onclick=()=>{q.mode=b.dataset.v;save();rQuality();});
@@ -1118,7 +1229,7 @@ function rQuality(){
   document.querySelectorAll("[data-snd]").forEach(b=>b.onclick=()=>SND.play(b.dataset.snd));
   $("qEdit").onclick=()=>{QED=clone(qProg(q.sel));go(ward+"/qedit");};
   $("qNew").onclick=()=>{QED={name:"ชุดใหม่",warm:{sec:5,sound:"bell"},loops:10,end:"triple",blocks:[{name:"เซต 1",rep:1,phases:[{name:"ตอบคำถาม",sec:30,sound:"ding2",kind:"q"},{name:"พัก",sec:5,sound:"ding",kind:"rest"}]}]};go(ward+"/qedit");};
-  $("qGo").onclick=()=>{if(!pool.length){toast(q.fresh?"ไม่มีข้อที่ยังไม่เคยทำในชุดที่เลือก":"ไม่มีข้อในชุดที่เลือก");return;}const pg=qProg(q.sel);
+  $("qGo").onclick=async()=>{if(live&&!await uiAsk("เริ่มรอบใหม่? รอบที่กำลังจับเวลาอยู่จะจบ (ข้อที่ตอบไปแล้วยังนับเป็นทำแล้ว)"))return;if(!pool.length){toast(q.fresh?"ไม่มีข้อที่ยังไม่เคยทำในชุดที่เลือก":"ไม่มีข้อในชุดที่เลือก");return;}const pg=qProg(q.sel);
     const nm=q.mode==="sets"&&q.sets.length?" · "+q.sets.join(", "):"";
     startSess("quality","Quality round · "+pg.name+nm,(q.mode==="sets"?pool:shuffle(pool)).map(x=>x.uid));qStart(pg,q.mand);if(view==="sess")rQuiz();};
 }
@@ -1438,9 +1549,9 @@ function rReport(){
   const plan=P.advPlan;
   h+=`<div class="card"><h3>✦ ให้ AI วางแผนการอ่านจากผลของฉัน</h3><span class="rd">ส่งสถิติรายหัวข้อและข้อที่ยังผิดให้ AI ช่วยจัดลำดับว่าควรอ่านอะไรก่อน เน้นตรงไหน</span><button class="btn" id="planGo" ${advPlanBusy?"disabled":""}>${plan?"วางแผนใหม่":"วางแผนการอ่าน"}</button><div id="planOut" class="aiout">${advPlanBusy?`<p class="hint">กำลังคิด… (ประมาณ 20–90 วินาที)</p>`:plan?mdLite(plan.t)+`<p class="hint">วางแผนเมื่อ ${fmtD(plan.ts)} · AI อาจผิดพลาดได้ ควรเทียบกับ lecture/guideline</p>`:""}</div></div>`;
   h+=`<h2 class="h2" style="font-size:18px;margin-top:22px">คำแนะนำรายหัวข้อ</h2>`;
-  const res=W.RES||[],lecs=(W.cfg.lectures||[]);
+  const res=W.RES||[],txt=W.TXT||[],lecs=(W.cfg.lectures||[]);
   h+=T.map((t,i)=>{const ad=topicAdvice(t),tg=TIER[t.tier];
-    const rs=res.filter(r=>r.topic===t.k).concat(lecs.filter(l=>l&&l.topic===t.k)),units=W.UNIT.filter(Lc=>Lc.topic===t.k);
+    const rs=lecs.filter(l=>l&&l.topic===t.k).concat(res.filter(r=>r.topic===t.k)).sort((a,b)=>codeCmp(a.code||a.title,b.code||b.title)),tts=txt.filter(r=>r&&r.title&&r.topic===t.k),units=W.UNIT.filter(Lc=>Lc.topic===t.k);
     const pts=t.wrongQ.concat(t.fixedQ).slice(0,8).map(q=>{const s=(q.summary||[]).filter(x=>!/^ดูข้อ/.test(plain(x)))[0];return s?`<li><button class="qref" data-u="${esc(q.uid)}">ข้อ ${q.id}</button> ${R(s)}</li>`:"";}).join("");
     return `<details class="grp tcard" ${i<3&&t.tier!=="green"?"open":""}><summary><span>${tg[0]}</span> <b>${esc(t.k)}</b> <span class="tag">${tg[1]}</span></summary>
     <p class="tline">${ad.imp}</p><p class="tline">${ad.st}</p><p class="tline"><b>แนะนำ:</b> ${ad.act}</p>
@@ -1448,6 +1559,7 @@ function rReport(){
     ${pts?`<div class="tsub">จุดที่เคยพลาดในหัวข้อนี้</div><ul>${pts}</ul>`:""}
     ${t.noteQ.length?`<div class="tsub">โน้ตที่คุณจดไว้ในหัวข้อนี้</div><ul>${t.noteQ.slice(0,6).map(q=>{const n=P.post[q.uid].t.trim();return `<li><button class="qref" data-u="${esc(q.uid)}">ข้อ ${q.id}</button> ${esc(n.length>220?n.slice(0,220)+"…":n)}</li>`;}).join("")}</ul>`:""}
     <div class="tsub">Lecture / resources</div>${rs.length||units.length?`<ul>${rs.map(r=>`<li>${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a>`:esc(r.title)}${r.type?` <span class="hint">· ${esc(r.type)}</span>`:""}${r.note?` — ${esc(r.note)}`:""}</li>`).join("")}${units.map(Lc=>`<li>Unit round: <a href="#/${esc(ward)}/unit">${esc(Lc.title)}</a></li>`).join("")}</ul>`:`<p class="hint" style="margin:2px 0 0">ยังไม่มี lecture หรือ resource ของหัวข้อนี้ในวอร์ดนี้ — เมื่ออัปโหลดเพิ่ม จะขึ้นที่นี่อัตโนมัติ</p>`}
+    ${tts.length?`<div class="tsub">ตำรา (T)</div><ul>${tts.map(r=>`<li><b>${esc(r.code||"")}</b> ${esc(r.title)}${r.note?` — ${esc(r.note)}`:""}</li>`).join("")}</ul>`:""}
     </details>`;}).join("");
   $("main").innerHTML=h;bindRefs();
   document.querySelectorAll("#rHp [data-v]").forEach(b=>b.onclick=()=>{a.hp=b.dataset.v;persist();rReport();});
@@ -1927,7 +2039,7 @@ function rResult(){
 }
 
 /* ---------------- Phase 2: high-yield & keywords ---------------- */
-function openQ(u){const s=P_().svc[ph()];s.set="all";s.status="all";s.cur=u;save();go(ward+"/svc");}
+function openQ(u){const s=P_().svc[ph()];s.set="all";s.status="all";if(s.tg)s.tg.on=false;s.cur=u;save();go(ward+"/svc");}
 function refBtns(refs){const W=W_();return (refs||[]).map(r=>W.byRid[r]).filter(Boolean).map(q=>`<button class="qref" data-u="${esc(q.uid)}">ข้อ ${q.id}</button>`).join(" ");}
 function bindRefs(){document.querySelectorAll("[data-u].qref").forEach(b=>b.onclick=()=>openQ(b.dataset.u));}
 function rHY(){rHySum("MCQ");}   /* หน้าเต็มอยู่ที่ site/hysum.js — W.HY (highyield.js) แบบเดิมเลิกใช้ */
@@ -1946,6 +2058,7 @@ function statLabels(a){document.querySelectorAll("#overlay .stat .k").forEach((e
 function sheet(){
   const W=W_(),P=P_(),p=ph();statLabels(["ทำแล้ว","ถูก","ความแม่น"]);
   {const cc=$("chChips");if(cc){cc.hidden=true;cc.innerHTML="";}}
+  {const tl=$("tgLine");if(tl){tl.hidden=true;tl.innerHTML="";}}
   if(view==="exam"||view==="lrev")return legSheet();
   if(isAIV()||view==="admq")return admSheet();
   if(view==="mq")return mqSheet();
@@ -1953,13 +2066,13 @@ function sheet(){
     const s=P.sess,qs=s.list.map(u=>qAny(u)).filter(Boolean);
     $("sheetTitle").textContent=s.title;$("setChips").innerHTML="";
     const f=st.sessF||"all";
-    $("statusChips").innerHTML=[["all","ทั้งหมด"],["todo",s.kind==="advisor"?"ยังไม่อ่าน":"ยังไม่ทำ"],["wrong",s.kind==="advisor"?"ล่าสุดผิด":"ตอบผิด"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-sf="${v}">${t}</button>`).join("");
+    $("statusChips").innerHTML=[["all","ทั้งหมด"],["todo",s.kind==="advisor"?"ยังไม่อ่าน":"ยังไม่ทำ"],["wrong",s.kind==="advisor"?"ล่าสุดผิด":"ตอบผิด"],["flag","⚑ ไม่มั่นใจ"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-sf="${v}">${t}</button>`).join("");
     document.querySelectorAll("[data-sf]").forEach(b=>b.onclick=()=>{st.sessF=b.dataset.sf;persist();sheet();});
     const adv=s.kind==="advisor",A=q=>{if(!adv)return s.ans[q.uid];const h=hist(P,q.uid,s.hp,true);return h.length?h[h.length-1][0]:undefined;};
     const done=qs.filter(q=>s.ans[q.uid]!==undefined),right=adv?qs.filter(q=>A(q)===q.ans):done.filter(q=>s.ans[q.uid]===q.ans);
     stats(done.length,qs.length,right.length);
-    const v=qs.map((q,i)=>[q,i]).filter(([q])=>{const a=s.ans[q.uid],b=A(q);return f==="todo"?a===undefined:f==="wrong"?b!==undefined&&b!==q.ans:true;});
-    rows(v.map(([q,i])=>({q,a:A(q),lock:mLocked(i)?i+1:0,meta:adv&&s.ans[q.uid]!==undefined?"อ่านแล้ว · ":"",cur:i===s.cur,go:()=>{if(!qNavOK(i)){toast(navMsg());return;}pick=null;s.cur=i;save();rQuiz();window.scrollTo(0,0);}})),f==="wrong"?"ยังไม่มีข้อที่ตอบผิดในรอบนี้":"ทำครบทุกข้อในรอบนี้แล้ว");
+    const v=qs.map((q,i)=>[q,i]).filter(([q])=>{const a=s.ans[q.uid],b=A(q);return f==="todo"?a===undefined:f==="wrong"?b!==undefined&&b!==q.ans:f==="flag"?flagged(P,q.uid):true;});
+    rows(v.map(([q,i])=>({q,a:A(q),lock:mLocked(i)?i+1:0,meta:adv&&s.ans[q.uid]!==undefined?"อ่านแล้ว · ":"",cur:i===s.cur,go:()=>{if(!qNavOK(i)){toast(navMsg());return;}pick=null;s.cur=i;save();rQuiz();window.scrollTo(0,0);}})),f==="wrong"?"ยังไม่มีข้อที่ตอบผิดในรอบนี้":f==="flag"?"ยังไม่มีข้อที่ทำเครื่องหมายไม่มั่นใจในรอบนี้":"ทำครบทุกข้อในรอบนี้แล้ว");
     $("sheetFoot").innerHTML=`<span class="hint">เส้นเขียวรอบวง = เฉลย</span><span class="spacer"></span><span class="hint" id="syncNote" style="flex-basis:100%"></span><button class="link" id="toResult">จบรอบ ดูสรุป</button>`;
     $("toResult").onclick=()=>{closeS(true);go(ward+"/result");};
     paintSync();return;
@@ -1975,6 +2088,7 @@ function sheet(){
     cc.hidden=false;
     if(sheet._cok)cc.scrollLeft=sheet._cx||0;else{const on=cc.querySelector('[aria-pressed="true"]:not([data-ch="all"])');if(on)cc.scrollLeft=on.offsetLeft-cc.offsetLeft-cc.clientWidth/2+on.offsetWidth/2;}sheet._cok=1;cc.onscroll=()=>{sheet._cx=cc.scrollLeft;};cc.onwheel=e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){cc.scrollLeft+=e.deltaY;e.preventDefault();}};
     cc.querySelectorAll("[data-ch]").forEach(b=>b.onclick=()=>{const v=b.dataset.ch;let c=!sv.ch||sv.ch==="all"?[]:sv.ch.split("|");if(v==="all")c=[];else if(c.includes(v))c=c.filter(x=>x!==v);else c.push(v);c.sort((x,y)=>chs.indexOf(x)-chs.indexOf(y));sv.ch=c.length?c.join("|"):"all";const cq=svcQ();if(cq&&!svcList().some(q=>q.uid===cq.uid)){const nx=svcVisible().find(q=>lockedAns(P,p,q.uid)===undefined)||svcVisible()[0];sv.cur=nx?nx.uid:null;}save();sheet();rQuiz();});}}
+  tgLine(tgAllQ(W),sv.tg,()=>{sv.tg.on=false;save();sheet();},()=>{closeS(true);go(ward+"/service");});
   const FS=[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["wrong","ตอบผิด"]].concat(p===2?[["right","ตอบถูก"],["flag","ไม่มั่นใจ"],["nop1","ไม่เคยทำใน P1"]]:[["flag","ไม่มั่นใจ"]]);
   if(!FS.some(x=>x[0]===sv.status))sv.status="all";
   $("statusChips").innerHTML=FS.map(([v,t])=>`<button class="chip" aria-pressed="${sv.status===v}" data-st="${v}">${t}</button>`).join("");
@@ -2223,7 +2337,8 @@ async function flushBank(){if(!fb||!fb.user)return;clearTimeout(bankT);const ks=
   for(const k of ks){try{if(bank[k])await fb.fs.setDoc(fb.fs.doc(bankCol(),inkId(k)),{k,d:JSON.stringify(bank[k]),ts:bank[k].ts||now()});}catch(e){console.warn(e);bankDirty.add(k);sync="error";}}paintSync();}
 function cloudBank(k){bankDirty.add(k);clearTimeout(bankT);if(cl){bankT=setTimeout(clBank,1500);return;}if(!fb||!fb.user)return;bankT=setTimeout(flushBank,1500);}
 function cloudInk(k){if(cl){inkDirty.add(k);clearTimeout(inkT);inkT=setTimeout(clInk,2000);return;}if(!fb||!fb.user)return;inkDirty.add(k);clearTimeout(inkT);inkT=setTimeout(flushInk,2000);}
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="hidden")return;if(cl){clPush();clInk();clBank();}else if(fb&&fb.user){pushNow();flushInk();flushBank();}});
+window.addEventListener("pagehide",()=>qSnap(1));
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="hidden")return;qSnap(1);if(cl){clPush();clInk();clBank();}else if(fb&&fb.user){pushNow();flushInk();flushBank();}});
 
 /* ---- Claude account backend: docs in data/users/<id>/ — "meta", "w_<ward>" (one per ward, < 256 KiB each), "ink_<hash>" ---- */
 async function initClaude(){

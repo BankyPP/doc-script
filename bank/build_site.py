@@ -72,6 +72,8 @@ for w in cfg.get('wards',[]):
     for extra in ('topics.js','resources.js','dups.js','tags.js','io.js','chapters.js'):     # W.TOPIC={"set|ro|orig":"topic"} · W.RES=[{topic,title,type,url,note}] (Advisor round)
         fp=os.path.join(d,extra)
         if os.path.exists(fp): js.append('(function(W){\n'+open(fp,encoding='utf-8').read()+'\n})(WARDS['+wid+']);')
+    for f in sorted(glob.glob(os.path.join(d,'txt_T*.js'))):     # textbooks (code T), one file per book, after io.js: W.TXT.push({code,title,topic,tags,type,url,note,points}) per chapter + its Round I/O doc kind "T" into W.IO.docs
+        js.append('(function(W){W.TXT=W.TXT||[];W.IO=W.IO||{docs:[],merged:{}};W.IO.docs=W.IO.docs||[];\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+']);')
     js.append(f'WARDS[{wid}].MQ=[];')
     for f in sorted(glob.glob(os.path.join(d,'meq_b*.js')),key=lambda f:int(re.sub(r'\D','',os.path.basename(f)) or 0)):   # MEQ banks: QB.push(case) → W.MQ
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].MQ);')
@@ -80,6 +82,9 @@ for w in cfg.get('wards',[]):
     js.append(f'WARDS[{wid}].OS=[];')
     for f in sorted(glob.glob(os.path.join(d,'osce_b*.js')),key=lambda f:int(re.sub(r'\D','',os.path.basename(f)) or 0)):   # OSCE banks: QB.push(station) → W.OS (same shape as a MEQ case, one Part)
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OS);')
+    orf=os.path.join(d,'osce_ref.js')   # แหล่งอ้างอิงให้ AI แต่ง/ตรวจ OSCE ของวอร์ด: OSREF.push({id,topic,sub,title,text})
+    js.append(f'WARDS[{wid}].OSREF=[];')
+    if os.path.exists(orf): js.append('(function(OSREF){\n'+open(orf,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OSREF);')
     js.append(f'WARDS[{wid}].SUMM={{MCQ:[],MEQ:[],OSCE:[]}};')
     for f in sorted(glob.glob(os.path.join(d,'sum_*.js'))):     # สรุป High-yield Phase 2: sum_<mcq|meq|osce>_<slug>.js → SUMM.push({tag,title,intro,groups})
         T=os.path.basename(f).split('_')[1].upper()

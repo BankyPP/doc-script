@@ -17,7 +17,7 @@ function mqL(wid,kind){wid=wid||ward;const W=WARDS[wid];if(!W)return [];kind=kin
     const so=[...new Set(L.map(q=>q.set))];L.sort((a,b)=>so.indexOf(a.set)-so.indexOf(b.set)||a.n-b.n);L.forEach((q,i)=>{q.n=i;});}
   return L;}
 function mqInitP(P,kind){const K=(kind||(P&&P.type==="OSCE"?"OSCE":"MEQ"))==="OSCE"?"osce":"meq";const m=P[K]=P[K]||{};m.a1=m.a1||{};m.a2=m.a2||{};m.star=m.star||{};m.v=m.v||{};const v=m.v;
-  v.set=v.set||"all";v.sec=v.sec||"all";v.status=v.status||"all";v.style=v.style||"all";v.tags=Array.isArray(v.tags)?v.tags:[];v.gl=Array.isArray(v.gl)?v.gl:[];return m;}
+  v.set=v.set||"all";v.sec=v.sec||"all";v.status=v.status||"all";v.style=v.style||"all";v.tags=Array.isArray(v.tags)?v.tags:[];v.gl=Array.isArray(v.gl)?v.gl:[];v.tg=v.tg&&Array.isArray(v.tg.tags)?v.tg:tgNorm(v.tg);return m;}
 function mqS(){return mqInitP(P_());}
 function mqA(){return mqS()["a"+ph()];}
 function mqRec(q){return mqA()[q.uid];}
@@ -40,7 +40,7 @@ function mqAnyDone(q){const r=mqRec(q);return !!r&&q.subs.some(s=>mqSubDone(q,s,
 function mqMk(s){return +s.marks||1;}
 /* score of one sub as 0–1: MEQ = self grade 2/1/0 · OSCE = share of checklist points ticked (OSCE key = ต้องมีคำนี้ / ต้องได้ n จาก m) unless the grade was picked by hand */
 function mqFrac(s,r){const i=s._i,g=r&&r.g&&r.g[i];if(g===undefined||g===null)return null;
-  if(mqIsOS()&&!(r.gm&&r.gm[i])&&(s.points||[]).length){const c=mqTicks(s,r);if(c.length){const sc=mqPtsScore(s,c);if(sc.tot)return sc.got/sc.tot;}}return g/2;}
+  if(mqIsOS()&&!(r.gm&&r.gm[i])&&(s.points||[]).length){const c=mqTicks(s,r);if(c.length){if(mqCritMiss(s,c).length)return 0;const sc=mqPtsScore(s,c);if(sc.tot)return mqPtsFrac(s,c);}}return g/2;}
 function mqScoreOf(subs,r){let tot=0,got=0,graded=0,full=0;subs.forEach(s=>{const m=mqMk(s);tot+=m;const f=mqFrac(s,r);if(f!==null){graded++;got+=m*f;if(f>=1)full++;}});
   return {tot,got,graded,full,n:subs.length,all:graded===subs.length,perfect:full===subs.length};}
 function mqScore(q){const r=mqRec(q);if(!r||!mqCaseDone(q,r))return null;return mqScoreOf(q.subs,r);}
@@ -54,6 +54,8 @@ function mqImgs(x,note){if(!x)return note?`<div class="img-missing">🖼 ${note}
 function mqTopics(){const W=W_(),T=((mqIsOS()?W.cfg.osceTopics:W.cfg.meqTopics)||[]).map(t=>Array.isArray(t)?t:[t.id,t.name]),have=new Set();mqL().forEach(q=>q.subs.forEach(s=>(s.tags||[]).forEach(t=>have.add(t))));
   const o=T.filter(([k])=>have.has(k));have.forEach(k=>{if(!o.some(x=>x[0]===k))o.push([k,k]);});return o;}
 const mqTN=k=>(mqTopics().find(x=>x[0]===k)||[k,k])[1];
+/* Service round Tag filter: a case counts by the Tags of all its Parts, because the Service round opens the whole case */
+const mqQTags=q=>[...new Set(q.subs.flatMap(s=>s.tags||[]))];
 /* ---- topic context (Unit round): only Parts tagged with a chosen topic ---- */
 const mqTM=()=>mqS().v.ctx==="topic";
 const mqTmatch=s=>(s.tags||[]).some(t=>mqS().v.tags.includes(t));
@@ -81,11 +83,25 @@ function mqTReset(){const c=mqCur();if(!c||!mqAnswering())return;mqTStop();const
 /* ---- checklist + keyword suggestion (works on the website with no AI, unlimited) ---- */
 function mqSig(s){const t=JSON.stringify(s.points||[]);let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return (h>>>0).toString(36);}
 function mqTicks(s,r){const i=s._i;return (r&&r.c&&r.c[i]&&r.cs&&r.cs[i]===mqSig(s))?r.c[i]:[];}
+/* checklist structure (ผู้ใช้สั่ง 1 พ.ย. 2026, OSCE + MEQ ทุกวอร์ด ทั้งสองเว็บ): s.secs = [[หัวข้อใหญ่, index ข้อแรกของหัวข้อ],…] · s.crit = index ข้อ "ห้ามขาด" — ขาดข้อใดข้อหนึ่ง = ข้อย่อยนั้น 0 คะแนน (กดให้คะแนนเองทับได้) */
+function mqPtOK(p,v){if(typeof p==="string")return v===true;const n=p.need||1;return (Array.isArray(v)?v.filter(Boolean).length:0)>=n;}
+function mqCritMiss(s,c){return (s.crit||[]).filter(j=>s.points&&s.points[j]!==undefined&&!mqPtOK(s.points[j],(c||[])[j]));}
+function mqPtLabel(p){return typeof p==="string"?p:(p.label||p.any.join(" / "));}
+function mqSecHead(s,j,c){const S=s.secs||[],k=S.findIndex(x=>x[1]===j);if(k<0)return "";const end=k+1<S.length?S[k+1][1]:s.points.length;let ok=0;for(let x=j;x<end;x++)if(mqPtOK(s.points[x],(c||[])[x]))ok++;
+  return `<li class="psec"><span>${esc(S[k][0])}${S[k][2]>0?` <span class="pn">(${S[k][2]}%)</span>`:""}</span><span class="pn">${ok}/${end-j}</span></li>`;}
+const mqCritTag=(s,j)=>(s.crit||[]).includes(j)?' <span class="crit">✱ ห้ามขาด</span>':"";
+function mqCritWarn(s,c){const m=mqCritMiss(s,c);return m.length?`<div class="critmiss">❌ ขาดข้อห้ามขาด: ${m.map(j=>mqPtLabel(s.points[j])).join(" · ")} → ข้อย่อยนี้ได้ 0 คะแนน (กดให้คะแนนเองทับได้)</div>`:"";}
+/* เฉลย MEQ/OSCE ไม่ใช่เฉลยทางการ (ผู้ใช้สั่ง 1 พ.ย. 2026) — กล่องเหลืองใต้เฉลยทุกข้อย่อย */
+function mqKeyWarn(s){const ai=!s.key||/เฉลยโดย Claude|ไม่มีเฉลย/.test(s.key);return `<div class="kwarn">⚠ เฉลยนี้ไม่ใช่เฉลยทางการ เชื่อถือได้ไม่ 100% — ${ai?"ไฟล์ไม่มีเฉลยข้อนี้ Claude เฉลยเอง":"มาจากไฟล์ของรุ่นพี่ Claude ตรวจและเติมแล้ว"} · ถ้าไม่แน่ใจให้เทียบตำรา/guideline</div>`;}
+/* สัดส่วนคะแนน: ถ้าหัวข้อใหญ่มีน้ำหนัก (s.secs[k][2]) → คิดแต่ละหัวข้อเป็นสัดส่วนของข้อที่ทำได้ในหัวข้อนั้น × น้ำหนัก · ไม่มีน้ำหนัก → นับทุกข้อเท่ากัน (แบบเดิม) */
+function mqPtsFrac(s,c){const S=s.secs||[];if(!S.some(x=>x[2]>0)){const sc=mqPtsScore(s,c);return sc.tot?sc.got/sc.tot:0;}
+  let W=0,G=0;S.forEach((x,k)=>{const a=x[1],b=k+1<S.length?S[k+1][1]:s.points.length,w=+x[2]||0;let tot=0,got=0;for(let j=a;j<b;j++){const p=s.points[j];if(typeof p==="string"){tot++;if((c||[])[j]===true)got++;}else{const n=p.need||1,v=Array.isArray((c||[])[j])?c[j].filter(Boolean).length:0;tot+=n;got+=Math.min(n,v);}}
+    if(tot&&w){W+=w;G+=w*got/tot;}});return W?G/W:0;}
 function mqPtsScore(s,c){let tot=0,got=0;(s.points||[]).forEach((p,j)=>{if(typeof p==="string"){tot++;if(c[j]===true)got++;}else{const n=p.need||1,v=Array.isArray(c[j])?c[j].filter(Boolean).length:0;tot+=n;got+=Math.min(n,v);}});return {tot,got};}
 function mqRx(p,t){try{return new RegExp(p,"i").test(t);}catch(e){return false;}}
 function mqKwTicks(s,t){const K=s.kw||[];return (s.points||[]).map((p,j)=>{const k=K[j];if(typeof p==="string")return !!(k&&k.some(x=>mqRx(x,t)));return p.any.map((a,m)=>!!(k&&k[m]&&k[m].some(x=>mqRx(x,t))));});}
 function mqAutoFull(s,t){if(!s.auto||!t)return false;if((s.auto.all||[]).some(r=>!mqRx(r,t)))return false;const A=s.auto.any||[];return A.filter(r=>mqRx(r,t)).length>=(A.length?(s.auto.need||1):0);}
-function mqKwGrade(s,t){if(!t)return null;if(mqAutoFull(s,t))return {grade:2,auto:1};if(!s.kw||!(s.points||[]).length)return null;const c=mqKwTicks(s,t),sc=mqPtsScore(s,c);return {grade:sc.got>=sc.tot?2:sc.got>0?1:0,got:sc.got,tot:sc.tot,c};}
+function mqKwGrade(s,t){if(!t)return null;if(mqAutoFull(s,t))return {grade:2,auto:1};if(!s.kw||!(s.points||[]).length)return null;const c=mqKwTicks(s,t),sc=mqPtsScore(s,c),cm=mqCritMiss(s,c).length;return {grade:cm?0:sc.got>=sc.tot?2:sc.got>0?1:0,got:sc.got,tot:sc.tot,c};}
 function mqKwFill(q,subs){const x=mqEns(q);x.kg=x.kg||{};x.c=x.c||{};x.cs=x.cs||{};x.g=x.g||{};x.gm=x.gm||{};
   subs.forEach(s=>{const i=s._i,t=((x.t&&x.t[i])||"").trim();delete x.kg[i];if(!t)return;const k=mqKwGrade(s,t);if(!k)return;
     x.kg[i]={grade:k.grade,got:k.got,tot:k.tot,auto:k.auto||0};if(k.c){x.c[i]=k.c;x.cs[i]=mqSig(s);}if(!x.gm[i])x.g[i]=k.grade;});}
@@ -105,6 +121,7 @@ function mqAiPrompt(q,pi,subs,r){const P=q.parts,part=P[pi],W=W_();
 4) โจทย์ให้ตอบ N อย่าง ตอบถูก N อย่าง = ได้ ไม่ต้องครบทุกอย่างในเฉลย; ตอบเกินไม่หัก เว้นแต่มีอันที่ผิดชัดเจน
 5) "บางส่วน" เมื่อถูกไม่ครบตามที่ถาม หรือขาดรายละเอียดที่โจทย์สั่งตรง ๆ (เช่น สั่งให้บอกขนาดยา)
 6) คำต่างแต่ความหมายถูกถือว่าถูก สะกดผิดเล็กน้อย/ไทยปนอังกฤษไม่หัก · ข้อมูลผิดที่อันตรายให้หัก · ประเมินเฉพาะที่เขียนจริง
+7) เฉลยในไฟล์ของรุ่นพี่เป็นแค่แนวทาง ไม่ได้ถูกเสมอ — ถ้าไม่เห็นด้วย ให้ตรวจตามความรู้ที่ถูกต้องที่สุด แล้วบอกใน assess ว่าไม่เห็นด้วยตรงไหนเพราะอะไร
 ตอบเป็น JSON object เท่านั้น ภาษาไทยปนศัพท์แพทย์อังกฤษ:
 {"results":[{"id": <id>, "level": "ได้", "grade": 2, "assess": "ประเมิน 2–4 ประโยค ว่าถูก/ผิด/ครบตรงไหน", "missing": "สิ่งที่ขาดตามเกณฑ์ (ว่างได้)", "why": "อ้างเกณฑ์ที่ตรงกับคำตอบ 1 ประโยค"}]}
 
@@ -122,7 +139,7 @@ ${s.key?"เฉลยในไฟล์: "+plain(s.key).slice(0,1100)+"\n":""}�
 """
 ${String(r.t[s._i]).slice(0,3000)}
 """
-`;});return t;}
+`;});if(mqIsOS()&&q.topic&&typeof osRefFor==="function"){const R=osRefFor(q.topic,osSubOf(q));if(R.length)t+="\n=== แหล่งอ้างอิงของคณะ (ใช้เทียบได้ แต่ถ้าขัดกับ guideline/ตำรา ให้ยึดแหล่งที่เชื่อถือกว่า) ===\n"+R.map(x=>x.title+"\n"+x.text).join("\n\n")+"\n";}return t;}
 function mqPtsText(s){return (s.points||[]).map(p=>typeof p==="string"?plain(p):`${plain(p.label||"")} — ตอบ ${p.need||1} อย่างจาก: ${p.any.map(plain).join(" | ")}`).join(" ; ");}
 async function mqAiRun(q,pi,force){const k=q.uid+"#"+pi;if(MQAI.busy[k])return;const r=mqRec(q);if(!r)return;
   const subs=(mqTM()?mqTsubs(q,pi):q.parts[pi].subs).filter(s=>!mqReo(r,s._i)&&mqSubDone(q,s,r)&&((r.t&&r.t[s._i])||"").trim()&&(force||!(r.ai&&r.ai[s._i])));
@@ -152,7 +169,7 @@ const MQ_ROUNDS=[
   {k:"unit",n:"Unit round",d:"ทำ MEQ ตามหัวข้อ เลือกได้หลายหัวข้อ — เปิดเฉพาะ Part ที่ตรงหัวข้อ"},
   {k:"quality",n:"Quality round",d:"",soon:1,note:"จับเวลาแบบใหม่สำหรับ MEQ — รอรายละเอียด"},
   {k:"admission",n:"Admission round",d:"",soon:1,note:"AI ออกโจทย์ให้ตอบแบบ short answer / short essay — กำลังทำ"},
-  {k:"specialty",n:"Specialty round",d:"เปิด Specialty round ของ MCQ — โจทย์ใหม่ที่ AI สร้างทีละข้อจากไฟล์ของวอร์ดนี้เท่านั้น เลือกเรื่อง / R / N ได้ (ใช้ร่วมกับ MCQ)"},
+  {k:"specialty",n:"Specialty round",d:"เปิด Specialty round ของ MCQ — โจทย์ใหม่ที่ AI สร้างทีละข้อจากไฟล์ของวอร์ดนี้เท่านั้น เลือกเรื่อง / R / T / N ได้ (ใช้ร่วมกับ MCQ)"},
   {k:"io",n:"Round I/O",d:"อ่านสรุปเนื้อหาจาก Lecture (L) · Resource (R) · โน้ตวอร์ด (N) และรวมตามเรื่อง ที่ Claude สรุปให้ · ใช้ร่วมกับ MCQ / OSCE"},
   {k:"longcase",n:"Long case",d:"AI ให้ chief complaint มา แล้วดำเนินเคสเองทีละขั้นแบบสอบ long case เฉลยทีละขั้นสไตล์ MEQ (ใช้ร่วมกับ MCQ / OSCE)"}
 ];
@@ -187,7 +204,7 @@ function mqList(rk){const v=mqS().v,L=mqL(),setOk=q=>v.set==="all"||v.set.split(
   if(rk==="advisor")return mqAdvL().filter(q=>mqStyOk(q));
   if(rk==="unit")return v.tags.length?L.filter(q=>setOk(q)&&mqSecOk(q)&&mqStyOk(q)&&mqTPass(q,v.status)):[];
   if(rk==="grand")return v.gl.map(u=>L.find(q=>q.uid===u)).filter(Boolean);
-  return L.filter(q=>setOk(q)&&mqSecOk(q)&&mqStyOk(q)&&mqPass(q,v.status));}
+  return L.filter(q=>setOk(q)&&mqSecOk(q)&&mqStyOk(q)&&mqPass(q,v.status)&&(rk!=="service"||tgPass(mqQTags(q),v.tg)));}
 /* ---- ward home (MEQ tab) ---- */
 function mqHomeHTML(type){type=type||"MEQ";const P=P_(),p=ph(),L=mqL(ward,type),W=W_(),done=L.filter(q=>mqCaseDone(q)),scs=done.map(mqScore).filter(s=>s&&s.all);
   const avg=scs.length?Math.round(scs.reduce((a,s)=>a+s.got/s.tot,0)/scs.length*100):null,nC=L.filter(q=>!q.sa).length,nS=L.length-nC,sl=mqStaffL().length;
@@ -213,7 +230,7 @@ function mqBindHome(type){type=type||"MEQ";
   document.querySelectorAll("[data-mqround]").forEach(b=>b.onclick=()=>{const k=b.dataset.mqround,R=mqRounds(type).find(r=>r.k===k);if(R.soon){toast(R.note||"โหมดนี้จะเพิ่มภายหลัง");return;}
     if(k==="io")return go(ward+"/io");if(k==="teach")return go(ward+"/teach");if(k==="longcase")return go(ward+"/lcase");if(k==="specialty")return go(ward+"/spc");if(k==="legend"&&type==="OSCE")return go(ward+"/osl");if(k==="quality"&&type==="OSCE")return go(ward+"/osq");if(!mqL().length){toast(`ยังไม่มีข้อสอบ ${type} ในคลัง`);return;}if(k==="grand")return mqGrandNext(true);
     mqVset({r:k,status:k==="service"||k==="unit"?mqS().v.status:"all"});save();go(ward+"/mqr");});
-  document.querySelectorAll("[data-mqp2]").forEach(b=>b.onclick=()=>{mqVset({r:"service",set:"all",style:"all",status:b.dataset.mqp2});save();go(ward+"/mqr");});
+  document.querySelectorAll("[data-mqp2]").forEach(b=>b.onclick=()=>{mqVset({r:"service",set:"all",style:"all",status:b.dataset.mqp2,tg:Object.assign({},mqS().v.tg,{on:false})});save();go(ward+"/mqr");});
   const rs=$("mqResume");if(rs)rs.onclick=()=>go(ward+"/mq");
   {const b=$("osHomeRes");if(b)b.onclick=()=>go(ward+"/osx");}
   document.querySelectorAll("[data-mqask]").forEach(b=>b.onclick=()=>{mqVset({ask:b.dataset.mqask==="1"});save();rHome();});
@@ -245,6 +262,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
     /* พาร์ทตามไฟล์ (MEQ / Long case / Recall …) of the selected sets — pick some to see only those; none = every part in file order */
     {const inS=L.filter(q=>v.set==="all"||sel.includes(mqSK(q))),secs=mqSecs(inS),ss=v.sec==="all"?[]:v.sec.split("|").filter(x=>secs.includes(x));
       if(secs.length)h+=`<div class="tl-h">พาร์ทในไฟล์ <span class="hint">ไม่เลือก = ทุกพาร์ท เรียงตามไฟล์</span></div><div class="chips scroll">${[["all",v.sec==="all"?"ทุกพาร์ท":`ทุกพาร์ท (เลือก ${ss.length})`]].concat(secs.map(x=>[x,x])).map(([k,n])=>`<button class="chip" type="button" data-msec="${esc(k)}" aria-pressed="${k==="all"?v.sec==="all":ss.includes(k)}">${esc(n)}<span class="cnt">${k==="all"?"":inS.filter(q=>mqSecG(q)===k).length}</span></button>`).join("")}</div>`;}
+    if(rk==="service"&&T.length){const secOk=q=>(v.set==="all"||sel.includes(mqSK(q)))&&mqSecOk(q)&&mqStyOk(q),cnt={};L.filter(secOk).forEach(q=>mqQTags(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));v.tg.tags=v.tg.tags.filter(t=>T.some(a=>a[0]===t));h+=`<div id="tgWrap">${tgPanel(tgSort(T),v.tg,cnt,mqList("service").length)}</div>`;}
     h+=`<div class="chips">${[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["notfull","ยังไม่ได้เต็ม"],["star","★ ติดดาว"]].map(([k,n])=>`<button class="chip" type="button" data-mst="${k}" aria-pressed="${v.status===k}">${n}</button>`).join("")}</div>`;}
   h+=`<div class="ssearch"><input type="search" id="mqQ" placeholder="🔍 ค้นหาคำ / หัวข้อ" autocomplete="off" value="${esc(mqQ)}" aria-label="ค้นหาข้อ"><span id="mqQn"></span></div>`;
   const Q0=mqList(rk),QT=srchTerms(mqQ),Q=QT.length?Q0.filter(q=>srchHit(mqSearchText(q),QT)):Q0;
@@ -257,6 +275,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
   {const nb=$("mqNext");if(nb)nb.onclick=()=>{const nx=mqNextTodo(Q0);if(nx)mqOpen(nx.uid,undefined,"service");};}
   {const qi=$("mqQ"),qn=$("mqQn");if(qn)qn.textContent=QT.length?`พบ ${Q.length}/${Q0.length} ข้อ`:"";
     if(qi){let tm=0;qi.addEventListener("input",()=>{clearTimeout(tm);tm=setTimeout(()=>{mqQ=qi.value;const p0=qi.selectionStart;mqRList();const n=$("mqQ");if(n){n.focus();try{n.setSelectionRange(p0,p0);}catch(e){}}},160);});}}
+  {const tw=$("tgWrap");if(tw)tgWire(tw,v.tg,()=>{mqVset({});save();mqRList();});}
   document.querySelectorAll("[data-mtag]").forEach(b=>b.onclick=()=>{const k=b.dataset.mtag,a=v.tags;const i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);mqVset({});save();mqRList();});
   document.querySelectorAll("[data-msty]").forEach(b=>b.onclick=()=>{mqVset({style:b.dataset.msty});save();mqRList();});
   document.querySelectorAll("[data-mset]").forEach(b=>b.onclick=()=>{const k=b.dataset.mset;let sel=v.set==="all"?[]:v.set.split("|");if(k==="all")sel=[];else if(sel.includes(k))sel=sel.filter(x=>x!==k);else sel.push(k);mqVset({set:sel.length?sel.join("|"):"all"});save();mqRList();});
@@ -267,6 +286,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
 function mqSheet(){const v=mqS().v,rk=v.r||"service",L=mqL(),c=mqCur(),cur=c?{u:c.q.uid,pi:c.pi}:null,SV=rk==="service"||rk==="unit";
   statLabels(["ทำแล้ว","ได้เต็ม","คะแนนเฉลี่ย"]);$("sheetTitle").textContent=`กระดาษคำตอบ · ${MQ_RN(rk)} · ${mqKN()}`;
   const sc=$("setChips"),cc=$("chChips"),stc=$("statusChips");sc.innerHTML="";stc.innerHTML="";if(cc){cc.innerHTML="";cc.hidden=true;}
+  tgLine(tgSort(mqTopics()),rk==="service"?v.tg:null,()=>{v.tg.on=false;mqVset({});save();mqSheet();},()=>{closeS(true);go(ward+"/mqr");});
   if(SV){const sets=[...new Set(L.map(mqSK))],sel=v.set==="all"?[]:v.set.split("|");
     sc.innerHTML=[["all",v.set==="all"?"ทุกชุด":`ทุกชุด (เลือก ${sel.length})`]].concat(sets.map(x=>[x,x])).map(([k,n])=>`<button class="chip" type="button" data-sms="${esc(k)}" aria-pressed="${k==="all"?v.set==="all":sel.includes(k)}">${esc(n)}</button>`).join("");
     const inS=L.filter(q=>v.set==="all"||sel.includes(mqSK(q))),secs=mqSecs(inS),ss=v.sec==="all"?[]:v.sec.split("|").filter(x=>secs.includes(x));
@@ -357,12 +377,13 @@ function mqDoneSub(q,pi,s,r,t){const i=s._i,typed=!!t.trim(),ai=(r.ai&&r.ai[i])|
     if(!ai&&mqClOK())h+=`<div class="muted">อยากได้คำประเมินละเอียด → กด “🤖 ให้ Claude ตรวจ” ท้ายส่วนนี้</div>`;
     if(!ai&&!MQAI.busy[kk]&&mqAiAvail())h+=`<div><button class="link ailink" type="button" data-mairun="1">🤖 ให้ AI ประเมินคำตอบ</button></div>`;}
   h+=`</div><div class="model"><span class="lab">④ เฉลยและสิ่งที่ควรตอบ</span><div class="a">${s.ans||""}</div>${s.exp?`<div class="mexp">${mqRich(s.exp)}</div>`:""}`;
-  if((s.points||[]).length){const c=mqTicks(s,r);h+=`<ul class="pts"><li class="ph">ประเด็นที่ควรมีในคำตอบ (ติ๊กข้อที่ตอบได้)</li>${s.points.map((p,j)=>{
-    if(typeof p==="string")return `<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" ${c[j]===true?"checked":""}><span>${p}</span></label></li>`;
+  if((s.points||[]).length){const c=mqTicks(s,r);h+=`<ul class="pts"><li class="ph">ประเด็นที่ควรมีในคำตอบ (ติ๊กข้อที่ตอบได้)</li>${s.points.map((p,j)=>{const hd=mqSecHead(s,j,c),ct=mqCritTag(s,j);
+    if(typeof p==="string")return hd+`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" ${c[j]===true?"checked":""}><span>${p}${ct}</span></label></li>`;
     const vv=Array.isArray(c[j])?c[j]:[],need=p.need||1;
-    return `<li class="pgrp"><div class="pgl">${p.label?p.label+" ":""}<span class="alt">${need===1?"เลือกอย่างใดอย่างหนึ่งก็ถูก":`ตอบ ${need} อย่างจากนี้ก็ได้เต็ม`}</span></div><ul>${p.any.map((a,m)=>`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" data-mk="${m}" ${vv[m]?"checked":""}><span>${a}</span></label></li>`).join("")}</ul></li>`;}).join("")}</ul>`;
+    return hd+`<li class="pgrp"><div class="pgl">${p.label?p.label+" ":""}<span class="alt">${need===1?"เลือกอย่างใดอย่างหนึ่งก็ถูก":`ตอบ ${need} อย่างจากนี้ก็ได้เต็ม`}</span>${ct}</div><ul>${p.any.map((a,m)=>`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" data-mk="${m}" ${vv[m]?"checked":""}><span>${a}</span></label></li>`).join("")}</ul></li>`;}).join("")}</ul>`;
+    if(c.length)h+=mqCritWarn(s,c);
     if(mqIsOS()){const f=mqFrac(s,r),sc=mqPtsScore(s,c.length?c:[]);h+=`<div class="oschk">Checklist ได้ <b>${sc.got}/${sc.tot}</b> ประเด็น${f!==null?` · ข้อย่อยนี้ได้ <b>${+(mqMk(s)*f).toFixed(1)}/${mqMk(s)}</b> คะแนน${r.gm&&r.gm[i]?" (เลือกคะแนนเอง)":""}`:""}</div>`;}}
-  h+=`</div>`;
+  h+=`</div>`+mqKeyWarn(s);
   const KL=[].concat(s.kimg||[]).filter(x=>IMGS[x]);
   if(s.key||KL.length)h+=`<div class="filekey"><span class="lab">เฉลยในไฟล์ (ของรุ่นพี่)</span>${s.key?`<div class="fk">${s.key}</div>`:""}${KL.length?`<div class="kimg">${KL.map(x=>imgHTML(x,"เฉลยจากไฟล์",1)).join("")}</div>`:""}</div>`;
   if(s.flag)h+=`<div class="sub-meta"><span class="tag warn">${esc(s.flag)}</span></div>`;
@@ -430,7 +451,7 @@ function mqBindView(q,pi){const r=()=>mqRec(q)||{};
   document.querySelectorAll(".pts input").forEach(el=>el.onchange=()=>{const x=mqEns(q),i=+el.dataset.ms,j=+el.dataset.mp,s=q.subs[i],sig=mqSig(s);
     x.c=x.c||{};x.cs=x.cs||{};if(x.cs[i]!==sig){x.c[i]=[];x.cs[i]=sig;}x.c[i]=x.c[i]||[];
     if(el.dataset.mk!==undefined){const m=+el.dataset.mk;if(!Array.isArray(x.c[i][j]))x.c[i][j]=[];x.c[i][j][m]=el.checked;}else x.c[i][j]=el.checked;
-    x.gm=x.gm||{};x.g=x.g||{};if(!x.gm[i]){const sc=mqPtsScore(s,x.c[i]);x.g[i]=sc.got>=sc.tot?2:sc.got>0?1:0;}mqSave(q);mqRe();});
+    x.gm=x.gm||{};x.g=x.g||{};if(!x.gm[i]){const sc=mqPtsScore(s,x.c[i]);x.g[i]=mqCritMiss(s,x.c[i]).length?0:sc.got>=sc.tot?2:sc.got>0?1:0;}mqSave(q);mqRe();});
   document.querySelectorAll(".mgbtn").forEach(el=>el.onclick=()=>{const x=mqEns(q),i=+el.dataset.ms,v=+el.dataset.mg;x.g=x.g||{};x.gm=x.gm||{};
     if(x.g[i]===v&&x.gm[i]){delete x.g[i];delete x.gm[i];const k=x.kg&&x.kg[i];if(k&&!(x.ai&&x.ai[i]))x.g[i]=k.grade;else if(x.ai&&x.ai[i]&&x.ai[i].grade!=null)x.g[i]=x.ai[i].grade;}else{x.g[i]=v;x.gm[i]=1;}mqSave(q);mqRe();});}
 document.addEventListener("keydown",e=>{try{if(view!=="mq")return;if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){const b=$("mqSubmit")||$("mqSubReo")||document.querySelector("[data-mssub]");if(b){e.preventDefault();b.click();}}}catch(x){}});

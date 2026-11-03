@@ -1,7 +1,8 @@
 /* ---------------- Specialty round (MCQ; the MEQ / OSCE boxes link here) ----------------
    Same engine as Admission round (AM="spc": state P.spc, bank "spc|<ward>|<uid>", uid "SPC|…", q.adm=1 + q.spc=1)
-   but every question is built ONLY from the ward's own files: Round I/O pages of kind R and N (+ L when the switch is on)
-   and resources.js entries (R) that have no I/O pages.
+   but every question is built ONLY from the ward's own files: Round I/O pages of kind R, T (textbook) and N (+ L when the switch is on)
+   and resources.js (R) / textbooks.js (T) entries that have no I/O pages.
+   Tabs: "TP" = by topic (label ตามเรื่อง; was key "T" before code T existed), R, T, N, L — saved in st.spcTb.
    Choose by topic (the "รวมตามเรื่อง" topics of Round I/O), by R file / page, by N page — any mix — or random from all.
    Pages are drawn like a bag (every chosen page once before any repeats); the last points asked from a page go into the
    prompt so the AI does not ask them again. */
@@ -9,16 +10,18 @@ function spcInitP(A){A.sel=A.sel||{all:0,T:[],U:[],L:0};["T","U"].forEach(k=>{if
   A.on=A.on||0;A.bag=A.bag||{sig:"",list:[]};A.pts=A.pts||{};A.done=A.done||{};if(A.run===undefined)A.run=null;}
 const spcA=wid=>PWof(st,wid||ward).spc;
 const ioPlain=h=>String(h||"").replace(/<span class="iowas">[\s\S]*?<\/span>/g,"").replace(/\{\{[^}]*\}\}/g,"").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&").replace(/\s+/g," ").trim();
-const SPC_KN={R:"Resource (R)",N:"โน้ตวอร์ด (N)",L:"Lecture (L)"};
+/* files whose page list is unfolded — closed by default so a ward with many R / T files stays short (user, 3 Nov 2026) */
+const spcOpen=new Set();
+const SPC_KN={R:"Resource (R)",T:"Textbook (T)",N:"โน้ตวอร์ด (N)",L:"Lecture (L)"};
 /* every page of the ward that can be a source — {key,kind,code,doc,title,id?,topics,rev,text} */
 function spcUnits(wid){wid=wid||ward;const W=WARDS[wid],o=[],ioR=new Set();
-  ((W&&W.IO&&W.IO.docs)||[]).forEach(d=>{if(!["R","N","L"].includes(d.kind))return;if(d.kind==="R")ioR.add(d.code);
+  ((W&&W.IO&&W.IO.docs)||[]).forEach(d=>{if(!["R","T","N","L"].includes(d.kind))return;if(d.kind==="R"||d.kind==="T")ioR.add(d.code);
     (d.pages||[]).forEach(p=>{const t=ioPlain(p.html);if(!t)return;
       o.push({key:"p:"+p.id,id:p.id,kind:d.kind,code:d.kind==="N"?"N":d.code,doc:d.kind==="N"?"โน้ตวอร์ด":d.title,title:p.title,topics:(p.topics&&p.topics.length)?p.topics:["อื่น ๆ"],rev:+p.rev||1,text:t.slice(0,9000)});});});
-  resOf(W).forEach(r=>{if(!resPts(r).length||(r.code&&ioR.has(r.code)))return;
+  [["R",resOf(W)],["T",txtOf(W)]].forEach(([K,L_])=>L_.forEach(r=>{if(!resPts(r).length||(r.code&&ioR.has(r.code)))return;
     const tp=[].concat(r.tags||[]);if(r.topic&&!tp.includes(r.topic))tp.push(r.topic);
-    o.push({key:"r:"+(r.code||r.title),kind:"R",code:r.code||"R",doc:r.title,title:r.title,topics:tp.length?tp:["อื่น ๆ"],rev:1,text:"- "+resPts(r).join("\n- ")});});
-  return o;}
+    o.push({key:(K==="T"?"t:":"r:")+(r.code||"")+"|"+r.title,kind:K,code:r.code||K,doc:r.title,title:r.title,topics:tp.length?tp:["อื่น ๆ"],rev:1,text:"- "+resPts(r).join("\n- ")});}));
+  return o.sort((a,b)=>codeCmp(a.kind==="N"?"N":a.kind+((codeKey(a.code)[1]||[]).join(".")),b.kind==="N"?"N":b.kind+((codeKey(b.code)[1]||[]).join("."))));}
 const spcLabel=u=>u.kind==="N"?`N · โน้ตวอร์ด — ${u.title}`:u.doc===u.title?`${u.code} ${u.title}`:`${u.code} ${u.doc} — ${u.title}`;
 function spcAvail(wid){const A=spcA(wid);return spcUnits(wid).filter(u=>u.kind!=="L"||A.sel.L);}
 function spcPool(wid){const A=spcA(wid),S=A.sel,us=spcAvail(wid);if(S.all)return us;
@@ -68,29 +71,32 @@ function spcSelTxt(wid){const A=spcA(wid),S=A.sel;if(S.all)return "สุ่ม�
 function spcTopicStat(){const o={};bankItems("spc",ward).forEach(x=>{if(!x.q||x.a==null)return;const ok=x.a===x.q.ans?1:0;(x.q.spcT||[]).forEach(t=>{const y=o[t]||(o[t]=[0,0]);y[0]++;y[1]+=ok;});});return o;}
 function spcEndRun(){const A=AS();A.on=0;A.ts=now();save();pick=null;$("nav").hidden=true;rSpc();window.scrollTo(0,0);}
 function rSpc(){
-  const W=W_(),A=spcA(),S=A.sel,all=spcUnits(),hasL=all.some(u=>u.kind==="L"),av=spcAvail(),pool=spcPool(),stat=spcTopicStat(),tab=["T","R","N","L"].includes(st.spcTab)&&(st.spcTab!=="L"||S.L)?st.spcTab:"T";
+  const W=W_(),A=spcA(),S=A.sel,all=spcUnits(),hasL=all.some(u=>u.kind==="L"),av=spcAvail(),pool=spcPool(),stat=spcTopicStat(),tab=["TP","R","T","N","L"].includes(st.spcTb)&&(st.spcTb!=="L"||S.L)?st.spcTb:"TP";
   $("nav").hidden=true;aiCount();
-  let h=`<h1 class="h2">Specialty round</h1><p class="sub">โจทย์ใหม่ที่ AI สร้างทีละข้อแบบ Admission round แต่<b>เนื้อหามาจากไฟล์ของวอร์ดนี้เท่านั้น</b> — เลือกได้ทั้งตามเรื่อง (หัวข้อเดียวกับ “รวมตามเรื่อง” ใน Round I/O) ตามไฟล์ R และตามหน้าโน้ต N เลือกหลายอย่างปนกันได้ หรือสุ่มจากทั้งหมด · สร้างไปเรื่อย ๆ จนกด “จบรอบ” · ทุกข้อเก็บในคลังของคุณ</p>`;
+  let h=`<h1 class="h2">Specialty round</h1><p class="sub">โจทย์ใหม่ที่ AI สร้างทีละข้อแบบ Admission round แต่<b>เนื้อหามาจากไฟล์ของวอร์ดนี้เท่านั้น</b> — เลือกได้ทั้งตามเรื่อง (หัวข้อเดียวกับ “รวมตามเรื่อง” ใน Round I/O) ตามไฟล์ R ตามตำรา T และตามหน้าโน้ต N เลือกหลายอย่างปนกันได้ หรือสุ่มจากทั้งหมด · สร้างไปเรื่อย ๆ จนกด “จบรอบ” · ทุกข้อเก็บในคลังของคุณ</p>`;
   if(A.run&&A.run.n&&!A.on){const R_=A.run,ts=Object.keys(R_.byT);h+=`<div class="card"><h3>รอบล่าสุด · ${R_.n} ข้อ · ถูก ${R_.r} (${Math.round(R_.r/R_.n*100)}%)</h3>${R_.sel?`<span class="rd">${esc(R_.sel)}</span>`:""}${ts.length?`<div class="spcrun">${ts.map(t=>{const [n,r]=R_.byT[t];return `<span class="tag">${esc(t)} ${r}/${n}</span>`;}).join("")}</div>`:""}</div>`;}
-  if(!av.length&&!hasL){h+=`<div class="card"><h3>ยังไม่มี R / N ในวอร์ดนี้</h3><span class="rd" style="margin:0">ส่งไฟล์ resource (R) หรือโน้ตวอร์ด (N) ให้ Claude สรุปเข้า Round I/O ก่อน แล้ว Specialty round จะใช้ได้</span></div>`;}
+  if(!av.length&&!hasL){h+=`<div class="card"><h3>ยังไม่มี R / T / N ในวอร์ดนี้</h3><span class="rd" style="margin:0">ส่งไฟล์ resource (R) ตำรา (T) หรือโน้ตวอร์ด (N) ให้ Claude สรุปเข้า Round I/O ก่อน แล้ว Specialty round จะใช้ได้</span></div>`;}
   else{
     h+=`<div class="tools spcquick"><button class="tool" id="spcAll" aria-pressed="${!!S.all}">🎲 สุ่มทั้งหมด${S.all?" ✓":""}</button><button class="tool" id="spcWeak">⚠ เรื่องที่ผิดบ่อย</button><button class="tool" id="spcNew">🆕 เนื้อหาใหม่<span class="n">${av.filter(u=>(A.done[u.key]||0)<u.rev).length}</span></button><button class="tool" id="spcClr">ล้างที่เลือก</button></div>`;
     if(hasL)h+=`<label class="spcsw"><input type="checkbox" id="spcL" ${S.L?"checked":""}> รวม Lecture (L) ด้วย <span class="hint">— ปกติปิดไว้ เพราะ L มีโจทย์ Unit round อยู่แล้ว</span></label>`;
     const T=new Map();av.forEach(u=>u.topics.forEach(t=>{if(!T.has(t))T.set(t,[]);T.get(t).push(u);}));
-    const cnt=k=>k==="T"?T.size:av.filter(u=>u.kind===k).length;
-    h+=`<div class="chips spctabs">${[["T","ตามเรื่อง"],["R","R"],["N","N"]].concat(S.L?[["L","L"]]:[]).map(([k,t])=>`<button class="chip" data-sptab="${k}" aria-pressed="${tab===k}">${t} <span class="hint">${cnt(k)}</span></button>`).join("")}</div>`;
+    const cnt=k=>k==="TP"?T.size:av.filter(u=>u.kind===k).length;
+    h+=`<div class="chips spctabs">${[["TP","ตามเรื่อง"]].concat(S.L?[["L","L"]]:[],[["R","R"],["T","T"],["N","N"]]).map(([k,t])=>`<button class="chip" data-sptab="${k}" aria-pressed="${tab===k}">${t} <span class="hint">${cnt(k)}</span></button>`).join("")}</div>`;
     const dim=S.all?` style="opacity:.55"`:"";
     const row=(attr,on,title,meta)=>`<button class="resume qprog" ${attr} aria-pressed="${on}"${dim}><span><b>${esc(title)}</b>${meta?`<span class="rd">${meta}</span>`:""}</span><span class="go">${on?"✓":""}</span></button>`;
     const acc=t=>{const x=stat[t];return x?` · ถูก ${Math.round(x[1]/x[0]*100)}% (${x[0]} ข้อ)`:"";};
     h+=`<div class="stack" style="margin-top:8px">`;
-    if(tab==="T"){if(!T.size)h+=`<p class="hint">ยังไม่มีเรื่อง</p>`;
-      for(const [t,us] of T){const k=["R","N","L"].map(x=>[x,us.filter(u=>u.kind===x).length]).filter(x=>x[1]).map(x=>`${x[0]} ${x[1]}`).join(" · ");h+=row(`data-sptopic="${esc(t)}"`,S.T.includes(t),t,`${k} หน้า${acc(t)}`);}}
+    if(tab==="TP"){if(!T.size)h+=`<p class="hint">ยังไม่มีเรื่อง</p>`;
+      for(const [t,us] of T){const k=["L","R","T","N"].map(x=>[x,us.filter(u=>u.kind===x).length]).filter(x=>x[1]).map(x=>`${x[0]} ${x[1]}`).join(" · ");h+=row(`data-sptopic="${esc(t)}"`,S.T.includes(t),t,`${k} หน้า${acc(t)}`);}}
     else{const D=new Map();av.filter(u=>u.kind===tab).forEach(u=>{const c=tab==="N"?u.key:u.code;if(!D.has(c))D.set(c,[]);D.get(c).push(u);});
-      if(!D.size)h+=`<p class="hint">${tab==="R"?"ยังไม่มีไฟล์ R ในวอร์ดนี้":tab==="N"?"ยังไม่มีโน้ตวอร์ด N":"ยังไม่มี lecture ใน Round I/O"}</p>`;
+      {const fks=tab==="N"?[]:[...D].filter(x=>x[1].length>1).map(x=>tab+"|"+x[0]);if(fks.length>1){const allOp=fks.every(k=>spcOpen.has(k));
+        h+=`<div class="spcfoldall"><button type="button" class="linkbtn" id="spcFoldAll" data-open="${allOp?1:0}">${allOp?"▴ พับทั้งหมด":"▾ กางทั้งหมด"}</button></div>`;}}
+      if(!D.size)h+=`<p class="hint">${tab==="R"?"ยังไม่มีไฟล์ R ในวอร์ดนี้":tab==="T"?"ยังไม่มีตำรา T ในวอร์ดนี้":tab==="N"?"ยังไม่มีโน้ตวอร์ด N":"ยังไม่มี lecture ใน Round I/O"}</p>`;
       for(const [c,us] of D){const on=us.every(u=>S.U.includes(u.key)),u0=us[0],nw=us.some(u=>(A.done[u.key]||0)<u.rev);
         if(tab==="N"||us.length===1)h+=row(`data-spunit="${esc(u0.key)}"`,on,tab==="N"?u0.title:`${u0.code} ${u0.doc===u0.title?u0.title:u0.doc+" — "+u0.title}`,`${u0.topics.join(", ")}${nw?" · 🆕 ยังไม่เคยออกโจทย์ / มีอัปเดต":""}`);
-        else{h+=row(`data-spdoc="${esc(c)}" data-spkind="${tab}"`,on,`${c} ${u0.doc}`,`${us.length} หน้า · ทั้งไฟล์`);
-          h+=`<div class="chips spcpages">${us.map(u=>`<button class="chip" data-spunit="${esc(u.key)}" aria-pressed="${S.U.includes(u.key)}"${dim}>${esc(u.title)}</button>`).join("")}</div>`;}}}
+        else{const fk=tab+"|"+c,op=spcOpen.has(fk),pk=us.filter(u=>S.U.includes(u.key)).length;
+          h+=`<div class="spcdoc">${row(`data-spdoc="${esc(c)}" data-spkind="${tab}"`,on,`${c} ${u0.doc}`,`${us.length} หน้า · ${on?"ทั้งไฟล์":pk?`<span class="spcpk">เลือก ${pk}/${us.length} หน้า</span>`:"แตะเพื่อเลือกทั้งไฟล์"}`)}<button type="button" class="spcfold" data-spfold="${esc(fk)}" aria-expanded="${op}" aria-label="${op?"พับ":"กาง"}รายการหน้าของ ${esc(c)}">${op?"▴":"▾"}</button></div>`;
+          if(op)h+=`<div class="chips spcpages">${us.map(u=>`<button class="chip" data-spunit="${esc(u.key)}" aria-pressed="${S.U.includes(u.key)}"${dim}>${esc(u.title)}</button>`).join("")}</div>`;}}}
     h+=`</div>`;
     const nT=new Set(pool.flatMap(u=>u.topics)).size;
     h+=`<p class="statline" style="margin-top:12px">${S.all?`สุ่มจากทุกหน้า <b>${pool.length}</b> หน้า`:pool.length?`เลือกแล้ว <b>${pool.length}</b> หน้า จาก <b>${nT}</b> เรื่อง`:"ยังไม่ได้เลือก — แตะเรื่อง / ไฟล์ ด้านบน หรือกด 🎲 สุ่มทั้งหมด"}</p>`;
@@ -102,7 +108,9 @@ function rSpc(){
   $("main").innerHTML=h;
   const re=()=>{save();rSpc();};
   {const b=$("admBankBtn");if(b)b.onclick=openS;}bindSharedAdm("spc");bindUfa();
-  document.querySelectorAll("[data-sptab]").forEach(b=>b.onclick=()=>{st.spcTab=b.dataset.sptab;persist();rSpc();});
+  document.querySelectorAll("[data-spfold]").forEach(b=>b.onclick=()=>{const k=b.dataset.spfold;if(spcOpen.has(k))spcOpen.delete(k);else spcOpen.add(k);rSpc();});
+  {const b=$("spcFoldAll");if(b)b.onclick=()=>{const ks=[...document.querySelectorAll("[data-spfold]")].map(x=>x.dataset.spfold);ks.forEach(k=>{if(b.dataset.open==="1")spcOpen.delete(k);else spcOpen.add(k);});rSpc();};}
+  document.querySelectorAll("[data-sptab]").forEach(b=>b.onclick=()=>{st.spcTb=b.dataset.sptab;persist();rSpc();});
   const tg=(arr,v)=>{const i=arr.indexOf(v);if(i<0)arr.push(v);else arr.splice(i,1);};
   document.querySelectorAll("[data-sptopic]").forEach(b=>b.onclick=()=>{S.all=0;tg(S.T,b.dataset.sptopic);re();});
   document.querySelectorAll("[data-spunit]").forEach(b=>b.onclick=()=>{S.all=0;tg(S.U,b.dataset.spunit);re();});
@@ -113,7 +121,7 @@ function rSpc(){
   {const b=$("spcL");if(b)b.onchange=()=>{S.L=b.checked?1:0;if(!S.L){const lk=new Set(all.filter(u=>u.kind==="L").map(u=>u.key));S.U=S.U.filter(k=>!lk.has(k));}re();};}
   {const b=$("spcWeak");if(b)b.onclick=()=>{const w=Object.keys(stat).filter(t=>stat[t][0]>=2&&stat[t][1]/stat[t][0]<0.6&&av.some(u=>u.topics.includes(t)));
     if(!w.length){toast(Object.keys(stat).length?"ยังไม่มีเรื่องที่ถูกต่ำกว่า 60% (นับเรื่องที่ทำแล้ว ≥ 2 ข้อ)":"ยังไม่มีสถิติ — ทำ Specialty round ก่อน");return;}
-    S.all=0;S.T=w;S.U=[];st.spcTab="T";persist();re();toast(`เลือกเรื่องที่ถูกต่ำกว่า 60%: ${w.length} เรื่อง`);};}
+    S.all=0;S.T=w;S.U=[];st.spcTb="TP";persist();re();toast(`เลือกเรื่องที่ถูกต่ำกว่า 60%: ${w.length} เรื่อง`);};}
   {const b=$("spcNew");if(b)b.onclick=()=>{const nw=av.filter(u=>(A.done[u.key]||0)<u.rev).map(u=>u.key);if(!nw.length){toast("ทุกหน้าเคยออกโจทย์แล้ว และยังไม่มีอัปเดตใหม่");return;}S.all=0;S.T=[];S.U=nw;re();toast(`เลือกหน้าใหม่ / มีอัปเดต ${nw.length} หน้า`);};}
   {const b=$("spcGo");if(b)b.onclick=()=>{const pl=spcPool();if(!pl.length)return;const sig=spcSig(pl);
     if(A.runSig!==sig){A.cur=null;A.next=null;A.ans=null;A.runSig=sig;}   /* another choice: an unanswered question stays in the bank only */

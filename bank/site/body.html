@@ -14,9 +14,11 @@
 <div class="legban" id="legban" hidden><span>⏱ กำลังสอบ Legendary round · เหลือ <b id="legbanT"></b></span><button class="btn" id="legbanGo" type="button">ทำต่อ</button><button class="btn primary" id="legbanSub" type="button">Submit</button></div>
 <main id="main"></main>
 <aside class="qbar" id="qbar" aria-label="จับเวลา Quality round" hidden>
-  <div class="qb-main"><span class="qb-t" id="qbT"></span><span class="qb-ph" id="qbPh"></span></div>
-  <div class="qb-meta" id="qbMeta"></div>
-  <div class="qb-btns"><button class="chip" id="qbPause" type="button">⏸ พัก</button><button class="chip" id="qbReset" type="button">⟲ เริ่มใหม่</button><button class="chip" id="qbStop" type="button">■ จบ</button><label class="qb-vol" aria-label="ระดับเสียง"><span>🔊</span><span class="qb-vs"><input type="range" id="qbVol" min="0" max="1" step="0.05"></span></label></div>
+  <div class="qb-main"><div class="qb-ring"><span class="qb-t" id="qbT"></span></div><span class="qb-ph" id="qbPh"></span><span class="qb-st" id="qbSt"></span></div>
+  <div class="qb-side"><div class="qb-meta" id="qbMeta"></div>
+  <div class="qb-btns"><button class="chip" id="qbPause" type="button">⏸ พัก</button><button class="chip" id="qbReset" type="button">⟲ เริ่มใหม่</button><button class="chip" id="qbSet" type="button">⚙ ตั้งค่า</button><button class="chip" id="qbStop" type="button">■ จบ</button></div>
+  <label class="qb-vol" aria-label="ระดับเสียง"><span>🔊</span><span class="qb-vs"><input type="range" id="qbVol" min="0" max="1" step="0.05"></span></label></div>
+  <span class="qb-grip" id="qbGrip" title="ลากเพื่อปรับขนาด · แตะสองครั้งเพื่อคืนค่าเดิม" aria-hidden="true"></span>
 </aside>
 
 <nav class="nav" id="nav" hidden>
@@ -39,6 +41,7 @@
       </div>
       <div class="chips scroll" id="setChips"></div>
       <div class="chips scroll" id="chChips" hidden></div>
+      <div class="tgline" id="tgLine" hidden></div>
       <div class="chips" id="statusChips"></div>
       <div class="ssearch"><input type="search" id="sheetQ" placeholder="🔍 ค้นหาคำ / หัวข้อ" autocomplete="off" aria-label="ค้นหาในกระดาษคำตอบ"><span id="sheetQn"></span></div>
     </div>
