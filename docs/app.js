@@ -930,11 +930,12 @@
           c.parent = g; g.kids.push(c);
         });
       } else if (data) {
-        (e.tabs || []).forEach(function (m) {
+        /* tabs: true = รายการแท็บและที่แขวนอยู่ในไฟล์เอง (under ของแต่ละแท็บ) */
+        (e.tabs === true ? data.tabs.map(function (x) { return { tab: x.title, under: x.under }; }) : e.tabs || []).forEach(function (m) {
           var t = data.tabs.filter(function (x) { return x.title === m.tab; })[0];
           var parent = findTitle(m.under, key);
           if (!t || !parent) return;
-          var n = add({ title: t.title, html: t.html, heads: t.heads || [], kids: [], kind: 'doc', src: key, from: e.from, at: data.at, badge: e.badge, slug: key + '-' + gslug(t.title) });
+          var n = add({ title: t.title, html: t.html, heads: t.heads || [], kids: [], kind: 'doc', src: key, from: t.from || e.from, at: data.at, badge: e.badge, slug: t.slug || key + '-' + gslug(t.title), inst: e.inst, code: t.code, fcode: t.fcode || t.code, wfile: t.code ? t.ward : '' });
           n.parent = parent; parent.kids.push(n);
         });
       }
@@ -962,7 +963,13 @@
     gPaintDrawer();
   }
   function gLook(n) { var t = n.topN || n, l = (GD.look || {})[t.title]; return l ? { c: l[0], pig: l[1], th: l[2] } : { c: '#5A6258', pig: '', th: '' }; }
-  function gHref(n, to) { return '#/kb/' + encodeURIComponent(n.slug) + (to ? '?to=' + encodeURIComponent(to) : ''); }
+  /* ไฟล์ L/R ของวอร์ด: เนื้อหาชุดเดียว เปิดได้ทั้งจาก system และจากหน้าวอร์ด (data-ann เดียวกัน โน้ต/ที่แก้จึงตรงกัน) */
+  var G_WCTX = null;
+  function gHref(n, to) {
+    var q = to ? '?to=' + encodeURIComponent(to) : '';
+    if (G_WCTX && gPath(n).indexOf(G_WCTX.top) >= 0) return '#/kb/ward/' + G_WCTX.w.id + '/f/' + encodeURIComponent(n.slug) + q;
+    return '#/kb/' + encodeURIComponent(n.slug) + q;
+  }
   /* วอร์ด (data/clinic.js) ที่ชื่อแท็บตรงกับคำใน match */
   function wardsByName(title) {
     var t = String(title || '').toLowerCase();
@@ -1039,7 +1046,7 @@
   function gTagLine(n) {
     var h = (n.lv === 'clinic' ? '<span class="kbtag lv">Clinic</span>' : n.lv === 'pre' ? '<span class="kbtag lv">Preclinic</span>' : '') +
       ((n.wards || []).length ? (n.wards || []).map(function (id) { var w = wardById(id); return w ? '<a class="kbtag" href="#/kb/ward/' + w.id + '" style="--w:' + w.c + '">' + esc(w.name) + '</a>' : ''; }).join('') : '<a class="kbtag" href="#/kb/ward/none" style="--w:' + WARD_NONE.c + '">ยังไม่มีวอร์ด</a>');
-    return '<div class="kbtags">' + h + '<button type="button" class="kbtag kbtagedit" data-tagedit="' + esc(n.slug) + '" aria-expanded="false">แก้ป้ายวอร์ด</button></div><div class="tagpick" data-tagpick="' + esc(n.slug) + '" hidden></div>';
+    return '<div class="kbtags">' + (n.inst ? srcBadges(n.inst) : '') + h + '<button type="button" class="kbtag kbtagedit" data-tagedit="' + esc(n.slug) + '" aria-expanded="false">แก้ป้ายวอร์ด</button></div><div class="tagpick" data-tagpick="' + esc(n.slug) + '" hidden></div>';
   }
   function gSrcLine(n) {
     if (n.src === 'main') return '<span class="gsrcrow"><span class="gsrcw" data-gsrc="' + esc(n.slug) + '">' + glLine(n) + '</span>' + glBtn() + '</span>';
@@ -1091,6 +1098,16 @@
       (hasTog ? '<div class="gtall"><button type="button" class="chip" data-gtall="1">ขยายทั้งหมด</button><button type="button" class="chip" data-gtall="0">ย่อทั้งหมด</button></div>' : '') +
       '<nav class="tree" aria-label="แท็บใน ' + esc(top.title) + '">' + item(top) + '</nav></details>';
   }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-siref]');
+    if (!a) return;
+    e.preventDefault();
+    var li = document.getElementById(a.getAttribute('data-siref'));
+    if (!li) return;
+    var d = li.closest('details'); if (d) d.open = true;
+    li.scrollIntoView({ block: 'center' });
+    li.classList.remove('si-hit'); void li.offsetWidth; li.classList.add('si-hit');
+  });
   function gTogState() { try { return JSON.parse(localStorage.getItem('poy.gtt') || '{}') || {}; } catch (e) { return {}; } }
   function gTogSave(m) { try { localStorage.setItem('poy.gtt', JSON.stringify(m)); } catch (e) { } }
   function gTogSet(btn, ex, m) {
@@ -1112,10 +1129,21 @@
     return '<div class="gsheets"><nav class="gstabs" aria-label="ชีต">' + sibs.map(function (s) { return '<a class="chip' + (s === n ? ' on" aria-current="page' : '') + '" href="' + gHref(s) + '">' + esc(s.title) + '</a>'; }).join('') + '</nav>' +
       (n.html ? '<style>' + n.css + '</style><div class="gsheet ' + esc(n.scope) + '"><div class="gsw" data-ann="g:' + esc(n.slug) + '">' + n.html + '</div></div>' : '<div class="empty"><p class="muted">ชีตนี้ว่าง</p></div>') + '</div>';
   }
-  function gNodePage(n, r) {
-    var top = n.topN || n, lk = gLook(top), path = gPath(n);
+  function gNodePage(n, r, ctx) {
+    G_WCTX = ctx || null;
+    try { return gNodePage_(n, r, ctx); } finally { G_WCTX = null; }
+  }
+  function gNodePage_(n, r, ctx) {
+    var top = ctx ? ctx.top : n.topN || n, lk = gLook(n), path = gPath(n);
+    var sysLink = '';
+    if (ctx) {
+      G_WCTX = null;
+      sysLink = '<a class="chip" href="' + gHref(top) + '">อยู่ใน Medical Soil ที่ ' + esc(gPath(top).slice(0, -1).map(function (x) { return x.title; }).join(' › ')) + ' →</a>';
+      G_WCTX = ctx;
+      path = path.slice(path.indexOf(top));
+    }
     gNeedSheets(gFlat(top));
-    remember({ href: gHref(n), title: n.title, crumb: 'Medical Soil › ' + path.slice(0, -1).map(function (x) { return x.title; }).join(' › '), c: lk.c });
+    remember({ href: gHref(n), title: n.title, crumb: ctx ? 'Medical Soil › ตามวอร์ด › ' + ctx.w.name : 'Medical Soil › ' + path.slice(0, -1).map(function (x) { return x.title; }).join(' › '), c: lk.c });
     var flat = gFlat(top).filter(function (x) { return x.kind !== 'sheets' || true; }), i = flat.indexOf(n), prev = flat[i - 1], next = flat[i + 1];
     var crumb = path.map(function (x, k) { return k === path.length - 1 ? '<span>' + esc(x.title) + '</span>' : '<a href="' + gHref(x) + '">' + esc(x.title) + '</a>'; }).join('<span class="muted"> › </span>');
     var body;
@@ -1124,9 +1152,9 @@
       '<p class="muted">แยกตามชีตเหมือนในไฟล์เดิม — เลือกชีตด้านล่าง</p>' + gKidCards(n);
     else body = '<div class="gdoc" data-ann="g:' + esc(n.slug) + '" data-ph="ยังว่าง — พิมพ์เนื้อหาได้เลย">' + (gFull(n) ? n.html : '') + '</div>' + (gFull(n) || shPeek('g:' + n.slug) ? '' : '<div class="empty" style="text-align:left"><p class="muted">แท็บนี้ยังไม่มีเนื้อหา — กด "แก้เนื้อหา" แล้วพิมพ์ได้เลย' + (n.kids.length ? ' — มีแท็บย่อยด้านล่าง' : '') + '</p></div>') +
       (n.kids.length ? '<div class="gsub"><span class="label">แท็บย่อยใน ' + esc(n.title) + '</span>' + gKidCards(n) + '</div>' : '');
-    var tools = (gFull(n) ? '<a class="chip" href="#/exam?src=' + encodeURIComponent('g:' + n.slug) + '">สร้างข้อสอบจากหน้านี้</a>' : '') +
+    var tools = sysLink + (gFull(n) ? '<a class="chip" href="#/exam?src=' + encodeURIComponent('g:' + n.slug) + '">สร้างข้อสอบจากหน้านี้</a>' : '') +
       (n.src === 'main' ? '<a class="chip" href="https://docs.google.com/document/d/' + esc(GD.main.id) + '/edit" target="_blank" rel="noopener">เปิด Doc ต้นฉบับ ↗</a>' : '');
-    var art = '<article class="sheet doc gdocart"><div style="display:flex;flex-direction:column;gap:10px"><nav class="muted" aria-label="ตำแหน่ง" style="font-size:14px">' + '<a href="#/kb">Medical Soil</a>' + (n.ck === 'ward' ? '<span class="muted"> › </span><a href="#/kb/ward">ตามวอร์ด</a>' : n.ck === 'skills' ? '<span class="muted"> › </span><a href="#/kb/skills">Clinical skills</a>' : '') + '<span class="muted"> › </span>' + crumb + '</nav>' +
+    var art = '<article class="sheet doc gdocart"><div style="display:flex;flex-direction:column;gap:10px"><nav class="muted" aria-label="ตำแหน่ง" style="font-size:14px">' + '<a href="#/kb">Medical Soil</a>' + (ctx ? '<span class="muted"> › </span><a href="#/kb/ward">ตามวอร์ด</a><span class="muted"> › </span><a href="#/kb/ward/' + ctx.w.id + '">' + esc(ctx.w.name) + '</a>' : n.ck === 'ward' ? '<span class="muted"> › </span><a href="#/kb/ward">ตามวอร์ด</a>' : n.ck === 'skills' ? '<span class="muted"> › </span><a href="#/kb/skills">Clinical skills</a>' : '') + '<span class="muted"> › </span>' + crumb + '</nav>' +
       '<h2 style="overflow-wrap:anywhere">' + esc(n.title) + '</h2>' + gTagLine(n) + (n.src === 'web' ? '<span class="muted" style="font-size:14px">แท็บที่สร้างในเว็บ' + (n.web.byName ? ' โดย ' + esc(n.web.byName) : '') + '</span>' : gSrcLine(n)) + gTabTools(n) + (tools ? '<div style="display:flex;flex-wrap:wrap;gap:8px">' + tools + '</div>' : '') + '</div>' + body +
       '<nav aria-label="หน้าก่อนหน้าและถัดไป" class="gpn">' +
       (prev ? '<a href="' + gHref(prev) + '"><span class="muted" style="font-size:13px">← ก่อนหน้า</span><span class="k" style="font-size:17px;font-weight:500">' + esc(prev.title) + '</span></a>' : '<span></span>') +
@@ -1376,8 +1404,28 @@
     var L = D.list.filter(function (d) { return dWards(d).indexOf(w.id) >= 0; }), first = function (d) { return dDiscWards(d).indexOf(w.id) >= 0 ? 0 : 1; };
     return L.sort(function (a, b) { return first(a) - first(b); });
   }
+  /* เรียง L → R → T → N แล้วตามเลข (กติกาเดียวกับเว็บข้อสอบเก่า) */
+  function codeKey(c) { var m = /^([A-Z])([\d.]+)/.exec(String(c || '')); return m ? [Math.max('LRTN'.indexOf(m[1]), 0) + ('LRTN'.indexOf(m[1]) < 0 ? 4 : 0), parseFloat(m[2]) || 0] : [9, 0]; }
+  function kbWardFiles(id) {
+    return G.nodes.filter(function (n) { return n.wfile === id; }).sort(function (a, b) { var x = codeKey(a.code), y = codeKey(b.code); return x[0] - y[0] || x[1] - y[1]; });
+  }
+  function kbWardFilesHTML(w) {
+    var L = kbWardFiles(w.id);
+    if (!L.length) return '';
+    return '<span class="label">Lecture &amp; Resource · ' + esc(w.name) + ' · ' + L.length + ' ไฟล์</span><div class="wfiles">' + L.map(function (n) {
+      return '<a class="sheet wfile" href="#/kb/ward/' + w.id + '/f/' + encodeURIComponent(n.slug) + '"><span class="wfcode">' + esc(n.code) + '</span><span class="wfmain"><span class="k" style="font-size:17px;font-weight:500">' + esc(n.title.replace(n.code + ' ', '')) + '</span>' +
+        '<span class="muted" style="font-size:13px">' + n.kids.length + ' หน้าย่อย · อยู่ใน ' + esc(gPath(n).slice(0, -1).map(function (x) { return x.title; }).join(' › ')) + '</span></span>' + srcBadges(n.inst) + '</a>';
+    }).join('') + '</div>';
+  }
   function wardPage(r) {
     var w = wardById(r.args[1]);
+    if (w && r.args[2] === 'f') {
+      if (G.st !== 'ready') return { title: w.name, html: clinicHead('ward', '', esc(w.name), '') + gWaiting('') };
+      var fn = G.by[r.args[3]], froot = fn;
+      while (froot && !froot.wfile) froot = froot.parent;
+      if (fn && froot && froot.wfile === w.id) return gNodePage(fn, r, { w: w, top: froot });
+      return kbGo('#/kb/ward/' + w.id, r);
+    }
     var crumb = '<a href="#/kb">Medical Soil</a><span class="muted"> › </span>' + (w ? '<a href="#/kb/ward">ตามวอร์ด</a><span class="muted"> › </span><span>' + esc(w.name) + '</span>' : '<span>ตามวอร์ด</span>');
     if (!w) {
       remember({ href: '#/kb/ward', title: 'ตามวอร์ด', crumb: 'Medical Soil', c: '#5C7F3A' });
@@ -1391,7 +1439,7 @@
     remember({ href: '#/kb/ward/' + w.id, title: w.name, crumb: 'Medical Soil › ตามวอร์ด', c: w.c });
     var head = clinicHead('ward', crumb, esc(w.name) + ' <span class="sxh1en">' + esc(w.full) + '</span>', '');
     if (G.st !== 'ready') return { title: w.name, html: head + gWaiting('') };
-    var ns = kbWardNodes(w.id), groups = [], gm = {};
+    var ns = kbWardNodes(w.id).filter(function (n) { return !n.wfile; }), groups = [], gm = {};
     ns.forEach(function (n) { var t = n.topN || n; if (!gm[t.slug]) { gm[t.slug] = { t: t, items: [] }; groups.push(gm[t.slug]); } gm[t.slug].items.push(n); });
     var docHTML = groups.length ? groups.map(function (g) {
       var lk = gLook(g.t);
@@ -1407,7 +1455,7 @@
       (w.mai ? '<a class="chip" style="align-self:flex-start" href="#/diseases?ward=' + encodeURIComponent(w.mai) + '">ดูโรคที่ Discovering ward = ' + esc(w.mai) + ' ใน 1000 MAI →</a>' : '') + '</section>' : '';
     return {
       title: w.name, html: head +
-        '<section class="wrap" style="padding-bottom:36px;display:flex;flex-direction:column;gap:18px"><span class="label">สรุปจากทุก system ที่ติดป้าย ' + esc(w.name) + '</span>' + docHTML +
+        '<section class="wrap" style="padding-bottom:36px;display:flex;flex-direction:column;gap:18px">' + kbWardFilesHTML(w) + '<span class="label">สรุปจากทุก system ที่ติดป้าย ' + esc(w.name) + '</span>' + docHTML +
         (KB_EXCL.filter(function (g) { return g.ward === w.id; }).length ? '<span class="label">นอก system · ' + esc(w.name) + ' Exclusive</span><div class="syss">' + exclCards(KB_EXCL.filter(function (g) { return g.ward === w.id; })) + '</div>' : '') + '</section>' + maiHTML +
         '<section class="wrap" style="padding-bottom:80px"><a class="sheet tool" href="' + esc(C.acUrl) + '" target="_blank" rel="noopener" style="border:1.5px solid var(--ink);max-width:420px"><span class="label">เชื่อมกับ</span><span class="k" style="font-size:18px;font-weight:500">คลังข้อสอบเก่า MDCU ↗</span></a></section>'
     };
@@ -3706,7 +3754,7 @@
       if (n.kind === 'sheets') return;
       var top = n.topN || n, lk = gLook(n);
       L.push({ type: 'content', title: n.title, path: 'Medical Soil › ' + gPath(n).slice(0, -1).map(function (y) { return y.title; }).join(' › '), text: gText(n), c: lk.c,
-        tags: [top.title, lk.th, n.lv === 'clinic' ? 'clinic' : n.lv === 'pre' ? 'preclinic' : ''].concat((n.wards || []).length ? (n.wards || []).map(function (w) { var x = wardById(w); return x ? x.name : w; }) : n.area === 'pre' ? [WARD_NONE.name] : []).filter(Boolean), href: gHref(n), node: n });
+        tags: [top.title, lk.th, n.fcode || '', n.lv === 'clinic' ? 'clinic' : n.lv === 'pre' ? 'preclinic' : ''].concat((n.inst || []).reduce(function (a, k) { return a.concat(k, SRC[k] ? SRC[k][1] : ''); }, [])).concat((n.wards || []).length ? (n.wards || []).map(function (w) { var x = wardById(w); return x ? x.name : w; }) : n.area === 'pre' ? [WARD_NONE.name] : []).filter(Boolean), href: gHref(n), node: n });
     });
     (SYS_SEARCH.d || []).forEach(function (x) {
       var c = syCh(x.c); if (!c) return;

@@ -1,5 +1,5 @@
 /* เลขรุ่นของไฟล์ใน docs/gdoc/ — เพิ่มทุกครั้งที่สร้างฉบับเก็บใหม่ (กันเบราว์เซอร์ใช้ไฟล์เก่า) */
-window.POY_GDOC_V = 3;
+window.POY_GDOC_V = 4;
 
 /* Preclinic + Clinic จาก Google Docs / Sheets
    - main: Doc "โพยหมอ" (แชร์ Anyone with the link → Viewer) — GitHub Actions ดึงมาอัปเดต snap ทุก ~10 นาที
@@ -70,7 +70,11 @@ window.POY_GDOC = {
     'Biostat': { ward: ['comm'] },
     'Medical Ethics': { ward: ['forensic',  'comm'] },
     'Medical Safety': { ward: ['med',  'sx',  'ped',  'obgyn',  'anes'] },
-    'Radiology': { ward: ['radio'] }
+    'Radiology': { ward: ['radio'] },
+    /* L/R จากคลังข้อสอบเก่า SI ward Med (extras si-med) */
+    'L17 Multiple myeloma & related disorders': { lv: 'clinic', ward: ['med'] },
+    'R01 Medically important bacteria': { lv: 'clinic', ward: ['med'] },
+    'R02 Adrenal insufficiency: old and new treatment': { lv: 'clinic', ward: ['med'] }
   },
   /* ชั้นของแท็บ — ใช้เฉพาะตอนฉบับเก็บไม่มีข้อมูลชั้น (ฉบับที่ GitHub Actions ดึงมีชั้นจริงจาก Doc อยู่แล้ว) */
   tree: [
@@ -116,6 +120,8 @@ window.POY_GDOC = {
     'Clinic': ['#5C7F3A', 'Sap green', 'สรุปวอร์ด']
   },
   extras: [
+    /* L/R จากคลังข้อสอบเก่า SI — สร้างด้วย tools/si-import/build.mjs (ไม่แตะ Google Doc) · ที่แขวนอยู่ในไฟล์ (tabs: true) */
+    { kind: 'doc', snap: 'gdoc/si-med.json', badge: 'ศิริราช', inst: ['SI'], from: 'คลังข้อสอบเก่า SI', tabs: true },
     { under: 'MS Anatomy', kind: 'sheet', snap: 'gdoc/msk-anatomy.json', title: 'MSK Anatomy Atlas',
       from: 'Google Sheet MSK Anatomy Atlas · บท Musculoskeletal system ปี 2' },
     { under: 'Histology', kind: 'sheet', snap: 'gdoc/tissue-bio.json', title: 'Tissue Bio Spot Hack',

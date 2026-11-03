@@ -827,7 +827,7 @@ input.field::-webkit-datetime-edit{padding:0}
 .kbtag{font-family:'Kanit',sans-serif;font-weight:500;font-size:13px;display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:999px;border:1px solid var(--rule-3);color:var(--ink);text-decoration:none;background:var(--sheet)}
 a.kbtag::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--w,#5C7F3A)}
 a.kbtag:hover{background:var(--hover);color:var(--ink)}
-.kbtag.lv{background:var(--paper-2);color:var(--ink-2)}
+.kbtag.lv{flex:none;background:var(--paper-2);color:var(--ink-2)}
 .kbwg{display:flex;flex-direction:column;gap:10px}
 .kbwg .sxgh h3{flex:0 1 auto}
 .sxsecs{display:flex;flex-direction:column;gap:14px}
@@ -987,3 +987,51 @@ a.spo{text-decoration:none}
 .sx .sb.ai{border-color:#C9BEE6}.sx .sb.ai::before{content:'เพิ่มโดย Claude';color:#4F3F80}
 .sx .hw,.fbox .hw{color:#2D5DA8;font-style:italic}
 @media (max-width:640px){.sxsec>summary,.sxbox>summary{flex-wrap:wrap;row-gap:4px}.sxsec>summary .bks,.sxbox>summary .bks{order:5;max-width:none;flex-basis:100%;justify-content:flex-start}.sxsec>summary .bks{padding-left:46px}}
+
+/* ===== L/R จากคลังข้อสอบเก่า SI (extras si-med) · แบ่งเป็นกล่องตามเรื่อง กระจายหลายคอลัมน์ ===== */
+.wfiles{display:flex;flex-direction:column;gap:8px}
+.wfile{display:flex;align-items:center;gap:12px;padding:12px 14px;text-decoration:none;color:inherit}
+.wfile:hover{background:var(--hover)}
+.wfcode{flex:none;font-family:'Kanit',sans-serif;font-weight:600;font-size:15px;color:#fff;background:#3C4A7A;border-radius:5px;padding:2px 9px}
+.wfmain{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;overflow-wrap:anywhere}
+.gdoc .sim{--si-red:#B3261E;--si-bl:#3C4A7A;column-width:330px;column-gap:14px;font-size:15.5px;line-height:1.55}
+.gdoc .sim p,.gdoc .sim li{white-space:normal}
+.sim>*{margin:0 0 14px}
+.sim .si-intro,.sim .si-iointro{column-span:all;background:var(--moss-bg);border-left:5px solid var(--moss);border-radius:4px;padding:10px 14px;font-size:16px}
+.sim .si-legend{column-span:all;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted);border:1px dashed var(--rule-3);border-radius:6px;padding:6px 10px}
+.sim .si-box{break-inside:avoid;background:var(--sheet-hi);border:1px solid var(--rule-2);border-radius:6px;padding:12px 14px 10px;box-shadow:0 1px 0 rgba(0,0,0,.03);overflow-x:auto}
+.sim .si-box.si-wide{column-span:all}
+.sim .si-box>*+*{margin-top:6px}
+.sim .si-box h3{font-size:17px;font-weight:600;line-height:1.3;color:var(--si-bl);display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:0 0 4px;scroll-margin-top:90px}
+.sim .si-box h4{font-size:15px;font-weight:500;color:var(--moss-dk);margin-top:8px}
+.sim .si-ref{font-family:'Kanit',sans-serif;font-weight:400;font-size:11px;color:#fff;background:#6B7A86;border-radius:5px;padding:0 6px;margin-left:auto;white-space:nowrap}
+.sim .si-imp,.sim .si-r{color:var(--si-red);font-weight:700}
+.sim .si-hw{color:#6a4a9c;font-style:italic}
+.sim .si-warn,.sim .si-clash{border-radius:4px;padding:3px 7px;font-size:14.5px}
+.sim .si-warn{background:#FBF1D9;border-left:3px solid #B26A00}
+.sim .si-clash{background:#FBECE9;border-left:3px solid var(--si-red)}
+.sim .si-chip{display:inline-block;font-family:'Kanit',sans-serif;font-size:12px;font-weight:500;padding:0 6px;border-radius:8px;border:1px solid currentColor;line-height:1.4;white-space:nowrap}
+.sim .si-chip.si-d{color:#8A5200;background:var(--sheet)}
+.sim .si-chip.si-r{font-weight:500}
+.sim .si-chip.si-x{color:#fff;background:var(--si-red);border-color:var(--si-red)}
+.sim ul,.sim ol{padding-left:20px;margin:4px 0}.sim li{margin:2px 0}
+.sim table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.4;margin:6px 0}
+.sim th{font-family:'Kanit',sans-serif;font-weight:500;background:var(--si-bl);color:#fff;padding:4px 7px;text-align:left;font-size:13.5px}
+.sim td{border:1px solid var(--rule-2);padding:4px 7px;vertical-align:top}
+.sim tr:nth-child(even) td{background:#F6F2E8}
+.sim .si-flow{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:6px 0}
+.sim .si-vflow{display:flex;flex-direction:column;align-items:stretch;gap:2px;margin:6px 0}
+.sim .si-vflow .si-ar{text-align:center;line-height:1}
+.sim .si-n{border:1px solid #8A96A3;background:#EEF1F4;border-radius:5px;padding:2px 7px;font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.sim .si-n.si-r{border-color:var(--si-red);background:#FBECE9}
+.sim .si-ar{color:#4A5560;font-weight:700}
+.sim .si-mn{border:1.5px dashed var(--si-red);background:#FCF1EE;border-radius:6px;padding:6px 9px;font-size:14.5px}
+.sim .si-mn .si-k{font-family:'Kanit',sans-serif;font-weight:600;color:var(--si-red)}
+.sim .si-fig img{display:block;max-width:100%;height:auto;border:1px solid var(--rule-2);border-radius:4px;background:#fff;margin:6px 0}
+.sim .si-cap{font-size:13px;color:var(--muted)}
+.sim .si-cite{font-size:12px;line-height:0}
+.sim .si-refs{column-span:all;border:1px solid var(--rule-2);border-radius:6px;background:var(--sheet);padding:8px 12px}
+.sim .si-refs>summary{cursor:pointer;font-family:'Kanit',sans-serif;font-weight:500;color:var(--si-bl)}
+.sim .si-refs ol{margin-top:6px;font-size:14px}
+.sim .si-hit{background:#F6E7A6;transition:background 1.6s}
+@media (max-width:760px){.gdoc .sim{column-width:auto;columns:1}.wfile{flex-wrap:wrap}}

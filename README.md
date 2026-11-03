@@ -26,6 +26,12 @@
 - **กฎอัปไฟล์:** ไม่ถามว่า pre-clinic หรือ clinic — ถามว่าเรื่องนี้ system อะไร → ใส่แท็บ system นั้น แล้วติดป้ายวอร์ดถ้ามาจากวอร์ด · ไฟล์ที่ครอบหลาย system (สรุปทั้งวอร์ด) → ใต้แท็บ "Clinic"
 - ลิงก์เก่า `#/preclinic/…` และ `#/clinic/…` ส่งต่อมาที่ `#/kb/…` เอง
 
+## L/R จากคลังข้อสอบเก่า SI → Medical Soil + หน้าวอร์ด
+- `node tools/si-import/build.mjs <ac-mdcu checkout>` ดึง Round I/O (`si/<dir>/io.js`) + รูป → `docs/gdoc/si-<ward>.json`, `docs/gdoc/img/si-<ward>/` (ไม่แตะ Google Doc, ไม่แก้เว็บ SI) แล้วเพิ่ม `POY_GDOC_V`
+- เพิ่มบทใหม่: เพิ่มบรรทัดใน `FILES` ของสคริปต์ (`under` = แท็บ system ที่จะแขวน) + ป้ายวอร์ดใน `tags` ของ `data/gdoc.js` (ชื่อ `<code> <title>`)
+- เนื้อหาชุดเดียว เปิดได้ 2 ทาง: `#/kb/si-<code>` (ตาม system) และ `#/kb/ward/<ward>/f/si-<code>` (กล่อง Lecture & Resource ในหน้าวอร์ด เรียง L → R → T → N) · `data-ann` เดียวกัน โน้ตและที่แก้จึงตรงกัน
+- คัดลอกทางเดียว: ที่แก้ใน Round I/O ของ SI ต้องรันสคริปต์ใหม่ · ไฟล์ extras ไม่มี `id` จึงไม่เขียนกลับไฟล์ Google
+
 ## โน้ต + แก้/เพิ่ม/ลบ (ทุกหน้าที่เป็นเนื้อหา)
 - กล่องเนื้อหาที่มี `data-ann="<key>"`: แท็บจาก Doc/ชีต `g:<แท็บ>` · บท Symptomatology `y:<บท>` · โรค 1000 MAI `d:<id>` (ทุกช่อง `data-col` = คอลัมน์ในชีต ช่องว่างโผล่ตอนแก้) · สรุป NL `n:<id>` · หน้าการสอบ NL `x:<id>` · Approach `c:<id>` · บอร์ด `b:<id>` (`data-ann-mode="note"` = จดโน้ตอย่างเดียว) · Random Topic Summary `t:<หัวข้อ>:<หน้า>` (`data-ann-mode="box"` = เนื้อหาเป็นภาพ → โน้ตทั้งกล่อง ปุ่ม "+ โน้ต")
 - **โน้ต = ของแต่ละคน**: localStorage `poy-ann:<key>` + Firestore `poymor/<uid>/ann/<key>` (เข้าสู่ระบบแล้วดึงโน้ตทุกหน้ามาให้ค้นได้)
