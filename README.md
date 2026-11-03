@@ -202,6 +202,7 @@ match /poymor_shared/{topic}/items/{id} {
   - **ตำราศิริราช** = ตำราอายุรศาสตร์ อาการวิทยา ศิริราช พิมพ์ครั้งที่ 3 (2559) 44 บท — แท็กสถาบัน "ศิริราช"
   - **เล่มเหลือง** = Differential diagnostic algorithm in internal medicine (ณัฐพล ปัทมินทร์) + ลายมือ/หน้าแทรกของเจ้าของเล่ม — แท็กสถาบัน **"จุฬาฯ + ศิริราช"** (`src both`, approach จากทั้งสองสถาบัน — ไม่ใช่ของจุฬาฯ อย่างเดียว)
   - **Blackbook** = Blackbook: Approaches to Medical Presentations, U of Calgary, 15th ed (2022, CC BY-NC 4.0) — แท็กสถาบัน **"International"** (`src intl`) · ผู้ใช้สั่ง 1 พ.ย. 2026 ทำเหมือนเล่มเหลือง · หมวด Pediatric = บทใหม่ `ped-*` กลุ่ม ped (ไม่รวมกับบทผู้ใหญ่) · ต้นทาง `tools/symp/bb/bb-NNN.json` (NNN = หน้าหนังสือ, `target` = id บท) · กติกา `tools/symp/bb-tools/BRIEF.md`
+  - **เอกสารคำสอน** (`tn`) = เอกสารสอนของอาจารย์ทีละเรื่อง — ตอนนี้ Chest pain ของ อ. พญ. ภัณฑิลา วาณิชย์การ (สำหรับนักศึกษาแพทย์ปีที่ 4) ป้าย "เอกสารคำสอน อ.พญ.ภัณฑิลา" · ต้นทาง `tools/symp/tn/tn-<เรื่อง>.json` + `tn/img/` รูปแบบเดียวกับเล่มเหลือง (+ `ref`) · ยังไม่ติดแท็กสถาบัน
   - ส่วนที่ Claude เขียนเพิ่ม (ตอนนี้: approach ปวดท้องเป็นระบบ anatomy + etiology ในบทปวดท้อง) ป้าย "เพิ่มโดย Claude"
 - ต้นทางทั้งหมดอยู่ใน repo: `tools/symp/si/` (ศิริราชฉบับเดิม), `tools/symp/yb/yb-<key>.json` + `yb/img/` (หนึ่งไฟล์ต่อหัวข้อเล่มเหลือง: ระบุ `target` บทศิริราช + `ops` append/sub/sec ว่าวางตรงไหน หรือ `target: null` = บทใหม่), `tools/symp/ai/` (ส่วนที่ Claude เพิ่ม)
 - สร้างเว็บ: `python3 tools/symp/merge_yb.py /home/claude/symp/out && python3 tools/symp/build.py /home/claude/symp/out`

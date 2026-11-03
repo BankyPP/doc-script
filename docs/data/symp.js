@@ -1,7 +1,7 @@
 /* Clinic › Symptomatology & Approach — สร้างอัตโนมัติด้วย tools/symp/build.py (อย่าแก้ด้วยมือ)
    ตำราศิริราช + เล่มเหลือง (รวมด้วย tools/symp/merge_yb.py) · เนื้อหาแต่ละบทอยู่ใน docs/symp/chNN.json · รูปใน docs/symp/img/ */
 window.POY_SYMP = {
- "v": 1793473920,
+ "v": 1793681647,
  "book": {
   "title": "ตำราอายุรศาสตร์ อาการวิทยา",
   "by": "ภาควิชาอายุรศาสตร์ คณะแพทยศาสตร์ศิริราชพยาบาล",
@@ -26,6 +26,10 @@ window.POY_SYMP = {
    "by": "Cumming School of Medicine, University of Calgary",
    "ed": "Fifteenth Edition (2022) · CC BY-NC 4.0",
    "inst": "intl"
+  },
+  "tn": {
+   "title": "Chest pain (เอกสารสอนนักศึกษาแพทย์ปีที่ 4)",
+   "by": "อ. พญ. ภัณฑิลา วาณิชย์การ"
   }
  },
  "total": 246,
@@ -825,13 +829,20 @@ window.POY_SYMP = {
       "o": 13,
       "p": "51–53"
      }
+    ],
+    "tn": [
+     {
+      "k": "Chest pain",
+      "o": 0,
+      "p": "1–14"
+     }
     ]
    },
    "file": "ch13.json",
-   "n": 46,
-   "f": 10,
-   "i": 7,
-   "kb": 93
+   "n": 48,
+   "f": 14,
+   "i": 13,
+   "kb": 140
   },
   {
    "no": 14,

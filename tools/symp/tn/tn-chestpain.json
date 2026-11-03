@@ -1,0 +1,393 @@
+{
+ "key": "chestpain",
+ "book": "tn",
+ "en": "Chest pain",
+ "th": "เจ็บหน้าอก",
+ "ref": "Chest pain",
+ "pdf": "1–14",
+ "target": 13,
+ "ops": [
+  {
+   "op": "append",
+   "sec": "overview",
+   "html": "<ul>\n<li>Chest pain เป็นอาการที่<b>พบบ่อยมาก</b> บางครั้งอาจบ่งชี้โรคที่ร้ายแรงถึงชีวิต (life-threatening diseases) เช่น <b>acute myocardial infarction, acute aortic dissection, acute pulmonary embolism</b> ซึ่งต้องการการวินิจฉัยและการรักษาเบื้องต้นอย่างฉับพลัน เพื่อที่จะรักษาชีวิตคนไข้ได้</li>\n<li>บางครั้งอาจบ่งชี้โรคที่ไม่ร้ายแรง เช่น costochondritis หรือ esophageal spasm</li>\n<li>สิ่งสำคัญที่สุดคือ<b>การซักประวัติ (history taking)</b> โดยแพทย์ต้องคำนึงถึงโรคร้ายแรง และต้องวินิจฉัยแยกโรคที่มีภาวะเร่งด่วนจุกเฉินออกไปก่อนอย่างทันท่วงที</li>\n</ul>\n<p><b>เป้าหมายของบทความนี้</b> ผู้อ่านเข้าใจและสามารถ</p>\n<ol><li>ซักประวัติและตรวจร่างกายผู้ป่วยที่มาตรวจด้วยอาการ chest pain</li><li>วินิจฉัยแยกโรคได้อย่างถูกต้อง โดยทำการส่งตรวจค้นเพิ่มเติมอย่างเหมาะสม ทันท่วงที</li><li>ให้การรักษาเบื้องต้นได้อย่างถูกต้องในเวลาที่เหมาะสม</li></ol>"
+  },
+  {
+   "op": "append",
+   "sec": "cause",
+   "html": "<h5>Diseases that present with chest pain</h5>\n<p><b>A. Life threatening diseases that require emergent recognition</b></p>\n<ol><li>Acute myocardial infarction (MI)</li><li>Acute aortic dissection</li><li>Acute pulmonary embolism (PE)</li><li>Acute pneumothorax</li></ol>\n<p><b>B. Other diseases with chest pain</b></p>\n<ol><li>Cardiovascular system: (a) coronary artery disease (b) pericarditis</li><li>Musculoskeletal diseases</li><li>Pulmonary diseases</li><li>Gastroenterology diseases</li></ol>"
+  },
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "tn-cp-approach",
+   "h": "Summary: Approach to chest pain patients",
+   "html": "<div class=\"flow\" data-flow=\"tncpa\"></div>\n<p><b>Initial Assessment</b> การตรวจเริ่มแรกนั้นต้องถามตัวเอง 2 คำถาม</p>\n<ol><li><b>Is the patient stable?</b></li><li><b>Is this a life-threatening disease?</b></li></ol>\n<ul>\n<li>ควรตรวจสัญญาณชีพว่า stable หรืออยู่ในเกณฑ์ปกติหรือไม่</li>\n<li>ถ้าความดันโลหิตต่ำ หรือ oxygen saturation ต่ำ หรือผู้ป่วยไม่รู้สึกตัวแล้ว → ต้องรีบ <b>resuscitate</b> ผู้ป่วยโดยเร็ว เพื่อป้องกัน multi-organ failure</li>\n<li>นอกจากนี้ต้องถามตัวเองว่าผู้ป่วยกำลังเป็นโรคร้ายแรง จุกเฉินชนิดใด และพยายามทำการวินิจฉัยและรักษาเบื้องต้นตามที่ได้กล่าวไปแล้วอย่างทันท่วงที</li>\n<li>ถ้าผู้ป่วยมีสัญญาณชีพ stable ก็มีเวลาที่จะทำการตรวจตามปกติ โดยเริ่มจากการซักประวัติ และตรวจร่างกาย ให้การวินิจฉัยแยกโรค ส่งตรวจทางห้องปฏิบัติการตามความเหมาะสม และให้การรักษาเบื้องต้นอย่างถูกต้อง</li>\n</ul>"
+  },
+  {
+   "op": "sec",
+   "after": "cause",
+   "id": "tn-cp-table",
+   "h": "ตารางสรุปคุณลักษณะและอาการแสดงของโรคที่ทำให้มีอาการ chest pain",
+   "html": "<div class=\"tbl\"><table class=\"wide\"><thead><tr><th>Diseases</th><th>Characters</th><th>Duration</th><th>Precipitating Factors</th><th>Alleviating Factors</th><th>Exam / Lab</th></tr></thead><tbody>\n<tr><td><b>Angina</b></td><td><ul><li>Substernal chest discomfort occurs with exertion</li></ul></td><td>2 ~ 10 min.</td><td>exertion, emotional stress</td><td><ul><li>NTG &lt; 5 min</li><li>Rest</li></ul></td><td><ul><li>S<sub>3</sub> S<sub>4</sub></li><li>EKG</li><li>exercise stress test</li></ul></td></tr>\n<tr><td><b>Acute MI</b></td><td><ul><li>Severe crushing substernal chest discomfort at rest</li><li>Patient in distress</li></ul></td><td>&gt; 30 min</td><td>none</td><td></td><td><ul><li>S<sub>4</sub>, MR murmur</li><li>CHF</li><li>EKG</li><li>troponin</li></ul></td></tr>\n<tr><td><b>Gastro-esophageal reflux disease (GERD)</b></td><td><ul><li>Burning epigastric discomfort</li><li>Sour taste in mouth</li></ul></td><td></td><td><ul><li>Often nocturnal and when recumbent</li><li>Related to meals</li></ul></td><td><ul><li>upright position</li><li>antacids nitroglycerin</li></ul></td><td><ul><li>Ba. Swallow</li><li>Endoscopy</li><li>Trial of PPI/H2 blocker</li></ul></td></tr>\n<tr><td><b>Acute aortic dissection</b></td><td><ul><li>Sharp, tearing pain in anterior chest wall referred to back</li><li>loss of arterial pulse</li><li>Acute aortic regurgitation</li></ul></td><td></td><td><ul><li>Hypertension</li><li>Marfan syndrome, Ehlers-Danlos syndrome</li></ul></td><td></td><td><ul><li>Severe hypertension</li><li>AR murmur</li><li>Chest X-ray (widening of mediastinum)</li><li>EKG</li><li>CTA aorta</li></ul></td></tr>\n<tr><td><b>Pulmonary embolism</b></td><td><ul><li>Pain may be absent or may have pleuritic chest pain</li><li>Sudden dyspnea</li></ul></td><td></td><td><ul><li>DVT</li></ul></td><td>-</td><td><ul><li>Hypoxemia</li><li>Pleural friction rub</li><li>EKG</li><li>Chest X-Ray</li><li>ABG</li><li>CT Pulmonary angiogram</li></ul></td></tr>\n<tr><td><b>Acute pericarditis</b></td><td><ul><li>Pleuritic chest pain</li></ul></td><td></td><td>-</td><td><ul><li>May be relieved by sitting up and leaning forward</li></ul></td><td><ul><li>Pericardial friction rub</li><li>EKG.</li><li>may have cardiac tamponade</li></ul></td></tr>\n</tbody></table></div>\n<div class=\"warn\">ผู้ป่วยแต่ละคนนั้นไม่เหมือนกัน อาจมีประวัติหรืออาการแสดงแตกต่างจากตารางสรุปนี้ได้ จึงควรใช้วิจารณญาณในการตรวจคนไข้ และอย่าลืมนึกถึงโรคร้ายแรงที่จะต้องได้รับการรักษาแบบภาวะจุกเฉิน</div>"
+  },
+  {
+   "op": "append",
+   "sec": "cvs-mi",
+   "html": "<h5>Acute myocardial infarction (MI) — life threatening</h5>\n<p>เป็นภาวะจุกเฉินที่ต้องสามารถวินิจฉัยได้ทันท่วงที มิฉะนั้นจะทำให้มีการตายของกล้ามเนื้อหัวใจ → ภาวะหัวใจล้มเหลว (heart failure) หรือเสียชีวิตเฉียบพลัน (sudden cardiac death) จาก ventricular tachycardia/ventricular fibrillation</p>\n<p><b>ลักษณะของ chest pain</b></p>\n<ul>\n<li>มักจะไม่ใช่ความเจ็บ (feels chest discomfort, not pain) — ผู้ป่วยมักอธิบายว่า แน่น หนัก เหมือนมีช้างมานั่งทับหน้าอก หรืออึดอัด หรือจุก หรือแสบ</li>\n<li>การเริ่มต้นอาจจะสัมพันธ์กับการออกแรง (exertion)</li>\n<li>ระยะเวลามักเป็นนานมากกว่า 20-30 นาที</li>\n<li>อาการแน่นหน้าอกมักจะมีร้าวไปที่ขากรรไกร และแขนซ้าย</li>\n<li>อย่างไรก็ตาม คนไข้อาจไม่มีอาการที่ typical ดังที่กล่าวนี้เสมอไป บางคนอาจ burning mid epigastric pain</li>\n</ul>\n<p><b>คนไข้ที่มีความเสี่ยงสูง</b></p>\n<ul>\n<li>เพศชาย อายุมากกว่า 45 ปี หรือเพศหญิงหลัง menopause หรืออายุมากกว่า 55 ปี</li>\n<li>มีครอบครัวที่มี premature myocardial infarction (ญาติชายอายุน้อยกว่า 55 ปี หญิงอายุน้อยกว่า 65 ปี)</li>\n<li>มีโรคความดันโลหิตสูง เบาหวาน ไขมันในเลือดสูง สูบบุหรี่</li>\n<li>หรือเคยได้รับการวินิจฉัยว่าเป็นโรคหัวใจขาดเลือดหรือเส้นเลือดหัวใจตีบ (coronary artery disease) มาก่อน</li>\n</ul>\n<p><b>การตรวจร่างกาย</b></p>\n<ul>\n<li>ควรทำการตรวจระบบหัวใจ และการหายใจอย่างละเอียด เพื่อตรวจว่ามีภาวะ shock (severe hypotension) หรือ hypoxemia หรือไม่</li>\n<li>ผลตรวจหัวใจอาจพบว่า มีหัวใจโต มี irregular heart rate มี S3 หรือ S4 gallop หรือมีภาวะน้ำท่วมปอด</li>\n<li>ผลการตรวจร่างกายจะทำให้การตัดสินใจให้การรักษาต่างกันไป</li>\n</ul>\n<p><b>การวินิจฉัยและการรักษาเบื้องต้น</b></p>\n<div class=\"flow\" data-flow=\"tncpb\"></div>\n<ul>\n<li>เริ่มด้วยการทำ <b>12-lead EKG (electrocardiogram) ทันที</b> เพื่อแยกภาวะ (rule out) ST-elevation myocardial infarction (STEMI) (รูปที่ 1) ซึ่งหมายถึงเส้นเลือดเลี้ยงหัวใจอุดตัน 100% และต้องได้รับการรักษาอย่างโดยเร็ว เป็นภาวะจุกเฉิน ต้องติดต่อทีมแพทย์หัวใจ (cardiology) ทันทีเพื่อทำการเปิดเส้นเลือดหัวใจ (revascularization) ด้วยการทำหัตถการฉีดสีสวนเส้นเลือดหัวใจ (cardiac catheterization) หรือให้ยา fibrinolytics</li>\n<li>เมื่อแยกภาวะ STEMI ออกแล้ว ควรตรวจทำ serial EKGs และเจาะ serial cardiac biomarkers (CK-MB, Troponin)</li>\n<li>แพทย์ควรให้การรักษาเบื้องต้นด้วยยา aspirin และคอยเฝ้าดูความดันโลหิต ชีพจร และ oxygen saturation อยู่ตลอดอย่างใกล้ชิด</li>\n<li>ถ้าพบว่ามี EKG เปลี่ยนไปจากเดิม เช่น ST depression (รูปที่ 2) หรือค่า cardiac biomarkers positive แล้วควรปรึกษา cardiologist ทันที</li>\n</ul><figure><img src=\"symp/img/tn-cp-f1.webp\" alt=\"EKG 12 lead แสดง ST-segment elevation MI\"><figcaption>รูปที่ 1: EKG: ST-segment elevation MI</figcaption></figure><figure><img src=\"symp/img/tn-cp-f2.webp\" alt=\"EKG 12 lead แสดง ST-segment depression\"><figcaption>รูปที่ 2: EKG ST-segment depression</figcaption></figure>\n<h5>Coronary artery disease — angina</h5>\n<p>Chest pain ที่เกิดจาก coronary artery disease จะมีชื่อเรียกว่า angina</p>\n<p><b>Typical angina</b> หมายถึง</p>\n<ol><li>มีอาการ chest pain</li><li>chest pain จะเป็นมากขึ้นเมื่อออกแรง (on exertion)</li><li>chest pain จะทุเลาลงเมื่อหยุดออกแรง หรืออม nitroglycerin ใต้ลิ้น</li></ol>\n<p>หลังจากนั้นจะต้องแยกภาวะ unstable angina ออกจาก stable angina เพราะการรักษาจะต่างกัน</p>\n<ul>\n<li><b>Unstable angina</b> ควรได้รับการรักษาเร่งด่วนเหมือน acute myocardial infarction (ตามที่เคยกล่าวไว้ในข้อ A 1)</li>\n<li><b>Stable angina</b> นิยาม: มีอาการ chest pain เมื่อออกแรงจำนวนหนึ่ง ซึ่งจะคงที่ ไม่เปลี่ยนแปลง และมักหายเองหลังจากพัก หรือหลังจากอม nitroglycerin เพียง 1 tablet — เช่น ผู้ป่วยให้ข้อมูลว่า จะมีอาการ chest pain ก็ต่อเมื่อขึ้นบันไดถึงชั้นที่ 3 และอาการจะหายเองเมื่อหยุดพัก ภายใน 3 นาที</li>\n<li>เมื่อไรที่มีการเปลี่ยนแปลงไปจากเดิม เช่น เกิด chest pain หลังขึ้นบันไดได้เพียงแค่ 2 ชั้น หรือต้องพักนานมากขึ้น เกิน 3 นาทีก่อนที่ chest pain จะหาย → การวินิจฉัยจะเปลี่ยนจาก stable angina เป็น unstable angina โดยทันที</li>\n</ul>\n<p><b>พยาธิกำเนิด</b></p>\n<ul>\n<li><b>Stable angina:</b> chest pain เกิดจาก myocardial oxygen demand ที่มากกว่า myocardial oxygen supply เพราะมีเส้นเลือดไปเลี้ยงหัวใจตีบจาก atherosclerotic plaque ซึ่งมี fibrous cap ครอบอยู่ ทำให้การตีบนั้นคงที่ · เมื่อมีการออกแรง myocardial oxygen demand จะเพิ่มขึ้น แต่ปริมาณเลือดไปเลี้ยงหัวใจจะคงเดิมจากการตีบของเส้นเลือด</li>\n<li><b>Atypical chest pain:</b> คนไข้ส่วนหนึ่งที่มีอาการของการที่กล้ามเนื้อหัวใจขาดเลือดที่ไม่ typical ตามที่ได้กล่าวมานั้น ทำให้การวินิจฉัยยากมากขึ้น อาจต้องใช้ข้อมูลจากการตรวจร่างกายหรือการตรวจค้นเพิ่มเติมอย่างอื่น เช่น EKG หรือ exercise stress test</li>\n<li><b>Acute coronary syndrome:</b> ถ้ามีการเปลี่ยนแปลงของ atherosclerotic plaque เช่น plaque แตก (plaque rupture) หรือซึมรั่ว (plaque erosion) จะกระตุ้นโมเลกุลต่าง ๆ เช่น IL-1, IL-6, ICAM-1, VCAM-1, myeloperoxidase, CD40 ligand → inflammation และ thrombosis (รูปที่ 6) → เส้นเลือดหัวใจตีบมากขึ้น และ myocardial oxygen supply ลดลง → ปริมาณการออกแรงทำได้น้อยลง · การเปลี่ยนแปลงนี้เป็นพยาธิสภาพของ acute coronary syndrome ซึ่งรวมถึง unstable angina, non-ST elevation myocardial infarction (NSTEMI) และ ST elevation myocardial infarction (STEMI)</li>\n</ul><figure><img src=\"symp/img/tn-cp-f6.webp\" alt=\"แผนภาพ pathogenesis of atherosclerosis จาก healthy vessel ถึง ruptured plaque and thrombosis\"><figcaption>รูปที่ 6: Pathogenesis of atherosclerosis</figcaption></figure>\n<p><b>การรักษาผู้ป่วย coronary artery disease ที่มี stable angina</b> เน้นการป้องกันไม่ให้เกิดภาวะ unstable angina หรือ acute coronary syndrome พร้อมกับการเข้าใจความเสี่ยงของผู้ป่วย (risk stratification) เพื่อให้การรักษาที่สามารถลดความเสี่ยงได้</p>\n<p><b>การประเมินความเสี่ยง ควรถามถึงข้อมูลต่อไปนี้</b></p>\n<ol><li>Cigarette smoking</li><li>Hypertension</li><li>HDL &lt; 40</li><li>Family history of premature CAD (ญาติชายที่เคยมี MI เมื่ออายุน้อยกว่า 55 ปี หรือหญิงอายุน้อยกว่า 65 ปี)</li><li>Age ชายอายุมากกว่า 45 ปี หรือหญิงอายุมากกว่า 55 ปี</li><li>Diabetes</li></ol>\n<p><b>ดังนั้น</b></p>\n<ul>\n<li>แนะนำให้ผู้ป่วยเลิกสูบบุหรี่ (ถ้าผู้ป่วยสูบบุหรี่อยู่)</li>\n<li>รักษาโรคความดันโลหิตสูงและโรคเบาหวาน</li>\n<li>ให้ยาประเภท statin เพื่อลด LDL และทำให้ plaque มีความ stable ไม่ rupture</li>\n<li>แนะนำให้ออกกำลังกายอย่างสม่ำเสมอ ทานอาหารที่มีไขมันต่ำ มีคุณภาพสูง</li>\n<li>ให้ยา aspirin เพื่อป้องกันการเกิด acute coronary syndrome</li>\n</ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cvs-peri",
+   "html": "<ul>\n<li>เยื่อหุ้มหัวใจ (pericardium) ทำให้เกิด chest pain ได้ คุณลักษณะจะเป็น <b>sharp pain และ pleuritic pain</b> จะเจ็บน้อยลงเมื่อโน้มตัวไปข้างหน้า แต่จะเจ็บมากขึ้นเมื่อนอนราบ</li>\n<li>สาเหตุที่พบบ่อยที่สุดคือ viral infection ตามด้วย post myocardial infarction → ควรซักประวัติเกี่ยวกับอาการ prodrome ที่เกี่ยวข้องกับ viral infection ด้วยเสมอ</li>\n<li>การวินิจฉัยส่วนใหญ่จะใช้ประวัติ · ตรวจร่างกายบางครั้งอาจพบเสียง pericardial rub · EKG มักพบ diffuse ST-segment elevation</li>\n<li>ควรทำ echocardiogram ในกรณีที่ผู้ป่วยมี sign ของ cardiac tamponade เช่น hypotension, elevated neck vein, distant heart sounds หรือมี pulsus paradoxus</li>\n<li><b>การรักษา:</b> NSAIDs, high dose aspirin หรือ steroids — ควรระวังการให้ steroids เพราะมี side effects มาก · การให้ colchicine ร่วมด้วยจะป้องกันการเกิด pericarditis ในอนาคตอีก</li>\n</ul>"
+  },
+  {
+   "op": "append",
+   "sec": "cvs-ad",
+   "html": "<h5>Acute aortic dissection — life threatening</h5>\n<ul>\n<li>เป็นโรคที่พบน้อย (2-3 ราย ใน 100,000 คน ต่อปี) แต่ถือเป็นภาวะจุกเฉินเพราะมีความเสี่ยงตายสูง (mortality rate) ประมาณ 40% จึงต้องคำนึงถึงภาวะนี้เสมอ แม้ว่าจะพบน้อยก็ตาม</li>\n<li><b>ลักษณะ chest pain:</b> มักเป็นการเจ็บที่เกิดขึ้นเฉียบพลัน และรุนแรง รู้สึกเหมือนหน้าอกถูกฉีกขาด (tearing pain) หรือถูกแทง (stabbing pain) และอาจมีการร้าวไปด้านหลัง · บางครั้งอาจไม่มีอาการดังกล่าว อาจรู้สึกแค่ไม่สบาย หรือเหมือนจะเป็นลมเท่านั้น</li>\n<li>ผู้ป่วยมักจะมีโรคความดันโลหิตสูง หรือมีโรคที่เกี่ยวกับ connective tissue เช่น Marfan syndrome และ Ehlers-Danlos syndrome</li>\n<li><b>ตรวจร่างกาย:</b> จะไม่พบ S3 gallop หรืออาการแสดง heart failure แต่มักพบความดันโลหิตที่สูงมาก (SBP &gt;180) ในขณะที่มาพบแพทย์ และอาจมีชีพจรไม่เท่ากัน 2 ข้าง</li>\n<li><b>Chest x-ray:</b> อาจพบว่า mediastinum กว้างกว่าปกติ (รูปที่ 3) แต่ไม่ sensitive หรือ specific พอที่จะทำการวินิจฉัยได้</li>\n<li><b>ตรวจค้นเพิ่มเติม:</b> CT (computer tomography), MRI (magnetic resonance imaging) หรือ echocardiogram (รูปที่ 4) — จำเป็นต้องทำอย่างเร่งด่วน ห้องฉุกเฉินส่วนใหญ่จะเลือกทำ CT scan เพราะใช้เวลาทำเร็ว และมีเครื่องและบุคลากรพร้อม (readily available)</li>\n<li>ในขณะเดียวกันแพทย์ต้องเริ่มรักษาความดันโลหิตที่สูงมาก ควรใช้ยาประเภท IV (intravenous) และยาประเภท <b>beta-blocker</b> จะเป็นยาที่เหมาะสม (drug of choice) ใน aortic dissection</li>\n<li>ถ้าการฉีกขาดของ aorta (aortic flap) เกิดขึ้นบริเวณ <b>ascending aorta</b> → จำเป็นต้องปรึกษาแพทย์ผ่าตัดหัวใจและทรวงอก (cardiothoracic surgery) โดยด่วนเพื่อเตรียมคนไข้ผ่าตัดรักษาอย่างทันท่วงที</li>\n<li>ถ้า aortic flap เกิดขึ้นบริเวณ <b>descending aorta</b> → ควร admit คนไข้ที่ CCU เพื่อรักษาความดันโลหิต และคอยเฝ้าดูอาการอย่างใกล้ชิด</li>\n</ul>\n<div class=\"flow\" data-flow=\"tncpc\"></div><figure><img src=\"symp/img/tn-cp-f3.webp\" alt=\"Chest X-ray แสดง mediastinum กว้าง\"><figcaption>รูปที่ 3: Chest X-Ray with widen mediastinum</figcaption></figure><figure><img src=\"symp/img/tn-cp-f4.webp\" alt=\"CT แนว sagittal แสดง aortic dissection\"><figcaption>รูปที่ 4: CT with aortic dissection</figcaption></figure>"
+  },
+  {
+   "op": "append",
+   "sec": "resp-pe",
+   "html": "<h5>Acute pulmonary embolism (PE) — life threatening</h5>\n<ul>\n<li>มักจะพบว่ามีอาการเกิดขึ้นอย่างเฉียบพลัน ผู้ป่วยมักอธิบายว่ามี <b>pleuritic chest pain</b> (เจ็บหน้าอกมากขึ้นเมื่อสูดหายใจเข้าลึก) พร้อมด้วยอาการเหนื่อย (dyspnea)</li>\n<li>ถ้ามี massive PE มักทำให้เกิด persistent chest pain (เจ็บที่เกิดตลอดเวลา) และอาจทำให้เป็นลม (syncope) ได้</li>\n<li>เป็นภาวะจุกเฉินเพราะผู้ป่วยอาจเสียชีวิตจาก RV infarct/RV failure ได้</li>\n<li><b>ผู้ป่วยที่มีความเสี่ยง:</b> hip/leg fracture, hip/knee replacement surgery, malignancy, hormone replacement therapy, previous venous thrombo-embolism (VTE) episode</li>\n<li><b>การรักษาเบื้องต้น:</b> รักษาระดับ oxygen และความดันโลหิตให้อยู่ในระดับปกติ</li>\n<li>ถ้ามีอาการ shock หรือความดันต่ำ ประกอบด้วย RV dysfunction (ตรวจโดย echocardiogram) หรือ myocardial injury (elevated CK/troponin/BNP) → ความเสี่ยงที่ทำให้ผู้ป่วยเสียชีวิตอาจมากถึงกว่า 15% และควรรักษาด้วย thrombolysis หรือ embolectomy ทันที ควรปรึกษาแพทย์หน่วย chest และ CVT โดยด่วน</li>\n<li>ถ้าไม่มีอาการ shock แต่มีความเป็นไปได้สูงที่จะมีภาวะ acute PE → ควรเริ่มการรักษาด้วย heparin (anticoagulation) ก่อน แล้วตามด้วยการตรวจค้นเพิ่มเติม ด้วย Pulmonary CT scan with contrast และ/หรือ duplex ultrasound of lower extremities</li>\n</ul>\n<div class=\"flow\" data-flow=\"tncpd\"></div>"
+  },
+  {
+   "op": "append",
+   "sec": "resp-ptx",
+   "html": "<h5>Acute pneumothorax — life threatening</h5>\n<ul>\n<li>อาการจะคล้ายคลึงกับ acute PE: onset เฉียบพลัน และอาการเจ็บหน้าอกที่ sharp ประกอบกับอาการเหนื่อย (dyspnea)</li>\n<li>Spontaneous pneumothorax อาจพบในผู้ป่วยชายที่อายุน้อย โดยที่ไม่มีโรคมาก่อน หรือพบในผู้ป่วยที่สูบบุหรี่เป็นเวลานานจนเกิดภาวะ COPD (Chronic Obstructive Pulmonary Disease) หรือจาก chest trauma</li>\n<li>แพทย์ควรรักษาระดับ oxygen ให้อยู่ในเกณฑ์ปกติ</li>\n<li><b>ตรวจร่างกาย:</b> ฟัง (auscultation) เสียงหายใจจะเบาในข้างที่มี pneumothorax · เคาะปอด (percussion) จะเกิดเสียง hyperresonant (เหมือนตีกลอง) · เสียง tactile fremitus จะค่อยลง</li>\n<li>Chest X-ray (รูปที่ 5) สามารถช่วยวินิจฉัยโรคได้</li>\n<li>การทำ <b>needle decompression หรือการใส่ chest tube</b> อย่างทันท่วงที สามารถช่วยชีวิตคนไข้ได้</li>\n</ul><figure><img src=\"symp/img/tn-cp-f5.webp\" alt=\"Chest X-ray แสดง pneumothorax\"><figcaption>รูปที่ 5: Chest X-Ray with pneumothorax</figcaption></figure>"
+  },
+  {
+   "op": "append",
+   "sec": "resp-pna",
+   "html": "<ul>\n<li>โรคทางปอดก็สามารถส่งผลให้ผู้ป่วยมีอาการ chest pain เช่น การติดเชื้อในปอด (ส่วนโรค pneumothorax และ pulmonary embolism ถือว่าเป็นโรคจุกเฉินที่ได้กล่าวไปแล้ว)</li>\n<li>ผู้ป่วยมีภาวะติดเชื้อในปอด มักเล่าประวัติว่ามี chest pain ที่มีคุณลักษณะเป็นแบบ pleuritic chest pain ร่วมกับมีไข้ ไอมีเสมหะ และเหนื่อยเพลีย</li>\n<li>การตรวจวัดหาไข้ และ Chest X-ray จะสามารถช่วยในการวินิจฉัยได้</li>\n<li>ถ้าคิดว่าผู้ป่วยมีภาวะติดเชื้อในปอดจริง ควรเพาะเชื้อจากเลือดและเสมหะ (blood culture and sputum culture) ก่อนที่จะให้ empiric antibiotics</li>\n</ul>"
+  },
+  {
+   "op": "append",
+   "sec": "gi",
+   "html": "<ul>\n<li>โรคระบบทางเดินอาหารที่ทำให้เกิด chest pain มักจะเกิดจากหลอดอาหาร (esophagus) เช่น โรคกรดไหลย้อน (Gastroesophageal Reflux Disease - GERD) และโรคหลอดอาหารหดเกร็ง (esophageal spasm)</li>\n<li>จึงควรซักประวัติเกี่ยวกับระบบทางเดินอาหาร รวมทั้งเวลาที่รับประทานอาหารและการเกิด chest pain หรือถามถึงอาการปวดท้อง หรือถ่ายดำ (melena) ร่วมด้วยหรือไม่</li>\n<li><b>Esophageal spasm:</b> nitroglycerin สามารถทำให้ chest pain ลดลงได้ เพราะหลอดอาหารนั้นเป็น smooth muscles จึงทำให้อาการเหมือน angina มาก แต่มักจะไม่สัมพันธ์กับการออกแรงเหมือน angina</li>\n<li>ถ้าหลังจากแยกภาวะโรคจุกเฉิน หรือโรคหัวใจออกไปแล้ว และสงสัยว่าจะเป็นโรคระบบทางเดินอาหาร แพทย์สามารถทดลองให้ยาไปลองก่อนที่จะปรึกษาแพทย์ระบบทางเดินอาหารได้ถ้าอาการไม่รุนแรง — ยาประเภท PPI (proton pump inhibitor) หรือ H2-blocker สำหรับโรค GERD หรือยาประเภท calcium channel blocker สำหรับโรค esophageal spasm</li>\n</ul>"
+  },
+  {
+   "op": "append",
+   "sec": "msk",
+   "html": "<ul>\n<li>อาจทำให้เกิด chest wall pain ซึ่งอาจเป็นจาก กล้ามเนื้อ กระดูกซี่โครงหัก (rib fracture) ข้อเสื่อม หรือกระดูกอ่อนอักเสบ (costochondritis)</li>\n<li>ผู้ป่วยอาจประวัติว่ามี chest pain หลังจากยกของหนัก หรือรู้สึกว่ามีการกระชากของกล้ามเนื้อ (pulled muscles)</li>\n<li>การเจ็บประเภทนี้มักจะเจ็บเป็นที่ (localized) และสัมพันธ์กับการขยับของกล้ามเนื้อนั้น</li>\n<li><b>ตรวจร่างกาย:</b> มักพบว่าเจ็บมากขึ้นเมื่อกดลงบริเวณนั้น (tenderness on palpation)</li>\n<li>Chest X-ray สามารถช่วยแยกการแตกหักของกระดูกซี่โครงได้</li>\n<li><b>การรักษา:</b> ให้ยาแก้ปวด เช่น ประเภท NSAIDs ได้</li>\n</ul>"
+  },
+  {
+   "op": "append",
+   "sec": "hx",
+   "html": "<p>เริ่มต้นด้วยการถามประวัติเกี่ยวกับความเจ็บ (pain) โดยทั่วไป ตามปกติ</p>\n<ul><li>การเริ่มต้นของความเจ็บ (onset)</li><li>คุณลักษณะ (quality)</li><li>ระยะเวลา (duration)</li><li>ความบ่อยหรือความถี่ (frequency)</li><li>ตำแหน่ง (location)</li><li>การเจ็บร้าว (radiation)</li><li>ปริมาณ (quantity)</li><li>ปัจจัยที่ทำให้เจ็บมากขึ้น (aggravating factors)</li><li>ปัจจัยที่ทำให้เจ็บน้อยลง (alleviating factors)</li></ul>\n<p>นอกจากนี้ควรนำข้อมูลจาก<b>ประวัติอดีต ประวัติครอบครัว และประวัติส่วนตัว</b>มาประกอบการวินิจฉัยแยกโรค — ในแต่ละโรคนั้น ความน่าจะเป็นจะต่างกันไปขึ้นอยู่กับสภาพผู้ป่วย (host)</p>\n<ul>\n<li><b>Spontaneous pneumothorax</b> มักพบในคนไข้ผู้ชาย ที่มีอายุน้อยโดยไม่มีโรคประจำตัวอื่น ๆ มาก่อน</li>\n<li><b>Aortic dissection</b> มักพบในผู้ป่วยที่มีโรคความดันโลหิตสูง และมักมีความดันโลหิตสูงมากระหว่างที่มีอาการ</li>\n<li><b>Angina หรือ acute myocardial infarction</b> มักจะเป็นผู้ชาย มีโรคเบาหวาน ไขมันในเลือดสูง และ/หรือ สูบบุหรี่ ร่วมด้วย</li>\n</ul>"
+  },
+  {
+   "op": "append",
+   "sec": "hx-char",
+   "html": "<p>คำว่า chest pain อาจแปลความหมายได้หลายอย่าง แพทย์จึงมีหน้าที่ในการที่จะแยกแยะอาการของผู้ป่วยได้อย่างแม่นยำ เพราะคุณลักษณะ (quality) ของ chest pain สามารถช่วยแพทย์วินิจฉัยแยกโรคได้</p>\n<ul>\n<li><b>Typical angina หรือ myocardial infarction:</b> มักเป็นลักษณะ แน่น (chest tightness) และ/หรือ หนัก (chest heaviness) หรืออึดอัด หรือจุก หรือแสบ บริเวณหน้าอก บางครั้งผู้ป่วยอาจอธิบายว่าเหมือนมีช้างมานั่งทับบนหน้าอก</li>\n<li><b>Pericarditis:</b> มักเป็นแบบเจ็บแปลบ ๆ (sharp pain) ซึ่งจะดีขึ้นเมื่อโน้มตัวไปข้างหน้า และเจ็บมากขึ้นเวลาหายใจเข้าลึก ๆ (pleuritic chest pain)</li>\n<li><b>Acute aortic dissection:</b> มักเกิดขึ้นฉับพลันมากจนผู้ป่วยจะจำเวลาที่เริ่มมีอาการได้อย่างดีถึงขั้นวินาทีเลยทีเดียว และอาการเจ็บมักจะมีร้าวไปทะลุด้านหลัง เหมือนถูกมีดแทง</li>\n</ul>\n<p>ดังนั้นการเข้าใจคุณลักษณะของ chest pain อย่างถ่องแท้จึงมีความสำคัญมาก โดยส่วนใหญ่ การซักประวัติที่ดีจะสามารถทำให้การวินิจฉัยแยกโรคแคบลง และเพิ่มความน่าจะเป็นของโรคที่ถูกต้องได้</p>"
+  },
+  {
+   "op": "append",
+   "sec": "hx-assoc",
+   "html": "<p>ควรซักถามประวัติอื่น ๆ ที่เกิดร่วมกับ chest pain (associated symptoms) เพื่อช่วยในการวินิจฉัยแยกโรค ถึงแม้โรคต่าง ๆ กันอาจทำให้เกิดอาการ chest pain คล้ายคลึงกัน แต่อาการร่วมจะช่วยให้เข้าใจพยาธิสภาพ และสามารถช่วยในการวินิจฉัยโรคได้</p>\n<ul>\n<li><b>Pulmonary embolism</b> มักเกิดจาก deep vein thrombosis มาก่อน โดยที่ลิ่มเลือดจะขึ้นจากขามาที่ปอด → ผู้ป่วยอาจมีอาการขาบวมแดงมาก่อน หรือมีประวัติที่เพิ่มความเสี่ยงการเกิด deep vein thrombosis เช่น นั่งเดินทางเป็นเวลานาน (stasis) หรือเพิ่งได้รับการผ่าตัดทางกระดูก เช่น เข่าหรือสะโพก</li>\n<li><b>Pneumonia</b> เกิดจากการติดเชื้อในปอด และอาจทำให้เกิดการระคายเคืองต่อเยื่อหุ้มปอด จึงทำให้มีอาการ chest pain ได้ → ผู้ป่วยมักจะมีอาการของการติดเชื้อ (infection) ร่วมด้วย เช่น มีไข้ หรือ ไอมีเสมหะ</li>\n</ul>\n<p>ดังนั้นแพทย์ผู้ซักประวัติ chest pain ควรทราบพยาธิสภาพของโรคต่าง ๆ ที่ส่งผลให้มีอาการ chest pain และซักประวัติร่วม เพื่อทำให้การวินิจฉัยแยกโรคแคบลงอีก</p>"
+  },
+  {
+   "op": "append",
+   "sec": "pe",
+   "html": "<ul>\n<li>ควรตรวจทุกระบบอย่างละเอียด โดยเริ่มจากการวัดสัญญาณชีพและคำนึงถึงการวินิจฉัยแยกโรค</li>\n<li>ใช้ความคิดแบบเดียวกันกับการซักประวัติผู้ป่วยตามที่กล่าวมาเบื้องต้น</li>\n<li>คุณลักษณะและอาการแสดงเฉพาะของแต่ละโรค ดูตารางสรุปในบทนี้</li>\n</ul>"
+  }
+ ],
+ "flows": [
+  {
+   "id": "tncpa",
+   "title": "Approach to chest pain patients",
+   "src": "text",
+   "note": "เอกสารบรรยายเป็นข้อความ ไม่มีแผนภาพ — ลำดับกล่องจัดจากหัวข้อ Summary: Approach to chest pain patients",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "ผู้ป่วย chest pain — Initial Assessment"
+    },
+    {
+     "id": "b",
+     "k": "q",
+     "t": "1) Is the patient stable?",
+     "d": "<p>ตรวจสัญญาณชีพว่า stable หรืออยู่ในเกณฑ์ปกติหรือไม่</p>"
+    },
+    {
+     "id": "c",
+     "k": "stop",
+     "t": "รีบ resuscitate ผู้ป่วยโดยเร็ว",
+     "d": "<p>เพื่อป้องกัน multi-organ failure</p>"
+    },
+    {
+     "id": "d",
+     "k": "q",
+     "t": "2) Is this a life-threatening disease?",
+     "d": "<p>ถามตัวเองว่าผู้ป่วยกำลังเป็นโรคร้ายแรง จุกเฉินชนิดใด</p>"
+    },
+    {
+     "id": "e",
+     "k": "stop",
+     "t": "วินิจฉัยและรักษาเบื้องต้นอย่างทันท่วงที",
+     "d": "<ul><li>Acute myocardial infarction</li><li>Acute aortic dissection</li><li>Acute pulmonary embolism</li><li>Acute pneumothorax</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "act",
+     "t": "ซักประวัติ และตรวจร่างกาย",
+     "d": "<p>ถ้าสัญญาณชีพ stable ก็มีเวลาที่จะทำการตรวจตามปกติ</p>"
+    },
+    {
+     "id": "g",
+     "k": "dx",
+     "t": "ให้การวินิจฉัยแยกโรค"
+    },
+    {
+     "id": "h",
+     "k": "act",
+     "t": "ส่งตรวจทางห้องปฏิบัติการตามความเหมาะสม"
+    },
+    {
+     "id": "i",
+     "k": "act",
+     "t": "ให้การรักษาเบื้องต้นอย่างถูกต้อง"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c",
+     "l": "ไม่ stable: BP ต่ำ / O2 sat ต่ำ / ไม่รู้สึกตัว"
+    },
+    {
+     "f": "b",
+     "t": "d",
+     "l": "stable"
+    },
+    {
+     "f": "c",
+     "t": "d"
+    },
+    {
+     "f": "d",
+     "t": "e",
+     "l": "ใช่"
+    },
+    {
+     "f": "d",
+     "t": "f",
+     "l": "ไม่ใช่"
+    },
+    {
+     "f": "f",
+     "t": "g"
+    },
+    {
+     "f": "g",
+     "t": "h"
+    },
+    {
+     "f": "h",
+     "t": "i"
+    }
+   ]
+  },
+  {
+   "id": "tncpb",
+   "title": "Acute MI — การวินิจฉัยและรักษาเบื้องต้น",
+   "src": "text",
+   "note": "เอกสารบรรยายเป็นข้อความ ไม่มีแผนภาพ — ลำดับกล่องจัดจากหัวข้อ Acute myocardial infarction",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "สงสัย acute MI"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "12-lead EKG ทันที"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "ST-elevation?"
+    },
+    {
+     "id": "d",
+     "k": "stop",
+     "t": "STEMI (รูปที่ 1) — ติดต่อทีม cardiology ทันที",
+     "d": "<ul><li>หมายถึงเส้นเลือดเลี้ยงหัวใจอุดตัน 100%</li><li>เปิดเส้นเลือดหัวใจ (revascularization) ด้วย cardiac catheterization หรือให้ยา fibrinolytics</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "serial EKGs + serial cardiac biomarkers",
+     "d": "<ul><li>CK-MB, Troponin</li><li>รักษาเบื้องต้นด้วย aspirin</li><li>เฝ้าดูความดันโลหิต ชีพจร oxygen saturation อยู่ตลอดอย่างใกล้ชิด</li></ul>"
+    },
+    {
+     "id": "f",
+     "k": "q",
+     "t": "EKG เปลี่ยนจากเดิม หรือ biomarkers positive?",
+     "d": "<p>เช่น ST depression (รูปที่ 2)</p>"
+    },
+    {
+     "id": "g",
+     "k": "stop",
+     "t": "ปรึกษา cardiologist ทันที"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "มี"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "ไม่มี"
+    },
+    {
+     "f": "e",
+     "t": "f"
+    },
+    {
+     "f": "f",
+     "t": "g",
+     "l": "ใช่"
+    }
+   ]
+  },
+  {
+   "id": "tncpc",
+   "title": "Acute aortic dissection — การตรวจและรักษาเบื้องต้น",
+   "src": "text",
+   "note": "เอกสารบรรยายเป็นข้อความ ไม่มีแผนภาพ — ลำดับกล่องจัดจากหัวข้อ Acute aortic dissection",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "สงสัย acute aortic dissection"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "ตรวจค้นเพิ่มเติมอย่างเร่งด่วน",
+     "d": "<ul><li>CT, MRI หรือ echocardiogram</li><li>ห้องฉุกเฉินส่วนใหญ่เลือก CT scan เพราะเร็วและพร้อม</li><li>Chest x-ray อาจพบ mediastinum กว้าง แต่ไม่ sensitive หรือ specific พอ</li><li>ขณะเดียวกันเริ่มรักษาความดันโลหิตที่สูงมาก: ยา IV, beta-blocker เป็น drug of choice</li></ul>"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Aortic flap เกิดบริเวณใด?"
+    },
+    {
+     "id": "d",
+     "k": "stop",
+     "t": "ปรึกษา cardiothoracic surgery โดยด่วน",
+     "d": "<p>เพื่อเตรียมคนไข้ผ่าตัดรักษาอย่างทันท่วงที</p>"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "Admit CCU",
+     "d": "<p>รักษาความดันโลหิต และคอยเฝ้าดูอาการอย่างใกล้ชิด</p>"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "ascending aorta"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "descending aorta"
+    }
+   ]
+  },
+  {
+   "id": "tncpd",
+   "title": "Acute PE — การรักษาเบื้องต้น",
+   "src": "text",
+   "note": "เอกสารบรรยายเป็นข้อความ ไม่มีแผนภาพ — ลำดับกล่องจัดจากหัวข้อ Acute pulmonary embolism",
+   "nodes": [
+    {
+     "id": "a",
+     "k": "start",
+     "t": "สงสัย acute PE"
+    },
+    {
+     "id": "b",
+     "k": "act",
+     "t": "รักษาระดับ oxygen และความดันโลหิตให้อยู่ในระดับปกติ"
+    },
+    {
+     "id": "c",
+     "k": "q",
+     "t": "Shock หรือความดันต่ำ + RV dysfunction หรือ myocardial injury?",
+     "d": "<ul><li>RV dysfunction: ตรวจโดย echocardiogram</li><li>Myocardial injury: elevated CK/troponin/BNP</li></ul>"
+    },
+    {
+     "id": "d",
+     "k": "stop",
+     "t": "Thrombolysis หรือ embolectomy ทันที",
+     "d": "<ul><li>ความเสี่ยงเสียชีวิตอาจมากถึงกว่า 15%</li><li>ปรึกษาแพทย์หน่วย chest และ CVT โดยด่วน</li></ul>"
+    },
+    {
+     "id": "e",
+     "k": "act",
+     "t": "เริ่ม heparin (anticoagulation) ก่อน",
+     "d": "<p>เมื่อไม่มี shock แต่มีความเป็นไปได้สูงที่จะมี acute PE</p>"
+    },
+    {
+     "id": "f",
+     "k": "act",
+     "t": "Pulmonary CT scan with contrast และ/หรือ duplex ultrasound of lower extremities"
+    }
+   ],
+   "edges": [
+    {
+     "f": "a",
+     "t": "b"
+    },
+    {
+     "f": "b",
+     "t": "c"
+    },
+    {
+     "f": "c",
+     "t": "d",
+     "l": "ใช่"
+    },
+    {
+     "f": "c",
+     "t": "e",
+     "l": "ไม่มี shock + โอกาสเป็น PE สูง"
+    },
+    {
+     "f": "e",
+     "t": "f"
+    }
+   ]
+  }
+ ]
+}

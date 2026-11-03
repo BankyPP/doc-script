@@ -436,6 +436,7 @@ details:not([open])>summary .chev{transform:rotate(-90deg)}
 .sx .tbl td{padding:7px 10px;border:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2)}
 .sx .tbl tr:last-child td{border-bottom:1px solid var(--rule-2)}
 .sx .tbl td ul,.sx .tbl td ol{padding-left:18px}
+.sx .tbl table.wide{min-width:900px;overflow-wrap:normal}
 .sxbox .tbl table{font-size:14.5px}
 .sx figure{margin:12px 0;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 .sx figure img{max-width:100%;max-height:560px;width:auto;height:auto;border:1px solid var(--rule-2);border-radius:4px;background:#fff;cursor:zoom-in}
@@ -973,6 +974,7 @@ a.spo{text-decoration:none}
 .bk.si{color:#1F4E6E;border-color:#B4CADB;background:#E6EFF5}
 .bk.yb{color:#7A5800;border-color:#E5C766;background:#FBF0C6}
 .bk.bb{color:#F4F1EA;border-color:#2B2B2B;background:#2B2B2B}
+.bk.tn{color:#1F5A45;border-color:#A6CDBB;background:#E4F2EB}
 .bk.ai{color:#4F3F80;border-color:#C9BEE6;background:#EFEBF8}
 .sxsec>summary .bks,.sxbox>summary .bks{max-width:42%;justify-content:flex-end}
 .sxs2 h4 .bks{margin-left:4px}
@@ -984,6 +986,7 @@ a.spo{text-decoration:none}
 .sx .sb.si{border-color:#B4CADB}.sx .sb.si::before{content:'ตำราศิริราช';color:#1F4E6E}
 .sx .sb.yb{border-color:#E5C766}.sx .sb.yb::before{content:'เล่มเหลือง';color:#7A5800}
 .sx .sb.bb{border-color:#2B2B2B}.sx .sb.bb::before{content:'Blackbook';color:#2B2B2B}
+.sx .sb.tn{border-color:#A6CDBB}.sx .sb.tn::before{content:'เอกสารคำสอน อ.พญ.ภัณฑิลา';color:#1F5A45}
 .sx .sb.ai{border-color:#C9BEE6}.sx .sb.ai::before{content:'เพิ่มโดย Claude';color:#4F3F80}
 .sx .hw,.fbox .hw{color:#2D5DA8;font-style:italic}
 @media (max-width:640px){.sxsec>summary,.sxbox>summary{flex-wrap:wrap;row-gap:4px}.sxsec>summary .bks,.sxbox>summary .bks{order:5;max-width:none;flex-basis:100%;justify-content:flex-start}.sxsec>summary .bks{padding-left:46px}}
