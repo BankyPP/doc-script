@@ -298,7 +298,7 @@ function osTick(){const run=osRunCur();if(!run||view!=="osx"){clearInterval(OST)
     if(r<=0)return osAdvance(run);
     if(!osTick.n||now()-osTick.n>4000){osTick.n=now();run.left=r;run.at=now();persist();}}}
 document.addEventListener("visibilitychange",()=>{try{const run=osRunCur();if(!run||run.paused)return;if(document.visibilityState==="hidden"){run.left=osRemain(run);run.at=now();persist();}}catch(e){}});
-function osRunView(){const run=osRunCur();if(!run)return go(ward+"/osl");if(!run.paused&&now()-run.at>8000)run.at=now();   /* page was closed: the clock waited */
+function osRunView(){const run=osRunCur();if(!run)return go(ward+"/osl");rsVisit(P_(),run,"osrun");if(!run.paused&&now()-run.at>8000)run.at=now();   /* page was closed: the clock waited */
   const ix=osSlotNow(run);if(ix<0)return osFinish(run);const sl=run.seq[ix],O=osOrder(run),N=run.seq.length;
   osImgLoad(run,()=>{if(view==="osx")osRunView();});
   const nx=run.pos+1<O.length?O[run.pos+1]:-1,nsl=nx>=0?run.seq[nx]:null,ty=osSlotType(run,sl),sim=run.mode==="sim";
@@ -409,7 +409,7 @@ function osMerge(l,r){const del=Object.assign({},l.osDel||{},r.osDel||{});l.osDe
 /* ward home top of the OSCE tab */
 function osHomeTop(L){const E=osExamCfg(),T=osTopics(),cur=osRunCur();
   let h=`<p class="hint" style="margin:6px 0 10px">${E?`สอบจริง <b>${E.n} ข้อ ข้อละ ${E.min} นาที</b> (<a href="#/${esc(ward)}/dates">แก้</a>)`:`ยังไม่ได้ตั้งจำนวนข้อ/เวลาสอบจริง (<a href="#/${esc(ward)}/dates">ตั้งที่หน้า Admit · ICU · Discharge</a>)`}${T.length?` · หัวข้อ: ${T.map(t=>esc(t.name)).join(", ")}`:""}</p>`;
-  if(cur)h+=`<button class="resume" id="osHomeRes"><span>กำลังทำ <b>${osKindN(cur.kind)} OSCE</b><span class="rd">ช่องที่ ${(cur.pos||0)+1}/${cur.seq.length} — กดเพื่อทำต่อ</span></span><span class="go">→</span></button>`;
+  if(cur&&!rsHidden(P_(),"osrun",Math.max(cur.vt||0,cur.ts||0)))h+=rsBox("osrun",`<button class="resume" id="osHomeRes"><span>กำลังทำ <b>${osKindN(cur.kind)} OSCE</b><span class="rd">ช่องที่ ${(cur.pos||0)+1}/${cur.seq.length} — กดเพื่อทำต่อ</span></span><span class="go">→</span></button>`);
   return h;}
 /* test hook for tools/smoke_site.py-style checks: read the running paper and fast-forward the clock */
 window.__os={cur:()=>osRunCur(),ff:s=>{const r=osRunCur();if(r){r.left=s;r.at=now();r.paused=false;}},finish:()=>{const r=osRunCur();if(r)osFinish(r);}};
