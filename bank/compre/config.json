@@ -69,7 +69,12 @@
    "brand": "AC Compre 1 MCQ",
    "dir": "data_c1",
    "scope": "Comprehensive 1 (จุฬาฯ เท่านั้น — ศิริราชไม่มี) ใช้ blueprint NL1 เก่า",
-   "dates": [],
+   "dates": [
+    {
+     "part": "MCQ",
+     "at": "2026-03-16"
+    }
+   ],
    "meqTopics": [],
    "osceTopics": [],
    "noExam": [

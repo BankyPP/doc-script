@@ -2485,7 +2485,7 @@
     var p = nextPart(x), b = xBank(x), st = bstat(x.id);
     return '<div class="xact sheet"><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="label">คลังข้อสอบเก่า</span>' +
       '<span class="k" style="font-size:20px">' + (st ? st.n + ' ข้อ' : '—') + '</span>' +
-      '<span class="muted" style="font-size:14px">' + (p ? esc(p.type + ' · ' + thDate(p.date) + ' · ' + daysText(p.date)) : 'ยังไม่ได้ใส่วันสอบ — <a href="#/nl/settings">ตั้งค่า</a>') + '</span></div>' +
+      '<span class="muted" style="font-size:14px">' + (p ? esc(p.type + ' · ' + thDate(p.date) + ' · ' + daysText(p.date)) : (function () { var d = x.parts.filter(function (q) { return q.date; }).sort(function (a, c) { return a.date < c.date ? 1 : -1; })[0]; return d ? esc(d.type + ' · ' + thDate(d.date) + ' · สอบไปแล้ว') : 'ยังไม่ได้ใส่วันสอบ — <a href="#/nl/settings">ตั้งค่า</a>'; })()) + '</span></div>' +
       (b ? '<a class="btn" href="' + esc(b) + '">เข้าคลังข้อสอบเก่า →</a>' : '') + '</div>';
   }
   function nlExam(id, r) {
@@ -2613,6 +2613,37 @@
   }
 
   /* ---------- สรุปเนื้อหา ---------- */
+  /* แท็ก code B ตาม blueprint (กล่อง <section data-bp="B10.1.1(3) B10.2.6">) → แถบตัวกรองเหนือสรุป */
+  function bpCodes(html) {
+    var m, re = /data-bp="([^"]+)"/g, n = {};
+    while ((m = re.exec(html))) m[1].split(/\s+/).forEach(function (c) { if (c) n[c] = (n[c] || 0) + 1; });
+    return n;
+  }
+  function bpKey(c) { return c.replace(/[()]/g, '.').split('.').filter(Boolean).map(function (x) { return /^\d+$/.test(x) ? ('000' + x).slice(-3) : x; }).join('.'); }
+  function bpBar(html) {
+    var n = bpCodes(html), ks = Object.keys(n);
+    if (!ks.length) return '';
+    var top = {};
+    ks.forEach(function (c) { var t = (c.match(/^B\d+(\.\d+)?/) || [c])[0]; top[t] = (top[t] || 0) + n[c]; });
+    var chip = function (c, lab, cnt, cls) { return '<button type="button" class="chip' + (cls ? ' ' + cls : '') + '" data-bpf="' + esc(c) + '">' + esc(lab) + (cnt ? ' <span class="muted">' + cnt + '</span>' : '') + '</button>'; };
+    return '<div class="bptags"><span class="label">แท็ก code B</span>' + chip('', 'ทั้งหมด', 0, 'on') +
+      Object.keys(top).sort(function (a, b) { return bpKey(a) < bpKey(b) ? -1 : 1; }).map(function (t) { return chip(t, t, top[t], 'bptop'); }).join('') +
+      '<details class="bpmore"><summary>รหัสย่อย</summary>' + ks.sort(function (a, b) { return bpKey(a) < bpKey(b) ? -1 : 1; }).map(function (c) { return chip(c, c, n[c]); }).join('') + '</details></div>';
+  }
+  function bpBarAfter() {
+    var bar = document.querySelector('.bptags');
+    if (!bar) return;
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-bpf]'); if (!b) return;
+      var f = b.getAttribute('data-bpf');
+      bar.querySelectorAll('[data-bpf]').forEach(function (x) { x.classList.toggle('on', x === b); });
+      document.querySelectorAll('.val section[data-bp]').forEach(function (s) {
+        var ok = !f || s.getAttribute('data-bp').split(/\s+/).some(function (c) { return c === f || c.indexOf(f + '.') === 0 || c.indexOf(f + '(') === 0; });
+        s.style.display = ok ? '' : 'none';
+      });
+    });
+  }
+
   function nlNotes(r) {
     var notes = NLD.notes || [], id = r.args[1];
     var note = id && notes.filter(function (n) { return n.id === id; })[0];
@@ -2623,9 +2654,11 @@
           '<section class="wrap" style="padding-bottom:80px"><article class="sheet doc"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">' + srcBadges(note.src) +
           (note.exams || []).map(function (k) { return '<span class="pill">' + (KIND[k] || esc(k)) + '</span>'; }).join('') +
           (note.topic ? '<span class="muted" style="font-size:14px">' + esc(note.topic) + '</span>' : '') + '<a class="chip" style="margin-left:auto" href="#/exam?src=' + encodeURIComponent('n:' + note.id) + '">สร้างข้อสอบจากเรื่องนี้</a></div>' +
+          bpBar(note.html || '') +
           '<div class="val" data-ann="n:' + esc(note.id) + '">' + (note.html || '') + '</div>' +
           ((note.files && note.files.length) || note.updated ? '<p class="note" style="border-top:1px dashed var(--rule);padding-top:12px">' + (note.files && note.files.length ? 'ไฟล์ต้นทาง: ' + esc(note.files.join(', ')) : '') + (note.updated ? ' · อัปเดต ' + esc(note.updated) : '') + '</p>' : '') +
-          '</article><p style="margin-top:20px"><a class="btn ghost" href="#/nl/notes">กลับไปสรุปทั้งหมด</a></p></section>'
+          '</article><p style="margin-top:20px"><a class="btn ghost" href="#/nl/notes">กลับไปสรุปทั้งหมด</a></p></section>',
+        after: bpBarAfter
       };
     }
     var fx = r.q.get('x') || '', fs = r.q.get('s') || '';
