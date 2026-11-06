@@ -1066,7 +1066,7 @@ a.spo{text-decoration:none}
 .bptags .bpmore{flex-basis:100%}
 .bptags .bpmore summary{cursor:pointer;font-size:13px;color:var(--ink-2);margin:2px 0 6px}
 .bptags .bpmore .chip{margin:0 6px 6px 0}
-.nbx .nb.wide{column-span:all}
-.nb.wide table{font-size:14px}
-.nb.wide td,.nb.wide th{overflow-wrap:normal;hyphens:manual}
+.nbflow>.nb.wide{margin:0 0 18px}
+.nb.wide table{font-size:14.5px;min-width:560px}
+.nb.wide td,.nb.wide th{overflow-wrap:normal;word-break:normal;hyphens:manual}
 .nb.wide details.nbs img{max-width:900px}
