@@ -1070,3 +1070,8 @@ a.spo{text-decoration:none}
 .nb.wide table{font-size:14.5px;min-width:560px}
 .nb.wide td,.nb.wide th{overflow-wrap:normal;word-break:normal;hyphens:manual}
 .nb.wide details.nbs img{max-width:900px}
+/* flowFix — แถวเต็มความกว้างที่แยกออกจากคอลัมน์ */
+[data-ff="w"]{columns:auto!important;column-width:auto!important;column-count:auto!important}
+[data-ff="w"]>*{column-span:none!important;overflow-x:auto}
+[data-ff="w"] td,[data-ff="w"] th{overflow-wrap:normal;word-break:normal;hyphens:manual}
+@media (max-width:700px){[data-ff="w"] table{min-width:520px}}

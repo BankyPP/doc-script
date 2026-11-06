@@ -492,7 +492,8 @@
     var res = page(r);
     app.innerHTML = res.html;
     document.title = (res.title ? res.title + ' — ' : '') + C.title;
-    annMountAll(app);   /* ฉบับที่แก้เอง + ขีดเส้นใต้โน้ต — ก่อน after() เพื่อให้ปุ่ม/ลิงก์ในเนื้อหาผูกกับ DOM ชุดสุดท้าย */
+    annMountAll(app);
+    flowFix(app);   /* กล่องที่มีตาราง/กางเต็มแถว → แยกออกจากคอลัมน์ (ดู flowFix) */   /* ฉบับที่แก้เอง + ขีดเส้นใต้โน้ต — ก่อน after() เพื่อให้ปุ่ม/ลิงก์ในเนื้อหาผูกกับ DOM ชุดสุดท้าย */
     if (res.after) res.after();
     annRestore(keepNotes);
     if (r.q.get('note')) annGoto(r.q.get('note'));
@@ -2611,6 +2612,37 @@
     return tabs + wt + '<div class="sheet bpcard"><div class="bphead"><span class="label">Bank · จุฬาฯ · ' + tot.n + ' เรื่อง (slides) ปี 1–3</span><h2 class="k">อ่านไปถึงไหนแล้ว</h2>' +
       '<p class="muted">จาก Google Sheet "Compre - NL1 Plan" (แท็บรายวิชา) · ดึงครั้งเดียว ' + esc(thDate(D.pulled)) + ' — ไม่ live · Study / Tutor / Review #1 / Review #2 = ช่องติ๊กในชีต</p></div>' + planBars(D.cols, tot, true) + '</div>' + yrs;
   }
+
+  /* ---------- flowFix: สรุปแบบหลายคอลัมน์ (.nbx · .sxgrid · .sim · .nxgrid · .nxqgrid) ----------
+     กล่องที่มีตาราง หรือกล่องที่ตั้งใจกางเต็มแถว (column-span: all) → ย้ายออกมาเป็นแถวเต็มความกว้างของตัวเอง
+     เหตุผล: ตารางในคอลัมน์ ~340px ถูกบีบจนตัดกลางคำ และ Safari (iPad/iPhone) วาด column-span ทับกล่องข้างบนจนเนื้อหาโดนตัด
+     แยกเป็นคอนเทนเนอร์พี่น้อง class เดิม (สไตล์ลูกยังใช้ได้) · data-ff กันทำซ้ำ · คอนเทนต์ที่โหลดทีหลังจับด้วย MutationObserver */
+  var FF_SEL = '.nbx,.sxgrid,.sim,.nxgrid,.nxqgrid';
+  function flowFix(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll(FF_SEL).forEach(function (box) {
+      if (box.hasAttribute('data-ff') || !box.parentNode) return;
+      var kids = [].slice.call(box.children);
+      var wide = kids.map(function (k) {
+        var cs = window.getComputedStyle(k);
+        return !!(k.querySelector('table') || k.tagName === 'TABLE' || cs.columnSpan === 'all');
+      });
+      if (wide.indexOf(true) < 0) { box.setAttribute('data-ff', '1'); return; }
+      var frag = document.createDocumentFragment(), run = null, first = true;
+      var mk = function (v) { var c = box.cloneNode(false); if (!first) c.removeAttribute('id'); first = false; c.setAttribute('data-ff', v); frag.appendChild(c); return c; };
+      kids.forEach(function (k, i) {
+        if (wide[i]) { run = null; mk('w').appendChild(k); }
+        else { if (!run) run = mk('1'); run.appendChild(k); }
+      });
+      [].slice.call(frag.children).forEach(function (c) { if (c.getAttribute('data-ff') === '1' && c.children.length === 1) c.setAttribute('data-ff', 'w'); });
+      box.parentNode.replaceChild(frag, box);
+    });
+  }
+  (function () {
+    var t = 0, app0 = document.getElementById('app');
+    if (!app0 || !window.MutationObserver) return;
+    new MutationObserver(function () { clearTimeout(t); t = setTimeout(function () { flowFix(app0); }, 60); }).observe(app0, { childList: true, subtree: true });
+  })();
 
   /* ---------- สรุปเนื้อหา ---------- */
   /* แท็ก code B ตาม blueprint (กล่อง <section data-bp="B10.1.1(3) B10.2.6">) → แถบตัวกรองเหนือสรุป */
