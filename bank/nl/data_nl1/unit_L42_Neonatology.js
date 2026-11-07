@@ -1,0 +1,2 @@
+/* Unit round — L42_Neonatology (ติวสอบ NL2 จุฬาฯ) · ใส่แค่หัวข้อบทไว้ก่อน (ยังไม่มีโจทย์ — 200 ข้อรอผู้ใช้สั่ง 7 พ.ย. 2026) */
+W.UNIT.push({"id": "L42_Neonatology", "title": "L42_Neonatology — ติวสอบ NL2 (จุฬาฯ)", "short": "L42", "src": "NL2_Neonatology.pdf (ติวสอบ NL2 จุฬาฯ — Thaninee Chitsinchayakul, MD., 17 หน้า)", "topic": "2.3.16 Perinatal period", "tags": ["2.3.16 Perinatal period"], "QB": []});

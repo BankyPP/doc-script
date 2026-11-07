@@ -58,6 +58,30 @@
    "c1": "#/nl/x/c1",
    "c2": "#/nl/x/c2",
    "c3": "#/nl/x/c3"
+  },
+  "others": {
+   "inst": "nl",
+   "before": true,
+   "wards": [
+    {
+     "id": "nl1",
+     "name": "NL part 1",
+     "short": "NL part 1",
+     "sub": "NL",
+     "noExam": [
+      "MEQ"
+     ]
+    },
+    {
+     "id": "nl2",
+     "name": "NL part 2",
+     "short": "NL part 2",
+     "sub": "NL",
+     "noExam": [
+      "MEQ"
+     ]
+    }
+   ]
   }
  },
  "wards": [

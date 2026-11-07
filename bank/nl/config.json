@@ -71,6 +71,39 @@
   "exams": {
    "nl1": "#/nl/x/nl1",
    "nl2": "#/nl/x/nl2"
+  },
+  "others": {
+   "inst": "compre",
+   "before": false,
+   "wards": [
+    {
+     "id": "c1",
+     "name": "Compre 1",
+     "short": "Compre 1",
+     "sub": "MDCU",
+     "noExam": [
+      "MEQ"
+     ]
+    },
+    {
+     "id": "c2",
+     "name": "Compre 2",
+     "short": "Compre 2",
+     "sub": "",
+     "noExam": [
+      "MEQ"
+     ]
+    },
+    {
+     "id": "c3",
+     "name": "Compre 3",
+     "short": "Compre 3",
+     "sub": "",
+     "noExam": [
+      "MEQ"
+     ]
+    }
+   ]
   }
  },
  "wards": [
@@ -87,6 +120,12 @@
    "osceTopics": [],
    "noExam": [
     "MEQ"
+   ],
+   "lectures": [
+    {
+     "title": "L42_Neonatology — ติวสอบ NL2 (จุฬาฯ)",
+     "topic": "2.3.16 Perinatal period"
+    }
    ]
   },
   {

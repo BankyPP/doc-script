@@ -1233,7 +1233,11 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
   text-decoration:none;color:var(--ink);font-family:var(--num);font-weight:500;font-size:14px;background:var(--sheet)}
 .poy-back:hover{border-color:var(--form);color:var(--form)}
 .poy-back svg{flex:none}
-@media (max-width:420px){.poy-back span{display:none}}
+.poy-back .pb-t small{font-size:12.5px;color:var(--muted);font-weight:400}
+.poy-back:hover .pb-t small{color:inherit}
+@media (max-width:520px){.poy-back .pb-t small{display:none}}
+/* ward picker: the other bank's exams sit in the same list (NL → Compre) */
+.poy-owrap{display:contents}
 
 /* exam home: card that links to the exam page in โพยหมอ (blueprint · analysis · reading plan) */
 .poy-xcard{display:flex;align-items:center;gap:14px;margin:14px 0 4px;padding:14px 16px;border:1px solid var(--rule);border-left:4px solid var(--form);border-radius:8px;
@@ -1302,8 +1306,8 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 <script>
 const IMGS={};const WARDS={};
 Object.assign(IMGS,{"knl2neo_02": "img/knl2neo_02.jpg", "knl2neo_03a": "img/knl2neo_03a.jpg", "knl2neo_03c": "img/knl2neo_03c.jpg", "knl2neo_03d": "img/knl2neo_03d.jpg", "knl2neo_04a": "img/knl2neo_04a.jpg", "knl2neo_04b": "img/knl2neo_04b.jpg", "knl2neo_04c": "img/knl2neo_04c.jpg", "knl2neo_04d": "img/knl2neo_04d.jpg", "knl2neo_05a": "img/knl2neo_05a.jpg", "knl2neo_05b": "img/knl2neo_05b.jpg", "knl2neo_05c": "img/knl2neo_05c.jpg", "knl2neo_05d": "img/knl2neo_05d.jpg", "knl2neo_06a": "img/knl2neo_06a.jpg", "knl2neo_06b": "img/knl2neo_06b.jpg", "knl2neo_06c": "img/knl2neo_06c.jpg", "knl2neo_06d": "img/knl2neo_06d.jpg", "knl2neo_07a": "img/knl2neo_07a.jpg", "knl2neo_07b": "img/knl2neo_07b.jpg", "knl2neo_07c": "img/knl2neo_07c.jpg", "knl2neo_11c": "img/knl2neo_11c.jpg", "knl2neo_11d": "img/knl2neo_11d.jpg", "knl2neo_13a": "img/knl2neo_13a.jpg", "knl2neo_13b": "img/knl2neo_13b.jpg", "knl2neo_13d": "img/knl2neo_13d.jpg", "knl2neo_14a": "img/knl2neo_14a.jpg", "knl2neo_14b": "img/knl2neo_14b.jpg", "knl2neo_14c": "img/knl2neo_14c.jpg", "knl2neo_14d": "img/knl2neo_14d.jpg", "knl2neo_15a": "img/knl2neo_15a.jpg", "knl2neo_15b": "img/knl2neo_15b.jpg", "knl2neo_15d": "img/knl2neo_15d.jpg", "knl2neo_16a": "img/knl2neo_16a.jpg", "knl2neo_16b": "img/knl2neo_16b.jpg", "knl2neo_16c": "img/knl2neo_16c.jpg", "knl2neo_16d": "img/knl2neo_16d.jpg", "knl2neo_17": "img/knl2neo_17.jpg"});
-const CONFIG={"title": "คลังข้อสอบเก่า NL · โพยหมอ", "brand": "Past NL", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-nl-v1", "setLabel": "ชุด", "roLabel": "ที่มา", "chipStrip": "", "files": {"NL2NEO": "L42_Neonatology"}, "siteUrl": "https://bankypp.github.io/doc-script/bank/nl/", "siteName": "คลังข้อสอบเก่า NL", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "nl"], "sharedPrefix": "poy_nl_", "homeBrand": "Past {short} by BankyPP", "quizBrand": "Past {short} {type}", "artifactUrl": "", "subjects": [{"id": "nl", "name": "National License (NL)", "wards": ["nl1", "nl2"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "roundNames": {"Grand round": "Random", "Service round": "Year by year", "Legendary round": "Real Experience", "Ward staff round": "Redo", "Teaching round": "Guidance", "Advisor round": "Revise", "Unit round": "Lecture quiz", "Quality round": "Timed", "Admission round": "Anything", "Specialty round": "Quiz by topics", "Round I/O": "Summary"}, "inst": {"id": "nl", "name": "NL", "th": "NL", "en": "National License Examination", "enShort": "NLE", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"nl1": "#/nl/x/nl1", "nl2": "#/nl/x/nl2"}}, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "brand": "Past NL part 1 MCQ", "dir": "data_nl1", "scope": "National License Examination Part I (NLE Part I) — ใช้ blueprint ใหม่ (มีผล 1 ม.ค. 2570): ความรู้วิทยาศาสตร์การแพทย์ + clinical ถึงปี 5 = NL1 เก่า + NL2 เก่า", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "brand": "Past NL part 2 MCQ", "dir": "data_nl2", "scope": "National License Examination Part II (NLE Part II) = NL3 เก่า (clinical ถึงปี 6)", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="04/11/2026 08:37";
+const CONFIG={"title": "คลังข้อสอบเก่า NL · โพยหมอ", "brand": "Past NL", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-nl-v1", "setLabel": "ชุด", "roLabel": "ที่มา", "chipStrip": "", "files": {"NL2NEO": "L42_Neonatology"}, "siteUrl": "https://bankypp.github.io/doc-script/bank/nl/", "siteName": "คลังข้อสอบเก่า NL", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "nl"], "sharedPrefix": "poy_nl_", "homeBrand": "Past {short} by BankyPP", "quizBrand": "Past {short} {type}", "artifactUrl": "", "subjects": [{"id": "nl", "name": "National License (NL)", "wards": ["nl1", "nl2"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "roundNames": {"Grand round": "Random", "Service round": "Year by year", "Legendary round": "Real Experience", "Ward staff round": "Redo", "Teaching round": "Guidance", "Advisor round": "Revise", "Unit round": "Lecture quiz", "Quality round": "Timed", "Admission round": "Anything", "Specialty round": "Quiz by topics", "Round I/O": "Summary"}, "inst": {"id": "nl", "name": "NL", "th": "NL", "en": "National License Examination", "enShort": "NLE", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"nl1": "#/nl/x/nl1", "nl2": "#/nl/x/nl2"}, "others": {"inst": "compre", "before": false, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "noExam": ["MEQ"]}]}}, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "brand": "Past NL part 1 MCQ", "dir": "data_nl1", "scope": "National License Examination Part I (NLE Part I) — ใช้ blueprint ใหม่ (มีผล 1 ม.ค. 2570): ความรู้วิทยาศาสตร์การแพทย์ + clinical ถึงปี 5 = NL1 เก่า + NL2 เก่า", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"], "lectures": [{"title": "L42_Neonatology — ติวสอบ NL2 (จุฬาฯ)", "topic": "2.3.16 Perinatal period"}]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "brand": "Past NL part 2 MCQ", "dir": "data_nl2", "scope": "National License Examination Part II (NLE Part II) = NL3 เก่า (clinical ถึงปี 6)", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
+const BUILD="07/11/2026 20:55";
 WARDS["nl1"]={QB:[],HY:null};
 (function(QB){
 (function(){
@@ -1562,6 +1566,11 @@ A({page:17, orig:"ไม่มีเลข (หน้า 17 ลายมือ)"
 })();
 
 })(WARDS["nl1"].QB);
+(function(W){W.UNIT=W.UNIT||[];
+/* Unit round — L42_Neonatology (ติวสอบ NL2 จุฬาฯ) · ใส่แค่หัวข้อบทไว้ก่อน (ยังไม่มีโจทย์ — 200 ข้อรอผู้ใช้สั่ง 7 พ.ย. 2026) */
+W.UNIT.push({"id": "L42_Neonatology", "title": "L42_Neonatology — ติวสอบ NL2 (จุฬาฯ)", "short": "L42", "src": "NL2_Neonatology.pdf (ติวสอบ NL2 จุฬาฯ — Thaninee Chitsinchayakul, MD., 17 หน้า)", "topic": "2.3.16 Perinatal period", "tags": ["2.3.16 Perinatal period"], "QB": []});
+
+})(WARDS["nl1"]);
 (function(W){
 /* หัวข้อของแต่ละข้อ = แท็ก blueprint หลัก (แท็กแรก) — ใช้กับ Advisor / Round I/O / Specialty */
 W.TOPIC={
@@ -1602,6 +1611,153 @@ W.TAGS={
 "NL2 เก่า|ติวจุฬาฯ Neonatology|6":["2.3.16 Perinatal period","2.3.7 Eye & adnexa"],
 "NL2 เก่า|ติวจุฬาฯ Neonatology|ไม่มีเลข (หน้า 17 ลายมือ)":["1.5 Check-up, screening & certificates","2.3.8 Ear & mastoid"]
 };
+
+})(WARDS["nl1"]);
+(function(W){
+/* Round I/O (อ่านสรุปเนื้อหา) — NL part 1 · W.IO.docs = [{code, kind:"L"|"R"|"T"|"N", title, src, upd, legend?, pages:[{id,title,topics,rev,upd,html}]}]
+   topics = แท็ก blueprint NLE Part I ใหม่ (ชุดเดียวกับ tags.js / docs/data/blueprint.js) → "รวมตามเรื่อง" และ Specialty round เลือกตามเรื่องได้
+   L42_Neonatology = clone ของสรุป nl2-neonatology-mdcu ใน docs/data/nl.js (กติกา clone: แก้/โน้ตที่หนึ่งต้องแก้อีกที่ให้ตรงกัน)
+   ทุกครั้งที่แก้/เพิ่มเนื้อหาหน้าไหน ให้เพิ่ม rev และเปลี่ยน upd ของหน้านั้น */
+W.IO={"docs":[{
+"code": "L42_Neonatology",
+"kind": "L",
+"title": "ติวสอบ NL2 (จุฬาฯ)",
+"src": "NL2_Neonatology.pdf (ติวสอบ NL2 จุฬาฯ — Thaninee Chitsinchayakul, MD., 17 หน้า) · เนื้อหาชุดเดียวกับโพยหมอ › ติว NL & Compre › สรุปเนื้อหา (แก้ที่หนึ่งต้องแก้อีกที่ให้ตรงกัน)",
+"upd": "2026-11-07",
+"legend": "<span><span class=\"hw\">ตัวเอียง</span> = ลายมือผู้จดในไฟล์</span><span>★ = ผู้สอนติดดาว</span><span>แท็กเรื่อง = หัวข้อ blueprint NLE Part I ใหม่</span>",
+"pages": [
+{
+"id": "L42-1",
+"title": "Neonatal jaundice — เกณฑ์ AAP 2022 และสาเหตุตามเวลา",
+"topics": [
+"2.3.16 Perinatal period"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"iointro\">ติวสอบ NL2 — Thaninee Chitsinchayakul, MD. (จุฬาฯ) · บท Neonatology · หัวข้อในไฟล์: Neonatal jaundice ★ · Neonatal sepsis · Scalp injuries ★ · Hypoglycemia ★ (ออกแน่) · Polycythemia (ออก) · Neonatal anemia · Acid elution / APT test · Respiratory distress ★ (รวม CDH ออก , TE fistula) · Neonatal resuscitation (NCPR) · SGA · TORCH · Neonatal conjunctivitis · Vital signs · Hearing screening (หน้าสุดท้าย ลายมือ)</div><div class=\"box\"><h3>Neonatal jaundice — AAP 2004 → 2022</h3><ul><li>2022 เปลี่ยน: เกณฑ์ phototherapy สูงขึ้น · เกณฑ์ exchange สูงขึ้น · เพิ่ม <b>escalation of care</b> · รายละเอียดเฉพาะขึ้น (แยกตาม GA + risk factor)</li><li><b>Neurotoxicity risk factors</b>: GA &lt;38 wk (ยิ่ง preterm ยิ่งเสี่ยง <span class=\"hw\">BBB ยังไม่ดี bilirubin ผ่านง่าย</span>) · albumin &lt;3 g/dL <span class=\"hw\">→ unconjugated free bilirubin ↑</span> · isoimmune/non-immune hemolytic disease · sepsis · clinical instability ใน 24 ชม.ที่ผ่านมา</li></ul><table><tr><th>MB (mg/dL)</th><th>24 ชม.</th><th>48 ชม.</th></tr><tr><td>Phototherapy 2004</td><td>8–12</td><td>11–15</td></tr><tr><td>Phototherapy 2022</td><td>9–11 <span class=\"hw\">≈10</span></td><td>12–14 <span class=\"hw\">≈12–13</span></td></tr><tr><td>Exchange 2004</td><td>15–19</td><td>17–23</td></tr><tr><td>Exchange 2022</td><td>16–18 <span class=\"hw\">18</span></td><td>18–20 <span class=\"hw\">20</span></td></tr></table><ul><li><b>Escalation of care</b> = TSB ต่ำกว่าเกณฑ์ exchange ≤2 mg/dL → intensive phototherapy + IV hydration · work-up TB, DB, crossmatch <span class=\"hw\">(เตรียม exchange)</span> · F/U TSB ทุก 2 ชม. จนต่ำกว่าระดับ escalation · ตัวอย่าง อายุ 24 ชม. escalation point = 14</li></ul></div><div class=\"box\"><h3>สาเหตุตามเวลาที่เริ่มเหลือง</h3><ul><li><b>&lt;24 ชม.: hemolysis</b> — immune (ABO, Rh, minor blood group; <b>DCT บวก</b>) <span class=\"hw\">ABO: แม่ O ลูกไม่ O · Rh: แม่ Rh− ลูก Rh+</span> · non-immune (G6PD, hereditary spherocytosis; <span class=\"hw\">DCT neg · spherocyte + polychromasia</span>)</li><li><b>24–48 ชม.</b>: G6PD, sepsis</li><li><b>Day 3–5</b>: <b>breastfeeding jaundice</b> (น้ำหนักลดมาก <span class=\"hw\">นมไม่พอ</span>) · skin ecchymosis (subgaleal, cephalohematoma) · enterohepatic circulation ↑ · polycythemia · sepsis</li><li><b>&gt;Day 5</b>: breastfeeding jaundice (weight loss) · <b>breast milk jaundice</b> (นมแม่ล้วน + น้ำหนักขึ้นปกติ) · cephalohematoma · sepsis</li><li><b>&gt;2 wk</b>: BF/BM jaundice · sepsis · <b>congenital hypothyroid · biliary atresia (acholic stool)</b> · Gilbert · Crigler-Najjar</li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_02}}{{IMG:knl2neo_03a}}{{IMG:knl2neo_03c}}{{IMG:knl2neo_03d}}</div>"
+},
+{
+"id": "L42-2",
+"title": "Neonatal sepsis",
+"topics": [
+"2.3.16 Perinatal period",
+"2.3.1 Infectious & parasitic"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>Neonatal sepsis</h3><table><tr><th></th><th>Early-onset</th><th>Late-onset</th></tr><tr><td>Onset</td><td>&lt;72 ชม. (&lt;6 วัน)</td><td>&gt;72 ชม. (&gt;6 วัน)</td></tr><tr><td>ทาง</td><td>vertical จาก GI/GU แม่</td><td>horizontal — nosocomial/สิ่งแวดล้อม</td></tr><tr><td>เชื้อ</td><td>GBS, Listeria, GN enteric (E. coli)</td><td>CoNS, S. aureus, GBS + E. coli, herpes</td></tr><tr><td>Ix</td><td>CBC, H/C ± serial CRP <span class=\"hw\">(6, 12, 24 hr)</span>, CXR ถ้ามีอาการ, ± LP</td><td>CBC, H/C, <b>urine culture, LP</b>, CXR ถ้ามีอาการ</td></tr><tr><td>ATB</td><td><b>Ampicillin + gentamicin</b></td><td>Cefotaxime + ampicillin <span class=\"hw\">(สงสัย Listeria)</span> · cefotaxime + amikacin · vancomycin + aminoglycoside <span class=\"hw\">(อยู่ รพ.นาน/มี catheter)</span></td></tr></table><ul><li>Risk factors: maternal fever · <b>PROM &gt;18 ชม.</b> · chorioamnionitis → Triple I · maternal GBS colonization · maternal UTI · preterm labour</li><li>อาการ: respiratory distress · apnea · temperature instability · lethargy <span class=\"hw\">(ซึม)</span> · septic shock <span class=\"hw\">(tachycardia, BP drop)</span></li><li><b>LP ใน EOS</b>: hemoculture บวก <span class=\"hw\">(→ meningitis ~30%)</span> · สงสัย meningitis (ชัก, ซึม) · ไม่ตอบสนองต่อยาที่เหมาะสม</li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_04d}}{{IMG:knl2neo_05a}}{{IMG:knl2neo_05b}}</div>"
+},
+{
+"id": "L42-3",
+"title": "Scalp injury — caput · subgaleal · cephalohematoma",
+"topics": [
+"2.3.16 Perinatal period",
+"2.2 Emergency"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>Scalp injury ★ <span class=\"hw\">ออกบ่อย</span></h3><table><tr><th></th><th>ลักษณะ</th><th>เวลา</th><th>ภาวะแทรกซ้อน</th></tr><tr><td>Caput succedaneum</td><td>soft tissue บวม <b>ข้าม suture</b></td><td>มีตั้งแต่เกิด หายในไม่กี่วัน</td><td>—</td></tr><tr><td><b>Subgaleal hemorrhage</b></td><td>fluctuant → tense, <b>ข้าม suture</b> <span class=\"hw\">(ใต้ galea)</span></td><td>หลังเกิดไม่นาน หายใน ~1 สัปดาห์</td><td><b>Hypovolemic shock ★★</b>, jaundice</td></tr><tr><td>Cephalohematoma</td><td>tense, <b>ไม่ข้าม suture</b> <span class=\"hw\">(ใต้ periosteum)</span></td><td>ใน 24 ชม.แรก หายหลายสัปดาห์</td><td>jaundice, calcified (ไม่บ่อย)</td></tr></table><ul><li>โจทย์: vacuum + ก้อนโตขึ้น/ข้าม midline + BP ต่ำ → ติดตาม <b>serial Hct</b> · ช็อก → <b>NSS 10 mL/kg</b></li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_05d}}{{IMG:knl2neo_06a}}</div>"
+},
+{
+"id": "L42-4",
+"title": "Vital signs (neonatal period)",
+"topics": [
+"2.3.16 Perinatal period"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>Vital signs (neonatal period)</h3><ul><li>BT 36.5–37.5 °C · RR 40–60 <span class=\"hw\">(&gt;60 = respiratory distress, &lt;40 ช้า, หยุดหายใจ &gt;20 วินาที = apnea)</span> · PR 100–160 <span class=\"hw\">(&lt;100 → PPV · tachycardia + cap refill &gt;2 s/BP drop = shock)</span></li><li>SBP ตามน้ำหนัก: <b>40 / 50 / 60 mmHg ที่ 1 / 2 / 3 kg</b> <span class=\"hw\">(4 kg ≈ 70)</span> · <b>MAP ≈ GA</b> (GA 39 wk ให้ MAP &gt;39)</li><li><span class=\"hw\">SpO2 &gt;95% · preterm &gt;90% OK · term &lt;95% → ให้ O2</span></li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_16d}}</div>"
+},
+{
+"id": "L42-5",
+"title": "Neonatal hypoglycemia",
+"topics": [
+"2.3.16 Perinatal period",
+"2.3.4 Endocrine, nutrition & metabolic"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>Hypoglycemia ★ <span class=\"hw\">ออกแน่</span></h3><ul><li>นิยาม: <b>POCT glucose ≤40 mg%</b></li><li>คัดกรองกลุ่มเสี่ยง: preterm · IUGR/SGA · LBW · LGA · maternal diabetes</li><li>อาการ: sweating · tachypnea, cyanosis, apnea · hypotonia, poor feeding · seizure · lethargy, coma · jitteriness</li><li><b>Symptomatic</b>: เจาะ blood sugar → <b>10% dextrose 2 mL/kg IV push ★</b> → F/U POCT 60 นาที → IV fluid GIR 5–8 mg/kg/min <span class=\"hw\">(80–100 mL/kg/day)</span></li><li><b>Asymptomatic</b>: <b>early feeding</b> → F/U POCT 60 นาที</li><li>AAP: symptomatic + &lt;40 → IV glucose · 0–4 ชม.: feed ใน 1 ชม.แรก เจาะ 30 นาทีหลัง feed — &lt;25 feed/เจาะซ้ำ 1 ชม. → ยัง &lt;25 IV, 25–40 refeed/IV prn · 4–24 ชม.: feed q2–3 ชม. เจาะก่อนทุก feed — &lt;35 IV (หลัง feed ไม่ขึ้น), 35–45 refeed/IV prn · เป้า ≥45 ก่อน routine feed · glucose dose 200 mg/kg (D10 2 mL/kg) และ/หรือ 5–8 mg/kg/min</li><li>Emergency: dextrose 0.2 g/kg IV ใน 1 นาที แล้ว infusion GIR 6–8 · <b>GIR = %dextrose × rate (mL/h) ÷ (6 × BW)</b> · เจาะซ้ำทุก 10–20 นาที (keep 70–120)</li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_06d}}{{IMG:knl2neo_07a}}{{IMG:knl2neo_07b}}</div>"
+},
+{
+"id": "L42-6",
+"title": "Polycythemia · neonatal anemia · acid elution / APT test",
+"topics": [
+"2.3.16 Perinatal period",
+"2.3.3 Blood & immune"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>Polycythemia <span class=\"hw\">ออก</span></h3><ul><li>นิยาม: <b>venous Hct ≥65%</b> <span class=\"hw\">(ปกติ 45–65 · capillary สูงกว่า venous)</span></li><li>Risk: placental insufficiency · maternal diabetes · maternal smoking <span class=\"hw\">(vasospasm → hypoxia → EPO)</span> · trisomy 13/18/21, Beckwith-Wiedemann <span class=\"hw\">(LGA)</span> · twin-to-twin transfusion · neonatal hyperthyroidism</li><li>Hyperviscosity: blood flow ไปสมอง หัวใจ ปอด ลำไส้ลดลง · irritability, jitteriness, tremor · feeding difficulty · lethargy · apnea, cyanosis, RD · seizure</li><li>รักษา (partial exchange transfusion): asymptomatic Hct &gt;70% · symptomatic Hct &gt;65%</li><li><b>NSS (mL) = (Hct ทารก − 55) × 80 × BW ÷ Hct ทารก</b> <span class=\"hw\">(55 = Hct ที่ต้องการ · 80 = blood volume mL/kg)</span></li></ul></div><div class=\"box\"><h3>Neonatal anemia</h3><ul><li>นิยาม Hct &lt;−2SD, <b>Hct &lt;40%</b></li><li><b>Blood loss</b>: antepartum (abruptio, previa, TTTS) · intrapartum (<b>fetomaternal hemorrhage</b> <span class=\"hw\">→ acid elution test</span>, obstetric trauma) · neonatal (subgaleal, intracranial, visceral bleed) → Dx: peripartum history, acid elution test ★, PE</li><li><b>Hemolysis</b>: immune (ABO, Rh, minor) · non-immune (sepsis) · enzyme (G6PD) · membrane (HS, HE) → anemia + jaundice, reticulocyte/NRBC ↑, PBS</li><li><b>Underproduction</b>: congenital (Diamond-Blackfan, congenital leukemia) · acquired (rubella, syphilis, aplastic) → reticulocyte ↓</li></ul></div><div class=\"box\"><h3>Acid elution · APT test</h3><ul><li><b>Kleihauer-Betke (acid elution)</b>: ยืนยัน <b>fetomaternal hemorrhage</b> · ทำบน<b>เลือดแม่</b> หาปริมาณ HbF ที่เข้าไปในแม่ · HbF ทนกรด, HbA ถูกชะออก <span class=\"hw\">(เม็ดเลือดแม่ HbA จางเป็นผี · เม็ดเลือดลูก HbF ติดสีชมพู)</span></li><li><b>APT (Apt-Downey / alkali denaturation)</b>: แยกเลือดในอุจจาระ/อาเจียนของทารกว่าเป็น<b>เลือดลูกหรือเลือดแม่ที่กลืนเข้าไป</b> · ผสมน้ำให้ hemolysis (supernatant สีชมพู) → ผสม 1% NaOH · <b>ยังชมพู = fetal blood (positive)</b> · เหลือง-น้ำตาล = maternal blood</li></ul></div>"
+},
+{
+"id": "L42-7",
+"title": "Respiratory distress — RDS · TTNB · MAS · pneumonia",
+"topics": [
+"2.3.16 Perinatal period"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>Respiratory distress ★</h3><ul><li>DDx: RDS · TTNB <span class=\"hw\">(เหนื่อยใน 2–3 ชม.แรก)</span> · MAS · infection (pneumonia/sepsis) · CDH · TE fistula</li><li><b>RDS</b>: preterm &lt;34 wk (&lt;5% ใน &gt;34 wk) · <b>6 เท่าใน maternal diabetes</b> <span class=\"hw\">(insulin ทำให้ surfactant maturation ช้า)</span> · type II pneumocyte ยังไม่โต → surfactant น้อย → surface tension ↑ compliance ↓ · grunting, retraction, poor air entry, hypoxia, cyanosis <span class=\"hw\">เหนื่อยภายใน 2 ชม.แรก</span> · CXR: homogeneous opacity (ground glass), air bronchogram, <b>lung volume ลด ★★</b></li><li><b>TTNB ★★</b>: สาเหตุ RD ที่พบบ่อยสุดใน <b>term (40%)</b> · risk: maternal diabetes, <b>cesarean ★★★</b> <span class=\"hw\">(ไม่ได้เจ็บครรภ์ → ไม่มี catecholamine → ENaC ไม่ทำงาน → น้ำในปอดไม่ถูกดูดกลับ)</span> · delayed clearance of fetal lung fluid · อาการทันทีหรือใน 2 ชม. · CXR: diffuse parenchymal infiltrate รอบหัวใจ, <b>fluid in minor fissure</b>, hyperaeration ± pleural effusion</li><li><b>MAS</b>: term/post-term · meconium irritative + obstructive → หอบทันทีหลังคลอด <span class=\"hw\">(air trap · chemical pneumonitis)</span> · ภาวะแทรกซ้อน <b>air leak</b> (pneumothorax, pneumomediastinum), <b>PPHN</b> · CXR: patchy opacity + hyperinflation (atelectasis + air trapping)</li><li><b>Pneumonia/sepsis</b>: GBS, S. aureus, S. pneumoniae, GN rods · RD + temperature instability · <b>ใช้เวลาเป็นชั่วโมงถึงวัน</b> <span class=\"hw\">(เหนื่อยหลังคลอด 2–3 วัน → infection)</span> · risk: preterm, chorio, maternal fever, PROM นาน, GBS+ · CXR patchy ± air bronchogram</li></ul></div>"
+},
+{
+"id": "L42-8",
+"title": "CDH · TE fistula",
+"topics": [
+"2.3.17 Congenital & chromosomal",
+"2.2 Emergency"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>CDH ★ <span class=\"hw\">ออก</span> · TE fistula</h3><ul><li><b>CDH</b>: 85% ซ้าย · RD ในไม่กี่นาทีแรก, retraction, cyanosis, <b>scaphoid abdomen</b> <span class=\"hw\">(KW)</span>, heart sound ย้ายไปขวา (left CDH), breath sound ลด/ได้ยิน bowel sound ข้างที่เป็น · ภาวะแทรกซ้อน: lung hypoplasia, PPHN, pneumothorax · Mx: <b>ห้าม PPV via mask</b> <span class=\"hw\">(ลมเข้าลำไส้ในช่องอก)</span> · <b>intubate ★★</b> เมื่อมี RD · OG decompress · NPO</li><li><b>TE fistula</b>: พบบ่อยสุด <b>EA with distal TEF (type C, 87%)</b> · ร่วม <b>VACTERL</b> (vertebral, anorectal, cardiac, TEF, renal, limb) · Hx polyhydramnios <span class=\"hw\">(กลืนน้ำคร่ำไม่ได้)</span> · RD · hypersecretion, drooling · choking <span class=\"hw\">(ให้นมแล้วสำลัก)</span> · secretion sound/coarse crepitation ทั้งสองปอด · aspiration pneumonia · Dx**: <b>OG tube ใส่ไม่ผ่านเกิน 10–15 cm</b> → CXR เห็นสายขดใน upper esophageal pouch <span class=\"hw\">(ใส่ OG ก่อนแล้ว CXR)</span> · Mx: intubate ตามข้อบ่งชี้ · คา OG + low-pressure suction · NPO · หัวสูง · consult ped surg · empirical antibiotic</li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_11c}}{{IMG:knl2neo_11d}}</div>"
+},
+{
+"id": "L42-9",
+"title": "Neonatal resuscitation (NRP 8th)",
+"topics": [
+"2.2 Emergency",
+"2.3.16 Perinatal period"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>Neonatal resuscitation (NRP 8th)</h3><ul><li><b>Initial steps</b>: warm, dry, stimulate, position airway (แหงนคอเล็กน้อย), suction ถ้าจำเป็น <span class=\"hw\">(วางใต้ radiant warmer เช็ดตัว เปลี่ยนผ้า)</span></li><li><b>Apnea/gasping หรือ HR &lt;100 → PPV</b> (→ ET tube) · labored breathing/cyanosis → O2 <span class=\"hw\">(term)</span> / CPAP <span class=\"hw\">(preterm)</span></li><li><b>HR &lt;60 → chest compression</b> → drugs (adrenaline, NSS) · <span class=\"hw\">HR&lt;100 PPV · HR&lt;60 CPR</span></li><li>Target SpO2: 1 นาที 60–65% · 2 นาที 65–70% · 3 นาที 70–75% · 4 นาที 75–80% · 5 นาที 80–85% · 10 นาที 85–95% · O2 เริ่ม PPV: ≥35 wk 21% · &lt;35 wk 21–30%</li><li><b>Airway and breathing are important in NCPR</b> · แม่ได้ pethidine: <span class=\"hw\">guideline 2010 ให้ naloxone · 2020 ใส่ tube</span> · MSAF non-vigorous HR &lt;100 → PPV (ไม่ดูดขี้เทาผ่านท่อเป็น routine)</li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_13b}}{{IMG:knl2neo_13d}}</div>"
+},
+{
+"id": "L42-10",
+"title": "SGA · TORCH",
+"topics": [
+"2.3.16 Perinatal period",
+"2.3.17 Congenital & chromosomal",
+"2.3.1 Infectious & parasitic"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>SGA</h3><table><tr><th></th><th>Symmetrical <span class=\"hw\">(เกิดจากตัวเด็ก)</span></th><th>Asymmetrical <span class=\"hw\">(เกิดจากแม่)</span></th></tr><tr><td>Etiology</td><td>intrinsic ต่อทารก</td><td>รก, โรคแม่</td></tr><tr><td>ตัวอย่าง</td><td>chromosome, genetic, congenital infection (TORCH)</td><td>chronic HT, preeclampsia, chronic fetal distress</td></tr><tr><td>Body / Brain</td><td>เล็กทั้งคู่</td><td>ตัวเล็ก <b>สมองไม่เล็ก</b></td></tr><tr><td>ช่วงที่กระทบ</td><td>ไตรมาสแรก</td><td>ไตรมาส 3 / ปลายไตรมาส 2</td></tr></table><ul><li>Complications: perinatal asphyxia · meconium aspiration <span class=\"hw\">(fetal distress → ขี้เทา → MAS)</span> · hypoglycemia · polycythemia · hypothermia</li><li>SGA + malformation (cleft lip) + แม่อายุมาก → <b>chromosome study</b></li></ul></div><div class=\"box\"><h3>TORCH</h3><ul><li>T toxoplasmosis · O others (syphilis, Zika <span class=\"hw\">VZV</span>) · R rubella · C CMV · H herpes</li><li>ร่วม: IUGR · microcephaly · ventriculomegaly · intracranial calcification · optic nerve hypoplasia · chorioretinal atrophy</li><li>Toxo: diffuse ICC, hydrocephalus, chorioretinitis · Syphilis: snuffles, maculopapular rash ฝ่ามือฝ่าเท้า, bone change (osteochondritis, periostitis) · <b>Rubella ★</b>: blueberry muffin, ตา (cataract, congenital glaucoma, pigmentary retinopathy), <b>CHD (PDA, pulmonary artery stenosis)</b> <span class=\"hw\">→ heart</span> · <b>CMV ★</b>: periventricular calcification, microcephaly · HSV: vesicle/scar, conjunctivitis/keratoconjunctivitis, LFT ↑ · Zika: microcephaly, ventriculomegaly, ICC, optic nerve hypoplasia</li><li><span class=\"hw\">clouded lens (ต้อกระจก) = KW → rubella</span></li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_14c}}{{IMG:knl2neo_14d}}{{IMG:knl2neo_15d}}</div>"
+},
+{
+"id": "L42-11",
+"title": "Neonatal conjunctivitis",
+"topics": [
+"2.3.7 Eye & adnexa",
+"2.3.16 Perinatal period"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3>Neonatal conjunctivitis (Nelson table)</h3><table><tr><th></th><th>Onset</th><th>ลักษณะ</th><th>Dx</th><th>Rx</th></tr><tr><td>Chemical</td><td>24 ชม.</td><td>noninfectious, lid edema, watery</td><td>ประวัติยา หายเองใน &lt;48 ชม.</td><td>ไม่ต้อง</td></tr><tr><td>Gonococcal</td><td>3–4 วัน</td><td>hyperacute purulent, lid edema มาก, cornea perforate ได้</td><td>Gram stain GN intracellular diplococci</td><td>ceftriaxone 25–50 mg/kg ครั้งเดียว + irrigation</td></tr><tr><td>Chlamydia</td><td>5–7 วัน (พบบ่อยสุด)</td><td>mild mucopurulent, pseudomembrane, pneumonitis 3–12 wk</td><td>Giemsa inclusion, DFA, PCR</td><td>oral erythromycin 12.5 mg/kg q6h 2 wk หรือ azithromycin 20 mg/kg/d 3 วัน</td></tr><tr><td>Staph/Strep</td><td>5–14 วัน</td><td>nosocomial</td><td>culture</td><td>topical</td></tr><tr><td>HSV</td><td>6–14 วัน</td><td>dendritic keratitis</td><td>DFA/PCR</td><td>acyclovir 60 mg/kg/d IV + topical</td></tr></table><ul><li><span class=\"hw\">silver nitrate = ยาหยอดตา → chemical · ป้ายยา tetracycline = OK</span></li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_16b}}</div>"
+},
+{
+"id": "L42-12",
+"title": "Hearing screening ในทารกแรกเกิด (ลายมือหน้าสุดท้าย)",
+"topics": [
+"1.5 Check-up, screening & certificates",
+"2.3.8 Ear & mastoid"
+],
+"rev": 1,
+"upd": "2026-11-07",
+"html": "<div class=\"box\"><h3><span class=\"hw\">ต้องตรวจการได้ยินตอนไหน (ลายมือหน้าสุดท้าย)</span></h3><ul><li><b>OAE screening → ตรวจทุกคน</b></li><li><b>ABR → ตรวจในคนเสี่ยง</b>: เหลืองจนถึงเกณฑ์ exchange · chromosome abnormality · craniofacial malformation · meningitis (อาจกด brain stem) · ได้ ototoxic drug (gentamicin, aminoglycoside, lasix) · เจ็บป่วยมาก อยู่ รพ.นาน · <b>low Apgar score</b> (เลือดไปเลี้ยงสมองน้อย)</li></ul></div><div class=\"box\"><h3>สไลด์ต้นฉบับ (มีลายมือ)</h3>{{IMG:knl2neo_17}}</div>"
+}
+]
+}],"merged":{}};
 
 })(WARDS["nl1"]);
 WARDS["nl1"].MQ=[];
@@ -5954,15 +6110,17 @@ if(HAS_CLAUDE())initClaude();else initFB();
 </script>
 <script>
 /* โพยหมอ hooks for the old-exam engine — added around the engine, never inside it:
-   1) a "โพยหมอ" link at the top-left of the bar (back to ติว NL & Compre)
-   2) on each exam home (#/<ward>) a card linking to that exam's page in โพยหมอ (blueprint · analysis · reading plan) — CONFIG.poy.exams */
+   1) a back link at the top-left of the bar → โพยหมอ › ติว NL & Compre › ข้อสอบ (#/nl/exams) — user, 7 Nov 2026
+   2) on each exam home (#/<ward>) a card linking to that exam's page in โพยหมอ (blueprint · analysis · reading plan) — CONFIG.poy.exams
+   3) ward picker shows NL and Compre together, NL all → Compre all (user, 7 Nov 2026): the other bank's exams are added as cards
+      linking into that bank (CONFIG.poy.others = {inst, before, wards:[{id,name,short,sub,noExam}]}, counts from ../stats.js) */
 (function () {
   var P = (typeof CONFIG !== 'undefined' && CONFIG.poy) || {}, X = P.exams || {}, BASE = '../../';
   var bar = document.querySelector('.bar-in');
   if (bar && !document.querySelector('.poy-back')) {
     var a = document.createElement('a');
-    a.className = 'poy-back'; a.href = BASE + '#/nl'; a.title = 'กลับไปโพยหมอ › ติว NL & Compre';
-    a.innerHTML = '<svg width="18" height="18" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 33C18 24 17 16 19 5"/><path d="M18 22C12 21 8 17 7 11c6 1 10 5 11 11z"/><path d="M18.5 15c4.5-1 8.5-5 9.5-10-5 1-8.5 4.5-9.5 10z"/></svg><span>โพยหมอ</span>';
+    a.className = 'poy-back'; a.href = BASE + '#/nl/exams'; a.title = 'กลับไปโพยหมอ › ติว NL & Compre › ข้อสอบ';
+    a.innerHTML = '<svg class="pb-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><svg width="18" height="18" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 33C18 24 17 16 19 5"/><path d="M18 22C12 21 8 17 7 11c6 1 10 5 11 11z"/><path d="M18.5 15c4.5-1 8.5-5 9.5-10-5 1-8.5 4.5-9.5 10z"/></svg><span class="pb-t"><small>โพยหมอ ›</small> ข้อสอบ</span>';
     bar.insertBefore(a, bar.firstChild);
   }
   var NAME = {};
@@ -5977,10 +6135,37 @@ if(HAS_CLAUDE())initClaude();else initFB();
     var sub = head.nextElementSibling && head.nextElementSibling.classList.contains('sub') ? head.nextElementSibling : head;
     sub.parentNode.insertBefore(c, sub.nextSibling);
   }
+
+  /* ward picker: add the other bank's exams (NL all → Compre all) */
+  var O = P.others || null, STAT = null;
+  function esc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function oCard(w) {
+    var no = w.noExam || [], c = (STAT && STAT[w.id]) || {}, n = Math.max.apply(null, String(w.short || w.id).split(' ').map(function (x) { return x.length; }));
+    var acn = '<span class="acn"><span class="acl">ข้อสอบเก่า AC</span>' + ['MCQ', 'MEQ', 'OSCE'].filter(function (k) { return no.indexOf(k) < 0; }).map(function (k) {
+      var v = k === 'MCQ' ? (c.n || 0) : 0; return '<span class="act' + (v ? '' : ' z') + '">' + k + ' <b>' + v + '</b></span>'; }).join('') + '</span>';
+    return '<a class="wcard poy-ow" href="../' + O.inst + '/#/' + esc(w.id) + '"><span class="wb" style="font-size:' + (n > 5 ? 11 : n > 4 ? 12.5 : 14) + 'px">' + esc(w.short || w.id) + '</span><span><b>' + esc(w.name) + '</b><span class="rd">' + esc(w.sub || '') + '</span>' + acn + '</span></a>';
+  }
+  function picker() {
+    if (!O || !(O.wards || []).length) return;
+    var h = location.hash || '', main = document.getElementById('main');
+    if (!(h === '' || h === '#' || h === '#/') || !main || main.querySelector('.poy-ow')) return;
+    var cards = main.querySelectorAll('a.wcard'); if (!cards.length) return;
+    var h1 = main.querySelector('h1.h1'); if (h1) h1.textContent = 'คลังข้อสอบเก่า NL & Compre';
+    var box = document.createElement('div'); box.className = 'poy-owrap';
+    box.innerHTML = O.wards.map(oCard).join('');
+    if (O.before) cards[0].parentNode.insertBefore(box, cards[0]);
+    else { var last = cards[cards.length - 1]; last.parentNode.insertBefore(box, last.nextSibling); }
+  }
+  if (O) {
+    var sc = document.createElement('script'); sc.src = '../stats.js?t=' + Date.now();
+    sc.onload = function () { STAT = window.POY_BANKSTAT || null; var b = document.querySelector('.poy-owrap'); if (b) { b.remove(); picker(); } };
+    document.head.appendChild(sc);
+  }
+  function all() { card(); picker(); }
   var main = document.getElementById('main');
-  if (main) new MutationObserver(card).observe(main, { childList: true });
-  window.addEventListener('hashchange', function () { setTimeout(card, 0); });
-  card();
+  if (main) new MutationObserver(all).observe(main, { childList: true });
+  window.addEventListener('hashchange', function () { setTimeout(all, 0); });
+  all();
 })();
 </script>
 </body>
