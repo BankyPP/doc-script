@@ -26,6 +26,7 @@ BOOKS = {
     'bb': {'title': 'Blackbook: Approaches to Medical Presentations', 'by': 'Cumming School of Medicine, University of Calgary',
            'ed': 'Fifteenth Edition (2022) · CC BY-NC 4.0', 'inst': 'intl'},
     'tn': {'title': 'Chest pain (เอกสารสอนนักศึกษาแพทย์ปีที่ 4)', 'by': 'อ. พญ. ภัณฑิลา วาณิชย์การ', 'inst': 'si'},
+    'ts': {'title': 'Dysnatremia (เอกสารคำสอน · ไฟล์ 2024Dysnatremia)', 'by': 'สุชาย ศรีทิพยวรรณ', 'inst': 'si'},
 }
 GROUPS = [
     ('base', 'พื้นฐานการดูแลผู้ป่วย', '#7A5C3E', [1, 2]),

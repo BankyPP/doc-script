@@ -985,6 +985,7 @@ a.spo{text-decoration:none}
 .bk.yb{color:#7A5800;border-color:#E5C766;background:#FBF0C6}
 .bk.bb{color:#F4F1EA;border-color:#2B2B2B;background:#2B2B2B}
 .bk.tn{color:#1F5A45;border-color:#A6CDBB;background:#E4F2EB}
+.bk.ts{color:#7A3E1D;border-color:#E2BFA3;background:#F7EADF}
 .bk.ai{color:#4F3F80;border-color:#C9BEE6;background:#EFEBF8}
 .sxsec>summary .bks,.sxbox>summary .bks{max-width:42%;justify-content:flex-end}
 .sxs2 h4 .bks{margin-left:4px}
@@ -997,6 +998,7 @@ a.spo{text-decoration:none}
 .sx .sb.yb{border-color:#E5C766}.sx .sb.yb::before{content:'เล่มเหลือง';color:#7A5800}
 .sx .sb.bb{border-color:#2B2B2B}.sx .sb.bb::before{content:'Blackbook';color:#2B2B2B}
 .sx .sb.tn{border-color:#A6CDBB}.sx .sb.tn::before{content:'เอกสารคำสอน อ.พญ.ภัณฑิลา';color:#1F5A45}
+.sx .sb.ts{border-color:#E2BFA3}.sx .sb.ts::before{content:'เอกสารคำสอน อ.สุชาย';color:#7A3E1D}
 .sx .sb.ai{border-color:#C9BEE6}.sx .sb.ai::before{content:'เพิ่มโดย Claude';color:#4F3F80}
 .sx .hw,.fbox .hw{color:#2D5DA8;font-style:italic}
 @media (max-width:640px){.sxsec>summary,.sxbox>summary{flex-wrap:wrap;row-gap:4px}.sxsec>summary .bks,.sxbox>summary .bks{order:5;max-width:none;flex-basis:100%;justify-content:flex-start}.sxsec>summary .bks{padding-left:46px}}

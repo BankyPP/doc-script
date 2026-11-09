@@ -1,0 +1,19 @@
+{
+ "key": "hypona-ai",
+ "book": "ai",
+ "en": "Hyponatremia",
+ "th": "หมายเหตุ",
+ "target": "hyponatremia",
+ "ops": [
+  {
+   "op": "append",
+   "sec": "ts-dn-tx-severe",
+   "html": "<div class=\"pearl\"><b>หมายเหตุสูตร Adrogué–Madias</b><ul><li>ในต้นฉบับของ Adrogué &amp; Madias (N Engl J Med 2000 — อ้างอิงที่ 30 ของเอกสาร) ตัวหารคือ <b>total body water + 1</b> (บวก 1 ลิตรของสารละลายที่ให้) ไม่ใช่ − 1</li><li>Change in serum Na = (infusate Na + infusate K − serum Na) ÷ (total body water + 1)</li></ul></div>"
+  },
+  {
+   "op": "append",
+   "sec": "ts-dn-tx-over",
+   "html": "<div class=\"pearl\"><b>หมายเหตุขนาด desmopressin</b><ul><li>ขนาดที่ใช้ทั่วไปคือ <b>2 microgram (µg)</b> IV ไม่ใช่ 2 mg — สอดคล้องกับที่เอกสารเองเขียนไว้ในหัวข้ออาการรุนแรงว่า desmopressin 1–2 microgram</li></ul></div>"
+  }
+ ]
+}

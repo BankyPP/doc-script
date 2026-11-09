@@ -1,7 +1,7 @@
 /* Clinic › Symptomatology & Approach — สร้างอัตโนมัติด้วย tools/symp/build.py (อย่าแก้ด้วยมือ)
    ตำราศิริราช + เล่มเหลือง (รวมด้วย tools/symp/merge_yb.py) · เนื้อหาแต่ละบทอยู่ใน docs/symp/chNN.json · รูปใน docs/symp/img/ */
 window.POY_SYMP = {
- "v": 1793685133,
+ "v": 1794241343,
  "book": {
   "title": "ตำราอายุรศาสตร์ อาการวิทยา",
   "by": "ภาควิชาอายุรศาสตร์ คณะแพทยศาสตร์ศิริราชพยาบาล",
@@ -30,6 +30,11 @@ window.POY_SYMP = {
   "tn": {
    "title": "Chest pain (เอกสารสอนนักศึกษาแพทย์ปีที่ 4)",
    "by": "อ. พญ. ภัณฑิลา วาณิชย์การ",
+   "inst": "si"
+  },
+  "ts": {
+   "title": "Dysnatremia (เอกสารคำสอน · ไฟล์ 2024Dysnatremia)",
+   "by": "สุชาย ศรีทิพยวรรณ",
    "inst": "si"
   }
  },
@@ -3376,13 +3381,21 @@ window.POY_SYMP = {
       "o": 78,
       "p": "143"
      }
-    ]
+    ],
+    "ts": [
+     {
+      "k": "Dysnatremia",
+      "o": 0,
+      "p": "1–19"
+     }
+    ],
+    "ai": 1
    },
    "file": "ch102.json",
-   "n": 1,
-   "f": 1,
-   "i": 1,
-   "kb": 3
+   "n": 37,
+   "f": 5,
+   "i": 5,
+   "kb": 89
   },
   {
    "no": 103,

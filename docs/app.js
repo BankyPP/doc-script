@@ -1607,12 +1607,12 @@
   var SY_SRC = '<span class="src si">ศิริราช</span>';
   function syBookLine() { return esc(SY.book.title || '') + ' · ' + esc(SY.book.by || '') + ' · ' + esc(SY.book.ed || ''); }
   /* ที่มาของเนื้อหา — ตำราศิริราช (si) · เล่มเหลือง (yb) · เพิ่มโดย Claude (ai) — ป้ายติดทุกหัวข้อ/กล่อง/algorithm */
-  var BK = { si: 'ตำราศิริราช', yb: 'เล่มเหลือง', bb: 'Blackbook', tn: 'เอกสารคำสอน อ.พญ.ภัณฑิลา', ai: 'เพิ่มโดย Claude' }, SY_DS = ['si'];
+  var BK = { si: 'ตำราศิริราช', yb: 'เล่มเหลือง', bb: 'Blackbook', tn: 'เอกสารคำสอน อ.พญ.ภัณฑิลา', ts: 'เอกสารคำสอน อ.สุชาย', ai: 'เพิ่มโดย Claude' }, SY_DS = ['si'];
   function bkChips(a) { return '<span class="bks">' + (a || []).map(function (k) { return BK[k] ? '<span class="bk ' + k + '">' + BK[k] + '</span>' : ''; }).join('') + '</span>'; }
-  function syBks(c) { var b = c.b || { si: { no: c.no } }, a = []; if (b.si) a.push('si'); if (b.yb) a.push('yb'); if (b.bb) a.push('bb'); if (b.tn) a.push('tn'); if (b.ai) a.push('ai'); return a; }
-  /* แท็กสถาบัน: เล่มเหลือง = approach จากทั้งสองสถาบัน → "จุฬาฯ + ศิริราช" · ตำราศิริราช → "ศิริราช" · Blackbook (U of Calgary) → "International" · เอกสารคำสอน อ.พญ.ภัณฑิลา → "ศิริราช" */
-  function syInst(c) { var b = c.b || { si: 1 }; return (b.yb ? '<span class="src both">จุฬาฯ + ศิริราช</span> ' : '') + (b.si || b.tn ? '<span class="src si">ศิริราช</span> ' : '') + (b.bb ? '<span class="src intl">International</span>' : ''); }
-  function syBooksLine() { var B = SY.books || {}; return ['si', 'yb', 'bb', 'tn'].filter(function (k) { return B[k]; }).map(function (k) { return '<b>' + BK[k] + '</b> = ' + esc(B[k].title) + (B[k].by ? ' · ' + esc(B[k].by) : '') + (B[k].ed ? ' · ' + esc(B[k].ed) : ''); }).join('<br>'); }
+  function syBks(c) { var b = c.b || { si: { no: c.no } }, a = []; if (b.si) a.push('si'); if (b.yb) a.push('yb'); if (b.bb) a.push('bb'); if (b.tn) a.push('tn'); if (b.ts) a.push('ts'); if (b.ai) a.push('ai'); return a; }
+  /* แท็กสถาบัน: เล่มเหลือง = approach จากทั้งสองสถาบัน → "จุฬาฯ + ศิริราช" · ตำราศิริราช → "ศิริราช" · Blackbook (U of Calgary) → "International" · เอกสารคำสอน อ.พญ.ภัณฑิลา และ อ.สุชาย (Dysnatremia) → "ศิริราช" */
+  function syInst(c) { var b = c.b || { si: 1 }; return (b.yb ? '<span class="src both">จุฬาฯ + ศิริราช</span> ' : '') + (b.si || b.tn || b.ts ? '<span class="src si">ศิริราช</span> ' : '') + (b.bb ? '<span class="src intl">International</span>' : ''); }
+  function syBooksLine() { var B = SY.books || {}; return ['si', 'yb', 'bb', 'tn', 'ts'].filter(function (k) { return B[k]; }).map(function (k) { return '<b>' + BK[k] + '</b> = ' + esc(B[k].title) + (B[k].by ? ' · ' + esc(B[k].by) : '') + (B[k].ed ? ' · ' + esc(B[k].ed) : ''); }).join('<br>'); }
   /* เลขอ้างอิงในแต่ละเล่ม เช่น "ศิริราช บท 13 · เหลือง 1.1" */
   function syRef(c, long) {
     var b = c.b || { si: { no: c.no } }, o = [];
@@ -1620,6 +1620,7 @@
     if (b.yb) o.push((long ? 'เล่มเหลือง ' : 'เหลือง ') + b.yb.map(function (y) { return y.k; }).join(', '));
     if (b.bb) o.push((long ? 'Blackbook ' : 'BB ') + b.bb.map(function (y) { return y.k.replace('หน้า ', long ? 'หน้า ' : 'p.'); }).join(', '));
     if (b.tn) o.push((long ? 'เอกสารคำสอน ' : 'คำสอน ') + b.tn.map(function (y) { return y.k; }).join(', '));
+    if (b.ts) o.push((long ? 'เอกสารคำสอน อ.สุชาย ' : 'คำสอน ') + b.ts.map(function (y) { return y.k; }).join(', '));
     if (!o.length && b.ai) o.push('เพิ่มโดย Claude');
     return o.join(' · ');
   }
@@ -1684,7 +1685,7 @@
     var hq = function (v) { return '#/kb/symp' + (v === 'book' ? '?v=book' : ''); };
     return {
       title: 'Symptomatology & Approach', html: clinicHead('symp', '<a href="#/kb">Medical Soil</a><span class="muted"> › </span><span>Symptomatology &amp; Approach</span>', 'Symptomatology &amp; Approach',
-        'approach ตามอาการนำจากหลายเล่ม merge กันตามหัวข้อ ทุกจุดมีป้ายบอกที่มา ' + bkChips(['si', 'yb', 'bb', 'tn']) + ' · algorithm กดดูทีละกล่องหรือเดินทีละขั้น<br><span class="muted" style="font-size:15px">' + syBooksLine() + '</span>') +
+        'approach ตามอาการนำจากหลายเล่ม merge กันตามหัวข้อ ทุกจุดมีป้ายบอกที่มา ' + bkChips(['si', 'yb', 'bb', 'tn', 'ts']) + ' · algorithm กดดูทีละกล่องหรือเดินทีละขั้น<br><span class="muted" style="font-size:15px">' + syBooksLine() + '</span>') +
         '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:26px">' +
         '<div class="sxbar"><form class="search sxsearch" id="sxsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sxq">ค้นทุกบท</label><input id="sxq" type="search" placeholder="ค้นทุกบท เช่น MCV, Rockall, eschar" value="' + esc(qq) + '" autocomplete="off"></form>' +
         '<div class="filters" role="group" aria-label="เรียงบท"><a class="chip' + (view === 'sys' ? ' on' : '') + '" href="' + hq('sys') + '">ตามระบบ</a><a class="chip' + (view === 'book' ? ' on' : '') + '" href="' + hq('book') + '">ตามเล่ม</a></div>' +
@@ -1745,7 +1746,7 @@
     remember({ href: '#/kb/symp/' + c.id, title: c.th + ' · ' + c.en, crumb: 'Medical Soil › Symptomatology', c: g.c });
     var st = syOpen(c.id), flows = d.flows || [], FM = {};
     flows.forEach(function (f) { FM[f.id] = f; });
-    SY_DS = c.b && !c.b.si ? (c.b.yb ? ['yb'] : c.b.bb ? ['bb'] : c.b.tn ? ['tn'] : ['ai']) : ['si'];
+    SY_DS = c.b && !c.b.si ? (c.b.yb ? ['yb'] : c.b.bb ? ['bb'] : c.b.tn ? ['tn'] : c.b.ts ? ['ts'] : ['ai']) : ['si'];
     ANN_HOOK.y = sxAnnHook(c, FM);
     var secs = d.sections.map(function (x, i) { return sySec(x, i, st); }).join('').replace(/<div class="flow" data-flow="([\w-]+)"><\/div>/g, function (m, id) { return FM[id] ? flowShell(FM[id]) : ''; });
     var toc = d.sections.map(function (x, i) { return '<a href="#/kb/symp/' + c.id + '?to=s-' + x.id + '" data-go="s-' + x.id + '"><span class="pn">' + (i + 1) + '</span><span>' + esc(x.h) + '</span></a>'; }).join('');
@@ -3922,7 +3923,7 @@
     });
     (SYS_SEARCH.d || []).forEach(function (x) {
       var c = syCh(x.c); if (!c) return;
-      L.push({ type: 'content', title: x.h, path: 'Symptomatology › ' + c.th, text: x.x, c: syGroup(c).c, tags: (x.b || ['si']).map(function (k) { return k === 'si' ? 'ศิริราช SI ตำราศิริราช' : k === 'yb' ? 'เล่มเหลือง จุฬาฯ + ศิริราช จุฬาฯ MDCU จุฬา ศิริราช SI ทั้งสองสถาบัน' : k === 'bb' ? 'Blackbook International Calgary' : k === 'tn' ? 'เอกสารคำสอน ภัณฑิลา วาณิชย์การ ศิริราช SI' : 'Claude'; }).concat([syGroup(c).t, c.en]), href: '#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) });
+      L.push({ type: 'content', title: x.h, path: 'Symptomatology › ' + c.th, text: x.x, c: syGroup(c).c, tags: (x.b || ['si']).map(function (k) { return k === 'si' ? 'ศิริราช SI ตำราศิริราช' : k === 'yb' ? 'เล่มเหลือง จุฬาฯ + ศิริราช จุฬาฯ MDCU จุฬา ศิริราช SI ทั้งสองสถาบัน' : k === 'bb' ? 'Blackbook International Calgary' : k === 'tn' ? 'เอกสารคำสอน ภัณฑิลา วาณิชย์การ ศิริราช SI' : k === 'ts' ? 'เอกสารคำสอน สุชาย ศรีทิพยวรรณ Dysnatremia ศิริราช SI' : 'Claude'; }).concat([syGroup(c).t, c.en]), href: '#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) });
     });
     D.list.forEach(function (d) {
       var e = shPeek('d:' + d.id);
