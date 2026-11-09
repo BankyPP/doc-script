@@ -5,7 +5,7 @@ python3 build_site.py --inst si [outdir]   → a second website from the same co
 Every <dir>/config.json with an "inst" block is an institution; each site's CONFIG.insts lists all of them (link + gate hash) for the institution switch on the account page.
 Each ward in config.json "wards" has "dir": its data folder holding data_b*.js (one file per set) optional unit_*.js (Unit round banks) and optional highyield.js
 (sets W.HY = {topics:[{title, points:[…], refs:[rid…], rep}], keywords:[{k, v, refs:[rid…]}]})."""
-import glob, json, os, shutil, html, sys, re
+import glob, hashlib, json, os, shutil, html, sys, re
 ROOT=os.path.dirname(os.path.abspath(__file__)); os.chdir(ROOT)
 AV=sys.argv[1:];INST=''
 for i,a in enumerate(AV):
@@ -17,6 +17,9 @@ IDIR=INST                                                          # '' = MDCU (
 J=lambda *p:os.path.join(IDIR,*p) if IDIR else os.path.join(*p)
 PACK='--pack' in sys.argv      # Claude artifact build: an artifact version holds at most ~510 files, so images are stacked into a few sprite sheets per prefix
 OUT=ARGS[0] if ARGS else os.path.join(ROOT,'docs',*([IDIR] if IDIR else []))
+SPLIT=PACK or not ARGS   # the website build (default outdir) keeps exam data in data_<ward>*.js next to the page, not inline: 44MB of inline script text made browser extensions that scan the page on every DOM change freeze each page switch 10-20 s (found 4 Nov 2026) · an explicit outdir without --pack stays one self-contained file
+if SPLIT and not PACK:
+    for f in glob.glob(os.path.join(OUT,'data_*.js')): os.remove(f)   # a ward can shrink to fewer chunks, or be removed
 tpl=open('template.html',encoding='utf-8').read()
 cfg=json.load(open(J('config.json'),encoding='utf-8'))
 def _inst(d):
@@ -58,10 +61,10 @@ js.append('const CONFIG='+json.dumps(cfg,ensure_ascii=False)+';')
 import datetime
 js.append('const BUILD='+json.dumps(datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7))).strftime('%d/%m/%Y %H:%M'))+';')
 total=0
-wsrc=[]   # --pack: each ward's data goes to its own data_<ward>.js next to the page (an artifact page is capped at 16MB)
+wsrc=[]   # SPLIT: each ward's data goes to its own data_<ward>.js next to the page (an artifact page is capped at 16MB)
 for w in cfg.get('wards',[]):
     wid=json.dumps(w['id']); d=J(w.get('dir','data'))
-    if PACK: j0=len(js)
+    if SPLIT: j0=len(js)
     js.append(f'WARDS[{wid}]={{QB:[],HY:null}};')
     for f in sorted(glob.glob(os.path.join(d,'data_b*.js')),key=num):
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].QB);')
@@ -85,13 +88,15 @@ for w in cfg.get('wards',[]):
     orf=os.path.join(d,'osce_ref.js')   # แหล่งอ้างอิงให้ AI แต่ง/ตรวจ OSCE ของวอร์ด: OSREF.push({id,topic,sub,title,text})
     js.append(f'WARDS[{wid}].OSREF=[];')
     if os.path.exists(orf): js.append('(function(OSREF){\n'+open(orf,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OSREF);')
+    kx=os.path.join(d,'kimg.js')   # รูปจากไฟล์เฉลยที่ครอปเพิ่มทีหลัง: W.QB/MQ/OS ตาม set|ro|orig (ใส่หน้ารูปเดิม)
+    if os.path.exists(kx): js.append('(function(W){\n'+open(kx,encoding='utf-8').read()+'\n})(WARDS['+wid+']);')
     js.append(f'WARDS[{wid}].SUMM={{MCQ:[],MEQ:[],OSCE:[]}};')
     for f in sorted(glob.glob(os.path.join(d,'sum_*.js'))):     # สรุป High-yield Phase 2: sum_<mcq|meq|osce>_<slug>.js → SUMM.push({tag,title,intro,groups})
         T=os.path.basename(f).split('_')[1].upper()
         if T in ('MCQ','MEQ','OSCE'): js.append('(function(SUMM){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].SUMM.'+T+');')
     hy=os.path.join(d,'highyield.js')
     if os.path.exists(hy): js.append('(function(W){\n'+open(hy,encoding='utf-8').read()+'\n})(WARDS['+wid+']);')
-    if PACK:
+    if SPLIT:
         # an artifact text file is capped at 16MB → split a big ward into data_<ward>.js, data_<ward>_2.js … (≤12MB each, loaded in order)
         os.makedirs(OUT,exist_ok=True); base='data_'+re.sub(r'\W','',w['id']); chunks=[[]]; sz=0
         for part in js[j0:]:
@@ -102,9 +107,24 @@ for w in cfg.get('wards',[]):
             fn=base+('' if i==0 else '_%d'%(i+1))+'.js'
             open(os.path.join(OUT,fn),'w',encoding='utf-8').write('\n'.join(ch)+'\n'); wsrc.append(fn)
         del js[j0:]
-out=(head+'</style>\n<style>\n'+open('site/extra.css',encoding='utf-8').read()+'</style>\n</head>\n<body>\n'
-     +body.replace('/*TITLE*/',html.escape(title))
-     +'\n<script>\n'+'\n'.join(js)+'\n</script>\n'+''.join(f'<script src="{fn}?v={len(open(os.path.join(OUT,fn),encoding="utf-8").read())}"></script>\n' for fn in wsrc)+'<script>\n'+open('site/app.js',encoding='utf-8').read().replace('"use strict";\n','"use strict";\n'+open('site/meq.js',encoding='utf-8').read()+'\n'+open('site/osce.js',encoding='utf-8').read()+'\n'+open('site/io.js',encoding='utf-8').read()+'\n'+open('site/spc.js',encoding='utf-8').read()+'\n'+open('site/hysum.js',encoding='utf-8').read()+'\n'+(open('site/teach_data.js',encoding='utf-8').read() if os.path.exists('site/teach_data.js') else '')+'\n'+open('site/teach.js',encoding='utf-8').read()+'\n',1)+'\n</script>\n</body>\n</html>\n')
+LOADERR="document.body.insertAdjacentHTML('afterbegin','<p style=&quot;margin:0;padding:12px 16px;background:#b3261e;color:#fff;text-align:center&quot;>โหลดข้อสอบไม่ครบ กรุณารีเฟรชหน้านี้</p>')"
+appjs=open('site/app.js',encoding='utf-8').read().replace('"use strict";\n','"use strict";\n'+open('site/meq.js',encoding='utf-8').read()+'\n'+open('site/osce.js',encoding='utf-8').read()+'\n'+open('site/io.js',encoding='utf-8').read()+'\n'+open('site/spc.js',encoding='utf-8').read()+'\n'+open('site/hysum.js',encoding='utf-8').read()+'\n'+(open('site/teach_data.js',encoding='utf-8').read() if os.path.exists('site/teach_data.js') else '')+'\n'+open('site/teach.js',encoding='utf-8').read()+'\n',1)
+extra=open('site/extra.css',encoding='utf-8').read()
+SRC=lambda fn,text=None:f'{fn}?v={hashlib.md5((text.encode() if text is not None else open(os.path.join(OUT,fn),"rb").read())).hexdigest()[:10]}'
+TAG=lambda src:f'<script src="{src}" onerror="{LOADERR}"></script>\n'
+wtags=''.join(TAG(SRC(fn)) for fn in wsrc)
+if SPLIT and not PACK:   # website: the page holds only its shell, so an extension that scans page text on every DOM change has almost nothing to read (the app code left inline still cost ~2 s per page switch, 4 Nov 2026)
+    os.makedirs(OUT,exist_ok=True); k=head.index('<style>')+len('<style>'); css=head[k:]+'\n'+extra
+    core='\n'.join(x for x in js if not x.startswith('const BUILD='))+'\n'   # BUILD stays in the page so core_site.js only changes when its content does
+    for fn,txt in (('site.css',css),('core_site.js',core),('app_site.js',appjs+'\n')): open(os.path.join(OUT,fn),'w',encoding='utf-8').write(txt)
+    build=[x for x in js if x.startswith('const BUILD=')][0]
+    out=(head[:head.index('<style>')]+f'<link rel="stylesheet" href="{SRC("site.css",css)}">\n</head>\n<body>\n'
+         +body.replace('/*TITLE*/',html.escape(title))
+         +'\n<script>'+build+'</script>\n'+TAG(SRC('core_site.js',core))+wtags+TAG(SRC('app_site.js',appjs+'\n'))+'</body>\n</html>\n')
+else:
+    out=(head+'</style>\n<style>\n'+extra+'</style>\n</head>\n<body>\n'
+         +body.replace('/*TITLE*/',html.escape(title))
+         +'\n<script>\n'+'\n'.join(js)+'\n</script>\n'+wtags+'<script>\n'+appjs+'\n</script>\n</body>\n</html>\n')
 out=re.sub(r'<title>.*?</title>','<title>'+html.escape(cfg.get('title',title))+'</title>',out,count=1,flags=re.S)
 os.makedirs(os.path.join(OUT,'img'),exist_ok=True)
 open(os.path.join(OUT,'index.html'),'w',encoding='utf-8').write(out)

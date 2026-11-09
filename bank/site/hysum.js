@@ -38,6 +38,52 @@ function hsOpenRef(type,u,pi){if(type==="MCQ")return openQ(u);
 function hsPendingN(type){const W=W_();if(!W)return 0;const its=hsItems(type);if(!its.length)return 0;const S=(W.SUMM||{})[type]||[],m=new Set();
   S.forEach(t=>t.groups.forEach(g=>g.sections.forEach(x=>(x.members||[]).forEach(k=>m.add(k)))));return its.filter(o=>!m.has(o.key)).length;}
 const HS_STY=[["case","Case"],["sa","Short answer"]];
+/* 📊 ตารางสถิติ (ผู้ใช้สั่ง 9 พ.ย. 2026 — ทุกวอร์ด ทุกเว็บ): หัวข้อใหญ่ → หัวข้อเล็ก/หัตถการย่อย (OSCE) → เรื่องย่อย
+   นับจำนวนข้อ/สถานี (ไม่ซ้ำ) + % ของข้อสอบเก่าทั้งหมด + คอลัมน์ปี (ปีใหม่สุดซ้ายสุด) กดหัวปีเพื่อแตกเป็นราย Ro · แถวเปิดปิดได้ */
+function hsYr(q){return String(q.set||"—");}
+function hsYrNum(y){const m=String(y).match(/(\d+)/);return m?+m[1]:-1;}
+function hsStatsHtml(type,its,TOP,OPEN){
+  const caseW=type==="OSCE"?"สถานี":"ข้อ",uq=new Map();its.forEach(o=>{if(!uq.has(o.q.uid))uq.set(o.q.uid,o.q);});
+  const TOT=uq.size;if(!TOT)return "";
+  /* columns: year → Ro list */
+  const Y={};uq.forEach(q=>{const y=hsYr(q),r=String(q.ro||"—");(Y[y]=Y[y]||new Set()).add(r);});
+  const years=Object.keys(Y).sort((a,b)=>hsYrNum(b)-hsYrNum(a)||b.localeCompare(a));
+  const SO=OPEN._st=OPEN._st||{y:{},r:{}};SO.y=SO.y||{};SO.r=SO.r||{};
+  const cols=[];years.forEach(y=>{const ros=[...Y[y]].sort();if(SO.y[y]&&ros.length>1)ros.forEach(r=>cols.push({y,r,lab:r==="—"?"(ไม่ระบุ)":r,sub:1}));else cols.push({y,lab:y});});
+  const yTot={};uq.forEach(q=>{const y=hsYr(q);yTot[y]=(yTot[y]||0)+1;});
+  /* section titles per question (from the summary) */
+  const secOf=new Map();TOP.forEach(t=>t.groups.forEach(g=>g.sections.forEach(({x,z})=>{if(x.auto)return;z.subs.forEach(o=>{const s=secOf.get(o.q.uid)||new Set();s.add(x.title);secOf.set(o.q.uid,s);});})));
+  /* tree: L1 topic/tag → (OSCE: L2 sub → L3 เรื่อง) | (MCQ/MEQ: L2 เรื่อง) */
+  const node=lab=>({lab,q:new Set(),ch:new Map()}),root=node("");
+  const add=(n,path,q)=>{n.q.add(q);if(!path.length)return;const k=path[0];if(!n.ch.has(k))n.ch.set(k,node(k));add(n.ch.get(k),path.slice(1),q);};
+  TOP.forEach(t=>{const qs=new Map();t.mine.forEach(o=>qs.set(o.q.uid,o.q));
+    qs.forEach((q,u)=>{const secs=[...(secOf.get(u)||[])],L3=secs.length?secs:[type==="OSCE"?String(q.title||"(ไม่มีชื่อ)").replace(/<[^>]+>/g,""):"(ยังไม่ได้สรุปเป็นเรื่อง)"];
+      L3.forEach(s=>{const path=type==="OSCE"?[t.title,(typeof osSubOf==="function"&&osSubOf(q))||"(ไม่ระบุหัวข้อเล็ก)",s]:[t.title,s];add(root,path,u);});});});
+  const cnt=(n,c)=>{let k=0;n.q.forEach(u=>{const q=uq.get(u);if(q&&hsYr(q)===c.y&&(!c.sub||String(q.ro||"—")===c.r))k++;});return k;};
+  const pct=n=>(n*100/TOT).toFixed(n*100/TOT<10?1:0);
+  let rows="",rid=0;
+  const walk=(n,lv,pid,vis)=>{const kids=[...n.ch.values()].sort((a,b)=>b.q.size-a.q.size||a.lab.localeCompare(b.lab));
+    kids.forEach(c=>{const id=pid+"/"+c.lab,has=c.ch.size>0,open=!!SO.r[id],hid=!vis;
+      rows+=`<tr class="stl${lv}${hid?" sthid":""}" data-stp="${esc(pid)}"><th scope="row">${has?`<button type="button" class="sttg" data-str="${esc(id)}" aria-expanded="${open}">${open?"▾":"▸"}</button>`:`<span class="stsp"></span>`}<span>${esc(c.lab)}</span></th>`+
+        `<td class="stn">${c.q.size}</td><td class="stp">${pct(c.q.size)}%</td>`+cols.map(col=>{const k=cnt(c,col);return `<td class="stc${col.sub?" stro":""}${k?" sth"+Math.min(4,k):""}">${k||""}</td>`;}).join("")+`</tr>`;
+      if(has)walk(c,lv+1,id,vis&&open);});};
+  walk(root,1,"",true);
+  const head=`<tr><th class="st0">หัวข้อ / เรื่อง</th><th>${caseW}</th><th>%</th>`+cols.map(c=>{const nR=Y[c.y].size;
+    if(c.sub)return `<th class="stro"><button type="button" class="styh" data-sty="${esc(c.y)}" title="ยุบกลับเป็นปี">${esc(c.y.replace(/^(MDCU|SI)/,""))}<br>${esc(c.lab)}</button></th>`;
+    return `<th>${nR>1?`<button type="button" class="styh" data-sty="${esc(c.y)}" title="แตกเป็นราย rotation">${esc(c.y.replace(/^(MDCU|SI)/,""))} ▸<br><small>${nR} Ro</small></button>`:`${esc(c.y.replace(/^(MDCU|SI)/,""))}<br><small>${esc([...Y[c.y]][0]==="—"?"":[...Y[c.y]][0])}</small>`}</th>`;}).join("")+`</tr>`;
+  const foot=`<tr class="sttot"><th scope="row">รวมทั้งคลัง</th><td class="stn">${TOT}</td><td class="stp">100%</td>`+cols.map(c=>{let k=0;uq.forEach(q=>{if(hsYr(q)===c.y&&(!c.sub||String(q.ro||"—")===c.r))k++;});return `<td class="stc${c.sub?" stro":""}">${k}</td>`;}).join("")+`</tr>`;
+  return `<details class="sumt sumstat" data-k="stat" ${OPEN.stat?"open":""}><summary><span class="st-name">📊 Stats — ออกเยอะแค่ไหน ปีไหนบ้าง</span><span class="st-meta">${TOT} ${caseW} · ${years.length} รุ่น</span></summary>
+    <div class="stbody"><p class="hint">นับจาก${type==="OSCE"?"สถานี":"ข้อ"}สอบเก่าทั้งหมดในคลัง (Service round) · ตัวเลข = จำนวน${caseW}ที่ออกเรื่องนั้น · % เทียบกับ${caseW}ทั้งหมด ${TOT} ${caseW}${type==="MCQ"?" (ข้อหนึ่งติดได้หลายหัวข้อ จึงรวมเกิน 100% ได้)":""} · คอลัมน์ปีใหม่สุดอยู่ซ้ายสุด แตะหัวปีที่มี ▸ เพื่อแยกราย rotation · แตะ ▸ หน้าแถวเพื่อเปิด${type==="OSCE"?"หัวข้อเล็ก / หัตถการย่อย และเรื่องย่อย":"เรื่องย่อย"}</p>
+    <div class="sum-tools"><button class="chip" type="button" id="stOpenAll">เปิดทุกแถว</button><button class="chip" type="button" id="stCloseAll">ปิดทุกแถว</button><button class="chip" type="button" id="stRoAll">แยกทุกปีเป็นราย Ro</button><button class="chip" type="button" id="stRoNone">รวมเป็นรายปี</button></div>
+    <div class="stwrap"><table class="sttab"><thead>${head}</thead><tbody>${rows}</tbody><tfoot>${foot}</tfoot></table></div></div></details>`;}
+function hsStatsBind(type,OPEN,keep){const SO=OPEN._st;if(!SO)return;const re=()=>{keep();const y=scrollY,w=document.querySelector(".stwrap"),x=w?w.scrollLeft:0;rHySum(type);scrollTo(0,y);const w2=document.querySelector(".stwrap");if(w2)w2.scrollLeft=x;};
+  document.querySelectorAll("[data-sty]").forEach(b=>b.onclick=()=>{const y=b.dataset.sty;SO.y[y]=!SO.y[y];re();});
+  document.querySelectorAll("[data-str]").forEach(b=>b.onclick=()=>{const id=b.dataset.str;SO.r[id]=!SO.r[id];re();});
+  const ids=()=>[...document.querySelectorAll("[data-str]")].map(b=>b.dataset.str);
+  const st=$("stOpenAll");if(st){st.onclick=()=>{ids().forEach(i=>{SO.r[i]=true;});re();};
+    $("stCloseAll").onclick=()=>{SO.r={};re();};
+    $("stRoAll").onclick=()=>{document.querySelectorAll("th [data-sty]").forEach(b=>{SO.y[b.dataset.sty]=true;});re();};
+    $("stRoNone").onclick=()=>{SO.y={};re();};}}
 function rHySum(type){
   const W=W_(),P=P_(),ALL=hsItems(type);
   P.hyOpen=P.hyOpen||{};const OPEN=P.hyOpen[type]=P.hyOpen[type]||{};
@@ -70,6 +116,7 @@ function rHySum(type){
     <p class="hint slegend">สถานะข้อ: <span class="ref s-todo"><span class="si">○</span>ยังไม่ทำ</span> <span class="ref s-ok"><span class="si">✓</span>${type==="MCQ"?"ถูก":"ได้เต็ม"}</span>${type==="MCQ"?"":` <span class="ref s-half"><span class="si">◐</span>บางส่วน</span>`} <span class="ref s-no"><span class="si">✗</span>${type==="MCQ"?"ผิด":"ไม่ได้"}</span>${type==="MCQ"?"":` <span class="ref s-done"><span class="si">●</span>ยังไม่ให้คะแนน</span>`}</p>
     ${STY?`<div class="chips hssty">${HS_STY.map(([k,n])=>`<button class="chip" type="button" data-hssty="${k}" aria-pressed="${sty===k}">${n} <span class="cnt">${ALL.filter(o=>o.sty===k).length} ข้อย่อย</span></button>`).join("")}</div>`:""}
     <div class="sum-tools"><button class="chip" type="button" id="hsOpenAll">เปิดทั้งหมด</button><button class="chip" type="button" id="hsCloseAll">ปิดทั้งหมด</button></div></div>`;
+  h+=hsStatsHtml(type,its,TOP,OPEN);
   if(top.length)h+=`<details class="sumt sumtop" data-k="top" ${OPEN.top!==false?"open":""}><summary><span class="st-name">🔥 เรื่องที่ออกบ่อยที่สุด</span><span class="st-meta">top ${top.length}</span></summary><ol class="toplist">${top.map(o=>{const L=HS_LV(o.z.nr);return `<li><button class="link toplink" type="button" data-hsjump="${esc(o.t.tag+"::"+o.x.id)}">${esc(o.x.title)}</button> <span class="ttag">${esc(o.t.title)}</span> <span class="lv ${L[0]}">${L[1]}</span> <span class="nums">${o.z.nr} rotation · ${o.z.subs.length} ${unitW}</span> ${hsProgTxt(hsProg(type,o.z.subs))}</li>`;}).join("")}</ol></details>`;
   else h+=`<div class="card"><span class="rd">Claude ยังไม่ได้เขียนสรุปของ ${type} วอร์ดนี้ ระหว่างนี้ด้านล่างคือรายการข้อทั้งหมดแยกตามหัวข้อ</span></div>`;
   TOP.forEach(t=>{const ns=t.groups.reduce((a,g)=>a+g.sections.filter(e=>!e.x.auto).length,0);
@@ -100,5 +147,6 @@ function rHySum(type){
   document.querySelectorAll("[data-hsjump]").forEach(b=>b.onclick=()=>{const el=document.getElementById("hs-"+b.dataset.hsjump);if(!el)return;let p=el.parentElement;
     while(p&&p!==document.body){if(p.tagName==="DETAILS"){p.open=true;if(p.dataset.k)OPEN[p.dataset.k]=true;}p=p.parentElement;}el.open=true;OPEN[el.dataset.k]=true;keep();el.scrollIntoView({block:"start"});scrollBy(0,-110);});
   document.querySelectorAll("[data-hsu]").forEach(b=>b.onclick=()=>hsOpenRef(type,b.dataset.hsu,b.dataset.hsp));
+  hsStatsBind(type,OPEN,keep);
   document.querySelectorAll("[data-hssty]").forEach(b=>b.onclick=()=>{OPEN._sty=b.dataset.hssty;keep();rHySum(type);scrollTo(0,0);});
 }

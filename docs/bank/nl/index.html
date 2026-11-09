@@ -1196,6 +1196,30 @@ mark{background:#FFF176;color:#1a1a1a;border-radius:2px}mark.pk{background:#F8BB
 .tgline[hidden]{display:none}
 .tgl-h{font-family:var(--num);font-weight:700;margin-right:2px}
 .tgline .link{margin-left:4px;font-size:12.5px}
+/* 📊 Stats table in สรุป High-yield (9 พ.ย. 2026) */
+.mqv .sumstat .stbody{padding:4px 12px 12px}
+.mqv .stwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--rule);border-radius:6px;max-height:75vh;overflow-y:auto}
+.mqv .sttab{border-collapse:separate;border-spacing:0;font-size:13px;min-width:100%}
+.mqv .sttab th,.mqv .sttab td{padding:5px 7px;border-bottom:1px solid var(--rule);white-space:nowrap;text-align:center;background:var(--sheet)}
+.mqv .sttab thead th{position:sticky;top:0;z-index:2;background:var(--paper);font-weight:600;font-size:12px;line-height:1.25;vertical-align:bottom}
+.mqv .sttab th.st0,.mqv .sttab tbody th,.mqv .sttab tfoot th{position:sticky;left:0;z-index:1;text-align:left;white-space:normal;min-width:140px;max-width:220px;font-weight:500}
+.mqv .sttab thead th.st0{z-index:3}
+.mqv .sttab tbody th{display:flex;align-items:flex-start;gap:4px}
+.mqv .sttab tr.stl1 th{font-weight:700}
+.mqv .sttab tr.stl2 th{padding-left:20px}
+.mqv .sttab tr.stl3 th{padding-left:36px;font-size:12.5px;color:var(--muted)}
+.mqv .sttab tr.sthid{display:none}
+.mqv .sttab .sttg{border:0;background:none;color:var(--form);cursor:pointer;padding:0 2px;font-size:12px;line-height:1.4;flex:none}
+.mqv .sttab .stsp{display:inline-block;width:14px;flex:none}
+.mqv .sttab .styh{border:0;background:none;color:var(--form);cursor:pointer;font:inherit;padding:0;line-height:1.25}
+.mqv .sttab td.stn{font-weight:700}
+.mqv .sttab td.stp{color:var(--muted)}
+.mqv .sttab .stro{background:color-mix(in srgb,var(--form) 5%,var(--sheet))}
+.mqv .sttab td.sth1{background:color-mix(in srgb,var(--form) 14%,var(--sheet))}
+.mqv .sttab td.sth2{background:color-mix(in srgb,var(--form) 26%,var(--sheet))}
+.mqv .sttab td.sth3{background:color-mix(in srgb,var(--form) 38%,var(--sheet))}
+.mqv .sttab td.sth4{background:color-mix(in srgb,var(--form) 52%,var(--sheet));font-weight:700}
+.mqv .sttab tfoot th,.mqv .sttab tfoot td{font-weight:700;border-top:2px solid var(--rule);border-bottom:0}
 </style>
 <style>
 /* โพยหมอ theme for the old-exam engine (NL & Compre banks) — only colours/fonts change; every feature stays the engine's own.
@@ -1307,7 +1331,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 const IMGS={};const WARDS={};
 Object.assign(IMGS,{"knl2neo_02": "img/knl2neo_02.jpg", "knl2neo_03a": "img/knl2neo_03a.jpg", "knl2neo_03c": "img/knl2neo_03c.jpg", "knl2neo_03d": "img/knl2neo_03d.jpg", "knl2neo_04a": "img/knl2neo_04a.jpg", "knl2neo_04b": "img/knl2neo_04b.jpg", "knl2neo_04c": "img/knl2neo_04c.jpg", "knl2neo_04d": "img/knl2neo_04d.jpg", "knl2neo_05a": "img/knl2neo_05a.jpg", "knl2neo_05b": "img/knl2neo_05b.jpg", "knl2neo_05c": "img/knl2neo_05c.jpg", "knl2neo_05d": "img/knl2neo_05d.jpg", "knl2neo_06a": "img/knl2neo_06a.jpg", "knl2neo_06b": "img/knl2neo_06b.jpg", "knl2neo_06c": "img/knl2neo_06c.jpg", "knl2neo_06d": "img/knl2neo_06d.jpg", "knl2neo_07a": "img/knl2neo_07a.jpg", "knl2neo_07b": "img/knl2neo_07b.jpg", "knl2neo_07c": "img/knl2neo_07c.jpg", "knl2neo_11c": "img/knl2neo_11c.jpg", "knl2neo_11d": "img/knl2neo_11d.jpg", "knl2neo_13a": "img/knl2neo_13a.jpg", "knl2neo_13b": "img/knl2neo_13b.jpg", "knl2neo_13d": "img/knl2neo_13d.jpg", "knl2neo_14a": "img/knl2neo_14a.jpg", "knl2neo_14b": "img/knl2neo_14b.jpg", "knl2neo_14c": "img/knl2neo_14c.jpg", "knl2neo_14d": "img/knl2neo_14d.jpg", "knl2neo_15a": "img/knl2neo_15a.jpg", "knl2neo_15b": "img/knl2neo_15b.jpg", "knl2neo_15d": "img/knl2neo_15d.jpg", "knl2neo_16a": "img/knl2neo_16a.jpg", "knl2neo_16b": "img/knl2neo_16b.jpg", "knl2neo_16c": "img/knl2neo_16c.jpg", "knl2neo_16d": "img/knl2neo_16d.jpg", "knl2neo_17": "img/knl2neo_17.jpg", "nl2neo_p01": "img/nl2neo_p01.jpg", "nl2neo_p02": "img/nl2neo_p02.jpg", "nl2neo_p03": "img/nl2neo_p03.jpg", "nl2neo_p04": "img/nl2neo_p04.jpg", "nl2neo_p05": "img/nl2neo_p05.jpg", "nl2neo_p06": "img/nl2neo_p06.jpg", "nl2neo_p07": "img/nl2neo_p07.jpg", "nl2neo_p08": "img/nl2neo_p08.jpg", "nl2neo_p09": "img/nl2neo_p09.jpg", "nl2neo_p10": "img/nl2neo_p10.jpg", "nl2neo_p11": "img/nl2neo_p11.jpg", "nl2neo_p12": "img/nl2neo_p12.jpg", "nl2neo_p13": "img/nl2neo_p13.jpg", "nl2neo_p14": "img/nl2neo_p14.jpg", "nl2neo_p15": "img/nl2neo_p15.jpg", "nl2neo_p16": "img/nl2neo_p16.jpg", "nl2neo_p17": "img/nl2neo_p17.jpg"});
 const CONFIG={"title": "คลังข้อสอบเก่า NL · โพยหมอ", "brand": "Past NL", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-nl-v1", "setLabel": "ชุด", "roLabel": "ที่มา", "chipStrip": "", "files": {"NL2NEO": "L42_Neonatology"}, "siteUrl": "https://bankypp.github.io/doc-script/bank/nl/", "siteName": "คลังข้อสอบเก่า NL", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "nl"], "sharedPrefix": "poy_nl_", "homeBrand": "Past {short} by BankyPP", "quizBrand": "Past {short} {type}", "artifactUrl": "", "subjects": [{"id": "nl", "name": "National License (NL)", "wards": ["nl1", "nl2"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "roundNames": {"Grand round": "Random", "Service round": "Year by year", "Legendary round": "Real Experience", "Ward staff round": "Redo", "Teaching round": "Guidance", "Advisor round": "Revise", "Unit round": "Lecture quiz", "Quality round": "Timed", "Admission round": "Anything", "Specialty round": "Quiz by topics", "Round I/O": "Summary"}, "inst": {"id": "nl", "name": "NL", "th": "NL", "en": "National License Examination", "enShort": "NLE", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"nl1": "#/nl/x/nl1", "nl2": "#/nl/x/nl2"}, "others": {"inst": "compre", "before": false, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "noExam": ["MEQ"]}]}}, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "brand": "Past NL part 1 MCQ", "dir": "data_nl1", "scope": "National License Examination Part I (NLE Part I) — ใช้ blueprint ใหม่ (มีผล 1 ม.ค. 2570): ความรู้วิทยาศาสตร์การแพทย์ + clinical ถึงปี 5 = NL1 เก่า + NL2 เก่า", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"], "lectures": [{"title": "L42_Neonatology — ติวสอบ NL2 (จุฬาฯ)", "topic": "2.3.16 Perinatal period"}]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "brand": "Past NL part 2 MCQ", "dir": "data_nl2", "scope": "National License Examination Part II (NLE Part II) = NL3 เก่า (clinical ถึงปี 6)", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="07/11/2026 21:16";
+const BUILD="09/11/2026 09:35";
 WARDS["nl1"]={QB:[],HY:null};
 (function(QB){
 (function(){
@@ -5820,6 +5844,52 @@ function hsOpenRef(type,u,pi){if(type==="MCQ")return openQ(u);
 function hsPendingN(type){const W=W_();if(!W)return 0;const its=hsItems(type);if(!its.length)return 0;const S=(W.SUMM||{})[type]||[],m=new Set();
   S.forEach(t=>t.groups.forEach(g=>g.sections.forEach(x=>(x.members||[]).forEach(k=>m.add(k)))));return its.filter(o=>!m.has(o.key)).length;}
 const HS_STY=[["case","Case"],["sa","Short answer"]];
+/* 📊 ตารางสถิติ (ผู้ใช้สั่ง 9 พ.ย. 2026 — ทุกวอร์ด ทุกเว็บ): หัวข้อใหญ่ → หัวข้อเล็ก/หัตถการย่อย (OSCE) → เรื่องย่อย
+   นับจำนวนข้อ/สถานี (ไม่ซ้ำ) + % ของข้อสอบเก่าทั้งหมด + คอลัมน์ปี (ปีใหม่สุดซ้ายสุด) กดหัวปีเพื่อแตกเป็นราย Ro · แถวเปิดปิดได้ */
+function hsYr(q){return String(q.set||"—");}
+function hsYrNum(y){const m=String(y).match(/(\d+)/);return m?+m[1]:-1;}
+function hsStatsHtml(type,its,TOP,OPEN){
+  const caseW=type==="OSCE"?"สถานี":"ข้อ",uq=new Map();its.forEach(o=>{if(!uq.has(o.q.uid))uq.set(o.q.uid,o.q);});
+  const TOT=uq.size;if(!TOT)return "";
+  /* columns: year → Ro list */
+  const Y={};uq.forEach(q=>{const y=hsYr(q),r=String(q.ro||"—");(Y[y]=Y[y]||new Set()).add(r);});
+  const years=Object.keys(Y).sort((a,b)=>hsYrNum(b)-hsYrNum(a)||b.localeCompare(a));
+  const SO=OPEN._st=OPEN._st||{y:{},r:{}};SO.y=SO.y||{};SO.r=SO.r||{};
+  const cols=[];years.forEach(y=>{const ros=[...Y[y]].sort();if(SO.y[y]&&ros.length>1)ros.forEach(r=>cols.push({y,r,lab:r==="—"?"(ไม่ระบุ)":r,sub:1}));else cols.push({y,lab:y});});
+  const yTot={};uq.forEach(q=>{const y=hsYr(q);yTot[y]=(yTot[y]||0)+1;});
+  /* section titles per question (from the summary) */
+  const secOf=new Map();TOP.forEach(t=>t.groups.forEach(g=>g.sections.forEach(({x,z})=>{if(x.auto)return;z.subs.forEach(o=>{const s=secOf.get(o.q.uid)||new Set();s.add(x.title);secOf.set(o.q.uid,s);});})));
+  /* tree: L1 topic/tag → (OSCE: L2 sub → L3 เรื่อง) | (MCQ/MEQ: L2 เรื่อง) */
+  const node=lab=>({lab,q:new Set(),ch:new Map()}),root=node("");
+  const add=(n,path,q)=>{n.q.add(q);if(!path.length)return;const k=path[0];if(!n.ch.has(k))n.ch.set(k,node(k));add(n.ch.get(k),path.slice(1),q);};
+  TOP.forEach(t=>{const qs=new Map();t.mine.forEach(o=>qs.set(o.q.uid,o.q));
+    qs.forEach((q,u)=>{const secs=[...(secOf.get(u)||[])],L3=secs.length?secs:[type==="OSCE"?String(q.title||"(ไม่มีชื่อ)").replace(/<[^>]+>/g,""):"(ยังไม่ได้สรุปเป็นเรื่อง)"];
+      L3.forEach(s=>{const path=type==="OSCE"?[t.title,(typeof osSubOf==="function"&&osSubOf(q))||"(ไม่ระบุหัวข้อเล็ก)",s]:[t.title,s];add(root,path,u);});});});
+  const cnt=(n,c)=>{let k=0;n.q.forEach(u=>{const q=uq.get(u);if(q&&hsYr(q)===c.y&&(!c.sub||String(q.ro||"—")===c.r))k++;});return k;};
+  const pct=n=>(n*100/TOT).toFixed(n*100/TOT<10?1:0);
+  let rows="",rid=0;
+  const walk=(n,lv,pid,vis)=>{const kids=[...n.ch.values()].sort((a,b)=>b.q.size-a.q.size||a.lab.localeCompare(b.lab));
+    kids.forEach(c=>{const id=pid+"/"+c.lab,has=c.ch.size>0,open=!!SO.r[id],hid=!vis;
+      rows+=`<tr class="stl${lv}${hid?" sthid":""}" data-stp="${esc(pid)}"><th scope="row">${has?`<button type="button" class="sttg" data-str="${esc(id)}" aria-expanded="${open}">${open?"▾":"▸"}</button>`:`<span class="stsp"></span>`}<span>${esc(c.lab)}</span></th>`+
+        `<td class="stn">${c.q.size}</td><td class="stp">${pct(c.q.size)}%</td>`+cols.map(col=>{const k=cnt(c,col);return `<td class="stc${col.sub?" stro":""}${k?" sth"+Math.min(4,k):""}">${k||""}</td>`;}).join("")+`</tr>`;
+      if(has)walk(c,lv+1,id,vis&&open);});};
+  walk(root,1,"",true);
+  const head=`<tr><th class="st0">หัวข้อ / เรื่อง</th><th>${caseW}</th><th>%</th>`+cols.map(c=>{const nR=Y[c.y].size;
+    if(c.sub)return `<th class="stro"><button type="button" class="styh" data-sty="${esc(c.y)}" title="ยุบกลับเป็นปี">${esc(c.y.replace(/^(MDCU|SI)/,""))}<br>${esc(c.lab)}</button></th>`;
+    return `<th>${nR>1?`<button type="button" class="styh" data-sty="${esc(c.y)}" title="แตกเป็นราย rotation">${esc(c.y.replace(/^(MDCU|SI)/,""))} ▸<br><small>${nR} Ro</small></button>`:`${esc(c.y.replace(/^(MDCU|SI)/,""))}<br><small>${esc([...Y[c.y]][0]==="—"?"":[...Y[c.y]][0])}</small>`}</th>`;}).join("")+`</tr>`;
+  const foot=`<tr class="sttot"><th scope="row">รวมทั้งคลัง</th><td class="stn">${TOT}</td><td class="stp">100%</td>`+cols.map(c=>{let k=0;uq.forEach(q=>{if(hsYr(q)===c.y&&(!c.sub||String(q.ro||"—")===c.r))k++;});return `<td class="stc${c.sub?" stro":""}">${k}</td>`;}).join("")+`</tr>`;
+  return `<details class="sumt sumstat" data-k="stat" ${OPEN.stat?"open":""}><summary><span class="st-name">📊 Stats — ออกเยอะแค่ไหน ปีไหนบ้าง</span><span class="st-meta">${TOT} ${caseW} · ${years.length} รุ่น</span></summary>
+    <div class="stbody"><p class="hint">นับจาก${type==="OSCE"?"สถานี":"ข้อ"}สอบเก่าทั้งหมดในคลัง (Service round) · ตัวเลข = จำนวน${caseW}ที่ออกเรื่องนั้น · % เทียบกับ${caseW}ทั้งหมด ${TOT} ${caseW}${type==="MCQ"?" (ข้อหนึ่งติดได้หลายหัวข้อ จึงรวมเกิน 100% ได้)":""} · คอลัมน์ปีใหม่สุดอยู่ซ้ายสุด แตะหัวปีที่มี ▸ เพื่อแยกราย rotation · แตะ ▸ หน้าแถวเพื่อเปิด${type==="OSCE"?"หัวข้อเล็ก / หัตถการย่อย และเรื่องย่อย":"เรื่องย่อย"}</p>
+    <div class="sum-tools"><button class="chip" type="button" id="stOpenAll">เปิดทุกแถว</button><button class="chip" type="button" id="stCloseAll">ปิดทุกแถว</button><button class="chip" type="button" id="stRoAll">แยกทุกปีเป็นราย Ro</button><button class="chip" type="button" id="stRoNone">รวมเป็นรายปี</button></div>
+    <div class="stwrap"><table class="sttab"><thead>${head}</thead><tbody>${rows}</tbody><tfoot>${foot}</tfoot></table></div></div></details>`;}
+function hsStatsBind(type,OPEN,keep){const SO=OPEN._st;if(!SO)return;const re=()=>{keep();const y=scrollY,w=document.querySelector(".stwrap"),x=w?w.scrollLeft:0;rHySum(type);scrollTo(0,y);const w2=document.querySelector(".stwrap");if(w2)w2.scrollLeft=x;};
+  document.querySelectorAll("[data-sty]").forEach(b=>b.onclick=()=>{const y=b.dataset.sty;SO.y[y]=!SO.y[y];re();});
+  document.querySelectorAll("[data-str]").forEach(b=>b.onclick=()=>{const id=b.dataset.str;SO.r[id]=!SO.r[id];re();});
+  const ids=()=>[...document.querySelectorAll("[data-str]")].map(b=>b.dataset.str);
+  const st=$("stOpenAll");if(st){st.onclick=()=>{ids().forEach(i=>{SO.r[i]=true;});re();};
+    $("stCloseAll").onclick=()=>{SO.r={};re();};
+    $("stRoAll").onclick=()=>{document.querySelectorAll("th [data-sty]").forEach(b=>{SO.y[b.dataset.sty]=true;});re();};
+    $("stRoNone").onclick=()=>{SO.y={};re();};}}
 function rHySum(type){
   const W=W_(),P=P_(),ALL=hsItems(type);
   P.hyOpen=P.hyOpen||{};const OPEN=P.hyOpen[type]=P.hyOpen[type]||{};
@@ -5852,6 +5922,7 @@ function rHySum(type){
     <p class="hint slegend">สถานะข้อ: <span class="ref s-todo"><span class="si">○</span>ยังไม่ทำ</span> <span class="ref s-ok"><span class="si">✓</span>${type==="MCQ"?"ถูก":"ได้เต็ม"}</span>${type==="MCQ"?"":` <span class="ref s-half"><span class="si">◐</span>บางส่วน</span>`} <span class="ref s-no"><span class="si">✗</span>${type==="MCQ"?"ผิด":"ไม่ได้"}</span>${type==="MCQ"?"":` <span class="ref s-done"><span class="si">●</span>ยังไม่ให้คะแนน</span>`}</p>
     ${STY?`<div class="chips hssty">${HS_STY.map(([k,n])=>`<button class="chip" type="button" data-hssty="${k}" aria-pressed="${sty===k}">${n} <span class="cnt">${ALL.filter(o=>o.sty===k).length} ข้อย่อย</span></button>`).join("")}</div>`:""}
     <div class="sum-tools"><button class="chip" type="button" id="hsOpenAll">เปิดทั้งหมด</button><button class="chip" type="button" id="hsCloseAll">ปิดทั้งหมด</button></div></div>`;
+  h+=hsStatsHtml(type,its,TOP,OPEN);
   if(top.length)h+=`<details class="sumt sumtop" data-k="top" ${OPEN.top!==false?"open":""}><summary><span class="st-name">🔥 เรื่องที่ออกบ่อยที่สุด</span><span class="st-meta">top ${top.length}</span></summary><ol class="toplist">${top.map(o=>{const L=HS_LV(o.z.nr);return `<li><button class="link toplink" type="button" data-hsjump="${esc(o.t.tag+"::"+o.x.id)}">${esc(o.x.title)}</button> <span class="ttag">${esc(o.t.title)}</span> <span class="lv ${L[0]}">${L[1]}</span> <span class="nums">${o.z.nr} rotation · ${o.z.subs.length} ${unitW}</span> ${hsProgTxt(hsProg(type,o.z.subs))}</li>`;}).join("")}</ol></details>`;
   else h+=`<div class="card"><span class="rd">Claude ยังไม่ได้เขียนสรุปของ ${type} วอร์ดนี้ ระหว่างนี้ด้านล่างคือรายการข้อทั้งหมดแยกตามหัวข้อ</span></div>`;
   TOP.forEach(t=>{const ns=t.groups.reduce((a,g)=>a+g.sections.filter(e=>!e.x.auto).length,0);
@@ -5882,6 +5953,7 @@ function rHySum(type){
   document.querySelectorAll("[data-hsjump]").forEach(b=>b.onclick=()=>{const el=document.getElementById("hs-"+b.dataset.hsjump);if(!el)return;let p=el.parentElement;
     while(p&&p!==document.body){if(p.tagName==="DETAILS"){p.open=true;if(p.dataset.k)OPEN[p.dataset.k]=true;}p=p.parentElement;}el.open=true;OPEN[el.dataset.k]=true;keep();el.scrollIntoView({block:"start"});scrollBy(0,-110);});
   document.querySelectorAll("[data-hsu]").forEach(b=>b.onclick=()=>hsOpenRef(type,b.dataset.hsu,b.dataset.hsp));
+  hsStatsBind(type,OPEN,keep);
   document.querySelectorAll("[data-hssty]").forEach(b=>b.onclick=()=>{OPEN._sty=b.dataset.hssty;keep();rHySum(type);scrollTo(0,0);});
 }
 
@@ -6669,7 +6741,7 @@ function acCounts(w){const W=WARDS[w.id]||{},no=w.noExam||[],c={MCQ:(W.QB||[]).l
   const t=["MCQ","MEQ","OSCE"].filter(k=>!no.includes(k));return `<span class="acn"><span class="acl">ข้อสอบเก่า AC</span>${t.map(k=>`<span class="act${c[k]?"":" z"}">${k} <b>${c[k]}</b></span>`).join("")}</span>`;}
 function rWards(){
   let h=`<h1 class="h1">${esc(CFG.siteName||"คลังข้อสอบเก่า")}</h1><p class="sub">เลือกวอร์ดที่กำลังวนอยู่</p>`;
-  if(SUBJ.length)h+=`<button class="grline" id="toGrades" type="button">📊 <b>สรุปเกรด</b>${(()=>{const L_=SUBJ.map(S=>{const G=(st.grades||{})[S.id]||{},g=GPARTS.map(([k])=>G[k]||"–");return g.some(x=>x!=="–")?`${esc(S.name)} ${g.map(esc).join("/")}`:"";}).filter(Boolean);return L_.length?`<span>${L_.join(" · ")}</span>`:`<span>ยังไม่ได้ใส่เกรด</span>`;})()}<span class="go">→</span></button>${SUBJ.some(S=>GPARTS.some(([k])=>((st.grades||{})[S.id]||{})[k]))?`<p class="hint" style="margin:-8px 0 12px">เรียง Theory / Competency / Performance</p>`:""}`;
+  if(SUBJ.length)h+=`<button class="grline" id="toGrades" type="button">📊 <b>สรุปเกรด</b>${(()=>{const L_=SUBJ.map(S=>{const G=(st.grades||{})[S.id]||{},g=GPARTS.map(([k])=>G[k]||"–");return g.some(x=>x!=="–")?`${esc(S.name)} ${g.map(esc).join("/")}`:"";}).filter(Boolean);return L_.length?`<span>${L_.join(" · ")}</span>`:`<span>ยังไม่ได้ใส่เกรด</span>`;})()}<span class="go">→</span></button>${SUBJ.some(S=>GPARTS.some(([k])=>((st.grades||{})[S.id]||{})[k]))&&!G1?`<p class="hint" style="margin:-8px 0 12px">เรียง Theory / Competency / Performance</p>`:""}`;
   h+=WL.map(w=>{const n=(WARDS[w.id]||{QB:[]}).QB.length;const nu=totalN(w.id);return `<a class="wcard" href="#/${esc(w.id)}"><span class="wb" style="font-size:${(()=>{const n=Math.max(...String(w.short||w.id).split(" ").map(x=>x.length));return n>5?11:n>4?12.5:14;})()}px">${esc(w.short||w.id)}</span><span><b>${esc(w.name)}</b><span class="rd">${esc(w.sub||"")}</span>${acCounts(w)}${examDates(w).map(x=>{const c=cdOf(x),sc=x.score&&scoreOf(x.score);return `<span class="wcd${c.hot?" hot":""}${c.done?" done":""}">สอบ${x.part?" "+esc(x.part):""}${x.label?" "+esc(x.label):""} · ${cdHTML(x)}${c.hot?` — ควรเริ่ม Phase 2 ของ ${esc(x.part||"ข้อสอบ")}`:""}${sc?` · คะแนน ${esc(sc)}`:""}</span>`;}).join("")}</span>${(()=>{const S=subjOf(w.id),G=S&&(st.grades||{})[S.id]||{},g=GPARTS.map(([k])=>G[k]);return g.some(Boolean)?`<span class="wgr" title="Theory / Competency / Performance">${g.map(x=>x?`<span class="${gCls(x)}">${esc(x)}</span>`:`<span class="hint">–</span>`).join("")}</span>`:"";})()}</a>`;}).join("");
   {const pend=ld(SPKEY),n=pend?Object.values(pend).reduce((x,a)=>x+a.length,0):0;if(n&&fbOn()&&!(fb&&fb.user))h+=`<div class="card"><h3>🌐 มีโจทย์รอแชร์ให้ทุกคน ${n} ข้อ</h3><span class="rd">เข้าสู่ระบบแล้วระบบจะแชร์ขึ้นคลังรวมให้ทันที</span><button class="btn" data-act="acct" type="button">เข้าสู่ระบบ</button></div>`;}
   h+=acctCard();
@@ -6750,9 +6822,10 @@ const GRADE_OPTS=["A","B+","B","C+","C","D+","D","F"];
 const SUBJ=CFG.subjects||[];
 const subjOf=wid=>SUBJ.find(s=>(s.wards||[]).includes(wid))||null;
 const grS=id=>{st.grades=st.grades||{};return st.grades[id]||(st.grades[id]={});};
-const GPARTS=[["theory","Theory in"],["comp","Competency in"],["perf","Performance in"]];
+/* MDCU: 3 grades per subject (Theory / Competency / Performance); an institution can set config gradeParts — SI = one grade per ward-subject ([["grade","Grade"]], ผู้ใช้สั่ง 8 พ.ย. 2026) */
+const GPARTS=CFG.gradeParts||[["theory","Theory in"],["comp","Competency in"],["perf","Performance in"]],G1=GPARTS.length===1;
 function gradeCard(wid){const S=subjOf(wid);if(!S)return "";const G=(st.grades||{})[S.id]||{};
-  return `<div class="card grcard"><h3>เกรด · ${esc(S.name)}</h3>${GPARTS.map(([k,t])=>`<label class="grrow"><span>${t} ${esc(S.name)}</span><select class="field-in grsel" data-gs="${esc(S.id)}" data-gk="${k}"><option value="">—</option>${GRADE_OPTS.map(g=>`<option ${G[k]===g?"selected":""}>${g}</option>`).join("")}</select></label>`).join("")}
+  return `<div class="card grcard"><h3>เกรด · ${esc(S.name)}</h3>${GPARTS.map(([k,t])=>`<label class="grrow"><span>${G1?esc(t):`${t} ${esc(S.name)}`}</span><select class="field-in grsel" data-gs="${esc(S.id)}" data-gk="${k}"><option value="">—</option>${GRADE_OPTS.map(g=>`<option ${G[k]===g?"selected":""}>${g}</option>`).join("")}</select></label>`).join("")}
     ${(S.scores||[]).map(x=>`<label class="grrow"><span>คะแนน ${esc(x.label)}</span><input class="field-in grin" data-gs="${esc(S.id)}" data-gsc="${esc(x.k)}" value="${esc((G.sc||{})[x.k]||"")}" placeholder="ยังไม่ออก" inputmode="decimal"></label>`).join("")}
     <button class="linkbtn" data-go-grades type="button">ดูเกรดทุกวิชา →</button></div>`;}
 function bindGrades(){document.querySelectorAll("[data-gk]").forEach(el=>el.onchange=()=>{const G=grS(el.dataset.gs);G[el.dataset.gk]=el.value;G.ts=now();save();toast("บันทึกเกรดแล้ว");});
@@ -7874,7 +7947,8 @@ const hPh=hp=>hp==="p"?[ph()]:[1,2];
 /* answer history of one question [[ans, ts, phase]…] oldest first · raw = include attempts made before a reset */
 function hist(P,u,hp,raw){const f=raw?rawAtts:atts;let o=[];hPh(hp).forEach(p=>{o=o.concat(f(P,p,u).map(x=>[x[0],x[1],p]));});return o.sort((x,y)=>x[1]-y[1]);}
 const nWrong=(h,q)=>h.filter(x=>x[0]!==q.ans).length;
-const topicOf=(W,q)=>(W.TOPIC&&W.TOPIC[q.set+"|"+q.ro+"|"+q.orig])||q.topic||"Others";
+/* ward topic of a question: <dir>/topics.js → q.topic → first Tag (wards without topics.js, e.g. Med, get the same topic grouping as Gen Sx) */
+const topicOf=(W,q)=>(W.TOPIC&&W.TOPIC[q.set+"|"+q.ro+"|"+q.orig])||q.topic||(!q.unit&&!q.adm&&W.TAGS&&(W.TAGS[q.set+"|"+q.ro+"|"+q.orig]||[])[0])||"Others";
 const ADVF=[["all","ทุกข้อที่ทำแล้ว"],["w1","ผิด ≥ 1 ครั้ง"],["w2","ผิด ≥ 2 ครั้ง"],["w3","ผิด ≥ 3 ครั้ง"],["last","ล่าสุดยังผิด"],["fixed","เคยผิด แต่ล่าสุดถูก"],["clean","ถูกทุกครั้ง"]];
 const ADVO=[["bank","ตามลำดับในคลัง"],["wrong","ผิดบ่อยสุดก่อน"],["topic","จัดตามหัวข้อ"],["rand","สุ่ม"]];
 function advPass(f,q,h){const w=nWrong(h,q),l=h[h.length-1];

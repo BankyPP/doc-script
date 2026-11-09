@@ -199,7 +199,7 @@ function acCounts(w){const W=WARDS[w.id]||{},no=w.noExam||[],c={MCQ:(W.QB||[]).l
   const t=["MCQ","MEQ","OSCE"].filter(k=>!no.includes(k));return `<span class="acn"><span class="acl">ข้อสอบเก่า AC</span>${t.map(k=>`<span class="act${c[k]?"":" z"}">${k} <b>${c[k]}</b></span>`).join("")}</span>`;}
 function rWards(){
   let h=`<h1 class="h1">${esc(CFG.siteName||"คลังข้อสอบเก่า")}</h1><p class="sub">เลือกวอร์ดที่กำลังวนอยู่</p>`;
-  if(SUBJ.length)h+=`<button class="grline" id="toGrades" type="button">📊 <b>สรุปเกรด</b>${(()=>{const L_=SUBJ.map(S=>{const G=(st.grades||{})[S.id]||{},g=GPARTS.map(([k])=>G[k]||"–");return g.some(x=>x!=="–")?`${esc(S.name)} ${g.map(esc).join("/")}`:"";}).filter(Boolean);return L_.length?`<span>${L_.join(" · ")}</span>`:`<span>ยังไม่ได้ใส่เกรด</span>`;})()}<span class="go">→</span></button>${SUBJ.some(S=>GPARTS.some(([k])=>((st.grades||{})[S.id]||{})[k]))?`<p class="hint" style="margin:-8px 0 12px">เรียง Theory / Competency / Performance</p>`:""}`;
+  if(SUBJ.length)h+=`<button class="grline" id="toGrades" type="button">📊 <b>สรุปเกรด</b>${(()=>{const L_=SUBJ.map(S=>{const G=(st.grades||{})[S.id]||{},g=GPARTS.map(([k])=>G[k]||"–");return g.some(x=>x!=="–")?`${esc(S.name)} ${g.map(esc).join("/")}`:"";}).filter(Boolean);return L_.length?`<span>${L_.join(" · ")}</span>`:`<span>ยังไม่ได้ใส่เกรด</span>`;})()}<span class="go">→</span></button>${SUBJ.some(S=>GPARTS.some(([k])=>((st.grades||{})[S.id]||{})[k]))&&!G1?`<p class="hint" style="margin:-8px 0 12px">เรียง Theory / Competency / Performance</p>`:""}`;
   h+=WL.map(w=>{const n=(WARDS[w.id]||{QB:[]}).QB.length;const nu=totalN(w.id);return `<a class="wcard" href="#/${esc(w.id)}"><span class="wb" style="font-size:${(()=>{const n=Math.max(...String(w.short||w.id).split(" ").map(x=>x.length));return n>5?11:n>4?12.5:14;})()}px">${esc(w.short||w.id)}</span><span><b>${esc(w.name)}</b><span class="rd">${esc(w.sub||"")}</span>${acCounts(w)}${examDates(w).map(x=>{const c=cdOf(x),sc=x.score&&scoreOf(x.score);return `<span class="wcd${c.hot?" hot":""}${c.done?" done":""}">สอบ${x.part?" "+esc(x.part):""}${x.label?" "+esc(x.label):""} · ${cdHTML(x)}${c.hot?` — ควรเริ่ม Phase 2 ของ ${esc(x.part||"ข้อสอบ")}`:""}${sc?` · คะแนน ${esc(sc)}`:""}</span>`;}).join("")}</span>${(()=>{const S=subjOf(w.id),G=S&&(st.grades||{})[S.id]||{},g=GPARTS.map(([k])=>G[k]);return g.some(Boolean)?`<span class="wgr" title="Theory / Competency / Performance">${g.map(x=>x?`<span class="${gCls(x)}">${esc(x)}</span>`:`<span class="hint">–</span>`).join("")}</span>`:"";})()}</a>`;}).join("");
   {const pend=ld(SPKEY),n=pend?Object.values(pend).reduce((x,a)=>x+a.length,0):0;if(n&&fbOn()&&!(fb&&fb.user))h+=`<div class="card"><h3>🌐 มีโจทย์รอแชร์ให้ทุกคน ${n} ข้อ</h3><span class="rd">เข้าสู่ระบบแล้วระบบจะแชร์ขึ้นคลังรวมให้ทันที</span><button class="btn" data-act="acct" type="button">เข้าสู่ระบบ</button></div>`;}
   h+=acctCard();
@@ -280,9 +280,10 @@ const GRADE_OPTS=["A","B+","B","C+","C","D+","D","F"];
 const SUBJ=CFG.subjects||[];
 const subjOf=wid=>SUBJ.find(s=>(s.wards||[]).includes(wid))||null;
 const grS=id=>{st.grades=st.grades||{};return st.grades[id]||(st.grades[id]={});};
-const GPARTS=[["theory","Theory in"],["comp","Competency in"],["perf","Performance in"]];
+/* MDCU: 3 grades per subject (Theory / Competency / Performance); an institution can set config gradeParts — SI = one grade per ward-subject ([["grade","Grade"]], ผู้ใช้สั่ง 8 พ.ย. 2026) */
+const GPARTS=CFG.gradeParts||[["theory","Theory in"],["comp","Competency in"],["perf","Performance in"]],G1=GPARTS.length===1;
 function gradeCard(wid){const S=subjOf(wid);if(!S)return "";const G=(st.grades||{})[S.id]||{};
-  return `<div class="card grcard"><h3>เกรด · ${esc(S.name)}</h3>${GPARTS.map(([k,t])=>`<label class="grrow"><span>${t} ${esc(S.name)}</span><select class="field-in grsel" data-gs="${esc(S.id)}" data-gk="${k}"><option value="">—</option>${GRADE_OPTS.map(g=>`<option ${G[k]===g?"selected":""}>${g}</option>`).join("")}</select></label>`).join("")}
+  return `<div class="card grcard"><h3>เกรด · ${esc(S.name)}</h3>${GPARTS.map(([k,t])=>`<label class="grrow"><span>${G1?esc(t):`${t} ${esc(S.name)}`}</span><select class="field-in grsel" data-gs="${esc(S.id)}" data-gk="${k}"><option value="">—</option>${GRADE_OPTS.map(g=>`<option ${G[k]===g?"selected":""}>${g}</option>`).join("")}</select></label>`).join("")}
     ${(S.scores||[]).map(x=>`<label class="grrow"><span>คะแนน ${esc(x.label)}</span><input class="field-in grin" data-gs="${esc(S.id)}" data-gsc="${esc(x.k)}" value="${esc((G.sc||{})[x.k]||"")}" placeholder="ยังไม่ออก" inputmode="decimal"></label>`).join("")}
     <button class="linkbtn" data-go-grades type="button">ดูเกรดทุกวิชา →</button></div>`;}
 function bindGrades(){document.querySelectorAll("[data-gk]").forEach(el=>el.onchange=()=>{const G=grS(el.dataset.gs);G[el.dataset.gk]=el.value;G.ts=now();save();toast("บันทึกเกรดแล้ว");});
@@ -1404,7 +1405,8 @@ const hPh=hp=>hp==="p"?[ph()]:[1,2];
 /* answer history of one question [[ans, ts, phase]…] oldest first · raw = include attempts made before a reset */
 function hist(P,u,hp,raw){const f=raw?rawAtts:atts;let o=[];hPh(hp).forEach(p=>{o=o.concat(f(P,p,u).map(x=>[x[0],x[1],p]));});return o.sort((x,y)=>x[1]-y[1]);}
 const nWrong=(h,q)=>h.filter(x=>x[0]!==q.ans).length;
-const topicOf=(W,q)=>(W.TOPIC&&W.TOPIC[q.set+"|"+q.ro+"|"+q.orig])||q.topic||"Others";
+/* ward topic of a question: <dir>/topics.js → q.topic → first Tag (wards without topics.js, e.g. Med, get the same topic grouping as Gen Sx) */
+const topicOf=(W,q)=>(W.TOPIC&&W.TOPIC[q.set+"|"+q.ro+"|"+q.orig])||q.topic||(!q.unit&&!q.adm&&W.TAGS&&(W.TAGS[q.set+"|"+q.ro+"|"+q.orig]||[])[0])||"Others";
 const ADVF=[["all","ทุกข้อที่ทำแล้ว"],["w1","ผิด ≥ 1 ครั้ง"],["w2","ผิด ≥ 2 ครั้ง"],["w3","ผิด ≥ 3 ครั้ง"],["last","ล่าสุดยังผิด"],["fixed","เคยผิด แต่ล่าสุดถูก"],["clean","ถูกทุกครั้ง"]];
 const ADVO=[["bank","ตามลำดับในคลัง"],["wrong","ผิดบ่อยสุดก่อน"],["topic","จัดตามหัวข้อ"],["rand","สุ่ม"]];
 function advPass(f,q,h){const w=nWrong(h,q),l=h[h.length-1];

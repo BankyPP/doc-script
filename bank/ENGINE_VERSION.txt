@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu b30d92f 2026-11-04 เพิ่มปุ่ม × ในกล่องชมพู "ทำต่อ/กำลังทำ" หน้า home แท็บ MEQ และ OSCE ให้เหมือน MCQ ทุกวอร์ด ทุกเว็บ
+BankyPP/ac-mdcu b5780e8 2026-11-09 Subspe OSCE WIP: crops from GSUP4K (data files not yet added)
