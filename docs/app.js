@@ -1589,10 +1589,11 @@
   }
   function sySearchLoad(cb) {
     if (SYS_SEARCH.d) return cb();
+    (SYS_SEARCH.q = SYS_SEARCH.q || []).push(cb);   /* หน้าวาดใหม่ระหว่างโหลด → เรียกทุก callback ที่รอ (ไม่ทิ้งของหน้าใหม่) */
     if (SYS_SEARCH.L) return;
     SYS_SEARCH.L = true;
     fetch('symp/search.json?v=' + SY.v).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function (j) { SYS_SEARCH.d = j; }).catch(function (e) { SYS_SEARCH.E = e.message || String(e); }).then(function () { SYS_SEARCH.L = false; cb(); });
+      .then(function (j) { SYS_SEARCH.d = j; }).catch(function (e) { SYS_SEARCH.E = e.message || String(e); }).then(function () { SYS_SEARCH.L = false; var q = SYS_SEARCH.q; SYS_SEARCH.q = []; q.forEach(function (f) { try { f(); } catch (e) { } }); });
   }
   function clinicTabs(cur) {
     return '<div class="subtabs" aria-label="มุมมองของ Medical Soil">' + [['', 'ตาม system'], ['ward', 'ตามวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach']].map(function (x) {
@@ -1687,26 +1688,69 @@
       title: 'Symptomatology & Approach', html: clinicHead('symp', '<a href="#/kb">Medical Soil</a><span class="muted"> › </span><span>Symptomatology &amp; Approach</span>', 'Symptomatology &amp; Approach',
         'approach ตามอาการนำจากหลายเล่ม merge กันตามหัวข้อ ทุกจุดมีป้ายบอกที่มา ' + bkChips(['si', 'yb', 'bb', 'tn', 'ts']) + ' · algorithm กดดูทีละกล่องหรือเดินทีละขั้น<br><span class="muted" style="font-size:15px">' + syBooksLine() + '</span>') +
         '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:26px">' +
-        '<div class="sxbar"><form class="search sxsearch" id="sxsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sxq">ค้นทุกบท</label><input id="sxq" type="search" placeholder="ค้นทุกบท เช่น MCV, Rockall, eschar" value="' + esc(qq) + '" autocomplete="off"></form>' +
+        '<div class="sxbar"><form class="search sxsearch" id="sxsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sxq">ค้นทุกบท</label><input id="sxq" type="search" placeholder="ค้นชื่อบท หัวข้อ เนื้อหา Tag เช่น MCV, Rockall, เล่มเหลือง" value="' + esc(qq) + '" autocomplete="off"></form>' +
         '<div class="filters" role="group" aria-label="เรียงบท"><a class="chip' + (view === 'sys' ? ' on' : '') + '" href="' + hq('sys') + '">ตามระบบ</a><a class="chip' + (view === 'book' ? ' on' : '') + '" href="' + hq('book') + '">ตามเล่ม</a></div>' +
         '<span class="muted" style="font-size:14px">' + SY.chapters.length + ' / ' + (SY.total || SY.chapters.length) + ' บท · ' + nf + ' algorithm · ' + ni + ' รูป</span></div>' +
         '<div id="sxres" class="sxres" hidden></div>' + gSympCard() + body + '</section>',
       after: function () {
-        var inp = document.getElementById('sxq'), res = document.getElementById('sxres'), t = null;
+        var inp = document.getElementById('sxq'), res = document.getElementById('sxres'), t = null, ft = '';
+        /* ค้นทุกอย่างในหน้า: ชื่อบท (ไทย/อังกฤษ/เลขบทในแต่ละเล่ม) · Tag (เล่ม สถาบัน กลุ่มระบบ) · หัวข้อ · algorithm · เนื้อหา · โน้ต — ผลแยกป้ายประเภท + ตัวกรอง */
+        var TY = { chap: 'ชื่อบท', tag: 'Tag', head: 'หัวข้อ', algo: 'Algorithm', body: 'เนื้อหา', note: 'โน้ต' };
+        function syTags(c) {
+          var b = c.b || { si: 1 }, o = syBks(c).map(function (k) { return BK[k]; });
+          if (b.yb) o.push('จุฬาฯ + ศิริราช', 'จุฬาฯ', 'จุฬา', 'MDCU', 'Chula');
+          if (b.si || b.tn || b.ts || b.yb) o.push('ศิริราช', 'SI', 'Siriraj');
+          if (b.bb) o.push('International');
+          o.push(syGroup(c).t); return o.filter(Boolean);
+        }
+        function words(v) { return v.toLowerCase().split(/\s+/).filter(Boolean); }
+        function has(s, ws) { s = String(s || '').toLowerCase(); return ws.every(function (w) { return s.indexOf(w) >= 0; }); }
+        function hl(s, ws) {
+          s = String(s || ''); var sl = s.toLowerCase(), m = [];
+          ws.forEach(function (w) { var i = 0; while ((i = sl.indexOf(w, i)) >= 0) { m.push([i, i + w.length]); i += w.length; } });
+          m.sort(function (x, y) { return x[0] - y[0]; });
+          var o = '', p = 0; m.forEach(function (r) { if (r[0] < p) return; o += esc(s.slice(p, r[0])) + '<mark>' + esc(s.slice(r[0], r[1])) + '</mark>'; p = r[1]; });
+          return o + esc(s.slice(p));
+        }
+        function snip(s, ws) {
+          s = String(s || '').replace(/\n/g, ' '); var sl = s.toLowerCase(), i = -1;
+          ws.some(function (w) { i = sl.indexOf(w); return i >= 0; });
+          if (i < 0) i = 0; var a = Math.max(0, i - 50), e = Math.min(s.length, i + 120);
+          return (a ? '…' : '') + hl(s.slice(a, e), ws) + (e < s.length ? '…' : '');
+        }
+        function row(ty, href, no, title, sub) { return '<a href="' + href + '" data-ty="' + ty + '"><span class="pn">' + no + '</span><span><span class="rtype sy' + ty + '">' + TY[ty] + '</span><b>' + title + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</span></a>'; }
         function run() {
+          if (!document.body.contains(res)) return;
           var v = inp.value.trim(); setQuery(route(), { q: v });
           if (v.length < 2) { res.hidden = true; res.innerHTML = ''; return; }
           res.hidden = false;
-          if (!SYS_SEARCH.d) { res.innerHTML = SYS_SEARCH.E ? '<p class="warn">โหลดดัชนีค้นหาไม่สำเร็จ: ' + esc(SYS_SEARCH.E) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดดัชนีค้นหา…</p>'; sySearchLoad(run); return; }
-          var ql = v.toLowerCase(), hits = SYS_SEARCH.d.filter(function (x) { return (x.h + ' ' + x.x).toLowerCase().indexOf(ql) >= 0; });
-          var nh = noteHits(function (k) { return k.indexOf('y:') === 0; }, v);
-          res.innerHTML = '<span class="label">พบ ' + hits.length + ' หัวข้อ' + (nh.length ? ' · โน้ต ' + nh.length : '') + (hits.length > 80 ? ' · แสดง 80 แรก' : '') + '</span>' + noteHitLinks(nh, v) + hits.slice(0, 80).map(function (x) {
-            var c = syCh(x.c); if (!c) return '';
-            var i = x.x.toLowerCase().indexOf(ql), snip = '';
-            if (i >= 0) { var a = Math.max(0, i - 50); snip = (a ? '…' : '') + esc(x.x.slice(a, i)) + '<mark>' + esc(x.x.slice(i, i + v.length)) + '</mark>' + esc(x.x.slice(i + v.length, i + v.length + 70)) + '…'; }
-            return '<a href="#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) + '"><span class="pn">' + c.no + '</span><span><b>' + esc(c.th) + ' › ' + esc(x.h) + '</b>' + (snip ? '<small>' + snip.replace(/\n/g, ' ') + '</small>' : '') + '</span></a>';
-          }).join('');
+          var ws = words(v), ql = v.toLowerCase(), R = [];
+          SY.chapters.forEach(function (c) {
+            var href = '#/kb/symp/' + c.id, nm = c.th + ' ' + c.en + ' ' + syRef(c);
+            if (has(nm, ws)) { var sc = (c.th + ' ' + c.en).toLowerCase().indexOf(ql) >= 0 ? 0 : 1; R.push([sc, row('chap', href, c.no, hl(c.th, ws) + ' · ' + hl(c.en, ws), hl(syRef(c), ws))]); return; }
+            var tg = syTags(c), hit = tg.filter(function (x) { return has(x, ws); });
+            if (hit.length || has(tg.join(' ') + ' ' + syRef(c, true), ws)) R.push([10, row('tag', href, c.no, esc(c.th) + ' · ' + esc(c.en), 'Tag: ' + (hit.length ? hit : tg).map(function (x) { return hl(x, ws); }).join(' · '))]);
+          });
+          if (SYS_SEARCH.d) SYS_SEARCH.d.forEach(function (x) {
+            var c = syCh(x.c); if (!c) return;
+            var href = '#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s), ty = x.f ? 'algo' : 'head';
+            if (has(x.h, ws)) R.push([x.f ? 30 : 20, row(ty, href, c.no, esc(c.th) + ' › ' + hl(x.h, ws), has(x.x, ws) ? snip(x.x, ws) : '')]);
+            else if (has(x.x, ws)) R.push([x.x.toLowerCase().indexOf(ql) >= 0 ? 40 : 41, row('body', href, c.no, esc(c.th) + ' › ' + esc(x.h), snip(x.x, ws))]);
+          });
+          R.sort(function (a, b) { return a[0] - b[0]; });
+          var nh = noteHits(function (k) { return k.indexOf('y:') === 0; }, v), cnt = { note: nh.length }, rows = R.map(function (r) { return r[1]; });
+          rows.forEach(function (h) { var k = h.match(/data-ty="(\w+)"/)[1]; cnt[k] = (cnt[k] || 0) + 1; });
+          if (ft && !cnt[ft]) ft = '';
+          var tot = rows.length + nh.length, show = ft ? (ft === 'note' ? [] : rows.filter(function (h) { return h.indexOf('data-ty="' + ft + '"') >= 0; })) : rows;
+          var chips = tot ? '<div class="filters sxft" role="group" aria-label="กรองประเภทผล"><button type="button" class="chip' + (!ft ? ' on' : '') + '" data-ft="">ทั้งหมด ' + tot + '</button>' +
+            Object.keys(TY).filter(function (k) { return cnt[k]; }).map(function (k) { return '<button type="button" class="chip' + (ft === k ? ' on' : '') + '" data-ft="' + k + '">' + TY[k] + ' ' + cnt[k] + '</button>'; }).join('') + '</div>' : '';
+          res.innerHTML = '<span class="label">พบ ' + tot + ' รายการ' + (show.length > 120 ? ' · แสดง 120 แรก' : '') + '</span>' + chips +
+            (!SYS_SEARCH.d ? (SYS_SEARCH.E ? '<p class="warn">โหลดดัชนีเนื้อหาไม่สำเร็จ: ' + esc(SYS_SEARCH.E) + '</p>' : '<p class="muted"><span class="spin" aria-hidden="true"></span> กำลังโหลดดัชนีเนื้อหา…</p>') : '') +
+            (!ft || ft === 'note' ? noteHitLinks(nh, v) : '') + show.slice(0, 120).join('') +
+            (!tot && SYS_SEARCH.d ? '<p class="muted" style="padding:4px 8px">ไม่พบ</p>' : '');
+          if (!SYS_SEARCH.d && !SYS_SEARCH.E) sySearchLoad(run);
         }
+        res.addEventListener('click', function (e) { var b = e.target.closest('[data-ft]'); if (!b) return; ft = b.getAttribute('data-ft'); run(); });
         inp.addEventListener('input', function () { clearTimeout(t); t = setTimeout(run, 220); });
         document.getElementById('sxsf').addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(t); run(); });
         if (qq) run();

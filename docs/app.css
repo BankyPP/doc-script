@@ -1077,3 +1077,13 @@ a.spo{text-decoration:none}
 [data-ff="w"]>*{column-span:none!important;overflow-x:auto}
 [data-ff="w"] td,[data-ff="w"] th{overflow-wrap:normal;word-break:normal;hyphens:manual}
 @media (max-width:700px){[data-ff="w"] table{min-width:520px}}
+
+/* Symptomatology: ผลค้นแยกประเภท */
+.sxres .rtype{display:inline-block;margin:0 6px 3px 0;vertical-align:1px}
+.rtype.sychap{background:#DDE8D0;color:#2F4A1C}
+.rtype.sytag{background:#E6EFF5;color:#1F4E6E}
+.rtype.syhead{background:#EEE7D6;color:#5A4A22}
+.rtype.syalgo{background:#EADCF0;color:#5B2F6E}
+.rtype.sybody{background:var(--moss-bg);color:var(--moss-dk)}
+.sxres .sxft{padding:0 8px 8px;gap:6px}
+.sxres .sxft .chip{font-size:13px;padding:4px 12px;min-height:0}
