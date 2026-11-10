@@ -31,7 +31,7 @@ window.POY_TOPICS = [
     selftest: true,
     testPages: [18, 19, 20],
     flash: [
-      { id: 'bug-drug', title: 'Flashcard — Bug → Drug', note: 'จากหน้า 10–11 ของสรุป', pages: [10, 11], file: '' }
+      { id: 'bug-drug', title: 'Flashcard — Bug → Drug', note: 'จากหน้า 10–11 ของสรุป', pages: [10, 11], file: 'flash-bug-drug.html' }
     ]
   },
   {

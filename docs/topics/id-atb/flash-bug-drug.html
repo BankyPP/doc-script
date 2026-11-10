@@ -1,0 +1,409 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Bug → Drug Drill</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one study bench — header + group filters on top, a single large specimen card in the middle, controls under it. Gram-stain palette: crystal violet = Gram+, safranin = Gram−. */
+:root{
+  --bg:#f5f3f8; --surface:#ffffff; --surface-2:#eeeaf4; --ink:#1e1830; --muted:#6a6380; --line:#dcd6e6;
+  --violet:#5a2d91; --violet-soft:#ece3f7; --safranin:#c0306a; --safranin-soft:#fbe4ee;
+  --good:#1f7a4d; --good-soft:#dff3e8; --bad:#b4232c; --bad-soft:#fbe3e4;
+  --g0:#5a2d91; --g1:#c0306a; --g2:#d0582f; --g3:#5d7a1f; --g4:#3d4f6b; --g5:#0f7d7a;
+  --shadow:0 1px 2px rgba(30,24,48,.06),0 8px 24px rgba(30,24,48,.08);
+  --f-display:"Bricolage Grotesque","IBM Plex Sans Thai",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13101b; --surface:#1d1828; --surface-2:#262035; --ink:#efeaf7; --muted:#a59db8; --line:#352d47;
+  --violet:#b48cf0; --violet-soft:#2e2343; --safranin:#f07aa6; --safranin-soft:#3a1f2c;
+  --good:#5fd39a; --good-soft:#163527; --bad:#ff7d84; --bad-soft:#3d1a1e;
+  --g0:#b48cf0; --g1:#f07aa6; --g2:#f0956c; --g3:#a9c95e; --g4:#9fb3d6; --g5:#4fd1c9;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#13101b; --surface:#1d1828; --surface-2:#262035; --ink:#efeaf7; --muted:#a59db8; --line:#352d47;
+  --violet:#b48cf0; --violet-soft:#2e2343; --safranin:#f07aa6; --safranin-soft:#3a1f2c;
+  --good:#5fd39a; --good-soft:#163527; --bad:#ff7d84; --bad-soft:#3d1a1e;
+  --g0:#b48cf0; --g1:#f07aa6; --g2:#f0956c; --g3:#a9c95e; --g4:#9fb3d6; --g5:#4fd1c9;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); color-scheme:dark;}
+
+html{background:var(--bg)}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 40px;display:flex;flex-direction:column;gap:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,.chip:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.brand h1{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,5vw,34px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.brand h1 .arrow{color:var(--safranin)}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.tally{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tally b{color:var(--ink);font-weight:500}
+.meter{width:120px;height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--safranin));width:0;transition:width .3s}
+
+.tabs{display:flex;gap:4px;background:var(--surface-2);padding:4px;border-radius:12px;width:fit-content;max-width:100%;flex-wrap:wrap}
+.tabs button{border:0;background:transparent;padding:7px 14px;border-radius:9px;font-weight:600;font-size:14px;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 11px 5px 9px;font-size:13px;user-select:none}
+.chip .dot{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.chip .n{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.chip[aria-pressed="false"]{opacity:.45}
+.chip[aria-pressed="false"] .dot{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c)}
+.opts{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);align-items:center}
+.opts label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.linkbtn{border:0;background:none;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:0;font-size:13px}
+
+/* card stage */
+.stage{display:flex;flex-direction:column;gap:14px}
+.progress{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.card{position:relative;perspective:1400px;min-height:280px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.card .face{position:absolute;inset:0;border-radius:18px;background:var(--surface);box-shadow:var(--shadow);border:1px solid var(--line);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px 22px;backface-visibility:hidden;
+  transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.card .back{transform:rotateY(180deg);background:var(--violet-soft)}
+.card.flipped .front{transform:rotateY(-180deg)}
+.card.flipped .back{transform:rotateY(0)}
+.face .tag{position:absolute;top:14px;left:16px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--c);font-weight:700;display:flex;gap:6px;align-items:center}
+.face .tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c)}
+.face .side{position:absolute;top:14px;right:16px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.face .known-badge{position:absolute;bottom:14px;left:16px;font-size:12px;color:var(--good);font-weight:600}
+.bug{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,6vw,46px);line-height:1.1;letter-spacing:-.01em;text-wrap:balance;max-width:100%;overflow-wrap:anywhere}
+.drug{font-weight:700;font-size:clamp(22px,4.6vw,34px);line-height:1.25;color:var(--violet);text-wrap:balance;overflow-wrap:anywhere}
+.ask{font-size:13px;color:var(--muted);margin-top:4px}
+.hint{position:absolute;bottom:14px;right:16px;font-size:12px;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1 1 160px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn kbd{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line);border-radius:5px;padding:0 5px;color:var(--muted);background:var(--surface-2)}
+.btn.again{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 35%,var(--line))}
+.btn.again:hover{background:var(--bad-soft)}
+.btn.know{color:var(--good);border-color:color-mix(in srgb,var(--good) 35%,var(--line))}
+.btn.know:hover{background:var(--good-soft)}
+.btn.primary{background:var(--violet);color:var(--surface);border-color:var(--violet)}
+.btn.primary kbd{background:transparent;color:inherit;border-color:currentColor;opacity:.7}
+.btn:disabled{opacity:.4;cursor:default}
+
+/* quiz */
+.qcard{border-radius:18px;background:var(--surface);box-shadow:var(--shadow);border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;gap:14px;position:relative}
+.qcard .tag{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--c);font-weight:700;display:flex;gap:6px;align-items:center}
+.qcard .tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.choices{grid-template-columns:1fr}}
+.choice{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px;display:flex;gap:10px;align-items:flex-start;min-width:0}
+.choice:hover:not(:disabled){border-color:var(--violet)}
+.choice .k{font-family:var(--f-mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;flex-shrink:0;margin-top:2px}
+.choice span.t{min-width:0;overflow-wrap:anywhere}
+.choice.ok{background:var(--good-soft);border-color:var(--good);color:var(--good);font-weight:600}
+.choice.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.choice:disabled{cursor:default}
+.feedback{font-weight:600;min-height:1.5em}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+
+/* match */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:620px){.mgrid{grid-template-columns:repeat(2,1fr)}}
+.tile{min-height:92px;border-radius:14px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);padding:10px;font-size:14px;line-height:1.3;display:flex;align-items:center;justify-content:center;text-align:center;overflow-wrap:anywhere;min-width:0;transition:transform .15s,opacity .3s,background .2s}
+.tile.bugt{font-family:var(--f-display);font-weight:800;font-size:16px}
+.tile.drugt{color:var(--violet);font-weight:600}
+.tile.sel{outline:2px solid var(--safranin);outline-offset:1px;transform:translateY(-2px)}
+.tile.done{opacity:0;pointer-events:none}
+.tile.wrong{animation:shake .35s;background:var(--bad-soft)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* summary */
+.summary{border-radius:18px;background:var(--surface);box-shadow:var(--shadow);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:14px}
+.summary h2{font-family:var(--f-display);font-weight:800;font-size:28px;margin:0}
+.stats{display:flex;gap:22px;flex-wrap:wrap;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.stats b{display:block;font-size:26px;color:var(--ink);font-family:var(--f-display);font-weight:800}
+.missed{border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:6px;max-height:340px;overflow:auto}
+.missed div{display:flex;gap:10px;justify-content:space-between;font-size:14px;flex-wrap:wrap}
+.missed div b{font-weight:700}
+.missed div span{color:var(--violet);text-align:right}
+.empty{padding:40px 20px;text-align:center;color:var(--muted)}
+.confirm{display:inline-flex;gap:8px;align-items:center;font-size:13px}
+.confirm button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:3px 10px;font-size:13px}
+.confirm button.danger{color:var(--bad);border-color:var(--bad)}
+footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+@media (prefers-reduced-motion: reduce){.card .face,.tile,.meter i{transition:none}.tile.wrong{animation:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>Bug <span class="arrow">→</span> Drug Drill</h1>
+      <p>เชื้อ 114 ตัว · ยา first line จากหน้า 10–11 ของ ABX Spectrum</p>
+    </div>
+    <div class="tally"><span>จำได้ <b id="knownN">0</b>/<b id="totalN">0</b></span><span class="meter"><i id="meterBar"></i></span></div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-flash" aria-selected="true" data-mode="flash">Flashcards</button>
+    <button role="tab" id="tab-quiz" aria-selected="false" data-mode="quiz">Quiz 4 ตัวเลือก</button>
+    <button role="tab" id="tab-match" aria-selected="false" data-mode="match">Match</button>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="opts">
+    <label><input type="checkbox" id="optShuffle" checked> สลับลำดับ</label>
+    <label><input type="checkbox" id="optUnknown"> เฉพาะที่ยังจำไม่ได้</label>
+    <span id="resetWrap"><button class="linkbtn" id="resetBtn" type="button">ล้างความคืบหน้า</button></span>
+  </div>
+
+  <main class="stage" id="stage"></main>
+
+  <footer>Flashcards: แตะการ์ดหรือกด Space เพื่อพลิก · ← / 1 = ยังจำไม่ได้ · → / 2 = จำได้แล้ว &nbsp;·&nbsp; Quiz: กด 1–4 เลือก, Enter ไปข้อถัดไป · ความคืบหน้าเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น</footer>
+</div>
+
+<script>
+const CARDS = [{"b": "MSSA", "d": "Cloxacillin / cefazolin", "g": 0}, {"b": "MRSA (HA)", "d": "Vancomycin", "g": 0}, {"b": "CA-MRSA (SSTI)", "d": "TMP-SMX / clinda", "g": 0}, {"b": "VISA / VRSA", "d": "Linezolid", "g": 0}, {"b": "CoNS / S. lugdunensis", "d": "Vancomycin", "g": 0}, {"b": "GAS (S. pyogenes)", "d": "Penicillin / amoxicillin", "g": 0}, {"b": "GBS (S. agalactiae)", "d": "Penicillin G / ampicillin", "g": 0}, {"b": "Viridans / S. gallolyticus", "d": "Pen G / ceftriaxone", "g": 0}, {"b": "S. pneumoniae PSSP", "d": "Amoxicillin / pen G", "g": 0}, {"b": "PISP / PRSP", "d": "HD amox · ceftriaxone", "g": 0}, {"b": "E. faecalis", "d": "Ampicillin / amoxicillin", "g": 0}, {"b": "E. faecium (amp-R)", "d": "Vancomycin", "g": 0}, {"b": "VRE", "d": "Linezolid", "g": 0}, {"b": "Listeria", "d": "Ampicillin (± genta)", "g": 0}, {"b": "C. diphtheriae", "d": "Antitoxin + erythro / pen G", "g": 0}, {"b": "B. anthracis", "d": "Cipro / doxy", "g": 0}, {"b": "Nocardia", "d": "TMP-SMX", "g": 0}, {"b": "Actinomyces", "d": "Pen G → amoxicillin", "g": 0}, {"b": "C. perfringens", "d": "Pen G + clinda", "g": 0}, {"b": "C. tetani", "d": "Metronidazole", "g": 0}, {"b": "C. difficile", "d": "Fidaxomicin / vanco PO", "g": 0}, {"b": "Cutibacterium acnes", "d": "Pen / vanco (device)", "g": 0}, {"b": "N. meningitidis", "d": "Ceftriaxone 2 g q12", "g": 1}, {"b": "N. gonorrhoeae", "d": "Ceftriaxone 500 mg IM ×1", "g": 1}, {"b": "M. catarrhalis", "d": "Amox-clav", "g": 1}, {"b": "H. influenzae", "d": "Amoxicillin (β-lact −) / amox-clav", "g": 1}, {"b": "B. pertussis", "d": "Azithromycin", "g": 1}, {"b": "Acinetobacter (non-MDR)", "d": "Amp-sulb / cefoperazone-sulb", "g": 1}, {"b": "CRAB", "d": "Colistin/polymyxin B ± HD sulbactam (ไทย)", "g": 1}, {"b": "E. coli / Klebsiella (non-ESBL)", "d": "Ceftriaxone", "g": 1}, {"b": "ESBL-E", "d": "Meropenem / ertapenem", "g": 1}, {"b": "AmpC (Enterobacter, K. aerogenes, C. freundii)", "d": "Cefepime", "g": 1}, {"b": "CRE KPC / OXA-48", "d": "Ceftaz-avibactam", "g": 1}, {"b": "CRE NDM (MBL)", "d": "Ceftaz-avi + aztreonam", "g": 1}, {"b": "Proteus / Morganella / Serratia", "d": "Ceftriaxone / cefepime", "g": 1}, {"b": "Salmonella Typhi", "d": "Ceftriaxone / azithro", "g": 1}, {"b": "NTS (invasive)", "d": "Ceftriaxone", "g": 1}, {"b": "Shigella", "d": "Azithro", "g": 1}, {"b": "Yersinia enterocolitica", "d": "TMP-SMX / FQ", "g": 1}, {"b": "Y. pestis", "d": "Gentamicin / streptomycin", "g": 1}, {"b": "P. aeruginosa", "d": "Pip-tazo / cefepime / ceftazidime", "g": 2}, {"b": "B. pseudomallei", "d": "Ceftazidime / meropenem", "g": 2}, {"b": "S. maltophilia", "d": "TMP-SMX", "g": 2}, {"b": "B. cepacia", "d": "TMP-SMX", "g": 2}, {"b": "Elizabethkingia", "d": "Minocycline / FQ", "g": 2}, {"b": "H. pylori", "d": "Bismuth quadruple 14 d", "g": 2}, {"b": "Campylobacter", "d": "Azithro", "g": 2}, {"b": "V. cholerae", "d": "Doxy 300 mg ×1", "g": 2}, {"b": "V. vulnificus", "d": "Doxy + ceftazidime/ceftriaxone", "g": 2}, {"b": "Aeromonas", "d": "FQ / TMP-SMX", "g": 2}, {"b": "Legionella", "d": "Azithro / levo", "g": 2}, {"b": "Pasteurella", "d": "Amox-clav / pen", "g": 2}, {"b": "Capnocytophaga", "d": "Amox-clav", "g": 2}, {"b": "Eikenella", "d": "Amox-clav", "g": 2}, {"b": "HACEK", "d": "Ceftriaxone", "g": 2}, {"b": "Bartonella", "d": "Azithro (cat scratch)", "g": 2}, {"b": "Brucella", "d": "Doxy + rifampin 6 wk", "g": 2}, {"b": "Francisella", "d": "Streptomycin / genta", "g": 2}, {"b": "Streptobacillus", "d": "Penicillin", "g": 2}, {"b": "H. ducreyi", "d": "Azithro / ceftriaxone", "g": 2}, {"b": "B. fragilis (ใต้กระบังลม)", "d": "Metronidazole", "g": 3}, {"b": "Oral anaerobes (เหนือกระบังลม): Prevotella, Fuso, Peptostrep", "d": "Amox-clav / amp-sulb", "g": 3}, {"b": "Mixed aerobic-anaerobic", "d": "Ceftriaxone + metro", "g": 3}, {"b": "M. pneumoniae", "d": "Azithromycin (MSMP)", "g": 3}, {"b": "C. pneumoniae", "d": "Azithro / doxy", "g": 3}, {"b": "C. psittaci", "d": "Doxy", "g": 3}, {"b": "C. trachomatis", "d": "Doxy 100 bid ×7 d", "g": 3}, {"b": "M. genitalium", "d": "Doxy → moxifloxacin", "g": 3}, {"b": "Coxiella", "d": "Doxy", "g": 3}, {"b": "T. pallidum early", "d": "Benzathine pen G 2.4 MU IM ×1", "g": 3}, {"b": "Neurosyphilis", "d": "Aqueous pen G 3–4 MU q4 ×10–14 d", "g": 3}, {"b": "Leptospira", "d": "Doxy (mild) / pen G, ceftriaxone (severe)", "g": 3}, {"b": "Borrelia burgdorferi", "d": "Doxy", "g": 3}, {"b": "Orientia (scrub)", "d": "Doxy 100 bid ×7 d", "g": 3}, {"b": "R. typhi / spotted fever", "d": "Doxy", "g": 3}, {"b": "Ehrlichia / Anaplasma", "d": "Doxy", "g": 3}, {"b": "M. tuberculosis", "d": "2HRZE / 4HR", "g": 4}, {"b": "MAC", "d": "Azithro/clari + EMB + rifampin", "g": 4}, {"b": "M. abscessus", "d": "Amikacin + imipenem/cefoxitin + macrolide", "g": 4}, {"b": "M. marinum", "d": "Clari + EMB", "g": 4}, {"b": "M. kansasii", "d": "RIF + EMB + INH/macrolide", "g": 4}, {"b": "M. leprae", "d": "Rifampin + dapsone (+ clofazimine)", "g": 4}, {"b": "C. albicans (mucosal)", "d": "Fluconazole", "g": 4}, {"b": "Candidemia", "d": "Echinocandin", "g": 4}, {"b": "C. glabrata / krusei / auris", "d": "Echinocandin", "g": 4}, {"b": "Cryptococcus", "d": "AmB + 5-FC → fluconazole", "g": 4}, {"b": "Aspergillus", "d": "Voriconazole", "g": 4}, {"b": "Mucorales", "d": "Liposomal AmB + surgery", "g": 4}, {"b": "Talaromyces", "d": "AmB → itraconazole", "g": 4}, {"b": "Histoplasma", "d": "Itra (mild) / AmB", "g": 4}, {"b": "Pneumocystis", "d": "TMP-SMX", "g": 4}, {"b": "Dermatophyte", "d": "Terbinafine", "g": 4}, {"b": "Sporothrix", "d": "Itraconazole", "g": 4}, {"b": "P. falciparum", "d": "ACT + primaquine 0.25 mg/kg ×1", "g": 5}, {"b": "P. vivax / ovale", "d": "Chloroquine + primaquine 14 d", "g": 5}, {"b": "Toxoplasma", "d": "Pyrimethamine + sulfadiazine + leucovorin", "g": 5}, {"b": "E. histolytica", "d": "Metro + paromomycin", "g": 5}, {"b": "Giardia", "d": "Metro / tinidazole", "g": 5}, {"b": "Trichomonas", "d": "Metronidazole", "g": 5}, {"b": "Strongyloides", "d": "Ivermectin", "g": 5}, {"b": "Ascaris / hookworm / Trichuris", "d": "Albendazole", "g": 5}, {"b": "Opisthorchis / Clonorchis", "d": "Praziquantel", "g": 5}, {"b": "Paragonimus", "d": "Praziquantel", "g": 5}, {"b": "Taenia / NCC", "d": "Prazi / niclosamide · NCC: albendazole + steroid", "g": 5}, {"b": "Gnathostoma", "d": "Albendazole 21 d", "g": 5}, {"b": "Angiostrongylus", "d": "Steroid + supportive", "g": 5}, {"b": "Fasciola / Schistosoma", "d": "Triclabendazole / prazi", "g": 5}, {"b": "Scabies", "d": "Permethrin 5%", "g": 5}, {"b": "HSV / VZV", "d": "Acyclovir / valacyclovir", "g": 5}, {"b": "CMV", "d": "Ganciclovir / valganciclovir", "g": 5}, {"b": "Influenza", "d": "Oseltamivir 75 bid ×5 d", "g": 5}, {"b": "HBV", "d": "ETV / TDF / TAF", "g": 5}, {"b": "HCV", "d": "SOF/VEL", "g": 5}, {"b": "HIV", "d": "TLD (TDF + 3TC + DTG)", "g": 5}];
+const GROUPS = [
+  {name:"Gram-positive", short:"Gram+ cocci/bacilli"},
+  {name:"Gram-negative · Neisseria, Haemophilus, Enterobacterales", short:"Gram− · Neisseria/Entero"},
+  {name:"Gram-negative · non-fermenter, curved, zoonotic", short:"Gram− · non-ferm/zoonotic"},
+  {name:"Anaerobe · atypical · spirochete", short:"Anaerobe · atypical"},
+  {name:"Mycobacteria · fungi", short:"Myco · fungi"},
+  {name:"Parasite · virus", short:"Parasite · virus"}
+];
+const KEY = "bugdrug-v1";
+const store = {
+  load(){ try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e){ return {}; } },
+  save(o){ try { localStorage.setItem(KEY, JSON.stringify(o)); } catch(e){} }
+};
+const saved = store.load();
+const S = {
+  mode: "flash",
+  groups: new Set(Array.isArray(saved.groups) ? saved.groups : [0,1,2,3,4,5]),
+  known: new Set(Array.isArray(saved.known) ? saved.known : []),
+  shuffle: saved.shuffle !== false,
+  onlyUnknown: !!saved.onlyUnknown,
+  best: saved.best || null,
+  flash: null, quiz: null, match: null
+};
+function persist(){ store.save({groups:[...S.groups], known:[...S.known], shuffle:S.shuffle, onlyUnknown:S.onlyUnknown, best:S.best}); }
+
+const $ = (s, r=document) => r.querySelector(s);
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]];} return b; };
+const gcol = g => `var(--g${g})`;
+
+function pool(){
+  let ids = CARDS.map((c,i)=>i).filter(i => S.groups.has(CARDS[i].g));
+  if (S.onlyUnknown) ids = ids.filter(i => !S.known.has(i));
+  return S.shuffle ? shuffle(ids) : ids;
+}
+
+function renderTally(){
+  $("#knownN").textContent = S.known.size;
+  $("#totalN").textContent = CARDS.length;
+  $("#meterBar").style.width = (S.known.size / CARDS.length * 100) + "%";
+  document.querySelectorAll(".chip").forEach(ch => {
+    const g = +ch.dataset.g, all = CARDS.filter(c=>c.g===g).length;
+    const k = CARDS.reduce((n,c,i)=> n + (c.g===g && S.known.has(i) ? 1:0), 0);
+    ch.querySelector(".n").textContent = `${k}/${all}`;
+  });
+}
+
+function renderFilters(){
+  const f = $("#filters");
+  f.innerHTML = GROUPS.map((g,i)=>`<button type="button" class="chip" data-g="${i}" style="--c:${gcol(i)}" aria-pressed="${S.groups.has(i)}" title="${esc(g.name)}"><span class="dot"></span>${esc(g.short)} <span class="n"></span></button>`).join("");
+  f.querySelectorAll(".chip").forEach(ch => ch.addEventListener("click", () => {
+    const g = +ch.dataset.g;
+    if (S.groups.has(g)) { if (S.groups.size > 1) S.groups.delete(g); } else S.groups.add(g);
+    ch.setAttribute("aria-pressed", S.groups.has(g));
+    persist(); restart();
+  }));
+}
+
+/* ---------- Flashcards ---------- */
+function startFlash(ids){
+  const q = ids || pool();
+  S.flash = { queue: q, total: q.length, done: 0, againSet: new Set(), flipped: false, seen: new Set() };
+}
+function renderFlash(){
+  const F = S.flash, st = $("#stage");
+  if (!F.total) { st.innerHTML = `<div class="summary empty">ไม่มีการ์ดในชุดนี้ — เลือกกลุ่มเชื้อเพิ่ม หรือเอาติ๊ก "เฉพาะที่ยังจำไม่ได้" ออก</div>`; return; }
+  if (!F.queue.length) {
+    const miss = [...F.againSet];
+    st.innerHTML = `<div class="summary"><h2>จบรอบแล้ว</h2>
+      <div class="stats"><span><b>${F.total}</b>การ์ดในรอบ</span><span><b>${F.total - miss.length}</b>จำได้ครั้งแรก</span><span><b>${miss.length}</b>ต้องทวน</span></div>
+      ${miss.length ? `<div class="missed">${miss.map(i=>`<div><b>${esc(CARDS[i].b)}</b><span>${esc(CARDS[i].d)}</span></div>`).join("")}</div>` : ""}
+      <div class="row">${miss.length ? `<button class="btn primary" id="redoMiss" type="button">ทวนเฉพาะ ${miss.length} ใบที่พลาด</button>` : ""}<button class="btn" id="newRound" type="button">เริ่มรอบใหม่</button></div></div>`;
+    $("#newRound").onclick = () => { startFlash(); renderFlash(); };
+    if (miss.length) $("#redoMiss").onclick = () => { startFlash(shuffle(miss)); renderFlash(); };
+    return;
+  }
+  const i = F.queue[0], c = CARDS[i];
+  st.innerHTML = `
+    <div class="progress"><span>${F.done + 1 > F.total ? F.total : F.done + 1} / ${F.total}</span><span>เหลือในคิว ${F.queue.length}</span></div>
+    <div class="card ${F.flipped ? "flipped" : ""}" id="fc" role="button" tabindex="0" aria-label="พลิกการ์ด">
+      <div class="face front" style="--c:${gcol(c.g)}"><span class="tag">${esc(GROUPS[c.g].short)}</span><span class="side">เชื้อ</span>
+        <div class="bug">${esc(c.b)}</div><div class="ask">First-line drug คืออะไร?</div>
+        ${S.known.has(i) ? `<span class="known-badge">✓ เคยจำได้</span>` : ""}<span class="hint">แตะเพื่อพลิก</span></div>
+      <div class="face back" style="--c:${gcol(c.g)}"><span class="tag">${esc(c.b)}</span><span class="side">1st line</span>
+        <div class="drug">${esc(c.d)}</div></div>
+    </div>
+    <div class="row">
+      <button class="btn again" id="bAgain" type="button" ${F.flipped ? "" : "disabled"}><kbd>←</kbd> ยังจำไม่ได้</button>
+      <button class="btn know" id="bKnow" type="button" ${F.flipped ? "" : "disabled"}>จำได้แล้ว <kbd>→</kbd></button>
+    </div>
+    ${F.flipped ? "" : `<button class="btn primary" id="bFlip" type="button">ดูคำตอบ <kbd>Space</kbd></button>`}`;
+  const flip = () => { F.flipped = !F.flipped; renderFlash(); };
+  $("#fc").onclick = flip;
+  $("#fc").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); flip(); } };
+  if ($("#bFlip")) $("#bFlip").onclick = flip;
+  $("#bAgain").onclick = () => flashAnswer(false);
+  $("#bKnow").onclick = () => flashAnswer(true);
+}
+function flashAnswer(ok){
+  const F = S.flash; if (!F.flipped || !F.queue.length) return;
+  const i = F.queue.shift();
+  if (ok) { S.known.add(i); if (!F.againSet.has(i)) {} F.done++; }
+  else { S.known.delete(i); F.againSet.add(i); F.queue.push(i); }
+  F.flipped = false; persist(); renderTally(); renderFlash();
+}
+
+/* ---------- Quiz ---------- */
+function startQuiz(){ const q = pool(); S.quiz = { order: q, pos: 0, score: 0, answered: null, opts: null, missed: [] }; }
+function buildOpts(i){
+  const c = CARDS[i], right = c.d;
+  const same = shuffle(CARDS.filter((x,j)=>j!==i && x.g===c.g && x.d!==right).map(x=>x.d));
+  const other = shuffle(CARDS.filter((x,j)=>j!==i && x.d!==right).map(x=>x.d));
+  const picks = [];
+  for (const d of [...same, ...other]) { if (!picks.includes(d)) picks.push(d); if (picks.length === 3) break; }
+  return shuffle([right, ...picks]);
+}
+function renderQuiz(){
+  const Q = S.quiz, st = $("#stage");
+  if (!Q.order.length) { st.innerHTML = `<div class="summary empty">ไม่มีการ์ดในชุดนี้ — เลือกกลุ่มเชื้อเพิ่ม หรือเอาติ๊ก "เฉพาะที่ยังจำไม่ได้" ออก</div>`; return; }
+  if (Q.pos >= Q.order.length) {
+    const pct = Math.round(Q.score / Q.order.length * 100);
+    st.innerHTML = `<div class="summary"><h2>${pct}%</h2>
+      <div class="stats"><span><b>${Q.score}</b>ถูก</span><span><b>${Q.order.length - Q.score}</b>ผิด</span><span><b>${Q.order.length}</b>ข้อทั้งหมด</span></div>
+      ${Q.missed.length ? `<div class="missed">${Q.missed.map(i=>`<div><b>${esc(CARDS[i].b)}</b><span>${esc(CARDS[i].d)}</span></div>`).join("")}</div>` : ""}
+      <div class="row">${Q.missed.length ? `<button class="btn primary" id="qMiss" type="button">ทำใหม่เฉพาะ ${Q.missed.length} ข้อที่ผิด</button>` : ""}<button class="btn" id="qNew" type="button">เริ่มชุดใหม่</button></div></div>`;
+    $("#qNew").onclick = () => { startQuiz(); renderQuiz(); };
+    if (Q.missed.length) $("#qMiss").onclick = () => { const m = shuffle(Q.missed); S.quiz = { order: m, pos: 0, score: 0, answered: null, opts: null, missed: [] }; renderQuiz(); };
+    return;
+  }
+  const i = Q.order[Q.pos], c = CARDS[i];
+  if (!Q.opts) Q.opts = buildOpts(i);
+  const a = Q.answered;
+  st.innerHTML = `
+    <div class="progress"><span>ข้อ ${Q.pos + 1} / ${Q.order.length}</span><span>ถูก ${Q.score}</span></div>
+    <div class="qcard" style="--c:${gcol(c.g)}"><span class="tag">${esc(GROUPS[c.g].short)}</span>
+      <div class="bug">${esc(c.b)}</div><div class="ask" style="margin-top:-6px">ยา first line คือข้อไหน?</div>
+      <div class="choices">${Q.opts.map((d,k)=>{
+        let cls = ""; if (a !== null) { if (d === c.d) cls = "ok"; else if (k === a) cls = "no"; }
+        return `<button class="choice ${cls}" type="button" data-k="${k}" ${a !== null ? "disabled" : ""}><span class="k">${k+1}</span><span class="t">${esc(d)}</span></button>`; }).join("")}</div>
+      <div class="feedback ${a === null ? "" : (Q.opts[a] === c.d ? "ok" : "no")}">${a === null ? "" : (Q.opts[a] === c.d ? "ถูกต้อง" : "ยังไม่ใช่ — คำตอบคือ " + esc(c.d))}</div>
+      ${a !== null ? `<button class="btn primary" id="qNext" type="button">ข้อถัดไป <kbd>Enter</kbd></button>` : ""}
+    </div>`;
+  st.querySelectorAll(".choice").forEach(b => b.onclick = () => quizPick(+b.dataset.k));
+  if ($("#qNext")) { $("#qNext").onclick = quizNext; $("#qNext").focus({preventScroll:true}); }
+}
+function quizPick(k){
+  const Q = S.quiz; if (Q.answered !== null || Q.pos >= Q.order.length) return;
+  const i = Q.order[Q.pos]; Q.answered = k;
+  if (Q.opts[k] === CARDS[i].d) { Q.score++; S.known.add(i); } else { Q.missed.push(i); S.known.delete(i); }
+  persist(); renderTally(); renderQuiz();
+}
+function quizNext(){ const Q = S.quiz; if (Q.answered === null) return; Q.pos++; Q.answered = null; Q.opts = null; renderQuiz(); }
+
+/* ---------- Match ---------- */
+function startMatch(){
+  const ids = pool(), picked = [], used = new Set();
+  for (const i of (S.shuffle ? ids : shuffle(ids))) { if (!used.has(CARDS[i].d)) { picked.push(i); used.add(CARDS[i].d); } if (picked.length === 6) break; }
+  const tiles = shuffle([...picked.map(i=>({i,t:"b"})), ...picked.map(i=>({i,t:"d"}))]);
+  S.match = { tiles, sel: null, done: new Set(), start: null, end: null, errors: 0, timer: null };
+}
+function fmt(ms){ const s = ms/1000; return s.toFixed(1) + " s"; }
+function renderMatch(){
+  const M = S.match, st = $("#stage");
+  if (M.tiles.length < 4) { st.innerHTML = `<div class="summary empty">ต้องมีอย่างน้อย 2 คู่ — เลือกกลุ่มเชื้อเพิ่ม</div>`; return; }
+  const pairs = M.tiles.length / 2;
+  if (M.done.size === pairs) {
+    const t = M.end - M.start; const isBest = !S.best || t < S.best;
+    if (isBest && pairs === 6) { S.best = t; persist(); }
+    st.innerHTML = `<div class="summary"><h2>${fmt(t)}</h2>
+      <div class="stats"><span><b>${pairs}</b>คู่</span><span><b>${M.errors}</b>จับคู่ผิด</span><span><b>${S.best ? fmt(S.best) : "–"}</b>สถิติดีสุด</span></div>
+      <div class="row"><button class="btn primary" id="mNew" type="button">เล่นอีกรอบ</button></div></div>`;
+    $("#mNew").onclick = () => { startMatch(); renderMatch(); };
+    return;
+  }
+  st.innerHTML = `<div class="progress"><span>จับคู่เชื้อกับยา first line · ${M.done.size}/${pairs}</span><span id="mt">${M.start ? fmt(Date.now()-M.start) : "แตะเพื่อเริ่มจับเวลา"}</span></div>
+    <div class="mgrid">${M.tiles.map((x,k)=>{
+      const c = CARDS[x.i];
+      return `<button type="button" class="tile ${x.t==="b"?"bugt":"drugt"} ${M.done.has(x.i)?"done":""} ${M.sel===k?"sel":""}" data-k="${k}" style="${x.t==="b"?`border-left:4px solid ${gcol(c.g)}`:""}">${esc(x.t==="b"?c.b:c.d)}</button>`; }).join("")}</div>
+    <div class="row"><button class="btn" id="mShuf" type="button">สุ่มชุดใหม่</button></div>`;
+  st.querySelectorAll(".tile").forEach(t => t.onclick = () => matchPick(+t.dataset.k, t));
+  $("#mShuf").onclick = () => { clearInterval(M.timer); startMatch(); renderMatch(); };
+}
+function matchPick(k, el){
+  const M = S.match;
+  if (!M.start) { M.start = Date.now(); M.timer = setInterval(()=>{ const e=$("#mt"); if (e && S.mode==="match" && M.start && !M.end) e.textContent = fmt(Date.now()-M.start); }, 100); }
+  if (M.sel === null) { M.sel = k; renderMatch(); return; }
+  if (M.sel === k) { M.sel = null; renderMatch(); return; }
+  const a = M.tiles[M.sel], b = M.tiles[k];
+  if (a.i === b.i && a.t !== b.t) {
+    M.done.add(a.i); M.sel = null;
+    if (M.done.size === M.tiles.length/2) { M.end = Date.now(); clearInterval(M.timer); }
+    renderMatch();
+  } else {
+    M.errors++; const prev = M.sel; M.sel = null; renderMatch();
+    [prev, k].forEach(x => { const t = document.querySelector(`.tile[data-k="${x}"]`); if (t) { t.classList.add("wrong"); setTimeout(()=>t.classList.remove("wrong"), 380); } });
+  }
+}
+
+/* ---------- shell ---------- */
+function restart(){
+  if (S.match && S.match.timer) clearInterval(S.match.timer);
+  if (S.mode === "flash") { startFlash(); renderFlash(); }
+  else if (S.mode === "quiz") { startQuiz(); renderQuiz(); }
+  else { startMatch(); renderMatch(); }
+  renderTally();
+}
+function setMode(m){
+  S.mode = m;
+  document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.mode === m));
+  restart();
+}
+document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+$("#optShuffle").checked = S.shuffle;
+$("#optUnknown").checked = S.onlyUnknown;
+$("#optShuffle").onchange = e => { S.shuffle = e.target.checked; persist(); restart(); };
+$("#optUnknown").onchange = e => { S.onlyUnknown = e.target.checked; persist(); restart(); };
+function resetUI(){
+  const w = $("#resetWrap");
+  w.innerHTML = `<button class="linkbtn" id="resetBtn" type="button">ล้างความคืบหน้า</button>`;
+  $("#resetBtn").onclick = () => {
+    w.innerHTML = `<span class="confirm">ล้างการ์ดที่จำได้ทั้งหมด? <button class="danger" id="rYes" type="button">ล้าง</button><button id="rNo" type="button">ยกเลิก</button></span>`;
+    $("#rYes").onclick = () => { S.known.clear(); S.best = null; persist(); resetUI(); restart(); };
+    $("#rNo").onclick = resetUI;
+  };
+}
+resetUI();
+
+document.addEventListener("keydown", e => {
+  if (e.target.matches("input")) return;
+  if (S.mode === "flash" && S.flash && S.flash.queue.length) {
+    if (e.key === " " ) { e.preventDefault(); S.flash.flipped = !S.flash.flipped; renderFlash(); }
+    else if (e.key === "ArrowRight" || e.key === "2") flashAnswer(true);
+    else if (e.key === "ArrowLeft" || e.key === "1") flashAnswer(false);
+  } else if (S.mode === "quiz" && S.quiz) {
+    if (["1","2","3","4"].includes(e.key)) quizPick(+e.key - 1);
+    else if (e.key === "Enter" && S.quiz.answered !== null) { e.preventDefault(); quizNext(); }
+  }
+});
+
+renderFilters();
+setMode("flash");
+</script>
+
+</body></html>
