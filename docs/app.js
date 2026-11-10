@@ -3232,7 +3232,7 @@
       return '<a class="chip' + (m === x[0] ? ' on' : '') + '" role="tab" aria-selected="' + (m === x[0]) + '" href="#/topics/' + t.id + '/practice?m=' + x[0] + '">' + x[1] + '</a>';
     }).join('') + '</div>';
     var head = topicHead(t, 'practice');
-    if (m === 'flash') return flashPage(t, head, tabs);
+    if (m === 'flash') return flashPage(t, head, tabs, r);
     var d = tLoad(t, 'data');
     if (!d) return { title: 'ฝึก — ' + t.title, html: head + '<section class="wrap" style="padding-bottom:80px">' + tabs + loadingHTML(TD[t.id], 'data') + '</section>' };
     if (m === 'test') return selfTestPage(t, d, head, tabs);
@@ -3240,9 +3240,17 @@
     return aiPage(t, d, r, head, tabs);
   }
 
-  function flashPage(t, head, tabs) {
-    var sets = t.flash || [];
-    var body = sets.map(function (f) {
+  function flashPage(t, head, tabs, r) {
+    var all = t.flash || [], sid = r && r.q.get('s'), cur = all.filter(function (f) { return f.id === sid; })[0];
+    /* topic picker first, always — even with one set (standing rule, every site) */
+    if (!cur && all.length) return { title: 'Flashcard — ' + t.title, html: head + '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:22px">' + tabs +
+      '<p class="muted" style="margin:0">เลือกเรื่องที่จะฝึก</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px">' + all.map(function (f, i) {
+        return '<a class="sheet" style="display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;padding:16px 18px' + (f.file ? '' : ';opacity:.55') + '" href="#/topics/' + t.id + '/practice?m=flash&s=' + encodeURIComponent(f.id) + '">' +
+          '<span class="label">' + String(i + 1).padStart(2, '0') + (f.file ? '' : ' · ยังไม่มีไฟล์') + '</span><span class="k" style="font-size:20px">' + esc(f.title) + '</span><span class="muted" style="font-size:14px">' + esc(f.note || '') + '</span></a>';
+      }).join('') + '</div></section>' };
+    var sets = cur ? [cur] : [];
+    var back = cur ? '<a class="chip" style="width:fit-content" href="#/topics/' + t.id + '/practice?m=flash">← เลือกเรื่อง Flashcard</a>' : '';
+    var body = back + sets.map(function (f) {
       if (!f.file) return '<div class="empty" style="text-align:left"><span class="label">' + esc(f.note || '') + '</span><p class="k" style="font-size:22px;margin:6px 0">' + esc(f.title) + '</p>' +
         '<p class="muted" style="max-width:640px">ช่องนี้เตรียมไว้แล้ว — รอไฟล์ flashcard (ส่งไฟล์ .html ของ artifact มาในแชท แล้ว Claude จะใส่ให้เล่นได้ตรงนี้ พร้อมลิงก์ไปหน้า ' + (f.pages || []).join('–') + ' ของสรุป)</p>' +
         ((f.pages || []).length ? '<p style="margin-top:12px"><a class="chip" href="#/topics/' + t.id + '/sum/' + f.pages[0] + '">เปิดสรุปหน้า ' + f.pages.join('–') + '</a></p>' : '') + '</div>';
