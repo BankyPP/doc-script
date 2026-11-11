@@ -990,6 +990,17 @@ a.spo{text-decoration:none}
 .sxsec>summary .bks,.sxbox>summary .bks{max-width:42%;justify-content:flex-end}
 .sxs2 h4 .bks{margin-left:4px}
 .sxcard .bks{margin-top:4px}
+/* ป้ายที่มา = ตัวกรอง */
+.bks .bk[data-bk]{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bks .bk[data-bk]:hover{filter:brightness(.95)}
+.bks .bk[data-bk]:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.bkf .bks .bk[data-bk]:not(.on){opacity:.45}
+.bks .bk.on{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px currentColor;opacity:1}
+.bk.bb.on{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px #2B2B2B}
+.bkx{display:none!important}
+.bkfbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.bkfbar[hidden]{display:none}
+.bkfbar .chip{min-height:36px;padding:0 14px;font-size:13px}
 .sxlegend{font-size:14px;color:var(--muted);margin:0}
 .sx .sb{position:relative;margin:10px 0;padding:6px 0 4px 14px;border-left:3px solid}
 .sx .sb:first-child{margin-top:0}

@@ -486,7 +486,7 @@
     if (gateOn()) { renderGate(); return; }
     if (keepScroll && !annForce && annEditing()) return;
     if (keepScroll && document.getElementById('nform') && rawGet('maidraft', null)) return;   /* กำลังกรอกโรคใหม่ — ไม่วาดฟอร์มซ้ำตอนดึงชีตเบื้องหลัง */   /* กำลังแก้เนื้อหาอยู่ — ไม่วาดหน้าซ้ำจากการซิงก์เบื้องหลัง */
-    document.body.classList.remove('gated');
+    document.body.classList.remove('gated'); BKF = null;
     var r = route();
     var page = PAGES[r.name] || PAGES._404;
     if (pageCleanup) { try { pageCleanup(); } catch (e) { } pageCleanup = null; }
@@ -1609,11 +1609,37 @@
   function syBookLine() { return esc(SY.book.title || '') + ' · ' + esc(SY.book.by || '') + ' · ' + esc(SY.book.ed || ''); }
   /* ที่มาของเนื้อหา — ตำราศิริราช (si) · เล่มเหลือง (yb) · เพิ่มโดย Claude (ai) — ป้ายติดทุกหัวข้อ/กล่อง/algorithm */
   var BK = { si: 'ตำราศิริราช', yb: 'เล่มเหลือง', bb: 'Blackbook', tn: 'เอกสารคำสอน อ.พญ.ภัณฑิลา', ts: 'เอกสารคำสอน อ.สุชาย', ai: 'เพิ่มโดย Claude' }, SY_DS = ['si'];
-  function bkChips(a) { return '<span class="bks">' + (a || []).map(function (k) { return BK[k] ? '<span class="bk ' + k + '">' + BK[k] + '</span>' : ''; }).join('') + '</span>'; }
+  function bkChips(a) { return '<span class="bks">' + (a || []).map(function (k) { return BK[k] ? '<span class="bk ' + k + '" data-bk="' + k + '" role="button" tabindex="0" title="กรองตามที่มา: ' + BK[k] + '">' + BK[k] + '</span>' : ''; }).join('') + '</span>'; }
   function syBks(c) { var b = c.b || { si: { no: c.no } }, a = []; if (b.si) a.push('si'); if (b.yb) a.push('yb'); if (b.bb) a.push('bb'); if (b.tn) a.push('tn'); if (b.ts) a.push('ts'); if (b.ai) a.push('ai'); return a; }
   /* แท็กสถาบัน: เล่มเหลือง = approach จากทั้งสองสถาบัน → "จุฬาฯ + ศิริราช" · ตำราศิริราช → "ศิริราช" · Blackbook (U of Calgary) → "International" · เอกสารคำสอน อ.พญ.ภัณฑิลา และ อ.สุชาย (Dysnatremia) → "ศิริราช" */
   function syInst(c) { var b = c.b || { si: 1 }; return (b.yb ? '<span class="src both">จุฬาฯ + ศิริราช</span> ' : '') + (b.si || b.tn || b.ts ? '<span class="src si">ศิริราช</span> ' : '') + (b.bb ? '<span class="src intl">International</span>' : ''); }
   function syBooksLine() { var B = SY.books || {}; return ['si', 'yb', 'bb', 'tn', 'ts'].filter(function (k) { return B[k]; }).map(function (k) { return '<b>' + BK[k] + '</b> = ' + esc(B[k].title) + (B[k].by ? ' · ' + esc(B[k].by) : '') + (B[k].ed ? ' · ' + esc(B[k].ed) : ''); }).join('<br>'); }
+  /* ป้ายที่มา = ตัวกรอง (ผู้ใช้ขอ 10 พ.ย. 2026) — กดป้ายใดก็ได้ในหน้า Symptomatology (หน้ารวม + หน้าบท) เพื่อกรองตามที่มา เลือกได้หลายป้าย (แสดงส่วนที่มาจากป้ายใดป้ายหนึ่ง) กดซ้ำ = เอาออก · เก็บใน ?b=si.yb
+     หน้ารวม: ซ่อนบทที่ไม่มีที่มานั้น (ลิงก์บทพา ?b ไปด้วย) · หน้าบท: ซ่อนหัวข้อ/กล่อง/หัวข้อย่อย/algorithm ที่ไม่ได้มาจากป้ายที่เลือก */
+  var BKF = null;
+  function bkKey(el) { var k = el.getAttribute('data-bk'); if (k && BK[k]) return k; for (var i = 0; i < el.classList.length; i++) if (el.classList[i] !== 'bk' && BK[el.classList[i]]) return el.classList[i]; return ''; }
+  function bkHit(F, el, sel) { if (!F.length) return true; var ks = [].map.call(el.querySelectorAll(sel), bkKey).filter(Boolean); return !ks.length || ks.some(function (k) { return F.indexOf(k) >= 0; }); }
+  function bkVis(el, on) { el.classList.toggle('bkx', !on); return on; }
+  function bkFilter(root, apply) {
+    var F = (route().q.get('b') || '').split('.').filter(function (k) { return BK[k]; });
+    function paint() {
+      setQuery(route(), { b: F.join('.') });
+      var msg = apply(F), bar = root.querySelector('.bkfbar');
+      if (bar) { bar.hidden = !F.length; bar.innerHTML = F.length ? '<span class="label">กรองตามที่มา</span>' + bkChips(F) + '<span class="muted" style="font-size:14px">' + msg + '</span><button type="button" class="chip" data-bkclr>ล้างตัวกรอง</button>' : ''; }
+      root.classList.toggle('bkf', F.length > 0);
+      root.querySelectorAll('.bks .bk').forEach(function (b) { b.classList.toggle('on', F.indexOf(bkKey(b)) >= 0); });
+    }
+    BKF = { root: root, hit: function (e) {
+      if (e.target.closest('[data-bkclr]')) { F = []; paint(); return; }
+      var b = e.target.closest('.bks .bk'), k = b && bkKey(b); if (!k) return;
+      e.preventDefault(); e.stopPropagation();
+      var i = F.indexOf(k); if (i >= 0) F.splice(i, 1); else F.push(k);
+      paint();
+    } };
+    paint();
+  }
+  document.addEventListener('click', function (e) { if (BKF && document.body.contains(BKF.root) && BKF.root.contains(e.target)) BKF.hit(e); }, true);
+  document.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('.bks .bk') && BKF && BKF.root.contains(e.target)) BKF.hit(e); }, true);
   /* เลขอ้างอิงในแต่ละเล่ม เช่น "ศิริราช บท 13 · เหลือง 1.1" */
   function syRef(c, long) {
     var b = c.b || { si: { no: c.no } }, o = [];
@@ -1675,12 +1701,12 @@
     if (!SY.chapters.length) body = '<div class="empty"><p class="muted">ยังไม่มีบท</p></div>';
     else if (view === 'book') body = [['si', 'ตามลำดับตำราศิริราช', function (c) { return c.b ? (c.b.si ? c.b.si.no : 0) : c.no; }], ['yb', 'ตามลำดับเล่มเหลือง', function (c) { return c.b && c.b.yb ? c.b.yb[0].o : 0; }], ['bb', 'ตามลำดับ Blackbook', function (c) { return c.b && c.b.bb ? c.b.bb[0].o : 0; }]].map(function (bk) {
       var cs = SY.chapters.filter(function (c) { return bk[2](c); }).sort(function (a, b) { return bk[2](a) - bk[2](b); });
-      return cs.length ? '<section class="sxgrp"><div class="sxgh">' + bkChips([bk[0]]) + '<h2>' + bk[1] + '</h2><span class="muted">' + cs.length + ' บท</span></div><div class="sxcards">' + cs.map(syCard).join('') + '</div></section>' : '';
+      return cs.length ? '<section class="sxgrp"><div class="sxgh">' + bkChips([bk[0]]) + '<h2>' + bk[1] + '</h2><span class="muted sxcnt">' + cs.length + ' บท</span></div><div class="sxcards">' + cs.map(syCard).join('') + '</div></section>' : '';
     }).join('');
     else body = SY.groups.map(function (g) {
       var cs = SY.chapters.filter(function (c) { return c.g === g.id; });
       if (!cs.length) return '';
-      return '<section class="sxgrp"><div class="sxgh"><span class="sw" style="background:' + g.c + '"></span><h2>' + esc(g.t) + '</h2><span class="muted">' + cs.length + ' บท</span></div><div class="sxcards">' + cs.map(syCard).join('') + '</div></section>';
+      return '<section class="sxgrp"><div class="sxgh"><span class="sw" style="background:' + g.c + '"></span><h2>' + esc(g.t) + '</h2><span class="muted sxcnt">' + cs.length + ' บท</span></div><div class="sxcards">' + cs.map(syCard).join('') + '</div></section>';
     }).join('');
     var nf = 0, ni = 0; SY.chapters.forEach(function (c) { nf += c.f; ni += c.i; });
     var hq = function (v) { return '#/kb/symp' + (v === 'book' ? '?v=book' : ''); };
@@ -1691,7 +1717,7 @@
         '<div class="sxbar"><form class="search sxsearch" id="sxsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="sxq">ค้นทุกบท</label><input id="sxq" type="search" placeholder="ค้นชื่อบท หัวข้อ เนื้อหา Tag เช่น MCV, Rockall, เล่มเหลือง" value="' + esc(qq) + '" autocomplete="off"></form>' +
         '<div class="filters" role="group" aria-label="เรียงบท"><a class="chip' + (view === 'sys' ? ' on' : '') + '" href="' + hq('sys') + '">ตามระบบ</a><a class="chip' + (view === 'book' ? ' on' : '') + '" href="' + hq('book') + '">ตามเล่ม</a></div>' +
         '<span class="muted" style="font-size:14px">' + SY.chapters.length + ' / ' + (SY.total || SY.chapters.length) + ' บท · ' + nf + ' algorithm · ' + ni + ' รูป</span></div>' +
-        '<div id="sxres" class="sxres" hidden></div>' + gSympCard() + body + '</section>',
+        '<div class="bkfbar" hidden></div><div id="sxres" class="sxres" hidden></div>' + gSympCard() + body + '</section>',
       after: function () {
         var inp = document.getElementById('sxq'), res = document.getElementById('sxres'), t = null, ft = '';
         /* ค้นทุกอย่างในหน้า: ชื่อบท (ไทย/อังกฤษ/เลขบทในแต่ละเล่ม) · Tag (เล่ม สถาบัน กลุ่มระบบ) · หัวข้อ · algorithm · เนื้อหา · โน้ต — ผลแยกป้ายประเภท + ตัวกรอง */
@@ -1725,15 +1751,18 @@
           if (v.length < 2) { res.hidden = true; res.innerHTML = ''; return; }
           res.hidden = false;
           var ws = words(v), ql = v.toLowerCase(), R = [];
+          var BF = (route().q.get('b') || '').split('.').filter(function (k) { return BK[k]; }), bq = BF.length ? 'b=' + BF.join('.') : '';
+          function bok(c) { return !BF.length || syBks(c).some(function (k) { return BF.indexOf(k) >= 0; }); }
           SY.chapters.forEach(function (c) {
-            var href = '#/kb/symp/' + c.id, nm = c.th + ' ' + c.en + ' ' + syRef(c);
+            if (!bok(c)) return;
+            var href = '#/kb/symp/' + c.id + (bq ? '?' + bq : ''), nm = c.th + ' ' + c.en + ' ' + syRef(c);
             if (has(nm, ws)) { var sc = (c.th + ' ' + c.en).toLowerCase().indexOf(ql) >= 0 ? 0 : 1; R.push([sc, row('chap', href, c.no, hl(c.th, ws) + ' · ' + hl(c.en, ws), hl(syRef(c), ws))]); return; }
             var tg = syTags(c), hit = tg.filter(function (x) { return has(x, ws); });
             if (hit.length || has(tg.join(' ') + ' ' + syRef(c, true), ws)) R.push([10, row('tag', href, c.no, esc(c.th) + ' · ' + esc(c.en), 'Tag: ' + (hit.length ? hit : tg).map(function (x) { return hl(x, ws); }).join(' · '))]);
           });
           if (SYS_SEARCH.d) SYS_SEARCH.d.forEach(function (x) {
-            var c = syCh(x.c); if (!c) return;
-            var href = '#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s), ty = x.f ? 'algo' : 'head';
+            var c = syCh(x.c); if (!c || !bok(c)) return;
+            var href = '#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) + (bq ? '&' + bq : ''), ty = x.f ? 'algo' : 'head';
             if (has(x.h, ws)) R.push([x.f ? 30 : 20, row(ty, href, c.no, esc(c.th) + ' › ' + hl(x.h, ws), has(x.x, ws) ? snip(x.x, ws) : '')]);
             else if (has(x.x, ws)) R.push([x.x.toLowerCase().indexOf(ql) >= 0 ? 40 : 41, row('body', href, c.no, esc(c.th) + ' › ' + esc(x.h), snip(x.x, ws))]);
           });
@@ -1753,6 +1782,22 @@
         res.addEventListener('click', function (e) { var b = e.target.closest('[data-ft]'); if (!b) return; ft = b.getAttribute('data-ft'); run(); });
         inp.addEventListener('input', function () { clearTimeout(t); t = setTimeout(run, 220); });
         document.getElementById('sxsf').addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(t); run(); });
+        var first = true;
+        bkFilter(app, function (F) {
+          var seen = {};
+          app.querySelectorAll('.sxgrp').forEach(function (g) {
+            var v = 0;
+            g.querySelectorAll('.sxcard').forEach(function (a) {
+              var h = a.getAttribute('href').split('?')[0];
+              if (bkVis(a, bkHit(F, a, '.bks .bk'))) { v++; seen[h] = 1; }
+              a.setAttribute('href', h + (F.length ? '?b=' + F.join('.') : ''));
+            });
+            bkVis(g, v > 0); var cn = g.querySelector('.sxcnt'); if (cn) cn.textContent = v + ' บท';
+          });
+          if (!first && inp.value.trim().length >= 2) run();
+          first = false;
+          return 'แสดง ' + Object.keys(seen).length + ' / ' + SY.chapters.length + ' บท';
+        });
         if (qq) run();
       }
     };
@@ -1805,7 +1850,7 @@
         '<details class="ttree sxtoc" id="sxtoc" open><summary class="k">หัวข้อในบท <span class="muted" style="font-weight:400;font-size:14px">· ' + d.sections.length + ' หัวข้อ</span></summary><nav class="tree" aria-label="หัวข้อในบท ' + esc(c.th) + '">' + toc + ftoc + '</nav></details>' +
         '<article class="sheet doc sxdoc sx"><div class="sxtools"><button type="button" class="chip" data-all="1">เปิดทั้งหมด</button><button type="button" class="chip" data-all="0">ปิดทั้งหมด</button><a class="chip" href="#/exam?src=' + encodeURIComponent('y:' + c.id) + '">ออกข้อสอบจากบทนี้</a>' +
         (flows.length ? '<span class="muted" style="font-size:14px">' + flows.length + ' algorithm — กดกล่องเพื่อดูรายละเอียด หรือเลือก "ทีละขั้น"</span>' : '') + '</div>' +
-        '<p class="sxlegend">ที่มา ' + bkChips(syBks(c)) + (JSON.stringify(d).indexOf('class=\\"hw') >= 0 ? ' · <span class="hw">ตัวเอียงสีน้ำเงิน</span> = ลายมือ/โน้ตที่เขียนเพิ่มในเล่มเหลือง' : '') + '</p>' +
+        '<p class="sxlegend">ที่มา ' + bkChips(syBks(c)) + (JSON.stringify(d).indexOf('class=\\"hw') >= 0 ? ' · <span class="hw">ตัวเอียงสีน้ำเงิน</span> = ลายมือ/โน้ตที่เขียนเพิ่มในเล่มเหลือง' : '') + ' · <span class="muted">กดป้ายเพื่อกรอง</span></p><div class="bkfbar" hidden></div>' +
         '<div class="sxsecs" data-ann="y:' + esc(c.id) + '">' + secs + '</div>' + nav + '</article></div></section>',
       after: function () {
         var root = document.getElementById('sxr');
@@ -1821,6 +1866,21 @@
           x.addEventListener('toggle', function () { if (x.open) mountIn(x); if (!x._q) save(); });
         });
         root.querySelectorAll('details.sxsec[open]').forEach(mountIn);
+        bkFilter(root, function (F) {
+          var ns = 0, all = 0;
+          root.querySelectorAll('.sxdoc .fbox').forEach(function (f) { bkVis(f, bkHit(F, f, '.fti .bk')); });
+          root.querySelectorAll('.sxs2').forEach(function (x) { bkVis(x, bkHit(F, x, ':scope>h4 .bk')); });
+          root.querySelectorAll('details.sxbox').forEach(function (b) { bkVis(b, bkHit(F, b, ':scope>summary .bk') || !!b.querySelector('.sxs2:not(.bkx),.fbox:not(.bkx)')); });
+          root.querySelectorAll('details.sxsec').forEach(function (s) {
+            all++;
+            var on = bkVis(s, bkHit(F, s, ':scope>summary .bk') || !!s.querySelector('details.sxbox:not(.bkx),.fbox:not(.bkx)'));
+            if (on) ns++;
+            var a = root.querySelector('.sxtoc [data-go="s-' + s.getAttribute('data-sid') + '"]'); if (a) bkVis(a, on);
+          });
+          root.querySelectorAll('.sxtoc [data-go^="f-"]').forEach(function (a) { var f = document.getElementById(a.getAttribute('data-go')); bkVis(a, !f || !f.classList.contains('bkx')); });
+          mountIn(root);
+          return 'แสดง ' + ns + ' / ' + all + ' หัวข้อ';
+        });
         root.querySelector('.sxtools').addEventListener('click', function (e) {
           var b = e.target.closest('[data-all]'); if (!b) return;
           var on = b.getAttribute('data-all') === '1';
