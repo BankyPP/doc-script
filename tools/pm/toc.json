@@ -1,0 +1,905 @@
+[
+{
+"p": 18,
+"t": "Electrocardiography",
+"ch": "CARDIOLOGY",
+"end": 22,
+"id": "electrocardiography"
+},
+{
+"p": 23,
+"t": "Chest Pain",
+"ch": "CARDIOLOGY",
+"end": 24,
+"id": "chest-pain"
+},
+{
+"p": 25,
+"t": "Noninvasive Evaluation of CAD",
+"ch": "CARDIOLOGY",
+"end": 26,
+"id": "noninvasive-evaluation-of-cad"
+},
+{
+"p": 27,
+"t": "Coronary Angiography & PCI",
+"ch": "CARDIOLOGY",
+"end": 28,
+"id": "coronary-angiography-pci"
+},
+{
+"p": 29,
+"t": "Stable Ischemic Heart Disease",
+"ch": "CARDIOLOGY",
+"end": 30,
+"id": "stable-ischemic-heart-disease"
+},
+{
+"p": 31,
+"t": "Acute Coronary Syndromes",
+"ch": "CARDIOLOGY",
+"end": 40,
+"id": "acute-coronary-syndromes"
+},
+{
+"p": 41,
+"t": "PA Catheter and Tailored Therapy",
+"ch": "CARDIOLOGY",
+"end": 44,
+"id": "pa-catheter-and-tailored-therapy"
+},
+{
+"p": 45,
+"t": "Heart Failure",
+"ch": "CARDIOLOGY",
+"end": 49,
+"id": "heart-failure"
+},
+{
+"p": 50,
+"t": "Cardiomyopathies",
+"ch": "CARDIOLOGY",
+"end": 55,
+"id": "cardiomyopathies"
+},
+{
+"p": 56,
+"t": "Valvular Heart Disease",
+"ch": "CARDIOLOGY",
+"end": 66,
+"id": "valvular-heart-disease"
+},
+{
+"p": 67,
+"t": "Pericardial Disease",
+"ch": "CARDIOLOGY",
+"end": 71,
+"id": "pericardial-disease"
+},
+{
+"p": 72,
+"t": "Hypertension",
+"ch": "CARDIOLOGY",
+"end": 75,
+"id": "hypertension"
+},
+{
+"p": 76,
+"t": "Aortic Aneurysms",
+"ch": "CARDIOLOGY",
+"end": 77,
+"id": "aortic-aneurysms"
+},
+{
+"p": 78,
+"t": "Acute Aortic Syndromes",
+"ch": "CARDIOLOGY",
+"end": 79,
+"id": "acute-aortic-syndromes"
+},
+{
+"p": 80,
+"t": "Arrhythmias",
+"ch": "CARDIOLOGY",
+"end": 85,
+"id": "arrhythmias"
+},
+{
+"p": 86,
+"t": "Atrial Fibrillation",
+"ch": "CARDIOLOGY",
+"end": 89,
+"id": "atrial-fibrillation"
+},
+{
+"p": 90,
+"t": "Syncope",
+"ch": "CARDIOLOGY",
+"end": 93,
+"id": "syncope"
+},
+{
+"p": 94,
+"t": "Cardiac Rhythm Management Devices",
+"ch": "CARDIOLOGY",
+"end": 95,
+"id": "cardiac-rhythm-management-devices"
+},
+{
+"p": 96,
+"t": "Cardiac Risk Assessment for Noncardiac Surgery",
+"ch": "CARDIOLOGY",
+"end": 98,
+"id": "cardiac-risk-assessment-for-noncardiac-s"
+},
+{
+"p": 99,
+"t": "Peripheral Artery Disease",
+"ch": "CARDIOLOGY",
+"end": 100,
+"id": "peripheral-artery-disease"
+},
+{
+"p": 101,
+"t": "Dyspnea",
+"ch": "PULMONARY",
+"end": 102,
+"id": "dyspnea"
+},
+{
+"p": 103,
+"t": "Pulmonary Function Tests",
+"ch": "PULMONARY",
+"end": 103,
+"id": "pulmonary-function-tests"
+},
+{
+"p": 104,
+"t": "Asthma",
+"ch": "PULMONARY",
+"end": 109,
+"id": "asthma"
+},
+{
+"p": 110,
+"t": "Anaphylaxis",
+"ch": "PULMONARY",
+"end": 111,
+"id": "anaphylaxis"
+},
+{
+"p": 112,
+"t": "Chronic Obstructive Pulmonary Disease",
+"ch": "PULMONARY",
+"end": 116,
+"id": "chronic-obstructive-pulmonary-disease"
+},
+{
+"p": 117,
+"t": "Solitary Pulmonary Nodule",
+"ch": "PULMONARY",
+"end": 118,
+"id": "solitary-pulmonary-nodule"
+},
+{
+"p": 119,
+"t": "Hemoptysis",
+"ch": "PULMONARY",
+"end": 120,
+"id": "hemoptysis"
+},
+{
+"p": 121,
+"t": "Bronchiectasis",
+"ch": "PULMONARY",
+"end": 122,
+"id": "bronchiectasis"
+},
+{
+"p": 123,
+"t": "Cystic Fibrosis",
+"ch": "PULMONARY",
+"end": 123,
+"id": "cystic-fibrosis"
+},
+{
+"p": 124,
+"t": "Interstitial Lung Disease",
+"ch": "PULMONARY",
+"end": 129,
+"id": "interstitial-lung-disease"
+},
+{
+"p": 130,
+"t": "Pleural Effusion",
+"ch": "PULMONARY",
+"end": 135,
+"id": "pleural-effusion"
+},
+{
+"p": 136,
+"t": "Venous Thromboembolism",
+"ch": "PULMONARY",
+"end": 143,
+"id": "venous-thromboembolism"
+},
+{
+"p": 144,
+"t": "Pulmonary Hypertension",
+"ch": "PULMONARY",
+"end": 148,
+"id": "pulmonary-hypertension"
+},
+{
+"p": 149,
+"t": "Respiratory Failure",
+"ch": "PULMONARY",
+"end": 151,
+"id": "respiratory-failure"
+},
+{
+"p": 152,
+"t": "Mechanical Ventilation",
+"ch": "PULMONARY",
+"end": 158,
+"id": "mechanical-ventilation"
+},
+{
+"p": 159,
+"t": "Acute Respiratory Distress Syndrome",
+"ch": "PULMONARY",
+"end": 161,
+"id": "acute-respiratory-distress-syndrome"
+},
+{
+"p": 162,
+"t": "Sepsis and Shock",
+"ch": "PULMONARY",
+"end": 164,
+"id": "sepsis-and-shock"
+},
+{
+"p": 165,
+"t": "Toxicology",
+"ch": "PULMONARY",
+"end": 166,
+"id": "toxicology"
+},
+{
+"p": 167,
+"t": "Lung Transplant",
+"ch": "PULMONARY",
+"end": 167,
+"id": "lung-transplant"
+},
+{
+"p": 168,
+"t": "Esophageal and Gastric Disorders",
+"ch": "GASTROENTEROLOGY",
+"end": 173,
+"id": "esophageal-and-gastric-disorders"
+},
+{
+"p": 174,
+"t": "Gastrointestinal Bleeding",
+"ch": "GASTROENTEROLOGY",
+"end": 178,
+"id": "gastrointestinal-bleeding"
+},
+{
+"p": 179,
+"t": "Diarrhea",
+"ch": "GASTROENTEROLOGY",
+"end": 186,
+"id": "diarrhea"
+},
+{
+"p": 187,
+"t": "Dysmotility & Nutrition",
+"ch": "GASTROENTEROLOGY",
+"end": 189,
+"id": "dysmotility-nutrition"
+},
+{
+"p": 190,
+"t": "Disorders of the Colon",
+"ch": "GASTROENTEROLOGY",
+"end": 192,
+"id": "disorders-of-the-colon"
+},
+{
+"p": 193,
+"t": "Inflammatory Bowel Disease",
+"ch": "GASTROENTEROLOGY",
+"end": 198,
+"id": "inflammatory-bowel-disease"
+},
+{
+"p": 199,
+"t": "Intestinal Ischemia",
+"ch": "GASTROENTEROLOGY",
+"end": 201,
+"id": "intestinal-ischemia"
+},
+{
+"p": 202,
+"t": "Pancreatitis",
+"ch": "GASTROENTEROLOGY",
+"end": 207,
+"id": "pancreatitis"
+},
+{
+"p": 208,
+"t": "Abnormal Liver Tests",
+"ch": "GASTROENTEROLOGY",
+"end": 212,
+"id": "abnormal-liver-tests"
+},
+{
+"p": 213,
+"t": "Hepatitis",
+"ch": "GASTROENTEROLOGY",
+"end": 221,
+"id": "hepatitis"
+},
+{
+"p": 222,
+"t": "Acute Liver Failure",
+"ch": "GASTROENTEROLOGY",
+"end": 224,
+"id": "acute-liver-failure"
+},
+{
+"p": 225,
+"t": "Cirrhosis",
+"ch": "GASTROENTEROLOGY",
+"end": 235,
+"id": "cirrhosis"
+},
+{
+"p": 236,
+"t": "Hepatic Vascular Disease",
+"ch": "GASTROENTEROLOGY",
+"end": 238,
+"id": "hepatic-vascular-disease"
+},
+{
+"p": 239,
+"t": "Ascites",
+"ch": "GASTROENTEROLOGY",
+"end": 241,
+"id": "ascites"
+},
+{
+"p": 242,
+"t": "Biliary Tract Disease",
+"ch": "GASTROENTEROLOGY",
+"end": 246,
+"id": "biliary-tract-disease"
+},
+{
+"p": 247,
+"t": "Acid-Base Disturbances",
+"ch": "NEPHROLOGY",
+"end": 258,
+"id": "acid-base-disturbances"
+},
+{
+"p": 259,
+"t": "Sodium and Water Homeostasis",
+"ch": "NEPHROLOGY",
+"end": 268,
+"id": "sodium-and-water-homeostasis"
+},
+{
+"p": 269,
+"t": "Potassium Homeostasis",
+"ch": "NEPHROLOGY",
+"end": 273,
+"id": "potassium-homeostasis"
+},
+{
+"p": 274,
+"t": "Kidney Disease",
+"ch": "NEPHROLOGY",
+"end": 285,
+"id": "kidney-disease"
+},
+{
+"p": 286,
+"t": "Glomerular Disease",
+"ch": "NEPHROLOGY",
+"end": 290,
+"id": "glomerular-disease"
+},
+{
+"p": 291,
+"t": "Urinalysis",
+"ch": "NEPHROLOGY",
+"end": 293,
+"id": "urinalysis"
+},
+{
+"p": 294,
+"t": "Nephrolithiasis",
+"ch": "NEPHROLOGY",
+"end": 295,
+"id": "nephrolithiasis"
+},
+{
+"p": 296,
+"t": "Anemia",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 308,
+"id": "anemia"
+},
+{
+"p": 309,
+"t": "Disorders of Hemostasis",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 310,
+"id": "disorders-of-hemostasis"
+},
+{
+"p": 311,
+"t": "Platelet Disorders",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 318,
+"id": "platelet-disorders"
+},
+{
+"p": 319,
+"t": "Coagulopathies",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 321,
+"id": "coagulopathies"
+},
+{
+"p": 322,
+"t": "Hypercoagulable States",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 324,
+"id": "hypercoagulable-states"
+},
+{
+"p": 325,
+"t": "Disorders of Leukocytes",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 326,
+"id": "disorders-of-leukocytes"
+},
+{
+"p": 327,
+"t": "Transfusion Therapy",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 329,
+"id": "transfusion-therapy"
+},
+{
+"p": 330,
+"t": "Myelodysplastic Syndromes",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 332,
+"id": "myelodysplastic-syndromes"
+},
+{
+"p": 333,
+"t": "Myeloproliferative Neoplasms",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 337,
+"id": "myeloproliferative-neoplasms"
+},
+{
+"p": 338,
+"t": "Leukemia",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 345,
+"id": "leukemia"
+},
+{
+"p": 346,
+"t": "Lymphoma and CLL",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 353,
+"id": "lymphoma-and-cll"
+},
+{
+"p": 354,
+"t": "Plasma Cell Dyscrasias",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 359,
+"id": "plasma-cell-dyscrasias"
+},
+{
+"p": 360,
+"t": "Hematopoietic Stem Cell Transplantation",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 364,
+"id": "hematopoietic-stem-cell-transplantation"
+},
+{
+"p": 365,
+"t": "Lung Cancer",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 369,
+"id": "lung-cancer"
+},
+{
+"p": 370,
+"t": "Breast Cancer",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 374,
+"id": "breast-cancer"
+},
+{
+"p": 375,
+"t": "Prostate Cancer",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 377,
+"id": "prostate-cancer"
+},
+{
+"p": 378,
+"t": "Colorectal Cancer",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 380,
+"id": "colorectal-cancer"
+},
+{
+"p": 381,
+"t": "Pancreatic Tumors",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 383,
+"id": "pancreatic-tumors"
+},
+{
+"p": 384,
+"t": "Other Solid Tumors",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 389,
+"id": "other-solid-tumors"
+},
+{
+"p": 390,
+"t": "Immunotherapy & Cellular Therapy",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 392,
+"id": "immunotherapy-cellular-therapy"
+},
+{
+"p": 393,
+"t": "Oncologic Emergencies",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 397,
+"id": "oncologic-emergencies"
+},
+{
+"p": 398,
+"t": "Chemo Side Effects",
+"ch": "HEMATOLOGY-ONCOLOGY",
+"end": 399,
+"id": "chemo-side-effects"
+},
+{
+"p": 400,
+"t": "Pneumonia",
+"ch": "INFECTIOUS DISEASES",
+"end": 405,
+"id": "pneumonia"
+},
+{
+"p": 406,
+"t": "Fungal Infections",
+"ch": "INFECTIOUS DISEASES",
+"end": 409,
+"id": "fungal-infections"
+},
+{
+"p": 410,
+"t": "Infxns in Immunosuppressed Hosts",
+"ch": "INFECTIOUS DISEASES",
+"end": 410,
+"id": "infxns-in-immunosuppressed-hosts"
+},
+{
+"p": 411,
+"t": "Urinary Tract Infections",
+"ch": "INFECTIOUS DISEASES",
+"end": 413,
+"id": "urinary-tract-infections"
+},
+{
+"p": 414,
+"t": "Sexually Transmitted Infections",
+"ch": "INFECTIOUS DISEASES",
+"end": 416,
+"id": "sexually-transmitted-infections"
+},
+{
+"p": 417,
+"t": "Skin and Soft Tissue Infections",
+"ch": "INFECTIOUS DISEASES",
+"end": 423,
+"id": "skin-and-soft-tissue-infections"
+},
+{
+"p": 424,
+"t": "Infections of the Nervous System",
+"ch": "INFECTIOUS DISEASES",
+"end": 430,
+"id": "infections-of-the-nervous-system"
+},
+{
+"p": 431,
+"t": "Bacteremia & Endocarditis",
+"ch": "INFECTIOUS DISEASES",
+"end": 437,
+"id": "bacteremia-endocarditis"
+},
+{
+"p": 438,
+"t": "Tuberculosis",
+"ch": "INFECTIOUS DISEASES",
+"end": 442,
+"id": "tuberculosis"
+},
+{
+"p": 443,
+"t": "HIV/AIDS",
+"ch": "INFECTIOUS DISEASES",
+"end": 450,
+"id": "hiv-aids"
+},
+{
+"p": 451,
+"t": "Tick-Borne Diseases",
+"ch": "INFECTIOUS DISEASES",
+"end": 455,
+"id": "tick-borne-diseases"
+},
+{
+"p": 456,
+"t": "Fever Syndromes",
+"ch": "INFECTIOUS DISEASES",
+"end": 460,
+"id": "fever-syndromes"
+},
+{
+"p": 461,
+"t": "Pituitary Disorders",
+"ch": "ENDOCRINOLOGY",
+"end": 465,
+"id": "pituitary-disorders"
+},
+{
+"p": 466,
+"t": "Thyroid Disorders",
+"ch": "ENDOCRINOLOGY",
+"end": 475,
+"id": "thyroid-disorders"
+},
+{
+"p": 476,
+"t": "Adrenal Disorders",
+"ch": "ENDOCRINOLOGY",
+"end": 485,
+"id": "adrenal-disorders"
+},
+{
+"p": 486,
+"t": "Calcium Disorders",
+"ch": "ENDOCRINOLOGY",
+"end": 490,
+"id": "calcium-disorders"
+},
+{
+"p": 491,
+"t": "Diabetes Mellitus",
+"ch": "ENDOCRINOLOGY",
+"end": 498,
+"id": "diabetes-mellitus"
+},
+{
+"p": 499,
+"t": "Lipid Disorders",
+"ch": "ENDOCRINOLOGY",
+"end": 501,
+"id": "lipid-disorders"
+},
+{
+"p": 502,
+"t": "Approach to Rheumatic Disease",
+"ch": "RHEUMATOLOGY",
+"end": 506,
+"id": "approach-to-rheumatic-disease"
+},
+{
+"p": 507,
+"t": "Rheumatoid Arthritis",
+"ch": "RHEUMATOLOGY",
+"end": 510,
+"id": "rheumatoid-arthritis"
+},
+{
+"p": 511,
+"t": "Adult-Onset Still’s Disease & Relapsing Polychondritis",
+"ch": "RHEUMATOLOGY",
+"end": 512,
+"id": "adult-onset-still-s-disease-relapsing-po"
+},
+{
+"p": 513,
+"t": "Crystal Deposition Arthritides",
+"ch": "RHEUMATOLOGY",
+"end": 517,
+"id": "crystal-deposition-arthritides"
+},
+{
+"p": 518,
+"t": "Seronegative Spondyloarthritis",
+"ch": "RHEUMATOLOGY",
+"end": 522,
+"id": "seronegative-spondyloarthritis"
+},
+{
+"p": 523,
+"t": "Infectious Arthritis & Bursitis",
+"ch": "RHEUMATOLOGY",
+"end": 527,
+"id": "infectious-arthritis-bursitis"
+},
+{
+"p": 528,
+"t": "Connective Tissue Diseases",
+"ch": "RHEUMATOLOGY",
+"end": 537,
+"id": "connective-tissue-diseases"
+},
+{
+"p": 538,
+"t": "Systemic Lupus Erythematosus",
+"ch": "RHEUMATOLOGY",
+"end": 541,
+"id": "systemic-lupus-erythematosus"
+},
+{
+"p": 542,
+"t": "IgG4-Related Disease",
+"ch": "RHEUMATOLOGY",
+"end": 542,
+"id": "igg4-related-disease"
+},
+{
+"p": 543,
+"t": "Vasculitis",
+"ch": "RHEUMATOLOGY",
+"end": 554,
+"id": "vasculitis"
+},
+{
+"p": 555,
+"t": "Autoinflammatory Syndromes",
+"ch": "RHEUMATOLOGY",
+"end": 556,
+"id": "autoinflammatory-syndromes"
+},
+{
+"p": 557,
+"t": "Amyloidosis",
+"ch": "RHEUMATOLOGY",
+"end": 559,
+"id": "amyloidosis"
+},
+{
+"p": 560,
+"t": "Change in Mental Status",
+"ch": "NEUROLOGY",
+"end": 565,
+"id": "change-in-mental-status"
+},
+{
+"p": 566,
+"t": "Seizures",
+"ch": "NEUROLOGY",
+"end": 570,
+"id": "seizures"
+},
+{
+"p": 571,
+"t": "Alcohol Withdrawal",
+"ch": "NEUROLOGY",
+"end": 572,
+"id": "alcohol-withdrawal"
+},
+{
+"p": 573,
+"t": "Dizziness",
+"ch": "NEUROLOGY",
+"end": 574,
+"id": "dizziness"
+},
+{
+"p": 575,
+"t": "Stroke",
+"ch": "NEUROLOGY",
+"end": 580,
+"id": "stroke"
+},
+{
+"p": 581,
+"t": "Weakness & Neuromuscular Dysfunction",
+"ch": "NEUROLOGY",
+"end": 586,
+"id": "weakness-neuromuscular-dysfunction"
+},
+{
+"p": 587,
+"t": "Headache",
+"ch": "NEUROLOGY",
+"end": 589,
+"id": "headache"
+},
+{
+"p": 590,
+"t": "Back and Spinal Cord Disease",
+"ch": "NEUROLOGY",
+"end": 594,
+"id": "back-and-spinal-cord-disease"
+},
+{
+"p": 595,
+"t": "Surgical Issues",
+"ch": "CONSULTS",
+"end": 599,
+"id": "surgical-issues"
+},
+{
+"p": 600,
+"t": "Ob/Gyn Issues",
+"ch": "CONSULTS",
+"end": 602,
+"id": "ob-gyn-issues"
+},
+{
+"p": 603,
+"t": "Ophthalmic Issues",
+"ch": "CONSULTS",
+"end": 605,
+"id": "ophthalmic-issues"
+},
+{
+"p": 606,
+"t": "ICU Medications",
+"ch": "APPENDIX",
+"end": 609,
+"id": "icu-medications"
+},
+{
+"p": 610,
+"t": "Antibiotics",
+"ch": "APPENDIX",
+"end": 612,
+"id": "antibiotics"
+},
+{
+"p": 613,
+"t": "Formulae and Quick Reference",
+"ch": "APPENDIX",
+"end": 623,
+"id": "formulae-and-quick-reference"
+},
+{
+"p": 625,
+"t": "Abbreviations",
+"ch": "ABBREVIATIONS",
+"end": 642,
+"id": "abbreviations"
+},
+{
+"p": 700,
+"t": "ACLS Algorithms",
+"ch": "APPENDIX",
+"end": 704,
+"id": "acls-algorithms"
+}
+]

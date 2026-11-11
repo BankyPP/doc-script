@@ -1098,3 +1098,46 @@ a.spo{text-decoration:none}
 .rtype.sybody{background:var(--moss-bg);color:var(--moss-dk)}
 .sxres .sxft{padding:0 8px 8px;gap:6px}
 .sxres .sxft .chip{font-size:13px;padding:4px 12px;min-height:0}
+/* ---------- Pocket Medicine (#/kb/pm) ---------- */
+.pmchs{display:flex;flex-direction:column;gap:10px}
+.pmch{border:1px solid var(--rule);border-left:6px solid var(--c);border-radius:10px;background:var(--paper,#fff)}
+.pmch>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;padding:12px 14px}
+.pmch>summary::-webkit-details-marker{display:none}
+.pmch>summary .k{font-family:'Kanit',sans-serif;font-weight:600;font-size:19px}
+.pmch>summary .sw{width:10px;height:10px;border-radius:50%;display:inline-block}
+.pmch>summary .muted{font-size:14px}
+.pmtl{display:flex;flex-direction:column;border-top:1px dashed var(--rule)}
+.pmtl a{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-bottom:1px dotted var(--rule);text-decoration:none;color:inherit}
+.pmtl a:last-child{border-bottom:0}
+.pmtl a b{font-family:'Kanit',sans-serif;font-weight:500;font-size:16px}
+.pmtl a small{font-size:13px;color:var(--muted,#6b7068);line-height:1.4}
+.pmtl a:hover b{text-decoration:underline}
+.pmdoc{font-family:'Sarabun',sans-serif;font-size:16px;line-height:1.55;padding:clamp(14px,3vw,30px)}
+.pmdoc .pmsec+.pmsec{margin-top:10px}
+.pmdoc details.pmsec>summary{cursor:pointer;list-style:none;border-top:1px solid var(--rule);padding:12px 0 6px;display:flex;gap:8px;align-items:baseline}
+.pmdoc details.pmsec>summary::-webkit-details-marker{display:none}
+.pmdoc details.pmsec>summary:before{content:'▸';color:#14653A;font-size:14px;transition:transform .15s}
+.pmdoc details.pmsec[open]>summary:before{transform:rotate(90deg)}
+.pmdoc details.pmsec:first-child>summary{border-top:0;padding-top:0}
+.pmdoc h2{font-family:'Kanit',sans-serif;font-weight:600;font-size:clamp(18px,2.4vw,22px);margin:0;color:#14653A;letter-spacing:.01em}
+.pmdoc h2 .g{color:inherit}
+.pmdoc h2 b,.pmh3 b{font-weight:inherit}
+.pmh3{font-family:'Kanit',sans-serif;font-weight:500;font-size:17px;margin:14px 0 3px;color:#14653A}
+.pmh3 small,.pmdoc h2 small{font-family:'Sarabun',sans-serif;font-weight:400}
+.pmdoc .g{color:#14653A}
+.pmp{margin:3px 0;padding-left:calc(var(--i,0)*0.85em)}
+.pmp.b{padding-left:calc(var(--i,0)*0.85em + 1.05em);text-indent:-1.05em}
+.pmp.b:before{content:'•';display:inline-block;width:1.05em;text-indent:0;color:#14653A;font-weight:700}
+.pmdoc small{font-size:.76em;color:var(--muted,#6b7068)}
+.pmdoc sub,.pmdoc sup{font-size:.72em}
+.pmdoc .gap{display:inline-block;width:1.4em}
+.pmfig{margin:10px 0;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pmfig a{display:block;width:calc(var(--w,1)*100%);min-width:calc(var(--w,1)*620px);max-width:calc(var(--w,1)*900px)}
+.pmfig img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.pmhide{display:none!important}
+.pmnav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pmjump>summary{cursor:pointer;font-family:'Kanit',sans-serif;font-weight:500;font-size:15px;padding:4px 0}
+.pmjump>div{display:flex;flex-wrap:wrap;gap:6px;padding-top:6px}
+.pmjump .chip{font-size:13px}
+.pmfind{flex:1 1 260px;min-width:0}
+::highlight(pmhit){background:#FFE58A;color:inherit}

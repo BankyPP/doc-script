@@ -1392,7 +1392,7 @@
      ที่เก็บหลัก = แท็บตาม system ใน Doc โพยหมอ (ไม่ว่าจะเรียนตอนปีไหน)
      วอร์ด = ป้าย/มุมมอง (#/kb/ward/<id>) ไม่ใช่ที่เก็บ · Clinical skills + Symptomatology = ทักษะที่ข้าม system
      ========================================================= */
-  var KB_SUB = { symp: 1, skills: 1, ward: 1, approach: 1, x: 1 };
+  var KB_SUB = { symp: 1, skills: 1, ward: 1, approach: 1, x: 1, pm: 1 };
   /* กลุ่ม "<วอร์ด> Exclusive" — บทที่ไม่เข้า system ไหน เป็นโลกของมันเอง ติดป้ายวอร์ดอย่างเดียว
      บทที่ clone มาจากติว NL (nl: <id> ใน data/nl.js) ใช้ data-ann เดียวกับต้นฉบับ → แก้/โน้ตที่ไหนก็ตรงกันทั้งสองที่ */
   var KB_EXCL = [
@@ -1449,6 +1449,7 @@
     if (a === 'ward') return wardPage(r);
     if (a === 'approach') return approachPage(r);
     if (a === 'x') return exclPage(r);
+    if (a === 'pm') return pmPage(r);
     if (a) {
       if (G.st !== 'ready') return { title: 'Medical Soil', html: clinicHead('', '', 'Medical Soil', '') + gWaiting('') };
       var n = G.by[a];
@@ -1595,8 +1596,167 @@
     fetch('symp/search.json?v=' + SY.v).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (j) { SYS_SEARCH.d = j; }).catch(function (e) { SYS_SEARCH.E = e.message || String(e); }).then(function () { SYS_SEARCH.L = false; var q = SYS_SEARCH.q; SYS_SEARCH.q = []; q.forEach(function (f) { try { f(); } catch (e) { } }); });
   }
+  /* =========================================================
+     Pocket Medicine 8e (#/kb/pm) — ทั้งเล่ม reflow เป็นหน้าเว็บ อ่านเร็วบนมือถือ · แท็ก International
+     ข้อมูล: data/pm.js (สารบัญ) + pm/<id>.json (เนื้อหาแต่ละเรื่อง) + pm/img (ตาราง/รูปตัดจากเล่ม) + pm/search.json (ค้นทั้งเล่ม)
+     สร้างด้วย tools/pm/extract.py → build_site.py · บล็อก: ['h2',html] ['h3',html] ['p',html,ย่อหน้า(em),bullet] ['img',ไฟล์,w,h,ข้อความในภาพ,สัดส่วนความกว้าง]
+     ส่วน (section) ที่ 0 = ก่อนหัวข้อ h2 แรก · k = h2 ตัวที่ k → id="pm-s<k>" · โน้ต/แก้เนื้อหาเก็บที่ key pm:<เรื่อง>:<ส่วน>
+     ========================================================= */
+  var PM = window.POY_PM || { v: 1, chapters: [], book: {} }, PMD = {}, PMS = { d: null, L: false, E: '' };
+  var PM_TAG = '<span class="src intl">International</span>';
+  function pmAll() { var a = []; PM.chapters.forEach(function (c) { c.topics.forEach(function (t) { a.push({ c: c, t: t }); }); }); return a; }
+  function pmFind(id) { return pmAll().filter(function (x) { return x.t.id === id; })[0] || null; }
+  function pmLoad(id) {
+    var s = PMD[id] || (PMD[id] = {});
+    if (s.d || s.L || s.E) return s.d || null;
+    s.L = true;
+    fetch('pm/' + id + '.json?v=' + PM.v).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) { s.d = j; }).catch(function (e) { s.E = e.message || String(e); }).then(function () {
+        s.L = false; var r = route(); if (r.name === 'kb' && r.args[0] === 'pm' && r.args[1] === id) render(true);
+      });
+    return null;
+  }
+  function pmSearchLoad(cb) {
+    if (PMS.d) return cb();
+    (PMS.q = PMS.q || []).push(cb);
+    if (PMS.L) return;
+    PMS.L = true;
+    fetch('pm/search.json?v=' + PM.v).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) { PMS.d = j; }).catch(function (e) { PMS.E = e.message || String(e); }).then(function () { PMS.L = false; var q = PMS.q; PMS.q = []; q.forEach(function (f) { try { f(); } catch (e) { } }); });
+  }
+  function pmSecs(T) {
+    var S = [{ h: '', b: [] }];
+    T.b.forEach(function (b) { if (b[0] === 'h2') S.push({ h: b[1], b: [] }); else S[S.length - 1].b.push(b); });
+    return S;
+  }
+  function pmBlock(b) {
+    if (b[0] === 'h3') return '<h3 class="pmh3">' + b[1] + '</h3>';
+    if (b[0] === 'p') return '<p class="pmp' + (b[3] ? ' b' : '') + '"' + (b[2] ? ' style="--i:' + b[2] + '"' : '') + '>' + b[1] + '</p>';
+    if (b[0] === 'img') return '<figure class="pmfig" data-alt="' + esc(b[4] || '') + '" style="--w:' + Math.min(1, b[5] || 1).toFixed(2) + '"><a href="pm/img/' + b[1] + '" target="_blank" rel="noopener" title="เปิดภาพเต็ม"><img src="pm/img/' + b[1] + '?v=' + PM.v + '" width="' + b[2] + '" height="' + b[3] + '" loading="lazy" alt="' + esc((b[4] || 'ตาราง/รูปจาก Pocket Medicine').slice(0, 300)) + '"></a></figure>';
+    return '';
+  }
+  function pmPage(r) { return r.args[1] ? pmTopicPage(r, r.args[1]) : pmHub(r); }
+  function pmLede() { return esc(PM.book.title || 'Pocket Medicine') + ' · ' + esc(PM.book.ed || '') + ' · ' + esc(PM.book.by || '') + ' ' + PM_TAG; }
+  function pmHub(r) {
+    remember({ href: '#/kb/pm', title: 'Pocket Medicine', crumb: 'Medical Soil', c: '#355A3A' });
+    var qq = (r.q.get('q') || '').trim(), all = pmAll(), ni = 0;
+    all.forEach(function (x) { ni += x.t.i; });
+    var body = PM.chapters.map(function (c) {
+      return '<details class="pmch" style="--c:' + c.c + '"><summary><span class="sw" style="background:' + c.c + '"></span><span class="k">' + esc(c.t) + '</span><span class="muted">' + esc(c.th) + ' · ' + c.topics.length + ' เรื่อง</span></summary><div class="pmtl">' +
+        c.topics.map(function (t) { return '<a href="#/kb/pm/' + t.id + '"><b>' + esc(t.t) + '</b>' + (t.h.length ? '<small>' + esc(t.h.slice(0, 8).join(' · ') + (t.h.length > 8 ? ' …' : '')) + '</small>' : '') + '</a>'; }).join('') + '</div></details>';
+    }).join('');
+    return {
+      title: 'Pocket Medicine', html: clinicHead('pm', '<a href="#/kb">Medical Soil</a><span class="muted"> › </span><span>Pocket Medicine</span>', 'Pocket Medicine',
+        pmLede() + '<br><span class="muted" style="font-size:15px">เนื้อหาครบทั้งเล่ม จัดเป็นหน้าเว็บอ่านบนมือถือ · ตาราง/รูป/ECG เป็นภาพตัดจากเล่ม กดเพื่อดูภาพเต็ม · ' + all.length + ' เรื่อง · ' + ni + ' ตาราง/รูป</span>') +
+        '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:18px">' +
+        '<div class="sxbar"><form class="search sxsearch" id="pmsf" role="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="pmq">ค้นทั้งเล่ม</label><input id="pmq" type="search" placeholder="ค้นทั้งเล่ม เช่น anion gap, Wells, CHA2DS2" value="' + esc(qq) + '" autocomplete="off"></form>' +
+        '<button type="button" class="chip" data-pmall="1">เปิดทุกบท</button><button type="button" class="chip" data-pmall="0">ปิดทุกบท</button></div>' +
+        '<div id="pmres" class="sxres" hidden></div><div class="pmchs">' + body + '</div></section>',
+      after: function () {
+        var inp = document.getElementById('pmq'), res = document.getElementById('pmres'), t = null;
+        document.querySelectorAll('[data-pmall]').forEach(function (b) { b.addEventListener('click', function () { var on = b.getAttribute('data-pmall') === '1'; document.querySelectorAll('.pmch').forEach(function (d) { d.open = on; }); }); });
+        function words(v) { return v.toLowerCase().split(/\s+/).filter(Boolean); }
+        function hl(s, ws) {
+          s = String(s || ''); var sl = s.toLowerCase(), m = [];
+          ws.forEach(function (w) { var i = 0; while ((i = sl.indexOf(w, i)) >= 0) { m.push([i, i + w.length]); i += w.length; } });
+          m.sort(function (x, y) { return x[0] - y[0]; });
+          var o = '', p = 0; m.forEach(function (q) { if (q[0] < p) return; o += esc(s.slice(p, q[0])) + '<mark>' + esc(s.slice(q[0], q[1])) + '</mark>'; p = q[1]; });
+          return o + esc(s.slice(p));
+        }
+        function run() {
+          if (!document.body.contains(res)) return;
+          var v = inp.value.trim(); setQuery(route(), { q: v });
+          if (v.length < 2) { res.hidden = true; res.innerHTML = ''; return; }
+          res.hidden = false;
+          if (!PMS.d) { res.innerHTML = '<p class="muted">' + (PMS.E ? 'โหลดดัชนีค้นหาไม่ได้: ' + esc(PMS.E) : 'กำลังโหลดดัชนีทั้งเล่ม…') + '</p>'; if (!PMS.E) pmSearchLoad(run); return; }
+          var ws = words(v), R = [];
+          all.forEach(function (x) { var s = x.t.t + ' ' + x.c.t; if (ws.every(function (w) { return s.toLowerCase().indexOf(w) >= 0; })) R.push([0, '<a href="#/kb/pm/' + x.t.id + '"><span class="pn">เรื่อง</span><span><b>' + hl(x.t.t, ws) + '</b><small>' + esc(x.c.t) + '</small></span></a>']); });
+          PMS.d.forEach(function (row) {
+            var x = pmFind(row.c); if (!x) return;
+            var lines = row.x.split('\n'), hits = lines.filter(function (l) { var s = l.toLowerCase(); return ws.some(function (w) { return s.indexOf(w) >= 0; }); });
+            var whole = (row.h + '\n' + row.x).toLowerCase();
+            if (!ws.every(function (w) { return whole.indexOf(w) >= 0; })) return;
+            var best = hits.filter(function (l) { var s = l.toLowerCase(); return ws.every(function (w) { return s.indexOf(w) >= 0; }); });
+            var sn = (best.length ? best : hits).slice(0, 2).map(function (l) { l = l.replace(/^## /, ''); return l.length > 220 ? l.slice(0, 220) + '…' : l; });
+            R.push([best.length ? 1 : 2, '<a href="#/kb/pm/' + row.c + '?to=pm-s' + row.s + '&q=' + encodeURIComponent(v) + '"><span class="pn">' + esc(x.c.t.split(/[ -]/)[0]) + '</span><span><b>' + esc(x.t.t) + (row.h ? ' › ' + hl(row.h, ws) : '') + '</b>' + sn.map(function (l) { return '<small>' + hl(l, ws) + '</small>'; }).join('') + '</span></a>']);
+          });
+          R.sort(function (a, b) { return a[0] - b[0]; });
+          res.innerHTML = R.length ? '<p class="muted" style="font-size:14px">' + R.length + ' ผล</p>' + R.slice(0, 80).map(function (q) { return q[1]; }).join('') : '<p class="muted">ไม่พบ “' + esc(v) + '”</p>';
+        }
+        inp.addEventListener('input', function () { clearTimeout(t); t = setTimeout(run, 180); });
+        document.getElementById('pmsf').addEventListener('submit', function (e) { e.preventDefault(); run(); });
+        if (qq) run();
+      }
+    };
+  }
+  function pmTopicPage(r, id) {
+    var x = pmFind(id);
+    if (!x) return { title: 'ไม่พบเรื่อง', html: clinicHead('pm', '', 'ไม่พบเรื่องนี้', '<a href="#/kb/pm">กลับไปสารบัญ Pocket Medicine</a>') };
+    var c = x.c, t = x.t, all = pmAll(), ix = all.map(function (y) { return y.t.id; }).indexOf(id), pv = all[ix - 1], nx = all[ix + 1];
+    remember({ href: '#/kb/pm/' + id, title: t.t, crumb: 'Medical Soil › Pocket Medicine › ' + c.t, c: c.c });
+    var crumb = '<a href="#/kb">Medical Soil</a><span class="muted"> › </span><a href="#/kb/pm">Pocket Medicine</a><span class="muted"> › </span><span>' + esc(c.t) + '</span>';
+    var head = clinicHead('pm', crumb, esc(t.t), '<span class="pill"><span class="sw" style="background:' + c.c + '"></span>' + esc(c.t) + '</span> ' + PM_TAG + ' <span class="muted" style="font-size:14px">Pocket Medicine 8e · หน้า ' + (t.p[0] + 1) + (t.p[1] > t.p[0] ? '–' + (t.p[1] + 1) : '') + ' ในไฟล์</span>');
+    var nav = '<div class="pmnav">' + (pv ? '<a class="chip" href="#/kb/pm/' + pv.t.id + '">← ' + esc(pv.t.t) + '</a>' : '<span></span>') + (nx ? '<a class="chip" href="#/kb/pm/' + nx.t.id + '">' + esc(nx.t.t) + ' →</a>' : '') + '</div>';
+    var T = pmLoad(id), s = PMD[id];
+    if (!T) return { title: t.t, html: head + '<section class="wrap" style="padding-bottom:80px"><p class="muted">' + (s && s.E ? 'โหลดไม่ได้: ' + esc(s.E) : 'กำลังโหลด…') + '</p></section>' };
+    var S = pmSecs(T), qq = (r.q.get('q') || '').trim();
+    var jump = S.length > 2 ? '<details class="pmjump"><summary>ในเรื่องนี้ · ' + (S.length - 1) + ' หัวข้อ</summary><div>' + S.map(function (sec, k) { return sec.h ? '<a class="chip" href="#/kb/pm/' + id + '?to=pm-s' + k + '" data-go="pm-s' + k + '">' + esc(htmlText(sec.h)) + '</a>' : ''; }).join('') + '</div></details>' : '';
+    var secs = S.map(function (sec, k) {
+      if (!sec.h && !sec.b.length) return '';
+      var inner = '<div class="pmb" data-ann="pm:' + id + ':' + k + '">' + sec.b.map(pmBlock).join('') + '</div>';
+      return sec.h ? '<details class="pmsec" id="pm-s' + k + '" open><summary><h2>' + sec.h + '</h2></summary>' + inner + '</details>' : '<div class="pmsec" id="pm-s' + k + '">' + inner + '</div>';
+    }).join('');
+    return {
+      title: t.t, html: head + '<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:14px">' +
+        '<div class="sxtools"><form class="search sxsearch pmfind" id="pmff" role="search"><label class="sr" for="pmf">ค้นในเรื่องนี้</label><input id="pmf" type="search" placeholder="ค้นในเรื่องนี้ — แสดงเฉพาะบรรทัดที่ตรง" value="' + esc(qq) + '" autocomplete="off"></form><span id="pmfn" class="muted" style="font-size:14px"></span>' +
+        (S.length > 2 ? '<button type="button" class="chip" data-all="1">เปิดทั้งหมด</button><button type="button" class="chip" data-all="0">ปิดทั้งหมด</button>' : '') + '</div>' + jump +
+        '<article class="sheet doc pmdoc">' + secs + '</article>' + nav + '</section>',
+      after: function () {
+        var root = document.querySelector('.pmdoc'), inp = document.getElementById('pmf'), cnt = document.getElementById('pmfn'), t2 = null;
+        document.querySelectorAll('[data-all]').forEach(function (b) { b.addEventListener('click', function () { var on = b.getAttribute('data-all') === '1'; root.querySelectorAll('details.pmsec').forEach(function (d) { d.open = on; }); }); });
+        document.querySelectorAll('.pmjump [data-go]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var el = document.getElementById(a.getAttribute('data-go')); if (el) { el.open = true; el.scrollIntoView({ behavior: 'smooth' }); } }); });
+        var to = r.q.get('to'), tel = to && document.getElementById(to); if (tel && tel.tagName === 'DETAILS') tel.open = true;
+        function filt() {
+          var v = inp.value.trim().toLowerCase(), ws = v.split(/\s+/).filter(Boolean), n = 0, rng = [];
+          setQuery(route(), { q: inp.value.trim() });
+          root.querySelectorAll('.pmsec').forEach(function (sec) {
+            var any = false, kids = [].slice.call(sec.querySelectorAll('.pmb > *')), lastH = null, hHit = false;
+            kids.forEach(function (el) {
+              if (v.length < 2) { el.classList.remove('pmhide'); return; }
+              if (el.classList.contains('pmh3')) { if (lastH) lastH.classList.toggle('pmhide', !hHit); lastH = el; hHit = false; }
+              var txt = (el.textContent + ' ' + (el.getAttribute('data-alt') || '')).toLowerCase(), ok = ws.every(function (w) { return txt.indexOf(w) >= 0; });
+              if (!el.classList.contains('pmh3')) { el.classList.toggle('pmhide', !ok); if (ok) { hHit = true; n++; } }
+              if (ok) any = true;
+            });
+            if (lastH && v.length >= 2) lastH.classList.toggle('pmhide', !hHit);
+            var h2 = sec.querySelector('summary'), h2ok = h2 && ws.length && ws.every(function (w) { return h2.textContent.toLowerCase().indexOf(w) >= 0; });
+            if (h2ok && v.length >= 2) { kids.forEach(function (el) { el.classList.remove('pmhide'); }); any = true; }
+            sec.classList.toggle('pmhide', v.length >= 2 && !any);
+            if (v.length >= 2 && any && sec.tagName === 'DETAILS') sec.open = true;
+          });
+          cnt.textContent = v.length >= 2 ? (n ? n + ' บรรทัด/ภาพที่ตรง' : 'ไม่พบในเรื่องนี้') : '';
+          /* ไฮไลต์คำด้วย CSS Custom Highlight (ไม่แตะ DOM ของเนื้อหา → โน้ต/ฉบับแก้ไม่พัง) */
+          if (window.CSS && CSS.highlights && window.Highlight) {
+            CSS.highlights.delete('pmhit');
+            if (v.length >= 2) {
+              var tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+              while (tw.nextNode()) {
+                var nd = tw.currentNode, s = nd.nodeValue.toLowerCase();
+                if (nd.parentElement.closest('.pmhide')) continue;
+                ws.forEach(function (w) { var i = 0; while ((i = s.indexOf(w, i)) >= 0) { var g = new Range(); g.setStart(nd, i); g.setEnd(nd, i + w.length); rng.push(g); i += w.length; } });
+              }
+              if (rng.length) { var hlt = new Highlight(); rng.forEach(function (g) { hlt.add(g); }); CSS.highlights.set('pmhit', hlt); }
+            }
+          }
+        }
+        inp.addEventListener('input', function () { clearTimeout(t2); t2 = setTimeout(filt, 160); });
+        document.getElementById('pmff').addEventListener('submit', function (e) { e.preventDefault(); filt(); var f = root.querySelector('.pmb > :not(.pmhide):not(.pmh3)'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+        if (qq) { filt(); var f0 = tel && tel.querySelector('.pmb > :not(.pmhide):not(.pmh3)'); if (f0) setTimeout(function () { f0.scrollIntoView({ block: 'center' }); }, 30); }
+      }
+    };
+  }
   function clinicTabs(cur) {
-    return '<div class="subtabs" aria-label="มุมมองของ Medical Soil">' + [['', 'ตาม system'], ['ward', 'ตามวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach']].map(function (x) {
+    return '<div class="subtabs" aria-label="มุมมองของ Medical Soil">' + [['', 'ตาม system'], ['ward', 'ตามวอร์ด'], ['skills', 'Clinical skills'], ['symp', 'Symptomatology & Approach'], ['pm', 'Pocket Medicine']].map(function (x) {
       return '<a class="chip' + (x[0] === cur ? ' on" aria-current="page' : '') + '" href="#/kb' + (x[0] ? '/' + x[0] : '') + '">' + x[1] + '</a>';
     }).join('') + '</div>';
   }
@@ -3952,7 +4112,7 @@
 
   /* =========================================================
      ค้นทั้งเว็บ (#/search?q=) — ช่องค้นบนสุด
-     ค้นใน: Medical Soil (ทุกแท็บ รวมฉบับที่แก้ในเว็บ) · Symptomatology · 1000 MAI · ติว NL (สรุป, blueprint, บอร์ด) ·
+     ค้นใน: Medical Soil (ทุกแท็บ รวมฉบับที่แก้ในเว็บ) · Symptomatology · Pocket Medicine · 1000 MAI · ติว NL (สรุป, blueprint, บอร์ด) ·
             ข้อสอบเก่า NL/Compre · Random Topic Summary · Approach · โน้ตของฉัน
      เรียงตามความเกี่ยวข้อง: ชื่อเรื่อง > แท็ก > เนื้อหา (นับจำนวนครั้ง) + ครบทุกคำ + ตรงทั้งวลี
      คำที่เกี่ยวข้อง: แท็กสถาบัน (จุฬา = MDCU …) · สะกดใกล้เคียง · AI (ถ้าใส่ API key ไว้) ขยายเป็นคำที่เกี่ยวข้องทางการแพทย์
@@ -3996,6 +4156,7 @@
     var i = k.indexOf(':'), p = k.slice(0, i), r = k.slice(i + 1), n, x;
     if (p === 'g' && (n = G.by[r])) return { label: 'Medical Soil › ' + gPath(n).map(function (y) { return y.title; }).join(' › '), href: gHref(n), c: gLook(n).c };
     if (p === 'y' && (x = syCh(r))) return { label: 'Symptomatology › ' + x.th, href: '#/kb/symp/' + x.id, c: syGroup(x).c };
+    if (p === 'pm') { var pq = r.split(':'); x = pmFind(pq[0]); return { label: 'Medical Soil › Pocket Medicine › ' + (x ? x.t.t : pq[0]), href: '#/kb/pm/' + pq[0] + (pq[1] ? '?to=pm-s' + pq[1] : ''), c: x ? x.c.c : '#355A3A' }; }
     if (p === 'd' && (x = findDisease(r))) return { label: '1000 MAI › ' + x.name, href: dHref(x), c: x.sys.c };
     if (p === 'n') { x = (NLD.notes || []).filter(function (y) { return y.id === r; })[0]; return { label: 'ติว NL › สรุปเนื้อหา › ' + (x ? x.title : r), href: '#/nl/notes/' + encodeURIComponent(r), c: '#4A5560' }; }
     if (p === 'x') return { label: 'ติว NL › ' + r.toUpperCase(), href: '#/nl/x/' + r, c: '#4A5560' };
@@ -4036,6 +4197,10 @@
     (SYS_SEARCH.d || []).forEach(function (x) {
       var c = syCh(x.c); if (!c) return;
       L.push({ type: 'content', title: x.h, path: 'Symptomatology › ' + c.th, text: x.x, c: syGroup(c).c, tags: (x.b || ['si']).map(function (k) { return k === 'si' ? 'ศิริราช SI ตำราศิริราช' : k === 'yb' ? 'เล่มเหลือง จุฬาฯ + ศิริราช จุฬาฯ MDCU จุฬา ศิริราช SI ทั้งสองสถาบัน' : k === 'bb' ? 'Blackbook International Calgary' : k === 'tn' ? 'เอกสารคำสอน ภัณฑิลา วาณิชย์การ ศิริราช SI' : k === 'ts' ? 'เอกสารคำสอน สุชาย ศรีทิพยวรรณ Dysnatremia ศิริราช SI' : 'Claude'; }).concat([syGroup(c).t, c.en]), href: '#/kb/symp/' + c.id + '?to=' + (x.f ? 'f-' + x.f : 's-' + x.s) });
+    });
+    (PMS.d || []).forEach(function (x) {
+      var p = pmFind(x.c); if (!p) return;
+      L.push({ type: 'content', title: x.h ? p.t.t + ' › ' + x.h : p.t.t, path: 'Medical Soil › Pocket Medicine › ' + p.c.t, text: x.x, c: p.c.c, tags: ['Pocket Medicine', 'International', p.c.t, p.t.t], href: '#/kb/pm/' + x.c + '?to=pm-s' + x.s });
     });
     D.list.forEach(function (d) {
       var e = shPeek('d:' + d.id);
@@ -4079,6 +4244,7 @@
     var wait = [];
     gLoad(); if (G.st !== 'ready' && G.st !== 'err') wait.push('สรุปจาก Doc');
     if (!SYS_SEARCH.d && !SYS_SEARCH.E) { wait.push('Symptomatology'); sySearchLoad(srchKick); }
+    if (!PMS.d && !PMS.E) { wait.push('Pocket Medicine'); pmSearchLoad(srchKick); }
     (window.POY_TOPICS || []).forEach(function (t) { var s = TD[t.id] || {}; if (!s.data && !s.dataE) { tLoad(t, 'data'); wait.push(t.title); } });
     if (!SRCH.bank && !SRCH.bankL) {
       SRCH.bankL = true;
