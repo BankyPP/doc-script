@@ -1141,3 +1141,5 @@ a.spo{text-decoration:none}
 .pmjump .chip{font-size:13px}
 .pmfind{flex:1 1 260px;min-width:0}
 ::highlight(pmhit){background:#FFE58A;color:inherit}
+.pmsys{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.pmsys .chip{font-size:13px}
