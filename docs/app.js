@@ -3466,13 +3466,24 @@
     };
   }
 
+  /* หัวข้อแบบข้อความ (data.json kind:'html' — ทำจาก Round I/O ด้วย tools/topic-from-io/build.py): html ของหน้าเหมือน Round I/O ทุกตัวอักษร
+     คลาสเป็น si-* (ใช้สไตล์ .sim ชุดเดียวกับเนื้อหา SI ในคลังข้อสอบเก่า) · กล่อง = หน่วยเนื้อหา (id u<หน้า>-0-<ลำดับ>) */
+  function topicHTMLBody(t, d, p, n) {
+    var R = p.refs || [];
+    return (d.legend ? '<details class="tleg"><summary>สัญลักษณ์ในสรุป</summary><div class="sim"><div class="si-legend">' + d.legend + '</div></div></details>' : '') +
+      '<div class="sim tsim" data-ann="t:' + esc(t.id) + ':' + n + '">' + (n === 1 && d.src ? '<div class="si-intro">' + esc(d.src) + '</div>' : '') + p.html +
+      (R.length ? '<details class="si-refs"><summary>Reference (' + R.length + ')</summary><ol>' + R.map(function (x, i) {
+        return '<li id="tref-' + n + '-' + (i + 1) + '">' + x.t + (x.u ? ' <a href="' + esc(x.u) + '" target="_blank" rel="noopener">' + esc(x.u.replace(/^https?:\/\//, '').slice(0, 60)) + '</a>' : '') + '</li>';
+      }).join('') + '</ol></details>' : '') + '</div>';
+  }
+
   /* ---------- สรุป ---------- */
   function topicSummary(t, r) {
     var s = TD[t.id] || {}, d = tLoad(t, 'data');
-    var dl = (t.pdfs || [{ f: t.pdf, t: 'ไฟล์ต้นฉบับ (PDF)' }]).map(function (x) { return '<a class="chip" href="' + t.dir + encodeURIComponent(x.f) + '" download>' + esc(x.t) + '</a>'; }).join('');
+    var dl = (t.pdfs || (t.pdf ? [{ f: t.pdf, t: 'ไฟล์ต้นฉบับ (PDF)' }] : [])).map(function (x) { return '<a class="chip" href="' + t.dir + encodeURIComponent(x.f) + '" download>' + esc(x.t) + '</a>'; }).join('');
     if (!d) return { title: t.title, html: topicHead(t, 'sum', dl) + '<section class="wrap" style="padding-bottom:80px">' + loadingHTML(TD[t.id], 'data') + '</section>' };
     var n = Math.max(1, Math.min(d.pages.length, +r.args[2] || 1)), p = d.pages[n - 1], g = groupOf(d, n);
-    var full = r.q.get('v') === 'page', qq = (r.q.get('q') || '').trim();
+    var html = d.kind === 'html', full = !html && r.q.get('v') === 'page', qq = (r.q.get('q') || '').trim();
     remember({ href: '#/topics/' + t.id + '/sum/' + n, title: t.title + ' · หน้า ' + n, crumb: 'Random Topic Summary › ' + p.t, c: t.c });
     var units = tUnitsCached(t, d), mine = units.filter(function (u) { return u.p === n; });
     var tree = d.groups.map(function (gr) {
@@ -3486,7 +3497,8 @@
     }).join('');
     var body;
     var pwh = pageWH(t, n);
-    if (full) body = '<button type="button" class="cimg fullp" data-zoom="' + n + '" aria-label="ขยายภาพหน้า ' + n + '"><img src="' + tImg(t, n) + '" width="' + pwh[0] + '" height="' + pwh[1] + '" alt=""' + (pwh[0] < pwh[1] ? ' style="max-width:720px"' : '') + '></button><p class="note">แตะที่ภาพเพื่อขยาย</p>';
+    if (html) body = topicHTMLBody(t, d, p, n);
+    else if (full) body = '<button type="button" class="cimg fullp" data-zoom="' + n + '" aria-label="ขยายภาพหน้า ' + n + '"><img src="' + tImg(t, n) + '" width="' + pwh[0] + '" height="' + pwh[1] + '" alt=""' + (pwh[0] < pwh[1] ? ' style="max-width:720px"' : '') + '></button><p class="note">แตะที่ภาพเพื่อขยาย</p>';
     else {
       var lastHead = null;
       body = '<div class="crops" data-ann="t:' + esc(t.id) + ':' + n + '" data-ann-mode="box">' + mine.map(function (u) {
@@ -3514,7 +3526,7 @@
         '<form class="search tsearch" id="tsrch" role="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A6258" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label class="sr" for="tq">ค้นในหัวข้อนี้</label><input id="tq" type="search" placeholder="ค้นในหัวข้อนี้ ' + esc(t.searchPh || 'เช่น CRAB, PID') + '" value="' + esc(qq) + '"></form>' +
         hits + '<nav class="tree" aria-label="หัวข้อย่อยของ ' + esc(t.title) + '">' + tree + '</nav></details>' +
         '<article class="sheet doc tdoc"><div style="display:flex;flex-direction:column;gap:8px"><span class="muted" style="font-size:14px">' + esc(g ? g.t : '') + ' · หน้า ' + n + ' / ' + d.pages.length + '</span><h2 style="font-size:clamp(24px,3vw,32px)">' + esc(p.t) + '</h2>' +
-        '<div class="filters" role="group" aria-label="มุมมอง"><a class="chip' + (full ? '' : ' on') + '" href="' + pageQ(false) + '">อ่านทีละกล่อง</a><a class="chip' + (full ? ' on' : '') + '" href="' + pageQ(true) + '">ทั้งหน้า</a>' +
+        '<div class="filters" role="group" aria-label="มุมมอง">' + (html ? (p.io ? '<a class="chip" href="' + esc(p.io) + '" target="_blank" rel="noopener">หน้านี้ใน Round I/O ↗</a>' : '') : '<a class="chip' + (full ? '' : ' on') + '" href="' + pageQ(false) + '">อ่านทีละกล่อง</a><a class="chip' + (full ? ' on' : '') + '" href="' + pageQ(true) + '">ทั้งหน้า</a>') +
         '<a class="chip" href="#/topics/' + t.id + '/practice?m=ai&p=' + n + '">ฝึกโจทย์หน้านี้</a></div></div>' + body + nav + '</article></div></section>',
       after: function () {
         if (window.innerWidth < 900) { var tt = document.getElementById('ttree'); if (tt && !qq) tt.open = false; }
@@ -3523,7 +3535,12 @@
           e.preventDefault(); var v = document.getElementById('tq').value.trim();
           location.hash = '#/topics/' + t.id + '/sum/' + n + (v ? '?q=' + encodeURIComponent(v) : '');
         });
-        if (r.q.get('to')) { var el = document.getElementById(r.q.get('to')); if (el) el.classList.add('hl'); }
+        if (r.q.get('to')) { var el = document.getElementById(r.q.get('to')); if (el) { el.classList.add(html ? 'si-hit' : 'hl'); if (html) el.scrollIntoView({ block: 'start' }); } }
+        if (html) document.getElementById('treader').addEventListener('click', function (e) {
+          var a = e.target.closest('[data-tref]'); if (!a) return; e.preventDefault();
+          var li = document.getElementById('tref-' + n + '-' + a.getAttribute('data-tref')), dt = li && li.closest('details');
+          if (!li) return; if (dt) dt.open = true; li.scrollIntoView({ block: 'center' }); li.classList.add('si-hit'); setTimeout(function () { li.classList.remove('si-hit'); }, 1800);
+        });
       }
     };
   }

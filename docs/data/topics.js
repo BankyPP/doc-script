@@ -85,5 +85,30 @@ window.POY_TOPICS = [
       other: 'ถามเรื่องอื่นในเนื้อหาได้ เช่น กลไก (action potential, vector, arrhythmogenesis) เกณฑ์และ score (Sgarbossa, Schwartz, Shanghai, VT score) ขนาดยา การวัด QT สาเหตุของ pattern หรือกับดักในการอ่าน'
     },
     flash: []
+  },
+  {
+    /* หัวข้อแบบข้อความ (kind html): เนื้อหาเดียวกับ Round I/O L11 Breast ใน ac-mdcu ทุกตัวอักษร รวมรูปและ reference
+       สร้างด้วย tools/topic-from-io/build.py <ac-mdcu> breast — แก้ที่ Round I/O แล้วรันใหม่ + เพิ่ม v */
+    id: 'breast',
+    title: 'Breast',
+    th: 'เต้านม — L11 Breast (Gen Sx) รวม Repro II + Nuc',
+    c: '#C2457A',
+    dir: 'topics/breast/',
+    v: 1,
+    pages: 18,
+    pdfs: [],
+    source: 'Round I/O L11 Breast (เนื้อหาเดียวกัน) — สไลด์ 78 + jod + handout อ.นพ.มาวิน · Breast I/II (Repro II) · รังสีรักษา (Nuc) · guideline ล่าสุด',
+    added: '12 พ.ย. 2026',
+    selftest: false,
+    searchPh: 'เช่น BI-RADS, phyllodes, SLNB',
+    focusPh: 'เช่น nipple discharge, staging, HER2+',
+    /* โจทย์ AI: case-based MCQ 5 ตัวเลือก — หัวข้อนี้ไม่มีเรื่องเชื้อ/ยา จึงเน้น approach + management จากเคส */
+    mix: {
+      p: 0.8,
+      main: 'เน้น approach และการรักษาจากเคส — จากอาการ/ตรวจร่างกาย/ภาพ (mammogram, US, BI-RADS)/ผลชิ้นเนื้อ ให้เลือก investigation ถัดไป การวินิจฉัย stage หรือ subtype แล้วเลือก management (ผ่าตัดเต้านม/รักแร้ systemic therapy รังสีรักษา หรือ follow-up)',
+      hint: '(ถ้าเนื้อหาด้านล่างไม่ได้พูดถึงตรง ๆ ให้ใช้เนื้อหานี้เป็นบริบทของเคส แล้วให้คำถามจบที่ next step หรือการรักษา)',
+      other: 'ถามเรื่องอื่นในเนื้อหาได้ เช่น anatomy (lymphatic, nerves) physiology pathology risk factor และ screening ตัวเลขสำคัญ ภาวะเต้านมในผู้ชาย หรือหัวข้ออื่นที่อยู่ในเนื้อหา'
+    },
+    flash: []
   }
 ];

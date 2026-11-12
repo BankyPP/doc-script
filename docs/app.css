@@ -1143,3 +1143,30 @@ a.spo{text-decoration:none}
 ::highlight(pmhit){background:#FFE58A;color:inherit}
 .pmsys{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
 .pmsys .chip{font-size:13px}
+
+/* Random Topic Summary แบบข้อความ (จาก Round I/O) — คลาสที่ .sim เดิมยังไม่มี */
+.tsim,.tleg{--si-red:#B3261E;--si-bl:#3C4A7A}
+.tsim{font-size:15.5px;line-height:1.6;margin-top:6px}
+.tsim .si-box .si-box{box-shadow:none;background:var(--sheet);margin-top:8px}
+.tsim .si-intro{font-size:15px}
+.tsim .si-mut{color:var(--muted)}
+.tsim .si-hl{background:#FBECE9;color:var(--si-red);font-weight:700;padding:0 2px;border-radius:2px}
+.tsim .si-star,.tsim .si-st{color:var(--si-red);font-weight:700}
+.tsim .si-cr{font-size:12.5px;color:var(--si-bl);white-space:nowrap}
+.tsim .si-sub2{display:block;border-left:3px solid var(--si-bl);padding-left:6px;margin:3px 0}
+.tsim .si-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+.tsim .si-mn>div+div{margin-top:3px}
+.tsim .si-chip.si-s{color:var(--si-bl);background:#EEF1F4}
+.tsim .si-chip.si-e{color:#5a4fb0}
+.tsim .si-chip.si-g{color:#2E7D32}
+.tsim .si-chip.si-b{color:var(--si-bl)}
+.tsim .si-chip.si-n{color:#2f7d8c}
+.tsim .si-chip.si-p{color:#6a4a9c}
+.tsim .si-chip.si-o{color:#B26A00}
+.tsim .si-chip.si-r{color:var(--si-red)}
+.tsim .si-fig img,.tsim img{display:block;max-width:100%;height:auto;border:1px solid var(--rule-2);border-radius:4px;background:#fff;margin:6px 0}
+.tsim .si-refs{margin-top:10px}
+.tsim .si-refs li a{overflow-wrap:anywhere}
+.tleg{margin:6px 0 4px;font-size:14px}
+.tleg>summary{cursor:pointer;font-family:'Kanit',sans-serif;font-weight:500;color:var(--ink-2)}
+.tleg .si-legend{margin-top:6px}
