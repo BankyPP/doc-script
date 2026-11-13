@@ -687,8 +687,8 @@ function rService(){
   if(!QB.length){$("main").innerHTML=`<div class="empty">ยังไม่มีข้อสอบในคลัง</div>`;return;}
   const sel=new Set(P.pick.filter(k=>W.sets.includes(k)));
   const years=[...new Set(QB.map(q=>q.set))];
-  let h=`<h1 class="h2">Service round</h1><p class="sub">เลือกปีและ rotation ที่อยากทำ เลือกได้หลายชุด ไม่เลือกเลย = ทุกชุด</p>`;
-  h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=qs.filter(q=>lockedAns(P,p,q.uid)!==undefined).length;const full=d===qs.length,pc=Math.round(d/qs.length*100);return `<button class="chip svchip${full?" done":""}" data-k="${esc(k)}" aria-pressed="${sel.has(k)}" style="--pc:${pc}%">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${full?"✓ ครบ ":""}${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");
+  let h=`<h1 class="h2">Service round</h1><p class="sub">เลือกปีและ rotation ที่อยากทำ เลือกได้หลายชุด ไม่เลือกเลย = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น</p>`;
+  h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=qs.filter(q=>lockedAns(P,p,q.uid)!==undefined).length;const full=d===qs.length,pc=Math.round(d/qs.length*100);return `<button class="chip svchip${full?" done":""}" data-k="${esc(k)}" aria-pressed="${sel.has(k)}" style="--pc:${pc}%">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${full?"✓ ครบ ":""}${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");
   h+=`<p class="hint">แถบสีในปุ่ม = สัดส่วนที่ทำแล้วใน Phase ${p} · ✓ ครบ = ทำครบทุกข้อในชุดนั้นแล้ว</p>`;
   h+=`<div id="tgWrap"></div>`;
   h+=`<div class="row2"><button class="btn ghost" id="spClear">ล้างที่เลือก</button><span class="spacer"></span><button class="btn primary" id="spGo">เริ่มทำ</button></div>`;
@@ -702,6 +702,26 @@ function rService(){
     const order=W.sets;P.pick=[...sel].sort((a,b)=>order.indexOf(a)-order.indexOf(b));const s=P.svc[p];s.set=P.pick.length?P.pick.join("|"):"all";s.tg=tg;
     {const nx=svcNextTodo();if(nx)s.cur=nx.uid;else{toast("ทำครบทุกข้อในชุดที่เลือกแล้ว");const c=W.byU[s.cur];if(!c||!inSet(c)){const v=svcVisible();s.cur=(svcStart(v)||svcList()[0]).uid;}}}save();go(ward+"/svc");};
 }
+
+
+/* ---------------- tap a year heading → pick / unpick every Ro of that year (user 13 Nov 2026, every ward on every site) ----------------
+   Works on any year group <div class="yr"><div class="yh">…</div><div class="chips">chips with a data-* key</div></div>:
+   if every Ro of the year is already picked → unpick all, else pick the rest. It clicks the page's own chips one by one
+   (re-finding each by its data key, since some pages re-render after every click), so each page keeps its own saving logic. */
+function yrChipKey(b){for(const a of b.attributes)if(a.name.startsWith("data-"))return [a.name,a.value];return null;}
+function yrChips(yr){return [...yr.querySelectorAll(".chips button.chip")].filter(b=>!b.disabled&&b.getAttribute("aria-disabled")!=="true"&&yrChipKey(b));}
+function yrPaint(){document.querySelectorAll(".yr").forEach(yr=>{const h=yr.querySelector(".yh"),c=yrChips(yr);if(!h)return;h.classList.toggle("yh-all",c.length>1);if(c.length<2)return;h.setAttribute("aria-pressed",c.every(b=>b.getAttribute("aria-pressed")==="true"));});}
+function yrToggle(h){const yr=h.closest(".yr"),c=yrChips(yr);if(c.length<2)return;const on=!c.every(b=>b.getAttribute("aria-pressed")==="true"),keys=c.map(yrChipKey);
+  keys.forEach(([a,v])=>{const b=[...document.querySelectorAll(`[${a}]`)].find(x=>x.getAttribute(a)===v);if(b&&(b.getAttribute("aria-pressed")==="true")!==on)b.click();});
+  yrPaint();toast(on?`เลือกทุก Ro ของ ${h.textContent.trim()} แล้ว`:`ยกเลิกทุก Ro ของ ${h.textContent.trim()} แล้ว`);}
+document.addEventListener("click",e=>{const h=e.target.closest&&e.target.closest(".yr .yh");if(h&&h.classList.contains("yh-all")){e.preventDefault();yrToggle(h);return;}
+  if(e.target.closest&&e.target.closest(".yr .chips"))setTimeout(yrPaint,0);});
+document.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const h=e.target.closest&&e.target.closest(".yr .yh.yh-all");if(h){e.preventDefault();yrToggle(h);}});
+{let yrT=0;new MutationObserver(()=>{if(yrT)return;yrT=requestAnimationFrame(()=>{yrT=0;yrPaint();});}).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});}
+/* year groups for set keys "<year> <Ro>" (MEQ / OSCE pickers) — keys whose year can't be found stay in a plain row first */
+function yrGroupHTML(keys,yearOf,chip){const g=new Map(),loose=[];keys.forEach(k=>{const y=yearOf(k);if(!y){loose.push(k);return;}if(!g.has(y))g.set(y,[]);g.get(y).push(k);});
+  return (loose.length?`<div class="chips">${loose.map(k=>chip(k,k)).join("")}</div>`:"")+[...g].map(([y,ks])=>`<div class="yr">${YHD(y)}<div class="chips">${ks.map(k=>chip(k,k.slice(y.length).trim()||"ทั้งชุด")).join("")}</div></div>`).join("");}
+const YHD=y=>`<div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div>`;
 
 /* ---------------- grand round setup ---------------- */
 function rGrand(){
@@ -1309,7 +1329,7 @@ function rQuality(){
     h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">ข้อสอบที่จะทำ</div>${chips("qMode",[["all","สุ่มจากข้อสอบเก่าทั้งหมด"],["sets","เลือกปีที่จะทำ"]],q.mode)}`;
     h+=`<p class="hint" style="margin:6px 0 0">${q.mode==="all"?"สุ่มลำดับจากข้อสอบเก่าทุกปีในคลัง ไม่ว่าเคยทำแล้วหรือยัง":"เหมือน Service round แต่จับเวลา — เรียงข้อตามชุดที่เลือก ไม่เลือกเลย = ทุกชุด · ตัวเลข = ทำแล้ว/ทั้งหมด ใน Phase "+p}</p>`;
     if(q.mode==="sets"){const sel=new Set(q.sets),years=[...new Set(W.QB.map(x=>x.set))];
-      h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=W.QB.filter(x=>setKey(x)===k),d=qs.filter(x=>atts(P,p,x.uid).length).length;return `<button class="chip" data-qk="${esc(k)}" aria-pressed="${sel.has(k)}">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");}
+      h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=W.QB.filter(x=>setKey(x)===k),d=qs.filter(x=>atts(P,p,x.uid).length).length;return `<button class="chip" data-qk="${esc(k)}" aria-pressed="${sel.has(k)}">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");}
     h+=`<label class="chk"><input type="checkbox" id="qFresh" ${q.fresh?"checked":""}><span>เฉพาะข้อที่ยังไม่เคยทำใน Phase ${p}</span></label>`;
     h+=`<p class="statline" style="margin-top:10px">รอบนี้มี <b>${pool.length}</b> ข้อ</p>`;}
   h+=`<label class="chk"><input type="checkbox" id="qMand" ${q.mand?"checked":""}><span><b>Mandatory</b> — หมดเวลาแล้วเปลี่ยนหน้าจอให้อัตโนมัติ: หมดเวลาตอบ = ส่งคำตอบที่เลือกไว้ (ไม่ได้เลือก = ข้าม + เสียง alarm) · จบช่วงพัก = ไปข้อต่อไป · ช่วงอ่านเฉลยเลื่อนดูข้อที่ทำไปแล้วได้</span></label>`;
@@ -1549,7 +1569,7 @@ function rAdvisor(){
   if(a.src.some(k=>k!=="ac"))h+=`<p class="hint" style="margin:6px 0 0">โจทย์ที่ไม่ใช่ข้อสอบเก่า (Unit · Admission · Specialty · โจทย์ AI ของ Legendary) นับประวัติรวมทั้ง 2 Phase และรีเซ็ตไม่ได้ — กด “ทำข้อนี้ใหม่” ในเฉลยแทนได้</p>`;
   h+=`<div class="lbl">ใช้ประวัติการตอบจาก${a.src.some(k=>k!=="ac")?` <span class="hint">(มีผลกับข้อสอบเก่า)</span>`:""}</div>${chips("aHp",[["all","ทั้ง 2 Phase"],["p",`เฉพาะ Phase ${ph()}`]],a.hp)}`;
   if(src.has("ac")&&QB.length){h+=`<div class="lbl">ข้อสอบเก่า · ปีและ rotation <span class="hint">ไม่เลือกเลย = ทุกชุด · ตัวเลข = ทำแล้ว/ทั้งหมด</span></div>`;
-    h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=dn(qs);return `<button class="chip" data-k="${esc(k)}" aria-pressed="${sel.has(k)}">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");}
+    h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=dn(qs);return `<button class="chip" data-k="${esc(k)}" aria-pressed="${sel.has(k)}">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");}
   if(src.has("unit")){const LS=W.UNIT.filter(Lc=>(Lc.QB||[]).length);if(LS.length)h+=`<details class="grp"${lsel.size?" open":""}><summary>Unit round · เลือกบท <span class="hint">${lsel.size?`เลือกไว้ ${lsel.size} บท`:"ไม่เลือกเลย = ทุกบท"}</span></summary><div class="chips" id="aLec">${LS.map(Lc=>`<button class="chip" data-lec="${esc(Lc.id)}" aria-pressed="${lsel.has(Lc.id)}">${esc(Lc.short||Lc.title)}<span class="c">${dn(Lc.QB)}/${Lc.QB.length}</span></button>`).join("")}</div></details>`;}
   h+=`<div class="lbl">ถูก / ผิด</div>${chips("aF",ADVF,a.f)}`;
   {const ks=advRKs(a),rs=new Set(a.rk);if(ks.length||rs.size)h+=`<div class="lbl">ทำใน round <span class="hint">ไม่เลือกเลย = ทุก round · เลือกแล้ว = ข้อที่เคยตอบใน round นั้น</span></div><div class="chips" id="aRk">${[...new Set(ks.concat(a.rk))].map(k=>`<button class="chip" data-rk="${esc(k)}" aria-pressed="${rs.has(k)}">${k==="?"?"ไม่ได้บันทึก round":esc(RKL[k]||k)}</button>`).join("")}</div>`;}
