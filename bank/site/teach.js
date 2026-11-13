@@ -125,22 +125,22 @@ const TEACH=[
   {k:"cta",n:"CTA",d:"ฝึกหัตถการ: เนื้อหาตามไฟล์ · keyword ที่ต้องมีเป๊ะ ๆ · wording ของตัวเอง · ฝึกพิมพ์แล้วตรวจ keyword"},
   {k:"case",n:"Case",d:"คลังเคสจริงจาก History taker / Physical examinator · สรุปเคสไว้พรีเซนต์ · ร่างใบเหลือง"},
   {k:"yellow",n:"ใบเหลือง",d:"ร่าง case report with discussion แบบ SOAP จากเคสในคลัง (เลือกเคสในหน้า Case)"},
-  {k:"flash",n:"Flashcard",d:"ฝึก keyword และความรู้จำเพาะสั้น ๆ แบบถามตอบเร็ว",soon:1},
+  {k:"flash",n:"Flashcard",d:"ฝึก keyword และความรู้จำเพาะสั้น ๆ แบบถามตอบเร็ว",soonIf:()=>!flashDecks().length},
   {k:"oral",n:"Oral",d:"ฝึกสอบปากเปล่าจาก flashcard",soon:1}];
 function rTeach(){
   const nC=bankItems("case",ward).filter(x=>!x.del).length;
   let h=`<h1 class="h2">Teaching round</h1><p class="sub">${esc(W_().cfg.name)} · เลือกเครื่องมือ · ตาราง History / PE / CTA ใช้ร่วมกันทุกวอร์ด (เปิด/ปิดหัวข้อแยกรายวอร์ด)</p>`;
-  h+=`<div class="rounds">${TEACH.map((t,i)=>`<button class="round" data-teach="${t.k}" aria-disabled="${!!t.soon}">${t.soon?'<span class="soon">เร็ว ๆ นี้</span>':t.k==="case"&&nC?`<span class="badge">${nC}</span>`:""}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${t.n}</b><span class="rd">${t.d}${t.k==="cta"?(()=>{const x=((W_().cfg.teach||{}).cta);return Array.isArray(x)&&x.length?" · "+x.map(esc).join(", "):"";})():""}</span></button>`).join("")}</div>`;
+  h+=`<div class="rounds">${TEACH.map(t=>Object.assign({},t,{soon:t.soonIf?t.soonIf():t.soon})).map((t,i)=>`<button class="round" data-teach="${t.k}" aria-disabled="${!!t.soon}">${t.soon?'<span class="soon">เร็ว ๆ นี้</span>':t.k==="case"&&nC?`<span class="badge">${nC}</span>`:""}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${t.n}</b><span class="rd">${t.d}${t.k==="cta"?(()=>{const x=((W_().cfg.teach||{}).cta);return Array.isArray(x)&&x.length?" · "+x.map(esc).join(", "):"";})():""}</span></button>`).join("")}</div>`;
   h+=`<div class="stack" style="margin-top:14px"><button class="btn ghost" id="tBack" type="button">กลับหน้าวอร์ด</button></div>`;
   $("main").innerHTML=h;
-  document.querySelectorAll("[data-teach]").forEach(b=>b.onclick=()=>{const k=b.dataset.teach,T=TEACH.find(t=>t.k===k);if(T.soon){toast(`${T.n} จะเพิ่มภายหลัง`);return;}
+  document.querySelectorAll("[data-teach]").forEach(b=>b.onclick=()=>{const k=b.dataset.teach,T=TEACH.find(t=>t.k===k);if(T.soonIf?T.soonIf():T.soon){toast(`${T.n} จะเพิ่มภายหลัง`);return;}
     if(k==="case"||k==="yellow")return go(ward+"/case");go(ward+"/tch/"+k);});
   $("tBack").onclick=()=>go(ward);
 }
 
 /* ---------- History taking / PE / CTA pages ---------- */
 function tSeg(){return (location.hash||"").replace(/^#\/?/,"").split("/").slice(2).map(x=>{try{return decodeURIComponent(x);}catch(e){return x;}});}
-function rTch(){const a=tSeg(),tool=TK[a[0]]?a[0]:"hx";if(TV.prac&&TV.prac.tool!==tool)TV.prac=null;
+function rTch(){if(tSeg()[0]==="flash")return rFlash();const a=tSeg(),tool=TK[a[0]]?a[0]:"hx";if(TV.prac&&TV.prac.tool!==tool)TV.prac=null;
   let cp=null;
   if(tool==="cta"){const O0=tchGet("cta");if(!a[1])return tCtaList(O0);cp=O0.procs.find(p=>p.id===a[1]);if(!cp){go(ward+"/tch/cta");return;}TV.ctaP=cp.id;}
   const tabs=tool==="cta"?[["full","เนื้อหา"],["key","Keyword"],["mine","Wording ของฉัน"],["prac","ฝึก"]]:[["full","ฉบับเต็ม"],["key","Key concept"],["prac","ฝึก"]];

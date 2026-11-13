@@ -41,7 +41,7 @@ const HS_STY=[["case","Case"],["sa","Short answer"]];
 /* 📊 ตารางสถิติ (ผู้ใช้สั่ง 9 พ.ย. 2026 — ทุกวอร์ด ทุกเว็บ): หัวข้อใหญ่ → หัวข้อเล็ก/หัตถการย่อย (OSCE) → เรื่องย่อย
    นับจำนวนข้อ/สถานี (ไม่ซ้ำ) + % ของข้อสอบเก่าทั้งหมด + คอลัมน์ปี (ปีใหม่สุดซ้ายสุด) กดหัวปีเพื่อแตกเป็นราย Ro · แถวเปิดปิดได้ */
 function hsYr(q){return String(q.set||"—");}
-function hsYrNum(y){const m=String(y).match(/(\d+)/);return m?+m[1]:-1;}
+function hsYrNum(y){const i=typeof TOPSET!=="undefined"?TOPSET.indexOf(String(y)):-1;if(i>=0)return 1e5-i;const m=String(y).match(/(\d+)/);return m?+m[1]:-1;}
 function hsStatsHtml(type,its,TOP,OPEN){
   const caseW=type==="OSCE"?"สถานี":"ข้อ",uq=new Map();its.forEach(o=>{if(!uq.has(o.q.uid))uq.set(o.q.uid,o.q);});
   const TOT=uq.size;if(!TOT)return "";

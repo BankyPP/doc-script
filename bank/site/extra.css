@@ -130,6 +130,11 @@ details.grp li{margin:6px 0}
 @media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
 .resume.qprog{background:var(--sheet);border-color:var(--rule)}
 .resume.qprog[aria-pressed="true"]{border-color:var(--form);background:var(--form-soft)}
+/* heading with no lecture file yet (nolec:true) = always grey, every ward on every site (11 Nov 2026) */
+.resume.qprog.nolec,.resume.qprog.nolec[aria-pressed="true"]{background:#E6E8EA;border-color:#C3C8CD;color:#6B7378}
+.resume.qprog.nolec .go{color:#6B7378}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .resume.qprog.nolec{background:#2A2E31;border-color:#454B50;color:#A3AAAF}:root:not([data-theme="light"]) .resume.qprog.nolec .go{color:#A3AAAF}}
+:root[data-theme="dark"] .resume.qprog.nolec{background:#2A2E31;border-color:#454B50;color:#A3AAAF}:root[data-theme="dark"] .resume.qprog.nolec .go{color:#A3AAAF}
 .tag{overflow-wrap:anywhere;word-break:break-word}
 /* ---------- Advisor round ---------- */
 .lbl{font-family:var(--num);font-weight:700;font-size:15px;margin:16px 0 6px}
@@ -212,6 +217,11 @@ details.tcard .tools{margin-top:10px}
 .stem-img .spr+.spr{border-top:1px solid var(--rule)}
 .kimg .spr{width:100%!important;max-width:640px;border:1px solid var(--rule);border-radius:4px}
 figure .spr{width:100%!important}
+.spr>img{display:none!important}   /* error probe only (site/app.js acImgErr) */
+.spr.imgerr{min-height:44px;background-image:none!important;border:1px dashed var(--rule)!important}
+/* stale page guard: the page on this phone is older than the website → reload bar */
+#stbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:80;max-width:92vw;background:var(--warn-soft);color:var(--ink);border:1.5px solid var(--warn);border-radius:8px;padding:10px 14px;font-size:14px;line-height:1.5;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+#stbar button{font:inherit;font-weight:600;color:var(--warn);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
 /* Legendary: AI writing new questions before the paper starts */
 .lgai{margin-top:12px;padding:12px 14px;border-left:4px solid var(--form);background:var(--form-soft);border-radius:4px;font-size:14px;line-height:1.6;color:var(--ink)}
 .lbadge{font-family:var(--num);font-weight:600;background:var(--form);color:#fff;border-radius:999px;padding:0 8px;font-size:11.5px;line-height:1.6;margin-right:6px}
@@ -1040,3 +1050,19 @@ mark{background:#FFF176;color:#1a1a1a;border-radius:2px}mark.pk{background:#F8BB
 .mqv .sttab td.sth3{background:color-mix(in srgb,var(--form) 38%,var(--sheet))}
 .mqv .sttab td.sth4{background:color-mix(in srgb,var(--form) 52%,var(--sheet));font-weight:700}
 .mqv .sttab tfoot th,.mqv .sttab tfoot td{font-weight:700;border-top:2px solid var(--rule);border-bottom:0}
+/* ---------- opening a ward: its exam data loads on demand ---------- */
+.wload .wlbar{height:8px;border-radius:99px;background:var(--rule);overflow:hidden;margin:10px 0 8px}
+.wload .wlbar span{display:block;height:100%;width:0;background:var(--form);transition:width .2s}
+/* 📘 Guideline boxes in Round I/O — content from the latest reliable guideline of each topic (11 Nov 2026, ทวทว) */
+.iov .box.gl{border:1.5px solid #1565C0;border-left-width:5px}
+.iov .box.gl h3{color:#0D47A1}
+.iov .chip.gl,.iov .iobody .chip.gl{color:#fff;background:#1565C0;border-color:#1565C0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .iov .box.gl h3{color:#90CAF9}}
+:root[data-theme="dark"] .iov .box.gl h3{color:#90CAF9}
+/* 📘 Guideline ท้ายกล่องหัวข้อ (11 Nov 2026) */
+.iov .glsec{margin-top:10px;padding:8px 10px;border-left:4px solid #1565C0;background:rgba(21,101,192,.07);border-radius:8px}
+.iov .glsec .glh{font-family:Kanit,sans-serif;font-weight:600;color:#0D47A1;margin-bottom:4px}
+.iov .glsec .glsrc{font-family:Sarabun,sans-serif;font-weight:400;font-size:.85em;opacity:.8}
+.iov .glsec ul,.iov .glsec ol{margin:4px 0 0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .iov .glsec .glh{color:#90CAF9}}
+:root[data-theme="dark"] .iov .glsec .glh{color:#90CAF9}

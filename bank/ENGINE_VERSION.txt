@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu b5780e8 2026-11-09 Subspe OSCE WIP: crops from GSUP4K (data files not yet added)
+BankyPP/ac-mdcu 3825fb3 2026-11-13 Advisor round: เรียงข้อที่ทำล่าสุดอยู่บน + กรอง round/ถูก/ผิด/⚑ · OSCE รวมสถานี AI จาก Legendary (13 พ.ย. 2026)
