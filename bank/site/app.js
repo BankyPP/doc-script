@@ -198,6 +198,8 @@ const latestAny=(P,u)=>{const a=lastA(P,1,u),b=lastA(P,2,u);if(!a)return b;if(!b
 const streak=(P,p,q)=>{const a=atts(P,p,q.uid);let n=0;for(let i=a.length-1;i>=0&&a[i][0]===q.ans;i--)n++;return n;};
 const uAtts=(P,u)=>P.unit.att[u]||[];
 const flagged=(P,u)=>!!(P.flag[u]&&P.flag[u][0]);
+/* 📝 the question has an after-answer note (typed or handwritten, P.post) — marked in every answer sheet and filterable wherever ⚑ ไม่มั่นใจ / ★ is (user 13 Nov 2026) */
+function noted(u){return !!u&&noteHas("post",0,u);}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
 /* ---------------- toast ---------------- */
@@ -516,6 +518,7 @@ const p2lists=()=>{const P=P_(),QB=W_().QB;return {
   wrong:QB.filter(q=>{const a=latestAny(P,q.uid);return a&&a[0]!==q.ans;}),
   right:QB.filter(q=>{const a=latestAny(P,q.uid);return a&&a[0]===q.ans;}),
   flag:QB.filter(q=>flagged(P,q.uid)),
+  note:QB.filter(q=>noted(q.uid)),
   nop1:QB.filter(q=>!atts(P,1,q.uid).length)};};
 function rHome(){
   const W=W_(),P=P_(),p=ph(),w=W.cfg,QB=W.QB;
@@ -547,6 +550,7 @@ function rHome(){
       <button class="tool" data-p2="wrong">✗ ข้อที่ยังผิดอยู่<span class="n">${l.wrong.length}</span></button>
       <button class="tool" data-p2="right">✓ ข้อที่ทำถูกแล้ว<span class="n">${l.right.length}</span></button>
       <button class="tool" data-p2="flag">⚑ ข้อที่ยังไม่มั่นใจ<span class="n">${l.flag.length}</span></button>
+      <button class="tool" data-p2="note">📝 ข้อที่มีโน้ต<span class="n">${l.note.length}</span></button>
       <button class="tool" data-p2="nop1">○ ไม่เคยทำใน Phase 1<span class="n">${l.nop1.length}</span></button></div></div>`;}
     const sc=staffList().length;
     const rCount=k=>{const t=k==="service"?`มี <b>${QB.length}</b> ข้อ`:k==="unit"?`มี <b>${unitN(ward)}</b> ข้อ · ${W.UNIT.length} บท`:k==="admission"?`มี <b>${aiN("adm",ward)}</b> เคส`:k==="specialty"?`มี <b>${aiN("spc",ward)}</b> ข้อ · ไฟล์ ${spcUnits().filter(u=>u.kind!=="L").length} เรื่อง`:k==="staff"?`มีข้อให้ทวน <b>${sc}</b> ข้อ`:k==="advisor"?`อ่านเฉลยได้ <b>${advDoneN()}</b> ข้อ`:"";return t?`<span class="rcnt">${t}</span>`:"";};
@@ -573,7 +577,7 @@ function rHome(){
   {const b=$("toP2");if(b)b.onclick=()=>{st.phase=2;save();rHome();};}
   bindGrades();
   document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(ward+"/"+b.dataset.go));
-  document.querySelectorAll("[data-p2]").forEach(b=>b.onclick=()=>{const k=b.dataset.p2,l=p2lists()[k];const t={wrong:"ข้อที่ยังผิดอยู่",right:"ข้อที่ทำถูกแล้ว",flag:"ข้อที่ยังไม่มั่นใจ",nop1:"ข้อที่ไม่เคยทำใน Phase 1"}[k];startSess("p2"+k,t,l.map(q=>q.uid));});
+  document.querySelectorAll("[data-p2]").forEach(b=>b.onclick=()=>{const k=b.dataset.p2,l=p2lists()[k];const t={wrong:"ข้อที่ยังผิดอยู่",right:"ข้อที่ทำถูกแล้ว",flag:"ข้อที่ยังไม่มั่นใจ",note:"ข้อที่มีโน้ต",nop1:"ข้อที่ไม่เคยทำใน Phase 1"}[k];startSess("p2"+k,t,l.map(q=>q.uid));});
   document.querySelectorAll("[data-rsx]").forEach(b=>b.onclick=()=>{const P=P_();P.rsHide=P.rsHide||{};P.rsHide[b.dataset.rsx+(b.dataset.rsall?"":"|"+ph())]=now();save();toast("ซ่อนแล้ว · จะขึ้นอีกเมื่อกลับไปทำรอบนั้น");rHome();});
   document.querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{if(b.dataset.rs==="svc"){svcQ();go(ward+"/svc");}else go(ward+"/sess");});
   const mc=$("mClock");if(mc){let lastDay=mDay();show._t=setInterval(()=>{if(!document.body.contains(mc)){clearInterval(show._t);return;}mc.textContent=hms(mNext()-now());if(mDay()!==lastDay){lastDay=mDay();rHome();}},1000);}
@@ -728,7 +732,7 @@ const chOk=q=>{const sv=svcS();if(!sv.ch||sv.ch==="all")return true;const k=setK
 const tgOk=q=>!!q.notice||tgPass(qTags(q),svcS().tg);
 const inSet=q=>tgOk(q)&&(svcS().set==="all"||selSets().includes(setKey(q))&&chOk(q));
 function svcPass(q){const P=P_(),p=ph(),f=svcS().status,a=lockedAns(P,p,q.uid);
-  switch(f){case"todo":return a===undefined;case"wrong":return a!==undefined&&a!==q.ans;case"right":return a!==undefined&&a===q.ans;case"flag":return flagged(P,q.uid);case"nop1":return !atts(P,1,q.uid).length;default:return true;}}
+  switch(f){case"todo":return a===undefined;case"wrong":return a!==undefined&&a!==q.ans;case"right":return a!==undefined&&a===q.ans;case"flag":return flagged(P,q.uid);case"note":return noted(q.uid);case"nop1":return !atts(P,1,q.uid).length;default:return true;}}
 const svcList=()=>W_().QB.filter(inSet);
 const svcVisible=()=>noteIns(svcList().filter(svcPass));
 /* put each set's notice page ("ข้อ 0") right before that set's first visible question (status filter ทั้งหมด / ยังไม่ทำ only) */
@@ -1493,7 +1497,7 @@ const isAdv=()=>view==="sess"&&!!P_().sess&&P_().sess.kind==="advisor";
 /* where the Advisor round takes its questions from (user, 13 Nov 2026: every round that isn't an old exam too) — ac = old exams · unit · adm · spc · lai = AI questions of the Legendary round */
 const ADVSRC=[["ac","ข้อสอบเก่า (AC)"],["unit","Unit round"],["adm","Admission round"],["spc","Specialty round"],["lai","โจทย์ AI จาก Legendary round"]];
 const advS=()=>{const a=st.adv||(st.adv={});a.sets=a.sets||[];a.f=a.f||"all";a.ord=a.ord||"bank";if(a.n==null)a.n=0;a.hp=a.hp==="p"?"p":"all";a.undone=!!a.undone;
-  if(!a.v2){a.v2=1;a.ord="recent";}a.flag=!!a.flag;a.rk=Array.isArray(a.rk)?a.rk:[];
+  if(!a.v2){a.v2=1;a.ord="recent";}a.flag=!!a.flag;a.note=!!a.note;a.rk=Array.isArray(a.rk)?a.rk:[];
   a.src=Array.isArray(a.src)?a.src.filter(k=>ADVSRC.some(x=>x[0]===k)):["ac"];if(!a.src.length)a.src=["ac"];a.lec=Array.isArray(a.lec)?a.lec:[];return a;};
 const hPh=hp=>hp==="p"?[ph()]:[1,2];
 /* a question that is NOT an old exam (Unit / Admission / Specialty / Legendary AI) — its answers are kept for both phases together, so it has no phase and no reset */
@@ -1522,7 +1526,7 @@ function advPass(f,q,h){const w=nWrong(h,q),l=h[h.length-1];
   switch(f){case"w1":return w>=1;case"w2":return w>=2;case"w3":return w>=3;case"last":return l[0]!==q.ans;case"right":return l[0]===q.ans;case"fixed":return w>=1&&l[0]===q.ans;case"clean":return w===0;default:return true;}}
 function advPool(a){const W=W_(),P=P_(),sel=a.sets.filter(k=>W.sets.includes(k)),out=[],seen=new Set();
   a.src.forEach(kd=>advSrcQs(kd,a.lec).forEach(q=>{if(seen.has(q.uid))return;if(kd==="ac"&&sel.length&&!sel.includes(setKey(q)))return;seen.add(q.uid);
-    if(a.flag&&!flagged(P,q.uid))return;const h=hist(P,q.uid,a.hp);if(a.rk.length&&!h.some(x=>a.rk.includes(x[3])))return;
+    if(a.flag&&!flagged(P,q.uid))return;if(a.note&&!noted(q.uid))return;const h=hist(P,q.uid,a.hp);if(a.rk.length&&!h.some(x=>a.rk.includes(x[3])))return;
     if(h.length?advPass(a.f,q,h):a.undone)out.push([q,h,out.length]);}));return out;}
 /* round keys found in the answer histories of the chosen sources (for the "ทำใน round" filter) */
 function advRKs(a){const P=P_(),s=new Set();a.src.forEach(kd=>advSrcQs(kd,a.lec).forEach(q=>hist(P,q.uid,a.hp).forEach(x=>s.add(x[3]))));return RKO.concat(["?"]).filter(k=>s.has(k));}
@@ -1550,6 +1554,7 @@ function rAdvisor(){
   h+=`<div class="lbl">ถูก / ผิด</div>${chips("aF",ADVF,a.f)}`;
   {const ks=advRKs(a),rs=new Set(a.rk);if(ks.length||rs.size)h+=`<div class="lbl">ทำใน round <span class="hint">ไม่เลือกเลย = ทุก round · เลือกแล้ว = ข้อที่เคยตอบใน round นั้น</span></div><div class="chips" id="aRk">${[...new Set(ks.concat(a.rk))].map(k=>`<button class="chip" data-rk="${esc(k)}" aria-pressed="${rs.has(k)}">${k==="?"?"ไม่ได้บันทึก round":esc(RKL[k]||k)}</button>`).join("")}</div>`;}
   h+=`<label class="chk" style="display:flex;gap:8px;align-items:center;margin-top:12px;font-size:15px"><input type="checkbox" id="aFlag" ${a.flag?"checked":""} style="width:20px;height:20px"> เฉพาะข้อที่ติด ⚑ ไม่มั่นใจ</label>`;
+  h+=`<label class="chk" style="display:flex;gap:8px;align-items:center;margin-top:8px;font-size:15px"><input type="checkbox" id="aNote" ${a.note?"checked":""} style="width:20px;height:20px"> เฉพาะข้อที่มี 📝 โน้ต</label>`;
   h+=`<label class="chk" style="display:flex;gap:8px;align-items:center;margin-top:8px;font-size:15px"><input type="checkbox" id="aUndone" ${a.undone?"checked":""} style="width:20px;height:20px"> รวมข้อที่ยังไม่เคยทำด้วย</label>`;
   h+=`<div class="lbl">ลำดับ</div>${chips("aO",ADVO,a.ord)}`;
   h+=`<div class="lbl">จำนวนข้อ</div>${chips("aN",[[10,"10 ข้อ"],[20,"20 ข้อ"],[40,"40 ข้อ"],[0,"ทั้งหมด"]],a.n)}`;
@@ -1565,6 +1570,7 @@ function rAdvisor(){
   document.querySelectorAll("[data-lec]").forEach(b=>b.onclick=()=>{const k=b.dataset.lec;if(lsel.has(k))lsel.delete(k);else lsel.add(k);a.lec=W.UNIT.map(Lc=>Lc.id).filter(x=>lsel.has(x));re();});
   $("aUndone").onchange=e=>{a.undone=e.target.checked;re();};
   $("aFlag").onchange=e=>{a.flag=e.target.checked;re();};
+  $("aNote").onchange=e=>{a.note=e.target.checked;re();};
   document.querySelectorAll("[data-rk]").forEach(b=>b.onclick=()=>{const k=b.dataset.rk,s=new Set(a.rk);if(s.has(k))s.delete(k);else s.add(k);a.rk=[...s];re();});
   $("aGo").onclick=()=>{const l=advList(a);if(!l.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}save();startSess("advisor",a.src.length===1&&a.src[0]==="ac"?"Advisor round":"Advisor round · "+a.src.map(k=>ADVSRC.find(x=>x[0]===k)[1].replace(/ \(AC\)| round$/,"")).join(" + "),l,{hp:a.hp});};
 }
@@ -1724,10 +1730,10 @@ ${wq||"(ยังไม่มี)"}
 function admSheet(){
   const A=AS(),B=bankItems(AM,ward),f=st.admF||"all";
   $("sheetTitle").textContent="กระดาษคำตอบ · "+AMN();$("setChips").innerHTML="";
-  $("statusChips").innerHTML=[["all","ทั้งหมด"],["wrong","ตอบผิด"],["right","ตอบถูก"],["todo","ยังไม่ตอบ"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-af="${v}">${t}</button>`).join("");
+  $("statusChips").innerHTML=[["all","ทั้งหมด"],["wrong","ตอบผิด"],["right","ตอบถูก"],["todo","ยังไม่ตอบ"],["note","📝 มีโน้ต"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-af="${v}">${t}</button>`).join("");
   document.querySelectorAll("[data-af]").forEach(b=>b.onclick=()=>{st.admF=b.dataset.af;persist();sheet();});
   const d=B.filter(x=>x.a!=null),r=d.filter(x=>x.a===x.q.ans);stats(d.length,B.length,r.length);
-  const v=B.map((x,i)=>[x,i]).filter(([x])=>f==="wrong"?x.a!=null&&x.a!==x.q.ans:f==="right"?x.a===x.q.ans:f==="todo"?x.a==null:true);
+  const v=B.map((x,i)=>[x,i]).filter(([x])=>f==="wrong"?x.a!=null&&x.a!==x.q.ans:f==="right"?x.a===x.q.ans:f==="todo"?x.a==null:f==="note"?noted(x.q.uid):true);
   rows(v.map(([x,i])=>({q:Object.assign({},x.q,{id:i+1,set:(Array.isArray(x.q.tags)&&x.q.tags.length?x.q.tags:guessTags(W_(),x.q.topic)).join(", ")||"Case",ro:""}),a:x.a==null?undefined:x.a,cur:view==="admq"?x.key===st.admSel:!!(A.cur&&A.cur.uid===x.q.uid),meta:fmtD(x.c)+" · ",
     go:()=>{st.admSel=x.key;persist();pick=null;if(A.cur&&A.cur.uid===x.q.uid&&A.ans==null)go(ward+"/"+AM);else go(ward+"/admq");}})).reverse(),B.length?"ไม่มีข้อที่ตรงกับตัวกรองนี้":`ยังไม่มีข้อในคลัง — เริ่ม ${AMN()} เพื่อให้ AI สร้างข้อแรก`);
   $("sheetFoot").innerHTML=`<span class="hint">เรียงจากเคสล่าสุด · ทุกเคสที่ AI สร้างเก็บไว้ในคลังของคุณ (ย้ายระหว่างเว็บกับ Claude ด้วย “ไฟล์สำรอง” ในหน้าวอร์ด)</span><span class="spacer"></span><span class="hint" id="syncNote" style="flex-basis:100%"></span>${view==="admq"?`<button class="link" id="toAdm">กลับไปข้อปัจจุบัน</button>`:""}${HAS_CLAUDE()&&CFG.siteUrl&&B.length?(()=>{const u=B.filter(unsent).length;return `<span style="flex-basis:100%"></span>${u?`<button class="btn primary" id="admWeb" type="button">ส่งเคสที่ยังไม่ได้ส่งไปเว็บ (${u})</button>`:""}<button class="btn" id="admWebAll" type="button">ส่งทุกเคสไปเว็บ (${B.length})</button><span class="hint" id="admWebNote" style="flex-basis:100%"></span>`;})():""}`;
@@ -2019,20 +2025,20 @@ setInterval(()=>{WL.forEach(w=>{const P=st.w[w.id];if(P&&P.leg&&now()>=P.leg.end
 function legSheet(){
   const W=W_(),X=legPaper(),ex=view==="exam",f=st.legF||"all";
   $("sheetTitle").textContent=ex?"กระดาษคำตอบ · Legendary round":`กระดาษคำตอบ · เกรด ${gradeOf(X.pct)}`;$("setChips").innerHTML="";
-  const FS=ex?[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["star","★ ติดดาว"]]:[["all","ทั้งหมด"],["wrong","ผิด"],["todo","ไม่ได้ทำ"],["star","★ ติดดาว"]];if(!FS.some(x=>x[0]===f))st.legF="all";
+  const FS=ex?[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["star","★ ติดดาว"]]:[["all","ทั้งหมด"],["wrong","ผิด"],["todo","ไม่ได้ทำ"],["star","★ ติดดาว"],["note","📝 มีโน้ต"]];if(!FS.some(x=>x[0]===f))st.legF="all";
   $("statusChips").innerHTML=FS.map(([v,t])=>`<button class="chip" aria-pressed="${(st.legF||"all")===v}" data-lf="${v}">${t}</button>`).join("");
   document.querySelectorAll("[data-lf]").forEach(b=>b.onclick=()=>{st.legF=b.dataset.lf;persist();sheet();});
   const qs=X.list.map(legQ),nA=Object.keys(X.ans).length,nS=Object.keys(X.star).filter(u=>X.star[u]).length,ff=st.legF||"all";
   if(ex){statLabels(["ตอบแล้ว","ติดดาว","เหลือเวลา"]);$("sDone").textContent=`${nA}/${X.list.length}`;$("sRight").textContent="★ "+nS;$("sPct").textContent=mmss((X.end-now())/1000);}
   else stats(nA,X.list.length,X.score);
-  const T=srchTerms(sheetQ),v=qs.map((q,i)=>[q,i]).filter(([q])=>{if(!q)return false;const a=X.ans[q.uid];return ff==="todo"?a==null:ff==="star"?!!X.star[q.uid]:ff==="wrong"?a!=null&&a!==q.ans:true;}).filter(([q])=>!T.length||srchHit(qSearchText(q,!ex,ex),T));
+  const T=srchTerms(sheetQ),v=qs.map((q,i)=>[q,i]).filter(([q])=>{if(!q)return false;const a=X.ans[q.uid];return ff==="todo"?a==null:ff==="star"?!!X.star[q.uid]:ff==="note"?noted(q.uid):ff==="wrong"?a!=null&&a!==q.ans:true;}).filter(([q])=>!T.length||srchHit(qSearchText(q,!ex,ex),T));
   if(ex)sheetQPaint(v.length);
   const cur=legIdx();
   if(ex){$("rows").innerHTML=!v.length&&T.length?`<div class="empty">ไม่พบข้อที่มีคำว่า “${esc(sheetQ.trim())}”</div>`:v.length?v.map(([q,i])=>{const a=X.ans[q.uid];return `<button class="srow${i===cur?" cur":""}" data-xi="${i}"><span class="n">${i+1}</span><span class="bs">${[0,1,2,3,4].map(j=>`<span class="b${a===j?" f":""}">${L[j]}</span>`).join("")}</span><span class="meta">${X.star[q.uid]?"★":""}${a==null?" ยังไม่ทำ":""}</span></button>`;}).join(""):`<div class="empty">ไม่มีข้อที่ตรงกับตัวกรองนี้</div>`;
     document.querySelectorAll("[data-xi]").forEach(b=>b.onclick=()=>{closeS();X.cur=+b.dataset.xi;save();rExam();window.scrollTo(0,0);});
     $("sheetFoot").innerHTML=`<span class="hint">ยังไม่เฉลยจนกว่าจะส่ง · ★ = ติดดาวไว้</span><span class="spacer"></span><button class="btn primary" id="sheetSub" type="button">Submit ส่งข้อสอบ</button>`;$("sheetSub").onclick=legAskSubmit;return;}
   rows(v.map(([q,i])=>({q:Object.assign({},q,{id:i+1,set:LSRS[legSrc(X,q.uid)]||"AC",ro:""}),rev:true,a:X.ans[q.uid]==null?-2:X.ans[q.uid],cur:i===cur,meta:(X.star[q.uid]?"★ ":"")+(X.ans[q.uid]==null?"ไม่ได้ทำ · ":""),go:()=>{st.legIdx=i;persist();pick=null;rQuiz();window.scrollTo(0,0);}})),"ไม่มีข้อที่ตรงกับตัวกรองนี้");
-  $("sheetFoot").innerHTML=`<span class="hint">เส้นเขียวรอบวง = เฉลย · ★ = ติดดาวไว้ตอนสอบ</span><span class="spacer"></span><button class="link" id="toLres">กลับไปผลสอบ</button>`;$("toLres").onclick=()=>{closeS(true);go(ward+"/lres");};
+  $("sheetFoot").innerHTML=`<span class="hint">เส้นเขียวรอบวง = เฉลย · ★ = ติดดาวไว้ตอนสอบ · 📝 = มีโน้ต</span><span class="spacer"></span><button class="link" id="toLres">กลับไปผลสอบ</button>`;$("toLres").onclick=()=>{closeS(true);go(ward+"/lres");};
 }
 function rLRes(){
   const W=W_(),X=bank[st.legSel];if(!X){go(ward+"/legend");return;}const mode=st.legMode==="short"?"short":"grade";
@@ -2197,14 +2203,14 @@ function sheet(){
     const s=P.sess,qs=s.list.map(u=>qAny(u)).filter(Boolean);
     $("sheetTitle").textContent=s.title;$("setChips").innerHTML="";
     const f=st.sessF||"all";
-    $("statusChips").innerHTML=[["all","ทั้งหมด"],["todo",s.kind==="advisor"?"ยังไม่อ่าน":"ยังไม่ทำ"],["wrong",s.kind==="advisor"?"ล่าสุดผิด":"ตอบผิด"],["flag","⚑ ไม่มั่นใจ"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-sf="${v}">${t}</button>`).join("");
+    $("statusChips").innerHTML=[["all","ทั้งหมด"],["todo",s.kind==="advisor"?"ยังไม่อ่าน":"ยังไม่ทำ"],["wrong",s.kind==="advisor"?"ล่าสุดผิด":"ตอบผิด"],["flag","⚑ ไม่มั่นใจ"],["note","📝 มีโน้ต"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-sf="${v}">${t}</button>`).join("");
     document.querySelectorAll("[data-sf]").forEach(b=>b.onclick=()=>{st.sessF=b.dataset.sf;persist();sheet();});
     const adv=s.kind==="advisor",A=q=>{if(!adv)return s.ans[q.uid];const h=hist(P,q.uid,s.hp,true);return h.length?h[h.length-1][0]:undefined;};
     const done=qs.filter(q=>s.ans[q.uid]!==undefined),right=adv?qs.filter(q=>A(q)===q.ans):done.filter(q=>s.ans[q.uid]===q.ans);
     stats(done.length,qs.length,right.length);
-    const v=qs.map((q,i)=>[q,i]).filter(([q])=>{const a=s.ans[q.uid],b=A(q);return f==="todo"?a===undefined:f==="wrong"?b!==undefined&&b!==q.ans:f==="flag"?flagged(P,q.uid):true;});
-    rows(v.map(([q,i])=>({q,a:A(q),lock:mLocked(i)?i+1:0,meta:adv&&s.ans[q.uid]!==undefined?"อ่านแล้ว · ":"",cur:i===s.cur,go:()=>{if(!qNavOK(i)){toast(navMsg());return;}pick=null;s.cur=i;save();rQuiz();window.scrollTo(0,0);}})),f==="wrong"?"ยังไม่มีข้อที่ตอบผิดในรอบนี้":f==="flag"?"ยังไม่มีข้อที่ทำเครื่องหมายไม่มั่นใจในรอบนี้":"ทำครบทุกข้อในรอบนี้แล้ว");
-    $("sheetFoot").innerHTML=`<span class="hint">เส้นเขียวรอบวง = เฉลย</span><span class="spacer"></span><span class="hint" id="syncNote" style="flex-basis:100%"></span><button class="link" id="toResult">จบรอบ ดูสรุป</button>`;
+    const v=qs.map((q,i)=>[q,i]).filter(([q])=>{const a=s.ans[q.uid],b=A(q);return f==="todo"?a===undefined:f==="wrong"?b!==undefined&&b!==q.ans:f==="flag"?flagged(P,q.uid):f==="note"?noted(q.uid):true;});
+    rows(v.map(([q,i])=>({q,a:A(q),lock:mLocked(i)?i+1:0,meta:adv&&s.ans[q.uid]!==undefined?"อ่านแล้ว · ":"",cur:i===s.cur,go:()=>{if(!qNavOK(i)){toast(navMsg());return;}pick=null;s.cur=i;save();rQuiz();window.scrollTo(0,0);}})),f==="wrong"?"ยังไม่มีข้อที่ตอบผิดในรอบนี้":f==="flag"?"ยังไม่มีข้อที่ทำเครื่องหมายไม่มั่นใจในรอบนี้":f==="note"?"ยังไม่มีข้อที่จดโน้ตไว้ในรอบนี้":"ทำครบทุกข้อในรอบนี้แล้ว");
+    $("sheetFoot").innerHTML=`<span class="hint">เส้นเขียวรอบวง = เฉลย · ⚑ = ไม่มั่นใจ · 📝 = มีโน้ต</span><span class="spacer"></span><span class="hint" id="syncNote" style="flex-basis:100%"></span><button class="link" id="toResult">จบรอบ ดูสรุป</button>`;
     $("toResult").onclick=()=>{closeS(true);go(ward+"/result");};
     paintSync();return;
   }
@@ -2220,7 +2226,7 @@ function sheet(){
     if(sheet._cok)cc.scrollLeft=sheet._cx||0;else{const on=cc.querySelector('[aria-pressed="true"]:not([data-ch="all"])');if(on)cc.scrollLeft=on.offsetLeft-cc.offsetLeft-cc.clientWidth/2+on.offsetWidth/2;}sheet._cok=1;cc.onscroll=()=>{sheet._cx=cc.scrollLeft;};cc.onwheel=e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){cc.scrollLeft+=e.deltaY;e.preventDefault();}};
     cc.querySelectorAll("[data-ch]").forEach(b=>b.onclick=()=>{const v=b.dataset.ch;let c=!sv.ch||sv.ch==="all"?[]:sv.ch.split("|");if(v==="all")c=[];else if(c.includes(v))c=c.filter(x=>x!==v);else c.push(v);c.sort((x,y)=>chs.indexOf(x)-chs.indexOf(y));sv.ch=c.length?c.join("|"):"all";const cq=svcQ();if(cq&&!svcList().some(q=>q.uid===cq.uid)){const nx=svcVisible().find(q=>lockedAns(P,p,q.uid)===undefined)||svcVisible()[0];sv.cur=nx?nx.uid:null;}save();sheet();rQuiz();});}}
   tgLine(tgAllQ(W),sv.tg,()=>{sv.tg.on=false;save();sheet();},()=>{closeS(true);go(ward+"/service");});
-  const FS=[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["wrong","ตอบผิด"]].concat(p===2?[["right","ตอบถูก"],["flag","ไม่มั่นใจ"],["nop1","ไม่เคยทำใน P1"]]:[["flag","ไม่มั่นใจ"]]);
+  const FS=[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["wrong","ตอบผิด"]].concat(p===2?[["right","ตอบถูก"],["flag","⚑ ไม่มั่นใจ"],["note","📝 มีโน้ต"],["nop1","ไม่เคยทำใน P1"]]:[["flag","⚑ ไม่มั่นใจ"],["note","📝 มีโน้ต"]]);
   if(!FS.some(x=>x[0]===sv.status))sv.status="all";
   $("statusChips").innerHTML=FS.map(([v,t])=>`<button class="chip" aria-pressed="${sv.status===v}" data-st="${v}">${t}</button>`).join("");
   document.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{sv.status=b.dataset.st;save();sheet();});
@@ -2228,8 +2234,8 @@ function sheet(){
   stats(done.length,pool.length,right.length);
   const cq=svcQ();
   rows(svcVisible().map(q=>{const p1=p===2?lastA(P,1,q.uid):null;return {q,a:lockedAns(P,p,q.uid),cur:cq&&q.uid===cq.uid,meta:p1?`P1${p1[0]===q.ans?"✓":"✗"} `:"",go:()=>{closeS();sv.cur=q.uid;pick=null;save();rQuiz();window.scrollTo(0,0);}};}),
-    sv.status==="wrong"?"ยังไม่มีข้อที่ตอบผิดในชุดนี้":sv.status==="flag"?"ยังไม่มีข้อที่ทำเครื่องหมายไม่มั่นใจ":"ไม่มีข้อที่ตรงกับตัวกรองนี้");
-  $("sheetFoot").innerHTML=`<span class="hint">เส้นเขียวรอบวง = เฉลย · แตะเลือกได้หลายชุด</span><span class="spacer"></span><span class="hint" id="syncNote" style="flex-basis:100%"></span>
+    sv.status==="wrong"?"ยังไม่มีข้อที่ตอบผิดในชุดนี้":sv.status==="flag"?"ยังไม่มีข้อที่ทำเครื่องหมายไม่มั่นใจ":sv.status==="note"?"ยังไม่มีข้อที่จดโน้ตไว้ในชุดนี้":"ไม่มีข้อที่ตรงกับตัวกรองนี้");
+  $("sheetFoot").innerHTML=`<span class="hint">เส้นเขียวรอบวง = เฉลย · ⚑ = ไม่มั่นใจ · 📝 = มีโน้ต · แตะเลือกได้หลายชุด</span><span class="spacer"></span><span class="hint" id="syncNote" style="flex-basis:100%"></span>
    <button class="link" id="redoWrong">ทำข้อที่ผิดใหม่</button><button class="link" id="backup">ส่งลิงก์ความคืบหน้า</button><button class="link" id="restore">นำเข้า</button><button class="link" id="reset">ล้างกระดาษคำตอบ</button>`;
   $("redoWrong").onclick=async()=>{const w=pool.filter(q=>{const a=lockedAns(P,p,q.uid);return a!==undefined&&a!==q.ans;});if(!w.length){uiAlert("ยังไม่มีข้อที่ตอบผิดในชุดนี้");return;}
     if(await uiAsk(`เปิดข้อที่ตอบผิด ${w.length} ข้อให้ทำใหม่? (ข้อที่ถูกยังอยู่ ประวัติการตอบยังเก็บไว้)`)){const t=now();w.forEach(q=>{P.open[p][q.uid]=t;});sv.status="todo";save();sheet();rQuiz();}};
@@ -2255,7 +2261,7 @@ function rows(list,empty){
   if(!list.length){$("rows").innerHTML=`<div class="empty">${empty}</div>`;return;}
   $("rows").innerHTML=list.map((x,i)=>{const q=x.q,a=x.a;
     if(x.lock)return `<button class="srow lock" data-r="${i}"><span class="n">${x.lock}</span><span class="bs">${[0,1,2,3,4].map(j=>`<span class="b">${L[j]}</span>`).join("")}</span><span class="meta">🔒 ยังไม่ถึงข้อนี้</span></button>`;const bs=[0,1,2,3,4].map(j=>{let c="b";if(a===j)c+=" f "+(j===q.ans?"ok":"no");else if(a!==undefined&&j===q.ans)c+=" k";return `<span class="${c}">${L[j]}</span>`;}).join("");
-    return `<button class="srow ${x.cur?"cur":""}" data-r="${i}"><span class="n">${q.id}</span><span class="bs">${bs}</span><span class="meta">${x.meta||""}${esc(q.set)} ${esc(q.ro)}${((W_()||{}).CHAP||{})[setKey(q)]?" · "+esc(q.orig):""}${flagged(P_(),q.uid)?" ⚑":""}</span></button>`;}).join("");
+    return `<button class="srow ${x.cur?"cur":""}" data-r="${i}"><span class="n">${q.id}</span><span class="bs">${bs}</span><span class="meta">${x.meta||""}${esc(q.set)} ${esc(q.ro)}${((W_()||{}).CHAP||{})[setKey(q)]?" · "+esc(q.orig):""}${flagged(P_(),q.uid)?" ⚑":""}${noted(q.uid)?" 📝":""}</span></button>`;}).join("");
   document.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{const x=list[+b.dataset.r];if(x.lock){toast(navMsg());return;}closeS();x.go();});
 }
 function openS(){sheet._ok=0;sheet._cok=0;sheet();$("overlay").classList.add("open");const c=document.querySelector(".srow.cur,.crow.cur");if(c)c.scrollIntoView({block:"center"});$("closeSheet").focus();}
