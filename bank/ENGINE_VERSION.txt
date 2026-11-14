@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu e8eb754 2026-11-14 Morning OSCE uses the Morning MCQ pool rules (always 3 a day: AC done first then not done, Unit new then met), T chapters without kw match their main tag only, Morning MEQ rule notes (14 Nov 2026)
+BankyPP/ac-mdcu b966f38 2026-11-14 MEQ/OSCE: sets ordered newest year first like MCQ (79 on top), every ward every site (14 Nov 2026)
