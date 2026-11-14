@@ -96,6 +96,12 @@ for w in cfg.get('wards',[]):
     js.append(f'WARDS[{wid}].OS=[];')
     for f in sorted(glob.glob(os.path.join(d,'osce_b*.js')),key=lambda f:int(re.sub(r'\D','',os.path.basename(f)) or 0)):   # OSCE banks: QB.push(station) → W.OS (same shape as a MEQ case, one Part)
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OS);')
+    js.append(f'WARDS[{wid}].OSU=[];')   # Unit round OSCE (14 Nov 2026): osu_<topic>.js → QB.push(station with topic) — by big OSCE topic
+    for f in sorted(glob.glob(os.path.join(d,'osu_*.js'))):
+        js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OSU);')
+    js.append(f'WARDS[{wid}].MORN=[];')   # Morning round MEQ (14 Nov 2026): morn_meq*.js → QB.push({day:"YYYY-MM-DD", …case}) — one case a day, the same for everyone
+    for f in sorted(glob.glob(os.path.join(d,'morn_meq*.js'))):
+        js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].MORN);')
     orf=os.path.join(d,'osce_ref.js')   # แหล่งอ้างอิงให้ AI แต่ง/ตรวจ OSCE ของวอร์ด: OSREF.push({id,topic,sub,title,text})
     js.append(f'WARDS[{wid}].OSREF=[];')
     if os.path.exists(orf): js.append('(function(OSREF){\n'+open(orf,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OSREF);')

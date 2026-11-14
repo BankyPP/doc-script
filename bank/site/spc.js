@@ -1,4 +1,4 @@
-/* ---------------- Specialty round (MCQ; the MEQ / OSCE boxes link here) ----------------
+/* ---------------- Specialty round of MCQ (14 Nov 2026: MEQ Specialty is closed · OSCE has its own — osSpcView in site/osce.js, sharing spcUnits) ----------------
    Same engine as Admission round (AM="spc": state P.spc, bank "spc|<ward>|<uid>", uid "SPC|…", q.adm=1 + q.spc=1)
    but every question is built ONLY from the ward's own files: Round I/O pages of kind R, T (textbook) and N (+ L when the switch is on)
    and resources.js (R) / textbooks.js (T) entries that have no I/O pages.
@@ -14,8 +14,8 @@ const ioPlain=h=>String(h||"").replace(/<span class="iowas">[\s\S]*?<\/span>/g,"
 const spcOpen=new Set();
 const SPC_KN={R:"Resource (R)",T:"Textbook (T)",N:"โน้ตวอร์ด (N)",L:"Lecture (L)"};
 /* every page of the ward that can be a source — {key,kind,code,doc,title,id?,topics,rev,text} */
-function spcUnits(wid){wid=wid||ward;const W=WARDS[wid],o=[],ioR=new Set();
-  ((W&&W.IO&&W.IO.docs)||[]).forEach(d=>{if(!["R","T","N","L"].includes(d.kind))return;if(d.kind==="R"||d.kind==="T")ioR.add(d.code);
+function spcUnits(wid,ty){wid=wid||ward;const W=WARDS[wid],o=[],ioR=new Set();
+  ioD(wid,ty||"MCQ").forEach(d=>{if(!["R","T","N","L"].includes(d.kind))return;if(d.kind==="R"||d.kind==="T")ioR.add(d.code);
     (d.pages||[]).forEach(p=>{const t=ioPlain(p.html);if(!t)return;
       o.push({key:"p:"+p.id,id:p.id,kind:d.kind,code:d.kind==="N"?"N":d.code,doc:d.kind==="N"?"โน้ตวอร์ด":d.title,title:p.title,topics:(p.topics&&p.topics.length)?p.topics:["อื่น ๆ"],rev:+p.rev||1,text:t.slice(0,9000)});});});
   [["R",resOf(W)],["T",txtOf(W)]].forEach(([K,L_])=>L_.forEach(r=>{if(!resPts(r).length||(r.code&&ioR.has(r.code)))return;
@@ -104,7 +104,7 @@ function rSpc(){
     h+=`<div class="row2"><span class="spacer"></span><button class="btn primary" id="spcGo" ${pool.length?"":"disabled"}>${cont?"ทำข้อค้างต่อ":"เริ่มสร้างโจทย์"}</button></div>`;}
   {const B=bankItems("spc",ward);if(B.length){const d=B.filter(x=>x.a!=null),r=d.filter(x=>x.a===x.q.ans);h+=`<div class="card"><h3>คลัง Specialty ของฉัน</h3><span class="rd">โจทย์ที่ AI เคยสร้างให้ ${B.length} ข้อ · ตอบแล้ว ${d.length} · ถูก ${r.length} — เปิดดูโจทย์และเฉลยเก่าได้ตลอด แม้ตอนสร้างข้อใหม่ไม่ได้</span><button class="btn" id="admBankBtn">📋 เปิดกระดาษคำตอบ</button></div>`;}}
   h+=sharedAdmCard("spc")+ufaBtn("ufaSpc");
-  h+=`<p class="hint">ใช้ร่วมกันทั้ง MCQ / MEQ / OSCE ของวอร์ดนี้ · ต้องมี AI (เปิดใน Claude หรือใส่ API key — ถามตอนกดเริ่ม)</p>`;
+  h+=`<p class="hint">เฉพาะ MCQ (Specialty round ของ OSCE แยกอยู่ในแท็บ OSCE · ของ MEQ ปิดไว้) · ต้องมี AI (เปิดใน Claude หรือใส่ API key — ถามตอนกดเริ่ม)</p>`;
   $("main").innerHTML=h;
   const re=()=>{save();rSpc();};
   {const b=$("admBankBtn");if(b)b.onclick=openS;}bindSharedAdm("spc");bindUfa();

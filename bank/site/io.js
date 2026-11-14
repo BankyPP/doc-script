@@ -1,11 +1,14 @@
-/* ================= Round I/O — อ่านสรุปเนื้อหา (ใช้ร่วมกันทั้ง MCQ / MEQ / OSCE ของวอร์ด) =================
+/* ================= Round I/O — อ่านสรุปเนื้อหา (แยกตามแท็บ MCQ / MEQ / OSCE: doc ที่มี types = เฉพาะแท็บนั้น · ไม่มี types = ใช้ร่วม) =================
    ข้อมูล: <โฟลเดอร์วอร์ด>/io.js → W.IO = {docs:[{code, kind:"L"|"R"|"T"|"N", title, src, upd, legend?, pages:[{id, title, topics:[…], rev, upd, html}]}], merged:{topic:{rev,upd,html}}}
    หน้า (hash): #/<w>/io · io/L|R|T|N (รายการไฟล์ · T = ตำรา) · io/d/<code> (เรื่องในไฟล์) · io/p/<pageId> (อ่าน) · io/M (รวมตามเรื่อง — key ภายใน M เพราะ T = ตำรา) · io/t/<topic> (อ่านรวม)
    จุดแดง = หน้าที่ rev ใหม่กว่าที่เคยเปิด (P.ioSeen {pageId|"T:"+topic: rev}) — หายเมื่อเปิดอ่านหน้านั้น 1 ครั้ง
    ไฟล์นี้ถูกแทรกเข้า app.js ตอน build (ใช้ของใน app.js ได้เฉพาะตอนเรียกฟังก์ชัน) */
 const IO_K=[["L","Lecture","สรุป core content ทีละบท — อ่านให้เห็นภาพรวมก่อนไปอ่าน lecture เต็ม"],["R","Resource","สรุปเอกสาร/แหล่งความรู้นอก lecture แยกเป็นเรื่อง"],["T","Textbook","สรุปตำราทีละบท แยกเป็นเรื่อง"],["N","โน้ตวอร์ด","โน้ตที่จดเองจากวอร์ด เรียบเรียงใหม่ และตรวจความถูกต้องทุกข้อ"],["M","รวมตามเรื่อง","ทุก L / R / T / N ที่เป็นเรื่องเดียวกัน รวมไว้ในหน้าเดียว"]];
 const IO_UNIT={L:"บท",R:"เอกสาร",T:"เล่ม",N:"โน้ต",M:"เรื่อง"};
-function ioD(wid){const W=WARDS[wid||ward];return (W&&W.IO&&Array.isArray(W.IO.docs))?W.IO.docs:[];}
+/* Round I/O per exam type (user 14 Nov 2026): a doc with "types" (e.g. ["OSCE"]) shows only in those tabs · a doc without "types" = shared by every tab · same rules for all */
+function ioType(wid){const P=st.w&&st.w[wid||ward];return (P&&P.type)||"MCQ";}
+function ioD(wid,ty){const W=WARDS[wid||ward];if(!(W&&W.IO&&Array.isArray(W.IO.docs)))return [];ty=ty||ioType(wid);const dt=(W.cfg&&W.cfg.ioTypes)||null;   /* ward default for docs without "types" (Gen Sx = ["MCQ"], user 14 Nov 2026) */
+  return W.IO.docs.filter(d=>{const T=Array.isArray(d.types)&&d.types.length?d.types:dt;return !T||T.includes(ty);});}
 function ioMerged(wid){const W=WARDS[wid||ward];return (W&&W.IO&&W.IO.merged)||{};}
 function ioAll(wid){const o=[];ioD(wid).forEach(d=>(d.pages||[]).forEach((p,i)=>o.push({d,p,i})));return o;}
 function ioTopics(wid){const m=new Map();ioAll(wid).forEach(x=>((x.p.topics&&x.p.topics.length)?x.p.topics:["อื่น ๆ"]).forEach(t=>{if(!m.has(t))m.set(t,[]);m.get(t).push(x);}));
@@ -38,7 +41,7 @@ function ioRow(href,code,title,meta,dot){return `<a class="iorow" href="${href}"
 function rIO(){const a=(location.hash||"").replace(/^#\/?/,"").split("/").slice(2).map(x=>{try{return decodeURIComponent(x);}catch(e){return x;}});
   const W=W_(),w=W.cfg,K=a[0]||"";let h=`<div class="iov">`;
   const back=(href,t)=>`<a class="ioback" href="${href}">← ${esc(t)}</a>`;
-  if(!K){h+=`<div class="whead"><h1 class="h2">Round I/O</h1><a href="#/${esc(ward)}">กลับหน้าวอร์ด</a></div><p class="sub" style="margin:0 0 12px">อ่านสรุปเนื้อหาของ ${esc(w.name)} ที่ Claude สรุปจากไฟล์ที่ส่งมา · ใช้ร่วมกันทั้ง MCQ / MEQ / OSCE · จุดแดง = มีเนื้อหาใหม่หรือเพิ่งอัปเดต</p><div class="iotiles">`;
+  if(!K){h+=`<div class="whead"><h1 class="h2">Round I/O</h1><a href="#/${esc(ward)}">กลับหน้าวอร์ด</a></div><p class="sub" style="margin:0 0 12px">อ่านสรุปเนื้อหาของ ${esc(w.name)} <b>(แท็บ ${ioType()} — ไฟล์ของแท็บนี้ + ไฟล์ที่ใช้ร่วม)</b> ที่ Claude สรุปจากไฟล์ที่ส่งมา · จุดแดง = มีเนื้อหาใหม่หรือเพิ่งอัปเดต</p><div class="iotiles">`;
     const TP=ioTopics();h+=IO_K.map(([k,n,d])=>{const c=k==="M"?TP.size:ioD().filter(x=>x.kind===k).length;return `<a class="iotile" href="${ioHref(k)}"><span class="iok">${k==="M"?"รวม":k}</span><span class="iot"><b>${ioDot(ioNewK(k))}${n}</b><span class="rd">${d}</span><span class="rcnt">มี <b>${c}</b> ${IO_UNIT[k]}</span></span><span class="go">→</span></a>`;}).join("")+`</div>`;}
   else if(K==="L"||K==="R"||K==="T"||K==="N"){const KN=IO_K.find(x=>x[0]===K),D=ioD().filter(d=>d.kind===K);
     h+=back(ioHref(),"Round I/O")+`<h1 class="h2">${K} · ${esc(KN[1])}</h1><p class="sub" style="margin:0 0 10px">${esc(KN[2])}</p>`;

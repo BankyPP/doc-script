@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 11b9d4d 2026-11-13 แตะชื่อปี = เลือก/ยกเลิกทุก Ro ในปีนั้น ทุกวอร์ดทุกเว็บ (13 พ.ย. 2026)
+BankyPP/ac-mdcu cb6f677 2026-11-14 Morning round MEQ/OSCE, Unit OSCE by big topic, Specialty OSCE (own) + MEQ closed, Round I/O per exam type, textbook chapters only when relevant (14 Nov 2026)

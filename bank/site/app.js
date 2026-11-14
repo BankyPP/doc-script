@@ -246,8 +246,8 @@ function route(){
   let v=h.v||"home";
   if(v==="sess"&&!validSess())v="home";
   if(v==="result"&&!P_().sess)v="home";
-  if(!["home","service","svc","grand","sess","result","hy","kw","unit","quality","qedit","adm","spc","advisor","report","legend","exam","lres","lrev","admq","lcase","staff","launch","lhist","teach","mhist","dates","mqr","mq","mqhy","mqin","io","tch","taker","case","osl","osx","osr","osh","osq"].includes(v))v="home";
-  if((v==="mqr"||v==="mq"||v==="mqhy")&&!mqL().length)v="home";
+  if(!["home","service","svc","grand","sess","result","hy","kw","unit","quality","qedit","adm","spc","advisor","report","legend","exam","lres","lrev","admq","lcase","staff","launch","lhist","teach","mhist","dates","mqr","mq","mqhy","mqin","io","tch","taker","case","osl","osx","osr","osh","osq","osspc"].includes(v))v="home";
+  if((v==="mqr"||v==="mqhy")&&!mqL().length&&!mqXAny())v="home";if(v==="mq"&&!mqL().length&&!mqFindU(mqS().v.u))v="home";
   if(v==="osx"&&!osRunCur())v=osLastRes()?"osr":"osl";if(v==="osr"&&!osLastRes())v="osl";
   if(v==="exam"&&!P_().leg)v="legend";
   if((v==="lres"||v==="lrev")&&!(bank[st.legSel]&&st.legSel.split("|")[1]===ward))v="legend";
@@ -267,7 +267,7 @@ function show(v){
   document.title=CFG.title||"คลังข้อสอบเก่า";
   if(!quiz){$("prog").style.width="0";}
   paintAcct();
-  ({wards:rWards,signin:rSignin,grades:rGrades,home:rHome,service:rService,grand:rGrand,svc:rQuiz,sess:rQuiz,result:rResult,hy:rHY,kw:rKW,unit:rUnit,quality:rQuality,qedit:rQEdit,adm:rAdm,spc:rAdm,advisor:rAdvisor,report:rReport,legend:rLegend,exam:rExam,lres:rLRes,lrev:rQuiz,admq:rQuiz,lcase:rLCase,staff:rStaff,launch:rLaunch,lhist:rLHist,teach:rTeach,mhist:rMHist,dates:rDates,mqr:mqRList,mq:mqView,mqhy:mqHY,mqin:mqIn,io:rIO,tch:rTch,taker:rTaker,case:rCase,osl:osSetup,osx:osRunView,osr:osResView,osh:osHistView,osq:osQuality})[v]();
+  ({wards:rWards,signin:rSignin,grades:rGrades,home:rHome,service:rService,grand:rGrand,svc:rQuiz,sess:rQuiz,result:rResult,hy:rHY,kw:rKW,unit:rUnit,quality:rQuality,qedit:rQEdit,adm:rAdm,spc:rAdm,advisor:rAdvisor,report:rReport,legend:rLegend,exam:rExam,lres:rLRes,lrev:rQuiz,admq:rQuiz,lcase:rLCase,staff:rStaff,launch:rLaunch,lhist:rLHist,teach:rTeach,mhist:rMHist,dates:rDates,mqr:mqRList,mq:mqView,mqhy:mqHY,mqin:mqIn,io:rIO,tch:rTch,taker:rTaker,case:rCase,osl:osSetup,osx:osRunView,osr:osResView,osh:osHistView,osq:osQuality,osspc:osSpcView})[v]();
   if(!quiz)window.scrollTo(0,0);
 }
 /* the AI-case engine serves two rounds: Admission ("adm") and Specialty ("spc", site/spc.js) — AM says which; bank kind = AM */
@@ -401,8 +401,8 @@ const ROUNDS=[
   {k:"unit",n:"Unit round",d:"โจทย์ใหม่แบบ case-based จาก lecture แต่ละบท สุ่มใหม่ทุกครั้งที่เข้า"},
   {k:"quality",n:"Quality round",d:"Speedrun ข้อสอบเก่า จับเวลาเป็นเซต · เลือกปีที่จะทำ หรือสุ่มจากทั้งคลัง ตั้งค่าเองได้ทั้งหมด"},
   {k:"admission",n:"Admission round",d:"เคสใหม่ที่ AI สร้างให้ทีละข้อ เนื้อหาเหมาะกับชั้นปีในวอร์ดนี้ · เก็บทุกข้อไว้ในคลังของคุณ"},
-  {k:"specialty",n:"Specialty round",d:"โจทย์ใหม่ที่ AI สร้างทีละข้อแบบ Admission round แต่เนื้อหาเฉพาะไฟล์ของวอร์ดนี้ · เลือกเรื่อง / R / T / N เอง หรือสุ่มทั้งหมด · ใช้ร่วมกับ MEQ / OSCE"},
-  {k:"io",n:"Round I/O",d:"อ่านสรุปเนื้อหาจาก Lecture (L) · Resource (R) · โน้ตวอร์ด (N) และรวมตามเรื่อง ที่ Claude สรุปให้ · ใช้ร่วมกับ MEQ / OSCE"},
+  {k:"specialty",n:"Specialty round",d:"โจทย์ใหม่ที่ AI สร้างทีละข้อแบบ Admission round แต่เนื้อหาเฉพาะไฟล์ของวอร์ดนี้ · เลือกเรื่อง / R / T / N เอง หรือสุ่มทั้งหมด"},
+  {k:"io",n:"Round I/O",d:"อ่านสรุปเนื้อหาจาก Lecture (L) · Resource (R) · Textbook (T) · โน้ตวอร์ด (N) และรวมตามเรื่อง ที่ Claude สรุปให้ · เห็นไฟล์ของแท็บนี้ + ไฟล์ที่ใช้ร่วม"},
   {k:"longcase",n:"Long case",d:"AI ให้ chief complaint มา แล้วดำเนินเคสเองทีละขั้นแบบสอบ long case เฉลยทีละขั้นสไตล์ MEQ"}
 ];
 const yearTxt=()=>{const m=/(\d+)/.exec(wYear());return m?"ปี "+m[1]:"";};
@@ -817,7 +817,11 @@ const resOf=W=>(W&&W.RES||[]).filter(r=>r&&r.title);
 /* textbooks (code T, <dir>/textbooks.js → W.TXT, same shape as W.RES, one entry per chapter) — everything R gets, always in its own box apart from R */
 const txtOf=W=>(W&&W.TXT||[]).filter(r=>r&&r.title);
 const isTxt=r=>!!r&&/^T\d/.test(r.code||"");
-function resFor(q,T){const W=W_(),tg=qTags(q),tp=q.adm||q.unit?"":topicOf(W,q);return (T?txtOf(W):resOf(W)).filter(r=>(r.tags||[]).some(t=>tg.includes(t))||(tp&&r.topic===tp));}
+/* textbook chapters (T) with "kw" (user 14 Nov 2026): attached only when the question itself is about that chapter — the regex must match the stem + the correct option
+   (broad tags such as Onco / Trauma / Surgical infection used to pull in unrelated chapters, e.g. thyroid, spleen, bites & stings) · chapters without kw: tags / topic as before · R unchanged */
+const qCoreTxt=q=>flatTxt([q.stem,q.q,Array.isArray(q.opts)&&q.ans!=null?q.opts[q.ans]:"",q.title].filter(Boolean).join(" "));
+function resFor(q,T){const W=W_(),tg=qTags(q),tp=q.adm||q.unit?"":topicOf(W,q);let tx=null;
+  return (T?txtOf(W):resOf(W)).filter(r=>{if(T&&r.kw){if(tx===null)tx=qCoreTxt(q);try{return new RegExp(r.kw,"i").test(tx);}catch(e){return false;}}return (r.tags||[]).some(t=>tg.includes(t))||(tp&&r.topic===tp);});}
 const txtFor=q=>resFor(q,1);
 const resLabel=r=>(r.code?r.code+" ":"")+r.title;
 const resPts=(r,n)=>(Array.isArray(r.points)?r.points:[]).slice(0,n||99);

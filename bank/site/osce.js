@@ -67,8 +67,8 @@ function osAiImgHTML(q,reveal){if(!osNeedsImg(q))return "";const d=OSIMG[q.uid];
   return (d?`<div class="stem-img"><img src="${d}" alt="รูปประกอบโจทย์ที่ใส่เอง"></div>`:q.imgAlt?`<div class="img-missing">🖼 ไม่ได้ใส่รูป — คำบรรยายแทนรูป: ${q.imgAlt}</div>`:"")+(reveal&&q.imgNeed?`<p class="hint">รูปที่ข้อนี้ต้องใช้: ${q.imgNeed}</p>`:"");}
 /* the website has no AI of its own: AI stations need the Claude version of this site (or the viewer's own API key) */
 const osAiOK=()=>HAS_CLAUDE()||!!aiCfg().key;
-function osAiBtns(){if(osAiOK())return "";const u=typeof artLink==="function"&&artLink(ward+"/osl");
-  return `<div class="osaibtn"><p class="rd">เว็บนี้ยังไม่ได้เชื่อม AI — เลือกอย่างใดอย่างหนึ่ง:</p><div class="row2">${u?`<a class="btn primary" href="${esc(u)}" target="_blank" rel="noopener">เปิด Legendary OSCE ใน Claude ↗</a>`:""}<a class="btn" href="#/${esc(ward)}/adm">ใส่ API key (หน้า Admission round)</a></div><p class="hint" style="margin:6px 0 0">ใน Claude: ถ้าขึ้นหน้า "จะไปหน้าไหน?" ให้กด <b>Legendary round · OSCE</b> · ผลสอบที่ทำใน Claude เก็บในบัญชี Claude (แยกจากเว็บ)</p></div>`;}
+function osAiBtns(rt){if(osAiOK())return "";const u=typeof artLink==="function"&&artLink(ward+(rt||"/osl"));
+  return `<div class="osaibtn"><p class="rd">เว็บนี้ยังไม่ได้เชื่อม AI — เลือกอย่างใดอย่างหนึ่ง:</p><div class="row2">${u?`<a class="btn primary" href="${esc(u)}" target="_blank" rel="noopener">เปิด ${rt?"Specialty":"Legendary"} OSCE ใน Claude ↗</a>`:""}<a class="btn" href="#/${esc(ward)}/adm">ใส่ API key (หน้า Admission round)</a></div><p class="hint" style="margin:6px 0 0">ใน Claude: ถ้าขึ้นหน้า "จะไปหน้าไหน?" ให้กด <b>Legendary round · OSCE</b> · ผลสอบที่ทำใน Claude เก็บในบัญชี Claude (แยกจากเว็บ)</p></div>`;}
 /* ---- building the paper ---- */
 /* หัวข้อใหญ่ (ผู้ใช้สั่ง 3 พ.ย. 2026): สุ่มกระจายให้ — ทุกอย่างมาจากการสุ่ม แล้วจัดสัดส่วนให้ไม่เยอะ/น้อยเกินไป · ถ้าจำนวนข้อพอให้ออกครบทุกหัวข้อ · ถ้าไม่พอ 1–2 หัวข้อไม่ออกก็ได้
    น้ำหนัก = ครึ่งหนึ่งจากสัดส่วนที่ออกจริงในข้อสอบเก่า ครึ่งหนึ่งเฉลี่ยเท่ากัน คูณสุ่ม ±25% · เพดานต่อหัวข้อ ≈ 1.8 เท่าของค่าเฉลี่ย */
@@ -230,7 +230,7 @@ function osGenPrompt(run,sl){const w=W_().cfg,tn=osTN(sl.topic),te=osTopicEx(sl.
   const cn={};run.seq.forEach(x=>{if(x.k!=="st"||x===sl)return;const q=osSt(run,x.u),k=q?osSubOf(q):x.sub,t=q?q.topic:x.topic;if(k&&t===sl.topic)cn[k]=(cn[k]||0)+1;});const full=Object.keys(cn).filter(k=>cn[k]>=OS_SUBLIM);
   const refs=osRefFor(sl.topic,sb).map(x=>"["+x.title+"]\n"+x.text).join("\n\n");
   return `Write ONE brand-new OSCE station for Thai ${INST.stu} (medical students) in Year 4 at ${INST.en}, ${w.name} rotation.
-Station topic: ${tn}${te.proc?" (procedure station with an examiner)":te.ex?" (station with an examiner: the student talks to a standardized patient or examines one)":" (written station, no examiner: the student reads the material and writes answers)"}. Time: ${osFmt(run.per)} minutes.
+${sl.src?`Station topic: choose the ONE station topic that best fits the source below, from this list (id = name): ${osTopics().map(t=>t.id+" = "+t.name+(t.proc?" (procedure, examiner)":t.ex?" (examiner)":" (written, no examiner)")).join("; ")}. Put its id in "topic".`:`Station topic: ${tn}${te.proc?" (procedure station with an examiner)":te.ex?" (station with an examiner: the student talks to a standardized patient or examines one)":" (written station, no examiner: the student reads the material and writes answers)"}.`} Time: ${osFmt(run.per)} minutes.
 ${sb?"Small topic of this station: "+sb+" (write the station on this small topic).\n":""}${sl.brief?"The student asked for: "+sl.brief+"\n":""}Scope: ${w.scope||w.name}. Level: what a Year-4 student must know. Content from current standard textbooks and guidelines.
 Old exams of this ward show how the exam is written, so match their level, length and way of asking. But this station must be NEW: never repeat an old station. Change the disease, or change the values/findings/presentation, so it is a different question.
 Old stations on this topic (do not reuse as they are):
@@ -246,10 +246,14 @@ Rules:
 - For an examiner station write "sp": the script for the standardized patient / examiner in Thai (patient details, answers to likely questions, examination findings to give when asked).
 - Each sub-question has an OSCE checklist key: "points" = list of items; an item is either a string (must be said) or {"label": "...", "any": ["...", "..."], "need": n} (any n of these). "kw" = for each item, case-insensitive JavaScript regex strings (Thai or English keywords) that detect it in a typed answer: for a string item an array of strings; for an "any" item an array of arrays, one per option.
 - "ans": model answer (English with Thai explanation allowed, <b> for emphasis). "exp": short Thai explanation with the key facts.
-Reply with only a JSON object:
-{"title": "short neutral English title that does not give the answer", "sub": "the small topic in 1-3 English words", "stem": "...", "imgNeed": "", "imgAlt": "", "sp": "Thai script or empty string", "subs": [{"q": "...", "marks": 2, "ans": "...", "exp": "...", "points": [...], "kw": [...]}], "keyNote": "", "interp": "Thai: what this station tests", "summary": ["3–5 Thai high-yield bullets"]}
+${sl.src?`CONTENT RULE (Specialty round of OSCE): build this station ONLY from the source below, which comes from this ward's own Round I/O (${sl.srcLabel||"file"}). The key facts tested and the model answers must be stated in, or follow directly from, the source; general knowledge only for case details. If the source disagrees with the newest guideline or textbook, still key what is correct per that guideline and explain the difference in Thai in "keyNote". Do not repeat these points already asked from this source: ${(sl.avoidPts||[]).join("; ")||"none yet"}.
+Source:
+${sl.src}
+`:""}Reply with only a JSON object:
+{${sl.src?'"topic": "one id from the list", "point": "the main fact tested, 1 short line", ':""}"title": "short neutral English title that does not give the answer", "sub": "the small topic in 1-3 English words", "stem": "...", "imgNeed": "", "imgAlt": "", "sp": "Thai script or empty string", "subs": [{"q": "...", "marks": 2, "ans": "...", "exp": "...", "points": [...], "kw": [...]}], "keyNote": "", "interp": "Thai: what this station tests", "summary": ["3–5 Thai high-yield bullets"]}
 ${exJ?"Old exam stations of this ward, as style examples only:\n"+exJ:""}`;}
 async function osGen(run,sl){const o=await aiJSON(osGenPrompt(run,sl),4096);if(!o||!o.stem||!Array.isArray(o.subs)||!o.subs.length)throw {code:"invalid_json"};
+  if(sl.src){const T=osTopics();sl.topic=(T.find(t=>t.id===o.topic)||T[0]||{id:""}).id;sl.point=String(o.point||"").slice(0,160);}
   const te=osTopicEx(sl.topic),uid="OSAI|"+now().toString(36)+Math.random().toString(36).slice(2,6),okRe=x=>{try{new RegExp(x,"i");return true;}catch(e){return false;}};
   const subs=o.subs.slice(0,6).map(s=>{const pts=Array.isArray(s.points)?s.points.filter(p=>typeof p==="string"||(p&&Array.isArray(p.any))):[];let kw=Array.isArray(s.kw)?s.kw:[];
     kw=pts.map((p,j)=>{const k=kw[j];if(typeof p==="string")return (Array.isArray(k)?k:[]).map(String).filter(okRe);return p.any.map((a,m)=>(Array.isArray(k)&&Array.isArray(k[m])?k[m]:[]).map(String).filter(okRe));});
@@ -413,3 +417,105 @@ function osHomeTop(L){const E=osExamCfg(),T=osTopics(),cur=osRunCur();
   return h;}
 /* test hook for tools/smoke_site.py-style checks: read the running paper and fast-forward the clock */
 window.__os={cur:()=>osRunCur(),ff:s=>{const r=osRunCur();if(r){r.left=s;r.at=now();r.paused=false;}},finish:()=>{const r=osRunCur();if(r)osFinish(r);}};
+/* ================= 14 Nov 2026 (user): Morning round MEQ / OSCE · Unit round OSCE by big topic · Specialty round OSCE =================
+   Extra questions the MEQ/OSCE engine can open besides the old-exam banks (mqFindU → mqXFind):
+   - Morning MEQ cases (case-style MEQ wards with config "mornMEQ": Med Y4, OB-GYN Y4 MDCU): <ward dir>/morn_meq.js → W.MORN [{day:"YYYY-MM-DD", …case}]
+     written ahead by Claude · the case of the day = W.MORN.find(day === mDay()) → the same case for everyone, nothing to generate on the device
+     (new day at 07:30 by the device clock) · uid "MORN|<day>" · during the case nothing tells the system / source (like Legendary)
+   - Unit round OSCE stations: <ward dir>/osu_<topic>.js → W.OSU (station shape of osce_b*.js + topic) · uid "OSU|<topic>|<id>"
+   - Specialty round OSCE: AI stations built only from the Round I/O docs the OSCE tab sees · kept in P.osce.spc.B · uid "OSAI|…" (from osGen)
+   Morning OSCE (every ward, every site): 3 stations a day per person = old stations done before 1 : Unit stations not met yet 2 (short side filled
+   from the other) · never a station that was in any earlier Morning set · state P.osce.morn {day,list,ts} + P.osce.mornH {day:{…}} */
+const XQ={};   /* uid → normalized copy */
+function mqNormX(q,OS){if(q._nx)return q;q._nx=1;if(!Array.isArray(q.parts)||!q.parts.length)q.parts=[{subs:q.subs||[]}];q.subs=[];
+  q.parts.forEach((p,pi)=>{p.i=pi;p.subs=p.subs||[];p.subs.forEach((s,k)=>{s._p=pi;s._k=k;s._i=q.subs.length;if(OS&&!(s.tags||[]).length&&q.topic)s.tags=[q.topic];q.subs.push(s);});});
+  if(q.n===undefined)q.n=0;return q;}
+const xClone=o=>JSON.parse(JSON.stringify(o));
+function mornMQOn(wid){const W=WARDS[wid||ward];return !!(W&&W.cfg&&W.cfg.mornMEQ);}
+function mornMQAll(){const W=W_();return (W&&W.MORN||[]).map(c=>{const u="MORN|"+c.day;if(!XQ[u]){const q=mqNormX(Object.assign(xClone(c),{uid:u,set:"Morning round",ro:"",orig:dayTH(c.day),file:"Morning",page:"",title:"เคส Morning round · "+dayTH(c.day)}),false);delete q.day;q.mday=c.day;XQ[u]=q;}return XQ[u];});}
+function osUnitAll(){const W=W_(),cnt={};return (W&&W.OSU||[]).map(c=>{const t=c.topic||"";cnt[t]=(cnt[t]||0)+1;const u="OSU|"+t+"|"+(c.id||cnt[t]);
+  if(!XQ[u])XQ[u]=mqNormX(Object.assign(xClone(c),{uid:u,set:"Unit round",ro:osTN(t),orig:String(c.id||cnt[t]),file:c.file||"Unit",page:c.page||""}),true);return XQ[u];});}
+function osSpcS(){const m=mqInitP(P_(),"OSCE");const S=m.spc=m.spc||{};S.sel=S.sel||{all:0,T:[],U:[]};["T","U"].forEach(k=>{if(!Array.isArray(S.sel[k]))S.sel[k]=[];});
+  S.bag=S.bag||{sig:"",list:[]};S.list=Array.isArray(S.list)?S.list:[];S.B=S.B||{};S.pts=S.pts||{};return S;}
+function osSpcQ(u){const S=osSpcS(),raw=S.B[u];if(!raw)return null;const k="S"+u;if(!XQ[k])XQ[k]=mqNormX(xClone(raw),true);return XQ[k];}
+function mqXFind(u){if(!u)return null;if(mqIsOS()){if(/^OSU\|/.test(u))return osUnitAll().find(q=>q.uid===u)||null;return osSpcQ(u);}
+  if(/^MORN\|/.test(u))return mornMQAll().find(q=>q.uid===u&&q.mday<=mDay())||null;return null;}
+function mqXAll(){if(mqIsOS())return osUnitAll().concat(osSpcS().list.map(osSpcQ).filter(Boolean));return mornMQAll().filter(q=>q.mday<=mDay());}
+const mqXAny=()=>mqXAll().length>0;
+/* records in either Phase (Morning sets are shared by both Phases, like Morning MCQ) */
+function xRecs(q,kind){const m=mqInitP(P_(),kind||mqKind());return [m.a1[q.uid],m.a2[q.uid]].filter(Boolean);}
+const xDone=(q,kind)=>xRecs(q,kind).some(r=>mqCaseDone(q,r));
+const xTouched=(q,kind)=>xRecs(q,kind).some(r=>q.subs.some(s=>mqSubDone(q,s,r)));
+/* ---- Morning round (MEQ / OSCE) ---- */
+const OS_MORN_N=3,OS_MORN_AC=1;
+let osMornOut=false;
+function osMorn(make){const m=mqInitP(P_(),"OSCE"),d=mDay();m.mornH=m.mornH||{};let x=m.morn;
+  if(x&&x.day&&x.day!==d){m.mornH[x.day]=x;x=m.morn=null;save();}
+  if(x||!make)return x;
+  const used=new Set();Object.values(m.mornH).forEach(h=>(h.list||[]).forEach(u=>used.add(u)));
+  const ac=shuffle(mqL(ward,"OSCE").filter(q=>!used.has(q.uid)&&xTouched(q,"OSCE"))),un=shuffle(osUnitAll().filter(q=>!used.has(q.uid)&&!xRecs(q,"OSCE").length));
+  let nA=Math.min(OS_MORN_AC,ac.length),nU=Math.min(OS_MORN_N-nA,un.length);nA=Math.min(ac.length,OS_MORN_N-nU);
+  const list=shuffle(ac.slice(0,nA).concat(un.slice(0,nU))).map(q=>q.uid);
+  osMornOut=!list.length&&used.size>0;if(!list.length)return null;
+  x=m.morn={day:d,list,ts:now()};save();return x;}
+function mornXList(){if(mqIsOS()){const x=osMorn(false);return x?x.list.map(u=>mqFindU(u)).filter(Boolean):[];}const q=mqXFind("MORN|"+mDay());return q?[q]:[];}
+function mornXBox(type){const clock=`<span class="mclock">${type==="OSCE"?"ชุดใหม่":"เคสใหม่"}ใน <b id="mClock">${hms(mNext()-now())}</b></span>`;let t;
+  if(type==="OSCE"){const x=osMorn(false);
+    if(!x){const can=mqL(ward,"OSCE").some(q=>xTouched(q,"OSCE"))||osUnitAll().length;t=can?"🎁 ยังไม่ได้เปิดกล่องวันนี้":"🎁 ยังไม่มีสถานีให้เปิดกล่อง — ทำข้อสอบเก่า OSCE ก่อน หรือรอสถานี Unit round";}
+    else{const L=mornXList(),dn=L.filter(q=>xDone(q,"OSCE")).length;t=!dn&&!L.some(q=>xTouched(q,"OSCE"))?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":dn<L.length?`วันนี้ทำไป ${dn}/${L.length} สถานี`:`✓ ครบ ${dn}/${L.length} สถานีแล้ว`;}}
+  else{const P=P_(),m=mqInitP(P,"MEQ"),d=mDay(),q=mqXFind("MORN|"+d),op=m.mopen&&m.mopen[d];
+    t=!q?"ยังไม่มีเคสใหม่ — รอเติมเคส":!op?"🎁 ยังไม่ได้เปิดกล่องวันนี้":xDone(q,"MEQ")?"✓ ทำเคสวันนี้ครบแล้ว":xTouched(q,"MEQ")?"ทำไปบางส่วน — ทำต่อให้ครบนะ":"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ";}
+  return `<span class="mtodo${/^✓/.test(t)?" ok":""}">${t}</span>${clock}`;}
+function mornXStart(type){
+  if(type==="OSCE"){const x=osMorn(true);if(!x){toast(osMornOut?"Morning round ออกครบทุกสถานีในวอร์ดนี้แล้ว — ไม่มีสถานีใหม่ที่ยังไม่เคยออก":"ยังไม่มีสถานีให้ทำ — ทำข้อสอบเก่า OSCE ก่อน หรือรอสถานี Unit round");return;}
+    const L=mornXList(),q=L.find(z=>!xDone(z,"OSCE"))||L[0];if(!q){toast("ไม่พบสถานีของวันนี้");return;}return mqOpen(q.uid,undefined,"morning");}
+  const m=mqInitP(P_(),"MEQ"),d=mDay(),q=mqXFind("MORN|"+d);if(!q){toast("ยังไม่มีเคสใหม่วันนี้ — รอเติมเคส");return;}
+  m.mopen=m.mopen||{};m.mopen[d]=1;Object.keys(m.mopen).sort().slice(0,-60).forEach(k=>delete m.mopen[k]);save();mqOpen(q.uid,undefined,"morning");}
+/* ---- Unit round OSCE: by big topic ---- */
+function osUnitList(t){return t?osUnitAll().filter(q=>q.topic===t):[];}
+function osUnitCnt(){const A=osUnitAll();return `<span class="rcnt">มี <b>${A.length}</b> สถานี · ${osTopics().length} หัวข้อใหญ่</span>`;}
+function osUnitPicker(v){const A=osUnitAll(),T=osTopics();
+  return `<div class="tl-h">เลือกหัวข้อใหญ่</div><div class="chips tchips">${T.map(t=>{const L=A.filter(q=>q.topic===t.id),dn=L.filter(q=>xDone(q,"OSCE")).length;return `<button class="chip" type="button" data-utop="${esc(t.id)}" aria-pressed="${v.utop===t.id}"${L.length?"":' style="opacity:.55"'}>${esc(t.name)}<span class="cnt">${L.length?dn+"/"+L.length:"0"}</span></button>`;}).join("")||`<span class="hint">วอร์ดนี้ยังไม่ได้ตั้งหัวข้อ OSCE</span>`}</div>`;}
+function osUnitEmpty(t){return t?`ยังไม่มีสถานี Unit round ในหัวข้อ “${esc(osTN(t))}” — รอ Claude แต่ง (หัวข้อละ 50 สถานี)`:"เลือกหัวข้อใหญ่ 1 หัวข้อ — สถานีของหัวข้อนั้นจะแสดงที่นี่";}
+/* ---- Specialty round OSCE (#/<ward>/osspc) ---- */
+var OSSPC={busy:0,err:""};
+const osSpcUnits=()=>spcUnits(ward,"OSCE");
+function osSpcPool(){const S=osSpcS(),us=osSpcUnits();if(S.sel.all)return us;return us.filter(u=>S.sel.U.includes(u.key)||u.topics.some(t=>S.sel.T.includes(t)));}
+function osSpcPick(){const S=osSpcS(),pool=osSpcPool();if(!pool.length)return null;const sig=pool.map(u=>u.key).sort().join("|"),by={};pool.forEach(u=>by[u.key]=u);
+  let L=(S.bag.sig===sig?S.bag.list:[]).filter(k=>by[k]);if(!L.length){L=shuffle(pool.map(u=>u.key));if(L.length>1&&L[0]===S.bag.last)L.push(L.shift());}
+  const k=L.shift();S.bag={sig,list:L,last:k};return by[k];}
+function osSpcList(){return osSpcS().list.map(osSpcQ).filter(Boolean);}
+async function osSpcNext(){if(OSSPC.busy){toast("กำลังสร้างสถานีอยู่…");return;}if(!osAiOK()){toast("ต้องมี AI — เปิดใน Claude หรือใส่ API key ที่หน้า Specialty round");return go(ward+"/osspc");}
+  const src=osSpcPick();if(!src){toast("เลือกเรื่อง / ไฟล์ก่อน");return go(ward+"/osspc");}
+  const S=osSpcS();OSSPC.busy=1;OSSPC.err="";if(view==="osspc")osSpcView();else toast("⏳ กำลังสร้างสถานีใหม่…");
+  try{const E=osExamCfg(),sl={topic:"*",src:src.text.slice(0,9000),srcLabel:spcLabel(src),avoidPts:(S.pts[src.key]||[]).slice(-12)};
+    const q=await osGen({seq:[],per:(E?E.min:5)*60},sl);
+    q.set="Specialty";q.ro="";q.orig=String(S.list.length+1);q.srcRes=spcLabel(src);q.srcKey=src.key;
+    if(q.imgAlt)q.stem+=`<p class="gray">🖼 รูปที่โจทย์ให้ดู (คำบรรยายแทนรูป): ${q.imgAlt}</p>`;
+    q.notes=`📄 ที่มา: ${esc(q.srcRes)}${q.imgNeed?`<br>🖼 รูปที่ควรใช้: ${q.imgNeed}`:""}`;
+    S.B[q.uid]=q;S.list.push(q.uid);while(S.list.length>80){const o=S.list.shift();delete S.B[o];}
+    S.pts[src.key]=(S.pts[src.key]||[]).concat(sl.point||q.title).slice(-12);S.ts=now();save();OSSPC.busy=0;mqOpen(q.uid,undefined,"spc");}
+  catch(e){OSSPC.busy=0;OSSPC.err=e&&e.code==="rate_limited"?"ใช้ AI ถี่เกินไป ลองใหม่อีกสักครู่":e&&e.code==="invalid_json"?"AI ตอบกลับในรูปแบบที่อ่านไม่ได้ ลองใหม่":"สร้างสถานีไม่สำเร็จ ลองใหม่";toast(OSSPC.err);if(view==="osspc")osSpcView();}}
+function osSpcView(){const S=osSpcS(),sel=S.sel,us=osSpcUnits(),pool=osSpcPool(),tab=st.osSpcTb==="F"?"F":"TP";$("nav").hidden=true;
+  let h=`<div class="whead"><h1 class="h2">Specialty round · OSCE</h1><a href="#/${esc(ward)}">กลับหน้าวอร์ด</a></div><p class="sub">สถานี OSCE ใหม่ที่ AI สร้างทีละสถานี <b>เนื้อหาจาก Round I/O ของแท็บ OSCE เท่านั้น</b> (ไฟล์ของแท็บ OSCE + ไฟล์ที่ใช้ร่วม) · เลือกตามเรื่องหรือตามไฟล์ ปนกันได้ หรือสุ่มทั้งหมด · ทำทีละสถานี ไม่จับเวลา</p>`;
+  if(!us.length)h+=`<div class="card"><h3>ยังไม่มีไฟล์ใน Round I/O ของแท็บ OSCE</h3><span class="rd" style="margin:0">ส่งไฟล์ให้ Claude สรุปเข้า Round I/O ก่อน แล้ว Specialty round ของ OSCE จะใช้ได้</span></div>`;
+  else{const T=new Map();us.forEach(u=>u.topics.forEach(t=>{if(!T.has(t))T.set(t,[]);T.get(t).push(u);}));
+    const dim=sel.all?' style="opacity:.55"':"",row=(attr,on,title,meta)=>`<button class="resume qprog" ${attr} aria-pressed="${on}"${dim}><span><b>${esc(title)}</b>${meta?`<span class="rd">${meta}</span>`:""}</span><span class="go">${on?"✓":""}</span></button>`;
+    h+=`<div class="tools spcquick"><button class="tool" id="ospAll" aria-pressed="${!!sel.all}">🎲 สุ่มทั้งหมด${sel.all?" ✓":""}</button><button class="tool" id="ospClr">ล้างที่เลือก</button></div>`;
+    h+=`<div class="chips spctabs">${[["TP","ตามเรื่อง",T.size],["F","ตามไฟล์",us.length]].map(([k,n,c])=>`<button class="chip" data-osptab="${k}" aria-pressed="${tab===k}">${n} <span class="hint">${c}</span></button>`).join("")}</div><div class="stack" style="margin-top:8px">`;
+    if(tab==="TP")for(const [t,xs] of T)h+=row(`data-osptopic="${esc(t)}"`,sel.T.includes(t),t,`${xs.length} หน้า`);
+    else us.forEach(u=>{h+=row(`data-ospunit="${esc(u.key)}"`,sel.U.includes(u.key),spcLabel(u),u.topics.join(", "));});
+    h+=`</div><p class="statline" style="margin-top:12px">${sel.all?`สุ่มจากทุกหน้า <b>${pool.length}</b> หน้า`:pool.length?`เลือกแล้ว <b>${pool.length}</b> หน้า`:"ยังไม่ได้เลือก — แตะเรื่อง / ไฟล์ ด้านบน หรือกด 🎲 สุ่มทั้งหมด"}</p>`;
+    if(!osAiOK())h+=osAiBtns("/osspc");
+    h+=OSSPC.busy?`<p class="hint">⏳ AI กำลังสร้างสถานี…</p>`:`<div class="row2"><span class="spacer"></span><button class="btn primary" id="ospGo" ${pool.length&&osAiOK()?"":"disabled"}>สร้างสถานีใหม่</button></div>`;
+    if(OSSPC.err)h+=`<p class="hint">${esc(OSSPC.err)}</p>`;}
+  const L=osSpcList();if(L.length){h+=`<div class="card"><h3>สถานี Specialty ของฉัน (${L.length})</h3><span class="rd">เปิดดูโจทย์และเฉลยเก่าได้ตลอด · ล่าสุดอยู่บน</span><div class="trows" style="margin-top:8px">${L.slice().reverse().slice(0,40).map(q=>`<button class="resume" data-ospopen="${esc(q.uid)}"><span><b>${esc(q.title||"สถานี")}</b><span class="rd">${esc(osTN(q.topic))} · ${esc(q.srcRes||"")}${xDone(q,"OSCE")?" · ✓ ทำแล้ว":""}</span></span><span class="go">→</span></button>`).join("")}</div></div>`;}
+  $("main").innerHTML=h;
+  const re=()=>{S.ts=now();save();osSpcView();},tg=(a,x)=>{const i=a.indexOf(x);if(i<0)a.push(x);else a.splice(i,1);};
+  document.querySelectorAll("[data-osptab]").forEach(b=>b.onclick=()=>{st.osSpcTb=b.dataset.osptab;persist();osSpcView();});
+  document.querySelectorAll("[data-osptopic]").forEach(b=>b.onclick=()=>{sel.all=0;tg(sel.T,b.dataset.osptopic);re();});
+  document.querySelectorAll("[data-ospunit]").forEach(b=>b.onclick=()=>{sel.all=0;tg(sel.U,b.dataset.ospunit);re();});
+  document.querySelectorAll("[data-ospopen]").forEach(b=>b.onclick=()=>mqOpen(b.dataset.ospopen,undefined,"spc"));
+  {const b=$("ospAll");if(b)b.onclick=()=>{sel.all=sel.all?0:1;re();};}
+  {const b=$("ospClr");if(b)b.onclick=()=>{sel.all=0;sel.T=[];sel.U=[];re();};}
+  {const b=$("ospGo");if(b)b.onclick=()=>osSpcNext();}}
