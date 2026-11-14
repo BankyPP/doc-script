@@ -298,7 +298,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
   else if(rk==="unit"&&!mqIsOS()&&!v.tags.length)h+=`<div class="empty">เลือกหัวข้ออย่างน้อย 1 หัวข้อ — Part ที่ติดหัวข้อนั้นจะแสดงที่นี่</div>`;
   else if(!Q.length&&QT.length)h+=`<div class="empty">ไม่พบข้อที่มีคำว่า “${esc(mqQ.trim())}”</div>`;
   else if(!Q.length)h+=`<div class="empty">${rk==="staff"?"ยังไม่มีข้อที่ต้องทวน — ทุก Part ที่ทำแล้วได้เต็ม":rk==="advisor"?`ยังไม่ได้ทำข้อ ${mqKN()} ใน Phase นี้`:"ไม่มีข้อในเงื่อนไขที่เลือก"}</div>`;
-  else{if(rk==="service"){const nx=mqNextTodo(Q0);h+=nx?`<button class="resume" type="button" id="mqNext" style="margin:0 0 10px"><span>▶ ไปข้อถัดไปที่ยังไม่ได้ทำ: <b>${mqKN()} ข้อ ${esc(mqNum(nx))}</b><span class="rd">${esc(nx.set)}${nx.ro?" · "+esc(nx.ro):""} · ${esc(mqTitle(nx))}</span></span><span class="go">→</span></button>`:`<p class="hint" style="margin:0 0 10px">✓ ทำครบทุกข้อในชุดที่เลือกแล้ว (Phase ${ph()})</p>`;}
+  else{if(rk==="service"){const nx=mqNextTodo(Q0);h+=nx?`<button class="resume" type="button" id="mqNext" style="margin:0 0 10px"><span>▶ ไปข้อแรกที่ยังไม่ได้ทำ: <b>${mqKN()} ข้อ ${esc(mqNum(nx))}</b><span class="rd">${esc(nx.set)}${nx.ro?" · "+esc(nx.ro):""} · ${esc(mqTitle(nx))}</span></span><span class="go">→</span></button>`:`<p class="hint" style="margin:0 0 10px">✓ ทำครบทุกข้อในชุดที่เลือกแล้ว (Phase ${ph()})</p>`;}
     h+=`<div class="tsum">${Q.length} ข้อ · แตะเลขข้อหรือ Part เพื่อเริ่มทำ</div><div class="trows">`+Q.map(q=>mqRowHTML(q,rk)).join("")+`</div>`;}
   h+=`</div>`;$("main").innerHTML=h;
   {const nb=$("mqNext");if(nb)nb.onclick=()=>{const nx=mqNextTodo(Q0);if(nx)mqOpen(nx.uid,undefined,"service");};}
@@ -336,9 +336,8 @@ function mqSheet(){const v=mqS().v,rk=v.r||"service",L=mqL(),c=mqCur(),cur=c?{u:
   stc.querySelectorAll("[data-smt]").forEach(b=>b.onclick=()=>{mqVset({status:b.dataset.smt});save();mqSheet();});
   $("rows").querySelectorAll("[data-mgo]").forEach(b=>b.onclick=()=>{if(b.getAttribute("aria-disabled")==="true"){toast("ส่งคำตอบ Part ก่อนหน้าก่อน");return;}closeS(true);mqOpen(b.dataset.mgo,b.dataset.p===undefined?undefined:+b.dataset.p,rk);});
   if(typeof paintSync==="function")paintSync();}
-/* Service round: the next case not yet finished in the chosen sets/parts — counting on from the case you were last on (it counts if still unfinished), else from the first — wrapping round; opens at its first Part not yet sent */
-function mqNextTodo(Q){if(!Q||!Q.length)return null;const u=mqS().v.u,i0=Math.max(0,Q.findIndex(q=>q.uid===u));
-  for(let j=0;j<Q.length;j++){const q=Q[(i0+j)%Q.length];if(!mqCaseDone(q))return q;}return null;}
+/* Service round: always the FIRST case not yet finished in the chosen sets/parts, in list order, wherever you were last (user 14 Nov 2026, every ward, every site); opens at its first Part not yet sent */
+function mqNextTodo(Q){if(!Q||!Q.length)return null;return Q.find(q=>!mqCaseDone(q))||null;}
 function mqOpen(u,pi,rk){const v=mqS().v;rk=rk||v.r||"service";const q=mqFindU(u);if(!q)return;
   mqVset({u,r:rk,ctx:rk==="unit"&&!mqIsOS()?"topic":"set"});if(pi===undefined||!mqViewable(q,pi))pi=mqDefPart(q);v.pi=pi;save();if(view==="mq"){mqTStop();mqView();scrollTo(0,0);}else go(ward+"/mq");}
 function mqGrandNext(fromHome){const v=mqS().v,L=mqL();if(!L.length){toast("ยังไม่มีข้อ MEQ");return;}const cur=v.r==="grand"?v.u:null;

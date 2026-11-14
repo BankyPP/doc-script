@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 1603fb2 2026-11-14 Explanations: R resources attach only when relevant (kw per resource, Gen Sx R22-R24 + SI Med R01-R02); R/T without kw match their main tag only, every ward every site (14 Nov 2026)
+BankyPP/ac-mdcu f0618d2 2026-11-14 Rebuild site after rebase (14 Nov 2026)
