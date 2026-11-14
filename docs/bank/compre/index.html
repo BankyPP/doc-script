@@ -1378,7 +1378,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 <script>
 const IMGS={};const WARDS={};
 const CONFIG={"title": "คลังข้อสอบเก่า Compre · โพยหมอ", "brand": "AC Compre", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-compre-v1", "setLabel": "ปี", "roLabel": "สถาบัน", "chipStrip": "", "files": {}, "siteUrl": "https://bankypp.github.io/doc-script/bank/compre/", "siteName": "คลังข้อสอบเก่า Compre", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "compre"], "sharedPrefix": "poy_compre_", "homeBrand": "AC {short} MDCU79 by BankyPP", "quizBrand": "AC {short} {type}", "artifactUrl": "", "subjects": [{"id": "compre", "name": "Comprehensive (Compre)", "wards": ["c1", "c2", "c3"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "inst": {"id": "compre", "name": "Compre", "th": "Compre", "en": "Comprehensive examination", "enShort": "Compre", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"c1": "#/nl/x/c1", "c2": "#/nl/x/c2", "c3": "#/nl/x/c3"}, "others": {"inst": "nl", "before": true, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "noExam": ["MEQ"]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "noExam": ["MEQ"]}]}}, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "brand": "AC Compre 1 MCQ", "dir": "data_c1", "scope": "Comprehensive 1 (จุฬาฯ เท่านั้น — ศิริราชไม่มี) ใช้ blueprint NL1 เก่า", "dates": [{"part": "MCQ", "at": "2026-03-16"}], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "brand": "AC Compre 2 MCQ", "dir": "data_c2", "scope": "Comprehensive 2 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "brand": "AC Compre 3 MCQ", "dir": "data_c3", "scope": "Comprehensive 3 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="14/11/2026 18:56";
+const BUILD="14/11/2026 19:05";
 WARDS["c1"]={QB:[],HY:null};
 WARDS["c1"].MQ=[];
 WARDS["c1"].OS=[];
@@ -3936,7 +3936,7 @@ const flagged=(P,u)=>!!(P.flag[u]&&P.flag[u][0]);
 /* 📝 the question has an after-answer note (typed or handwritten, P.post) — marked in every answer sheet and filterable wherever ⚑ ไม่มั่นใจ / ★ is (user 13 Nov 2026) */
 function noted(u){return !!u&&noteHas("post",0,u);}
 /* recall text from the AC file (q.gray) under the question/case/part: a collapsible box, because it often carries the note-taker's answer or hints (user 14 Nov 2026, ทวทว)
-   st.grayOpen = default for every question (synced with the account; unset = closed) · grayU = boxes opened/closed by hand during this visit */
+   st.grayOpen = default for every question (synced with the account; unset = closed) · grayU = boxes opened/closed by hand, kept while moving between questions, cleared on leaving the question pages (show()) */
 const grayU={};
 const grayDef=()=>!!st.grayOpen;
 function grayBox(t,k,cls){if(!t)return "";const o=Object.prototype.hasOwnProperty.call(grayU,k)?grayU[k]:grayDef(),d=grayDef();
@@ -4005,6 +4005,7 @@ function validSess(){const P=P_(),s=P.sess;if(!s)return false;s.list=(s.list||[]
 function show(v){
   mqTStop();view=v;if(v==="adm")AM="adm";else if(v==="spc")AM="spc";else if(v==="admq")AM=String(st.admSel||"").startsWith("spc|")?"spc":"adm";
   const quiz=["svc","sess","adm","spc","exam","lrev","admq"].includes(v);
+  if(!quiz&&!["mq","osx"].includes(v))for(const k in grayU)delete grayU[k];   /* recall boxes: leaving the question pages → back to the default next time; moving between questions keeps each box as last left (user 14 Nov 2026) */
   clearInterval(show._t);
   const mqP=v==="mq";   /* MEQ question page: answer sheet button on top + prev/next bar at the bottom, like the MCQ pages */
   $("nav").hidden=!quiz&&!mqP;$("exnav").hidden=v!=="exam";paintLegBan();$("openSheet").hidden=!quiz&&!mqP;if(!mqP){$("next").classList.remove("primary");$("next").classList.add("ghost");}$("homeBtn").hidden=v==="wards";paintQR();

@@ -201,7 +201,7 @@ const flagged=(P,u)=>!!(P.flag[u]&&P.flag[u][0]);
 /* 📝 the question has an after-answer note (typed or handwritten, P.post) — marked in every answer sheet and filterable wherever ⚑ ไม่มั่นใจ / ★ is (user 13 Nov 2026) */
 function noted(u){return !!u&&noteHas("post",0,u);}
 /* recall text from the AC file (q.gray) under the question/case/part: a collapsible box, because it often carries the note-taker's answer or hints (user 14 Nov 2026, ทวทว)
-   st.grayOpen = default for every question (synced with the account; unset = closed) · grayU = boxes opened/closed by hand during this visit */
+   st.grayOpen = default for every question (synced with the account; unset = closed) · grayU = boxes opened/closed by hand, kept while moving between questions, cleared on leaving the question pages (show()) */
 const grayU={};
 const grayDef=()=>!!st.grayOpen;
 function grayBox(t,k,cls){if(!t)return "";const o=Object.prototype.hasOwnProperty.call(grayU,k)?grayU[k]:grayDef(),d=grayDef();
@@ -270,6 +270,7 @@ function validSess(){const P=P_(),s=P.sess;if(!s)return false;s.list=(s.list||[]
 function show(v){
   mqTStop();view=v;if(v==="adm")AM="adm";else if(v==="spc")AM="spc";else if(v==="admq")AM=String(st.admSel||"").startsWith("spc|")?"spc":"adm";
   const quiz=["svc","sess","adm","spc","exam","lrev","admq"].includes(v);
+  if(!quiz&&!["mq","osx"].includes(v))for(const k in grayU)delete grayU[k];   /* recall boxes: leaving the question pages → back to the default next time; moving between questions keeps each box as last left (user 14 Nov 2026) */
   clearInterval(show._t);
   const mqP=v==="mq";   /* MEQ question page: answer sheet button on top + prev/next bar at the bottom, like the MCQ pages */
   $("nav").hidden=!quiz&&!mqP;$("exnav").hidden=v!=="exam";paintLegBan();$("openSheet").hidden=!quiz&&!mqP;if(!mqP){$("next").classList.remove("primary");$("next").classList.add("ghost");}$("homeBtn").hidden=v==="wards";paintQR();
