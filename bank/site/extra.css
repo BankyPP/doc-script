@@ -1080,11 +1080,10 @@ mark{background:#FFF176;color:#1a1a1a;border-radius:2px}mark.pk{background:#F8BB
 :root[data-theme="dark"] .iov .glsec .glh{color:#90CAF9}
 /* recall text from the AC file under the question — collapsible, default closed (st.grayOpen) */
 details.gbox{margin:8px 0 0;border-left:2px solid var(--rule);padding-left:12px}
-details.gbox>summary{cursor:pointer;color:var(--muted);font-size:13.5px;list-style:none;padding:2px 0;user-select:none}
+details.gbox>summary{cursor:pointer;color:var(--muted);font-size:13.5px;list-style:none;padding:2px 0;user-select:none;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
 details.gbox>summary::-webkit-details-marker{display:none}
-details.gbox>summary::before{content:"▸";display:inline-block;width:1em;transition:transform .15s}
-details.gbox[open]>summary::before{transform:rotate(90deg)}
+details.gbox>summary .gt::before{content:"▸";display:inline-block;width:1em;transition:transform .15s}
+details.gbox[open]>summary .gt::before{transform:rotate(90deg)}
 details.gbox .gwarn{font-size:12px;opacity:.75;margin-left:4px}
 details.gbox>.gray{border-left:0;padding-left:0;margin:4px 0 0}
-details.gbox .gdef{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0 2px;font-size:12.5px;color:var(--muted)}
-details.gbox .gdef .chip{font-size:12.5px;padding:2px 10px}
+details.gbox .chip.gdef{font-size:12px;padding:0 9px;line-height:1.6;white-space:nowrap;color:var(--muted)}

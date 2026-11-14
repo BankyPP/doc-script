@@ -204,13 +204,15 @@ function noted(u){return !!u&&noteHas("post",0,u);}
    st.grayOpen = default for every question (synced with the account; unset = closed) · grayU = boxes opened/closed by hand, kept while moving between questions, cleared on leaving the question pages (show()) */
 const grayU={};
 const grayDef=()=>!!st.grayOpen;
+/* one chip right of the title: shows the current default, tap = switch it (fits on one line on a phone) */
+const grayChip=d=>`<button type="button" class="chip gdef" data-gdef="${d?0:1}" title="ค่าเริ่มต้นของทุกข้อ — แตะเพื่อสลับ">ค่าเริ่มต้น: ${d?"เปิด":"ปิด"}</button>`;
 function grayBox(t,k,cls){if(!t)return "";const o=Object.prototype.hasOwnProperty.call(grayU,k)?grayU[k]:grayDef(),d=grayDef();
-  return `<details class="gbox${cls?" "+cls:""}" data-grk="${esc(k)}"${o?" open":""}><summary>📄 ข้อความในไฟล์ (recall) <span class="gwarn">อาจมีเฉลย/คำใบ้</span></summary><p class="gray">${esc(t)}</p><div class="gdef"><span>ค่าเริ่มต้นทุกข้อ</span><button type="button" class="chip" data-gdef="0" aria-pressed="${!d}">ปิด</button><button type="button" class="chip" data-gdef="1" aria-pressed="${d}">เปิด</button></div></details>`;}
+  return `<details class="gbox${cls?" "+cls:""}" data-grk="${esc(k)}"${o?" open":""}><summary><span class="gt">📄 ข้อความในไฟล์ <span class="gwarn">อาจมีเฉลย/คำใบ้</span></span>${grayChip(d)}</summary><p class="gray">${esc(t)}</p></details>`;}
 document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.classList&&d.classList.contains("gbox"))grayU[d.dataset.grk]=d.open;},true);
 document.addEventListener("click",e=>{const b=e.target&&e.target.closest&&e.target.closest("[data-gdef]");if(!b)return;e.preventDefault();
   const on=b.dataset.gdef==="1",me=b.closest("details.gbox");st.grayOpen=on;save();
   for(const k in grayU)delete grayU[k];if(me)grayU[me.dataset.grk]=me.open;   /* the box being used stays as it is; every other box follows the new default */
-  document.querySelectorAll("details.gbox").forEach(x=>{if(x!==me)x.open=on;x.querySelectorAll("[data-gdef]").forEach(c=>c.setAttribute("aria-pressed",String((c.dataset.gdef==="1")===on)));});
+  document.querySelectorAll("details.gbox").forEach(x=>{if(x!==me)x.open=on;x.querySelectorAll("[data-gdef]").forEach(c=>c.outerHTML=grayChip(on));});
   toast(on?"ค่าเริ่มต้น: เปิดข้อความในไฟล์ทุกข้อ":"ค่าเริ่มต้น: ปิดข้อความในไฟล์ทุกข้อ");});
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
