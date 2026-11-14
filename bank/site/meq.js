@@ -111,8 +111,14 @@ function mqPtsFrac(s,c){const S=s.secs||[];if(!S.some(x=>x[2]>0)){const sc=mqPts
     if(tot&&w){W+=w;G+=w*got/tot;}});return W?G/W:0;}
 function mqPtsScore(s,c){let tot=0,got=0;(s.points||[]).forEach((p,j)=>{if(typeof p==="string"){tot++;if(c[j]===true)got++;}else{const n=p.need||1,v=Array.isArray(c[j])?c[j].filter(Boolean).length:0;tot+=n;got+=Math.min(n,v);}});return {tot,got};}
 function mqRx(p,t){try{return new RegExp(p,"i").test(t);}catch(e){return false;}}
-function mqKwTicks(s,t){const K=s.kw||[];return (s.points||[]).map((p,j)=>{const k=K[j];if(typeof p==="string")return !!(k&&k.some(x=>mqRx(x,t)));return p.any.map((a,m)=>!!(k&&k[m]&&k[m].some(x=>mqRx(x,t))));});}
-function mqAutoFull(s,t){if(!s.auto||!t)return false;if((s.auto.all||[]).some(r=>!mqRx(r,t)))return false;const A=s.auto.any||[];return A.filter(r=>mqRx(r,t)).length>=(A.length?(s.auto.need||1):0);}
+/* count-limited sub (s.lim = N, user 14 Nov 2026): "list 3 …" — only the first N items typed count, the rest are ignored even if right */
+function mqItems(t){t=String(t||"").trim();if(!t)return [];const cl=x=>x.replace(/^\s*(?:[-•*·–]|\(?\d+[.)]|\(?[a-e][.)])\s*/i,"").trim();
+  let L=t.split(/\n+/).map(cl).filter(Boolean);if(L.length>1)return L;
+  L=t.split(/\s+(?=\(?\d+[.)]\s)/).map(cl).filter(Boolean);if(L.length>1)return L;
+  return t.split(/\s*[,;]\s*|\s+(?:และ|and)\s+/i).map(cl).filter(Boolean);}
+function mqLimT(s,t){return s&&s.lim&&t?mqItems(t).slice(0,s.lim).join("\n"):t;}
+function mqKwTicks(s,t){t=mqLimT(s,t);const K=s.kw||[];return (s.points||[]).map((p,j)=>{const k=K[j];if(typeof p==="string")return !!(k&&k.some(x=>mqRx(x,t)));return p.any.map((a,m)=>!!(k&&k[m]&&k[m].some(x=>mqRx(x,t))));});}
+function mqAutoFull(s,t){if(!s.auto||!t)return false;t=mqLimT(s,t);if((s.auto.all||[]).some(r=>!mqRx(r,t)))return false;const A=s.auto.any||[];return A.filter(r=>mqRx(r,t)).length>=(A.length?(s.auto.need||1):0);}
 function mqKwGrade(s,t){if(!t)return null;if(mqAutoFull(s,t))return {grade:2,auto:1};if(!s.kw||!(s.points||[]).length)return null;const c=mqKwTicks(s,t),sc=mqPtsScore(s,c),cm=mqCritMiss(s,c).length;return {grade:cm?0:sc.got>=sc.tot?2:sc.got>0?1:0,got:sc.got,tot:sc.tot,c};}
 function mqKwFill(q,subs){const x=mqEns(q);x.kg=x.kg||{};x.c=x.c||{};x.cs=x.cs||{};x.g=x.g||{};x.gm=x.gm||{};
   subs.forEach(s=>{const i=s._i,t=((x.t&&x.t[i])||"").trim();delete x.kg[i];if(!t)return;const k=mqKwGrade(s,t);if(!k)return;
@@ -152,7 +158,7 @@ ${s.key?"เฉลยในไฟล์: "+plain(s.key).slice(0,1100)+"\n":""}�
 ${String(r.t[s._i]).slice(0,3000)}
 """
 `;});if(mqIsOS()&&q.topic&&typeof osRefFor==="function"){const R=osRefFor(q.topic,osSubOf(q));if(R.length)t+="\n=== แหล่งอ้างอิงของคณะ (ใช้เทียบได้ แต่ถ้าขัดกับ guideline/ตำรา ให้ยึดแหล่งที่เชื่อถือกว่า) ===\n"+R.map(x=>x.title+"\n"+x.text).join("\n\n")+"\n";}return t;}
-function mqPtsText(s){return (s.points||[]).map(p=>typeof p==="string"?plain(p):`${plain(p.label||"")} — ตอบ ${p.need||1} อย่างจาก: ${p.any.map(plain).join(" | ")}`).join(" ; ");}
+function mqPtsText(s){return (s.lim?`[ข้อนี้กำหนดให้ตอบ ${s.lim} อย่าง — นับเฉพาะ ${s.lim} อย่างแรกที่ผู้สอบตอบ เกินมาไม่นับ] ; `:"")+(s.points||[]).map(p=>typeof p==="string"?plain(p):`${plain(p.label||"")} — ตอบ ${p.need||1} อย่างจาก: ${p.any.map(plain).join(" | ")}`).join(" ; ");}
 async function mqAiRun(q,pi,force){const k=q.uid+"#"+pi;if(MQAI.busy[k])return;const r=mqRec(q);if(!r)return;
   const subs=(mqTM()?mqTsubs(q,pi):q.parts[pi].subs).filter(s=>!mqReo(r,s._i)&&mqSubDone(q,s,r)&&((r.t&&r.t[s._i])||"").trim()&&(force||!(r.ai&&r.ai[s._i])));
   if(!subs.length)return;let mode="";try{mode=await aiMode();}catch(e){}if(!mode){MQAI.off=1;return;}
@@ -173,7 +179,7 @@ const mqAiAvail=()=>!MQAI.off&&(HAS_CLAUDE()||!!aiCfg().key);
 const MQ_ROUNDS=[
   {k:"grand",n:"Grand round",d:"สุ่ม MEQ จากทั้งคลังทีละข้อ ยำรวมทุกแบบ (case + short answer) ไม่สนชุดหรือหัวข้อ"},
   {k:"service",n:"Service round",d:"ทำ MEQ ตามชุดข้อสอบ เลือกชุดและแบบ (case / short answer) ได้ · เคสเปิด Part ทีละช่วงเหมือนสอบจริง พิมพ์ตอบแล้วดูเฉลย + คะแนนแนะนำ"},
-  {k:"morning",n:"Morning round",d:"วันละ 1 เคส (1 โรค) 3–5 ข้อย่อย แนวเดียวกับข้อสอบเก่า · ทุกคนได้เคสเดียวกันในวันนั้น · ระหว่างทำไม่บอกอะไรเลยเหมือน Legendary · เคสใหม่ทุกวัน 07:30"},
+  {k:"morning",n:"Morning round",d:"วันละ 1 เคส (1 โรค) 4–5 Part แนวเดียวกับข้อสอบเก่า · เริ่มจาก CC แล้วซักประวัติเสมอ · ทุกคนได้เคสเดียวกันในวันนั้น · ระหว่างทำไม่บอกอะไรเลยเหมือน Legendary · เคสใหม่ทุกวัน 07:30"},
   {k:"legend",n:"Legendary round",d:"",soon:1,off:1,note:"ปิดไว้ก่อน — ยังไม่เปิดใน MEQ / OSCE"},
   {k:"staff",n:"Ward staff round",d:"ทวนข้อ MEQ ที่ทำแล้วแต่ยังมี Part ที่ไม่ได้เต็ม"},
   {k:"teach",n:"Teaching round",d:"ใบเหลือง · CTA · Flashcard · Oral (ใช้ร่วมกับ MCQ / OSCE)"},
@@ -246,7 +252,8 @@ function mqHomeHTML(type){type=type||"MEQ";const P=P_(),p=ph(),L=mqL(ward,type),
   if(HAS_CLAUDE()&&L.length)h+=`<button class="resume" id="mqInGo"><span><b>📋 ตรวจคำตอบ MEQ / OSCE จากเว็บ</b><span class="rd">วางรหัสที่คัดลอกจากเว็บ แล้วให้ Claude ประเมิน</span></span><span class="go">→</span></button>`;
   const cnt=k=>{const t=k==="service"?`มี <b>${L.length}</b> ข้อ · ${L.reduce((a,q)=>a+q.subs.length,0)} ${type==="OSCE"?"ข้อย่อย":"Part"}`:k==="staff"?`มีข้อให้ทวน <b>${sl}</b> ข้อ`:k==="advisor"?`อ่านเฉลยได้ <b>${L.filter(mqAnyDone).length+(type==="OSCE"?Object.keys(osAIMap()).filter(u=>!L.some(q=>q.uid===u)).length:0)}</b> ข้อ`:k==="unit"?`มี <b>${mqTopics().length}</b> หัวข้อ`:"";return t?`<span class="rcnt">${t}</span>`:"";};
   const RS=mqRounds(type),osRun=type==="OSCE"&&typeof osRunCur==="function"&&osRunCur();
-  h+=`<div class="rounds">${RS.map((r,i)=>`<button class="round" data-mqround="${r.k}" aria-disabled="${!!r.soon}">${r.soon?`<span class="soon">${r.off?"ปิดไว้":"เร็ว ๆ นี้"}</span>`:r.k==="staff"&&sl?`<span class="badge">${sl}</span>`:r.k==="legend"&&osRun?`<span class="badge">กำลังสอบ</span>`:""}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}</b><span class="rd">${r.soon?(r.note||"รายละเอียดจะเพิ่มภายหลัง"):r.d}</span>${(r.k==="legend"||r.k==="quality")&&type==="OSCE"?osLegCnt(r.k):r.k==="unit"&&type==="OSCE"?osUnitCnt():r.k==="morning"&&!r.soon?mornXBox(type):L.length?cnt(r.k):""}</button>`).join("")}</div>`;
+  const mfx=RS.some(r=>r.k==="morning"&&!r.soon)?mornXFx(type):[],MG=mfx.length||RS.some(r=>r.k==="morning"&&!r.soon)?mornGame():null;
+  h+=`<div class="rounds">${RS.map((r,i)=>`<button class="round${r.k==="morning"&&!r.soon?mfx.map(c=>" "+c).join(""):""}" data-mqround="${r.k}" aria-disabled="${!!r.soon}"${r.k==="morning"&&mfx.includes("maura")?` style="${auraVars(mDay())}"`:""}>${r.soon?`<span class="soon">${r.off?"ปิดไว้":"เร็ว ๆ นี้"}</span>`:r.k==="staff"&&sl?`<span class="badge">${sl}</span>`:r.k==="legend"&&osRun?`<span class="badge">กำลังสอบ</span>`:""}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}${r.k==="morning"&&!r.soon&&MG?mGameHTML(MG):""}</b><span class="rd">${r.soon?(r.note||"รายละเอียดจะเพิ่มภายหลัง"):r.d}</span>${(r.k==="legend"||r.k==="quality")&&type==="OSCE"?osLegCnt(r.k):r.k==="unit"&&type==="OSCE"?osUnitCnt():r.k==="morning"&&!r.soon?mornXBox(type):L.length?cnt(r.k):""}</button>`).join("")}</div>`;
   return h;}
 function mqBindHome(type){type=type||"MEQ";
   document.querySelectorAll("[data-mqround]").forEach(b=>b.onclick=()=>{const k=b.dataset.mqround,R=mqRounds(type).find(r=>r.k===k);if(R.soon){toast(R.note||"โหมดนี้จะเพิ่มภายหลัง");return;}
@@ -356,12 +363,12 @@ function mqView(){const c=mqCur();if(!c){go(ward);return;}const {q}=c;let pi=c.p
   const part=q.parts[pi],pDone=mqPDone(q,pi),SUBS=tm?mqTsubs(q,pi):part.subs,TP=tm?mqTParts(q):null,ans=mqAnswering(),gl=mqGL(q,pi);
   const Q=v.r==="grand"?v.gl.map(u=>mqL().find(x=>x.uid===u)).filter(Boolean):mqList(),k=Q.indexOf(q);
   let h=`<div class="mqv"><div class="mtbar"><a class="back" href="#/${esc(ward)}${v.r==="grand"||v.r==="morning"?"":v.r==="spc"?"/osspc":"/mqr"}">← ${v.r==="grand"||v.r==="morning"?"หน้าวอร์ด":v.r==="spc"?"Specialty round":"รายการข้อ"}</a><span class="tsel">${esc(MQ_RN(v.r))}${tm?" · หัวข้อ: "+esc(v.tags.map(mqTN).join(", ")):""}</span><span class="tcnt">${k>=0?`${k+1}/${Q.length}`:""}</span></div>`;
-  h+=`<div class="qhead"><div class="qnum"><small>ข้อ</small>${esc(mqNum(q))}</div><div class="fields"><span class="field"><b>${esc(CFG.setLabel||"ชุด")}</b>${esc(q.set)}</span>${q.ro?`<span class="field"><b>${esc(CFG.roLabel||"Ro")}</b>${esc(q.ro)}</span>`:""}<span class="field case-tag"><b>${mqKN()}</b>${mqIsOS()?`${esc(mqTN(q.topic||"")||"")} · ${q.proc?"หัตถการ (มีอาจารย์)":q.ex?"มีอาจารย์":"ไม่มีอาจารย์"} · ${q.subs.length} ข้อย่อย`:q.sa?"short answer":`case · ${q.subs.length} Part`}</span></div>`;
+  const qN=mqNum(q);h+=`<div class="qhead"><div class="qnum${qN.length>4?" long":""}"><small>${q.mday?"เคสประจำวัน":"ข้อ"}</small>${esc(qN)}</div><div class="fields">${q.mday?"":`<span class="field"><b>${esc(CFG.setLabel||"ชุด")}</b>${esc(q.set)}</span>`}${q.ro?`<span class="field"><b>${esc(CFG.roLabel||"Ro")}</b>${esc(q.ro)}</span>`:""}<span class="field case-tag"><b>${mqKN()}</b>${mqIsOS()?`${esc(mqTN(q.topic||"")||"")} · ${q.proc?"หัตถการ (มีอาจารย์)":q.ex?"มีอาจารย์":"ไม่มีอาจารย์"} · ${q.subs.length} ข้อย่อย`:q.sa?"short answer":`case · ${q.subs.length} Part`}</span></div>`;
   h+=`<div class="qtools">${(!mqCaseDone(q)||ans)&&!mqIsOS()?`<span class="timer" id="mqTimer"></span>`:""}${ans&&!mqIsOS()?`<button class="tbtn${mqPaused()?" on":""}" id="mqPause" type="button">${mqPaused()?"▶ เดินต่อ":"⏸ หยุดเวลา"}</button><button class="tbtn" id="mqTRes" type="button">↺ เริ่มจับเวลาใหม่</button>`:""}<button class="starbtn" id="mqStar" aria-pressed="${mqStar(q)}" title="ติดดาวไว้ทบทวน">${mqStar(q)?"★":"☆"}</button></div></div>`;
   if(tm){if(TP.length>1)h+=`<div class="psteps">${TP.map(j=>{const d=mqTDone(q,j);return `<button class="pstep ${d?"done":"open"}${j===pi?" on":""}" data-mpart="${j}">${d?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;}
   else if(NP>1)h+=`<div class="psteps">${q.parts.map((p,j)=>{const lock=j>ps;return `<button class="pstep ${j<ps?"done":j===ps?"open":"lock"}${j===pi?" on":""}" data-mpart="${j}" ${lock?'disabled title="ส่งคำตอบ Part ก่อนหน้าก่อน"':""}>${lock?"🔒 ":j<ps?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;
   if(mqCaseDone(q))h+=myNoteTop(q);   /* 📝 my after-answer note above the question — only once the whole case has been answered (user 28 Oct 2026) */
-  if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">ข้อ ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?`<p class="gray">${esc(q.gray)}</p>`:""}</section>`;
+  if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">${q.mday?"เคสประจำวัน":"ข้อ"} ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?`<p class="gray">${esc(q.gray)}</p>`:""}</section>`;
     const prev=q.parts.slice(0,pi).filter(p=>p.info||p.img);
     if(prev.length)h+=`<details class="prev old" open><summary>ข้อมูลเพิ่มเติมจาก Part ก่อนหน้า <span class="oldtag">ข้อมูลเดิม</span></summary>${prev.map(p=>`<div class="pinfo"><span class="pn">${esc(mqGL(q,p.i).replace("Part ","P"))}</span><div>${p.info?`<div>${p.info}</div>`:""}${p.info&&(p.igray||p.gray)?`<p class="gray">${esc(p.igray||p.gray)}</p>`:""}${mqImgs(p.img,p.imgNote)}</div></div>`).join("")}</details>`;}
   const pm=SUBS.reduce((a,s)=>a+mqMk(s),0);
@@ -403,6 +410,7 @@ function mqDoneSub(q,pi,s,r,t){const i=s._i,typed=!!t.trim(),ai=(r.ai&&r.ai[i])|
   if(!typed)h+=`<div class="muted">ไม่ได้พิมพ์คำตอบ — เทียบกับเฉลยและเกณฑ์ด้านล่าง แล้วให้คะแนนตัวเอง</div>`;
   else{if(ai)h+=`<div><b>🤖 AI:</b> ${mqNl(sg&&sg.grade===2&&ai.grade!==2?MQ_GOOD:ai.assess)}</div>${ai.missing&&!(sg&&sg.grade===2)?`<div class="aimiss"><b>ขาด / ควรเพิ่ม:</b> ${mqNl(ai.missing)}</div>`:""}`;
     else if(MQAI.busy[kk])h+=`<div class="muted">⏳ AI กำลังอ่านคำตอบ… (ครั้งแรกใน Claude จะมีหน้าต่างขออนุญาต)</div>`;
+    if(s.lim){const nI=mqItems(t).length;if(nI>s.lim)h+=`<div class="aimiss"><b>ตอบมา ${nI} อย่าง เกินที่โจทย์กำหนด (${s.lim})</b> — นับเฉพาะ ${s.lim} อย่างแรก</div>`;}
     const kg=r.kg&&r.kg[i];
     if(kg&&!ai){const miss=(s.points||[]).map((p,j)=>{const c=mqTicks(s,r)[j];return typeof p==="string"?(c===true?null:p):(Array.isArray(c)&&c.filter(Boolean).length>=(p.need||1)?null:(p.label||p.any.join(" / ")));}).filter(Boolean);
       h+=`<div>🔎 <b>เทียบคำสำคัญ</b>${kg.auto?" — มีคำตอบหลักตรงเกณฑ์ \"ได้\"":kg.tot?` — เจอ <b>${kg.got}/${kg.tot}</b> ประเด็น (ติ๊กให้ในข้อ ④ แล้ว)`:""}</div>${miss.length&&!kg.auto?`<div class="aimiss"><b>ยังไม่เจอในคำตอบ:</b> ${miss.map(x=>plain(x)).map(esc).join(" · ")}</div>`:""}<div class="muted">ระบบจับคำสำคัญแบบคร่าว ๆ (ไม่ใช้ AI ใช้ได้ไม่จำกัด) — ถ้าเขียนด้วยคำอื่นอาจจับไม่ได้ ตรวจและแก้ติ๊กเองได้</div>`;}
@@ -414,7 +422,7 @@ function mqDoneSub(q,pi,s,r,t){const i=s._i,typed=!!t.trim(),ai=(r.ai&&r.ai[i])|
   if((s.points||[]).length){const c=mqTicks(s,r);h+=`<ul class="pts"><li class="ph">ประเด็นที่ควรมีในคำตอบ (ติ๊กข้อที่ตอบได้)</li>${s.points.map((p,j)=>{const hd=mqSecHead(s,j,c),ct=mqCritTag(s,j);
     if(typeof p==="string")return hd+`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" ${c[j]===true?"checked":""}><span>${p}${ct}</span></label></li>`;
     const vv=Array.isArray(c[j])?c[j]:[],need=p.need||1;
-    return hd+`<li class="pgrp"><div class="pgl">${p.label?p.label+" ":""}<span class="alt">${need===1?"เลือกอย่างใดอย่างหนึ่งก็ถูก":`ตอบ ${need} อย่างจากนี้ก็ได้เต็ม`}</span>${ct}</div><ul>${p.any.map((a,m)=>`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" data-mk="${m}" ${vv[m]?"checked":""}><span>${a}</span></label></li>`).join("")}</ul></li>`;}).join("")}</ul>`;
+    return hd+`<li class="pgrp"><div class="pgl">${p.label?p.label+" ":""}<span class="alt">${s.lim?`โจทย์ให้ตอบ ${s.lim} อย่าง — นับเฉพาะ ${s.lim} อย่างแรกที่ตอบ ถูก ${need} อย่างจากนี้ได้เต็ม`:need===1?"เลือกอย่างใดอย่างหนึ่งก็ถูก":`ตอบ ${need} อย่างจากนี้ก็ได้เต็ม`}</span>${ct}</div><ul>${p.any.map((a,m)=>`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" data-mk="${m}" ${vv[m]?"checked":""}><span>${a}</span></label></li>`).join("")}</ul></li>`;}).join("")}</ul>`;
     if(c.length)h+=mqCritWarn(s,c);
     if(mqIsOS()){const f=mqFrac(s,r),sc=mqPtsScore(s,c.length?c:[]);h+=`<div class="oschk">Checklist ได้ <b>${sc.got}/${sc.tot}</b> ประเด็น${f!==null?` · ข้อย่อยนี้ได้ <b>${+(mqMk(s)*f).toFixed(1)}/${mqMk(s)}</b> คะแนน${r.gm&&r.gm[i]?" (เลือกคะแนนเอง)":""}`:""}</div>`;}}
   h+=`</div>`+mqKeyWarn(s);

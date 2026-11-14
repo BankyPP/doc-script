@@ -438,6 +438,10 @@ function osUnitAll(){const W=W_(),cnt={};return (W&&W.OSU||[]).map(c=>{const t=c
 function osSpcS(){const m=mqInitP(P_(),"OSCE");const S=m.spc=m.spc||{};S.sel=S.sel||{all:0,T:[],U:[]};["T","U"].forEach(k=>{if(!Array.isArray(S.sel[k]))S.sel[k]=[];});
   S.bag=S.bag||{sig:"",list:[]};S.list=Array.isArray(S.list)?S.list:[];S.B=S.B||{};S.pts=S.pts||{};return S;}
 function osSpcQ(u){const S=osSpcS(),raw=S.B[u];if(!raw)return null;const k="S"+u;if(!XQ[k])XQ[k]=mqNormX(xClone(raw),true);return XQ[k];}
+/* no case today but a later one is ready (e.g. before case 1 starts) → "รอวันจันทร์ 16 พ.ย. 07:30 เริ่มเคสที่ 1" (user 14 Nov 2026) */
+function mornMQWait(){const d=mDay(),W=W_(),nx=(W&&W.MORN||[]).filter(c=>c.day>d).sort((a,b)=>a.day<b.day?-1:1)[0];if(!nx)return "ยังไม่มีเคสใหม่ — รอเติมเคส";
+  const [y,m,dd]=nx.day.split("-").map(Number),wd=["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"][new Date(y,m-1,dd).getDay()];
+  return `รอ${wd} ${dd} ${TH_MO[m-1]} 07:30 ${nx.no?`เริ่มเคสที่ ${nx.no}`:"— เคสถัดไป"}`;}
 function mqXFind(u){if(!u)return null;if(mqIsOS()){if(/^OSU\|/.test(u))return osUnitAll().find(q=>q.uid===u)||null;return osSpcQ(u);}
   if(/^MORN\|/.test(u))return mornMQAll().find(q=>q.uid===u&&q.mday<=mDay())||null;return null;}
 function mqXAll(){if(mqIsOS())return osUnitAll().concat(osSpcS().list.map(osSpcQ).filter(Boolean));return mornMQAll().filter(q=>q.mday<=mDay());}
@@ -462,18 +466,30 @@ function osMorn(make){const m=mqInitP(P_(),"OSCE"),d=mDay();m.mornH=m.mornH||{};
   const list=shuffle(a.concat(u)).map(q=>q.uid);
   osMornOut=!list.length&&used.size>0;if(!list.length)return null;
   x=m.morn={day:d,list,ts:now()};save();return x;}
+/* state of the Morning MEQ case / OSCE set of day d for the current ward, whatever tab is open (P.type switched for the lookup only) */
+function mqKindDo(k,fn){const P=P_(),o=P.type;P.type=k;try{return fn();}finally{P.type=o;}}
+function mornXState(d){const out={},P=P_(),W=W_();if(!W)return out;
+  const pc=(q,r)=>{const s=mqScoreOf(q.subs,r);return s.all&&s.tot?s.got/s.tot:null;},best=a=>{const v=a.filter(x=>x!=null);return v.length?Math.max(...v):null;};
+  if((W.MORN||[]).some(c=>c.day===d)){const q=mornMQAll().find(x=>x.mday===d);if(q){const R=xRecs(q,"MEQ").filter(r=>mqCaseDone(q,r));out.meq={done:R.length>0,pct:best(R.map(r=>pc(q,r)))};}}
+  const m=P.osce,x=m&&(m.morn&&m.morn.day===d?m.morn:(m.mornH||{})[d]);
+  if(x&&(x.list||[]).length){const qs=mqKindDo("OSCE",()=>x.list.map(u=>mqFindU(u)).filter(Boolean)),dn=qs.filter(q=>xDone(q,"OSCE"));
+    const ps=dn.map(q=>best(xRecs(q,"OSCE").filter(r=>mqCaseDone(q,r)).map(r=>pc(q,r))));
+    out.os={done:qs.length>0&&dn.length>=qs.length,n:dn.length,tot:qs.length,pct:dn.length>=qs.length&&ps.every(v=>v!=null)?ps.reduce((a,b)=>a+b,0)/ps.length:null};}
+  return out;}
+/* Morning box colours for MEQ / OSCE (per exam type): green = today's case / set done, red = not yet · gold edge = done on time · aura = ≥80% */
+function mornXFx(type){const s=mornXState(mDay())[type==="OSCE"?"os":"meq"];if(!s)return [];const c=[s.done?"mgood":"mwarn"];if(s.done)c.push("mgold");if(s.done&&s.pct!=null&&s.pct>=MX_GOOD)c.push("maura");return c;}
 function mornXList(){if(mqIsOS()){const x=osMorn(false);return x?x.list.map(u=>mqFindU(u)).filter(Boolean):[];}const q=mqXFind("MORN|"+mDay());return q?[q]:[];}
 function mornXBox(type){const clock=`<span class="mclock">${type==="OSCE"?"ชุดใหม่":"เคสใหม่"}ใน <b id="mClock">${hms(mNext()-now())}</b></span>`;let t;
   if(type==="OSCE"){const x=osMorn(false);
     if(!x){const can=mqL(ward,"OSCE").length||osUnitAll().length;t=can?"🎁 ยังไม่ได้เปิดกล่องวันนี้":"🎁 ยังไม่มีสถานีให้เปิดกล่อง — รอข้อสอบเก่า OSCE / สถานี Unit round";}
     else{const L=mornXList(),dn=L.filter(q=>xDone(q,"OSCE")).length;t=!dn&&!L.some(q=>xTouched(q,"OSCE"))?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":dn<L.length?`วันนี้ทำไป ${dn}/${L.length} สถานี`:`✓ ครบ ${dn}/${L.length} สถานีแล้ว`;}}
   else{const P=P_(),m=mqInitP(P,"MEQ"),d=mDay(),q=mqXFind("MORN|"+d),op=m.mopen&&m.mopen[d];
-    t=!q?"ยังไม่มีเคสใหม่ — รอเติมเคส":!op?"🎁 ยังไม่ได้เปิดกล่องวันนี้":xDone(q,"MEQ")?"✓ ทำเคสวันนี้ครบแล้ว":xTouched(q,"MEQ")?"ทำไปบางส่วน — ทำต่อให้ครบนะ":"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ";}
+    t=!q?mornMQWait():!op?"🎁 ยังไม่ได้เปิดกล่องวันนี้":xDone(q,"MEQ")?"✓ ทำเคสวันนี้ครบแล้ว":xTouched(q,"MEQ")?"ทำไปบางส่วน — ทำต่อให้ครบนะ":"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ";}
   return `<span class="mtodo${/^✓/.test(t)?" ok":""}">${t}</span>${clock}`;}
 function mornXStart(type){
   if(type==="OSCE"){const x=osMorn(true);if(!x){toast(osMornOut?"Morning round ออกครบทุกสถานีในวอร์ดนี้แล้ว — ไม่มีสถานีใหม่ที่ยังไม่เคยออก":"ยังไม่มีสถานีให้ทำ — รอข้อสอบเก่า OSCE / สถานี Unit round");return;}
     const L=mornXList(),q=L.find(z=>!xDone(z,"OSCE"))||L[0];if(!q){toast("ไม่พบสถานีของวันนี้");return;}return mqOpen(q.uid,undefined,"morning");}
-  const m=mqInitP(P_(),"MEQ"),d=mDay(),q=mqXFind("MORN|"+d);if(!q){toast("ยังไม่มีเคสใหม่วันนี้ — รอเติมเคส");return;}
+  const m=mqInitP(P_(),"MEQ"),d=mDay(),q=mqXFind("MORN|"+d);if(!q){toast(mornMQWait());return;}
   m.mopen=m.mopen||{};m.mopen[d]=1;Object.keys(m.mopen).sort().slice(0,-60).forEach(k=>delete m.mopen[k]);save();mqOpen(q.uid,undefined,"morning");}
 /* ---- Unit round OSCE: by big topic ---- */
 function osUnitList(t){return t?osUnitAll().filter(q=>q.topic===t):[];}

@@ -502,7 +502,11 @@ body.gated header.bar,body.gated #legban,body.gated .nav,body.gated .qbar{displa
 /* ===== MEQ (site/meq.js) — ported from meq-platform-kit, scoped under .mqv ===== */
 .mqv .case-tag{border-color:var(--ink)!important}
 .mqv .qhead{flex-wrap:wrap}
-.mqv .qhead .fields{flex:1;min-width:0}
+.mqv .qhead .fields{flex:1 1 12em}
+/* 14 Nov 2026: header pieces never overlap — chips keep one line each, the fields box can't shrink below its widest chip, so the timer/tools row wraps underneath instead of sitting on top */
+.mqv .qhead{row-gap:10px}
+.mqv .qhead .field{white-space:nowrap}
+.mqv .qnum.long{font-size:30px;white-space:nowrap}
 .mqv .qtools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-left:auto;padding-bottom:4px;flex:none}
 .mqv .timer{white-space:nowrap;font-family:var(--num);font-weight:600;font-size:14px;color:var(--muted);border:1.5px solid var(--rule);border-radius:3px;padding:1px 8px}
 .mqv .timer.over{color:var(--wrong);border-color:var(--wrong)}
@@ -546,7 +550,7 @@ body.gated header.bar,body.gated #legban,body.gated .nav,body.gated .qbar{displa
 .mqv .srow .b.f.half{background:var(--warn);border-color:var(--warn);color:#fff}
 .mqv .srow .more{font-size:11px;color:var(--muted);font-family:var(--num)}
 .mqv .srow .st{color:var(--warn);font-size:13px}
-@media (max-width:520px){.mqv .qtools{order:3;flex-basis:100%;margin-left:0;padding-bottom:0}}
+@media (max-width:520px){.mqv .qtools{order:3;flex-basis:100%;margin-left:0;padding-bottom:0}.mqv .qnum.long{font-size:24px}.mqv .qhead .field{white-space:normal}}
 .mqv .qnum small{display:block;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--muted);line-height:1.2;margin-bottom:2px}
 .mqv .psteps{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
 .mqv .pstep{font-family:var(--num);font-weight:600;font-size:14px;border:1.5px solid var(--rule);background:transparent;border-radius:999px;padding:2px 12px;cursor:pointer;color:var(--ink)}
@@ -1362,7 +1366,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 const IMGS={};const WARDS={};
 Object.assign(IMGS,{"knl2neo_02": "img/knl2neo_02.jpg", "knl2neo_03a": "img/knl2neo_03a.jpg", "knl2neo_03c": "img/knl2neo_03c.jpg", "knl2neo_03d": "img/knl2neo_03d.jpg", "knl2neo_04a": "img/knl2neo_04a.jpg", "knl2neo_04b": "img/knl2neo_04b.jpg", "knl2neo_04c": "img/knl2neo_04c.jpg", "knl2neo_04d": "img/knl2neo_04d.jpg", "knl2neo_05a": "img/knl2neo_05a.jpg", "knl2neo_05b": "img/knl2neo_05b.jpg", "knl2neo_05c": "img/knl2neo_05c.jpg", "knl2neo_05d": "img/knl2neo_05d.jpg", "knl2neo_06a": "img/knl2neo_06a.jpg", "knl2neo_06b": "img/knl2neo_06b.jpg", "knl2neo_06c": "img/knl2neo_06c.jpg", "knl2neo_06d": "img/knl2neo_06d.jpg", "knl2neo_07a": "img/knl2neo_07a.jpg", "knl2neo_07b": "img/knl2neo_07b.jpg", "knl2neo_07c": "img/knl2neo_07c.jpg", "knl2neo_11c": "img/knl2neo_11c.jpg", "knl2neo_11d": "img/knl2neo_11d.jpg", "knl2neo_13a": "img/knl2neo_13a.jpg", "knl2neo_13b": "img/knl2neo_13b.jpg", "knl2neo_13d": "img/knl2neo_13d.jpg", "knl2neo_14a": "img/knl2neo_14a.jpg", "knl2neo_14b": "img/knl2neo_14b.jpg", "knl2neo_14c": "img/knl2neo_14c.jpg", "knl2neo_14d": "img/knl2neo_14d.jpg", "knl2neo_15a": "img/knl2neo_15a.jpg", "knl2neo_15b": "img/knl2neo_15b.jpg", "knl2neo_15d": "img/knl2neo_15d.jpg", "knl2neo_16a": "img/knl2neo_16a.jpg", "knl2neo_16b": "img/knl2neo_16b.jpg", "knl2neo_16c": "img/knl2neo_16c.jpg", "knl2neo_16d": "img/knl2neo_16d.jpg", "knl2neo_17": "img/knl2neo_17.jpg", "nl2neo_p01": "img/nl2neo_p01.jpg", "nl2neo_p02": "img/nl2neo_p02.jpg", "nl2neo_p03": "img/nl2neo_p03.jpg", "nl2neo_p04": "img/nl2neo_p04.jpg", "nl2neo_p05": "img/nl2neo_p05.jpg", "nl2neo_p06": "img/nl2neo_p06.jpg", "nl2neo_p07": "img/nl2neo_p07.jpg", "nl2neo_p08": "img/nl2neo_p08.jpg", "nl2neo_p09": "img/nl2neo_p09.jpg", "nl2neo_p10": "img/nl2neo_p10.jpg", "nl2neo_p11": "img/nl2neo_p11.jpg", "nl2neo_p12": "img/nl2neo_p12.jpg", "nl2neo_p13": "img/nl2neo_p13.jpg", "nl2neo_p14": "img/nl2neo_p14.jpg", "nl2neo_p15": "img/nl2neo_p15.jpg", "nl2neo_p16": "img/nl2neo_p16.jpg", "nl2neo_p17": "img/nl2neo_p17.jpg"});
 const CONFIG={"title": "คลังข้อสอบเก่า NL · โพยหมอ", "brand": "Past NL", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-nl-v1", "setLabel": "ชุด", "roLabel": "ที่มา", "chipStrip": "", "files": {"NL2NEO": "L42_Neonatology"}, "siteUrl": "https://bankypp.github.io/doc-script/bank/nl/", "siteName": "คลังข้อสอบเก่า NL", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "nl"], "sharedPrefix": "poy_nl_", "homeBrand": "Past {short} by BankyPP", "quizBrand": "Past {short} {type}", "artifactUrl": "", "subjects": [{"id": "nl", "name": "National License (NL)", "wards": ["nl1", "nl2"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "_roundNamesSaved": "ชื่อ round แบบ SI ที่ NL เคยใช้ — ปิดใช้ 13 พ.ย. 2026 (ผู้ใช้สั่ง: ทุกวอร์ดทุกเว็บใช้ชื่อ round original) · เก็บไว้เผื่อกลับมาใช้: เปลี่ยนชื่อ key กลับเป็น roundNames", "roundNamesSaved": {"Grand round": "Random", "Service round": "Year by year", "Legendary round": "Real Experience", "Ward staff round": "Redo", "Teaching round": "Guidance", "Advisor round": "Revise", "Unit round": "Lecture quiz", "Quality round": "Timed", "Admission round": "Anything", "Specialty round": "Quiz by topics", "Round I/O": "Summary"}, "inst": {"id": "nl", "name": "NL", "th": "NL", "en": "National License Examination", "enShort": "NLE", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"nl1": "#/nl/x/nl1", "nl2": "#/nl/x/nl2"}, "others": {"inst": "compre", "before": false, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "noExam": ["MEQ"]}]}}, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "brand": "Past NL part 1 MCQ", "dir": "data_nl1", "scope": "National License Examination Part I (NLE Part I) — ใช้ blueprint ใหม่ (มีผล 1 ม.ค. 2570): ความรู้วิทยาศาสตร์การแพทย์ + clinical ถึงปี 5 = NL1 เก่า + NL2 เก่า", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"], "lectures": [{"title": "L42_Neonatology — ติวสอบ NL2 (จุฬาฯ)", "topic": "2.3.16 Perinatal period"}]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "brand": "Past NL part 2 MCQ", "dir": "data_nl2", "scope": "National License Examination Part II (NLE Part II) = NL3 เก่า (clinical ถึงปี 6)", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="14/11/2026 12:26";
+const BUILD="14/11/2026 15:18";
 WARDS["nl1"]={QB:[],HY:null};
 (function(QB){
 (function(){
@@ -4816,8 +4820,14 @@ function mqPtsFrac(s,c){const S=s.secs||[];if(!S.some(x=>x[2]>0)){const sc=mqPts
     if(tot&&w){W+=w;G+=w*got/tot;}});return W?G/W:0;}
 function mqPtsScore(s,c){let tot=0,got=0;(s.points||[]).forEach((p,j)=>{if(typeof p==="string"){tot++;if(c[j]===true)got++;}else{const n=p.need||1,v=Array.isArray(c[j])?c[j].filter(Boolean).length:0;tot+=n;got+=Math.min(n,v);}});return {tot,got};}
 function mqRx(p,t){try{return new RegExp(p,"i").test(t);}catch(e){return false;}}
-function mqKwTicks(s,t){const K=s.kw||[];return (s.points||[]).map((p,j)=>{const k=K[j];if(typeof p==="string")return !!(k&&k.some(x=>mqRx(x,t)));return p.any.map((a,m)=>!!(k&&k[m]&&k[m].some(x=>mqRx(x,t))));});}
-function mqAutoFull(s,t){if(!s.auto||!t)return false;if((s.auto.all||[]).some(r=>!mqRx(r,t)))return false;const A=s.auto.any||[];return A.filter(r=>mqRx(r,t)).length>=(A.length?(s.auto.need||1):0);}
+/* count-limited sub (s.lim = N, user 14 Nov 2026): "list 3 …" — only the first N items typed count, the rest are ignored even if right */
+function mqItems(t){t=String(t||"").trim();if(!t)return [];const cl=x=>x.replace(/^\s*(?:[-•*·–]|\(?\d+[.)]|\(?[a-e][.)])\s*/i,"").trim();
+  let L=t.split(/\n+/).map(cl).filter(Boolean);if(L.length>1)return L;
+  L=t.split(/\s+(?=\(?\d+[.)]\s)/).map(cl).filter(Boolean);if(L.length>1)return L;
+  return t.split(/\s*[,;]\s*|\s+(?:และ|and)\s+/i).map(cl).filter(Boolean);}
+function mqLimT(s,t){return s&&s.lim&&t?mqItems(t).slice(0,s.lim).join("\n"):t;}
+function mqKwTicks(s,t){t=mqLimT(s,t);const K=s.kw||[];return (s.points||[]).map((p,j)=>{const k=K[j];if(typeof p==="string")return !!(k&&k.some(x=>mqRx(x,t)));return p.any.map((a,m)=>!!(k&&k[m]&&k[m].some(x=>mqRx(x,t))));});}
+function mqAutoFull(s,t){if(!s.auto||!t)return false;t=mqLimT(s,t);if((s.auto.all||[]).some(r=>!mqRx(r,t)))return false;const A=s.auto.any||[];return A.filter(r=>mqRx(r,t)).length>=(A.length?(s.auto.need||1):0);}
 function mqKwGrade(s,t){if(!t)return null;if(mqAutoFull(s,t))return {grade:2,auto:1};if(!s.kw||!(s.points||[]).length)return null;const c=mqKwTicks(s,t),sc=mqPtsScore(s,c),cm=mqCritMiss(s,c).length;return {grade:cm?0:sc.got>=sc.tot?2:sc.got>0?1:0,got:sc.got,tot:sc.tot,c};}
 function mqKwFill(q,subs){const x=mqEns(q);x.kg=x.kg||{};x.c=x.c||{};x.cs=x.cs||{};x.g=x.g||{};x.gm=x.gm||{};
   subs.forEach(s=>{const i=s._i,t=((x.t&&x.t[i])||"").trim();delete x.kg[i];if(!t)return;const k=mqKwGrade(s,t);if(!k)return;
@@ -4857,7 +4867,7 @@ ${s.key?"เฉลยในไฟล์: "+plain(s.key).slice(0,1100)+"\n":""}�
 ${String(r.t[s._i]).slice(0,3000)}
 """
 `;});if(mqIsOS()&&q.topic&&typeof osRefFor==="function"){const R=osRefFor(q.topic,osSubOf(q));if(R.length)t+="\n=== แหล่งอ้างอิงของคณะ (ใช้เทียบได้ แต่ถ้าขัดกับ guideline/ตำรา ให้ยึดแหล่งที่เชื่อถือกว่า) ===\n"+R.map(x=>x.title+"\n"+x.text).join("\n\n")+"\n";}return t;}
-function mqPtsText(s){return (s.points||[]).map(p=>typeof p==="string"?plain(p):`${plain(p.label||"")} — ตอบ ${p.need||1} อย่างจาก: ${p.any.map(plain).join(" | ")}`).join(" ; ");}
+function mqPtsText(s){return (s.lim?`[ข้อนี้กำหนดให้ตอบ ${s.lim} อย่าง — นับเฉพาะ ${s.lim} อย่างแรกที่ผู้สอบตอบ เกินมาไม่นับ] ; `:"")+(s.points||[]).map(p=>typeof p==="string"?plain(p):`${plain(p.label||"")} — ตอบ ${p.need||1} อย่างจาก: ${p.any.map(plain).join(" | ")}`).join(" ; ");}
 async function mqAiRun(q,pi,force){const k=q.uid+"#"+pi;if(MQAI.busy[k])return;const r=mqRec(q);if(!r)return;
   const subs=(mqTM()?mqTsubs(q,pi):q.parts[pi].subs).filter(s=>!mqReo(r,s._i)&&mqSubDone(q,s,r)&&((r.t&&r.t[s._i])||"").trim()&&(force||!(r.ai&&r.ai[s._i])));
   if(!subs.length)return;let mode="";try{mode=await aiMode();}catch(e){}if(!mode){MQAI.off=1;return;}
@@ -4878,7 +4888,7 @@ const mqAiAvail=()=>!MQAI.off&&(HAS_CLAUDE()||!!aiCfg().key);
 const MQ_ROUNDS=[
   {k:"grand",n:"Grand round",d:"สุ่ม MEQ จากทั้งคลังทีละข้อ ยำรวมทุกแบบ (case + short answer) ไม่สนชุดหรือหัวข้อ"},
   {k:"service",n:"Service round",d:"ทำ MEQ ตามชุดข้อสอบ เลือกชุดและแบบ (case / short answer) ได้ · เคสเปิด Part ทีละช่วงเหมือนสอบจริง พิมพ์ตอบแล้วดูเฉลย + คะแนนแนะนำ"},
-  {k:"morning",n:"Morning round",d:"วันละ 1 เคส (1 โรค) 3–5 ข้อย่อย แนวเดียวกับข้อสอบเก่า · ทุกคนได้เคสเดียวกันในวันนั้น · ระหว่างทำไม่บอกอะไรเลยเหมือน Legendary · เคสใหม่ทุกวัน 07:30"},
+  {k:"morning",n:"Morning round",d:"วันละ 1 เคส (1 โรค) 4–5 Part แนวเดียวกับข้อสอบเก่า · เริ่มจาก CC แล้วซักประวัติเสมอ · ทุกคนได้เคสเดียวกันในวันนั้น · ระหว่างทำไม่บอกอะไรเลยเหมือน Legendary · เคสใหม่ทุกวัน 07:30"},
   {k:"legend",n:"Legendary round",d:"",soon:1,off:1,note:"ปิดไว้ก่อน — ยังไม่เปิดใน MEQ / OSCE"},
   {k:"staff",n:"Ward staff round",d:"ทวนข้อ MEQ ที่ทำแล้วแต่ยังมี Part ที่ไม่ได้เต็ม"},
   {k:"teach",n:"Teaching round",d:"ใบเหลือง · CTA · Flashcard · Oral (ใช้ร่วมกับ MCQ / OSCE)"},
@@ -4951,7 +4961,8 @@ function mqHomeHTML(type){type=type||"MEQ";const P=P_(),p=ph(),L=mqL(ward,type),
   if(HAS_CLAUDE()&&L.length)h+=`<button class="resume" id="mqInGo"><span><b>📋 ตรวจคำตอบ MEQ / OSCE จากเว็บ</b><span class="rd">วางรหัสที่คัดลอกจากเว็บ แล้วให้ Claude ประเมิน</span></span><span class="go">→</span></button>`;
   const cnt=k=>{const t=k==="service"?`มี <b>${L.length}</b> ข้อ · ${L.reduce((a,q)=>a+q.subs.length,0)} ${type==="OSCE"?"ข้อย่อย":"Part"}`:k==="staff"?`มีข้อให้ทวน <b>${sl}</b> ข้อ`:k==="advisor"?`อ่านเฉลยได้ <b>${L.filter(mqAnyDone).length+(type==="OSCE"?Object.keys(osAIMap()).filter(u=>!L.some(q=>q.uid===u)).length:0)}</b> ข้อ`:k==="unit"?`มี <b>${mqTopics().length}</b> หัวข้อ`:"";return t?`<span class="rcnt">${t}</span>`:"";};
   const RS=mqRounds(type),osRun=type==="OSCE"&&typeof osRunCur==="function"&&osRunCur();
-  h+=`<div class="rounds">${RS.map((r,i)=>`<button class="round" data-mqround="${r.k}" aria-disabled="${!!r.soon}">${r.soon?`<span class="soon">${r.off?"ปิดไว้":"เร็ว ๆ นี้"}</span>`:r.k==="staff"&&sl?`<span class="badge">${sl}</span>`:r.k==="legend"&&osRun?`<span class="badge">กำลังสอบ</span>`:""}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}</b><span class="rd">${r.soon?(r.note||"รายละเอียดจะเพิ่มภายหลัง"):r.d}</span>${(r.k==="legend"||r.k==="quality")&&type==="OSCE"?osLegCnt(r.k):r.k==="unit"&&type==="OSCE"?osUnitCnt():r.k==="morning"&&!r.soon?mornXBox(type):L.length?cnt(r.k):""}</button>`).join("")}</div>`;
+  const mfx=RS.some(r=>r.k==="morning"&&!r.soon)?mornXFx(type):[],MG=mfx.length||RS.some(r=>r.k==="morning"&&!r.soon)?mornGame():null;
+  h+=`<div class="rounds">${RS.map((r,i)=>`<button class="round${r.k==="morning"&&!r.soon?mfx.map(c=>" "+c).join(""):""}" data-mqround="${r.k}" aria-disabled="${!!r.soon}"${r.k==="morning"&&mfx.includes("maura")?` style="${auraVars(mDay())}"`:""}>${r.soon?`<span class="soon">${r.off?"ปิดไว้":"เร็ว ๆ นี้"}</span>`:r.k==="staff"&&sl?`<span class="badge">${sl}</span>`:r.k==="legend"&&osRun?`<span class="badge">กำลังสอบ</span>`:""}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}${r.k==="morning"&&!r.soon&&MG?mGameHTML(MG):""}</b><span class="rd">${r.soon?(r.note||"รายละเอียดจะเพิ่มภายหลัง"):r.d}</span>${(r.k==="legend"||r.k==="quality")&&type==="OSCE"?osLegCnt(r.k):r.k==="unit"&&type==="OSCE"?osUnitCnt():r.k==="morning"&&!r.soon?mornXBox(type):L.length?cnt(r.k):""}</button>`).join("")}</div>`;
   return h;}
 function mqBindHome(type){type=type||"MEQ";
   document.querySelectorAll("[data-mqround]").forEach(b=>b.onclick=()=>{const k=b.dataset.mqround,R=mqRounds(type).find(r=>r.k===k);if(R.soon){toast(R.note||"โหมดนี้จะเพิ่มภายหลัง");return;}
@@ -5061,12 +5072,12 @@ function mqView(){const c=mqCur();if(!c){go(ward);return;}const {q}=c;let pi=c.p
   const part=q.parts[pi],pDone=mqPDone(q,pi),SUBS=tm?mqTsubs(q,pi):part.subs,TP=tm?mqTParts(q):null,ans=mqAnswering(),gl=mqGL(q,pi);
   const Q=v.r==="grand"?v.gl.map(u=>mqL().find(x=>x.uid===u)).filter(Boolean):mqList(),k=Q.indexOf(q);
   let h=`<div class="mqv"><div class="mtbar"><a class="back" href="#/${esc(ward)}${v.r==="grand"||v.r==="morning"?"":v.r==="spc"?"/osspc":"/mqr"}">← ${v.r==="grand"||v.r==="morning"?"หน้าวอร์ด":v.r==="spc"?"Specialty round":"รายการข้อ"}</a><span class="tsel">${esc(MQ_RN(v.r))}${tm?" · หัวข้อ: "+esc(v.tags.map(mqTN).join(", ")):""}</span><span class="tcnt">${k>=0?`${k+1}/${Q.length}`:""}</span></div>`;
-  h+=`<div class="qhead"><div class="qnum"><small>ข้อ</small>${esc(mqNum(q))}</div><div class="fields"><span class="field"><b>${esc(CFG.setLabel||"ชุด")}</b>${esc(q.set)}</span>${q.ro?`<span class="field"><b>${esc(CFG.roLabel||"Ro")}</b>${esc(q.ro)}</span>`:""}<span class="field case-tag"><b>${mqKN()}</b>${mqIsOS()?`${esc(mqTN(q.topic||"")||"")} · ${q.proc?"หัตถการ (มีอาจารย์)":q.ex?"มีอาจารย์":"ไม่มีอาจารย์"} · ${q.subs.length} ข้อย่อย`:q.sa?"short answer":`case · ${q.subs.length} Part`}</span></div>`;
+  const qN=mqNum(q);h+=`<div class="qhead"><div class="qnum${qN.length>4?" long":""}"><small>${q.mday?"เคสประจำวัน":"ข้อ"}</small>${esc(qN)}</div><div class="fields">${q.mday?"":`<span class="field"><b>${esc(CFG.setLabel||"ชุด")}</b>${esc(q.set)}</span>`}${q.ro?`<span class="field"><b>${esc(CFG.roLabel||"Ro")}</b>${esc(q.ro)}</span>`:""}<span class="field case-tag"><b>${mqKN()}</b>${mqIsOS()?`${esc(mqTN(q.topic||"")||"")} · ${q.proc?"หัตถการ (มีอาจารย์)":q.ex?"มีอาจารย์":"ไม่มีอาจารย์"} · ${q.subs.length} ข้อย่อย`:q.sa?"short answer":`case · ${q.subs.length} Part`}</span></div>`;
   h+=`<div class="qtools">${(!mqCaseDone(q)||ans)&&!mqIsOS()?`<span class="timer" id="mqTimer"></span>`:""}${ans&&!mqIsOS()?`<button class="tbtn${mqPaused()?" on":""}" id="mqPause" type="button">${mqPaused()?"▶ เดินต่อ":"⏸ หยุดเวลา"}</button><button class="tbtn" id="mqTRes" type="button">↺ เริ่มจับเวลาใหม่</button>`:""}<button class="starbtn" id="mqStar" aria-pressed="${mqStar(q)}" title="ติดดาวไว้ทบทวน">${mqStar(q)?"★":"☆"}</button></div></div>`;
   if(tm){if(TP.length>1)h+=`<div class="psteps">${TP.map(j=>{const d=mqTDone(q,j);return `<button class="pstep ${d?"done":"open"}${j===pi?" on":""}" data-mpart="${j}">${d?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;}
   else if(NP>1)h+=`<div class="psteps">${q.parts.map((p,j)=>{const lock=j>ps;return `<button class="pstep ${j<ps?"done":j===ps?"open":"lock"}${j===pi?" on":""}" data-mpart="${j}" ${lock?'disabled title="ส่งคำตอบ Part ก่อนหน้าก่อน"':""}>${lock?"🔒 ":j<ps?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;
   if(mqCaseDone(q))h+=myNoteTop(q);   /* 📝 my after-answer note above the question — only once the whole case has been answered (user 28 Oct 2026) */
-  if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">ข้อ ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?`<p class="gray">${esc(q.gray)}</p>`:""}</section>`;
+  if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">${q.mday?"เคสประจำวัน":"ข้อ"} ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?`<p class="gray">${esc(q.gray)}</p>`:""}</section>`;
     const prev=q.parts.slice(0,pi).filter(p=>p.info||p.img);
     if(prev.length)h+=`<details class="prev old" open><summary>ข้อมูลเพิ่มเติมจาก Part ก่อนหน้า <span class="oldtag">ข้อมูลเดิม</span></summary>${prev.map(p=>`<div class="pinfo"><span class="pn">${esc(mqGL(q,p.i).replace("Part ","P"))}</span><div>${p.info?`<div>${p.info}</div>`:""}${p.info&&(p.igray||p.gray)?`<p class="gray">${esc(p.igray||p.gray)}</p>`:""}${mqImgs(p.img,p.imgNote)}</div></div>`).join("")}</details>`;}
   const pm=SUBS.reduce((a,s)=>a+mqMk(s),0);
@@ -5108,6 +5119,7 @@ function mqDoneSub(q,pi,s,r,t){const i=s._i,typed=!!t.trim(),ai=(r.ai&&r.ai[i])|
   if(!typed)h+=`<div class="muted">ไม่ได้พิมพ์คำตอบ — เทียบกับเฉลยและเกณฑ์ด้านล่าง แล้วให้คะแนนตัวเอง</div>`;
   else{if(ai)h+=`<div><b>🤖 AI:</b> ${mqNl(sg&&sg.grade===2&&ai.grade!==2?MQ_GOOD:ai.assess)}</div>${ai.missing&&!(sg&&sg.grade===2)?`<div class="aimiss"><b>ขาด / ควรเพิ่ม:</b> ${mqNl(ai.missing)}</div>`:""}`;
     else if(MQAI.busy[kk])h+=`<div class="muted">⏳ AI กำลังอ่านคำตอบ… (ครั้งแรกใน Claude จะมีหน้าต่างขออนุญาต)</div>`;
+    if(s.lim){const nI=mqItems(t).length;if(nI>s.lim)h+=`<div class="aimiss"><b>ตอบมา ${nI} อย่าง เกินที่โจทย์กำหนด (${s.lim})</b> — นับเฉพาะ ${s.lim} อย่างแรก</div>`;}
     const kg=r.kg&&r.kg[i];
     if(kg&&!ai){const miss=(s.points||[]).map((p,j)=>{const c=mqTicks(s,r)[j];return typeof p==="string"?(c===true?null:p):(Array.isArray(c)&&c.filter(Boolean).length>=(p.need||1)?null:(p.label||p.any.join(" / ")));}).filter(Boolean);
       h+=`<div>🔎 <b>เทียบคำสำคัญ</b>${kg.auto?" — มีคำตอบหลักตรงเกณฑ์ \"ได้\"":kg.tot?` — เจอ <b>${kg.got}/${kg.tot}</b> ประเด็น (ติ๊กให้ในข้อ ④ แล้ว)`:""}</div>${miss.length&&!kg.auto?`<div class="aimiss"><b>ยังไม่เจอในคำตอบ:</b> ${miss.map(x=>plain(x)).map(esc).join(" · ")}</div>`:""}<div class="muted">ระบบจับคำสำคัญแบบคร่าว ๆ (ไม่ใช้ AI ใช้ได้ไม่จำกัด) — ถ้าเขียนด้วยคำอื่นอาจจับไม่ได้ ตรวจและแก้ติ๊กเองได้</div>`;}
@@ -5119,7 +5131,7 @@ function mqDoneSub(q,pi,s,r,t){const i=s._i,typed=!!t.trim(),ai=(r.ai&&r.ai[i])|
   if((s.points||[]).length){const c=mqTicks(s,r);h+=`<ul class="pts"><li class="ph">ประเด็นที่ควรมีในคำตอบ (ติ๊กข้อที่ตอบได้)</li>${s.points.map((p,j)=>{const hd=mqSecHead(s,j,c),ct=mqCritTag(s,j);
     if(typeof p==="string")return hd+`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" ${c[j]===true?"checked":""}><span>${p}${ct}</span></label></li>`;
     const vv=Array.isArray(c[j])?c[j]:[],need=p.need||1;
-    return hd+`<li class="pgrp"><div class="pgl">${p.label?p.label+" ":""}<span class="alt">${need===1?"เลือกอย่างใดอย่างหนึ่งก็ถูก":`ตอบ ${need} อย่างจากนี้ก็ได้เต็ม`}</span>${ct}</div><ul>${p.any.map((a,m)=>`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" data-mk="${m}" ${vv[m]?"checked":""}><span>${a}</span></label></li>`).join("")}</ul></li>`;}).join("")}</ul>`;
+    return hd+`<li class="pgrp"><div class="pgl">${p.label?p.label+" ":""}<span class="alt">${s.lim?`โจทย์ให้ตอบ ${s.lim} อย่าง — นับเฉพาะ ${s.lim} อย่างแรกที่ตอบ ถูก ${need} อย่างจากนี้ได้เต็ม`:need===1?"เลือกอย่างใดอย่างหนึ่งก็ถูก":`ตอบ ${need} อย่างจากนี้ก็ได้เต็ม`}</span>${ct}</div><ul>${p.any.map((a,m)=>`<li><label><input type="checkbox" data-ms="${i}" data-mp="${j}" data-mk="${m}" ${vv[m]?"checked":""}><span>${a}</span></label></li>`).join("")}</ul></li>`;}).join("")}</ul>`;
     if(c.length)h+=mqCritWarn(s,c);
     if(mqIsOS()){const f=mqFrac(s,r),sc=mqPtsScore(s,c.length?c:[]);h+=`<div class="oschk">Checklist ได้ <b>${sc.got}/${sc.tot}</b> ประเด็น${f!==null?` · ข้อย่อยนี้ได้ <b>${+(mqMk(s)*f).toFixed(1)}/${mqMk(s)}</b> คะแนน${r.gm&&r.gm[i]?" (เลือกคะแนนเอง)":""}`:""}</div>`;}}
   h+=`</div>`+mqKeyWarn(s);
@@ -5698,6 +5710,10 @@ function osUnitAll(){const W=W_(),cnt={};return (W&&W.OSU||[]).map(c=>{const t=c
 function osSpcS(){const m=mqInitP(P_(),"OSCE");const S=m.spc=m.spc||{};S.sel=S.sel||{all:0,T:[],U:[]};["T","U"].forEach(k=>{if(!Array.isArray(S.sel[k]))S.sel[k]=[];});
   S.bag=S.bag||{sig:"",list:[]};S.list=Array.isArray(S.list)?S.list:[];S.B=S.B||{};S.pts=S.pts||{};return S;}
 function osSpcQ(u){const S=osSpcS(),raw=S.B[u];if(!raw)return null;const k="S"+u;if(!XQ[k])XQ[k]=mqNormX(xClone(raw),true);return XQ[k];}
+/* no case today but a later one is ready (e.g. before case 1 starts) → "รอวันจันทร์ 16 พ.ย. 07:30 เริ่มเคสที่ 1" (user 14 Nov 2026) */
+function mornMQWait(){const d=mDay(),W=W_(),nx=(W&&W.MORN||[]).filter(c=>c.day>d).sort((a,b)=>a.day<b.day?-1:1)[0];if(!nx)return "ยังไม่มีเคสใหม่ — รอเติมเคส";
+  const [y,m,dd]=nx.day.split("-").map(Number),wd=["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"][new Date(y,m-1,dd).getDay()];
+  return `รอ${wd} ${dd} ${TH_MO[m-1]} 07:30 ${nx.no?`เริ่มเคสที่ ${nx.no}`:"— เคสถัดไป"}`;}
 function mqXFind(u){if(!u)return null;if(mqIsOS()){if(/^OSU\|/.test(u))return osUnitAll().find(q=>q.uid===u)||null;return osSpcQ(u);}
   if(/^MORN\|/.test(u))return mornMQAll().find(q=>q.uid===u&&q.mday<=mDay())||null;return null;}
 function mqXAll(){if(mqIsOS())return osUnitAll().concat(osSpcS().list.map(osSpcQ).filter(Boolean));return mornMQAll().filter(q=>q.mday<=mDay());}
@@ -5722,18 +5738,30 @@ function osMorn(make){const m=mqInitP(P_(),"OSCE"),d=mDay();m.mornH=m.mornH||{};
   const list=shuffle(a.concat(u)).map(q=>q.uid);
   osMornOut=!list.length&&used.size>0;if(!list.length)return null;
   x=m.morn={day:d,list,ts:now()};save();return x;}
+/* state of the Morning MEQ case / OSCE set of day d for the current ward, whatever tab is open (P.type switched for the lookup only) */
+function mqKindDo(k,fn){const P=P_(),o=P.type;P.type=k;try{return fn();}finally{P.type=o;}}
+function mornXState(d){const out={},P=P_(),W=W_();if(!W)return out;
+  const pc=(q,r)=>{const s=mqScoreOf(q.subs,r);return s.all&&s.tot?s.got/s.tot:null;},best=a=>{const v=a.filter(x=>x!=null);return v.length?Math.max(...v):null;};
+  if((W.MORN||[]).some(c=>c.day===d)){const q=mornMQAll().find(x=>x.mday===d);if(q){const R=xRecs(q,"MEQ").filter(r=>mqCaseDone(q,r));out.meq={done:R.length>0,pct:best(R.map(r=>pc(q,r)))};}}
+  const m=P.osce,x=m&&(m.morn&&m.morn.day===d?m.morn:(m.mornH||{})[d]);
+  if(x&&(x.list||[]).length){const qs=mqKindDo("OSCE",()=>x.list.map(u=>mqFindU(u)).filter(Boolean)),dn=qs.filter(q=>xDone(q,"OSCE"));
+    const ps=dn.map(q=>best(xRecs(q,"OSCE").filter(r=>mqCaseDone(q,r)).map(r=>pc(q,r))));
+    out.os={done:qs.length>0&&dn.length>=qs.length,n:dn.length,tot:qs.length,pct:dn.length>=qs.length&&ps.every(v=>v!=null)?ps.reduce((a,b)=>a+b,0)/ps.length:null};}
+  return out;}
+/* Morning box colours for MEQ / OSCE (per exam type): green = today's case / set done, red = not yet · gold edge = done on time · aura = ≥80% */
+function mornXFx(type){const s=mornXState(mDay())[type==="OSCE"?"os":"meq"];if(!s)return [];const c=[s.done?"mgood":"mwarn"];if(s.done)c.push("mgold");if(s.done&&s.pct!=null&&s.pct>=MX_GOOD)c.push("maura");return c;}
 function mornXList(){if(mqIsOS()){const x=osMorn(false);return x?x.list.map(u=>mqFindU(u)).filter(Boolean):[];}const q=mqXFind("MORN|"+mDay());return q?[q]:[];}
 function mornXBox(type){const clock=`<span class="mclock">${type==="OSCE"?"ชุดใหม่":"เคสใหม่"}ใน <b id="mClock">${hms(mNext()-now())}</b></span>`;let t;
   if(type==="OSCE"){const x=osMorn(false);
     if(!x){const can=mqL(ward,"OSCE").length||osUnitAll().length;t=can?"🎁 ยังไม่ได้เปิดกล่องวันนี้":"🎁 ยังไม่มีสถานีให้เปิดกล่อง — รอข้อสอบเก่า OSCE / สถานี Unit round";}
     else{const L=mornXList(),dn=L.filter(q=>xDone(q,"OSCE")).length;t=!dn&&!L.some(q=>xTouched(q,"OSCE"))?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":dn<L.length?`วันนี้ทำไป ${dn}/${L.length} สถานี`:`✓ ครบ ${dn}/${L.length} สถานีแล้ว`;}}
   else{const P=P_(),m=mqInitP(P,"MEQ"),d=mDay(),q=mqXFind("MORN|"+d),op=m.mopen&&m.mopen[d];
-    t=!q?"ยังไม่มีเคสใหม่ — รอเติมเคส":!op?"🎁 ยังไม่ได้เปิดกล่องวันนี้":xDone(q,"MEQ")?"✓ ทำเคสวันนี้ครบแล้ว":xTouched(q,"MEQ")?"ทำไปบางส่วน — ทำต่อให้ครบนะ":"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ";}
+    t=!q?mornMQWait():!op?"🎁 ยังไม่ได้เปิดกล่องวันนี้":xDone(q,"MEQ")?"✓ ทำเคสวันนี้ครบแล้ว":xTouched(q,"MEQ")?"ทำไปบางส่วน — ทำต่อให้ครบนะ":"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ";}
   return `<span class="mtodo${/^✓/.test(t)?" ok":""}">${t}</span>${clock}`;}
 function mornXStart(type){
   if(type==="OSCE"){const x=osMorn(true);if(!x){toast(osMornOut?"Morning round ออกครบทุกสถานีในวอร์ดนี้แล้ว — ไม่มีสถานีใหม่ที่ยังไม่เคยออก":"ยังไม่มีสถานีให้ทำ — รอข้อสอบเก่า OSCE / สถานี Unit round");return;}
     const L=mornXList(),q=L.find(z=>!xDone(z,"OSCE"))||L[0];if(!q){toast("ไม่พบสถานีของวันนี้");return;}return mqOpen(q.uid,undefined,"morning");}
-  const m=mqInitP(P_(),"MEQ"),d=mDay(),q=mqXFind("MORN|"+d);if(!q){toast("ยังไม่มีเคสใหม่วันนี้ — รอเติมเคส");return;}
+  const m=mqInitP(P_(),"MEQ"),d=mDay(),q=mqXFind("MORN|"+d);if(!q){toast(mornMQWait());return;}
   m.mopen=m.mopen||{};m.mopen[d]=1;Object.keys(m.mopen).sort().slice(0,-60).forEach(k=>delete m.mopen[k]);save();mqOpen(q.uid,undefined,"morning");}
 /* ---- Unit round OSCE: by big topic ---- */
 function osUnitList(t){return t?osUnitAll().filter(q=>q.topic===t):[];}
@@ -7181,7 +7209,7 @@ function PWof(S,id){
 /* migrate the earlier single-sheet site/artifact format {a:{uid:ans},t} → Phase 1 attempts */
 (function(){if(st.migrated)return;const o=ld(CFG.storageKey||"");if(o&&o.a&&typeof o.a==="object"){const P=PWof(st,WL[0].id),t=o.t||now();Object.keys(o.a).forEach(u=>{if(typeof o.a[u]==="number"&&!P.att[1][u])P.att[1][u]=[[o.a[u],t]];});}st.migrated=1;})();
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){toast("พื้นที่เก็บข้อมูลในเบราว์เซอร์เต็ม");}}
-function save(){st.t=now();persist();cloudPush();}
+function save(){try{mornXMark();}catch(e){}st.t=now();persist();cloudPush();}
 /* bank: larger per-user items kept one record each (Admission cases, Legendary papers, Long cases) — key "<kind>|<ward>|<id>" → {…, c:createdTs, ts} · own localStorage key, own cloud docs (a ward doc must stay < 256 KiB) */
 const BKEY=KEY+"-bank";let bank=ld(BKEY)||{};const bankDirty=new Set();let bankT=null;
 function bankPut(k,v){v.ts=now();if(!v.c)v.c=v.ts;bank[k]=v;try{localStorage.setItem(BKEY,JSON.stringify(bank));}catch(e){toast("พื้นที่เก็บข้อมูลในเบราว์เซอร์เต็ม");}cloudBank(k);}
@@ -7450,16 +7478,26 @@ function mornStat(x){const W=W_(),list=(x.list||[]).filter(u=>W.byU[u]),done=lis
    🔥 day counts when ≥10 of that day's questions were answered on time · one missed day keeps the count (dim, number red, last chance), two missed days in a row → 0
    🏅 = number of days with ≥12 right on time (any days) · gold edge = all 15 on time · aura = ≥12 right on time (random pastel per day) */
 const MF_LIT=10,MF_MEDAL=12;
-function mornGame(){const rec=mornRecs(),today=mDay(),days={};
+/* 🔥 / 🏅 are shared by Morning MCQ, MEQ and OSCE of the ward (user 14 Nov 2026, every ward every site): a day lights if ANY of them is done on time —
+   MCQ ≥10 of the day's set · MEQ the day's case submitted to the last Part · OSCE every station of the day's set · medal day = MCQ ≥12 right or MEQ / OSCE ≥80% (one per day)
+   on-time MEQ / OSCE results are written to P.mornX[day] by mornXMark() on every save while that day is still running; today is read live. Box colours stay per exam type. */
+const MX_GOOD=0.8;
+function mornXMark(){if(!ward||!WARDS[ward]||typeof mornXState!=="function")return;const P=P_(),d=mDay(),s=mornXState(d);if(!s.meq&&!s.os)return;
+  const o=P.mornX=P.mornX||{},c=Object.assign({},o[d]||{});["meq","os"].forEach(k=>{const v=s[k];if(!v||!v.done)return;c[k]=1;if(v.pct!=null&&v.pct>(c[k+"P"]||0))c[k+"P"]=+v.pct.toFixed(3);});
+  if(JSON.stringify(c)!==JSON.stringify(o[d]||{}))o[d]=c;}
+function mornGame(){const rec=mornRecs(),today=mDay(),days={},X=Object.assign({},P_().mornX||{});
+  try{const t=typeof mornXState==="function"?mornXState(today):{},c=Object.assign({},X[today]||{});["meq","os"].forEach(k=>{const v=t[k];if(v&&v.done){c[k]=1;if(v.pct!=null&&v.pct>(c[k+"P"]||0))c[k+"P"]=v.pct;}});X[today]=c;}catch(e){}
   for(const d in rec){let n=0,r=0;rec[d].forEach(x=>{const o=x.ot||{};for(const u in o){n++;if(o[u]===1)r++;}});days[d]={n,r,tot:(rec[d].find(x=>x.p===1)||rec[d][0]).list.length};}
-  const lit=d=>!!days[d]&&days[d].n>=MF_LIT,ks=Object.keys(days).filter(lit).sort();let fire=0;
+  const xLit=d=>!!X[d]&&!!(X[d].meq||X[d].os),xMed=d=>!!X[d]&&((X[d].meqP||0)>=MX_GOOD||(X[d].osP||0)>=MX_GOOD);
+  const lit=d=>(!!days[d]&&days[d].n>=MF_LIT)||xLit(d),ks=[...new Set(Object.keys(days).concat(Object.keys(X)))].filter(lit).sort();let fire=0;
   let risk=false;const end={};   /* risk: yesterday was missed (1-day grace) — if today is missed too, the fire drops to 0 tomorrow · end[day] = the fire at the last second of that day (07:29:59 next morning): {f, s:"on"|"frz"|"out"} */
   if(ks.length){let miss=0;for(let d=ks[0];d<today;d=addDay(d,1)){if(lit(d)){fire++;miss=0;}else if(++miss>=2)fire=0;end[d]={f:fire,s:lit(d)?"on":fire>0?"frz":"out"};}risk=miss===1&&fire>0&&!lit(today);if(lit(today))fire++;}
-  return {fire,on:lit(today),risk,end,medals:Object.values(days).filter(x=>x.r>=MF_MEDAL).length,days};}
+  const md=[...new Set(Object.keys(days).concat(Object.keys(X)))].filter(d=>(days[d]&&days[d].r>=MF_MEDAL)||xMed(d));
+  return {fire,on:lit(today),risk,end,medals:md.length,days,X};}
 const mornHue=d=>parseInt(H7((ward||"")+"|"+d),36)%360;
 const auraVars=d=>{const h=mornHue(d);return `--aura:hsla(${h},90%,84%,.95);--aura2:hsla(${(h+30)%360},90%,87%,.7);--aura3:hsla(${(h+60)%360},90%,91%,.5)`;};
 function mornFx(d,G,all,isPast){const x=G.days[d]||{n:0,r:0,tot:15},c=[];c.push(all>=MF_LIT?"mgood":"mred");if(x.n>0&&x.n>=x.tot)c.push("mgold");if(x.r>=MF_MEDAL)c.push("maura");return c;}
-const mGameHTML=G=>`<span class="mgame"><span class="mfire${G.on?" on":""}${G.risk?" frz":""}" title="Morning round ติดกัน ${G.fire} วัน${G.risk?" — ไฟกำลังจะดับ (ไฟแข็ง): เมื่อวานทำไม่ถึง 10 ข้อ ถ้าวันนี้ยังไม่ทำให้ได้ ≥10 ข้อ พรุ่งนี้ไฟเหลือ 0":G.on?"":" — วันนี้ยังไม่ติดไฟ (ทำให้ได้ ≥10 ข้อ)"}"><span class="ff">🔥</span><i>${G.fire}</i></span><span class="mmedal" title="วันที่ถูก ≥12 ข้อ (ในวันนั้น)">🏅<i>${G.medals}</i></span></span>`;
+const mGameHTML=G=>`<span class="mgame"><span class="mfire${G.on?" on":""}${G.risk?" frz":""}" title="Morning round ติดกัน ${G.fire} วัน (ใช้ร่วมกัน MCQ · MEQ · OSCE — ทำอย่างใดอย่างหนึ่งก็ไฟติด)${G.risk?" — ไฟกำลังจะดับ (ไฟแข็ง): เมื่อวานไฟไม่ติด ถ้าวันนี้ยังไม่ทำ พรุ่งนี้ไฟเหลือ 0":G.on?"":" — วันนี้ยังไม่ติดไฟ (MCQ ≥10 ข้อ หรือ MEQ ครบเคส หรือ OSCE ครบชุด)"}"><span class="ff">🔥</span><i>${G.fire}</i></span><span class="mmedal" title="วันที่ได้เหรียญ: MCQ ถูก ≥12 ข้อ หรือ MEQ / OSCE ได้ ≥80% (ในวันนั้น · วันละ 1 เหรียญ)">🏅<i>${G.medals}</i></span></span>`;
 /* fire beside each date in the Morning history: past days = the fire at the last second of that day; today = the fire right now (same look as the ward-home box) */
 function mhFire(d,today,G){if(d>today)return "";
   if(d===today){const c=G.on?"on":G.risk?"frz":"wait";return `<span class="mhf ${c}" title="${G.on?"วันนี้ไฟติดแล้ว":G.risk?"ไฟแข็ง — เมื่อวานทำไม่ถึง 10 ข้อ ถ้าวันนี้ไม่ทำ พรุ่งนี้ไฟเหลือ 0":"วันนี้ยังไม่ติดไฟ (ทำให้ได้ ≥10 ข้อ)"}"><span class="ff">🔥</span><i>${G.fire}</i><small>ตอนนี้</small></span>`;}
@@ -7563,7 +7601,7 @@ function rHome(){
     const rCount=k=>{const t=k==="service"?`มี <b>${QB.length}</b> ข้อ`:k==="unit"?`มี <b>${unitN(ward)}</b> ข้อ · ${W.UNIT.length} บท`:k==="admission"?`มี <b>${aiN("adm",ward)}</b> เคส`:k==="specialty"?`มี <b>${aiN("spc",ward)}</b> ข้อ · ไฟล์ ${spcUnits().filter(u=>u.kind!=="L").length} เรื่อง`:k==="staff"?`มีข้อให้ทวน <b>${sc}</b> ข้อ`:k==="advisor"?`อ่านเฉลยได้ <b>${advDoneN()}</b> ข้อ`:"";return t?`<span class="rcnt">${t}</span>`:"";};
     const mm=morning(false),ma=mm?mm.list.filter(u=>mm.ans[u]!==undefined).length:0,mr=mm?mm.list.filter(u=>W.byU[u]&&mm.ans[u]===W.byU[u].ans).length:0,MG=mornGame(),mOn=QB.length+unitN(ward)>0,mfx=mornFx(mDay(),MG,ma);   /* same Morning box look in every ward, old or new (user 31 Oct 2026) — a ward with no questions yet still shows 🔥/🏅 and the red/green state */
     const badge=r=>r.soon?'<span class="soon">เร็ว ๆ นี้</span>':r.k==="legend"&&P.leg?'<span class="badge">กำลังสอบ</span>':r.k==="staff"&&sc?`<span class="badge">${sc}</span>`:r.k==="morning"&&mm?`<span class="badge">${ma}/${mm.list.length}</span>`:"";
-    h+=`<div class="rounds">${ROUNDS.map((r,i)=>`<button class="round${r.k==="morning"?mfx.map(c=>" "+(c==="mred"?"mwarn":c)).join(""):""}" data-round="${r.k}" aria-disabled="${!!r.soon}"${r.k==="morning"&&mfx.includes("maura")?` style="${auraVars(mDay())}"`:""}>${badge(r)}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}${r.k==="morning"?mGameHTML(MG):""}</b><span class="rd">${r.soon?"รายละเอียดจะเพิ่มภายหลัง":r.d}</span>${rCount(r.k)}${r.k==="legend"?(()=>{const E=examCfg();return `<span class="lgspec">${E?`<b>${E.n}</b> ข้อ · <b>${E.min}</b> นาที`:"ยังไม่ได้ตั้งจำนวนข้อ/เวลา"}</span>`;})():""}${r.k==="morning"?`<span class="mtodo${ma>=MF_LIT?" ok":""}">${!mOn?"🎁 ยังไม่มีข้อให้เปิดกล่อง — รอเพิ่มข้อสอบเก่า / Unit round":!mm?"🎁 ยังไม่ได้เปิดกล่องวันนี้":!ma?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":ma<MF_LIT?`วันนี้ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ) — อีก ${MF_LIT-ma} ข้อไฟติด 🔥`:ma<mm.list.length?`🔥 ไฟติดแล้ว · ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ)`:`✓ ครบ ${ma}/${mm.list.length} ข้อแล้ว (ถูก ${mr} ข้อ)`}</span>`:""}${r.k==="morning"?`<span class="mclock">ชุดใหม่ใน <b id="mClock">${hms(mNext()-now())}</b></span><span class="mhist" data-mhist="1">📅 ประวัติรายวัน →</span>`:""}</button>`).join("")}</div>`;
+    h+=`<div class="rounds">${ROUNDS.map((r,i)=>`<button class="round${r.k==="morning"?mfx.map(c=>" "+(c==="mred"?"mwarn":c)).join(""):""}" data-round="${r.k}" aria-disabled="${!!r.soon}"${r.k==="morning"&&mfx.includes("maura")?` style="${auraVars(mDay())}"`:""}>${badge(r)}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}${r.k==="morning"?mGameHTML(MG):""}</b><span class="rd">${r.soon?"รายละเอียดจะเพิ่มภายหลัง":r.d}</span>${rCount(r.k)}${r.k==="legend"?(()=>{const E=examCfg();return `<span class="lgspec">${E?`<b>${E.n}</b> ข้อ · <b>${E.min}</b> นาที`:"ยังไม่ได้ตั้งจำนวนข้อ/เวลา"}</span>`;})():""}${r.k==="morning"?`<span class="mtodo${ma>=MF_LIT?" ok":""}">${!mOn?"🎁 ยังไม่มีข้อให้เปิดกล่อง — รอเพิ่มข้อสอบเก่า / Unit round":!mm?"🎁 ยังไม่ได้เปิดกล่องวันนี้":!ma?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":ma<MF_LIT?`วันนี้ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ) ${MG.on?"— 🔥 ไฟวันนี้ติดแล้ว (จาก MEQ / OSCE)":`— อีก ${MF_LIT-ma} ข้อไฟติด 🔥`}`:ma<mm.list.length?`🔥 ไฟติดแล้ว · ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ)`:`✓ ครบ ${ma}/${mm.list.length} ข้อแล้ว (ถูก ${mr} ข้อ)`}</span>`:""}${r.k==="morning"?`<span class="mclock">ชุดใหม่ใน <b id="mClock">${hms(mNext()-now())}</b></span><span class="mhist" data-mhist="1">📅 ประวัติรายวัน →</span>`:""}</button>`).join("")}</div>`;
   }
   h+=gradeCard(ward);
   if(IN_FRAME&&HAS_CLAUDE())h+=clStartCard();
@@ -9458,6 +9496,7 @@ function mergeSt(a,b){
       if(a&&a.day===c.day&&(a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);}
       else if(!a||c.day>a.day||(c.day===a.day&&(c.ts||0)>(a.ts||0)))l.morn[p]=c;});
     mornOne(l);
+    if(r.mornX){l.mornX=l.mornX||{};for(const d in r.mornX){const a=l.mornX[d]||{},c=r.mornX[d]||{};l.mornX[d]={meq:a.meq||c.meq||0,os:a.os||c.os||0,meqP:Math.max(a.meqP||0,c.meqP||0),osP:Math.max(a.osP||0,c.osP||0)};}}
     for(const k in r.mornH){const a=l.mornH[k],c=r.mornH[k];if(!a)l.mornH[k]=c;else if((a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);}else if((c.ts||0)>(a.ts||0))l.mornH[k]=c;}
     if((r.adm.ts||0)>(l.adm.ts||0))l.adm=r.adm;
     for(const u in r.seen){const a=l.seen[u]||(l.seen[u]={}),b=r.seen[u];for(const k in b)a[k]=a[k]?Math.min(a[k],b[k]):b[k];}

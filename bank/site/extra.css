@@ -322,7 +322,11 @@ body.gated header.bar,body.gated #legban,body.gated .nav,body.gated .qbar{displa
 /* ===== MEQ (site/meq.js) — ported from meq-platform-kit, scoped under .mqv ===== */
 .mqv .case-tag{border-color:var(--ink)!important}
 .mqv .qhead{flex-wrap:wrap}
-.mqv .qhead .fields{flex:1;min-width:0}
+.mqv .qhead .fields{flex:1 1 12em}
+/* 14 Nov 2026: header pieces never overlap — chips keep one line each, the fields box can't shrink below its widest chip, so the timer/tools row wraps underneath instead of sitting on top */
+.mqv .qhead{row-gap:10px}
+.mqv .qhead .field{white-space:nowrap}
+.mqv .qnum.long{font-size:30px;white-space:nowrap}
 .mqv .qtools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-left:auto;padding-bottom:4px;flex:none}
 .mqv .timer{white-space:nowrap;font-family:var(--num);font-weight:600;font-size:14px;color:var(--muted);border:1.5px solid var(--rule);border-radius:3px;padding:1px 8px}
 .mqv .timer.over{color:var(--wrong);border-color:var(--wrong)}
@@ -366,7 +370,7 @@ body.gated header.bar,body.gated #legban,body.gated .nav,body.gated .qbar{displa
 .mqv .srow .b.f.half{background:var(--warn);border-color:var(--warn);color:#fff}
 .mqv .srow .more{font-size:11px;color:var(--muted);font-family:var(--num)}
 .mqv .srow .st{color:var(--warn);font-size:13px}
-@media (max-width:520px){.mqv .qtools{order:3;flex-basis:100%;margin-left:0;padding-bottom:0}}
+@media (max-width:520px){.mqv .qtools{order:3;flex-basis:100%;margin-left:0;padding-bottom:0}.mqv .qnum.long{font-size:24px}.mqv .qhead .field{white-space:normal}}
 .mqv .qnum small{display:block;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--muted);line-height:1.2;margin-bottom:2px}
 .mqv .psteps{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
 .mqv .pstep{font-family:var(--num);font-weight:600;font-size:14px;border:1.5px solid var(--rule);background:transparent;border-radius:999px;padding:2px 12px;cursor:pointer;color:var(--ink)}
