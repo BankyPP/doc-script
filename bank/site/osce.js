@@ -479,11 +479,12 @@ function mornXState(d){const out={},P=P_(),W=W_();if(!W)return out;
 /* Morning box colours for MEQ / OSCE (per exam type): green = today's case / set done, red = not yet · gold edge = done on time · aura = ≥80% */
 function mornXFx(type){const s=mornXState(mDay())[type==="OSCE"?"os":"meq"];if(!s)return [];const c=[s.done?"mgood":"mwarn"];if(s.done)c.push("mgold");if(s.done&&s.pct!=null&&s.pct>=MX_GOOD)c.push("maura");return c;}
 function mornXList(){if(mqIsOS()){const x=osMorn(false);return x?x.list.map(u=>mqFindU(u)).filter(Boolean):[];}const q=mqXFind("MORN|"+mDay());return q?[q]:[];}
-function mornXBox(type){const clock=`<span class="mclock">${type==="OSCE"?"ชุดใหม่":"เคสใหม่"}ใน <b id="mClock">${hms(mNext()-now())}</b></span>`;let t;
+function mornXBox(type){let clock=`<span class="mclock">${type==="OSCE"?"ชุดใหม่":"เคสใหม่"}ใน <b id="mClock">${hms(mNext()-now())}</b></span>`;let t;
   if(type==="OSCE"){const x=osMorn(false);
     if(!x){const can=mqL(ward,"OSCE").length||osUnitAll().length;t=can?"🎁 ยังไม่ได้เปิดกล่องวันนี้":"🎁 ยังไม่มีสถานีให้เปิดกล่อง — รอข้อสอบเก่า OSCE / สถานี Unit round";}
     else{const L=mornXList(),dn=L.filter(q=>xDone(q,"OSCE")).length;t=!dn&&!L.some(q=>xTouched(q,"OSCE"))?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":dn<L.length?`วันนี้ทำไป ${dn}/${L.length} สถานี`:`✓ ครบ ${dn}/${L.length} สถานีแล้ว`;}}
   else{const P=P_(),m=mqInitP(P,"MEQ"),d=mDay(),q=mqXFind("MORN|"+d),op=m.mopen&&m.mopen[d];
+    if(!q)clock="";/* waiting for a later case: the wait text already gives the day + 07:30, the countdown would point at tomorrow */
     t=!q?mornMQWait():!op?"🎁 ยังไม่ได้เปิดกล่องวันนี้":xDone(q,"MEQ")?"✓ ทำเคสวันนี้ครบแล้ว":xTouched(q,"MEQ")?"ทำไปบางส่วน — ทำต่อให้ครบนะ":"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ";}
   return `<span class="mtodo${/^✓/.test(t)?" ok":""}">${t}</span>${clock}`;}
 function mornXStart(type){

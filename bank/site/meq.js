@@ -339,6 +339,7 @@ function mqSheet(){const v=mqS().v,rk=v.r||"service",L=mqL(),c=mqCur(),cur=c?{u:
   $("rows").innerHTML=Q.length?`<div class="mqv"><div class="trows mqrows">`+Q.map(q=>mqRowHTML(q,rk,cur)).join("")+`</div></div>`:`<div class="empty">${T.length?`ไม่พบข้อที่มีคำว่า “${esc(sheetQ.trim())}”`:rk==="grand"?"ยังไม่ได้สุ่มข้อในรอบนี้":"ไม่มีข้อในเงื่อนไขที่เลือก"}</div>`;
   $("sheetFoot").innerHTML=`<span class="hint">แตะเลขข้อเพื่อไปที่ข้อ · แตะ Part เพื่อเปิด Part นั้น (🔒 = ต้องส่ง Part ก่อนหน้าก่อน) · วงกลม = ข้อย่อย: เขียว ได้เต็ม · เหลือง บางส่วน · แดง ไม่ได้ · ทึบ ส่งแล้วยังไม่ให้คะแนน · ★ ติดดาว · 📝 มีโน้ต${SV?" · แตะชุด/พาร์ทเลือกได้หลายอัน":""}</span><span class="spacer"></span><span class="hint" id="syncNote" style="flex-basis:100%"></span>`;
   const tog=(cur,k)=>{let a=cur==="all"?[]:cur.split("|");if(k==="all")a=[];else if(a.includes(k))a=a.filter(x=>x!==k);else a.push(k);return a.length?a.join("|"):"all";};
+  if(typeof chipRowKeep==="function"){chipRowKeep(sc,"set");if(cc&&!cc.hidden)chipRowKeep(cc,"ch");}
   sc.querySelectorAll("[data-sms]").forEach(b=>b.onclick=()=>{mqVset({set:tog(v.set,b.dataset.sms)});save();mqSheet();});
   if(cc)cc.querySelectorAll("[data-smp]").forEach(b=>b.onclick=()=>{mqVset({sec:tog(v.sec,b.dataset.smp)});save();mqSheet();});
   stc.querySelectorAll("[data-smt]").forEach(b=>b.onclick=()=>{mqVset({status:b.dataset.smt});save();mqSheet();});
