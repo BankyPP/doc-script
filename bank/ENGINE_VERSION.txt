@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu b966f38 2026-11-14 MEQ/OSCE: sets ordered newest year first like MCQ (79 on top), every ward every site (14 Nov 2026)
+BankyPP/ac-mdcu f933174 2026-11-14 Service round: always open at the first not-yet-done question (MCQ/MEQ/OSCE, MDCU+SI)

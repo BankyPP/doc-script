@@ -1361,7 +1361,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 <script>
 const IMGS={};const WARDS={};
 const CONFIG={"title": "คลังข้อสอบเก่า Compre · โพยหมอ", "brand": "AC Compre", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-compre-v1", "setLabel": "ปี", "roLabel": "สถาบัน", "chipStrip": "", "files": {}, "siteUrl": "https://bankypp.github.io/doc-script/bank/compre/", "siteName": "คลังข้อสอบเก่า Compre", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "compre"], "sharedPrefix": "poy_compre_", "homeBrand": "AC {short} MDCU79 by BankyPP", "quizBrand": "AC {short} {type}", "artifactUrl": "", "subjects": [{"id": "compre", "name": "Comprehensive (Compre)", "wards": ["c1", "c2", "c3"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "inst": {"id": "compre", "name": "Compre", "th": "Compre", "en": "Comprehensive examination", "enShort": "Compre", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"c1": "#/nl/x/c1", "c2": "#/nl/x/c2", "c3": "#/nl/x/c3"}, "others": {"inst": "nl", "before": true, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "noExam": ["MEQ"]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "noExam": ["MEQ"]}]}}, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "brand": "AC Compre 1 MCQ", "dir": "data_c1", "scope": "Comprehensive 1 (จุฬาฯ เท่านั้น — ศิริราชไม่มี) ใช้ blueprint NL1 เก่า", "dates": [{"part": "MCQ", "at": "2026-03-16"}], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "brand": "AC Compre 2 MCQ", "dir": "data_c2", "scope": "Comprehensive 2 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "brand": "AC Compre 3 MCQ", "dir": "data_c3", "scope": "Comprehensive 3 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="14/11/2026 11:23";
+const BUILD="14/11/2026 11:36";
 WARDS["c1"]={QB:[],HY:null};
 WARDS["c1"].MQ=[];
 WARDS["c1"].OS=[];
@@ -1687,7 +1687,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
   else if(rk==="unit"&&!mqIsOS()&&!v.tags.length)h+=`<div class="empty">เลือกหัวข้ออย่างน้อย 1 หัวข้อ — Part ที่ติดหัวข้อนั้นจะแสดงที่นี่</div>`;
   else if(!Q.length&&QT.length)h+=`<div class="empty">ไม่พบข้อที่มีคำว่า “${esc(mqQ.trim())}”</div>`;
   else if(!Q.length)h+=`<div class="empty">${rk==="staff"?"ยังไม่มีข้อที่ต้องทวน — ทุก Part ที่ทำแล้วได้เต็ม":rk==="advisor"?`ยังไม่ได้ทำข้อ ${mqKN()} ใน Phase นี้`:"ไม่มีข้อในเงื่อนไขที่เลือก"}</div>`;
-  else{if(rk==="service"){const nx=mqNextTodo(Q0);h+=nx?`<button class="resume" type="button" id="mqNext" style="margin:0 0 10px"><span>▶ ไปข้อถัดไปที่ยังไม่ได้ทำ: <b>${mqKN()} ข้อ ${esc(mqNum(nx))}</b><span class="rd">${esc(nx.set)}${nx.ro?" · "+esc(nx.ro):""} · ${esc(mqTitle(nx))}</span></span><span class="go">→</span></button>`:`<p class="hint" style="margin:0 0 10px">✓ ทำครบทุกข้อในชุดที่เลือกแล้ว (Phase ${ph()})</p>`;}
+  else{if(rk==="service"){const nx=mqNextTodo(Q0);h+=nx?`<button class="resume" type="button" id="mqNext" style="margin:0 0 10px"><span>▶ ไปข้อแรกที่ยังไม่ได้ทำ: <b>${mqKN()} ข้อ ${esc(mqNum(nx))}</b><span class="rd">${esc(nx.set)}${nx.ro?" · "+esc(nx.ro):""} · ${esc(mqTitle(nx))}</span></span><span class="go">→</span></button>`:`<p class="hint" style="margin:0 0 10px">✓ ทำครบทุกข้อในชุดที่เลือกแล้ว (Phase ${ph()})</p>`;}
     h+=`<div class="tsum">${Q.length} ข้อ · แตะเลขข้อหรือ Part เพื่อเริ่มทำ</div><div class="trows">`+Q.map(q=>mqRowHTML(q,rk)).join("")+`</div>`;}
   h+=`</div>`;$("main").innerHTML=h;
   {const nb=$("mqNext");if(nb)nb.onclick=()=>{const nx=mqNextTodo(Q0);if(nx)mqOpen(nx.uid,undefined,"service");};}
@@ -1725,9 +1725,8 @@ function mqSheet(){const v=mqS().v,rk=v.r||"service",L=mqL(),c=mqCur(),cur=c?{u:
   stc.querySelectorAll("[data-smt]").forEach(b=>b.onclick=()=>{mqVset({status:b.dataset.smt});save();mqSheet();});
   $("rows").querySelectorAll("[data-mgo]").forEach(b=>b.onclick=()=>{if(b.getAttribute("aria-disabled")==="true"){toast("ส่งคำตอบ Part ก่อนหน้าก่อน");return;}closeS(true);mqOpen(b.dataset.mgo,b.dataset.p===undefined?undefined:+b.dataset.p,rk);});
   if(typeof paintSync==="function")paintSync();}
-/* Service round: the next case not yet finished in the chosen sets/parts — counting on from the case you were last on (it counts if still unfinished), else from the first — wrapping round; opens at its first Part not yet sent */
-function mqNextTodo(Q){if(!Q||!Q.length)return null;const u=mqS().v.u,i0=Math.max(0,Q.findIndex(q=>q.uid===u));
-  for(let j=0;j<Q.length;j++){const q=Q[(i0+j)%Q.length];if(!mqCaseDone(q))return q;}return null;}
+/* Service round: always the FIRST case not yet finished in the chosen sets/parts, in list order, wherever you were last (user 14 Nov 2026, every ward, every site); opens at its first Part not yet sent */
+function mqNextTodo(Q){if(!Q||!Q.length)return null;return Q.find(q=>!mqCaseDone(q))||null;}
 function mqOpen(u,pi,rk){const v=mqS().v;rk=rk||v.r||"service";const q=mqFindU(u);if(!q)return;
   mqVset({u,r:rk,ctx:rk==="unit"&&!mqIsOS()?"topic":"set"});if(pi===undefined||!mqViewable(q,pi))pi=mqDefPart(q);v.pi=pi;save();if(view==="mq"){mqTStop();mqView();scrollTo(0,0);}else go(ward+"/mq");}
 function mqGrandNext(fromHome){const v=mqS().v,L=mqL();if(!L.length){toast("ยังไม่มีข้อ MEQ");return;}const cur=v.r==="grand"?v.u:null;
@@ -4271,7 +4270,7 @@ function rHome(){
   document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(ward+"/"+b.dataset.go));
   document.querySelectorAll("[data-p2]").forEach(b=>b.onclick=()=>{const k=b.dataset.p2,l=p2lists()[k];const t={wrong:"ข้อที่ยังผิดอยู่",right:"ข้อที่ทำถูกแล้ว",flag:"ข้อที่ยังไม่มั่นใจ",note:"ข้อที่มีโน้ต",nop1:"ข้อที่ไม่เคยทำใน Phase 1"}[k];startSess("p2"+k,t,l.map(q=>q.uid));});
   document.querySelectorAll("[data-rsx]").forEach(b=>b.onclick=()=>{const P=P_();P.rsHide=P.rsHide||{};P.rsHide[b.dataset.rsx+(b.dataset.rsall?"":"|"+ph())]=now();save();toast("ซ่อนแล้ว · จะขึ้นอีกเมื่อกลับไปทำรอบนั้น");rHome();});
-  document.querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{if(b.dataset.rs==="svc"){svcQ();go(ward+"/svc");}else go(ward+"/sess");});
+  document.querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{if(b.dataset.rs==="svc"){const nx=svcNextTodo();if(nx){svcS().cur=nx.uid;save();}else svcQ();go(ward+"/svc");}else go(ward+"/sess");});
   const mc=$("mClock");if(mc){let lastDay=mDay();show._t=setInterval(()=>{if(!document.body.contains(mc)){clearInterval(show._t);return;}mc.textContent=hms(mNext()-now());if(mDay()!==lastDay){lastDay=mDay();rHome();}},1000);}
   document.querySelectorAll("[data-round]").forEach(b=>b.onclick=e=>{if(e&&e.target&&e.target.closest&&e.target.closest("[data-mhist]"))return go(ward+"/mhist");const k=b.dataset.round;const R=ROUNDS.find(r=>r.k===k);if(R.soon){toast("โหมดนี้จะเพิ่มภายหลัง");return;}
     if(k==="io")return go(ward+"/io");if(k==="teach")return go(ward+"/teach");if(k==="unit")return go(ward+"/unit");if(k==="admission")return go(ward+"/adm");if(k==="specialty")return go(ward+"/spc");if(k==="morning")return startMorning();if(k==="longcase")return go(ward+"/lcase");
@@ -4289,9 +4288,9 @@ function rsVisit(P,o,k){if(o&&(now()-(o.vt||0)>30000||(o.vt||0)<=((P.rsHide||{})
 function homeResume(P,p){qRestore();const W=W_(),out=[],s=P.sess;
   if(s&&s.list&&s.list.length&&s.ph===p){const a=Object.keys(s.ans).length;if(a<s.list.length)out.push({k:"sess",t:Math.max(s.vt||0,s.ts||0),title:s.title,d:`ทำไป ${a}/${s.list.length} ข้อ · ล่าสุดอยู่ข้อ ${s.cur+1}${QR&&!QR.done&&QR.ward===ward&&s.kind==="quality"?" · กำลังจับเวลา":""}`});}
   const sv=P.svc[p];
-  if(sv&&(sv.vt||sv.cur)&&W.QB.length){const L=svcList().filter(q=>!q.notice),d=L.filter(q=>lockedAns(P,p,q.uid)!==undefined).length,c=W.byU[sv.cur];
+  if(sv&&(sv.vt||sv.cur)&&W.QB.length){const L=svcList().filter(q=>!q.notice),d=L.filter(q=>lockedAns(P,p,q.uid)!==undefined).length,c=L.find(q=>lockedAns(P,p,q.uid)===undefined);
     if(L.length&&d<L.length){const ss=selSets(),nm=(sv.set==="all"?"ทุกชุด":ss.length>2?`${ss.slice(0,2).join(", ")} +${ss.length-2} ชุด`:ss.join(", "))+(tgActive(sv.tg)?` · ${sv.tg.tags.length} Tag`:"");
-      out.push({k:"svc",t:sv.vt||0,title:"Service round · "+nm,d:`ทำไป ${d}/${L.length} ข้อ${c&&!c.notice?` · ล่าสุดอยู่${ss.length===1?"":" "+esc(setKey(c))} ข้อ ${c.id}`:""}`});}}
+      out.push({k:"svc",t:sv.vt||0,title:"Service round · "+nm,d:`ทำไป ${d}/${L.length} ข้อ${c&&!c.notice?` · ไปข้อแรกที่ยังไม่ทำ${ss.length===1?"":" "+esc(setKey(c))} ข้อ ${c.id}`:""}`});}}
   const H=P.rsHide||{};return out.filter(x=>!(H[x.k+"|"+p]>=x.t)).sort((a,b)=>b.t-a.t);}
 function startSess(kind,title,uids,extra){
   if(!uids.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}
@@ -4452,12 +4451,11 @@ function noteIns(L){const W=W_();if(!W.NOTE||!W.NOTE.length)return L;const f=svc
   W.NOTE.filter(inSet).forEach(n=>{const i=out.findIndex(q=>!q.notice&&setKey(q)===setKey(n));if(i>=0)out.splice(i,0,n);});return out;}
 const noteSeen=q=>!!(P_().noteSeen&&P_().noteSeen[q.uid]);
 const svcStart=v=>v.find(x=>!(x.notice&&noteSeen(x)))||v[0];   /* entering a set: its ข้อ 0 page until it has been answered once */
-/* entering the Service round (เริ่มทำ): the next not-yet-answered question of the chosen sets — counting on from where you were if that question is in them, else from the first — wrapping round; a set's unseen ข้อ 0 page comes first when that set still has questions to do */
+/* entering the Service round (เริ่มทำ / ทำต่อ): always the FIRST not-yet-answered question of the chosen sets, in sheet order, wherever you were last (user 14 Nov 2026, every ward, every site); a set's unseen ข้อ 0 page comes first when that set still has questions to do */
 function svcNextTodo(){const P=P_(),p=ph(),v=svcVisible();if(!v.length)return null;
   const todo=x=>lockedAns(P,p,x.uid)===undefined,left=k=>v.some(y=>!y.notice&&setKey(y)===k&&todo(y));
   const ok=x=>x.notice?!noteSeen(x)&&left(setKey(x)):todo(x);
-  const i0=Math.max(0,v.findIndex(x=>x.uid===svcS().cur));
-  for(let j=0;j<v.length;j++){const x=v[(i0+j)%v.length];if(ok(x))return x;}return null;}
+  return v.find(ok)||null;}
 const ordId=x=>{if(!x.notice)return x.id;const f=W_().QB.find(q=>setKey(q)===setKey(x));return (f?f.id:0)-0.5;};
 function svcQ(){const W=W_(),s=svcS();let q=W.byU[s.cur];if(!q||!inSet(q)){q=svcStart(svcVisible())||svcList()[0]||W.QB[0];if(q)s.cur=q.uid;}return q;}
 const isSess=()=>view==="sess";
