@@ -15,7 +15,8 @@ function mqL(wid,kind){wid=wid||ward;const W=WARDS[wid];if(!W)return [];kind=kin
     let u=q.ukey||((OS?"OS|":"MQ|")+q.set+"|"+q.file+"|"+q.page+"|"+q.orig);if(seen[u])u+="#"+(++seen[u]);else seen[u]=1;q.uid=u;q.n=n;})
     /* files are loaded meq_b1, b2, b3 … — keep each set together in the order its first file appears (ไฟล์ดำ p1–5, p6–15 …, then short ans …) */
     const so0=[...new Set(L.map(q=>q.set))],so=so0.slice().sort((a,b)=>(typeof yrNum==="function"?yrNum(b)-yrNum(a):0)||so0.indexOf(a)-so0.indexOf(b));   /* newest year first like MCQ (P’Pugun/Prac, 79, 78 …) — user 14 Nov 2026; same year keeps file order */
-    L.sort((a,b)=>so.indexOf(a.set)-so.indexOf(b.set)||a.n-b.n);L.forEach((q,i)=>{q.n=i;});}
+    const rk=r=>{r=String(r||"");return /^RoX/.test(r)?"~"+r:r;};   /* within a year: rotation A → B → C → D → X (like MCQ), then file order */
+    L.sort((a,b)=>so.indexOf(a.set)-so.indexOf(b.set)||(rk(a.ro)<rk(b.ro)?-1:rk(a.ro)>rk(b.ro)?1:0)||a.n-b.n);L.forEach((q,i)=>{q.n=i;});}
   return L;}
 function mqInitP(P,kind){const K=(kind||(P&&P.type==="OSCE"?"OSCE":"MEQ"))==="OSCE"?"osce":"meq";const m=P[K]=P[K]||{};m.a1=m.a1||{};m.a2=m.a2||{};m.star=m.star||{};m.v=m.v||{};const v=m.v;
   v.set=v.set||"all";v.sec=v.sec||"all";v.status=v.status||"all";v.style=v.style||"all";v.tags=Array.isArray(v.tags)?v.tags:[];v.gl=Array.isArray(v.gl)?v.gl:[];v.tg=v.tg&&Array.isArray(v.tg.tags)?v.tg:tgNorm(v.tg);return m;}

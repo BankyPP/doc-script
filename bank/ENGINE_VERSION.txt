@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 6f6f51e 2026-11-14 Morning round: 🔥/🏅 shared by MCQ, MEQ and OSCE of each ward (every ward, MDCU + SI)
+BankyPP/ac-mdcu 1a56f09 2026-11-14 Med Y4 MDCU: L01 CXR (Round I/O 9 pages, shared by every tab, 48 slide pages stored as img/medl01_p*) + Unit heading; CXR stations graded by ABCDEFGHI; skin OSCE 71-74 (11 new stations) + user's primary skin keys on existing 74-79 stations + High-yield skin update; MEQ/OSCE rotations ordered A→X (14 Nov 2026)
