@@ -821,7 +821,8 @@ const isTxt=r=>!!r&&/^T\d/.test(r.code||"");
    (broad tags such as Onco / Trauma / Surgical infection used to pull in unrelated chapters, e.g. thyroid, spleen, bites & stings) · chapters without kw: tags / topic as before · R unchanged */
 const qCoreTxt=q=>flatTxt([q.stem,q.q,Array.isArray(q.opts)&&q.ans!=null?q.opts[q.ans]:"",q.title].filter(Boolean).join(" "));
 function resFor(q,T){const W=W_(),tg=qTags(q),tp=q.adm||q.unit?"":topicOf(W,q);let tx=null;
-  return (T?txtOf(W):resOf(W)).filter(r=>{if(T&&r.kw){if(tx===null)tx=qCoreTxt(q);try{return new RegExp(r.kw,"i").test(tx);}catch(e){return false;}}return (r.tags||[]).some(t=>tg.includes(t))||(tp&&r.topic===tp);});}
+  return (T?txtOf(W):resOf(W)).filter(r=>{if(T&&r.kw){if(tx===null)tx=qCoreTxt(q);try{return new RegExp(r.kw,"i").test(tx);}catch(e){return false;}}if(T)return (r.tags||[]).slice(0,1).some(t=>tg.includes(t));   /* a T chapter without kw: its own main tag only — no broad tags, no topic */
+  return (r.tags||[]).some(t=>tg.includes(t))||(tp&&r.topic===tp);});}
 const txtFor=q=>resFor(q,1);
 const resLabel=r=>(r.code?r.code+" ":"")+r.title;
 const resPts=(r,n)=>(Array.isArray(r.points)?r.points:[]).slice(0,n||99);

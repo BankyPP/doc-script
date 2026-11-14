@@ -195,7 +195,7 @@ function mqRounds(type){if(type!=="OSCE")return MQ_ROUNDS.map(r=>r.k==="legend"?
     else if(r.k==="staff")o.d="ทวนข้อ OSCE ที่ทำแล้วแต่ยังมีข้อย่อยที่ไม่ได้เต็ม";
     else if(r.k==="advisor")o.d="อ่านเฉลยข้อ OSCE ที่ทำแล้ว รวมสถานีที่ AI สร้างใน Legendary round · เรียงข้อที่ทำล่าสุดอยู่บน หรือคะแนนน้อยสุดก่อน · กรองชุด / ได้เต็ม / ★ ได้";
     else if(r.k==="unit")o.d="สถานีใหม่ที่ Claude แต่งจากไฟล์ของวอร์ด แยกตามหัวข้อใหญ่ OSCE (Lab, Imaging, EKG, History taking …) · ทำทีละสถานี ไม่จับเวลา";
-    else if(r.k==="morning"){o.soon=0;o.off=0;o.d="วันละ 3 สถานี: ข้อสอบเก่าที่เคยทำแล้ว 1 + สถานี Unit round 2 (ขาดฝั่งไหนเติมจากอีกฝั่ง) · ไม่ซ้ำตลอดทั้งวอร์ด · ชุดใหม่ทุกวัน 07:30";}
+    else if(r.k==="morning"){o.soon=0;o.off=0;o.d="วันละ 3 สถานี: ข้อสอบเก่า 1 + สถานี Unit round 2 (ขาดฝั่งไหนเติมจากอีกฝั่ง) · ไม่ซ้ำตลอดทั้งวอร์ด · ชุดใหม่ทุกวัน 07:30";}
     else if(r.k==="specialty"){o.soon=0;o.off=0;o.d="สถานีใหม่ที่ AI สร้างทีละสถานี เนื้อหาจาก Round I/O ของแท็บ OSCE เท่านั้น · เลือกเรื่อง / ไฟล์ (L · R · T · N) เอง หรือสุ่มทั้งหมด";}
     else if(r.k==="admission")o.note="AI ออกสถานี OSCE ใหม่ — รอรายละเอียด";
     else if(["teach","longcase"].includes(r.k))o.d=r.d.replace(/MCQ \/ OSCE/,"MCQ / MEQ");
