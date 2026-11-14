@@ -933,7 +933,10 @@ mark{background:#FFF176;color:#1a1a1a;border-radius:2px}mark.pk{background:#F8BB
 .tkcard{display:grid;grid-template-columns:1fr 1fr 0.7fr;gap:8px;margin:12px 0 4px}
 .tkb{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;border:1.5px solid var(--rule);background:var(--sheet);border-radius:8px;padding:9px 10px;cursor:pointer;color:var(--ink)}
 .tkb:hover{border-color:var(--form)}.tkb .i{font-size:18px}.tkb b{font-family:var(--num);font-size:14px;line-height:1.2}.tkb .rd{font-size:11.5px;color:var(--muted)}
-@media (max-width:420px){.tkcard{grid-template-columns:1fr 1fr}.tkb.sm{grid-column:span 2;flex-direction:row;align-items:center;gap:6px}}
+/* 3 กล่องอยู่บรรทัดเดียวเสมอทุกขนาดจอ (14 พ.ย. 2026) — จอแคบย่อตัวอักษร/ช่องแทนการขึ้นบรรทัดใหม่ */
+.tkcard{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,.75fr)}.tkb{min-width:0}.tkb b,.tkb .rd{max-width:100%;overflow-wrap:break-word}
+@media (max-width:420px){.tkcard{gap:6px}.tkb{padding:8px 8px}.tkb .i{font-size:16px}.tkb b{font-size:13px}.tkb .rd{font-size:10.5px;line-height:1.35}}
+@media (max-width:350px){.tkcard{gap:5px}.tkb{padding:7px 6px}.tkb b{font-size:12px}.tkb .rd{font-size:10px}}
 .tkt{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);margin-top:8px}.tkt input{font:inherit;font-size:15px;padding:7px 10px;border:1.5px solid var(--rule);border-radius:8px;background:var(--sheet);color:var(--ink)}
 .tch-chips i{font-style:normal;font-size:11.5px;border:1px solid var(--rule);border-radius:999px;padding:0 6px;margin-left:4px;color:var(--muted)}
 .tdoc{font-size:14.5px;line-height:1.6}.tdoc h3{font-size:16px;margin:12px 0 4px}.tdoc h4{font-size:15px;margin:10px 0 4px}.tdoc table{border-collapse:collapse;width:100%;font-size:13.5px}.tdoc td,.tdoc th{border:1px solid var(--rule);padding:4px 6px;vertical-align:top}
@@ -1255,6 +1258,16 @@ mark{background:#FFF176;color:#1a1a1a;border-radius:2px}mark.pk{background:#F8BB
 .iov .glsec ul,.iov .glsec ol{margin:4px 0 0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .iov .glsec .glh{color:#90CAF9}}
 :root[data-theme="dark"] .iov .glsec .glh{color:#90CAF9}
+/* recall text from the AC file under the question — collapsible, default closed (st.grayOpen) */
+details.gbox{margin:8px 0 0;border-left:2px solid var(--rule);padding-left:12px}
+details.gbox>summary{cursor:pointer;color:var(--muted);font-size:13.5px;list-style:none;padding:2px 0;user-select:none}
+details.gbox>summary::-webkit-details-marker{display:none}
+details.gbox>summary::before{content:"▸";display:inline-block;width:1em;transition:transform .15s}
+details.gbox[open]>summary::before{transform:rotate(90deg)}
+details.gbox .gwarn{font-size:12px;opacity:.75;margin-left:4px}
+details.gbox>.gray{border-left:0;padding-left:0;margin:4px 0 0}
+details.gbox .gdef{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0 2px;font-size:12.5px;color:var(--muted)}
+details.gbox .gdef .chip{font-size:12.5px;padding:2px 10px}
 </style>
 <style>
 /* โพยหมอ theme for the old-exam engine (NL & Compre banks) — only colours/fonts change; every feature stays the engine's own.
@@ -1365,7 +1378,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 <script>
 const IMGS={};const WARDS={};
 const CONFIG={"title": "คลังข้อสอบเก่า Compre · โพยหมอ", "brand": "AC Compre", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-compre-v1", "setLabel": "ปี", "roLabel": "สถาบัน", "chipStrip": "", "files": {}, "siteUrl": "https://bankypp.github.io/doc-script/bank/compre/", "siteName": "คลังข้อสอบเก่า Compre", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "compre"], "sharedPrefix": "poy_compre_", "homeBrand": "AC {short} MDCU79 by BankyPP", "quizBrand": "AC {short} {type}", "artifactUrl": "", "subjects": [{"id": "compre", "name": "Comprehensive (Compre)", "wards": ["c1", "c2", "c3"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "inst": {"id": "compre", "name": "Compre", "th": "Compre", "en": "Comprehensive examination", "enShort": "Compre", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"c1": "#/nl/x/c1", "c2": "#/nl/x/c2", "c3": "#/nl/x/c3"}, "others": {"inst": "nl", "before": true, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "noExam": ["MEQ"]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "noExam": ["MEQ"]}]}}, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "brand": "AC Compre 1 MCQ", "dir": "data_c1", "scope": "Comprehensive 1 (จุฬาฯ เท่านั้น — ศิริราชไม่มี) ใช้ blueprint NL1 เก่า", "dates": [{"part": "MCQ", "at": "2026-03-16"}], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "brand": "AC Compre 2 MCQ", "dir": "data_c2", "scope": "Comprehensive 2 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "brand": "AC Compre 3 MCQ", "dir": "data_c3", "scope": "Comprehensive 3 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="14/11/2026 18:19";
+const BUILD="14/11/2026 18:56";
 WARDS["c1"]={QB:[],HY:null};
 WARDS["c1"].MQ=[];
 WARDS["c1"].OS=[];
@@ -1763,19 +1776,19 @@ function mqView(){const c=mqCur();if(!c){go(ward);return;}const {q}=c;let pi=c.p
   if(tm){if(TP.length>1)h+=`<div class="psteps">${TP.map(j=>{const d=mqTDone(q,j);return `<button class="pstep ${d?"done":"open"}${j===pi?" on":""}" data-mpart="${j}">${d?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;}
   else if(NP>1)h+=`<div class="psteps">${q.parts.map((p,j)=>{const lock=j>ps;return `<button class="pstep ${j<ps?"done":j===ps?"open":"lock"}${j===pi?" on":""}" data-mpart="${j}" ${lock?'disabled title="ส่งคำตอบ Part ก่อนหน้าก่อน"':""}>${lock?"🔒 ":j<ps?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;
   if(mqCaseDone(q))h+=myNoteTop(q);   /* 📝 my after-answer note above the question — only once the whole case has been answered (user 28 Oct 2026) */
-  if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">${q.mday?"เคสประจำวัน":"ข้อ"} ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?`<p class="gray">${esc(q.gray)}</p>`:""}</section>`;
+  if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">${q.mday?"เคสประจำวัน":"ข้อ"} ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?grayBox(q.gray,q.uid+"|c"):""}</section>`;
     const prev=q.parts.slice(0,pi).filter(p=>p.info||p.img);
-    if(prev.length)h+=`<details class="prev old" open><summary>ข้อมูลเพิ่มเติมจาก Part ก่อนหน้า <span class="oldtag">ข้อมูลเดิม</span></summary>${prev.map(p=>`<div class="pinfo"><span class="pn">${esc(mqGL(q,p.i).replace("Part ","P"))}</span><div>${p.info?`<div>${p.info}</div>`:""}${p.info&&(p.igray||p.gray)?`<p class="gray">${esc(p.igray||p.gray)}</p>`:""}${mqImgs(p.img,p.imgNote)}</div></div>`).join("")}</details>`;}
+    if(prev.length)h+=`<details class="prev old" open><summary>ข้อมูลเพิ่มเติมจาก Part ก่อนหน้า <span class="oldtag">ข้อมูลเดิม</span></summary>${prev.map(p=>`<div class="pinfo"><span class="pn">${esc(mqGL(q,p.i).replace("Part ","P"))}</span><div>${p.info?`<div>${p.info}</div>`:""}${p.info&&(p.igray||p.gray)?grayBox(p.igray||p.gray,q.uid+"|i"+p.i):""}${mqImgs(p.img,p.imgNote)}</div></div>`).join("")}</details>`;}
   const pm=SUBS.reduce((a,s)=>a+mqMk(s),0);
   h+=`<section class="part"><div class="part-h"><span class="pnum">${q.sa?"คำถาม":mqIsOS()?"ข้อย่อย":esc(gl)}</span><span class="mk">${pm} คะแนน</span>${pDone&&!mqReoIds(q,pi).length&&r.pt&&r.pt[pi]?`<span class="ptime">⏱ ใช้เวลา ${mqFmt(r.pt[pi])}</span>`:""}</div>`;
   /* Thai wording from the AC file sits under the English text it translates, like the case box: igray under the new information, sub gray under each Part's question (an old-style part.gray goes under the info, or under the first question) */
   const pg=part.igray||(part.info?part.gray:"");
-  if(part.info)h+=`<div class="pinfo-cur"><span class="newtag">ข้อมูลใหม่</span>${part.info}${pg?`<p class="gray">${esc(pg)}</p>`:""}</div>`;
+  if(part.info)h+=`<div class="pinfo-cur"><span class="newtag">ข้อมูลใหม่</span>${part.info}${pg?grayBox(pg,q.uid+"|i"+pi):""}</div>`;
   h+=mqImgs(part.img,part.imgNote);
   SUBS.forEach(s=>{const i=s._i,sn=q.sa||mqIsOS()?"":"Part "+(i+1),t=(r.t&&r.t[i])||"";
     h+=`<div class="subq" id="mqs${i}"><div class="sh">${sn?`<span class="sn">${sn}</span>`:""}<div class="sq">${q.sa?q.stem:s.q}</div><span class="mk">${mqMk(s)} คะแนน</span></div>`;
     if(tm&&(s.tags||[]).length)h+=`<div class="ttags">${s.tags.map(x=>`<span class="ttag${v.tags.includes(x)?" on":""}">${esc(mqTN(x))}</span>`).join("")}</div>`;
-    h+=mqImgs(s.img,s.imgNote);{const sg=q.sa?q.gray:(s.gray||(!part.info&&part.gray&&s===SUBS[0]?part.gray:""));if(sg)h+=`<p class="gray sgray">${esc(sg)}</p>`;}
+    h+=mqImgs(s.img,s.imgNote);{const sg=q.sa?q.gray:(s.gray||(!part.info&&part.gray&&s===SUBS[0]?part.gray:""));if(sg)h+=grayBox(sg,q.uid+"|s"+i,"sgray");}
     if(!mqSubDone(q,s,r)){h+=`<textarea class="ans" id="mqa${i}" data-i="${i}" rows="3" placeholder="พิมพ์คำตอบ${sn?" "+sn:""} (ไม่บังคับ)">${esc(t)}</textarea>`;
       if(mqReo(r,i))h+=`<div class="actions sact"><button class="btn primary" type="button" data-mssub="${i}">ส่งคำตอบ & ดูเฉลย${sn?" "+sn:""}</button><span class="hint">กำลังทำข้อนี้ใหม่</span></div>`;}
     else h+=mqDoneSub(q,pi,s,r,t);
@@ -3922,6 +3935,18 @@ const uAtts=(P,u)=>P.unit.att[u]||[];
 const flagged=(P,u)=>!!(P.flag[u]&&P.flag[u][0]);
 /* 📝 the question has an after-answer note (typed or handwritten, P.post) — marked in every answer sheet and filterable wherever ⚑ ไม่มั่นใจ / ★ is (user 13 Nov 2026) */
 function noted(u){return !!u&&noteHas("post",0,u);}
+/* recall text from the AC file (q.gray) under the question/case/part: a collapsible box, because it often carries the note-taker's answer or hints (user 14 Nov 2026, ทวทว)
+   st.grayOpen = default for every question (synced with the account; unset = closed) · grayU = boxes opened/closed by hand during this visit */
+const grayU={};
+const grayDef=()=>!!st.grayOpen;
+function grayBox(t,k,cls){if(!t)return "";const o=Object.prototype.hasOwnProperty.call(grayU,k)?grayU[k]:grayDef(),d=grayDef();
+  return `<details class="gbox${cls?" "+cls:""}" data-grk="${esc(k)}"${o?" open":""}><summary>📄 ข้อความในไฟล์ (recall) <span class="gwarn">อาจมีเฉลย/คำใบ้</span></summary><p class="gray">${esc(t)}</p><div class="gdef"><span>ค่าเริ่มต้นทุกข้อ</span><button type="button" class="chip" data-gdef="0" aria-pressed="${!d}">ปิด</button><button type="button" class="chip" data-gdef="1" aria-pressed="${d}">เปิด</button></div></details>`;}
+document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.classList&&d.classList.contains("gbox"))grayU[d.dataset.grk]=d.open;},true);
+document.addEventListener("click",e=>{const b=e.target&&e.target.closest&&e.target.closest("[data-gdef]");if(!b)return;e.preventDefault();
+  const on=b.dataset.gdef==="1",me=b.closest("details.gbox");st.grayOpen=on;save();
+  for(const k in grayU)delete grayU[k];if(me)grayU[me.dataset.grk]=me.open;   /* the box being used stays as it is; every other box follows the new default */
+  document.querySelectorAll("details.gbox").forEach(x=>{if(x!==me)x.open=on;x.querySelectorAll("[data-gdef]").forEach(c=>c.setAttribute("aria-pressed",String((c.dataset.gdef==="1")===on)));});
+  toast(on?"ค่าเริ่มต้น: เปิดข้อความในไฟล์ทุกข้อ":"ค่าเริ่มต้น: ปิดข้อความในไฟล์ทุกข้อ");});
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
 /* ---------------- toast ---------------- */
@@ -4612,7 +4637,7 @@ function rQuiz(){
   h+=`<p class="stem">${q.stem}</p>`;
   if(!q.img&&q.imgNote)h+=`<div class="img-missing">🖼 ${q.imgNote}</div>`;
   if(q.img){const IL=Array.isArray(q.img)?q.img:[q.img];h+=`<div class="stem-img">${IL.map(k=>imgHTML(k,"ภาพประกอบโจทย์")).join("")}${q.imgNote?`<div class="img-note">${q.imgNote}</div>`:""}</div>`;}
-  const gi=(q.gray||"").indexOf(" — "),g1=gi>=0?q.gray.slice(0,gi):q.gray;if(g1)h+=`<p class="gray">${esc(g1)}</p>`;
+  const gi=(q.gray||"").indexOf(" — "),g1=gi>=0?q.gray.slice(0,gi):q.gray;h+=grayBox(g1,q.uid);
   h+=`<ul class="opts" role="radiogroup" aria-label="ตัวเลือก">`;
   const everPick=isAdv()?new Set(hist(P,q.uid,P.sess.hp,true).map(x=>x[0])):null;
   q.opts.forEach((o,i)=>{let c="opt";if(pick===i)c+=" sel";if(locked){if(i===q.ans)c+=" correct";else if(i===done||(everPick&&everPick.has(i)))c+=" wrongpick";else c+=" dim";}
@@ -6204,8 +6229,8 @@ function mergeSt(a,b){
     if((b.t||0)>(a.t||0)){l.svc=r.svc;l.type=r.type;l.pick=r.pick;}
     if(r.sess&&(!l.sess||(r.sess.ts||0)>(l.sess.ts||0)))l.sess=r.sess;
   }
-  if((b.t||0)>(a.t||0)){a.phase=b.phase===2?2:1;a.noteMode=b.noteMode||a.noteMode;if(b.qp)a.qp=b.qp;["staffAll","legAI","clStart","lastWard"].forEach(k=>{if(b[k]!==undefined&&b[k]!=="")a[k]=b[k];});}
-  ["staffAll","legAI","clStart","lastWard"].forEach(k=>{if(a[k]===undefined&&b[k]!==undefined)a[k]=b[k];});
+  if((b.t||0)>(a.t||0)){a.phase=b.phase===2?2:1;a.noteMode=b.noteMode||a.noteMode;if(b.qp)a.qp=b.qp;["staffAll","legAI","clStart","lastWard","grayOpen"].forEach(k=>{if(b[k]!==undefined&&b[k]!=="")a[k]=b[k];});}
+  ["staffAll","legAI","clStart","lastWard","grayOpen"].forEach(k=>{if(a[k]===undefined&&b[k]!==undefined)a[k]=b[k];});
   if(b.wcfg){a.wcfg=a.wcfg||{};for(const k in b.wcfg){const x=b.wcfg[k];if(x&&(!a.wcfg[k]||(x.ts||0)>(a.wcfg[k].ts||0)))a.wcfg[k]=x;}}
   if(b.grades){a.grades=a.grades||{};for(const k in b.grades){const x=b.grades[k];if(x&&(!a.grades[k]||(x.ts||0)>(a.grades[k].ts||0)))a.grades[k]=x;}}
   if(!a.qp&&b.qp)a.qp=b.qp;
@@ -6254,7 +6279,7 @@ async function clPull(){
   const snap=await cl.db.collection(cl.col).limit(1000).get();
   const r={w:{},t:0},rts={};let old=null;
   snap.docs.forEach(d=>{const id=d.id,x=d.data()||{};try{
-    if(id==="meta"){const m=JSON.parse(x.d||"{}");r.phase=m.phase;r.noteMode=m.noteMode;if(m.qp)r.qp=m.qp;if(m.lastRoute){r.lastRoute=m.lastRoute;r.lastRouteT=m.lastRouteT||0;}["staffAll","legAI","clStart","lastWard"].forEach(k=>{if(m[k]!==undefined&&m[k]!=="")r[k]=m[k];});if(m.grades)r.grades=m.grades;if(m.wcfg)r.wcfg=m.wcfg;r.t=Math.max(r.t,x.t||0);}
+    if(id==="meta"){const m=JSON.parse(x.d||"{}");r.phase=m.phase;r.noteMode=m.noteMode;if(m.qp)r.qp=m.qp;if(m.lastRoute){r.lastRoute=m.lastRoute;r.lastRouteT=m.lastRouteT||0;}["staffAll","legAI","clStart","lastWard","grayOpen"].forEach(k=>{if(m[k]!==undefined&&m[k]!=="")r[k]=m[k];});if(m.grades)r.grades=m.grades;if(m.wcfg)r.wcfg=m.wcfg;r.t=Math.max(r.t,x.t||0);}
     else if(id==="progress"&&Array.isArray(x.a))old=x;   /* progress saved by the earlier single-page artifact */
     else if(id.startsWith("w_")){r.w[id.slice(2)]=JSON.parse(x.d||"{}");r.t=Math.max(r.t,x.t||0);}
     else if(id.startsWith("ink_")&&x.k){const v=JSON.parse(x.d);rts[x.k]=v.ts||0;if(!ink[x.k]||(v.ts||0)>(ink[x.k].ts||0))ink[x.k]=v;}
@@ -6276,7 +6301,7 @@ async function clBank(){if(!cl)return;clearTimeout(bankT);const ks=[...bankDirty
 let clBusy=false,clAgain=false;
 async function clPush(){if(!cl)return;clearTimeout(pushT);if(clBusy){clAgain=true;return;}clBusy=true;sync="saving";paintSync();
   try{const t=st.t||now();
-    await cl.db.doc(cl.col+"/meta").set({d:JSON.stringify({phase:st.phase,noteMode:st.noteMode||"",lastWard:st.lastWard||"",qp:st.qp||null,lastRoute:st.lastRoute||"",lastRouteT:st.lastRouteT||0,staffAll:st.staffAll,legAI:st.legAI,clStart:st.clStart,grades:st.grades||{},wcfg:st.wcfg||{}}),t});
+    await cl.db.doc(cl.col+"/meta").set({d:JSON.stringify({phase:st.phase,noteMode:st.noteMode||"",lastWard:st.lastWard||"",qp:st.qp||null,lastRoute:st.lastRoute||"",lastRouteT:st.lastRouteT||0,staffAll:st.staffAll,legAI:st.legAI,grayOpen:st.grayOpen,clStart:st.clStart,grades:st.grades||{},wcfg:st.wcfg||{}}),t});
     for(const id in st.w)await cl.db.doc(cl.col+"/w_"+id).set({d:JSON.stringify(st.w[id]),t});
     sync="cloud";}catch(e){console.warn(e);sync="error";}
   clBusy=false;paintSync();if(clAgain){clAgain=false;clPush();}}

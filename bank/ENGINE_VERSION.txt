@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu bc73f80 2026-11-14 Morning MEQ box: no countdown while waiting for a later case
+BankyPP/ac-mdcu 0e963d5 2026-11-14 Recall text (gray) under the question: collapsible box, default closed, with a default open/closed switch for every question (MCQ + MEQ, all wards, MDCU + SI)

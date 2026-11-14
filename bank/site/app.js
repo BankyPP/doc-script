@@ -200,6 +200,18 @@ const uAtts=(P,u)=>P.unit.att[u]||[];
 const flagged=(P,u)=>!!(P.flag[u]&&P.flag[u][0]);
 /* 📝 the question has an after-answer note (typed or handwritten, P.post) — marked in every answer sheet and filterable wherever ⚑ ไม่มั่นใจ / ★ is (user 13 Nov 2026) */
 function noted(u){return !!u&&noteHas("post",0,u);}
+/* recall text from the AC file (q.gray) under the question/case/part: a collapsible box, because it often carries the note-taker's answer or hints (user 14 Nov 2026, ทวทว)
+   st.grayOpen = default for every question (synced with the account; unset = closed) · grayU = boxes opened/closed by hand during this visit */
+const grayU={};
+const grayDef=()=>!!st.grayOpen;
+function grayBox(t,k,cls){if(!t)return "";const o=Object.prototype.hasOwnProperty.call(grayU,k)?grayU[k]:grayDef(),d=grayDef();
+  return `<details class="gbox${cls?" "+cls:""}" data-grk="${esc(k)}"${o?" open":""}><summary>📄 ข้อความในไฟล์ (recall) <span class="gwarn">อาจมีเฉลย/คำใบ้</span></summary><p class="gray">${esc(t)}</p><div class="gdef"><span>ค่าเริ่มต้นทุกข้อ</span><button type="button" class="chip" data-gdef="0" aria-pressed="${!d}">ปิด</button><button type="button" class="chip" data-gdef="1" aria-pressed="${d}">เปิด</button></div></details>`;}
+document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.classList&&d.classList.contains("gbox"))grayU[d.dataset.grk]=d.open;},true);
+document.addEventListener("click",e=>{const b=e.target&&e.target.closest&&e.target.closest("[data-gdef]");if(!b)return;e.preventDefault();
+  const on=b.dataset.gdef==="1",me=b.closest("details.gbox");st.grayOpen=on;save();
+  for(const k in grayU)delete grayU[k];if(me)grayU[me.dataset.grk]=me.open;   /* the box being used stays as it is; every other box follows the new default */
+  document.querySelectorAll("details.gbox").forEach(x=>{if(x!==me)x.open=on;x.querySelectorAll("[data-gdef]").forEach(c=>c.setAttribute("aria-pressed",String((c.dataset.gdef==="1")===on)));});
+  toast(on?"ค่าเริ่มต้น: เปิดข้อความในไฟล์ทุกข้อ":"ค่าเริ่มต้น: ปิดข้อความในไฟล์ทุกข้อ");});
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
 /* ---------------- toast ---------------- */
@@ -890,7 +902,7 @@ function rQuiz(){
   h+=`<p class="stem">${q.stem}</p>`;
   if(!q.img&&q.imgNote)h+=`<div class="img-missing">🖼 ${q.imgNote}</div>`;
   if(q.img){const IL=Array.isArray(q.img)?q.img:[q.img];h+=`<div class="stem-img">${IL.map(k=>imgHTML(k,"ภาพประกอบโจทย์")).join("")}${q.imgNote?`<div class="img-note">${q.imgNote}</div>`:""}</div>`;}
-  const gi=(q.gray||"").indexOf(" — "),g1=gi>=0?q.gray.slice(0,gi):q.gray;if(g1)h+=`<p class="gray">${esc(g1)}</p>`;
+  const gi=(q.gray||"").indexOf(" — "),g1=gi>=0?q.gray.slice(0,gi):q.gray;h+=grayBox(g1,q.uid);
   h+=`<ul class="opts" role="radiogroup" aria-label="ตัวเลือก">`;
   const everPick=isAdv()?new Set(hist(P,q.uid,P.sess.hp,true).map(x=>x[0])):null;
   q.opts.forEach((o,i)=>{let c="opt";if(pick===i)c+=" sel";if(locked){if(i===q.ans)c+=" correct";else if(i===done||(everPick&&everPick.has(i)))c+=" wrongpick";else c+=" dim";}
@@ -2482,8 +2494,8 @@ function mergeSt(a,b){
     if((b.t||0)>(a.t||0)){l.svc=r.svc;l.type=r.type;l.pick=r.pick;}
     if(r.sess&&(!l.sess||(r.sess.ts||0)>(l.sess.ts||0)))l.sess=r.sess;
   }
-  if((b.t||0)>(a.t||0)){a.phase=b.phase===2?2:1;a.noteMode=b.noteMode||a.noteMode;if(b.qp)a.qp=b.qp;["staffAll","legAI","clStart","lastWard"].forEach(k=>{if(b[k]!==undefined&&b[k]!=="")a[k]=b[k];});}
-  ["staffAll","legAI","clStart","lastWard"].forEach(k=>{if(a[k]===undefined&&b[k]!==undefined)a[k]=b[k];});
+  if((b.t||0)>(a.t||0)){a.phase=b.phase===2?2:1;a.noteMode=b.noteMode||a.noteMode;if(b.qp)a.qp=b.qp;["staffAll","legAI","clStart","lastWard","grayOpen"].forEach(k=>{if(b[k]!==undefined&&b[k]!=="")a[k]=b[k];});}
+  ["staffAll","legAI","clStart","lastWard","grayOpen"].forEach(k=>{if(a[k]===undefined&&b[k]!==undefined)a[k]=b[k];});
   if(b.wcfg){a.wcfg=a.wcfg||{};for(const k in b.wcfg){const x=b.wcfg[k];if(x&&(!a.wcfg[k]||(x.ts||0)>(a.wcfg[k].ts||0)))a.wcfg[k]=x;}}
   if(b.grades){a.grades=a.grades||{};for(const k in b.grades){const x=b.grades[k];if(x&&(!a.grades[k]||(x.ts||0)>(a.grades[k].ts||0)))a.grades[k]=x;}}
   if(!a.qp&&b.qp)a.qp=b.qp;
@@ -2532,7 +2544,7 @@ async function clPull(){
   const snap=await cl.db.collection(cl.col).limit(1000).get();
   const r={w:{},t:0},rts={};let old=null;
   snap.docs.forEach(d=>{const id=d.id,x=d.data()||{};try{
-    if(id==="meta"){const m=JSON.parse(x.d||"{}");r.phase=m.phase;r.noteMode=m.noteMode;if(m.qp)r.qp=m.qp;if(m.lastRoute){r.lastRoute=m.lastRoute;r.lastRouteT=m.lastRouteT||0;}["staffAll","legAI","clStart","lastWard"].forEach(k=>{if(m[k]!==undefined&&m[k]!=="")r[k]=m[k];});if(m.grades)r.grades=m.grades;if(m.wcfg)r.wcfg=m.wcfg;r.t=Math.max(r.t,x.t||0);}
+    if(id==="meta"){const m=JSON.parse(x.d||"{}");r.phase=m.phase;r.noteMode=m.noteMode;if(m.qp)r.qp=m.qp;if(m.lastRoute){r.lastRoute=m.lastRoute;r.lastRouteT=m.lastRouteT||0;}["staffAll","legAI","clStart","lastWard","grayOpen"].forEach(k=>{if(m[k]!==undefined&&m[k]!=="")r[k]=m[k];});if(m.grades)r.grades=m.grades;if(m.wcfg)r.wcfg=m.wcfg;r.t=Math.max(r.t,x.t||0);}
     else if(id==="progress"&&Array.isArray(x.a))old=x;   /* progress saved by the earlier single-page artifact */
     else if(id.startsWith("w_")){r.w[id.slice(2)]=JSON.parse(x.d||"{}");r.t=Math.max(r.t,x.t||0);}
     else if(id.startsWith("ink_")&&x.k){const v=JSON.parse(x.d);rts[x.k]=v.ts||0;if(!ink[x.k]||(v.ts||0)>(ink[x.k].ts||0))ink[x.k]=v;}
@@ -2554,7 +2566,7 @@ async function clBank(){if(!cl)return;clearTimeout(bankT);const ks=[...bankDirty
 let clBusy=false,clAgain=false;
 async function clPush(){if(!cl)return;clearTimeout(pushT);if(clBusy){clAgain=true;return;}clBusy=true;sync="saving";paintSync();
   try{const t=st.t||now();
-    await cl.db.doc(cl.col+"/meta").set({d:JSON.stringify({phase:st.phase,noteMode:st.noteMode||"",lastWard:st.lastWard||"",qp:st.qp||null,lastRoute:st.lastRoute||"",lastRouteT:st.lastRouteT||0,staffAll:st.staffAll,legAI:st.legAI,clStart:st.clStart,grades:st.grades||{},wcfg:st.wcfg||{}}),t});
+    await cl.db.doc(cl.col+"/meta").set({d:JSON.stringify({phase:st.phase,noteMode:st.noteMode||"",lastWard:st.lastWard||"",qp:st.qp||null,lastRoute:st.lastRoute||"",lastRouteT:st.lastRouteT||0,staffAll:st.staffAll,legAI:st.legAI,grayOpen:st.grayOpen,clStart:st.clStart,grades:st.grades||{},wcfg:st.wcfg||{}}),t});
     for(const id in st.w)await cl.db.doc(cl.col+"/w_"+id).set({d:JSON.stringify(st.w[id]),t});
     sync="cloud";}catch(e){console.warn(e);sync="error";}
   clBusy=false;paintSync();if(clAgain){clAgain=false;clPush();}}
