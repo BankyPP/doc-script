@@ -579,7 +579,7 @@ function rHome(){
   document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(ward+"/"+b.dataset.go));
   document.querySelectorAll("[data-p2]").forEach(b=>b.onclick=()=>{const k=b.dataset.p2,l=p2lists()[k];const t={wrong:"ข้อที่ยังผิดอยู่",right:"ข้อที่ทำถูกแล้ว",flag:"ข้อที่ยังไม่มั่นใจ",note:"ข้อที่มีโน้ต",nop1:"ข้อที่ไม่เคยทำใน Phase 1"}[k];startSess("p2"+k,t,l.map(q=>q.uid));});
   document.querySelectorAll("[data-rsx]").forEach(b=>b.onclick=()=>{const P=P_();P.rsHide=P.rsHide||{};P.rsHide[b.dataset.rsx+(b.dataset.rsall?"":"|"+ph())]=now();save();toast("ซ่อนแล้ว · จะขึ้นอีกเมื่อกลับไปทำรอบนั้น");rHome();});
-  document.querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{if(b.dataset.rs==="svc"){const nx=svcNextTodo();if(nx){svcS().cur=nx.uid;save();}else svcQ();go(ward+"/svc");}else go(ward+"/sess");});
+  document.querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{if(b.dataset.rs==="svc"){svcQ();go(ward+"/svc");}else go(ward+"/sess");});
   const mc=$("mClock");if(mc){let lastDay=mDay();show._t=setInterval(()=>{if(!document.body.contains(mc)){clearInterval(show._t);return;}mc.textContent=hms(mNext()-now());if(mDay()!==lastDay){lastDay=mDay();rHome();}},1000);}
   document.querySelectorAll("[data-round]").forEach(b=>b.onclick=e=>{if(e&&e.target&&e.target.closest&&e.target.closest("[data-mhist]"))return go(ward+"/mhist");const k=b.dataset.round;const R=ROUNDS.find(r=>r.k===k);if(R.soon){toast("โหมดนี้จะเพิ่มภายหลัง");return;}
     if(k==="io")return go(ward+"/io");if(k==="teach")return go(ward+"/teach");if(k==="unit")return go(ward+"/unit");if(k==="admission")return go(ward+"/adm");if(k==="specialty")return go(ward+"/spc");if(k==="morning")return startMorning();if(k==="longcase")return go(ward+"/lcase");
@@ -597,9 +597,9 @@ function rsVisit(P,o,k){if(o&&(now()-(o.vt||0)>30000||(o.vt||0)<=((P.rsHide||{})
 function homeResume(P,p){qRestore();const W=W_(),out=[],s=P.sess;
   if(s&&s.list&&s.list.length&&s.ph===p){const a=Object.keys(s.ans).length;if(a<s.list.length)out.push({k:"sess",t:Math.max(s.vt||0,s.ts||0),title:s.title,d:`ทำไป ${a}/${s.list.length} ข้อ · ล่าสุดอยู่ข้อ ${s.cur+1}${QR&&!QR.done&&QR.ward===ward&&s.kind==="quality"?" · กำลังจับเวลา":""}`});}
   const sv=P.svc[p];
-  if(sv&&(sv.vt||sv.cur)&&W.QB.length){const L=svcList().filter(q=>!q.notice),d=L.filter(q=>lockedAns(P,p,q.uid)!==undefined).length,c=L.find(q=>lockedAns(P,p,q.uid)===undefined);
+  if(sv&&(sv.vt||sv.cur)&&W.QB.length){const L=svcList().filter(q=>!q.notice),d=L.filter(q=>lockedAns(P,p,q.uid)!==undefined).length,c=W.byU[sv.cur];
     if(L.length&&d<L.length){const ss=selSets(),nm=(sv.set==="all"?"ทุกชุด":ss.length>2?`${ss.slice(0,2).join(", ")} +${ss.length-2} ชุด`:ss.join(", "))+(tgActive(sv.tg)?` · ${sv.tg.tags.length} Tag`:"");
-      out.push({k:"svc",t:sv.vt||0,title:"Service round · "+nm,d:`ทำไป ${d}/${L.length} ข้อ${c&&!c.notice?` · ไปข้อแรกที่ยังไม่ทำ${ss.length===1?"":" "+esc(setKey(c))} ข้อ ${c.id}`:""}`});}}
+      out.push({k:"svc",t:sv.vt||0,title:"Service round · "+nm,d:`ทำไป ${d}/${L.length} ข้อ${c&&!c.notice?` · ล่าสุดอยู่${ss.length===1?"":" "+esc(setKey(c))} ข้อ ${c.id}`:""}`});}}
   const H=P.rsHide||{};return out.filter(x=>!(H[x.k+"|"+p]>=x.t)).sort((a,b)=>b.t-a.t);}
 function startSess(kind,title,uids,extra){
   if(!uids.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}
@@ -760,11 +760,12 @@ function noteIns(L){const W=W_();if(!W.NOTE||!W.NOTE.length)return L;const f=svc
   W.NOTE.filter(inSet).forEach(n=>{const i=out.findIndex(q=>!q.notice&&setKey(q)===setKey(n));if(i>=0)out.splice(i,0,n);});return out;}
 const noteSeen=q=>!!(P_().noteSeen&&P_().noteSeen[q.uid]);
 const svcStart=v=>v.find(x=>!(x.notice&&noteSeen(x)))||v[0];   /* entering a set: its ข้อ 0 page until it has been answered once */
-/* entering the Service round (เริ่มทำ / ทำต่อ): always the FIRST not-yet-answered question of the chosen sets, in sheet order, wherever you were last (user 14 Nov 2026, every ward, every site); a set's unseen ข้อ 0 page comes first when that set still has questions to do */
+/* entering the Service round (เริ่มทำ): the next not-yet-answered question of the chosen sets — counting on from where you were if that question is in them, else from the first — wrapping round; a set's unseen ข้อ 0 page comes first when that set still has questions to do */
 function svcNextTodo(){const P=P_(),p=ph(),v=svcVisible();if(!v.length)return null;
   const todo=x=>lockedAns(P,p,x.uid)===undefined,left=k=>v.some(y=>!y.notice&&setKey(y)===k&&todo(y));
   const ok=x=>x.notice?!noteSeen(x)&&left(setKey(x)):todo(x);
-  return v.find(ok)||null;}
+  const i0=Math.max(0,v.findIndex(x=>x.uid===svcS().cur));
+  for(let j=0;j<v.length;j++){const x=v[(i0+j)%v.length];if(ok(x))return x;}return null;}
 const ordId=x=>{if(!x.notice)return x.id;const f=W_().QB.find(q=>setKey(q)===setKey(x));return (f?f.id:0)-0.5;};
 function svcQ(){const W=W_(),s=svcS();let q=W.byU[s.cur];if(!q||!inSet(q)){q=svcStart(svcVisible())||svcList()[0]||W.QB[0];if(q)s.cur=q.uid;}return q;}
 const isSess=()=>view==="sess";
@@ -816,12 +817,11 @@ const resOf=W=>(W&&W.RES||[]).filter(r=>r&&r.title);
 /* textbooks (code T, <dir>/textbooks.js → W.TXT, same shape as W.RES, one entry per chapter) — everything R gets, always in its own box apart from R */
 const txtOf=W=>(W&&W.TXT||[]).filter(r=>r&&r.title);
 const isTxt=r=>!!r&&/^T\d/.test(r.code||"");
-/* textbook chapters (T) with "kw" (user 14 Nov 2026): attached only when the question itself is about that chapter — the regex must match the stem + the correct option
+/* R resources and T textbook chapters with "kw" (user 14 Nov 2026, ทวทว): attached only when the question itself is about that chapter — the regex must match the stem + the correct option
    (broad tags such as Onco / Trauma / Surgical infection used to pull in unrelated chapters, e.g. thyroid, spleen, bites & stings) · chapters without kw: tags / topic as before · R unchanged */
 const qCoreTxt=q=>flatTxt([q.stem,q.q,Array.isArray(q.opts)&&q.ans!=null?q.opts[q.ans]:"",q.title].filter(Boolean).join(" "));
 function resFor(q,T){const W=W_(),tg=qTags(q),tp=q.adm||q.unit?"":topicOf(W,q);let tx=null;
-  return (T?txtOf(W):resOf(W)).filter(r=>{if(T&&r.kw){if(tx===null)tx=qCoreTxt(q);try{return new RegExp(r.kw,"i").test(tx);}catch(e){return false;}}if(T)return (r.tags||[]).slice(0,1).some(t=>tg.includes(t));   /* a T chapter without kw: its own main tag only — no broad tags, no topic */
-  return (r.tags||[]).some(t=>tg.includes(t))||(tp&&r.topic===tp);});}
+  return (T?txtOf(W):resOf(W)).filter(r=>{if(r.kw){if(tx===null)tx=qCoreTxt(q);try{return new RegExp(r.kw,"i").test(tx);}catch(e){return false;}}return (r.tags||[]).slice(0,1).some(t=>tg.includes(t));});}   /* R or T without kw (user 14 Nov 2026, ทวทว): its own main tag only — no broad tags, no topic */
 const txtFor=q=>resFor(q,1);
 const resLabel=r=>(r.code?r.code+" ":"")+r.title;
 const resPts=(r,n)=>(Array.isArray(r.points)?r.points:[]).slice(0,n||99);
