@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 11549f0 2026-11-14 Recall box: leaving the question pages resets every box to the default; moving between questions keeps the last state
+BankyPP/ac-mdcu e75f8f4 2026-11-16 New-version bar: also fire when any part of the site was redeployed (Last-Modified), not only code/data hashes

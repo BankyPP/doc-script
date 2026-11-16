@@ -222,8 +222,10 @@ details.tcard .tools{margin-top:10px}
 .stem-img .spr+.spr{border-top:1px solid var(--rule)}
 .kimg .spr{width:100%!important;max-width:640px;border:1px solid var(--rule);border-radius:4px}
 figure .spr{width:100%!important}
-.spr>img{display:none!important}   /* error probe only (site/app.js acImgErr) */
+.spr{position:relative;overflow:hidden}
+.spr>img.sp{position:absolute;left:0;display:block!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:fill!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important}   /* the whole sheet, shifted to the slot (site/app.js imgHTML) */
 .spr.imgerr{min-height:44px;background-image:none!important;border:1px dashed var(--rule)!important}
+.spr.imgerr>img{display:none!important}
 /* stale page guard: the page on this phone is older than the website → reload bar */
 #stbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:80;max-width:92vw;background:var(--warn-soft);color:var(--ink);border:1.5px solid var(--warn);border-radius:8px;padding:10px 14px;font-size:14px;line-height:1.5;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 #stbar button{font:inherit;font-weight:600;color:var(--warn);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}

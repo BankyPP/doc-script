@@ -406,4 +406,36 @@ renderFilters();
 setMode("flash");
 </script>
 
+<!-- stale page guard (16 Nov 2026, same yellow bar as ac-mdcu): a tab / home-screen web app left open keeps running old code after a deploy.
+     When the page comes back to the screen, every 15 min and on focus, ask the server for this page again; if it changed → yellow bar "เว็บมีเวอร์ชันใหม่ — แตะเพื่อโหลดใหม่".
+     Never reloads by itself (a game / form in progress would be lost). -->
+<style>
+#stbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:2147483000;max-width:92vw;background:#FFF1D2;color:#1d1a14;border:1.5px solid #9A6400;border-radius:8px;padding:10px 14px;font-family:'Sarabun',system-ui,sans-serif;font-size:14px;line-height:1.5;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+#stbar button{font:inherit;font-family:'Kanit','Sarabun',sans-serif;font-weight:600;color:#9A6400;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+@media (prefers-color-scheme:dark){#stbar{background:#382D14;color:#f3ead8;border-color:#F0BE5A}#stbar button{color:#F0BE5A}}
+</style>
+<script>
+(function(){
+  try{if(window.top!==window)return;}catch(e){return;}            /* not inside claude.ai / another frame */
+  if(!/^https?:$/.test(location.protocol))return;
+  var url=location.pathname, base=null, baseLM=0, last=0, busy=false, old=false;
+  var h=function(s){var x=0x811c9dc5;for(var i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,0x01000193)>>>0;}return x;};
+  var lmOf=function(r){var v=r.headers.get("last-modified");return v?(Date.parse(v)||0):0;};
+  var get=function(){return fetch(url+"?st="+Date.now(),{cache:"no-store"}).then(function(r){
+    if(!r.ok)throw 0;return r.text().then(function(t){return {h:h(t),lm:lmOf(r)};});});};
+  function bar(){old=true;if(document.getElementById("stbar"))return;var b=document.createElement("div");b.id="stbar";b.setAttribute("role","alert");
+    b.innerHTML='เว็บมีเวอร์ชันใหม่ — <button type="button">แตะเพื่อโหลดใหม่</button>';
+    b.querySelector("button").onclick=function(){location.reload();};document.body.appendChild(b);}
+  function check(force){
+    if(old||busy||base===null)return;if(!force&&Date.now()-last<60000)return;last=Date.now();busy=true;
+    get().then(function(n){if(n.h!==base||(n.lm&&baseLM&&n.lm>baseLM))bar();}).catch(function(){}).then(function(){busy=false;});}
+  /* first copy = the version this tab is running; if the server copy is already newer than what the browser loaded (page came from an old cache) → bar now */
+  get().then(function(n){base=n.h;baseLM=n.lm;var mine=Date.parse(document.lastModified)||0;
+    if(n.lm&&mine&&n.lm-mine>60000)bar();}).catch(function(){});
+  document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")check(0);});
+  addEventListener("focus",function(){check(0);});
+  addEventListener("pageshow",function(e){if(e.persisted)check(1);});
+  setInterval(function(){if(document.visibilityState==="visible")check(1);},15*60000);
+})();
+</script>
 </body></html>
