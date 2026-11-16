@@ -873,6 +873,8 @@ body.gated header.bar,body.gated #legban,body.gated .nav,body.gated .qbar{displa
 .staffnote{flex-basis:100%;margin-top:6px;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);font-size:14px;line-height:1.5}
 .staffnote.grad{border-color:var(--right);background:var(--right-soft)}
 .staffnote .chip{margin-top:6px;display:inline-block}
+/* answered again without leaving the question — shown, not counted (16 Nov 2026) */
+.ncnote{flex-basis:100%;margin:8px 0;padding:8px 10px;border:1px dashed var(--warn,#b45309);border-radius:8px;background:var(--sheet);font-size:14px;line-height:1.5}
 /* Morning history: fire at the end of each day, beside the date */
 .mhf{display:inline-flex;align-items:center;gap:2px;font-family:var(--num);font-size:14px;line-height:1}
 .mhf i{font-style:normal;font-weight:700;color:var(--ink)}
@@ -1379,7 +1381,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 <script>
 const IMGS={};const WARDS={};
 const CONFIG={"title": "คลังข้อสอบเก่า Compre · โพยหมอ", "brand": "AC Compre", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-compre-v1", "setLabel": "ปี", "roLabel": "สถาบัน", "chipStrip": "", "files": {}, "siteUrl": "https://bankypp.github.io/doc-script/bank/compre/", "siteName": "คลังข้อสอบเก่า Compre", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "compre"], "sharedPrefix": "poy_compre_", "homeBrand": "AC {short} MDCU79 by BankyPP", "quizBrand": "AC {short} {type}", "artifactUrl": "", "subjects": [{"id": "compre", "name": "Comprehensive (Compre)", "wards": ["c1", "c2", "c3"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "inst": {"id": "compre", "name": "Compre", "th": "Compre", "en": "Comprehensive examination", "enShort": "Compre", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"c1": "#/nl/x/c1", "c2": "#/nl/x/c2", "c3": "#/nl/x/c3"}, "others": {"inst": "nl", "before": true, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "noExam": ["MEQ"]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "noExam": ["MEQ"]}]}}, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "brand": "AC Compre 1 MCQ", "dir": "data_c1", "scope": "Comprehensive 1 (จุฬาฯ เท่านั้น — ศิริราชไม่มี) ใช้ blueprint NL1 เก่า", "dates": [{"part": "MCQ", "at": "2026-03-16"}], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "brand": "AC Compre 2 MCQ", "dir": "data_c2", "scope": "Comprehensive 2 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "brand": "AC Compre 3 MCQ", "dir": "data_c3", "scope": "Comprehensive 3 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="16/11/2026 11:34";
+const BUILD="16/11/2026 14:58";
 WARDS["c1"]={QB:[],HY:null};
 WARDS["c1"].MQ=[];
 WARDS["c1"].OS=[];
@@ -1464,6 +1466,21 @@ function mqFrac(s,r){const i=s._i,g=r&&r.g&&r.g[i];if(g===undefined||g===null)re
 function mqScoreOf(subs,r){let tot=0,got=0,graded=0,full=0;subs.forEach(s=>{const m=mqMk(s);tot+=m;const f=mqFrac(s,r);if(f!==null){graded++;got+=m*f;if(f>=1)full++;}});
   return {tot,got,graded,full,n:subs.length,all:graded===subs.length,perfect:full===subs.length};}
 function mqScore(q){const r=mqRec(q);if(!r||!mqCaseDone(q,r))return null;return mqScoreOf(q.subs,r);}
+/* ---- one visit of a MEQ case / OSCE station (user 16 Nov 2026, ทวทว) ----
+   Like MCQ: a Part / sub-question answered again ("ทำข้อนี้ใหม่") without leaving the case keeps showing the new answer and grade,
+   but Ward staff, "ข้อที่ยังไม่ได้เต็ม", the Advisor filter and the average keep the grade of the FIRST answer of that visit — rec.cg[i] = {g,gm,c,cs}.
+   The visit ends when another case is opened, the question pages are left, or the page is reloaded. A new visit's first answer counts again (cg dropped). */
+var MQVIS={u:"",s:{}};
+function mqVisTouch(q){const u=q?q.uid:"";if(MQVIS.u!==u)MQVIS={u,s:{}};}
+function mqVisLeave(){MQVIS={u:"",s:{}};}
+function mqVisDone(q,ids){mqVisTouch(q);ids.forEach(i=>{MQVIS.s[i]=1;});}
+/* call before a sub is cleared to be answered again */
+function mqVisRedo(q,x,i){if(!x)return;if(MQVIS.u===q.uid&&MQVIS.s[i]){x.cg=x.cg||{};if(!(i in x.cg))x.cg[i]={g:x.g&&x.g[i],gm:x.gm&&x.gm[i],c:x.c&&x.c[i],cs:x.cs&&x.cs[i]};}else if(x.cg)delete x.cg[i];}
+/* the record as counted (uncounted re-answers replaced by the counted grade) */
+function mqCnt(r){if(!r||!r.cg||!Object.keys(r.cg).length)return r;const o=Object.assign({},r);["g","gm","c","cs"].forEach(k=>{o[k]=Object.assign({},r[k]||{});});
+  for(const i in r.cg){const c=r.cg[i]||{};["g","gm","c","cs"].forEach(k=>{if(c[k]===undefined||c[k]===null)delete o[k][i];else o[k][i]=c[k];});}return o;}
+const mqCntHas=(r,i)=>!!(r&&r.cg&&(i in r.cg));
+function mqScoreC(q){const r=mqRec(q);if(!r||!mqCaseDone(q,r))return null;return mqScoreOf(q.subs,mqCnt(r));}
 function mqStar(q){const s=mqS().star[q.uid];return !!(s&&s[0]);}
 const mqPct=p=>p>=80?"var(--right)":p>=50?"var(--warn)":"var(--wrong)";
 const mqFmt=sec=>{sec=Math.max(0,Math.round(sec||0));return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0");};
@@ -1615,16 +1632,16 @@ function mqRounds(type){if(type!=="OSCE")return MQ_ROUNDS.map(r=>r.k==="legend"?
     else if(r.k==="admission")o.note="AI ออกสถานี OSCE ใหม่ — รอรายละเอียด";
     else if(["teach","longcase"].includes(r.k))o.d=r.d.replace(/MCQ \/ OSCE/,"MCQ / MEQ");
     return o;});}
-function mqStaffL(){return mqL().filter(q=>{const r=mqRec(q);return r&&q.subs.some(s=>mqSubDone(q,s,r)&&!(r.g&&r.g[s._i]===2));});}
+function mqStaffL(){return mqL().filter(q=>{const r=mqRec(q),rc=mqCnt(r);return r&&q.subs.some(s=>(mqSubDone(q,s,r)||mqCntHas(r,s._i))&&!(rc.g&&rc.g[s._i]===2));});}
 /* Advisor round (MEQ / OSCE): every case/station answered (OSCE also the AI stations of Legendary runs) · filters: sets/Ro, full or not, ★ · order: newest first (user 13 Nov 2026) or lowest score first */
 const mqRecTs=q=>{const r=mqRec(q);return r?(r.ts||r.at||0):0;};
 function mqAdvL(){const v=mqS().v,L=mqL().concat(mqIsOS()?Object.values(osAIMap()).map(x=>x.q).filter(q=>!mqL().some(y=>y.uid===q.uid)):[],mqXAll()),as=v.aset||"all",st=v.ast||"all";
-  return L.filter(mqAnyDone).filter(q=>as==="all"||as.split("|").includes(mqSK(q))).map(q=>{const r=mqRec(q),S=q.subs.filter(s=>mqSubDone(q,s,r)),sc=mqScoreOf(S,r);return [q,sc.tot?sc.got/sc.tot:1];})
+  return L.filter(mqAnyDone).filter(q=>as==="all"||as.split("|").includes(mqSK(q))).map(q=>{const r=mqRec(q),S=q.subs.filter(s=>mqSubDone(q,s,r)),sc=mqScoreOf(S,mqCnt(r));return [q,sc.tot?sc.got/sc.tot:1];})
     .filter(x=>st==="all"||(st==="full"?x[1]>=1:st==="notfull"?x[1]<1:st==="note"?noted(x[0].uid):mqStar(x[0])))
     .sort((a,b)=>v.aord==="score"?a[1]-b[1]||(a[0].n||0)-(b[0].n||0):mqRecTs(b[0])-mqRecTs(a[0])||a[1]-b[1]).map(x=>x[0]);}
-function mqPass(q,f){if(f==="todo")return !mqCaseDone(q);if(f==="notfull"){const sc=mqScore(q);return !!sc&&!sc.perfect;}if(f==="star")return mqStar(q);if(f==="note")return noted(q.uid);return true;}
+function mqPass(q,f){if(f==="todo")return !mqCaseDone(q);if(f==="notfull"){const sc=mqScoreC(q);return !!sc&&!sc.perfect;}if(f==="star")return mqStar(q);if(f==="note")return noted(q.uid);return true;}
 function mqTPass(q,f){const ps=mqTParts(q);if(!ps.length)return false;if(f==="todo")return ps.some(pi=>!mqTDone(q,pi));
-  if(f==="notfull"){const r=mqRec(q);return ps.some(pi=>mqTDone(q,pi)&&mqTsubs(q,pi).some(s=>!(r&&r.g&&r.g[s._i]===2)));}if(f==="star")return mqStar(q);if(f==="note")return noted(q.uid);return true;}
+  if(f==="notfull"){const r=mqCnt(mqRec(q));return ps.some(pi=>mqTDone(q,pi)&&mqTsubs(q,pi).some(s=>!(r&&r.g&&r.g[s._i]===2)));}if(f==="star")return mqStar(q);if(f==="note")return noted(q.uid);return true;}
 const mqSK=q=>q.ro?q.set+" "+q.ro:q.set;   /* chip key of a MEQ set (rotation kept apart) */
 /* พาร์ทในไฟล์ รวมชื่อเดียวกันทุกปี: "Part 1: MEQ" / "Part I: MEQ" / "MEQ OB" → MEQ · Recall / Short answer → Recall · Long case */
 const mqSecG=q=>{const s=String(q.sec||"").replace(/^Part\s+[\dIVX]+\s*[:.\-–]\s*/i,"").trim();if(!s)return "";if(/long\s*case/i.test(s))return "Long case";if(/recall|short\s*answer/i.test(s))return "Recall / Short answer";if(/^MEQ\b/i.test(s))return "MEQ";return s;};
@@ -1641,7 +1658,7 @@ function mqList(rk){const v=mqS().v,L=mqL(),setOk=q=>v.set==="all"||v.set.split(
   if(rk==="grand")return v.gl.map(u=>L.find(q=>q.uid===u)).filter(Boolean);
   return L.filter(q=>setOk(q)&&mqSecOk(q)&&mqStyOk(q)&&mqPass(q,v.status)&&(rk!=="service"||tgPass(mqQTags(q),v.tg)));}
 /* ---- ward home (MEQ tab) ---- */
-function mqHomeHTML(type){type=type||"MEQ";const P=P_(),p=ph(),L=mqL(ward,type),W=W_(),done=L.filter(q=>mqCaseDone(q)),scs=done.map(mqScore).filter(s=>s&&s.all);
+function mqHomeHTML(type){type=type||"MEQ";const P=P_(),p=ph(),L=mqL(ward,type),W=W_(),done=L.filter(q=>mqCaseDone(q)),scs=done.map(mqScoreC).filter(s=>s&&s.all);
   const avg=scs.length?Math.round(scs.reduce((a,s)=>a+s.got/s.tot,0)/scs.length*100):null,nC=L.filter(q=>!q.sa).length,nS=L.length-nC,sl=mqStaffL().length;
   let h=type==="OSCE"?osHomeTop(L):"";
   if(!L.length)h+=`<div class="card"><h3>ยังไม่มีข้อสอบ ${type} ในคลัง</h3><span class="rd" style="margin:0">ส่งไฟล์ข้อสอบเก่า ${type} (PDF/รูป/เอกสาร) ให้ Claude แล้วให้เพิ่มเข้าเว็บ ปุ่ม round ด้านล่างจะใช้ได้เมื่อมีข้อสอบ (Round I/O, Teaching และ Long case ใช้ได้เลย)</span></div>`;
@@ -1767,7 +1784,7 @@ function mqStep(d){const c=mqCur();if(!c)return;const {q,pi}=c,v=mqS().v;
   const Q=mqList(),i=Q.indexOf(q);let t;if(i>=0)t=Q[i+d];else t=d>0?Q.find(x=>x.n>q.n):[...Q].reverse().find(x=>x.n<q.n);
   if(!t){toast(d>0?"ข้อสุดท้ายในรายการแล้ว":"ข้อแรกในรายการแล้ว");return;}mqOpen(t.uid,d<0&&!mqTM()?mqDefPart(t):undefined,v.r);}
 /* ---- case view ---- */
-function mqView(){const c=mqCur();if(!c){go(ward);return;}const {q}=c;let pi=c.pi;const v=mqS().v,r=mqRec(q)||{},NP=q.parts.length,ps=mqPs(q),tm=mqTM();
+function mqView(){const c=mqCur();if(!c){go(ward);return;}const {q}=c;mqVisTouch(q);let pi=c.pi;const v=mqS().v,r=mqRec(q)||{},NP=q.parts.length,ps=mqPs(q),tm=mqTM();
   rsVisit(P_(),v,"mq"+mqKind());
   const part=q.parts[pi],pDone=mqPDone(q,pi),SUBS=tm?mqTsubs(q,pi):part.subs,TP=tm?mqTParts(q):null,ans=mqAnswering(),gl=mqGL(q,pi);
   const Q=v.r==="grand"?v.gl.map(u=>mqL().find(x=>x.uid===u)).filter(Boolean):mqList(),k=Q.indexOf(q);
@@ -1840,6 +1857,7 @@ function mqDoneSub(q,pi,s,r,t){const i=s._i,typed=!!t.trim(),ai=(r.ai&&r.ai[i])|
   if(s.flag)h+=`<div class="sub-meta"><span class="tag warn">${esc(s.flag)}</span></div>`;
   h+=`<div class="sblk sugbox"><span class="lab">⑤ คะแนนที่แนะนำ</span>${sg?`<div class="sugline"><span class="sug g${sg.grade}">${MQ_GL[sg.grade]}</span> ${mqNl(sg.why||"")}</div><div class="muted">เป็นคำแนะนำ${sg.src==="kw"?"จากคำสำคัญ":sg.src==="ai"?"จาก AI":""}เท่านั้น — กดเลือกคะแนนเองด้านล่างได้</div>`:typed?`<div class="muted">ยังไม่มีคำแนะนำ</div>`:""}${s.rubric?`<div class="rubric"><b>เกณฑ์:</b> ${s.rubric}</div>`:""}</div>`;
   const g=r.g?r.g[i]:undefined;
+  if(mqCntHas(r,i))h+=`<div class="ncnote">↺ ตอบซ้ำโดยยังไม่ออกจากข้อนี้ — เก็บคำตอบและคะแนนนี้ไว้ให้เห็น แต่<b>ไม่นับ</b> (Ward staff และสถิตินับคะแนนของคำตอบแรกในการเข้าข้อนี้ครั้งนั้น${(c=>c&&c.g!=null?` = ${MQ_GL[c.g]}`:"")(r.cg[i])}) · อยากให้นับ: ออกไปข้ออื่นหรือออกจากหน้าทำข้อสอบก่อน แล้วค่อยกลับมาทำใหม่</div>`;
   h+=`<div class="grade"><span class="gl">ให้คะแนนตัวเอง${r.gm&&r.gm[i]?"":g!==undefined?" (ตอนนี้ใช้คะแนนแนะนำ — กดเลือกเองได้)":""}:</span>${[[2,"✓ ได้"],[1,"◐ บางส่วน"],[0,"✗ ไม่ได้"]].map(([x,tx])=>`<button class="mgbtn g${x}" data-ms="${i}" data-mg="${x}" aria-pressed="${g===x}">${tx}${sg&&sg.grade===x?' <span class="sm">แนะนำ</span>':""}</button>`).join("")}<button class="link sredo" type="button" data-msredo="${i}">↺ ทำข้อนี้ใหม่</button></div></div>`;
   return h;}
 const MQ_GL={2:"✓ ได้",1:"◐ บางส่วน",0:"✗ ไม่ได้"};
@@ -1871,17 +1889,17 @@ function mqSubmit(){const c=mqCur();if(!c)return;const {q,pi}=c;if(mqPDone(q,pi)
   if(mqTM()){x.sd=x.sd||{};subs.forEach(s=>{if(!mqSubDone(q,s,x)){x.sd[s._i]=1;if(x.reo)delete x.reo[s._i];}});}
   else{if(pi!==mqPs(q))return;x.ps=pi+1;subs.forEach(s=>{if(x.reo)delete x.reo[s._i];});}
   if(mqPs(q,x)>=q.parts.length){x.sub=1;x.at=now();}
-  mqKwFill(q,subs);
+  mqKwFill(q,subs);mqVisDone(q,subs.map(s=>s._i));
   mqSave(q);mqView();const e=$("mqs"+subs[0]._i);if(e)setTimeout(()=>e.scrollIntoView({block:"start"}),60);if(HAS_CLAUDE())mqAiRun(q,pi,false);else if(mqClOK()&&mqS().v.ask!==false&&mqTyped(q,x))setTimeout(()=>mqAskAfter(q),450);}
 function mqSubmitReo(q,pi,ids){if(!ids.length)return;mqTStop();const x=mqEns(q);ids.forEach(i=>{if(x.reo)delete x.reo[i];});if(x.pz&&!mqReoIds(q,pi).length)delete x.pz[pi];
-  mqKwFill(q,ids.map(i=>q.subs[i]));mqSave(q);mqView();const e=$("mqs"+ids[0]);if(e)setTimeout(()=>e.scrollIntoView({block:"start"}),60);if(HAS_CLAUDE())mqAiRun(q,pi,false);}
-async function mqRedoSub(q,pi,i){if(!await uiAsk("ทำข้อนี้ใหม่? คำตอบ ติ๊ก และคะแนนของข้อนี้จะถูกล้าง (ข้ออื่นไม่เปลี่ยน)"))return;mqTStop();const x=mqEns(q);mqClearSub(x,i);x.reo=x.reo||{};x.reo[i]=1;x.sub=0;mqSave(q);mqView();
+  mqKwFill(q,ids.map(i=>q.subs[i]));mqVisDone(q,ids);mqSave(q);mqView();const e=$("mqs"+ids[0]);if(e)setTimeout(()=>e.scrollIntoView({block:"start"}),60);if(HAS_CLAUDE())mqAiRun(q,pi,false);}
+async function mqRedoSub(q,pi,i){if(!await uiAsk("ทำข้อนี้ใหม่? คำตอบ ติ๊ก และคะแนนของข้อนี้จะถูกล้าง (ข้ออื่นไม่เปลี่ยน)"))return;mqTStop();const x=mqEns(q);mqVisRedo(q,x,i);mqClearSub(x,i);x.reo=x.reo||{};x.reo[i]=1;x.sub=0;mqSave(q);mqView();
   const ta=$("mqa"+i);if(ta){ta.scrollIntoView({block:"center"});ta.focus({preventScroll:true});}}
 async function mqRedoPart(q,pi){if(!await uiAsk("ทำส่วนนี้ใหม่ทั้งหน้า? คำตอบ ติ๊ก คะแนน และเวลาของส่วนนี้จะถูกล้าง (ส่วนอื่นไม่เปลี่ยน)"))return;mqTStop();const x=mqEns(q);if(x.pz)delete x.pz[pi];x.reo=x.reo||{};
-  (mqTM()?mqTsubs(q,pi):q.parts[pi].subs).forEach(s=>{const was=mqSubDone(q,s,x);mqClearSub(x,s._i);if(was)x.reo[s._i]=1;});x.sub=0;x.pt=x.pt||{};x.time=Math.max(0,(x.time||0)-(x.pt[pi]||0));x.pt[pi]=0;mqSave(q);mqView();scrollTo(0,0);}
+  (mqTM()?mqTsubs(q,pi):q.parts[pi].subs).forEach(s=>{const was=mqSubDone(q,s,x);if(was)mqVisRedo(q,x,s._i);mqClearSub(x,s._i);if(was)x.reo[s._i]=1;});x.sub=0;x.pt=x.pt||{};x.time=Math.max(0,(x.time||0)-(x.pt[pi]||0));x.pt[pi]=0;mqSave(q);mqView();scrollTo(0,0);}
 async function mqRedoCase(q){if(!await uiAsk(mqTM()?"ล้างคำตอบและคะแนนของ Part ที่ตรงหัวข้อที่เลือกในข้อนี้ เพื่อทำใหม่?":"ล้างคำตอบ คะแนน และเวลาของข้อนี้ทั้งข้อ เพื่อทำใหม่?"))return;mqTStop();const A=mqA();
-  if(mqTM()){const x=mqEns(q);x.reo=x.reo||{};q.subs.filter(mqTmatch).forEach(s=>{const was=mqSubDone(q,s,x);mqClearSub(x,s._i);if(x.sd)delete x.sd[s._i];if(was&&s._p<(x.ps||0))x.reo[s._i]=1;});x.sub=0;x.ts=now();}
-  else A[q.uid]={t:{},g:{},gm:{},c:{},cs:{},ps:0,sd:{},ts:now()};mqS().v.pi=mqDefPart(q);save();mqView();scrollTo(0,0);}
+  if(mqTM()){const x=mqEns(q);x.reo=x.reo||{};q.subs.filter(mqTmatch).forEach(s=>{const was=mqSubDone(q,s,x);if(was)mqVisRedo(q,x,s._i);mqClearSub(x,s._i);if(x.sd)delete x.sd[s._i];if(was&&s._p<(x.ps||0))x.reo[s._i]=1;});x.sub=0;x.ts=now();}
+  else{const o=A[q.uid];if(o)q.subs.forEach(s=>{if(mqSubDone(q,s,o))mqVisRedo(q,o,s._i);});A[q.uid]={t:{},g:{},gm:{},c:{},cs:{},ps:0,sd:{},ts:now()};if(o&&o.cg&&Object.keys(o.cg).length)A[q.uid].cg=o.cg;}mqS().v.pi=mqDefPart(q);save();mqView();scrollTo(0,0);}
 function mqBindView(q,pi){const r=()=>mqRec(q)||{};
   mountNotes(document);
   {const b=$("mqPause");if(b)b.onclick=mqTogglePause;}{const b=$("mqTRes");if(b)b.onclick=mqTReset;}
@@ -3954,7 +3972,7 @@ const ph=()=>st.phase===2?2:1;
 const rawAtts=(P,p,u)=>P.att[p][u]||[];
 const atts=(P,p,u)=>{const a=P.att[p][u]||[],r=P.reset&&P.reset[p]&&P.reset[p][u];return r&&r[0]?a.filter(x=>x[1]>r[0]):a;};
 const lastA=(P,p,u)=>{const a=atts(P,p,u);return a.length?a[a.length-1]:null;};
-const lockedAns=(P,p,u)=>{const a=lastA(P,p,u);if(!a)return undefined;const o=P.open[p][u];if(o&&o>=a[1])return undefined;return a[0];};
+const lockedAns=(P,p,u)=>{let a=lastA(P,p,u);{const d=dispAC(P,p,u);if(d&&(!a||d[1]>a[1]))a=d;}if(!a)return undefined;const o=P.open[p][u];if(o&&o>=a[1])return undefined;return a[0];};
 const latestAny=(P,u)=>{const a=lastA(P,1,u),b=lastA(P,2,u);if(!a)return b;if(!b)return a;return a[1]>=b[1]?a:b;};
 const streak=(P,p,q)=>{const a=atts(P,p,q.uid);let n=0;for(let i=a.length-1;i>=0&&a[i][0]===q.ans;i--)n++;return n;};
 const uAtts=(P,u)=>P.unit.att[u]||[];
@@ -4033,6 +4051,7 @@ function validSess(){const P=P_(),s=P.sess;if(!s)return false;s.list=(s.list||[]
 function show(v){
   mqTStop();view=v;if(v==="adm")AM="adm";else if(v==="spc")AM="spc";else if(v==="admq")AM=String(st.admSel||"").startsWith("spc|")?"spc":"adm";
   const quiz=["svc","sess","adm","spc","exam","lrev","admq"].includes(v);
+  if(!quiz)visLeave();if(v!=="mq"&&typeof mqVisLeave==="function")mqVisLeave();   /* one visit of a question ends when the quiz pages are left (user 16 Nov 2026) */
   if(!quiz&&!["mq","osx"].includes(v))for(const k in grayU)delete grayU[k];   /* recall boxes: leaving the question pages → back to the default next time; moving between questions keeps each box as last left (user 14 Nov 2026) */
   clearInterval(show._t);
   const mqP=v==="mq";   /* MEQ question page: answer sheet button on top + prev/next bar at the bottom, like the MCQ pages */
@@ -4212,8 +4231,8 @@ const addDay=(d,n)=>{const [y,m,dd]=d.split("-").map(Number),t=new Date(y,m-1,dd
 function mornRecs(){const P=P_(),o={};for(const k in P.mornH){const x=P.mornH[k];if(x&&x.day)(o[x.day]=o[x.day]||[]).push(Object.assign({p:+k.split("|")[1]||1},x));}
   [1,2].forEach(p=>{const m=P.morn[p];if(!m||!m.day)return;const L=o[m.day]=(o[m.day]||[]).filter(x=>x.p!==p);L.push(Object.assign({p},m));});for(const d in o)o[d].sort((a,b)=>a.p-b.p);return o;}
 function mornStat(x){const W=W_(),list=(x.list||[]).filter(u=>W.byU[u]),done=list.filter(u=>x.ans[u]!==undefined),qs=list.map(u=>W.byU[u]);
-  const ok=u=>x.ans[u]===W.byU[u].ans,ac=qs.filter(q=>!q.unit),un=qs.filter(q=>q.unit);
-  const part=a=>({n:a.length,done:a.filter(q=>x.ans[q.uid]!==undefined).length,right:a.filter(q=>ok(q.uid)).length});
+  const ok=u=>cAns(x,u)===W.byU[u].ans,ac=qs.filter(q=>!q.unit),un=qs.filter(q=>q.unit);
+  const part=a=>({n:a.length,done:a.filter(q=>x.ans[q.uid]!==undefined).length,right:a.filter(q=>x.ans[q.uid]!==undefined&&ok(q.uid)).length});
   return {list,n:list.length,done:done.length,right:done.filter(ok).length,ac:part(ac),un:part(un)};}
 /* Morning round 🔥 fire / 🏅 medal (counted from on-time answers only — x.ot):
    🔥 day counts when ≥10 of that day's questions were answered on time · one missed day keeps the count (dim, number red, last chance), two missed days in a row → 0
@@ -4340,7 +4359,7 @@ function rHome(){
       <button class="tool" data-p2="nop1">○ ไม่เคยทำใน Phase 1<span class="n">${l.nop1.length}</span></button></div></div>`;}
     const sc=staffList().length;
     const rCount=k=>{const t=k==="service"?`มี <b>${QB.length}</b> ข้อ`:k==="unit"?`มี <b>${unitN(ward)}</b> ข้อ · ${W.UNIT.length} บท`:k==="admission"?`มี <b>${aiN("adm",ward)}</b> เคส`:k==="specialty"?`มี <b>${aiN("spc",ward)}</b> ข้อ · ไฟล์ ${spcUnits().filter(u=>u.kind!=="L").length} เรื่อง`:k==="staff"?`มีข้อให้ทวน <b>${sc}</b> ข้อ`:k==="advisor"?`อ่านเฉลยได้ <b>${advDoneN()}</b> ข้อ`:"";return t?`<span class="rcnt">${t}</span>`:"";};
-    const mm=morning(false),ma=mm?mm.list.filter(u=>mm.ans[u]!==undefined).length:0,mr=mm?mm.list.filter(u=>W.byU[u]&&mm.ans[u]===W.byU[u].ans).length:0,MG=mornGame(),mOn=QB.length+unitN(ward)>0,mfx=mornFx(mDay(),MG,ma);   /* same Morning box look in every ward, old or new (user 31 Oct 2026) — a ward with no questions yet still shows 🔥/🏅 and the red/green state */
+    const mm=morning(false),ma=mm?mm.list.filter(u=>mm.ans[u]!==undefined).length:0,mr=mm?mm.list.filter(u=>W.byU[u]&&mm.ans[u]!==undefined&&cAns(mm,u)===W.byU[u].ans).length:0,MG=mornGame(),mOn=QB.length+unitN(ward)>0,mfx=mornFx(mDay(),MG,ma);   /* same Morning box look in every ward, old or new (user 31 Oct 2026) — a ward with no questions yet still shows 🔥/🏅 and the red/green state */
     const badge=r=>r.soon?'<span class="soon">เร็ว ๆ นี้</span>':r.k==="legend"&&P.leg?'<span class="badge">กำลังสอบ</span>':r.k==="staff"&&sc?`<span class="badge">${sc}</span>`:r.k==="morning"&&mm?`<span class="badge">${ma}/${mm.list.length}</span>`:"";
     h+=`<div class="rounds">${ROUNDS.map((r,i)=>`<button class="round${r.k==="morning"?mfx.map(c=>" "+(c==="mred"?"mwarn":c)).join(""):""}" data-round="${r.k}" aria-disabled="${!!r.soon}"${r.k==="morning"&&mfx.includes("maura")?` style="${auraVars(mDay())}"`:""}>${badge(r)}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}${r.k==="morning"?mGameHTML(MG):""}</b><span class="rd">${r.soon?"รายละเอียดจะเพิ่มภายหลัง":r.d}</span>${rCount(r.k)}${r.k==="legend"?(()=>{const E=examCfg();return `<span class="lgspec">${E?`<b>${E.n}</b> ข้อ · <b>${E.min}</b> นาที`:"ยังไม่ได้ตั้งจำนวนข้อ/เวลา"}</span>`;})():""}${r.k==="morning"?`<span class="mtodo${ma>=MF_LIT?" ok":""}">${!mOn?"🎁 ยังไม่มีข้อให้เปิดกล่อง — รอเพิ่มข้อสอบเก่า / Unit round":!mm?"🎁 ยังไม่ได้เปิดกล่องวันนี้":!ma?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":ma<MF_LIT?`วันนี้ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ) ${MG.on?"— 🔥 ไฟวันนี้ติดแล้ว (จาก MEQ / OSCE)":`— อีก ${MF_LIT-ma} ข้อไฟติด 🔥`}`:ma<mm.list.length?`🔥 ไฟติดแล้ว · ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ)`:`✓ ครบ ${ma}/${mm.list.length} ข้อแล้ว (ถูก ${mr} ข้อ)`}</span>`:""}${r.k==="morning"?`<span class="mclock">ชุดใหม่ใน <b id="mClock">${hms(mNext()-now())}</b></span><span class="mhist" data-mhist="1">📅 ประวัติรายวัน →</span>`:""}</button>`).join("")}</div>`;
   }
@@ -4560,7 +4579,28 @@ function curQ(){if(isAIV())return AS().cur;if(view==="admq"){const it=bank[st.ad
 /* "ทำข้อนี้ใหม่" where answers aren't kept in a session: Legendary review, Admission (current case and bank), Advisor — null = answering again, a number = the new answer */
 const REDO={};
 function redoKey(q){if(!q)return "";if(view==="lrev")return "lrev|"+st.legSel+"|"+q.uid;if(view==="admq")return "admq|"+st.admSel;if(isAIV())return AM+"|"+q.uid;if(isAdv())return "adv|"+q.uid;return "";}
-function doneAns(q){{const k=redoKey(q);if(k&&k in REDO)return REDO[k]===null?undefined:REDO[k];}if(view==="admq"){const it=bank[st.admSel];return it&&it.a!=null?it.a:undefined;}if(view==="lrev"){const a=bank[st.legSel].ans[q.uid];return a==null?-2:a;}if(isAdv()){const h=hist(P_(),q.uid,P_().sess.hp,true);return h.length?h[h.length-1][0]:null;}if(isAIV()){const a=AS().ans;return a==null?undefined:a;}return isSess()?P_().sess.ans[q.uid]:lockedAns(P_(),ph(),q.uid);}
+function doneAns(q){{const k=redoKey(q);if(k&&k in REDO)return REDO[k]===null?undefined:REDO[k];}if(view==="admq"){const it=bank[st.admSel];return it&&it.a!=null?it.a:undefined;}if(view==="lrev"){const a=bank[st.legSel].ans[q.uid];return a==null?-2:a;}if(isAdv()){const d=dispOf(P_(),q,ph());if(d)return d[0];const h=hist(P_(),q.uid,P_().sess.hp,true);return h.length?h[h.length-1][0]:null;}if(isAIV()){const a=AS().ans;return a==null?undefined:a;}return isSess()?P_().sess.ans[q.uid]:lockedAns(P_(),ph(),q.uid);}
+
+/* ---------------- one visit of a question (user 16 Nov 2026, ทวทว) ----------------
+   Only the FIRST answer given during one visit of a question counts for right/wrong (Ward staff streak, stats, round scores).
+   Pressing "ทำข้อนี้ใหม่" and answering again while still on the same question is SAVED as the latest answer (shown when the question is opened again) but never counted.
+   A visit ends when another question is shown (next / previous / another number in the answer sheet / a new case), when the quiz pages are left, or when the page is reloaded or closed.
+   Tapping the number of the question already open in the answer sheet keeps the visit. */
+let VIS={k:"",done:0};
+function visTouch(q){const k=q?view+"|"+q.uid:"";if(VIS.k!==k)VIS={k,done:0};}
+function visLeave(){VIS={k:"",done:0};}
+const visRepeat=q=>!!q&&VIS.k===view+"|"+q.uid&&VIS.done>0;
+/* the uncounted latest answer [pick, ts]: old exams P.disp[phase][uid] · Unit P.unit.disp[uid] · Admission / Specialty / Legendary AI questions bank item .dsp */
+function dispAC(P,p,u){const d=P.disp&&P.disp[p]&&P.disp[p][u];if(!d)return null;const r=P.reset&&P.reset[p]&&P.reset[p][u];return r&&r[0]&&d[1]<=r[0]?null:d;}
+function dispSet(P,p,q,pick){const x=[pick,now()];
+  if(q.unit){P.unit.disp=P.unit.disp||{};P.unit.disp[q.uid]=x;}
+  else if(q.adm||q.lai){const k=extKey(q),it=bank[k];if(it){it.dsp=x;bankPut(k,it);}}
+  else{P.disp=P.disp||{};P.disp[p]=P.disp[p]||{};P.disp[p][q.uid]=x;}}
+/* the uncounted answer when it is newer than every counted one (= what the question shows now), else null */
+function dispOf(P,q,p){if(!q||!Array.isArray(q.opts))return null;const a=q.unit?uAtts(P,q.uid):(q.adm||q.lai)?extAtts(q):atts(P,p,q.uid),last=a.length?a[a.length-1]:null;
+  const d=q.unit?((P.unit.disp||{})[q.uid]):(q.adm||q.lai)?((bank[extKey(q)]||{}).dsp):dispAC(P,p,q.uid);return d&&(!last||d[1]>last[1])?d:null;}
+/* the counted answer of a round's sheet (s.cn / Morning m.cn, first answer of each visit); older sets without cn → the answer kept */
+const cAns=(x,u)=>x&&x.cn&&(u in x.cn)?x.cn[u]:x?x.ans[u]:undefined;
 
 /* ---------------- seen elsewhere: which rounds a question (or a related question) has already appeared in ---------------- */
 const RKL={service:"service round",grand:"grand round",morning:"morning round",staff:"ward staff round",quality:"quality round",unit:"unit round",advisor:"advisor round",topic:"advisor round (รายหัวข้อ)",redo:"รอบทำข้อผิดซ้ำ",phase2:"ทบทวนก่อนสอบ (Phase 2)",legend:"legendary round",adm:"admission round",spc:"specialty round",mday:"morning round (ย้อนดู)"};
@@ -4650,6 +4690,7 @@ function rQuiz(){const r=pfT("วาดหน้าข้อ",rQuiz0);if(PF)pfIm
 function rQuiz0(){
   const W=W_(),P=P_(),R=W.R,q=curQ();
   {const o=view==="svc"?svcS():isSess()?P.sess:null;if(o&&(now()-(o.vt||0)>30000||(o.vt||0)<=((P.rsHide||{})[(view==="svc"?"svc|":"sess|")+ph()]||0))){o.vt=now();persist();}}   /* last visit — the home "ทำต่อ" box shows whichever was used last */
+  visTouch(q);
   if(!q){$("main").innerHTML=`<div class="empty">ไม่มีข้อในชุดนี้</div>`;return;}
   if(q.notice){rNotice(q);return;}
   const done=doneAns(q);if(done!==undefined)pick=done!=null&&done>=0?done:null;const locked=done!==undefined;
@@ -4726,24 +4767,30 @@ function confirmAns(){return pfT("กดยืนยันคำตอบ",confi
 function confirmAns0(){
   if(pick===null)return;const P=P_(),q=curQ(),p=isSess()?P.sess.ph:ph();
   const rdk=redoKey(q),again=rdk&&REDO[rdk]===null;
+  /* answered again without leaving this question (user 16 Nov 2026): kept as the latest answer, not counted for right/wrong */
+  const nc=visRepeat(q);
   if(again&&(isAIV()||view==="admq"||view==="lrev")){const t=now();
-    if(view==="admq"){const it=bank[st.admSel];if(it){if(it.a==null)admBank(ward,it.q,pick);else extPush(it.q,[pick,t,AM]);}}
+    if(nc)dispSet(P,ph(),q,pick);
+    else if(view==="admq"){const it=bank[st.admSel];if(it){if(it.a==null)admBank(ward,it.q,pick);else extPush(it.q,[pick,t,AM]);}}
     else if(q.unit)(P.unit.att[q.uid]=P.unit.att[q.uid]||[]).push([pick,t,curRK()]);
     else if(q.adm){if(bank[extKey(q)])extPush(q,[pick,t,curRK()]);else if(q.lai)bankPut(extKey(q),{q,h:[[pick,t,curRK()]]});else admBank(ward,q,pick);}
     else (P.att[ph()][q.uid]=P.att[ph()][q.uid]||[]).push([pick,t,curRK()]);
-    REDO[rdk]=pick;save();rQuiz();const e=document.querySelector(".exp");if(e)setTimeout(()=>e.scrollIntoView({behavior:"smooth",block:"start"}),60);return;}
+    REDO[rdk]=pick;VIS.done++;save();rQuiz();const e=document.querySelector(".exp");if(e)setTimeout(()=>e.scrollIntoView({behavior:"smooth",block:"start"}),60);return;}
   if(rdk&&rdk.startsWith("adv|"))delete REDO[rdk];
+  VIS.done++;
   if(isAIV()){admAnswer(pick);return;}
   if(view==="admq"){const it=bank[st.admSel];if(it){admBank(ward,it.q,pick);}rQuiz();return;}
   const rk=curRK();
-  if(q.unit)(P.unit.att[q.uid]=P.unit.att[q.uid]||[]).push([pick,now(),rk]);
+  if(nc)dispSet(P,p,q,pick);
+  else if(q.unit)(P.unit.att[q.uid]=P.unit.att[q.uid]||[]).push([pick,now(),rk]);
   else if(q.adm){if(bank[extKey(q)])extPush(q,[pick,now(),rk]);else if(q.lai)bankPut(extKey(q),{q,h:[[pick,now(),rk]]});else admBank(ward,q,pick);}
   else (P.att[p][q.uid]=P.att[p][q.uid]||[]).push([pick,now(),rk]);
-  if(isSess()){const s=P.sess;s.ans[q.uid]=pick;s.ts=now();
-    if(s.kind==="morning"){const m=P.morn[1];if(m&&m.day===s.day){m.ans[q.uid]=pick;m.ts=now();
+  const cnt=x=>{if(!nc){x.cn=x.cn||{};x.cn[q.uid]=pick;}};   /* the round's own score counts the first answer of each visit */
+  if(isSess()){const s=P.sess;s.ans[q.uid]=pick;cnt(s);s.ts=now();
+    if(s.kind==="morning"){const m=P.morn[1];if(m&&m.day===s.day){m.ans[q.uid]=pick;cnt(m);m.ts=now();
       /* on-time = answered inside that day's 07:30–07:29 window; only these count for 🔥 / 🏅 / gold edge / aura (first answer only) */
       if(mDay()===m.day&&pick>=0){m.ot=m.ot||{};if(!(q.uid in m.ot))m.ot[q.uid]=pick===q.ans?1:0;}}}
-    if(s.kind==="mday"){const m1=P.morn[1],mp=s.mp||1,x=m1&&m1.day===s.day&&mp===1?m1:P.mornH[s.day+"|"+mp];if(x){x.ans=x.ans||{};x.ans[q.uid]=pick;x.ts=now();}}}
+    if(s.kind==="mday"){const m1=P.morn[1],mp=s.mp||1,x=m1&&m1.day===s.day&&mp===1?m1:P.mornH[s.day+"|"+mp];if(x){x.ans=x.ans||{};x.ans[q.uid]=pick;cnt(x);x.ts=now();}}}
   else svcS().cur=q.uid;
   save();rQuiz();
   const e=document.querySelector(".exp");if(e)setTimeout(()=>e.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}),60);
@@ -4780,6 +4827,7 @@ function explain(q,done,R,p){
     if(X.star[q.uid])h+=`<span class="tag starTag">★ ติดดาวไว้ตอนสอบ</span>`;}
   if(adv)h+=advResetBtn(q);
   h+=`<button class="link redo" id="redo" type="button">ทำข้อนี้ใหม่</button>`;
+  {const dd=view!=="exam"&&Array.isArray(q.opts)?dispOf(P,q,s?s.ph:ph()):null;if(dd&&done===dd[0])h+=`<div class="ncnote">↺ ตอบซ้ำโดยยังไม่ออกจากข้อนี้ — เก็บคำตอบนี้ไว้ให้เห็น แต่<b>ไม่นับถูก/ผิด</b> (Ward staff และสถิตินับคำตอบแรกของการเข้าข้อนี้แต่ละครั้ง) · อยากให้นับ: เปลี่ยนข้อหรือออกจากหน้าทำข้อสอบก่อน แล้วค่อยกลับมาตอบ</div>`;}
   if(view!=="exam"&&Array.isArray(q.opts)){const a=qAttsOf(P,q),k=stk(a,q),fl=flagged(P,q.uid),kp=kept(P,q.uid),justNow=!adv&&done===q.ans&&k===2&&a.length&&a[a.length-1][1]>now()-5*60e3;
     /* status always reflects the LATEST answers of this question (any round) — so every place this explanation shows stays up to date */
     if(a.length||fl||kp)h+=`<div class="staffnote${k>=2&&!fl&&!kp?" grad":""}">${justNow?"🎓 ถูก 2 ครั้งติดกันแล้ว — ข้อนี้<b>พ้นจาก Ward staff round</b>":k>=2?`✓ <b>พ้นจาก Ward staff round แล้ว</b> · ถูกติดกัน ${k} ครั้งล่าสุด`:a.length?`อยู่ใน Ward staff round · ถูกติดกันล่าสุด ${k}/2 ครั้ง${a.length&&a[a.length-1][0]!==q.ans?" (ล่าสุดผิด — นับใหม่)":""}`:"ยังไม่เคยตอบข้อนี้"}${k>=2&&fl?" · แต่ยังอยู่ใน Ward staff round เพราะติด ⚑ ไม่มั่นใจไว้":""}${k>=2&&kp?" · แต่ยังอยู่ใน Ward staff round เพราะกด 📌 เก็บไว้":""}
@@ -5973,7 +6021,7 @@ function lcFbPrompt(x){const C=x.case,my=x.my||{};
 function rResult(){
   const W=W_(),P=P_(),s=P.sess;const qs=s.list.map(u=>qAny(u)).filter(Boolean);
   if(s.kind==="advisor")return rAdvResult(W,P,s,qs);
-  const ans=qs.filter(q=>s.ans[q.uid]>=0),right=ans.filter(q=>s.ans[q.uid]===q.ans),wrong=ans.filter(q=>s.ans[q.uid]!==q.ans),tout=qs.filter(q=>s.ans[q.uid]<0).length,skip=qs.length-ans.length-tout;
+  const ans=qs.filter(q=>s.ans[q.uid]>=0),right=ans.filter(q=>cAns(s,q.uid)===q.ans),wrong=ans.filter(q=>cAns(s,q.uid)!==q.ans),tout=qs.filter(q=>s.ans[q.uid]<0).length,skip=qs.length-ans.length-tout;
   let h=`<h1 class="h2">สรุป ${esc(s.title)}</h1><p class="sub">Phase ${s.ph} · ${qs.length} ข้อ</p>
   <div class="score">${right.length}<span style="font-size:22px;color:var(--muted)"> / ${qs.length}</span></div>
   <p class="statline">ถูก <b>${right.length}</b> · ผิด <b>${wrong.length}</b>${tout?` · หมดเวลา <b>${tout}</b>`:""}${skip?` · ยังไม่ได้ตอบ <b>${skip}</b>`:""} · ความแม่น <b>${ans.length?Math.round(right.length/ans.length*100)+"%":"–"}</b></p>
@@ -6017,7 +6065,7 @@ function sheet(){
     $("statusChips").innerHTML=[["all","ทั้งหมด"],["todo",s.kind==="advisor"?"ยังไม่อ่าน":"ยังไม่ทำ"],["wrong",s.kind==="advisor"?"ล่าสุดผิด":"ตอบผิด"],["flag","⚑ ไม่มั่นใจ"],["note","📝 มีโน้ต"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-sf="${v}">${t}</button>`).join("");
     document.querySelectorAll("[data-sf]").forEach(b=>b.onclick=()=>{st.sessF=b.dataset.sf;persist();sheet();});
     const adv=s.kind==="advisor",A=q=>{if(!adv)return s.ans[q.uid];const h=hist(P,q.uid,s.hp,true);return h.length?h[h.length-1][0]:undefined;};
-    const done=qs.filter(q=>s.ans[q.uid]!==undefined),right=adv?qs.filter(q=>A(q)===q.ans):done.filter(q=>s.ans[q.uid]===q.ans);
+    const done=qs.filter(q=>s.ans[q.uid]!==undefined),right=adv?qs.filter(q=>A(q)===q.ans):done.filter(q=>cAns(s,q.uid)===q.ans);
     stats(done.length,qs.length,right.length);
     const v=qs.map((q,i)=>[q,i]).filter(([q])=>{const a=s.ans[q.uid],b=A(q);return f==="todo"?a===undefined:f==="wrong"?b!==undefined&&b!==q.ans:f==="flag"?flagged(P,q.uid):f==="note"?noted(q.uid):true;});
     rows(v.map(([q,i])=>({q,a:A(q),lock:mLocked(i)?i+1:0,meta:adv&&s.ans[q.uid]!==undefined?"อ่านแล้ว · ":"",cur:i===s.cur,go:()=>{if(!qNavOK(i)){toast(navMsg());return;}pick=null;s.cur=i;save();rQuiz();window.scrollTo(0,0);}})),f==="wrong"?"ยังไม่มีข้อที่ตอบผิดในรอบนี้":f==="flag"?"ยังไม่มีข้อที่ทำเครื่องหมายไม่มั่นใจในรอบนี้":f==="note"?"ยังไม่มีข้อที่จดโน้ตไว้ในรอบนี้":"ทำครบทุกข้อในรอบนี้แล้ว");
@@ -6238,14 +6286,16 @@ function mergeSt(a,b){
       for(const u in r.att[p]){const m=new Map();(l.att[p][u]||[]).concat(r.att[p][u]).forEach(x=>m.set(x[1]+":"+x[0],x));l.att[p][u]=[...m.values()].sort((x,y)=>x[1]-y[1]);}
       newer(l.pre[p],r.pre[p]);newer(l.reset[p],r.reset[p]);
       for(const u in r.open[p])l.open[p][u]=Math.max(l.open[p][u]||0,r.open[p][u]);
+      if(r.disp&&r.disp[p]){l.disp=l.disp||{};l.disp[p]=l.disp[p]||{};newer(l.disp[p],r.disp[p]);}
     });
+    if(r.unit.disp){l.unit.disp=l.unit.disp||{};newer(l.unit.disp,r.unit.disp);}
     for(const u in r.unit.att){const m=new Map();(l.unit.att[u]||[]).concat(r.unit.att[u]).forEach(x=>m.set(x[1]+":"+x[0],x));l.unit.att[u]=[...m.values()].sort((x,y)=>x[1]-y[1]);}
     [1,2].forEach(p=>{const a=l.morn[p],c=r.morn[p];if(!c)return;
-      if(a&&a.day===c.day&&(a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);}
+      if(a&&a.day===c.day&&(a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);if(a.cn||c.cn)a.cn=Object.assign({},c.cn,a.cn);}
       else if(!a||c.day>a.day||(c.day===a.day&&(c.ts||0)>(a.ts||0)))l.morn[p]=c;});
     mornOne(l);
     if(r.mornX){l.mornX=l.mornX||{};for(const d in r.mornX){const a=l.mornX[d]||{},c=r.mornX[d]||{};l.mornX[d]={meq:a.meq||c.meq||0,os:a.os||c.os||0,meqP:Math.max(a.meqP||0,c.meqP||0),osP:Math.max(a.osP||0,c.osP||0)};}}
-    for(const k in r.mornH){const a=l.mornH[k],c=r.mornH[k];if(!a)l.mornH[k]=c;else if((a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);}else if((c.ts||0)>(a.ts||0))l.mornH[k]=c;}
+    for(const k in r.mornH){const a=l.mornH[k],c=r.mornH[k];if(!a)l.mornH[k]=c;else if((a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);if(a.cn||c.cn)a.cn=Object.assign({},c.cn,a.cn);}else if((c.ts||0)>(a.ts||0))l.mornH[k]=c;}
     if((r.adm.ts||0)>(l.adm.ts||0))l.adm=r.adm;
     for(const u in r.seen){const a=l.seen[u]||(l.seen[u]={}),b=r.seen[u];for(const k in b)a[k]=a[k]?Math.min(a[k],b[k]):b[k];}
     if(r.leg&&!bank["leg|"+id+"|"+r.leg.id]){if(!l.leg)l.leg=r.leg;else if(l.leg.id===r.leg.id){l.leg.ans=Object.assign({},r.leg.ans,l.leg.ans);l.leg.star=Object.assign({},r.leg.star,l.leg.star);}}

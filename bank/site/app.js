@@ -218,7 +218,7 @@ const ph=()=>st.phase===2?2:1;
 const rawAtts=(P,p,u)=>P.att[p][u]||[];
 const atts=(P,p,u)=>{const a=P.att[p][u]||[],r=P.reset&&P.reset[p]&&P.reset[p][u];return r&&r[0]?a.filter(x=>x[1]>r[0]):a;};
 const lastA=(P,p,u)=>{const a=atts(P,p,u);return a.length?a[a.length-1]:null;};
-const lockedAns=(P,p,u)=>{const a=lastA(P,p,u);if(!a)return undefined;const o=P.open[p][u];if(o&&o>=a[1])return undefined;return a[0];};
+const lockedAns=(P,p,u)=>{let a=lastA(P,p,u);{const d=dispAC(P,p,u);if(d&&(!a||d[1]>a[1]))a=d;}if(!a)return undefined;const o=P.open[p][u];if(o&&o>=a[1])return undefined;return a[0];};
 const latestAny=(P,u)=>{const a=lastA(P,1,u),b=lastA(P,2,u);if(!a)return b;if(!b)return a;return a[1]>=b[1]?a:b;};
 const streak=(P,p,q)=>{const a=atts(P,p,q.uid);let n=0;for(let i=a.length-1;i>=0&&a[i][0]===q.ans;i--)n++;return n;};
 const uAtts=(P,u)=>P.unit.att[u]||[];
@@ -297,6 +297,7 @@ function validSess(){const P=P_(),s=P.sess;if(!s)return false;s.list=(s.list||[]
 function show(v){
   mqTStop();view=v;if(v==="adm")AM="adm";else if(v==="spc")AM="spc";else if(v==="admq")AM=String(st.admSel||"").startsWith("spc|")?"spc":"adm";
   const quiz=["svc","sess","adm","spc","exam","lrev","admq"].includes(v);
+  if(!quiz)visLeave();if(v!=="mq"&&typeof mqVisLeave==="function")mqVisLeave();   /* one visit of a question ends when the quiz pages are left (user 16 Nov 2026) */
   if(!quiz&&!["mq","osx"].includes(v))for(const k in grayU)delete grayU[k];   /* recall boxes: leaving the question pages → back to the default next time; moving between questions keeps each box as last left (user 14 Nov 2026) */
   clearInterval(show._t);
   const mqP=v==="mq";   /* MEQ question page: answer sheet button on top + prev/next bar at the bottom, like the MCQ pages */
@@ -476,8 +477,8 @@ const addDay=(d,n)=>{const [y,m,dd]=d.split("-").map(Number),t=new Date(y,m-1,dd
 function mornRecs(){const P=P_(),o={};for(const k in P.mornH){const x=P.mornH[k];if(x&&x.day)(o[x.day]=o[x.day]||[]).push(Object.assign({p:+k.split("|")[1]||1},x));}
   [1,2].forEach(p=>{const m=P.morn[p];if(!m||!m.day)return;const L=o[m.day]=(o[m.day]||[]).filter(x=>x.p!==p);L.push(Object.assign({p},m));});for(const d in o)o[d].sort((a,b)=>a.p-b.p);return o;}
 function mornStat(x){const W=W_(),list=(x.list||[]).filter(u=>W.byU[u]),done=list.filter(u=>x.ans[u]!==undefined),qs=list.map(u=>W.byU[u]);
-  const ok=u=>x.ans[u]===W.byU[u].ans,ac=qs.filter(q=>!q.unit),un=qs.filter(q=>q.unit);
-  const part=a=>({n:a.length,done:a.filter(q=>x.ans[q.uid]!==undefined).length,right:a.filter(q=>ok(q.uid)).length});
+  const ok=u=>cAns(x,u)===W.byU[u].ans,ac=qs.filter(q=>!q.unit),un=qs.filter(q=>q.unit);
+  const part=a=>({n:a.length,done:a.filter(q=>x.ans[q.uid]!==undefined).length,right:a.filter(q=>x.ans[q.uid]!==undefined&&ok(q.uid)).length});
   return {list,n:list.length,done:done.length,right:done.filter(ok).length,ac:part(ac),un:part(un)};}
 /* Morning round 🔥 fire / 🏅 medal (counted from on-time answers only — x.ot):
    🔥 day counts when ≥10 of that day's questions were answered on time · one missed day keeps the count (dim, number red, last chance), two missed days in a row → 0
@@ -604,7 +605,7 @@ function rHome(){
       <button class="tool" data-p2="nop1">○ ไม่เคยทำใน Phase 1<span class="n">${l.nop1.length}</span></button></div></div>`;}
     const sc=staffList().length;
     const rCount=k=>{const t=k==="service"?`มี <b>${QB.length}</b> ข้อ`:k==="unit"?`มี <b>${unitN(ward)}</b> ข้อ · ${W.UNIT.length} บท`:k==="admission"?`มี <b>${aiN("adm",ward)}</b> เคส`:k==="specialty"?`มี <b>${aiN("spc",ward)}</b> ข้อ · ไฟล์ ${spcUnits().filter(u=>u.kind!=="L").length} เรื่อง`:k==="staff"?`มีข้อให้ทวน <b>${sc}</b> ข้อ`:k==="advisor"?`อ่านเฉลยได้ <b>${advDoneN()}</b> ข้อ`:"";return t?`<span class="rcnt">${t}</span>`:"";};
-    const mm=morning(false),ma=mm?mm.list.filter(u=>mm.ans[u]!==undefined).length:0,mr=mm?mm.list.filter(u=>W.byU[u]&&mm.ans[u]===W.byU[u].ans).length:0,MG=mornGame(),mOn=QB.length+unitN(ward)>0,mfx=mornFx(mDay(),MG,ma);   /* same Morning box look in every ward, old or new (user 31 Oct 2026) — a ward with no questions yet still shows 🔥/🏅 and the red/green state */
+    const mm=morning(false),ma=mm?mm.list.filter(u=>mm.ans[u]!==undefined).length:0,mr=mm?mm.list.filter(u=>W.byU[u]&&mm.ans[u]!==undefined&&cAns(mm,u)===W.byU[u].ans).length:0,MG=mornGame(),mOn=QB.length+unitN(ward)>0,mfx=mornFx(mDay(),MG,ma);   /* same Morning box look in every ward, old or new (user 31 Oct 2026) — a ward with no questions yet still shows 🔥/🏅 and the red/green state */
     const badge=r=>r.soon?'<span class="soon">เร็ว ๆ นี้</span>':r.k==="legend"&&P.leg?'<span class="badge">กำลังสอบ</span>':r.k==="staff"&&sc?`<span class="badge">${sc}</span>`:r.k==="morning"&&mm?`<span class="badge">${ma}/${mm.list.length}</span>`:"";
     h+=`<div class="rounds">${ROUNDS.map((r,i)=>`<button class="round${r.k==="morning"?mfx.map(c=>" "+(c==="mred"?"mwarn":c)).join(""):""}" data-round="${r.k}" aria-disabled="${!!r.soon}"${r.k==="morning"&&mfx.includes("maura")?` style="${auraVars(mDay())}"`:""}>${badge(r)}<span class="rn">${String(i+1).padStart(2,"0")}</span><b>${r.k==="io"?ioDot(ioAnyNew()):""}${r.n}${r.k==="morning"?mGameHTML(MG):""}</b><span class="rd">${r.soon?"รายละเอียดจะเพิ่มภายหลัง":r.d}</span>${rCount(r.k)}${r.k==="legend"?(()=>{const E=examCfg();return `<span class="lgspec">${E?`<b>${E.n}</b> ข้อ · <b>${E.min}</b> นาที`:"ยังไม่ได้ตั้งจำนวนข้อ/เวลา"}</span>`;})():""}${r.k==="morning"?`<span class="mtodo${ma>=MF_LIT?" ok":""}">${!mOn?"🎁 ยังไม่มีข้อให้เปิดกล่อง — รอเพิ่มข้อสอบเก่า / Unit round":!mm?"🎁 ยังไม่ได้เปิดกล่องวันนี้":!ma?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":ma<MF_LIT?`วันนี้ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ) ${MG.on?"— 🔥 ไฟวันนี้ติดแล้ว (จาก MEQ / OSCE)":`— อีก ${MF_LIT-ma} ข้อไฟติด 🔥`}`:ma<mm.list.length?`🔥 ไฟติดแล้ว · ทำไป ${ma}/${mm.list.length} (ถูก ${mr} ข้อ)`:`✓ ครบ ${ma}/${mm.list.length} ข้อแล้ว (ถูก ${mr} ข้อ)`}</span>`:""}${r.k==="morning"?`<span class="mclock">ชุดใหม่ใน <b id="mClock">${hms(mNext()-now())}</b></span><span class="mhist" data-mhist="1">📅 ประวัติรายวัน →</span>`:""}</button>`).join("")}</div>`;
   }
@@ -824,7 +825,28 @@ function curQ(){if(isAIV())return AS().cur;if(view==="admq"){const it=bank[st.ad
 /* "ทำข้อนี้ใหม่" where answers aren't kept in a session: Legendary review, Admission (current case and bank), Advisor — null = answering again, a number = the new answer */
 const REDO={};
 function redoKey(q){if(!q)return "";if(view==="lrev")return "lrev|"+st.legSel+"|"+q.uid;if(view==="admq")return "admq|"+st.admSel;if(isAIV())return AM+"|"+q.uid;if(isAdv())return "adv|"+q.uid;return "";}
-function doneAns(q){{const k=redoKey(q);if(k&&k in REDO)return REDO[k]===null?undefined:REDO[k];}if(view==="admq"){const it=bank[st.admSel];return it&&it.a!=null?it.a:undefined;}if(view==="lrev"){const a=bank[st.legSel].ans[q.uid];return a==null?-2:a;}if(isAdv()){const h=hist(P_(),q.uid,P_().sess.hp,true);return h.length?h[h.length-1][0]:null;}if(isAIV()){const a=AS().ans;return a==null?undefined:a;}return isSess()?P_().sess.ans[q.uid]:lockedAns(P_(),ph(),q.uid);}
+function doneAns(q){{const k=redoKey(q);if(k&&k in REDO)return REDO[k]===null?undefined:REDO[k];}if(view==="admq"){const it=bank[st.admSel];return it&&it.a!=null?it.a:undefined;}if(view==="lrev"){const a=bank[st.legSel].ans[q.uid];return a==null?-2:a;}if(isAdv()){const d=dispOf(P_(),q,ph());if(d)return d[0];const h=hist(P_(),q.uid,P_().sess.hp,true);return h.length?h[h.length-1][0]:null;}if(isAIV()){const a=AS().ans;return a==null?undefined:a;}return isSess()?P_().sess.ans[q.uid]:lockedAns(P_(),ph(),q.uid);}
+
+/* ---------------- one visit of a question (user 16 Nov 2026, ทวทว) ----------------
+   Only the FIRST answer given during one visit of a question counts for right/wrong (Ward staff streak, stats, round scores).
+   Pressing "ทำข้อนี้ใหม่" and answering again while still on the same question is SAVED as the latest answer (shown when the question is opened again) but never counted.
+   A visit ends when another question is shown (next / previous / another number in the answer sheet / a new case), when the quiz pages are left, or when the page is reloaded or closed.
+   Tapping the number of the question already open in the answer sheet keeps the visit. */
+let VIS={k:"",done:0};
+function visTouch(q){const k=q?view+"|"+q.uid:"";if(VIS.k!==k)VIS={k,done:0};}
+function visLeave(){VIS={k:"",done:0};}
+const visRepeat=q=>!!q&&VIS.k===view+"|"+q.uid&&VIS.done>0;
+/* the uncounted latest answer [pick, ts]: old exams P.disp[phase][uid] · Unit P.unit.disp[uid] · Admission / Specialty / Legendary AI questions bank item .dsp */
+function dispAC(P,p,u){const d=P.disp&&P.disp[p]&&P.disp[p][u];if(!d)return null;const r=P.reset&&P.reset[p]&&P.reset[p][u];return r&&r[0]&&d[1]<=r[0]?null:d;}
+function dispSet(P,p,q,pick){const x=[pick,now()];
+  if(q.unit){P.unit.disp=P.unit.disp||{};P.unit.disp[q.uid]=x;}
+  else if(q.adm||q.lai){const k=extKey(q),it=bank[k];if(it){it.dsp=x;bankPut(k,it);}}
+  else{P.disp=P.disp||{};P.disp[p]=P.disp[p]||{};P.disp[p][q.uid]=x;}}
+/* the uncounted answer when it is newer than every counted one (= what the question shows now), else null */
+function dispOf(P,q,p){if(!q||!Array.isArray(q.opts))return null;const a=q.unit?uAtts(P,q.uid):(q.adm||q.lai)?extAtts(q):atts(P,p,q.uid),last=a.length?a[a.length-1]:null;
+  const d=q.unit?((P.unit.disp||{})[q.uid]):(q.adm||q.lai)?((bank[extKey(q)]||{}).dsp):dispAC(P,p,q.uid);return d&&(!last||d[1]>last[1])?d:null;}
+/* the counted answer of a round's sheet (s.cn / Morning m.cn, first answer of each visit); older sets without cn → the answer kept */
+const cAns=(x,u)=>x&&x.cn&&(u in x.cn)?x.cn[u]:x?x.ans[u]:undefined;
 
 /* ---------------- seen elsewhere: which rounds a question (or a related question) has already appeared in ---------------- */
 const RKL={service:"service round",grand:"grand round",morning:"morning round",staff:"ward staff round",quality:"quality round",unit:"unit round",advisor:"advisor round",topic:"advisor round (รายหัวข้อ)",redo:"รอบทำข้อผิดซ้ำ",phase2:"ทบทวนก่อนสอบ (Phase 2)",legend:"legendary round",adm:"admission round",spc:"specialty round",mday:"morning round (ย้อนดู)"};
@@ -914,6 +936,7 @@ function rQuiz(){const r=pfT("วาดหน้าข้อ",rQuiz0);if(PF)pfIm
 function rQuiz0(){
   const W=W_(),P=P_(),R=W.R,q=curQ();
   {const o=view==="svc"?svcS():isSess()?P.sess:null;if(o&&(now()-(o.vt||0)>30000||(o.vt||0)<=((P.rsHide||{})[(view==="svc"?"svc|":"sess|")+ph()]||0))){o.vt=now();persist();}}   /* last visit — the home "ทำต่อ" box shows whichever was used last */
+  visTouch(q);
   if(!q){$("main").innerHTML=`<div class="empty">ไม่มีข้อในชุดนี้</div>`;return;}
   if(q.notice){rNotice(q);return;}
   const done=doneAns(q);if(done!==undefined)pick=done!=null&&done>=0?done:null;const locked=done!==undefined;
@@ -990,24 +1013,30 @@ function confirmAns(){return pfT("กดยืนยันคำตอบ",confi
 function confirmAns0(){
   if(pick===null)return;const P=P_(),q=curQ(),p=isSess()?P.sess.ph:ph();
   const rdk=redoKey(q),again=rdk&&REDO[rdk]===null;
+  /* answered again without leaving this question (user 16 Nov 2026): kept as the latest answer, not counted for right/wrong */
+  const nc=visRepeat(q);
   if(again&&(isAIV()||view==="admq"||view==="lrev")){const t=now();
-    if(view==="admq"){const it=bank[st.admSel];if(it){if(it.a==null)admBank(ward,it.q,pick);else extPush(it.q,[pick,t,AM]);}}
+    if(nc)dispSet(P,ph(),q,pick);
+    else if(view==="admq"){const it=bank[st.admSel];if(it){if(it.a==null)admBank(ward,it.q,pick);else extPush(it.q,[pick,t,AM]);}}
     else if(q.unit)(P.unit.att[q.uid]=P.unit.att[q.uid]||[]).push([pick,t,curRK()]);
     else if(q.adm){if(bank[extKey(q)])extPush(q,[pick,t,curRK()]);else if(q.lai)bankPut(extKey(q),{q,h:[[pick,t,curRK()]]});else admBank(ward,q,pick);}
     else (P.att[ph()][q.uid]=P.att[ph()][q.uid]||[]).push([pick,t,curRK()]);
-    REDO[rdk]=pick;save();rQuiz();const e=document.querySelector(".exp");if(e)setTimeout(()=>e.scrollIntoView({behavior:"smooth",block:"start"}),60);return;}
+    REDO[rdk]=pick;VIS.done++;save();rQuiz();const e=document.querySelector(".exp");if(e)setTimeout(()=>e.scrollIntoView({behavior:"smooth",block:"start"}),60);return;}
   if(rdk&&rdk.startsWith("adv|"))delete REDO[rdk];
+  VIS.done++;
   if(isAIV()){admAnswer(pick);return;}
   if(view==="admq"){const it=bank[st.admSel];if(it){admBank(ward,it.q,pick);}rQuiz();return;}
   const rk=curRK();
-  if(q.unit)(P.unit.att[q.uid]=P.unit.att[q.uid]||[]).push([pick,now(),rk]);
+  if(nc)dispSet(P,p,q,pick);
+  else if(q.unit)(P.unit.att[q.uid]=P.unit.att[q.uid]||[]).push([pick,now(),rk]);
   else if(q.adm){if(bank[extKey(q)])extPush(q,[pick,now(),rk]);else if(q.lai)bankPut(extKey(q),{q,h:[[pick,now(),rk]]});else admBank(ward,q,pick);}
   else (P.att[p][q.uid]=P.att[p][q.uid]||[]).push([pick,now(),rk]);
-  if(isSess()){const s=P.sess;s.ans[q.uid]=pick;s.ts=now();
-    if(s.kind==="morning"){const m=P.morn[1];if(m&&m.day===s.day){m.ans[q.uid]=pick;m.ts=now();
+  const cnt=x=>{if(!nc){x.cn=x.cn||{};x.cn[q.uid]=pick;}};   /* the round's own score counts the first answer of each visit */
+  if(isSess()){const s=P.sess;s.ans[q.uid]=pick;cnt(s);s.ts=now();
+    if(s.kind==="morning"){const m=P.morn[1];if(m&&m.day===s.day){m.ans[q.uid]=pick;cnt(m);m.ts=now();
       /* on-time = answered inside that day's 07:30–07:29 window; only these count for 🔥 / 🏅 / gold edge / aura (first answer only) */
       if(mDay()===m.day&&pick>=0){m.ot=m.ot||{};if(!(q.uid in m.ot))m.ot[q.uid]=pick===q.ans?1:0;}}}
-    if(s.kind==="mday"){const m1=P.morn[1],mp=s.mp||1,x=m1&&m1.day===s.day&&mp===1?m1:P.mornH[s.day+"|"+mp];if(x){x.ans=x.ans||{};x.ans[q.uid]=pick;x.ts=now();}}}
+    if(s.kind==="mday"){const m1=P.morn[1],mp=s.mp||1,x=m1&&m1.day===s.day&&mp===1?m1:P.mornH[s.day+"|"+mp];if(x){x.ans=x.ans||{};x.ans[q.uid]=pick;cnt(x);x.ts=now();}}}
   else svcS().cur=q.uid;
   save();rQuiz();
   const e=document.querySelector(".exp");if(e)setTimeout(()=>e.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}),60);
@@ -1044,6 +1073,7 @@ function explain(q,done,R,p){
     if(X.star[q.uid])h+=`<span class="tag starTag">★ ติดดาวไว้ตอนสอบ</span>`;}
   if(adv)h+=advResetBtn(q);
   h+=`<button class="link redo" id="redo" type="button">ทำข้อนี้ใหม่</button>`;
+  {const dd=view!=="exam"&&Array.isArray(q.opts)?dispOf(P,q,s?s.ph:ph()):null;if(dd&&done===dd[0])h+=`<div class="ncnote">↺ ตอบซ้ำโดยยังไม่ออกจากข้อนี้ — เก็บคำตอบนี้ไว้ให้เห็น แต่<b>ไม่นับถูก/ผิด</b> (Ward staff และสถิตินับคำตอบแรกของการเข้าข้อนี้แต่ละครั้ง) · อยากให้นับ: เปลี่ยนข้อหรือออกจากหน้าทำข้อสอบก่อน แล้วค่อยกลับมาตอบ</div>`;}
   if(view!=="exam"&&Array.isArray(q.opts)){const a=qAttsOf(P,q),k=stk(a,q),fl=flagged(P,q.uid),kp=kept(P,q.uid),justNow=!adv&&done===q.ans&&k===2&&a.length&&a[a.length-1][1]>now()-5*60e3;
     /* status always reflects the LATEST answers of this question (any round) — so every place this explanation shows stays up to date */
     if(a.length||fl||kp)h+=`<div class="staffnote${k>=2&&!fl&&!kp?" grad":""}">${justNow?"🎓 ถูก 2 ครั้งติดกันแล้ว — ข้อนี้<b>พ้นจาก Ward staff round</b>":k>=2?`✓ <b>พ้นจาก Ward staff round แล้ว</b> · ถูกติดกัน ${k} ครั้งล่าสุด`:a.length?`อยู่ใน Ward staff round · ถูกติดกันล่าสุด ${k}/2 ครั้ง${a.length&&a[a.length-1][0]!==q.ans?" (ล่าสุดผิด — นับใหม่)":""}`:"ยังไม่เคยตอบข้อนี้"}${k>=2&&fl?" · แต่ยังอยู่ใน Ward staff round เพราะติด ⚑ ไม่มั่นใจไว้":""}${k>=2&&kp?" · แต่ยังอยู่ใน Ward staff round เพราะกด 📌 เก็บไว้":""}
@@ -2237,7 +2267,7 @@ function lcFbPrompt(x){const C=x.case,my=x.my||{};
 function rResult(){
   const W=W_(),P=P_(),s=P.sess;const qs=s.list.map(u=>qAny(u)).filter(Boolean);
   if(s.kind==="advisor")return rAdvResult(W,P,s,qs);
-  const ans=qs.filter(q=>s.ans[q.uid]>=0),right=ans.filter(q=>s.ans[q.uid]===q.ans),wrong=ans.filter(q=>s.ans[q.uid]!==q.ans),tout=qs.filter(q=>s.ans[q.uid]<0).length,skip=qs.length-ans.length-tout;
+  const ans=qs.filter(q=>s.ans[q.uid]>=0),right=ans.filter(q=>cAns(s,q.uid)===q.ans),wrong=ans.filter(q=>cAns(s,q.uid)!==q.ans),tout=qs.filter(q=>s.ans[q.uid]<0).length,skip=qs.length-ans.length-tout;
   let h=`<h1 class="h2">สรุป ${esc(s.title)}</h1><p class="sub">Phase ${s.ph} · ${qs.length} ข้อ</p>
   <div class="score">${right.length}<span style="font-size:22px;color:var(--muted)"> / ${qs.length}</span></div>
   <p class="statline">ถูก <b>${right.length}</b> · ผิด <b>${wrong.length}</b>${tout?` · หมดเวลา <b>${tout}</b>`:""}${skip?` · ยังไม่ได้ตอบ <b>${skip}</b>`:""} · ความแม่น <b>${ans.length?Math.round(right.length/ans.length*100)+"%":"–"}</b></p>
@@ -2281,7 +2311,7 @@ function sheet(){
     $("statusChips").innerHTML=[["all","ทั้งหมด"],["todo",s.kind==="advisor"?"ยังไม่อ่าน":"ยังไม่ทำ"],["wrong",s.kind==="advisor"?"ล่าสุดผิด":"ตอบผิด"],["flag","⚑ ไม่มั่นใจ"],["note","📝 มีโน้ต"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-sf="${v}">${t}</button>`).join("");
     document.querySelectorAll("[data-sf]").forEach(b=>b.onclick=()=>{st.sessF=b.dataset.sf;persist();sheet();});
     const adv=s.kind==="advisor",A=q=>{if(!adv)return s.ans[q.uid];const h=hist(P,q.uid,s.hp,true);return h.length?h[h.length-1][0]:undefined;};
-    const done=qs.filter(q=>s.ans[q.uid]!==undefined),right=adv?qs.filter(q=>A(q)===q.ans):done.filter(q=>s.ans[q.uid]===q.ans);
+    const done=qs.filter(q=>s.ans[q.uid]!==undefined),right=adv?qs.filter(q=>A(q)===q.ans):done.filter(q=>cAns(s,q.uid)===q.ans);
     stats(done.length,qs.length,right.length);
     const v=qs.map((q,i)=>[q,i]).filter(([q])=>{const a=s.ans[q.uid],b=A(q);return f==="todo"?a===undefined:f==="wrong"?b!==undefined&&b!==q.ans:f==="flag"?flagged(P,q.uid):f==="note"?noted(q.uid):true;});
     rows(v.map(([q,i])=>({q,a:A(q),lock:mLocked(i)?i+1:0,meta:adv&&s.ans[q.uid]!==undefined?"อ่านแล้ว · ":"",cur:i===s.cur,go:()=>{if(!qNavOK(i)){toast(navMsg());return;}pick=null;s.cur=i;save();rQuiz();window.scrollTo(0,0);}})),f==="wrong"?"ยังไม่มีข้อที่ตอบผิดในรอบนี้":f==="flag"?"ยังไม่มีข้อที่ทำเครื่องหมายไม่มั่นใจในรอบนี้":f==="note"?"ยังไม่มีข้อที่จดโน้ตไว้ในรอบนี้":"ทำครบทุกข้อในรอบนี้แล้ว");
@@ -2502,14 +2532,16 @@ function mergeSt(a,b){
       for(const u in r.att[p]){const m=new Map();(l.att[p][u]||[]).concat(r.att[p][u]).forEach(x=>m.set(x[1]+":"+x[0],x));l.att[p][u]=[...m.values()].sort((x,y)=>x[1]-y[1]);}
       newer(l.pre[p],r.pre[p]);newer(l.reset[p],r.reset[p]);
       for(const u in r.open[p])l.open[p][u]=Math.max(l.open[p][u]||0,r.open[p][u]);
+      if(r.disp&&r.disp[p]){l.disp=l.disp||{};l.disp[p]=l.disp[p]||{};newer(l.disp[p],r.disp[p]);}
     });
+    if(r.unit.disp){l.unit.disp=l.unit.disp||{};newer(l.unit.disp,r.unit.disp);}
     for(const u in r.unit.att){const m=new Map();(l.unit.att[u]||[]).concat(r.unit.att[u]).forEach(x=>m.set(x[1]+":"+x[0],x));l.unit.att[u]=[...m.values()].sort((x,y)=>x[1]-y[1]);}
     [1,2].forEach(p=>{const a=l.morn[p],c=r.morn[p];if(!c)return;
-      if(a&&a.day===c.day&&(a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);}
+      if(a&&a.day===c.day&&(a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);if(a.cn||c.cn)a.cn=Object.assign({},c.cn,a.cn);}
       else if(!a||c.day>a.day||(c.day===a.day&&(c.ts||0)>(a.ts||0)))l.morn[p]=c;});
     mornOne(l);
     if(r.mornX){l.mornX=l.mornX||{};for(const d in r.mornX){const a=l.mornX[d]||{},c=r.mornX[d]||{};l.mornX[d]={meq:a.meq||c.meq||0,os:a.os||c.os||0,meqP:Math.max(a.meqP||0,c.meqP||0),osP:Math.max(a.osP||0,c.osP||0)};}}
-    for(const k in r.mornH){const a=l.mornH[k],c=r.mornH[k];if(!a)l.mornH[k]=c;else if((a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);}else if((c.ts||0)>(a.ts||0))l.mornH[k]=c;}
+    for(const k in r.mornH){const a=l.mornH[k],c=r.mornH[k];if(!a)l.mornH[k]=c;else if((a.list||[]).join()===(c.list||[]).join()){a.ans=Object.assign({},c.ans,a.ans);if(a.ot||c.ot)a.ot=Object.assign({},c.ot,a.ot);if(a.cn||c.cn)a.cn=Object.assign({},c.cn,a.cn);}else if((c.ts||0)>(a.ts||0))l.mornH[k]=c;}
     if((r.adm.ts||0)>(l.adm.ts||0))l.adm=r.adm;
     for(const u in r.seen){const a=l.seen[u]||(l.seen[u]={}),b=r.seen[u];for(const k in b)a[k]=a[k]?Math.min(a[k],b[k]):b[k];}
     if(r.leg&&!bank["leg|"+id+"|"+r.leg.id]){if(!l.leg)l.leg=r.leg;else if(l.leg.id===r.leg.id){l.leg.ans=Object.assign({},r.leg.ans,l.leg.ans);l.leg.star=Object.assign({},r.leg.star,l.leg.star);}}

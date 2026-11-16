@@ -693,6 +693,8 @@ body.gated header.bar,body.gated #legban,body.gated .nav,body.gated .qbar{displa
 .staffnote{flex-basis:100%;margin-top:6px;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);font-size:14px;line-height:1.5}
 .staffnote.grad{border-color:var(--right);background:var(--right-soft)}
 .staffnote .chip{margin-top:6px;display:inline-block}
+/* answered again without leaving the question — shown, not counted (16 Nov 2026) */
+.ncnote{flex-basis:100%;margin:8px 0;padding:8px 10px;border:1px dashed var(--warn,#b45309);border-radius:8px;background:var(--sheet);font-size:14px;line-height:1.5}
 /* Morning history: fire at the end of each day, beside the date */
 .mhf{display:inline-flex;align-items:center;gap:2px;font-family:var(--num);font-size:14px;line-height:1}
 .mhf i{font-style:normal;font-weight:700;color:var(--ink)}
