@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 5f0bc2a 2026-11-17 Phase 2: กล่อง ทบทวนก่อนสอบ พับ/กางได้ (MCQ/MEQ/OSCE, default กาง)
+BankyPP/ac-mdcu cae2cf7 2026-11-17 Ward staff / Advisor: pick questions by Tag like Service round (MCQ, MEQ, OSCE); Service shows how many questions will start

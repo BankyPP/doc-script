@@ -1387,7 +1387,7 @@ body{background-image:radial-gradient(rgba(122,92,62,.045) 1px,transparent 1.2px
 <script>
 const IMGS={};const WARDS={};
 const CONFIG={"title": "คลังข้อสอบเก่า Compre · โพยหมอ", "brand": "AC Compre", "sub": "คลังข้อสอบเก่า", "storageKey": "poy-bank-compre-v1", "setLabel": "ปี", "roLabel": "สถาบัน", "chipStrip": "", "files": {}, "siteUrl": "https://bankypp.github.io/doc-script/bank/compre/", "siteName": "คลังข้อสอบเก่า Compre", "firebase": {"apiKey": "AIzaSyDIzd81Qw7shAOj3uiGU1T8tm90HXtF4yg", "authDomain": "ac-mdcu.firebaseapp.com", "projectId": "ac-mdcu", "storageBucket": "ac-mdcu.firebasestorage.app", "messagingSenderId": "537236830552", "appId": "1:537236830552:web:40d77940f7adf0fecd8d2d", "measurementId": "G-BYB1HZMHK6"}, "fbPath": ["poymor", "{uid}", "bank", "compre"], "sharedPrefix": "poy_compre_", "homeBrand": "AC {short} MDCU79 by BankyPP", "quizBrand": "AC {short} {type}", "artifactUrl": "", "subjects": [{"id": "compre", "name": "Comprehensive (Compre)", "wards": ["c1", "c2", "c3"]}], "gate": {"on": true, "salt": "06faf800614125fd", "h": "ed660d4b3559b47d9f0a826217ba1f983dcece43cd22b7e6a5f4413fdfc5d26b", "r": 0}, "inst": {"id": "compre", "name": "Compre", "th": "Compre", "en": "Comprehensive examination", "enShort": "Compre", "stu": "นิสิต/นักศึกษาแพทย์"}, "poy": {"exams": {"c1": "#/nl/x/c1", "c2": "#/nl/x/c2", "c3": "#/nl/x/c3"}, "others": {"inst": "nl", "before": true, "wards": [{"id": "nl1", "name": "NL part 1", "short": "NL part 1", "sub": "NL", "noExam": ["MEQ"]}, {"id": "nl2", "name": "NL part 2", "short": "NL part 2", "sub": "NL", "noExam": ["MEQ"]}]}}, "wards": [{"id": "c1", "name": "Compre 1", "short": "Compre 1", "sub": "MDCU", "brand": "AC Compre 1 MCQ", "dir": "data_c1", "scope": "Comprehensive 1 (จุฬาฯ เท่านั้น — ศิริราชไม่มี) ใช้ blueprint NL1 เก่า", "dates": [{"part": "MCQ", "at": "2026-03-16"}], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c2", "name": "Compre 2", "short": "Compre 2", "sub": "", "brand": "AC Compre 2 MCQ", "dir": "data_c2", "scope": "Comprehensive 2 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}, {"id": "c3", "name": "Compre 3", "short": "Compre 3", "sub": "", "brand": "AC Compre 3 MCQ", "dir": "data_c3", "scope": "Comprehensive 3 — ยังไม่มีประกาศ", "dates": [], "meqTopics": [], "osceTopics": [], "noExam": ["MEQ"]}]};
-const BUILD="17/11/2026 04:25";
+const BUILD="17/11/2026 06:50";
 WARDS["c1"]={QB:[],HY:null};
 WARDS["c1"].MQ=[];
 WARDS["c1"].OS=[];
@@ -1434,7 +1434,9 @@ function mqL(wid,kind){wid=wid||ward;const W=WARDS[wid];if(!W)return [];kind=kin
     L.sort((a,b)=>so.indexOf(a.set)-so.indexOf(b.set)||(rk(a.ro)<rk(b.ro)?-1:rk(a.ro)>rk(b.ro)?1:0)||a.n-b.n);L.forEach((q,i)=>{q.n=i;});}
   return L;}
 function mqInitP(P,kind){const K=(kind||(P&&P.type==="OSCE"?"OSCE":"MEQ"))==="OSCE"?"osce":"meq";const m=P[K]=P[K]||{};m.a1=m.a1||{};m.a2=m.a2||{};m.star=m.star||{};m.v=m.v||{};const v=m.v;
-  v.set=v.set||"all";v.sec=v.sec||"all";v.status=v.status||"all";v.style=v.style||"all";v.tags=Array.isArray(v.tags)?v.tags:[];v.gl=Array.isArray(v.gl)?v.gl:[];v.tg=v.tg&&Array.isArray(v.tg.tags)?v.tg:tgNorm(v.tg);return m;}
+  v.set=v.set||"all";v.sec=v.sec||"all";v.status=v.status||"all";v.style=v.style||"all";v.tags=Array.isArray(v.tags)?v.tags:[];v.gl=Array.isArray(v.gl)?v.gl:[];v.tg=v.tg&&Array.isArray(v.tg.tags)?v.tg:tgNorm(v.tg);
+  /* Tag filter of Ward staff (tgs) and Advisor (tga) — own selection, same panel as the Service round (user 17 Nov 2026, ทวทว) */
+  v.tgs=v.tgs&&Array.isArray(v.tgs.tags)?v.tgs:tgNorm(v.tgs);v.tga=v.tga&&Array.isArray(v.tga.tags)?v.tga:tgNorm(v.tga);return m;}
 function mqS(){return mqInitP(P_());}
 function mqA(){return mqS()["a"+ph()];}
 function mqRec(q){return mqA()[q.uid]||(q&&q.ai&&mqIsOS()?(osAIMap()[q.uid]||{}).rec:undefined);}
@@ -1499,6 +1501,11 @@ function mqTopics(){const W=W_(),T=((mqIsOS()?W.cfg.osceTopics:W.cfg.meqTopics)|
 const mqTN=k=>(mqTopics().find(x=>x[0]===k)||[k,k])[1];
 /* Service round Tag filter: a case counts by the Tags of all its Parts, because the Service round opens the whole case */
 const mqQTags=q=>[...new Set(q.subs.flatMap(s=>s.tags||[]))];
+/* Tags for the Ward staff / Advisor filters — AI stations / cases without per-part Tags fall back to their topic */
+const mqQTagsX=q=>{const t=mqQTags(q);return t.length?t:q.topic?[q.topic]:[];};
+const mqRTg=rk=>{const v=mqS().v;return rk==="staff"?v.tgs:rk==="advisor"?v.tga:rk==="service"?v.tg:null;};
+/* Tag list for a panel: the ward's topics first (with their names), then any other Tag the questions carry */
+const mqTgAll=qs=>{const T=mqTopics(),have=new Set();qs.forEach(q=>mqQTagsX(q).forEach(t=>have.add(t)));return tgSort(T.filter(([k])=>have.has(k)).concat([...have].filter(k=>!T.some(x=>x[0]===k)).map(k=>[k,k])));};
 /* ---- topic context (Unit round): only Parts tagged with a chosen topic ---- */
 const mqTM=()=>mqS().v.ctx==="topic";
 const mqTmatch=s=>(s.tags||[]).some(t=>mqS().v.tags.includes(t));
@@ -1655,8 +1662,8 @@ const MQ_SECO=["MEQ","Recall / Short answer","Long case"];
 const mqSecs=L=>{const a=[...new Set(L.map(mqSecG).filter(Boolean))];return a.sort((x,y)=>{const i=MQ_SECO.indexOf(x),j=MQ_SECO.indexOf(y);return (i<0?99:i)-(j<0?99:j);});};
 const mqSecOk=q=>{const v=mqS().v;return !v.sec||v.sec==="all"||v.sec.split("|").includes(mqSecG(q));};
 function mqList(rk){const v=mqS().v,L=mqL(),setOk=q=>v.set==="all"||v.set.split("|").includes(mqSK(q));rk=rk||v.r;
-  if(rk==="staff")return mqStaffL().filter(q=>mqStyOk(q));
-  if(rk==="advisor")return mqAdvL().filter(q=>mqStyOk(q));
+  if(rk==="staff")return mqStaffL().filter(q=>mqStyOk(q)&&tgPass(mqQTagsX(q),v.tgs));
+  if(rk==="advisor")return mqAdvL().filter(q=>mqStyOk(q)&&tgPass(mqQTagsX(q),v.tga));
   if(rk==="morning")return mornXList();
   if(rk==="spc")return osSpcList();
   if(rk==="unit"&&mqIsOS())return osUnitList(v.utop);
@@ -1723,6 +1730,8 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
     h+=`<div class="tl-h">เรียง</div><div class="chips">${[["recent","ทำล่าสุดอยู่บน"],["score","คะแนนน้อยสุดก่อน"]].map(([k,n])=>`<button class="chip" type="button" data-maord="${k}" aria-pressed="${(v.aord||"recent")===k}">${n}</button>`).join("")}</div>`;
     if(sets.length)h+=`<div class="tl-h">ชุดข้อสอบ / Ro <span class="hint">ไม่เลือก = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น</span></div><div class="chips"><button class="chip" type="button" data-maset="all" aria-pressed="${!sel.length}">${sel.length?`ทุกชุด (เลือก ${sel.length})`:"ทุกชุด"}</button></div>`+yrGroupHTML(sets,(k=>{const q=L.concat(typeof osAIMap==="function"&&mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[]).find(x=>mqSK(x)===k);return q&&q.set&&k!=="AI"?q.set:"";}),(k,n)=>`<button class="chip" type="button" data-maset="${esc(k)}" aria-pressed="${sel.includes(k)}">${esc(k==="AI"?"โจทย์ AI จาก Legendary":n)}</button>`);
     h+=`<div class="chips">${[["all","ทั้งหมด"],["notfull","ยังไม่ได้เต็ม"],["full","ได้เต็ม"],["star","★ ติดดาว"],["note","📝 มีโน้ต"]].map(([k,n])=>`<button class="chip" type="button" data-mast="${k}" aria-pressed="${(v.ast||"all")===k}">${n}</button>`).join("")}</div>`;}
+  if(rk==="staff"||rk==="advisor"){const g=mqRTg(rk),base=(rk==="staff"?mqStaffL():mqAdvL()).filter(q=>mqStyOk(q)),allT=mqTgAll(base);g.tags=g.tags.filter(t=>allT.some(a=>a[0]===t));
+    if(allT.length){const cnt={};base.forEach(q=>mqQTagsX(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));h+=`<div id="tgWrap">${tgPanel(allT,g,cnt,base.filter(q=>tgPass(mqQTagsX(q),g)).length)}</div>`;}}
   if(rk==="service"||(rk==="unit"&&!mqIsOS())){const sets=[...new Set(L.map(mqSK))],sel=v.set==="all"?[]:v.set.split("|");
     h+=`<div class="tl-h">ชุดข้อสอบ <span class="hint">แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น</span></div><div class="chips"><button class="chip" type="button" data-mset="all" aria-pressed="${v.set==="all"}">${v.set==="all"?"ทุกชุด":`ทุกชุด (เลือก ${sel.length})`}</button></div>`+yrGroupHTML(sets,(k=>{const q=L.concat(typeof osAIMap==="function"&&mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[]).find(x=>mqSK(x)===k);return q&&q.set&&k!=="AI"?q.set:"";}),(k,n)=>`<button class="chip" type="button" data-mset="${esc(k)}" aria-pressed="${sel.includes(k)}">${esc(n)}<span class="cnt">${L.filter(q=>mqSK(q)===k).length}</span></button>`);
     /* พาร์ทตามไฟล์ (MEQ / Long case / Recall …) of the selected sets — pick some to see only those; none = every part in file order */
@@ -1742,7 +1751,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
   {const nb=$("mqNext");if(nb)nb.onclick=()=>{const nx=mqNextTodo(Q0);if(nx)mqOpen(nx.uid,undefined,"service");};}
   {const qi=$("mqQ"),qn=$("mqQn");if(qn)qn.textContent=QT.length?`พบ ${Q.length}/${Q0.length} ข้อ`:"";
     if(qi){let tm=0;qi.addEventListener("input",()=>{clearTimeout(tm);tm=setTimeout(()=>{mqQ=qi.value;const p0=qi.selectionStart;mqRList();const n=$("mqQ");if(n){n.focus();try{n.setSelectionRange(p0,p0);}catch(e){}}},160);});}}
-  {const tw=$("tgWrap");if(tw)tgWire(tw,v.tg,()=>{mqVset({});save();mqRList();});}
+  {const tw=$("tgWrap"),g=mqRTg(rk);if(tw&&g)tgWire(tw,g,()=>{mqVset({});save();mqRList();});}
   document.querySelectorAll("[data-utop]").forEach(b=>b.onclick=()=>{mqVset({utop:b.dataset.utop});save();mqRList();});
   document.querySelectorAll("[data-mtag]").forEach(b=>b.onclick=()=>{const k=b.dataset.mtag,a=v.tags;const i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);mqVset({});save();mqRList();});
   document.querySelectorAll("[data-msty]").forEach(b=>b.onclick=()=>{mqVset({style:b.dataset.msty});save();mqRList();});
@@ -1757,7 +1766,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
 function mqSheet(){const v=mqS().v,rk=v.r||"service",L=mqL(),c=mqCur(),cur=c?{u:c.q.uid,pi:c.pi}:null,SV=rk==="service"||rk==="unit";
   statLabels(["ทำแล้ว","ได้เต็ม","คะแนนเฉลี่ย"]);$("sheetTitle").textContent=`กระดาษคำตอบ · ${MQ_RN(rk)} · ${mqKN()}`;
   const sc=$("setChips"),cc=$("chChips"),stc=$("statusChips");sc.innerHTML="";stc.innerHTML="";if(cc){cc.innerHTML="";cc.hidden=true;}
-  tgLine(tgSort(mqTopics()),rk==="service"?v.tg:null,()=>{v.tg.on=false;mqVset({});save();mqSheet();},()=>{closeS(true);go(ward+"/mqr");});
+  {const g=mqRTg(rk);tgLine(rk==="service"?tgSort(mqTopics()):mqTgAll((rk==="staff"?mqStaffL():mqAdvL()).concat(mqL())),g,()=>{g.on=false;mqVset({});save();mqSheet();},()=>{closeS(true);go(ward+"/mqr");});}
   if(SV){const sets=[...new Set(L.map(mqSK))],sel=v.set==="all"?[]:v.set.split("|");
     sc.innerHTML=[["all",v.set==="all"?"ทุกชุด":`ทุกชุด (เลือก ${sel.length})`]].concat(sets.map(x=>[x,x])).map(([k,n])=>`<button class="chip" type="button" data-sms="${esc(k)}" aria-pressed="${k==="all"?v.set==="all":sel.includes(k)}">${esc(n)}</button>`).join("");
     const inS=L.filter(q=>v.set==="all"||sel.includes(mqSK(q))),secs=mqSecs(inS),ss=v.sec==="all"?[]:v.sec.split("|").filter(x=>secs.includes(x));
@@ -4338,6 +4347,16 @@ function staffPools(){const P=P_(),p=ph(),W=W_(),o={ac:[],unit:[],adm:[],spc:[],
   return o;}
 const staffAll=()=>!!st.staffAll;
 const staffList=all=>{const o=staffPools();return (all==null?staffAll():all)?o.ac.concat(o.unit,o.adm,o.spc,o.lai):o.ac;};
+/* Tag filter of Ward staff / Advisor round — same panel and Minimum / Maximum modes as the Service round (user 17 Nov 2026, ทวทว) · kept in st (not per phase) */
+const tgOf=q=>q&&q.lai?(Array.isArray(q.tags)&&q.tags.length?q.tags:guessTags(W_(),(q.topic||"")+" "+(q.stem||""))):qTags(q);
+const tgAllOf=qs=>{const s=new Set();qs.forEach(q=>tgOf(q).forEach(t=>s.add(t)));return tgSort([...s].map(t=>[t,t]));};
+const staffTg=()=>(st.staffTg=tgNorm(st.staffTg));
+const staffListTg=all=>{const g=staffTg();return staffList(all).filter(u=>{const q=qAny(u);return !q||tgPass(tgOf(q),g);});};
+/* the Tag line in the answer sheet of a Ward staff / Advisor session: แก้ = back to the setup page · เอาออก = rebuild the list without the Tag filter, staying on the same question */
+function sessTgLine(s){if(!s.tg||!tgActive(s.tg))return;const qs=s.list.map(u=>qAny(u)).filter(Boolean),all=tgAllOf(qs).concat(s.tg.tags.filter(t=>!qs.some(q=>tgOf(q).includes(t))).map(t=>[t,t]));
+  tgLine(all,s.tg,()=>{const cu=s.list[s.cur],g=s.kind==="advisor"?advS().tg:staffTg();g.on=false;
+      const l=s.kind==="advisor"?advList(advS()):staffList(s.all);s.tg=null;{const keep=new Set(s.list);s.list=s.list.concat(l.filter(u=>!keep.has(u)));}const i=s.list.indexOf(cu);s.cur=i<0?0:i;save();sheet();rQuiz();},
+    ()=>{closeS(true);go(ward+"/"+(s.kind==="advisor"?"advisor":"staff"));});}
 /* กล่อง "ทบทวนก่อนสอบ" (Phase 2) ของ MCQ / MEQ / OSCE พับ/กางได้ — ค่าเริ่มต้นกางไว้, จำแยกตามแท็บ, ซิงก์ข้ามเครื่องผ่าน st (ผู้ใช้สั่ง 17 พ.ย. 2026, ทวทว) */
 const p2Fold=k=>!!(st.p2fold&&st.p2fold[k]);
 const p2Head=(k,t)=>`<button class="p2h" type="button" data-p2f="${k}" aria-expanded="${!p2Fold(k)}" title="พับ / กางเมนู"><h3>${t}</h3><span class="chev" aria-hidden="true">▾</span></button>`;
@@ -4462,7 +4481,7 @@ function rLaunch(){
 
 /* ---------------- Ward staff round: choose where the questions come from ---------------- */
 function rStaff(){
-  const P=P_(),p=ph(),o=staffPools(),all=staffAll(),n=all?o.ac.length+o.unit.length+o.adm.length+o.spc.length+o.lai.length:o.ac.length;
+  const P=P_(),p=ph(),o=staffPools(),all=staffAll(),g=staffTg(),base=staffList(),bq=base.map(u=>qAny(u)).filter(Boolean),allT=tgAllOf(bq);
   const opt=(v,t,d,c)=>`<button class="resume qprog" data-sa="${v}" aria-pressed="${all===!!v}"><span><b>${t}</b><span class="rd">${d}</span></span><span class="go">${all===!!v?"✓":""}<span class="hint" style="display:block;font-size:13px">${c} ข้อ</span></span></button>`;
   let h=`<h1 class="h2">Ward staff round</h1><p class="sub">ทวนข้อที่เคยทำแล้ว แต่ยังทำถูกติดกันไม่ถึง 2 ครั้ง (ข้อที่ผิดครั้งล่าสุด หรือเพิ่งถูกครั้งเดียวหลังจากเคยผิด) — ทำถูกติดกัน 2 ครั้งเมื่อไหร่ ข้อนั้นจะออกจาก round นี้เอง</p>`;
   h+=`<div class="lbl">ข้อมาจาก</div><div class="stack" style="margin-top:0">`;
@@ -4472,11 +4491,17 @@ function rStaff(){
   {const nf=[].concat(o.ac,all?o.unit.concat(o.adm,o.spc,o.lai):[]),f=nf.filter(u=>flagged(P,u)).length,k=nf.filter(u=>kept(P,u)).length;
    h+=`<p class="hint">นับเฉพาะคำตอบล่าสุด — ต้องถูกติดกัน 2 ครั้งล่าสุดถึงจะพ้น ตอบผิดเมื่อไหร่นับใหม่ (ทำจาก round ไหนก็นับ) · ข้อที่ติด ⚑ ไม่มั่นใจ และข้อที่กด 📌 เก็บไว้ จะอยู่ใน round นี้เสมอจนกว่าจะเอาออก${f+k?` (ตอนนี้ ⚑ ${f} ข้อ · 📌 ${k} ข้อ)`:""}</p>`;}
   h+=`<p class="hint">โจทย์ใหม่ที่ AI สร้างใน Legendary round จะไม่ไปโผล่ใน round อื่นเลย นอกจากที่นี่ (เมื่อเลือก “รวมโจทย์ที่ไม่ใช่ข้อสอบเก่าด้วย”)</p>`;
-  h+=`<p class="statline" style="margin-top:14px">${n?`มีข้อให้ทวน <b>${n}</b> ข้อ`:Object.keys(P.att[p]).length||o.unit.length+o.adm.length+o.spc.length+o.lai.length?"ไม่มีข้อที่ต้องทวน — ทุกข้อที่ทำแล้วถูกติดกัน 2 ครั้งแล้ว":"ยังไม่มีข้อที่เคยทำใน Phase นี้"}</p>`;
-  h+=`<div class="row2"><span class="spacer"></span><button class="btn primary" id="saGo" ${n?"":"disabled"}>เริ่มทวน</button></div>`;
+  if(allT.length)h+=`<div id="tgWrap"></div>`;
+  h+=`<p class="statline" id="saN" style="margin-top:14px"></p>`;
+  h+=`<div class="row2"><span class="spacer"></span><button class="btn primary" id="saGo">เริ่มทวน</button></div>`;
   $("main").innerHTML=h;
+  const paint=()=>{const m=bq.filter(q=>tgPass(tgOf(q),g)).length,el=$("tgWrap");
+    if(el){const cnt={};bq.forEach(q=>tgOf(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));g.tags=g.tags.filter(t=>allT.some(a=>a[0]===t));el.innerHTML=tgPanel(allT,g,cnt,m);tgWire(el,g,()=>{save();paint();});}
+    $("saN").innerHTML=m?`มีข้อให้ทวน <b>${m}</b> ข้อ${tgActive(g)?` (ตาม Tag ที่เลือก จาก ${bq.length} ข้อ)`:""}`:bq.length?"ไม่มีข้อที่ตรงกับ Tag ที่เลือก":Object.keys(P.att[p]).length||o.unit.length+o.adm.length+o.spc.length+o.lai.length?"ไม่มีข้อที่ต้องทวน — ทุกข้อที่ทำแล้วถูกติดกัน 2 ครั้งแล้ว":"ยังไม่มีข้อที่เคยทำใน Phase นี้";
+    $("saGo").disabled=!m;};
+  paint();
   document.querySelectorAll("[data-sa]").forEach(b=>b.onclick=()=>{st.staffAll=b.dataset.sa==="1";save();rStaff();});
-  $("saGo").onclick=()=>{const l=staffList();if(!l.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}startSess("staff",all?"Ward staff round · รวมทุกแหล่ง":"Ward staff round",l);};
+  $("saGo").onclick=()=>{const l=staffListTg();if(!l.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}startSess("staff",(all?"Ward staff round · รวมทุกแหล่ง":"Ward staff round")+(tgActive(g)?" · เลือก Tag":""),l,{all,tg:tgActive(g)?JSON.parse(JSON.stringify(g)):null});};
 }
 
 /* ---------------- Service round: pick by Tag (every exam type, ward and site) ----------------
@@ -4519,10 +4544,14 @@ function rService(){
   h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=qs.filter(q=>lockedAns(P,p,q.uid)!==undefined).length;const full=d===qs.length,pc=Math.round(d/qs.length*100);return `<button class="chip svchip${full?" done":""}" data-k="${esc(k)}" aria-pressed="${sel.has(k)}" style="--pc:${pc}%">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${full?"✓ ครบ ":""}${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");
   h+=`<p class="hint">แถบสีในปุ่ม = สัดส่วนที่ทำแล้วใน Phase ${p} · ✓ ครบ = ทำครบทุกข้อในชุดนั้นแล้ว</p>`;
   h+=`<div id="tgWrap"></div>`;
+  h+=`<p class="statline" id="spN" style="margin-top:14px"></p>`;
   h+=`<div class="row2"><button class="btn ghost" id="spClear">ล้างที่เลือก</button><span class="spacer"></span><button class="btn primary" id="spGo">เริ่มทำ</button></div>`;
   $("main").innerHTML=h;
   const allT=tgAllQ(W),tg=tgNorm(P.svc[p].tg,allT),tgPool=()=>QB.filter(q=>!sel.size||sel.has(setKey(q))),
-    paintTg=()=>{const el=$("tgWrap");if(!el||!allT.length)return;const pool=tgPool(),cnt={};pool.forEach(q=>qTags(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));el.innerHTML=tgPanel(allT,tg,cnt,pool.filter(q=>tgPass(qTags(q),tg)).length);tgWire(el,tg,paintTg);};
+    /* how many questions this start will give — like the Ward staff / Advisor rounds (user 17 Nov 2026, ทวทว) */
+    paintN=()=>{const el=$("spN");if(!el)return;const L=tgPool().filter(q=>!q.notice&&tgPass(qTags(q),tg)),d=L.filter(q=>lockedAns(P,p,q.uid)!==undefined).length;
+      el.innerHTML=L.length?`จะได้ทำ <b>${L.length}</b> ข้อ${sel.size?` จาก ${sel.size} ชุด`:" (ทุกชุด)"}${tgActive(tg)?" ตาม Tag ที่เลือก":""} · ทำแล้ว ${d} · ยังไม่ทำ <b>${L.length-d}</b> ข้อ`:"ไม่มีข้อที่ตรงกับชุดและ Tag ที่เลือก";},
+    paintTg=()=>{paintN();const el=$("tgWrap");if(!el||!allT.length)return;const pool=tgPool(),cnt={};pool.forEach(q=>qTags(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));el.innerHTML=tgPanel(allT,tg,cnt,pool.filter(q=>tgPass(qTags(q),tg)).length);tgWire(el,tg,paintTg);};
   paintTg();
   document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else sel.add(k);b.setAttribute("aria-pressed",sel.has(k));paintTg();});
   $("spClear").onclick=()=>{sel.clear();tg.tags.length=0;document.querySelectorAll("[data-k]").forEach(b=>b.setAttribute("aria-pressed","false"));paintTg();};
@@ -5380,7 +5409,7 @@ const isAdv=()=>view==="sess"&&!!P_().sess&&P_().sess.kind==="advisor";
 const ADVSRC=[["ac","ข้อสอบเก่า (AC)"],["unit","Unit round"],["adm","Admission round"],["spc","Specialty round"],["lai","โจทย์ AI จาก Legendary round"]];
 const advS=()=>{const a=st.adv||(st.adv={});a.sets=a.sets||[];a.f=a.f||"all";a.ord=a.ord||"bank";if(a.n==null)a.n=0;a.hp=a.hp==="p"?"p":"all";a.undone=!!a.undone;
   if(!a.v2){a.v2=1;a.ord="recent";}a.flag=!!a.flag;a.note=!!a.note;a.rk=Array.isArray(a.rk)?a.rk:[];
-  a.src=Array.isArray(a.src)?a.src.filter(k=>ADVSRC.some(x=>x[0]===k)):["ac"];if(!a.src.length)a.src=["ac"];a.lec=Array.isArray(a.lec)?a.lec:[];return a;};
+  a.src=Array.isArray(a.src)?a.src.filter(k=>ADVSRC.some(x=>x[0]===k)):["ac"];if(!a.src.length)a.src=["ac"];a.lec=Array.isArray(a.lec)?a.lec:[];a.tg=tgNorm(a.tg);return a;};
 const hPh=hp=>hp==="p"?[ph()]:[1,2];
 /* a question that is NOT an old exam (Unit / Admission / Specialty / Legendary AI) — its answers are kept for both phases together, so it has no phase and no reset */
 const advNon=u=>{const W=W_(),q=W&&W.byU[u];if(q&&!q.unit)return null;return q||qAny(u);};
@@ -5408,7 +5437,7 @@ function advPass(f,q,h){const w=nWrong(h,q),l=h[h.length-1];
   switch(f){case"w1":return w>=1;case"w2":return w>=2;case"w3":return w>=3;case"last":return l[0]!==q.ans;case"right":return l[0]===q.ans;case"fixed":return w>=1&&l[0]===q.ans;case"clean":return w===0;default:return true;}}
 function advPool(a){const W=W_(),P=P_(),sel=a.sets.filter(k=>W.sets.includes(k)),out=[],seen=new Set();
   a.src.forEach(kd=>advSrcQs(kd,a.lec).forEach(q=>{if(seen.has(q.uid))return;if(kd==="ac"&&sel.length&&!sel.includes(setKey(q)))return;seen.add(q.uid);
-    if(a.flag&&!flagged(P,q.uid))return;if(a.note&&!noted(q.uid))return;const h=hist(P,q.uid,a.hp);if(a.rk.length&&!h.some(x=>a.rk.includes(x[3])))return;
+    if(a.flag&&!flagged(P,q.uid))return;if(a.note&&!noted(q.uid))return;if(!tgPass(tgOf(q),a.tg))return;const h=hist(P,q.uid,a.hp);if(a.rk.length&&!h.some(x=>a.rk.includes(x[3])))return;
     if(h.length?advPass(a.f,q,h):a.undone)out.push([q,h,out.length]);}));return out;}
 /* round keys found in the answer histories of the chosen sources (for the "ทำใน round" filter) */
 function advRKs(a){const P=P_(),s=new Set();a.src.forEach(kd=>advSrcQs(kd,a.lec).forEach(q=>hist(P,q.uid,a.hp).forEach(x=>s.add(x[3]))));return RKO.concat(["?"]).filter(k=>s.has(k));}
@@ -5438,6 +5467,11 @@ function rAdvisor(){
   h+=`<label class="chk" style="display:flex;gap:8px;align-items:center;margin-top:12px;font-size:15px"><input type="checkbox" id="aFlag" ${a.flag?"checked":""} style="width:20px;height:20px"> เฉพาะข้อที่ติด ⚑ ไม่มั่นใจ</label>`;
   h+=`<label class="chk" style="display:flex;gap:8px;align-items:center;margin-top:8px;font-size:15px"><input type="checkbox" id="aNote" ${a.note?"checked":""} style="width:20px;height:20px"> เฉพาะข้อที่มี 📝 โน้ต</label>`;
   h+=`<label class="chk" style="display:flex;gap:8px;align-items:center;margin-top:8px;font-size:15px"><input type="checkbox" id="aUndone" ${a.undone?"checked":""} style="width:20px;height:20px"> รวมข้อที่ยังไม่เคยทำด้วย</label>`;
+  /* Tag filter like the Service round — Tags of every question in the chosen sources (user 17 Nov 2026, ทวทว) */
+  const tgQs=[],tgSeen=new Set();a.src.forEach(kd=>advSrcQs(kd,a.lec).forEach(q=>{if(tgSeen.has(q.uid))return;if(kd==="ac"&&sel.size&&!sel.has(setKey(q)))return;tgSeen.add(q.uid);tgQs.push(q);}));
+  const allT=tgAllOf(tgQs);a.tg.tags=a.tg.tags.filter(t=>allT.some(x=>x[0]===t));
+  if(allT.length){const cnt={},tg0=a.tg,on0=tg0.on;a.tg={on:false,tags:[],mode:"min"};const base=advPool(a);a.tg=tg0;base.forEach(([q])=>tgOf(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));
+    h+=`<div id="tgWrap">${tgPanel(allT,a.tg,cnt,on0?advPool(a).length:base.length)}</div>`;}
   h+=`<div class="lbl">ลำดับ</div>${chips("aO",ADVO,a.ord)}`;
   h+=`<div class="lbl">จำนวนข้อ</div>${chips("aN",[[10,"10 ข้อ"],[20,"20 ข้อ"],[40,"40 ข้อ"],[0,"ทั้งหมด"]],a.n)}`;
   const pool=advPool(a),n=a.n?Math.min(a.n,pool.length):pool.length,anyDone=a.src.some(k=>dn(advSrcQs(k,a.lec)));
@@ -5446,6 +5480,7 @@ function rAdvisor(){
   $("main").innerHTML=h;
   const re=()=>{persist();rAdvisor();};
   $("advRep").onclick=()=>go(ward+"/report");
+  {const tw=$("tgWrap");if(tw)tgWire(tw,a.tg,re);}
   [["aHp","hp"],["aF","f"],["aO","ord"],["aN","n"]].forEach(([id,k])=>document.querySelectorAll(`#${id} [data-v]`).forEach(b=>b.onclick=()=>{a[k]=k==="n"?+b.dataset.v:b.dataset.v;re();}));
   document.querySelectorAll("[data-src]").forEach(b=>b.onclick=()=>{const k=b.dataset.src,s=new Set(a.src);if(s.has(k)){if(s.size===1){toast("เลือกไว้อย่างน้อย 1 แหล่ง");return;}s.delete(k);}else s.add(k);a.src=ADVSRC.map(x=>x[0]).filter(x=>s.has(x));re();});
   document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else sel.add(k);a.sets=W.sets.filter(x=>sel.has(x));re();});
@@ -5454,7 +5489,7 @@ function rAdvisor(){
   $("aFlag").onchange=e=>{a.flag=e.target.checked;re();};
   $("aNote").onchange=e=>{a.note=e.target.checked;re();};
   document.querySelectorAll("[data-rk]").forEach(b=>b.onclick=()=>{const k=b.dataset.rk,s=new Set(a.rk);if(s.has(k))s.delete(k);else s.add(k);a.rk=[...s];re();});
-  $("aGo").onclick=()=>{const l=advList(a);if(!l.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}save();startSess("advisor",a.src.length===1&&a.src[0]==="ac"?"Advisor round":"Advisor round · "+a.src.map(k=>ADVSRC.find(x=>x[0]===k)[1].replace(/ \(AC\)| round$/,"")).join(" + "),l,{hp:a.hp});};
+  $("aGo").onclick=()=>{const l=advList(a);if(!l.length){toast("ไม่มีข้อที่เข้าเงื่อนไข");return;}save();startSess("advisor",(a.src.length===1&&a.src[0]==="ac"?"Advisor round":"Advisor round · "+a.src.map(k=>ADVSRC.find(x=>x[0]===k)[1].replace(/ \(AC\)| round$/,"")).join(" + "))+(tgActive(a.tg)?" · เลือก Tag":""),l,{hp:a.hp,tg:tgActive(a.tg)?JSON.parse(JSON.stringify(a.tg)):null});};
 }
 /* reset = this question counts as not done again (Service sheet, Grand "ยังไม่เคยทำ", Quality, Ward staff, Morning) — the answer history is kept for advice and the report */
 const advIsReset=(P,q,hp)=>hist(P,q.uid,hp,true).length>0&&!hist(P,q.uid,hp).length;
@@ -6084,6 +6119,7 @@ function sheet(){
   if(isSess()){
     const s=P.sess,qs=s.list.map(u=>qAny(u)).filter(Boolean);
     $("sheetTitle").textContent=s.title;$("setChips").innerHTML="";
+    if(s.kind==="staff"||s.kind==="advisor")sessTgLine(s);
     const f=st.sessF||"all";
     $("statusChips").innerHTML=[["all","ทั้งหมด"],["todo",s.kind==="advisor"?"ยังไม่อ่าน":"ยังไม่ทำ"],["wrong",s.kind==="advisor"?"ล่าสุดผิด":"ตอบผิด"],["flag","⚑ ไม่มั่นใจ"],["note","📝 มีโน้ต"]].map(([v,t])=>`<button class="chip" aria-pressed="${f===v}" data-sf="${v}">${t}</button>`).join("");
     document.querySelectorAll("[data-sf]").forEach(b=>b.onclick=()=>{st.sessF=b.dataset.sf;persist();sheet();});

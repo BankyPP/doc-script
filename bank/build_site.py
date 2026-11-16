@@ -37,7 +37,7 @@ def num(f):
     b=os.path.basename(f)[6:-3]
     return int(b) if b.isdigit() else 10**9
 packs={}
-WEBSPR=SPLIT and not PACK and '--no-sprites' not in sys.argv   # website: images stacked into sprite sheets too (10 Nov 2026: ~6.2k files made the GitHub Pages deploy hit its 10-min syncing_files timeout) · sheets ≤ 8000 px tall for phones · ?v=<hash> so the service worker never shows a stale sheet
+WEBSPR=SPLIT and not PACK and '--no-sprites' not in sys.argv   # website: images stacked into sprite sheets too (10 Nov 2026: ~6.2k files made the GitHub Pages deploy hit its 10-min syncing_files timeout) · sheets ≤ 2000 px tall (17 Nov 2026: an 8000-px sheet is ~50 MB once decoded, so showing one small key picture froze iPad Safari for seconds; ≤2000 px ≈ 13 MB) · ?v=<hash> so the service worker never shows a stale sheet
 if PACK or WEBSPR:
     from PIL import Image
     groups={}
@@ -49,7 +49,7 @@ if PACK or WEBSPR:
         ims=[(k,Image.open(J(imgs[k])).convert('RGB')) for k in ks]
         sheets=[[]];h=0
         for k,im in ims:
-            if h+im.height>(30000 if PACK else 8000) and sheets[-1]: sheets.append([]);h=0
+            if h+im.height>(30000 if PACK else 2000) and sheets[-1]: sheets.append([]);h=0
             sheets[-1].append((k,im));h+=im.height
         for si,sh in enumerate(sheets):
             W=max(im.width for _,im in sh);H=sum(im.height for _,im in sh)

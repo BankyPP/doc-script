@@ -19,7 +19,9 @@ function mqL(wid,kind){wid=wid||ward;const W=WARDS[wid];if(!W)return [];kind=kin
     L.sort((a,b)=>so.indexOf(a.set)-so.indexOf(b.set)||(rk(a.ro)<rk(b.ro)?-1:rk(a.ro)>rk(b.ro)?1:0)||a.n-b.n);L.forEach((q,i)=>{q.n=i;});}
   return L;}
 function mqInitP(P,kind){const K=(kind||(P&&P.type==="OSCE"?"OSCE":"MEQ"))==="OSCE"?"osce":"meq";const m=P[K]=P[K]||{};m.a1=m.a1||{};m.a2=m.a2||{};m.star=m.star||{};m.v=m.v||{};const v=m.v;
-  v.set=v.set||"all";v.sec=v.sec||"all";v.status=v.status||"all";v.style=v.style||"all";v.tags=Array.isArray(v.tags)?v.tags:[];v.gl=Array.isArray(v.gl)?v.gl:[];v.tg=v.tg&&Array.isArray(v.tg.tags)?v.tg:tgNorm(v.tg);return m;}
+  v.set=v.set||"all";v.sec=v.sec||"all";v.status=v.status||"all";v.style=v.style||"all";v.tags=Array.isArray(v.tags)?v.tags:[];v.gl=Array.isArray(v.gl)?v.gl:[];v.tg=v.tg&&Array.isArray(v.tg.tags)?v.tg:tgNorm(v.tg);
+  /* Tag filter of Ward staff (tgs) and Advisor (tga) — own selection, same panel as the Service round (user 17 Nov 2026, ทวทว) */
+  v.tgs=v.tgs&&Array.isArray(v.tgs.tags)?v.tgs:tgNorm(v.tgs);v.tga=v.tga&&Array.isArray(v.tga.tags)?v.tga:tgNorm(v.tga);return m;}
 function mqS(){return mqInitP(P_());}
 function mqA(){return mqS()["a"+ph()];}
 function mqRec(q){return mqA()[q.uid]||(q&&q.ai&&mqIsOS()?(osAIMap()[q.uid]||{}).rec:undefined);}
@@ -84,6 +86,11 @@ function mqTopics(){const W=W_(),T=((mqIsOS()?W.cfg.osceTopics:W.cfg.meqTopics)|
 const mqTN=k=>(mqTopics().find(x=>x[0]===k)||[k,k])[1];
 /* Service round Tag filter: a case counts by the Tags of all its Parts, because the Service round opens the whole case */
 const mqQTags=q=>[...new Set(q.subs.flatMap(s=>s.tags||[]))];
+/* Tags for the Ward staff / Advisor filters — AI stations / cases without per-part Tags fall back to their topic */
+const mqQTagsX=q=>{const t=mqQTags(q);return t.length?t:q.topic?[q.topic]:[];};
+const mqRTg=rk=>{const v=mqS().v;return rk==="staff"?v.tgs:rk==="advisor"?v.tga:rk==="service"?v.tg:null;};
+/* Tag list for a panel: the ward's topics first (with their names), then any other Tag the questions carry */
+const mqTgAll=qs=>{const T=mqTopics(),have=new Set();qs.forEach(q=>mqQTagsX(q).forEach(t=>have.add(t)));return tgSort(T.filter(([k])=>have.has(k)).concat([...have].filter(k=>!T.some(x=>x[0]===k)).map(k=>[k,k])));};
 /* ---- topic context (Unit round): only Parts tagged with a chosen topic ---- */
 const mqTM=()=>mqS().v.ctx==="topic";
 const mqTmatch=s=>(s.tags||[]).some(t=>mqS().v.tags.includes(t));
@@ -240,8 +247,8 @@ const MQ_SECO=["MEQ","Recall / Short answer","Long case"];
 const mqSecs=L=>{const a=[...new Set(L.map(mqSecG).filter(Boolean))];return a.sort((x,y)=>{const i=MQ_SECO.indexOf(x),j=MQ_SECO.indexOf(y);return (i<0?99:i)-(j<0?99:j);});};
 const mqSecOk=q=>{const v=mqS().v;return !v.sec||v.sec==="all"||v.sec.split("|").includes(mqSecG(q));};
 function mqList(rk){const v=mqS().v,L=mqL(),setOk=q=>v.set==="all"||v.set.split("|").includes(mqSK(q));rk=rk||v.r;
-  if(rk==="staff")return mqStaffL().filter(q=>mqStyOk(q));
-  if(rk==="advisor")return mqAdvL().filter(q=>mqStyOk(q));
+  if(rk==="staff")return mqStaffL().filter(q=>mqStyOk(q)&&tgPass(mqQTagsX(q),v.tgs));
+  if(rk==="advisor")return mqAdvL().filter(q=>mqStyOk(q)&&tgPass(mqQTagsX(q),v.tga));
   if(rk==="morning")return mornXList();
   if(rk==="spc")return osSpcList();
   if(rk==="unit"&&mqIsOS())return osUnitList(v.utop);
@@ -308,6 +315,8 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
     h+=`<div class="tl-h">เรียง</div><div class="chips">${[["recent","ทำล่าสุดอยู่บน"],["score","คะแนนน้อยสุดก่อน"]].map(([k,n])=>`<button class="chip" type="button" data-maord="${k}" aria-pressed="${(v.aord||"recent")===k}">${n}</button>`).join("")}</div>`;
     if(sets.length)h+=`<div class="tl-h">ชุดข้อสอบ / Ro <span class="hint">ไม่เลือก = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น</span></div><div class="chips"><button class="chip" type="button" data-maset="all" aria-pressed="${!sel.length}">${sel.length?`ทุกชุด (เลือก ${sel.length})`:"ทุกชุด"}</button></div>`+yrGroupHTML(sets,(k=>{const q=L.concat(typeof osAIMap==="function"&&mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[]).find(x=>mqSK(x)===k);return q&&q.set&&k!=="AI"?q.set:"";}),(k,n)=>`<button class="chip" type="button" data-maset="${esc(k)}" aria-pressed="${sel.includes(k)}">${esc(k==="AI"?"โจทย์ AI จาก Legendary":n)}</button>`);
     h+=`<div class="chips">${[["all","ทั้งหมด"],["notfull","ยังไม่ได้เต็ม"],["full","ได้เต็ม"],["star","★ ติดดาว"],["note","📝 มีโน้ต"]].map(([k,n])=>`<button class="chip" type="button" data-mast="${k}" aria-pressed="${(v.ast||"all")===k}">${n}</button>`).join("")}</div>`;}
+  if(rk==="staff"||rk==="advisor"){const g=mqRTg(rk),base=(rk==="staff"?mqStaffL():mqAdvL()).filter(q=>mqStyOk(q)),allT=mqTgAll(base);g.tags=g.tags.filter(t=>allT.some(a=>a[0]===t));
+    if(allT.length){const cnt={};base.forEach(q=>mqQTagsX(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));h+=`<div id="tgWrap">${tgPanel(allT,g,cnt,base.filter(q=>tgPass(mqQTagsX(q),g)).length)}</div>`;}}
   if(rk==="service"||(rk==="unit"&&!mqIsOS())){const sets=[...new Set(L.map(mqSK))],sel=v.set==="all"?[]:v.set.split("|");
     h+=`<div class="tl-h">ชุดข้อสอบ <span class="hint">แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น</span></div><div class="chips"><button class="chip" type="button" data-mset="all" aria-pressed="${v.set==="all"}">${v.set==="all"?"ทุกชุด":`ทุกชุด (เลือก ${sel.length})`}</button></div>`+yrGroupHTML(sets,(k=>{const q=L.concat(typeof osAIMap==="function"&&mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[]).find(x=>mqSK(x)===k);return q&&q.set&&k!=="AI"?q.set:"";}),(k,n)=>`<button class="chip" type="button" data-mset="${esc(k)}" aria-pressed="${sel.includes(k)}">${esc(n)}<span class="cnt">${L.filter(q=>mqSK(q)===k).length}</span></button>`);
     /* พาร์ทตามไฟล์ (MEQ / Long case / Recall …) of the selected sets — pick some to see only those; none = every part in file order */
@@ -327,7 +336,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
   {const nb=$("mqNext");if(nb)nb.onclick=()=>{const nx=mqNextTodo(Q0);if(nx)mqOpen(nx.uid,undefined,"service");};}
   {const qi=$("mqQ"),qn=$("mqQn");if(qn)qn.textContent=QT.length?`พบ ${Q.length}/${Q0.length} ข้อ`:"";
     if(qi){let tm=0;qi.addEventListener("input",()=>{clearTimeout(tm);tm=setTimeout(()=>{mqQ=qi.value;const p0=qi.selectionStart;mqRList();const n=$("mqQ");if(n){n.focus();try{n.setSelectionRange(p0,p0);}catch(e){}}},160);});}}
-  {const tw=$("tgWrap");if(tw)tgWire(tw,v.tg,()=>{mqVset({});save();mqRList();});}
+  {const tw=$("tgWrap"),g=mqRTg(rk);if(tw&&g)tgWire(tw,g,()=>{mqVset({});save();mqRList();});}
   document.querySelectorAll("[data-utop]").forEach(b=>b.onclick=()=>{mqVset({utop:b.dataset.utop});save();mqRList();});
   document.querySelectorAll("[data-mtag]").forEach(b=>b.onclick=()=>{const k=b.dataset.mtag,a=v.tags;const i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);mqVset({});save();mqRList();});
   document.querySelectorAll("[data-msty]").forEach(b=>b.onclick=()=>{mqVset({style:b.dataset.msty});save();mqRList();});
@@ -342,7 +351,7 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
 function mqSheet(){const v=mqS().v,rk=v.r||"service",L=mqL(),c=mqCur(),cur=c?{u:c.q.uid,pi:c.pi}:null,SV=rk==="service"||rk==="unit";
   statLabels(["ทำแล้ว","ได้เต็ม","คะแนนเฉลี่ย"]);$("sheetTitle").textContent=`กระดาษคำตอบ · ${MQ_RN(rk)} · ${mqKN()}`;
   const sc=$("setChips"),cc=$("chChips"),stc=$("statusChips");sc.innerHTML="";stc.innerHTML="";if(cc){cc.innerHTML="";cc.hidden=true;}
-  tgLine(tgSort(mqTopics()),rk==="service"?v.tg:null,()=>{v.tg.on=false;mqVset({});save();mqSheet();},()=>{closeS(true);go(ward+"/mqr");});
+  {const g=mqRTg(rk);tgLine(rk==="service"?tgSort(mqTopics()):mqTgAll((rk==="staff"?mqStaffL():mqAdvL()).concat(mqL())),g,()=>{g.on=false;mqVset({});save();mqSheet();},()=>{closeS(true);go(ward+"/mqr");});}
   if(SV){const sets=[...new Set(L.map(mqSK))],sel=v.set==="all"?[]:v.set.split("|");
     sc.innerHTML=[["all",v.set==="all"?"ทุกชุด":`ทุกชุด (เลือก ${sel.length})`]].concat(sets.map(x=>[x,x])).map(([k,n])=>`<button class="chip" type="button" data-sms="${esc(k)}" aria-pressed="${k==="all"?v.set==="all":sel.includes(k)}">${esc(n)}</button>`).join("");
     const inS=L.filter(q=>v.set==="all"||sel.includes(mqSK(q))),secs=mqSecs(inS),ss=v.sec==="all"?[]:v.sec.split("|").filter(x=>secs.includes(x));
