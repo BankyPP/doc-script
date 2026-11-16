@@ -97,7 +97,7 @@
 <script src="data/topics.js?v=21"></script>
 <script src="app.js?v=81"></script>
 <!-- stale page guard (16 Nov 2026, same yellow bar as ac-mdcu): a tab / home-screen web app left open keeps running old code after a deploy.
-     When the page comes back to the screen, every 15 min and on focus, ask the server for this page again; if it changed → yellow bar "เว็บมีเวอร์ชันใหม่ — แตะเพื่อโหลดใหม่".
+     When the page comes back to the screen, every minute while on screen, and on focus, ask the server for this page again; if it changed → yellow bar "เว็บมีเวอร์ชันใหม่ — แตะเพื่อโหลดใหม่".
      Never reloads by itself (a game / form in progress would be lost). -->
 <style>
 #stbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:2147483000;max-width:92vw;background:#FFF1D2;color:#1d1a14;border:1.5px solid #9A6400;border-radius:8px;padding:10px 14px;font-family:'Sarabun',system-ui,sans-serif;font-size:14px;line-height:1.5;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.25)}
