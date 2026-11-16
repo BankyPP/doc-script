@@ -12,7 +12,11 @@ function imgHTML(k,alt,lazy){const v=IMGS[k];if(!v)return "";if(typeof v==="stri
      Sheets are up to 1600×8000 px; Safari decodes a CSS background on the main thread when it paints and can't lazy-load it, so every
      answer / next question / scroll with key pictures could freeze the page. An <img> decodes off the main thread (decoding=async)
      and the answer-key ones load only when scrolled near (loading=lazy). Same box size and crop as before; a failed sheet still → acImgErr. */
-  return `<span class="spr" role="img" aria-label="${alt}" style="width:min(100%,${v.w}px);aspect-ratio:${v.w}/${v.h}"><img class="sp" src="${v.p}" alt="" decoding="async" ${lazy?'loading="lazy" ':""}style="width:${(v.W/v.w*100).toFixed(4)}%;top:${(-v.y/v.h*100).toFixed(5)}%" onerror="acImgErr(this.parentNode)"></span>`;}
+  /* 17 Nov 2026 (รูปแคปเฉลยไม่ขึ้นหลายข้อ เช่น 78D ข้อ 275, 276): loading=lazy removed from sheet slots — before it loads, the <img> had no size
+     (height:auto, no width/height) so its 0-height box sat at the slot's top offset, far above the visible crop for slots low in a tall sheet;
+     Safari's small lazy-load margin never saw it on screen → never loaded. Sheets now load at once (decoding stays async, off the main thread)
+     and carry width/height so the box has the sheet's shape before the file arrives. */
+  return `<span class="spr" role="img" aria-label="${alt}" style="width:min(100%,${v.w}px);aspect-ratio:${v.w}/${v.h}"><img class="sp" src="${v.p}" alt="" width="${v.W}" height="${v.H}" decoding="async" style="width:${(v.W/v.w*100).toFixed(4)}%;top:${(-v.y/v.h*100).toFixed(5)}%" onerror="acImgErr(this.parentNode)"></span>`;}
 /* ---- stale page guard (11 Nov 2026) ----
    A phone keeps an open tab (or a home-screen web app) alive for days without reloading, so after a new deploy it still runs the old code,
    which asks for image files / sprite sheets / data hashes that the new deploy removed or replaced → answer-key pictures show "?" and text only.
