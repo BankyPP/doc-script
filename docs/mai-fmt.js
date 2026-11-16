@@ -57,14 +57,23 @@
   }
   function karyo(w) { return /^\d*,?[XY0O]+$/.test(w); }
 
+  /* "/" ที่ไม่ต้องเว้นวรรคและไม่ใช่ตัวคั่นชื่อ — ชื่อที่ใช้กันทั่วไปแบบนี้ (ผู้ใช้สั่ง 16 พ.ย. 2026) */
+  var SLASH_OK = [/SJS\/TEN/g, /Stevens-Johnson Syndrome\/Toxic Epidermal Necrolysis/gi];
+  function slashExempt(s) {
+    var ex = {};
+    SLASH_OK.forEach(function (re) { re.lastIndex = 0; var m; while ((m = re.exec(s))) ex[m.index + m[0].indexOf('/')] = 1; });
+    return ex;
+  }
+
   /* แยกเป็นส่วน ๆ ด้วย / ที่อยู่นอกวงเล็บ */
   function splitTop(s) {
+    var ex = slashExempt(s);
     var parts = [], cur = '', dep = 0, slashBad = false;
     for (var i = 0; i < s.length; i++) {
       var ch = s[i];
       if (ch === '(') dep++;
       if (ch === ')') dep--;
-      if (ch === '/' && dep === 0) {
+      if (ch === '/' && dep === 0 && !ex[i]) {
         if (s[i - 1] !== ' ' || s[i + 1] !== ' ') slashBad = true;
         parts.push(cur); cur = ''; continue;
       }
@@ -212,7 +221,7 @@
   /* กฎข้อ 10 — การเว้นวรรครอบเครื่องหมาย: "(" เว้นข้างหน้า · ")" เว้นข้างหลัง (ด้านในวงเล็บไม่เว้น)
      · "/" เว้นทั้งหน้าและหลัง · "-" ไม่เว้นทั้งหน้าและหลัง */
   function spacing(s, skip, out) {
-    var noSlash = skip.indexOf('slash') >= 0, seen = {};
+    var noSlash = skip.indexOf('slash') >= 0, seen = {}, ex = slashExempt(s);
     function at(i) { return '"' + s.slice(Math.max(0, i - 6), i + 7).trim() + '"'; }
     function add(c, i, m) { if (seen[c]) return; seen[c] = 1; out.push({ c: c, m: m + ' — ตรง ' + at(i) }); }
     for (var i = 0; i < s.length; i++) {
@@ -224,7 +233,7 @@
         if (i < s.length - 1 && a !== ' ') add('sp-close', i, 'วงเล็บปิด ")" ต้องเว้นวรรคข้างหลัง');
         if (b === ' ') add('sp-in', i, 'ด้านในวงเล็บไม่ต้องเว้นวรรค');
       } else if (ch === '/') {
-        if (!noSlash && (b !== ' ' || a !== ' ')) add('slash', i, 'เครื่องหมาย " / " ต้องเว้นวรรคทั้งหน้าและหลัง');
+        if (!noSlash && !ex[i] && (b !== ' ' || a !== ' ')) add('slash', i, 'เครื่องหมาย " / " ต้องเว้นวรรคทั้งหน้าและหลัง');
       } else if (ch === '-') {
         if (b === ' ' || a === ' ') add('sp-hyphen', i, 'ขีด "-" ไม่ต้องเว้นวรรคทั้งหน้าและหลัง');
       }
