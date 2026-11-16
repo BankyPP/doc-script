@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu e75f8f4 2026-11-16 New-version bar: also fire when any part of the site was redeployed (Last-Modified), not only code/data hashes
+BankyPP/ac-mdcu 0c5f331 2026-11-16 New-version bar: check every minute while the page stays on screen (not only on return / every 15 min)

@@ -43,7 +43,8 @@ window.acImgErr=acImgErr;   /* the app runs inside a function wrapper — inline
 function acImgErr(el){try{if(el&&el.classList){el.classList.add("imgerr");if(el.tagName==="IMG")el.removeAttribute("onerror");}}catch(e){}stCheck(1).then(o=>stAct(o,false));}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")stCheck(0).then(o=>stAct(o,true));});
 addEventListener("pageshow",e=>{if(e.persisted)stCheck(1).then(o=>stAct(o,true));});
-setInterval(()=>{if(document.visibilityState==="visible")stCheck(1).then(o=>stAct(o,false));},15*60000);
+/* 16 Nov 2026: was every 15 min — now every minute while the page is on screen, so the bar shows soon after any deploy (index.html is ~6 KB) */
+setInterval(()=>{if(document.visibilityState==="visible")stCheck(1).then(o=>stAct(o,false));},60000);
 const CFG=(typeof CONFIG!=="undefined"&&CONFIG)||{};
 /* institution of this website (config "inst"): MDCU = repo root, SI = si/config.json — used in AI prompts */
 const INST=Object.assign({id:"mdcu",name:"MDCU",th:"จุฬาฯ",en:"Chulalongkorn University (MDCU)",enShort:"Chulalongkorn University",stu:"นิสิตแพทย์"},CFG.inst||{});
