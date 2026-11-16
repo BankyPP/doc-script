@@ -763,9 +763,11 @@
         '<ul class="why">' + p.probs.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul>' +
         (back ? '<button class="chip sm" type="button" data-unfok="' + esc(p.key) + '">เอากลับ</button>' : '<button class="chip sm" type="button" data-fok="' + esc(p.key) + '">ไม่ผิด</button>') + '</li>';
     }
-    var hidPart = hid.length ? '<button class="linkbtn" type="button" data-showfhid aria-expanded="' + !!st.fhid + '">' + (st.fhid ? 'ซ่อนรายการ' : 'ดู') + 'ชื่อที่กดว่าไม่ผิดไว้ (' + hid.length + ')</button>' +
-      (st.fhid ? '<ul class="mai-hidlist">' + hid.map(function (p) { return li(p, true); }).join('') + '</ul>' : '') : '';
-    if (!vis.length) return '<section class="wrap" style="padding-bottom:16px"><div class="mai-dupok"><span class="muted">✓ ไม่มีชื่อผิดรูปแบบค้างอยู่</span>' + rulesBtn + hidPart + '</div></section>';
+    var hidBtn = hid.length ? '<button class="linkbtn" type="button" data-showfhid aria-expanded="' + !!st.fhid + '">' + (st.fhid ? 'ซ่อนรายการ' : 'ดู') + 'ชื่อที่กดว่าไม่ผิดไว้ (' + hid.length + ')</button>' : '';
+    var hidList = hid.length && st.fhid ? '<ul class="mai-hidlist">' + hid.map(function (p) { return li(p, true); }).join('') + '</ul>' : '';
+    var hidPart = hidBtn + hidList;
+    /* ปุ่มดูรายการที่ซ่อนไว้อยู่ข้าง ✓ (ฝั่งขวา เหมือนกล่องโรคซ้ำ) · ปุ่มอ่านกฎอยู่ถัดลงมา */
+    if (!vis.length) return '<section class="wrap" style="padding-bottom:16px"><div class="mai-dupok"><span class="muted">✓ ไม่มีชื่อผิดรูปแบบค้างอยู่</span>' + hidBtn + '<span style="flex-basis:100%">' + rulesBtn + '</span>' + hidList + '</div></section>';
     return '<section class="wrap" style="padding-bottom:22px"><details class="mai-dup mai-fmt"' + (st.fopen != null ? (st.fopen ? ' open' : '') : vis.length <= 2 || window.innerWidth >= 760 ? ' open' : '') + '><summary><span class="bang" aria-hidden="true">Aa</span><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span class="k" style="font-size:18px">ชื่อผิดรูปแบบ ' + vis.length + ' โรค</span><span class="muted" style="font-size:14px">เขียนไม่ตรงกฎการตั้งชื่อ ทำให้ค้นด้วย filter ในชีตไม่เจอ — แก้ในชีต หรือกด “ไม่ผิด” เพื่อซ่อน</span></span></summary>' +
       '<div class="mai-fmtbar">' + rulesBtn + '</div><ul>' + vis.map(function (p) { return li(p, false); }).join('') + '</ul>' + (hidPart ? '<div class="mai-dupfoot">' + hidPart + '</div>' : '') + '</details></section>';
   }
