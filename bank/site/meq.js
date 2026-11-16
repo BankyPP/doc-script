@@ -469,7 +469,7 @@ function mqExplain(q,r){const tm=mqTM(),S=tm?q.subs.filter(s=>mqTmatch(s)&&mqSub
   h+=sec("สิ่งที่เขียนไว้ในไฟล์",q.notes?`<div class="box">${mqRich(q.notes)}</div>`:"","notes");
   {const KL=[].concat(q.kimg||[]).filter(x=>IMGS[x]);if(KL.length)h+=sec("หน้า/รูปอ้างอิงจากไฟล์เฉลย",`<div class="kimg">${KL.map(x=>imgHTML(x,"หน้าเฉลยจากไฟล์",1)).join("")}</div>`);}
   h+=sec("ช่วยจำ",q.mnemonic?`<p>${q.mnemonic}</p>`:"");
-  h+=sec("ความเห็นของผม",q.opinion?`<div class="box">${q.opinion}</div>`:"","opinion");
+  {const op=opinionOf(q);h+=sec("ความเห็นของผม",op?`<div class="box">${op}</div>`:"","opinion");}
   h+=sec("คำถามต่อยอดที่อาจออก",(q.variants||[]).length?`<ul>${q.variants.map(s=>`<li>${s}</li>`).join("")}</ul>`:"");
   h+=myNoteSec(q);   /* same note store as MCQ (P.post, shared by both Phases) */
   return h+`</section>`;}

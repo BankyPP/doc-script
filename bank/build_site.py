@@ -81,6 +81,9 @@ for w in cfg.get('wards',[]):
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].QB);')
     fx=os.path.join(d,'fixes.js') if d!='data' else 'fixes.js'
     if os.path.exists(fx): js.append('(function(QB){\n'+open(fx,encoding='utf-8').read()+'\n})(WARDS['+wid+'].QB);')
+    for ofn,arr in (('opinions.js','QB'),):   # "ความเห็นของผม" of old exams written later (17 Nov 2026): O["set|ro|orig[#n]"] → q.opinion when empty
+        op=os.path.join(d,ofn)
+        if os.path.exists(op): js.append('(function(QB){\n'+open(op,encoding='utf-8').read()+'\n})(WARDS['+wid+'].'+arr+');')
     for f in sorted(glob.glob(os.path.join(d,'unit_*.js'))):     # Unit round banks: W.UNIT.push({id,title,short,src,QB:[…]})
         js.append('(function(W){W.UNIT=W.UNIT||[];\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+']);')
     for extra in ('topics.js','resources.js','dups.js','tags.js','io.js','chapters.js'):     # W.TOPIC={"set|ro|orig":"topic"} · W.RES=[{topic,title,type,url,note}] (Advisor round)
@@ -93,9 +96,13 @@ for w in cfg.get('wards',[]):
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].MQ);')
     mfx=os.path.join(d,'meq_fixes.js')   # MEQ field overrides (OB-GYN reference audit) — keys set|ro|orig[#k], see parts/meqaudit
     if os.path.exists(mfx): js.append('(function(QB){\n'+open(mfx,encoding='utf-8').read()+'\n})(WARDS['+wid+'].MQ);')
+    op=os.path.join(d,'meq_opinions.js')
+    if os.path.exists(op): js.append('(function(QB){\n'+open(op,encoding='utf-8').read()+'\n})(WARDS['+wid+'].MQ);')
     js.append(f'WARDS[{wid}].OS=[];')
     for f in sorted(glob.glob(os.path.join(d,'osce_b*.js')),key=lambda f:int(re.sub(r'\D','',os.path.basename(f)) or 0)):   # OSCE banks: QB.push(station) → W.OS (same shape as a MEQ case, one Part)
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OS);')
+    op=os.path.join(d,'osce_opinions.js')
+    if os.path.exists(op): js.append('(function(QB){\n'+open(op,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OS);')
     js.append(f'WARDS[{wid}].OSU=[];')   # Unit round OSCE (14 Nov 2026): osu_<topic>.js → QB.push(station with topic) — by big OSCE topic
     for f in sorted(glob.glob(os.path.join(d,'osu_*.js'))):
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].OSU);')

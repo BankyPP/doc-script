@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 37e7685 2026-11-16 Answering again in the same visit is saved but not counted (ทวทว)
+BankyPP/ac-mdcu 7ba2431 2026-11-17 "ความเห็นของผม" on every question (ทวทว)

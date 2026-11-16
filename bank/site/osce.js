@@ -376,7 +376,7 @@ function osResView(){const P=P_(),rs=osLastRes();if(!rs)return go(ward+"/osl");c
     if(q.sp)h+=`<div class="sec notes"><h3>บทผู้ป่วยจำลอง / ผลตรวจ</h3><div class="box">${q.sp}</div></div>`;
     if(q.interp)h+=`<div class="sec"><h3>ประเด็นของข้อนี้</h3><p>${q.interp}</p></div>`;
     if((q.summary||[]).length)h+=`<div class="sec"><h3>สรุป</h3><ul>${q.summary.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
-    if(q.opinion)h+=`<div class="sec opinion"><h3>ความเห็นของผม</h3><div class="box">${q.opinion}</div></div>`;
+    {const op=opinionOf(q);if(op)h+=`<div class="sec opinion"><h3>ความเห็นของผม</h3><div class="box">${op}</div></div>`;}
     if(q.flag)h+=`<div class="sub-meta"><span class="tag warn">${esc(q.flag)}</span></div>`;
     h+=myNoteSec(q);
     h+=`<div class="row2">${!q.ai?`<button class="link" type="button" data-osgo="${esc(q.uid)}">เปิดข้อนี้ใน Service round ↗</button>`:""}${rs.mode==="sim"&&mqAiAvail()&&q.subs.some(s=>(((rs.ans||{})[ix]||{})[s._i]||"").trim())?(OSAI.busy===ix+1?`<span class="hint">⏳ AI กำลังตรวจ…</span>`:`<button class="link ailink" type="button" data-osai="${ix}">🤖 ให้ AI ตรวจข้อนี้</button>`):""}</div></div></details>`;});

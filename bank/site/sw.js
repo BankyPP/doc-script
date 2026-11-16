@@ -7,8 +7,10 @@
 const CN="ac-"+self.registration.scope;
 self.addEventListener("install",()=>self.skipWaiting());
 self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
+/* 16 Nov 2026: look up only this file's older copies (ignoreSearch) — listing the whole cache (1,000+ picture sheets) on every new file
+   kept this site's storage busy on iPad, and every page of bankypp.github.io waits on that same storage */
 async function putV(c,req,res){await c.put(req,res);const u=new URL(req.url);
-  for(const k of await c.keys()){const x=new URL(k.url);if(x.pathname===u.pathname&&x.search!==u.search)await c.delete(k);}}
+  for(const k of await c.keys(u.origin+u.pathname,{ignoreSearch:true})){if(new URL(k.url).search!==u.search)await c.delete(k);}}
 self.addEventListener("fetch",e=>{
   const r=e.request;if(r.method!=="GET")return;const u=new URL(r.url);
   if(u.origin!==location.origin||!u.href.startsWith(self.registration.scope))return;
