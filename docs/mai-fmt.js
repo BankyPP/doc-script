@@ -209,17 +209,39 @@
     });
   }
 
+  /* กฎข้อ 10 — การเว้นวรรครอบเครื่องหมาย: "(" เว้นข้างหน้า · ")" เว้นข้างหลัง (ด้านในวงเล็บไม่เว้น)
+     · "/" เว้นทั้งหน้าและหลัง · "-" ไม่เว้นทั้งหน้าและหลัง */
+  function spacing(s, skip, out) {
+    var noSlash = skip.indexOf('slash') >= 0, seen = {};
+    function at(i) { return '"' + s.slice(Math.max(0, i - 6), i + 7).trim() + '"'; }
+    function add(c, i, m) { if (seen[c]) return; seen[c] = 1; out.push({ c: c, m: m + ' — ตรง ' + at(i) }); }
+    for (var i = 0; i < s.length; i++) {
+      var ch = s[i], b = s[i - 1], a = s[i + 1];
+      if (ch === '(') {
+        if (i > 0 && b !== ' ') add('sp-open', i, 'วงเล็บเปิด "(" ต้องเว้นวรรคข้างหน้า');
+        if (a === ' ') add('sp-in', i, 'ด้านในวงเล็บไม่ต้องเว้นวรรค');
+      } else if (ch === ')') {
+        if (i < s.length - 1 && a !== ' ') add('sp-close', i, 'วงเล็บปิด ")" ต้องเว้นวรรคข้างหลัง');
+        if (b === ' ') add('sp-in', i, 'ด้านในวงเล็บไม่ต้องเว้นวรรค');
+      } else if (ch === '/') {
+        if (!noSlash && (b !== ' ' || a !== ' ')) add('slash', i, 'เครื่องหมาย " / " ต้องเว้นวรรคทั้งหน้าและหลัง');
+      } else if (ch === '-') {
+        if (b === ' ' || a === ' ') add('sp-hyphen', i, 'ขีด "-" ไม่ต้องเว้นวรรคทั้งหน้าและหลัง');
+      }
+    }
+  }
+
   function check(raw) {
     var s = String(raw || '').trim(), out = [];
     if (!s || THAI.test(s)) return out;
     var skip = CFG.skip[s] || [];
     if (/covid/i.test(s) && !/COVID-\d{2}/.test(s)) out.push({ c: 'covid', m: 'เขียน COVID-19 ตัวพิมพ์ใหญ่และมีขีดเสมอ' });
+    spacing(s, skip, out);
     var depth = 0, badPar = false;
     for (var i = 0; i < s.length; i++) { if (s[i] === '(') depth++; if (s[i] === ')') depth--; if (depth < 0 || depth > 1) badPar = true; }
     if (depth !== 0) badPar = true;
     if (badPar) { out.push({ c: 'paren', m: 'วงเล็บเปิด–ปิดไม่ครบคู่' }); return out; }
     var sp = skip.indexOf('slash') >= 0 ? { parts: [s], slashBad: false } : splitTop(s);
-    if (sp.slashBad && skip.indexOf('slash') < 0) out.push({ c: 'slash', m: 'คั่นชื่อด้วย " / " ต้องเว้นวรรคหน้าและหลังเครื่องหมาย' });
     sp.parts.forEach(function (part) {
       var gs = part.match(/\([^)]*\)/g) || [];
       var endOK = !gs.length || (gs.length === 1 && /\)\s*$/.test(part));
