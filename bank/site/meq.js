@@ -256,7 +256,7 @@ function mqHomeHTML(type){type=type||"MEQ";const P=P_(),p=ph(),L=mqL(ward,type),
   h+=`<p class="statline">คลังมี <b>${L.length}</b> ข้อ${type==="OSCE"&&L.length?` (ไม่มีอาจารย์ ${L.filter(q=>!q.ex).length} · มีอาจารย์ ${L.filter(q=>q.ex).length})`:""} · ข้อสอบเก่า <b>${L.length}</b> ข้อ${type==="MEQ"&&L.length?` (case ${nC} · short answer ${nS})`:""} · Phase ${p} ทำแล้ว <b>${done.length}</b> ข้อ · คะแนนเฉลี่ย <b>${avg==null?"–":avg+"%"}</b></p>`;
   const v=mqS().v,cq=v.u&&L.find(q=>q.uid===v.u);
   if(cq&&!mqCaseDone(cq)&&mqAnyDone(cq)&&!rsHidden(P,"mq"+type,v.vt))h+=rsBox("mq"+type,`<button class="resume" id="mqResume"><span>ทำต่อ: <b>${type} ข้อ ${esc(mqNum(cq))}</b><span class="rd">${esc(cq.set)} · ${esc(mqTitle(cq))}</span></span><span class="go">→</span></button>`);
-  if(p===2&&L.length){h+=`<div class="card"><h3>ทบทวน ${type} ก่อนสอบ</h3><span class="rd">สรุปจากข้อสอบ ${type} เก่าเท่านั้น และทวนเฉพาะข้อที่ยังไม่ได้เต็ม</span><div class="tools">
+  if(p===2&&L.length){h+=`<div class="card${p2Fold(type)?" p2fold":""}">${p2Head(type,`ทบทวน ${type} ก่อนสอบ`)}<span class="rd">สรุปจากข้อสอบ ${type} เก่าเท่านั้น และทวนเฉพาะข้อที่ยังไม่ได้เต็ม</span><div class="tools">
     <button class="tool" data-go="mqhy">📘 สรุป High-yield ${type}${(n=>n?`<span class="n" title="ข้อใหม่ที่ Claude ยังไม่ได้สรุป">🆕 ${n}</span>`:"")(hsPendingN(type))}</button>
     <button class="tool" data-mqp2="notfull">◐ ข้อที่ยังไม่ได้เต็ม<span class="n">${L.filter(q=>mqPass(q,"notfull")).length}</span></button>
     <button class="tool" data-mqp2="star">★ ข้อที่ติดดาว<span class="n">${L.filter(mqStar).length}</span></button>

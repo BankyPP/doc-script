@@ -578,6 +578,10 @@ function staffPools(){const P=P_(),p=ph(),W=W_(),o={ac:[],unit:[],adm:[],spc:[],
   return o;}
 const staffAll=()=>!!st.staffAll;
 const staffList=all=>{const o=staffPools();return (all==null?staffAll():all)?o.ac.concat(o.unit,o.adm,o.spc,o.lai):o.ac;};
+/* กล่อง "ทบทวนก่อนสอบ" (Phase 2) ของ MCQ / MEQ / OSCE พับ/กางได้ — ค่าเริ่มต้นกางไว้, จำแยกตามแท็บ, ซิงก์ข้ามเครื่องผ่าน st (ผู้ใช้สั่ง 17 พ.ย. 2026, ทวทว) */
+const p2Fold=k=>!!(st.p2fold&&st.p2fold[k]);
+const p2Head=(k,t)=>`<button class="p2h" type="button" data-p2f="${k}" aria-expanded="${!p2Fold(k)}" title="พับ / กางเมนู"><h3>${t}</h3><span class="chev" aria-hidden="true">▾</span></button>`;
+function bindP2Fold(){document.querySelectorAll("[data-p2f]").forEach(b=>b.onclick=()=>{const k=b.dataset.p2f,c=b.closest(".card");st.p2fold=st.p2fold||{};const f=!p2Fold(k);if(f)st.p2fold[k]=1;else delete st.p2fold[k];if(c)c.classList.toggle("p2fold",f);b.setAttribute("aria-expanded",String(!f));save();});}
 const p2lists=()=>{const P=P_(),QB=W_().QB;return {
   wrong:QB.filter(q=>{const a=latestAny(P,q.uid);return a&&a[0]!==q.ans;}),
   right:QB.filter(q=>{const a=latestAny(P,q.uid);return a&&a[0]===q.ans;}),
@@ -609,7 +613,7 @@ function rHome(){
       h+=`<div class="rswrap"><button class="resume" id="resume" data-rs="${a.k}"><span>ทำต่อ: <b>${esc(a.title)}</b><span class="rd">${a.d}</span></span><span class="go">→</span></button><button class="rsx" data-rsx="${a.k}" aria-label="ซ่อนกล่องนี้" title="ซ่อน (ขึ้นใหม่เมื่อกลับไปทำรอบนี้อีก)">×</button></div>`;
       if(b)h+=`<div class="rswrap"><button class="linkbtn rs2" data-rs="${b.k}">หรือทำต่อ: <b>${esc(b.title)}</b> · ${b.d} →</button><button class="rsx sm" data-rsx="${b.k}" aria-label="ซ่อน">×</button></div>`;}}
     if(p===2){const l=p2lists();
-      h+=`<div class="card"><h3>ทบทวนก่อนสอบ</h3><span class="rd">สรุปจากข้อสอบเก่าทุกปี และเลือกทวนเฉพาะกลุ่มข้อ</span><div class="tools">
+      h+=`<div class="card${p2Fold("MCQ")?" p2fold":""}">${p2Head("MCQ","ทบทวนก่อนสอบ")}<span class="rd">สรุปจากข้อสอบเก่าทุกปี และเลือกทวนเฉพาะกลุ่มข้อ</span><div class="tools">
       <button class="tool" data-go="hy">📘 สรุป High-yield${(n=>n?`<span class="n" title="ข้อใหม่ที่ Claude ยังไม่ได้สรุป">🆕 ${n}</span>`:"")(hsPendingN("MCQ"))}</button><button class="tool" data-go="kw">🔑 Keyword ตอบข้อสอบ</button>
       <button class="tool" data-p2="wrong">✗ ข้อที่ยังผิดอยู่<span class="n">${l.wrong.length}</span></button>
       <button class="tool" data-p2="right">✓ ข้อที่ทำถูกแล้ว<span class="n">${l.right.length}</span></button>
@@ -630,7 +634,7 @@ function rHome(){
       <div class="row2"><button class="btn${ua+ul?" primary":""}" id="hSendWeb" type="button" ${ua+ul?"":"disabled"}>ส่งไปเว็บ (เฉพาะของฉัน)</button><button class="btn ghost" id="hSendAll" type="button">ส่งทั้งหมดอีกครั้ง</button></div><p class="hint" id="hSendNote" style="margin:6px 0 0"></p>${ufaBtn("ufaHome")}</div>`;}
   h+=`<div class="card"><h3>ย้ายความคืบหน้า</h3><span class="rd"><b>ลิงก์</b> พาไปได้ทุกวอร์ด ทุก Phase พร้อม ⚑ (ไม่รวมโน้ต) · <b>ไฟล์สำรอง</b> ครบทุกอย่างรวมโน้ตและที่เขียนด้วยมือ</span><div class="tools"><button class="tool" id="hExp">🔗 ส่งลิงก์ความคืบหน้า</button><button class="tool" id="hImp">⤵ นำเข้าลิงก์ / รหัส</button><button class="tool" id="hFile">💾 ดาวน์โหลดไฟล์สำรอง</button><button class="tool" id="hFileIn">📂 นำเข้าไฟล์สำรอง</button></div></div>`;
   h+=`<p class="hint" style="text-align:center;margin-top:18px">อัปเดตเว็บล่าสุด ${typeof BUILD!=="undefined"?BUILD:""}</p>`;
-  $("main").innerHTML=h;if((type==="MEQ"||type==="OSCE")&&!noEx)mqBindHome(type);
+  $("main").innerHTML=h;if((type==="MEQ"||type==="OSCE")&&!noEx)mqBindHome(type);bindP2Fold();
   document.querySelectorAll("[data-cs]").forEach(b=>b.onclick=()=>{st.clStart=b.dataset.cs;save();rHome();});
   bindUfa();
   {const b=$("hSendAll");if(b)b.onclick=()=>sendWeb(bankItems("adm",ward).concat(bankItems("spc",ward)).map(x=>x.key).concat(bankItems("leg",ward).map(x=>x.key)),"hSendNote");}
