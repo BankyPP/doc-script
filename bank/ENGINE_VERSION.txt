@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 817450d 2026-11-17 Green progress on Ro chips in every done/total year picker; × on every in-round resume box; stop Quality page jumping up while scrolling (MDCU + SI)
+BankyPP/ac-mdcu 15a8edf 2026-11-18 Answer sheet of every round: pick sets, chapters/parts and status like Service round (MCQ sessions + MEQ/OSCE rounds; MDCU + SI)

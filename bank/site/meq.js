@@ -357,7 +357,19 @@ function mqSheet(){const v=mqS().v,rk=v.r||"service",L=mqL(),c=mqCur(),cur=c?{u:
     const inS=L.filter(q=>v.set==="all"||sel.includes(mqSK(q))),secs=mqSecs(inS),ss=v.sec==="all"?[]:v.sec.split("|").filter(x=>secs.includes(x));
     if(cc&&secs.length){cc.innerHTML=[["all",ss.length?`ทุกพาร์ท (เลือก ${ss.length})`:"ทุกพาร์ท"]].concat(secs.map(x=>[x,x])).map(([k,n])=>`<button class="chip" type="button" data-smp="${esc(k)}" aria-pressed="${k==="all"?!ss.length:ss.includes(k)}">${esc(n)}<span class="cnt">${k==="all"?"":inS.filter(q=>mqSecG(q)===k).length}</span></button>`).join("");cc.hidden=false;}
     stc.innerHTML=[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["notfull","ยังไม่ได้เต็ม"],["star","★ ติดดาว"],["note","📝 มีโน้ต"]].map(([k,n])=>`<button class="chip" type="button" data-smt="${k}" aria-pressed="${v.status===k}">${n}</button>`).join("");}
-  const Q0=rk==="grand"?v.gl.map(u=>L.find(x=>x.uid===u)).filter(Boolean):mqList(rk),T=srchTerms(sheetQ),Q=T.length?Q0.filter(q=>srchHit(mqSearchText(q),T)):Q0;sheetQPaint(Q.length,Q0.length);
+  let Q0=rk==="grand"?v.gl.map(u=>L.find(x=>x.uid===u)).filter(Boolean):mqList(rk);
+  /* every other round's answer sheet gets the Service sheet's pickers too — sets, parts, status (user 18 Nov 2026, ทวทว); filters the sheet only, kept per round */
+  if(!SV&&Q0.length){const F=(v.shf||(v.shf={}))[rk]||(v.shf[rk]={set:"all",sec:"all",status:"all"}),SK=q=>mqSK(q)||"อื่นๆ (โจทย์ AI)",sets=[...new Set(Q0.map(SK))];
+    const sel=F.set==="all"?[]:F.set.split("|").filter(k=>sets.includes(k)),inS=Q0.filter(q=>!sel.length||sel.includes(SK(q))),secs=mqSecs(inS),ss=F.sec==="all"?[]:F.sec.split("|").filter(x=>secs.includes(x));
+    if(sets.length>1)sc.innerHTML=[["all",sel.length?`ทุกชุด (เลือก ${sel.length})`:"ทุกชุด"]].concat(sets.map(x=>[x,x])).map(([k,n])=>{const c=k==="all"?null:Q0.filter(q=>SK(q)===k);return `<button class="chip" type="button" data-sms2="${esc(k)}" aria-pressed="${k==="all"?!sel.length:sel.includes(k)}">${esc(n)}${c?`<span class="cnt">${c.filter(mqCaseDone).length}/${c.length}</span>`:""}</button>`;}).join("");
+    if(cc&&secs.length>1){cc.innerHTML=[["all",ss.length?`ทุกพาร์ท (เลือก ${ss.length})`:"ทุกพาร์ท"]].concat(secs.map(x=>[x,x])).map(([k,n])=>`<button class="chip" type="button" data-smp2="${esc(k)}" aria-pressed="${k==="all"?!ss.length:ss.includes(k)}">${esc(n)}<span class="cnt">${k==="all"?"":inS.filter(q=>mqSecG(q)===k).length}</span></button>`).join("");cc.hidden=false;}
+    stc.innerHTML=[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["notfull","ยังไม่ได้เต็ม"],["star","★ ติดดาว"],["note","📝 มีโน้ต"]].map(([k,n])=>`<button class="chip" type="button" data-smt2="${k}" aria-pressed="${(F.status||"all")===k}">${n}</button>`).join("");
+    const tg=(cur,k)=>{let a=cur==="all"?[]:cur.split("|");if(k==="all")a=[];else if(a.includes(k))a=a.filter(x=>x!==k);else a.push(k);return a.length?a.join("|"):"all";};
+    sc.querySelectorAll("[data-sms2]").forEach(b=>b.onclick=()=>{F.set=tg(sel.length?sel.join("|"):"all",b.dataset.sms2);F.sec="all";save();mqSheet();});
+    if(cc)cc.querySelectorAll("[data-smp2]").forEach(b=>b.onclick=()=>{F.sec=tg(ss.length?ss.join("|"):"all",b.dataset.smp2);save();mqSheet();});
+    stc.querySelectorAll("[data-smt2]").forEach(b=>b.onclick=()=>{F.status=b.dataset.smt2;save();mqSheet();});
+    Q0=inS.filter(q=>(!ss.length||ss.includes(mqSecG(q)))&&mqPass(q,F.status||"all"));}
+  const T=srchTerms(sheetQ),Q=T.length?Q0.filter(q=>srchHit(mqSearchText(q),T)):Q0;sheetQPaint(Q.length,Q0.length);
   {const D=Q0.filter(q=>mqCaseDone(q)),S=D.map(mqScore).filter(x=>x&&x.tot),full=S.filter(x=>x.perfect).length,avg=S.length?Math.round(S.reduce((a,x)=>a+x.got/x.tot,0)/S.length*100):null;
     $("sDone").textContent=`${D.length}/${Q0.length}`;$("sRight").textContent=full;$("sPct").textContent=avg===null?"–":avg+"%";}
   $("rows").innerHTML=Q.length?`<div class="mqv"><div class="trows mqrows">`+Q.map(q=>mqRowHTML(q,rk,cur)).join("")+`</div></div>`:`<div class="empty">${T.length?`ไม่พบข้อที่มีคำว่า “${esc(sheetQ.trim())}”`:rk==="grand"?"ยังไม่ได้สุ่มข้อในรอบนี้":"ไม่มีข้อในเงื่อนไขที่เลือก"}</div>`;
