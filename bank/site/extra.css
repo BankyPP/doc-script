@@ -177,7 +177,7 @@ details.tcard .tools{margin-top:10px}
 /* ---------- Service round: set progress ---------- */
 .chip.svchip:not([aria-pressed="true"]){background-image:linear-gradient(to right,var(--right-soft) var(--pc),transparent var(--pc))}
 .chip.svchip.done{border-color:var(--right)}
-.chip.svchip.done:not([aria-pressed="true"]) .c{color:var(--right);opacity:1;font-weight:600}
+.chip.svchip.done:not([aria-pressed="true"]) .c,.chip.svchip.done:not([aria-pressed="true"]) .cnt{color:var(--right);opacity:1;font-weight:600}
 /* ---------- Legendary round ---------- */
 .exnav{display:flex;align-items:center;gap:10px;max-width:760px;margin:0 auto;padding:8px 16px 0}
 .exnav .ext{font-family:var(--num);font-weight:700;font-size:20px;font-variant-numeric:tabular-nums;color:var(--ink)}

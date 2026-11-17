@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu cae2cf7 2026-11-17 Ward staff / Advisor: pick questions by Tag like Service round (MCQ, MEQ, OSCE); Service shows how many questions will start
+BankyPP/ac-mdcu 817450d 2026-11-17 Green progress on Ro chips in every done/total year picker; × on every in-round resume box; stop Quality page jumping up while scrolling (MDCU + SI)

@@ -207,6 +207,10 @@ const PF=(()=>{let on=false;try{const m=/[?&]perf=([01])/.exec(location.search);
   try{const P=EventTarget.prototype,oA=P.addEventListener,oR=P.removeEventListener,WM=new WeakMap();
     P.addEventListener=function(type,fn,o){if(typeof fn!=="function")return oA.call(this,type,fn,o);let w=WM.get(fn);if(!w){const tag="event "+type+" "+((this&&(this.id||this.tagName||(this.constructor&&this.constructor.name)))||"")+" "+nm(fn);w=function(...x){return slow(tag,fn,this,x);};WM.set(fn,w);}return oA.call(this,type,w,o);};
     P.removeEventListener=function(type,fn,o){return oR.call(this,type,(typeof fn==="function"&&WM.get(fn))||fn,o);};}catch(e){}
+  /* 17 Nov 2026: also note this page's own downloads (fetch) and any slow read/write of the browser's storage (localStorage) */
+  try{const oF=window.fetch;window.fetch=function(i,...a){const n=decodeURIComponent(String(i&&i.url||i).split("/").pop()).slice(0,40),t=performance.now();mark("กำลังโหลด "+n);
+    const p=oF.call(this,i,...a);p.then(()=>{const d=performance.now()-t;mark("โหลดเสร็จ "+n);if(d>1500)log(`📥 ${n} ${(d/1000).toFixed(1)}s`);},()=>{});return p;};}catch(e){}
+  try{const SP=Storage.prototype;["setItem","getItem","removeItem"].forEach(k=>{const o=SP[k];SP[k]=function(...a){const t=performance.now();try{return o.apply(this,a);}finally{const d=performance.now()-t;if(d>100)log(`💾 localStorage.${k} ${String(a[0]).slice(0,24)} ${Math.round(d)} ms`);}};});}catch(e){}
   log("เปิดโหมดวัดความเร็ว");
   return {log,mark,time:(s,f)=>{mark(s+" (กำลังทำ)");const a=performance.now();try{return f();}finally{const d=performance.now()-a;mark(s+" เสร็จ");if(d>150)log(`${s} ${Math.round(d)} ms`);}}};
 })();
@@ -669,8 +673,17 @@ function rHome(){
 }
 /* the pink "ทำต่อ" box with its × — one look and one rule on the MCQ, MEQ and OSCE home of every ward (user 4 Nov 2026): hidden until that round is opened again (t = last visit) */
 const rsHidden=(P,k,t)=>{const H=(P.rsHide||{})[k];return H!==undefined&&H>=(t||0);};
-const rsBox=(k,btn)=>`<div class="rswrap">${btn}<button class="rsx" data-rsx="${k}" data-rsall="1" aria-label="ซ่อนกล่องนี้" title="ซ่อน (ขึ้นใหม่เมื่อกลับไปทำรอบนี้อีก)">×</button></div>`;
-function rsVisit(P,o,k){if(o&&(now()-(o.vt||0)>30000||(o.vt||0)<=((P.rsHide||{})[k]||0))){o.vt=now();persist();}}
+const rsBox=(k,btn,pg)=>`<div class="rswrap">${btn}<button class="rsx" data-rsx="${k}" data-rsall="1"${pg?' data-rsp="1"':""} aria-label="ซ่อนกล่องนี้" title="ซ่อน (ขึ้นใหม่เมื่อกลับไปทำรอบนี้อีก)">×</button></div>`;
+const rsHideT=(P,k)=>Math.max(0,...[].concat(k).map(x=>(P.rsHide||{})[x]||0));
+function rsVisit(P,o,k){if(o&&(now()-(o.vt||0)>30000||(o.vt||0)<=rsHideT(P,k))){o.vt=now();persist();}}
+/* the same pink "ทำต่อ / กำลังทำ" box inside a round's own page (Quality, Legendary, MEQ/OSCE Service list …) gets the same × (user 17 Nov 2026, ทวทว).
+   Its own key "pg:…" — hiding it here leaves the home box alone; it comes back once that round is opened again (t = last visit).
+   back = a one-line link left in its place where the box is the only way back into a running timed exam */
+function rsPage(k,t,btn,back){return rsHidden(P_(),k,t)?(back||""):rsBox(k,btn,1);}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".rsx[data-rsp]");if(!b)return;e.preventDefault();e.stopPropagation();
+  const P=P_();P.rsHide=P.rsHide||{};P.rsHide[b.dataset.rsx]=now();save();toast("ซ่อนแล้ว · จะขึ้นอีกเมื่อกลับไปทำรอบนั้น");const y=window.scrollY;show(view);window.scrollTo(0,y);},true);
+/* Ro chips of a year picker filled green by how much is done, like the Service round (user 17 Nov 2026, ทวทว — every picker that shows done/total) */
+const pcChip=(d,n)=>{const full=n>0&&d>=n;return {c:" svchip"+(full?" done":""),s:` style="--pc:${n?Math.round(d/n*100):0}%"`,t:`${full?"✓ ครบ ":""}${d}/${n}`};};
 /* home "ทำต่อ" box: the unfinished round (a session, or the Service round sheet) used most recently first, the other one as a small link under it */
 function homeResume(P,p){qRestore();const W=W_(),out=[],s=P.sess;
   if(s&&s.list&&s.list.length&&s.ph===p){const a=Object.keys(s.ans).length;if(a<s.list.length)out.push({k:"sess",t:Math.max(s.vt||0,s.ts||0),title:s.title,d:`ทำไป ${a}/${s.list.length} ข้อ · ล่าสุดอยู่ข้อ ${s.cur+1}${QR&&!QR.done&&QR.ward===ward&&s.kind==="quality"?" · กำลังจับเวลา":""}`});}
@@ -972,7 +985,7 @@ function seenHistHTML(q,rk){const P=P_(),W=W_(),g={},L_=[];
 function rQuiz(){const r=pfT("วาดหน้าข้อ",rQuiz0);if(PF)pfImgs();return r;}
 function rQuiz0(){
   const W=W_(),P=P_(),R=W.R,q=curQ();
-  {const o=view==="svc"?svcS():isSess()?P.sess:null;if(o&&(now()-(o.vt||0)>30000||(o.vt||0)<=((P.rsHide||{})[(view==="svc"?"svc|":"sess|")+ph()]||0))){o.vt=now();persist();}}   /* last visit — the home "ทำต่อ" box shows whichever was used last */
+  {const o=view==="svc"?svcS():isSess()?P.sess:null;rsVisit(P,o,[(view==="svc"?"svc|":"sess|")+ph(),"pg:quality|"+ph()]);}   /* last visit — the home "ทำต่อ" box shows whichever was used last */
   visTouch(q);
   if(!q){$("main").innerHTML=`<div class="empty">ไม่มีข้อในชุดนี้</div>`;return;}
   if(q.notice){rNotice(q);return;}
@@ -1403,7 +1416,8 @@ function paintQR(){const b=$("qbar");if(!b)return;
   $("qbT").textContent=t;$("qbMeta").innerHTML=meta+(QR.mand?"<br>mandatory":"");
   $("qbPause").textContent=QR.paused?"▶ ต่อ":"⏸ พัก";$("qbPause").disabled=QR.done;b.dataset.k=QR.done?"done":g?g.kind:"";
   const v=$("qbVol");if(document.activeElement!==v)v.value=qpS().vol;
-  const fk=[ph,$("qbSt").textContent,meta,$("qbPause").textContent].join("|");if(!was||fk!==paintQR._k){paintQR._k=fk;qFit();}}
+  /* refit only when the text's shape changes — the ticking "เหลือ m:ss" changed fk every second, and each refit reflowed the page (user 17 Nov 2026: the Quality page jumped up while scrolling) */
+  const fk=[ph,$("qbSt").textContent,meta.replace(/\d/g,"0"),$("qbPause").textContent].join("|");if(!was||fk!==paintQR._k){paintQR._k=fk;qFit();}}
 /* timer box size: the user's (drag the bottom-left grip; double-tap it = back to default), kept per screen kind (narrow / wide).
    qFit picks --qw, the unit every size inside is made from, as large as fits the box with no scrolling; a box wider than tall goes side by side */
 const qMode=()=>innerWidth>=1000?"w":"n";
@@ -1419,10 +1433,14 @@ function qFit(){const b=$("qbar");if(!b||b.hidden)return;
   for(let k=0;k<12;k++){const m=(lo+hi)/2;b.style.setProperty("--qw",m+"px");if(fits())lo=m;else hi=m;}
   b.style.setProperty("--qw",Math.floor(lo)+"px");qPad(true);}
 /* keep the question clear of the timer box */
-function qPad(on){const m=$("main"),b=$("qbar");if(!m)return;m.style.paddingRight="";if(!on||!b||b.hidden)return;
-  const r=b.getBoundingClientRect(),mr=m.getBoundingClientRect(),pr=parseFloat(getComputedStyle(m).paddingRight)||16,over=(mr.right-pr)-(r.left-12);
-  if(over>0)m.style.paddingRight=(pr+over)+"px";}
-addEventListener("resize",()=>{clearTimeout(qFit._t);qFit._t=setTimeout(qFit,120);});
+/* never clears the padding first and puts it back: that made the page shorter for a moment, and when scrolled far down the browser clamped the scroll and the page jumped up */
+let QPAD0=0;
+function qPad(on){const m=$("main"),b=$("qbar");if(!m)return;
+  if(!QPAD0||!m.style.paddingRight){const c=parseFloat(getComputedStyle(m).paddingRight);if(!m.style.paddingRight&&c)QPAD0=c;}
+  const pr=QPAD0||16;let want="";
+  if(on&&b&&!b.hidden){const r=b.getBoundingClientRect(),mr=m.getBoundingClientRect(),over=(mr.right-pr)-(r.left-12);if(over>0)want=Math.round(pr+over)+"px";}
+  if(m.style.paddingRight!==want)m.style.paddingRight=want;}
+addEventListener("resize",()=>{clearTimeout(qFit._t);qFit._t=setTimeout(()=>{const m=$("main");if(m)m.style.paddingRight="";QPAD0=0;qFit();},120);});
 {const g=$("qbGrip"),b=$("qbar");let st0=null,lastTap=0,moved=false,raf=0;
   g.addEventListener("pointerdown",e=>{e.preventDefault();g.setPointerCapture(e.pointerId);moved=false;st0={x:e.clientX,y:e.clientY,w:b.offsetWidth,h:b.offsetHeight};});
   g.addEventListener("pointermove",e=>{if(!st0)return;const dx=st0.x-e.clientX,dy=e.clientY-st0.y;if(!moved&&Math.hypot(dx,dy)<4)return;moved=true;b.classList.add("drag");
@@ -1445,13 +1463,13 @@ function rQuality(){
   if(!PG.some(x=>x.id===q.sel))q.sel=PG[0].id;
   let h=`<h1 class="h2">Quality round</h1><p class="sub">Speedrun ข้อสอบเก่า จับเวลาเป็นเซตแบบ OSCE · เลือกชุดจับเวลา แล้วเลือกว่าจะทำปีไหน หรือสุ่มจากทั้งคลัง</p>`;
   const live=!!(QR&&!QR.done&&QR.ward===ward&&P.sess&&P.sess.kind==="quality");
-  if(live){const a=Object.keys(P.sess.ans).length;h+=`<button class="resume" id="qBack"><span>กำลังจับเวลา: <b>${esc(QR.pg.name)}</b>${QR.paused?" · หยุดอยู่":""}<span class="rd">ทำไป ${a}/${P.sess.list.length} ข้อ · กลับไปทำต่อ${QR.paused?" (เวลาเดินต่อเมื่อกลับไป)":""}</span></span><span class="go">→</span></button>`;}
+  if(live){const a=Object.keys(P.sess.ans).length;h+=rsPage("pg:quality|"+p,Math.max(P.sess.vt||0,P.sess.ts||0),`<button class="resume" id="qBack"><span>กำลังจับเวลา: <b>${esc(QR.pg.name)}</b>${QR.paused?" · หยุดอยู่":""}<span class="rd">ทำไป ${a}/${P.sess.list.length} ข้อ · กลับไปทำต่อ${QR.paused?" (เวลาเดินต่อเมื่อกลับไป)":""}</span></span><span class="go">→</span></button>`,`<button class="linkbtn rs2" id="qBack">กำลังจับเวลาค้างอยู่ (${a}/${P.sess.list.length} ข้อ) · <b>กลับไปทำต่อ</b> →</button>`);}
   h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">ชุดจับเวลา</div><div class="stack" style="margin-top:0">`+PG.map(pg=>`<button class="resume qprog" data-pg="${esc(pg.id)}" aria-pressed="${pg.id===q.sel}"><span><b>${esc(pg.name)}</b>${pg.builtin?' <span class="tag">preset</span>':''}<span class="rd">${qDesc(pg)}</span></span><span class="go">${pg.id===q.sel?"✓":""}</span></button>`).join("")+`</div>`;
   {const chips=(id,list,cur)=>`<div class="chips" id="${id}">${list.map(([v,t])=>`<button class="chip" data-v="${esc(v)}" aria-pressed="${String(v)===String(cur)}">${t}</button>`).join("")}</div>`;
     h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">ข้อสอบที่จะทำ</div>${chips("qMode",[["all","สุ่มจากข้อสอบเก่าทั้งหมด"],["sets","เลือกปีที่จะทำ"]],q.mode)}`;
     h+=`<p class="hint" style="margin:6px 0 0">${q.mode==="all"?"สุ่มลำดับจากข้อสอบเก่าทุกปีในคลัง ไม่ว่าเคยทำแล้วหรือยัง":"เหมือน Service round แต่จับเวลา — เรียงข้อตามชุดที่เลือก ไม่เลือกเลย = ทุกชุด · ตัวเลข = ทำแล้ว/ทั้งหมด ใน Phase "+p}</p>`;
     if(q.mode==="sets"){const sel=new Set(q.sets),years=[...new Set(W.QB.map(x=>x.set))];
-      h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=W.QB.filter(x=>setKey(x)===k),d=qs.filter(x=>atts(P,p,x.uid).length).length;return `<button class="chip" data-qk="${esc(k)}" aria-pressed="${sel.has(k)}">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");}
+      h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=W.QB.filter(x=>setKey(x)===k),d=qs.filter(x=>atts(P,p,x.uid).length).length,g=pcChip(d,qs.length);return `<button class="chip${g.c}" data-qk="${esc(k)}" aria-pressed="${sel.has(k)}"${g.s}>${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${g.t}</span></button>`;}).join("")}</div></div>`;}).join("");}
     h+=`<label class="chk"><input type="checkbox" id="qFresh" ${q.fresh?"checked":""}><span>เฉพาะข้อที่ยังไม่เคยทำใน Phase ${p}</span></label>`;
     h+=`<p class="statline" style="margin-top:10px">รอบนี้มี <b>${pool.length}</b> ข้อ</p>`;}
   h+=`<label class="chk"><input type="checkbox" id="qMand" ${q.mand?"checked":""}><span><b>Mandatory</b> — หมดเวลาแล้วเปลี่ยนหน้าจอให้อัตโนมัติ: หมดเวลาตอบ = ส่งคำตอบที่เลือกไว้ (ไม่ได้เลือก = ข้าม + เสียง alarm) · จบช่วงพัก = ไปข้อต่อไป · ช่วงอ่านเฉลยเลื่อนดูข้อที่ทำไปแล้วได้</span></label>`;
@@ -1691,7 +1709,7 @@ function rAdvisor(){
   if(a.src.some(k=>k!=="ac"))h+=`<p class="hint" style="margin:6px 0 0">โจทย์ที่ไม่ใช่ข้อสอบเก่า (Unit · Admission · Specialty · โจทย์ AI ของ Legendary) นับประวัติรวมทั้ง 2 Phase และรีเซ็ตไม่ได้ — กด “ทำข้อนี้ใหม่” ในเฉลยแทนได้</p>`;
   h+=`<div class="lbl">ใช้ประวัติการตอบจาก${a.src.some(k=>k!=="ac")?` <span class="hint">(มีผลกับข้อสอบเก่า)</span>`:""}</div>${chips("aHp",[["all","ทั้ง 2 Phase"],["p",`เฉพาะ Phase ${ph()}`]],a.hp)}`;
   if(src.has("ac")&&QB.length){h+=`<div class="lbl">ข้อสอบเก่า · ปีและ rotation <span class="hint">ไม่เลือกเลย = ทุกชุด · ตัวเลข = ทำแล้ว/ทั้งหมด</span></div>`;
-    h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=dn(qs);return `<button class="chip" data-k="${esc(k)}" aria-pressed="${sel.has(k)}">${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${d}/${qs.length}</span></button>`;}).join("")}</div></div>`;}).join("");}
+    h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=dn(qs),g=pcChip(d,qs.length);return `<button class="chip${g.c}" data-k="${esc(k)}" aria-pressed="${sel.has(k)}"${g.s}>${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${g.t}</span></button>`;}).join("")}</div></div>`;}).join("");}
   if(src.has("unit")){const LS=W.UNIT.filter(Lc=>(Lc.QB||[]).length);if(LS.length)h+=`<details class="grp"${lsel.size?" open":""}><summary>Unit round · เลือกบท <span class="hint">${lsel.size?`เลือกไว้ ${lsel.size} บท`:"ไม่เลือกเลย = ทุกบท"}</span></summary><div class="chips" id="aLec">${LS.map(Lc=>`<button class="chip" data-lec="${esc(Lc.id)}" aria-pressed="${lsel.has(Lc.id)}">${esc(Lc.short||Lc.title)}<span class="c">${dn(Lc.QB)}/${Lc.QB.length}</span></button>`).join("")}</div></details>`;}
   h+=`<div class="lbl">ถูก / ผิด</div>${chips("aF",ADVF,a.f)}`;
   {const ks=advRKs(a),rs=new Set(a.rk);if(ks.length||rs.size)h+=`<div class="lbl">ทำใน round <span class="hint">ไม่เลือกเลย = ทุก round · เลือกแล้ว = ข้อที่เคยตอบใน round นั้น</span></div><div class="chips" id="aRk">${[...new Set(ks.concat(a.rk))].map(k=>`<button class="chip" data-rk="${esc(k)}" aria-pressed="${rs.has(k)}">${k==="?"?"ไม่ได้บันทึก round":esc(RKL[k]||k)}</button>`).join("")}</div>`;}
@@ -1996,7 +2014,7 @@ function rLegend(){
   const PL=legPools(),avail=PL.acd.length+PL.acn.length+PL.unit.length+PL.adm.length,n=Math.min(E.n,avail),L_=P.leg;
   h+=`<div class="lgbig"><span class="w">สอบจริง ${esc(W.cfg.short||W.cfg.name)}</span><span><b>${E.n}</b> ข้อ</span><span class="dot">·</span><span><b>${E.min}</b> นาที</span></div>`;
   if(L_){const a=Object.keys(L_.ans).length,s=Object.keys(L_.star).filter(u=>L_.star[u]).length;
-    h+=`<button class="resume" id="lgResume"><span>กำลังสอบอยู่ · <b>เหลือเวลา <span id="lgLeft">${hms(L_.end-now())}</span></b><span class="rd">ตอบแล้ว ${a}/${L_.list.length} ข้อ${s?` · ★ ${s}`:""} · เวลาเดินต่อแม้ปิดหน้า เหมือนสอบจริง</span></span><span class="go">→</span></button><div class="row2" style="margin-top:0"><span class="spacer"></span><button class="btn primary" id="lgSub" type="button">Submit ส่งข้อสอบเลย</button></div>`;}
+    h+=rsPage("pg:leg",Math.max(L_.vt||0,L_.t0||0),`<button class="resume" id="lgResume"><span>กำลังสอบอยู่ · <b>เหลือเวลา <span id="lgLeft">${hms(L_.end-now())}</span></b><span class="rd">ตอบแล้ว ${a}/${L_.list.length} ข้อ${s?` · ★ ${s}`:""} · เวลาเดินต่อแม้ปิดหน้า เหมือนสอบจริง</span></span><span class="go">→</span></button>`,`<button class="linkbtn rs2" id="lgResume">กำลังสอบอยู่ · เหลือเวลา <span id="lgLeft">${hms(L_.end-now())}</span> · <b>กลับไปทำต่อ</b> →</button>`)+`<div class="row2" style="margin-top:0"><span class="spacer"></span><button class="btn primary" id="lgSub" type="button">Submit ส่งข้อสอบเลย</button></div>`;}
   else{
     h+=`<div class="card"><h3>MCQ ${n} ข้อ · ${E.min} นาที</h3><span class="rd">เหมือนสอบจริงของ ${esc(W.cfg.short||W.cfg.name)}${n<E.n?` (มีข้อให้สุ่มทั้งหมด ${avail} ข้อ จึงใช้ทั้งหมด)`:""} · เปลี่ยนคำตอบได้จนหมดเวลา · กด ☆ ติดดาวข้อที่อยากกลับมาดู · ส่งแล้วจะเห็นเกรดก่อน แล้วค่อยเลือกดู Short answer paper หรือ Long explanation</span>
     ${E.ai?`<span class="rd">สัดส่วนตามที่ตั้งไว้: <b>ข้อสอบเก่า (AC) ${Math.round((1-E.ai)*100)}% = ${E.n-Math.round(E.n*E.ai)} ข้อ</b> สุ่มใหม่ทุกครั้ง + <b>โจทย์ใหม่ที่ AI แต่ง ${Math.round(E.ai*100)}% = ${Math.round(E.n*E.ai)} ข้อ</b>${E.aiFromAC?" จากเนื้อหาที่เจอในข้อสอบเก่า แต่ไม่ซ้ำข้อสอบเก่า (สถานการณ์ใหม่ ถามคนละประเด็น)":""} — ถ้า AI สร้างได้ไม่ครบหรือไม่มี AI ใช้ข้อสอบเก่าแทนส่วนที่ขาด · พยายามให้มีครบทุกหัวข้อในชุดเดียว · ระหว่างทำไม่บอกข้อมูลอะไรเลย ตอนเฉลยจึงบอกว่าแต่ละข้อมาจากไหนและเคยเจอมาก่อนหรือไม่</span>`:`<span class="rd">ข้อสอบจริงอาจตรงหรือไม่ตรงกับข้อสอบเก่า จึง<b>สุ่มทุกอย่างใหม่ทุกครั้ง</b> ทั้งจำนวนข้อที่ซ้ำกับที่เคยเจอ ข้อสอบเก่าที่ยังไม่เคยทำ โจทย์ Unit round เคสจาก Admission round ของคุณ และ<b>โจทย์ใหม่ที่ AI สร้างขึ้นเฉพาะชุดนั้น</b> (ไม่เคยเจอที่ไหน และจะกลับมาอีกเฉพาะใน Ward staff round) และพยายามให้มีครบทุกหัวข้อในชุดเดียว — ระหว่างทำไม่บอกข้อมูลอะไรเลย ตอนเฉลยจึงบอกว่าแต่ละข้อมาจากไหนและเคยเจอมาก่อนหรือไม่</span>`}
@@ -2137,6 +2155,7 @@ function legStart(aiQs){
 function legPick(i){const X=P_().leg;if(!X)return;const u=X.list[X.cur];if(X.ans[u]===i)delete X.ans[u];else X.ans[u]=i;save();rExam();}
 function rExam(){
   const W=W_(),P=P_(),X=P.leg;if(!X){go(ward+"/legend");return;}
+  rsVisit(P,X,"pg:leg");   /* back in the exam → the Legendary page's own resume box shows again */
   const i=X.cur,q=legQ(X.list[i]);if(!q){$("main").innerHTML=`<div class="empty">ไม่พบข้อนี้ในคลัง</div>`;paintNav();return;}
   const a=X.ans[q.uid],sd=!!X.star[q.uid],nA=Object.keys(X.ans).length,nS=Object.keys(X.star).filter(u=>X.star[u]).length;
   $("exT").textContent=hms(X.end-now());$("exN").innerHTML=`ตอบแล้ว <b>${nA}</b>/${X.list.length}${nS?` · ★ ${nS}`:""}`;
