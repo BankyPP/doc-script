@@ -224,7 +224,7 @@ function mqRounds(type){if(type!=="OSCE")return MQ_ROUNDS.map(r=>r.k==="legend"?
     else if(r.k==="quality"){o.soon=0;o.d="ข้อสอบเก่าแบบจับเวลาทีละข้อ หมดเวลาเปลี่ยนข้อเอง · เลือกปีที่จะทำ หรือสุ่มจากทั้งคลัง · กำหนดเวลาต่อข้อเอง";}
     else if(r.k==="staff")o.d="ทวนข้อ OSCE ที่ทำแล้วแต่ยังมีข้อย่อยที่ไม่ได้เต็ม";
     else if(r.k==="advisor")o.d="อ่านเฉลยข้อ OSCE ที่ทำแล้ว รวมสถานีที่ AI สร้างใน Legendary round · เรียงข้อที่ทำล่าสุดอยู่บน หรือคะแนนน้อยสุดก่อน · กรองชุด / ได้เต็ม / ★ ได้";
-    else if(r.k==="unit")o.d="สถานีใหม่ที่ Claude แต่งจากไฟล์ของวอร์ด แยกตามหัวข้อใหญ่ OSCE (Lab, Imaging, EKG, History taking …) · ทำทีละสถานี ไม่จับเวลา";
+    else if(r.k==="unit")o.d="สถานีใหม่ที่ Claude แต่งจากไฟล์ของวอร์ด แยกตามหัวข้อใหญ่/เล็ก OSCE · เลือกหัวข้อและจำนวน แล้วสุ่มใหม่ทุกครั้งเหมือน Unit round MCQ (เจอซ้ำได้) · ทำทีละสถานี ไม่จับเวลา";
     else if(r.k==="morning"){o.soon=0;o.off=0;o.d="วันละ 3 สถานี: ข้อสอบเก่า 1 + สถานี Unit round 2 (ขาดฝั่งไหนเติมจากอีกฝั่ง) · ไม่ซ้ำตลอดทั้งวอร์ด · ชุดใหม่ทุกวัน 07:30";}
     else if(r.k==="specialty"){o.soon=0;o.off=0;o.d="สถานีใหม่ที่ AI สร้างทีละสถานี เนื้อหาจาก Round I/O ของแท็บ OSCE เท่านั้น · เลือกเรื่อง / ไฟล์ (L · R · T · N) เอง หรือสุ่มทั้งหมด";}
     else if(r.k==="admission")o.note="AI ออกสถานี OSCE ใหม่ — รอรายละเอียด";
@@ -252,7 +252,7 @@ function mqList(rk){const v=mqS().v,L=mqL(),setOk=q=>v.set==="all"||v.set.split(
   if(rk==="advisor")return mqAdvL().filter(q=>mqStyOk(q)&&tgPass(mqQTagsX(q),v.tga));
   if(rk==="morning")return mornXList();
   if(rk==="spc")return osSpcList();
-  if(rk==="unit"&&mqIsOS())return osUnitList(v.utop,v.usub,v);
+  if(rk==="unit"&&mqIsOS())return osUnitList(v);
   if(rk==="unit")return v.tags.length?L.filter(q=>setOk(q)&&mqSecOk(q)&&mqStyOk(q)&&mqTPass(q,v.status)):[];
   if(rk==="grand")return v.gl.map(u=>L.find(q=>q.uid===u)).filter(Boolean);
   return L.filter(q=>setOk(q)&&mqSecOk(q)&&mqStyOk(q)&&mqPass(q,v.status)&&(rk!=="service"||tgPass(mqQTags(q),v.tg)));}
@@ -309,40 +309,39 @@ function mqRowHTML(q,rk,cur){const v=mqS().v,tm=rk==="unit",r=mqRec(q)||null,sc=
       return `<div class="crow${isC?" cur":""}"><button class="cn" type="button" data-mgo="${esc(q.uid)}"><span class="cl">ข้อ</span>${esc(mqNum(q))}</button><div style="min-width:0"><div class="cq">${esc(mqTitle(q))}</div><div class="cparts">${chips}</div></div><div class="cmeta">${esc(q.set)}${q.ro?" · "+esc(q.ro):""}${q.sec?" · "+esc(q.sec):""} · ${mqIsOS()?esc(mqTN(q.topic||"")||"OSCE")+(q.ex?" · มีอาจารย์":""):q.sa?"short answer":"case"}${sc&&sc.all?` · <b style="color:${mqPct(Math.round(sc.got/sc.tot*100))}">${+sc.got.toFixed(1)}/${sc.tot}</b>`:""}${mqStar(q)?' · <span class="st">★</span>':""}${noted(q.uid)?' · <span class="st">📝</span>':""}</div></div>`;}
 function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
   let h=`<div class="mqv"><div class="whead"><h1 class="h2">${esc(MQ_RN(rk))} · ${mqKN()}</h1><a href="#/${esc(ward)}">กลับหน้าวอร์ด</a></div><p class="sub" style="margin:0 0 10px">${esc((mqRounds(mqKN()).find(r=>r.k===rk)||{}).d||"")}</p>`;
-  if(rk==="unit"&&mqIsOS())h+=osUnitPicker(v);
+  if(rk==="unit"&&mqIsOS()){h+=osUnitPicker(v)+`</div>`;$("main").innerHTML=h;osUnitWire(v);return;}
   else if(rk==="morning"||rk==="spc"){}
   else if(rk==="unit"){const cnt={};L.forEach(q=>q.subs.forEach(s=>(s.tags||[]).forEach(t=>{cnt[t]=(cnt[t]||0)+1;})));
     h+=`<div class="tl-h">เลือกหัวข้อ (เลือกได้หลายหัวข้อ)</div><div class="chips tchips">${T.length?T.map(([k,n])=>`<button class="chip" type="button" data-mtag="${esc(k)}" aria-pressed="${v.tags.includes(k)}">${esc(n)}<span class="cnt">${cnt[k]||0}</span></button>`).join(""):`<span class="hint">ยังไม่ได้ติดหัวข้อให้ข้อ ${mqKN()} ในวอร์ดนี้</span>`}</div>`;}
-  h+=`<div class="tl-h">${mqIsOS()?"ประเภทข้อ":"แบบข้อสอบ"}</div><div class="chips">${mqSTY().map(([k,n])=>`<button class="chip" type="button" data-msty="${k}" aria-pressed="${v.style===k}">${n}</button>`).join("")}</div>`;
+  const OSU=rk==="unit"&&mqIsOS();
+  if(!OSU)h+=`<div class="tl-h">${mqIsOS()?"ประเภทข้อ":"แบบข้อสอบ"}</div><div class="chips">${mqSTY().map(([k,n])=>`<button class="chip" type="button" data-msty="${k}" aria-pressed="${v.style===k}">${n}</button>`).join("")}</div>`;
   if(rk==="advisor"){const AI=mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[],sets=[...new Set(L.concat(AI).filter(mqAnyDone).map(mqSK))],sel=(v.aset||"all")==="all"?[]:v.aset.split("|");
     h+=`<div class="tl-h">เรียง</div><div class="chips">${[["recent","ทำล่าสุดอยู่บน"],["score","คะแนนน้อยสุดก่อน"]].map(([k,n])=>`<button class="chip" type="button" data-maord="${k}" aria-pressed="${(v.aord||"recent")===k}">${n}</button>`).join("")}</div>`;
-    if(sets.length)h+=`<div class="tl-h">ชุดข้อสอบ / Ro <span class="hint">ไม่เลือก = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น</span></div><div class="chips"><button class="chip" type="button" data-maset="all" aria-pressed="${!sel.length}">${sel.length?`ทุกชุด (เลือก ${sel.length})`:"ทุกชุด"}</button></div>`+yrGroupHTML(sets,(k=>{const q=L.concat(typeof osAIMap==="function"&&mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[]).find(x=>mqSK(x)===k);return q&&q.set&&k!=="AI"?q.set:"";}),(k,n)=>`<button class="chip" type="button" data-maset="${esc(k)}" aria-pressed="${sel.includes(k)}">${esc(k==="AI"?"โจทย์ AI จาก Legendary":n)}</button>`);
+    if(sets.length)h+=`<div class="tl-h">ชุดข้อสอบ / Ro <span class="hint">เลือกได้หลายชุด · ไม่เลือก = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น · แถบสี/ตัวเลข = ทำแล้ว/ทั้งหมด</span></div><div class="chips"><button class="chip" type="button" data-maset="all" aria-pressed="${!sel.length}">${sel.length?`ทุกชุด (เลือก ${sel.length})`:"ทุกชุด"}</button></div>`+yrGroupHTML(sets,(k=>{const q=L.concat(typeof osAIMap==="function"&&mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[]).find(x=>mqSK(x)===k);return q&&q.set&&k!=="AI"?q.set:"";}),(k,n)=>{const qs=L.concat(AI).filter(q=>mqSK(q)===k),g=pcChip(qs.filter(mqAnyDone).length,qs.length);return `<button class="chip${g.c}" type="button" data-maset="${esc(k)}" aria-pressed="${sel.includes(k)}"${g.s}>${esc(k==="AI"?"โจทย์ AI จาก Legendary":n)}<span class="cnt">${g.t}</span></button>`;});
     h+=`<div class="chips">${[["all","ทั้งหมด"],["notfull","ยังไม่ได้เต็ม"],["full","ได้เต็ม"],["star","★ ติดดาว"],["note","📝 มีโน้ต"]].map(([k,n])=>`<button class="chip" type="button" data-mast="${k}" aria-pressed="${(v.ast||"all")===k}">${n}</button>`).join("")}</div>`;}
   if(rk==="staff"||rk==="advisor"){const g=mqRTg(rk),base=(rk==="staff"?mqStaffL():mqAdvL()).filter(q=>mqStyOk(q)),allT=mqTgAll(base);g.tags=g.tags.filter(t=>allT.some(a=>a[0]===t));
     if(allT.length){const cnt={};base.forEach(q=>mqQTagsX(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));h+=`<div id="tgWrap">${tgPanel(allT,g,cnt,base.filter(q=>tgPass(mqQTagsX(q),g)).length)}</div>`;}}
   if(rk==="service"||(rk==="unit"&&!mqIsOS())){const sets=[...new Set(L.map(mqSK))],sel=v.set==="all"?[]:v.set.split("|");
-    h+=`<div class="tl-h">ชุดข้อสอบ <span class="hint">แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น</span></div><div class="chips"><button class="chip" type="button" data-mset="all" aria-pressed="${v.set==="all"}">${v.set==="all"?"ทุกชุด":`ทุกชุด (เลือก ${sel.length})`}</button></div>`+yrGroupHTML(sets,(k=>{const q=L.concat(typeof osAIMap==="function"&&mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[]).find(x=>mqSK(x)===k);return q&&q.set&&k!=="AI"?q.set:"";}),(k,n)=>{const qs=L.filter(q=>mqSK(q)===k),g=pcChip(qs.filter(q=>mqCaseDone(q)).length,qs.length);return `<button class="chip${g.c}" type="button" data-mset="${esc(k)}" aria-pressed="${sel.includes(k)}"${g.s}>${esc(n)}<span class="cnt">${g.t}</span></button>`;});
+    h+=`<div class="tl-h">ชุดข้อสอบ <span class="hint">เลือกได้หลายชุด · ไม่เลือก = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น · แถบสี/ตัวเลข = ทำแล้ว/ทั้งหมด ใน Phase ${ph()}</span></div><div class="chips"><button class="chip" type="button" data-mset="all" aria-pressed="${v.set==="all"}">${v.set==="all"?"ทุกชุด":`ทุกชุด (เลือก ${sel.length})`}</button></div>`+yrGroupHTML(sets,(k=>{const q=L.concat(typeof osAIMap==="function"&&mqIsOS()?Object.values(osAIMap()).map(x=>x.q):[]).find(x=>mqSK(x)===k);return q&&q.set&&k!=="AI"?q.set:"";}),(k,n)=>{const qs=L.filter(q=>mqSK(q)===k),g=pcChip(qs.filter(q=>mqCaseDone(q)).length,qs.length);return `<button class="chip${g.c}" type="button" data-mset="${esc(k)}" aria-pressed="${sel.includes(k)}"${g.s}>${esc(n)}<span class="cnt">${g.t}</span></button>`;});
     /* พาร์ทตามไฟล์ (MEQ / Long case / Recall …) of the selected sets — pick some to see only those; none = every part in file order */
     {const inS=L.filter(q=>v.set==="all"||sel.includes(mqSK(q))),secs=mqSecs(inS),ss=v.sec==="all"?[]:v.sec.split("|").filter(x=>secs.includes(x));
       if(secs.length)h+=`<div class="tl-h">พาร์ทในไฟล์ <span class="hint">ไม่เลือก = ทุกพาร์ท เรียงตามไฟล์</span></div><div class="chips scroll">${[["all",v.sec==="all"?"ทุกพาร์ท":`ทุกพาร์ท (เลือก ${ss.length})`]].concat(secs.map(x=>[x,x])).map(([k,n])=>`<button class="chip" type="button" data-msec="${esc(k)}" aria-pressed="${k==="all"?v.sec==="all":ss.includes(k)}">${esc(n)}<span class="cnt">${k==="all"?"":inS.filter(q=>mqSecG(q)===k).length}</span></button>`).join("")}</div>`;}
     if(rk==="service"&&T.length){const secOk=q=>(v.set==="all"||sel.includes(mqSK(q)))&&mqSecOk(q)&&mqStyOk(q),cnt={};L.filter(secOk).forEach(q=>mqQTags(q).forEach(t=>{cnt[t]=(cnt[t]||0)+1;}));v.tg.tags=v.tg.tags.filter(t=>T.some(a=>a[0]===t));h+=`<div id="tgWrap">${tgPanel(tgSort(T),v.tg,cnt,mqList("service").length)}</div>`;}
     h+=`<div class="chips">${[["all","ทั้งหมด"],["todo","ยังไม่ทำ"],["notfull","ยังไม่ได้เต็ม"],["star","★ ติดดาว"],["note","📝 มีโน้ต"]].map(([k,n])=>`<button class="chip" type="button" data-mst="${k}" aria-pressed="${v.status===k}">${n}</button>`).join("")}</div>`;}
-  h+=`<div class="ssearch"><input type="search" id="mqQ" placeholder="🔍 ค้นหาคำ / หัวข้อ" autocomplete="off" value="${esc(mqQ)}" aria-label="ค้นหาข้อ"><span id="mqQn"></span></div>`;
+  if(!OSU)h+=`<div class="ssearch"><input type="search" id="mqQ" placeholder="🔍 ค้นหาคำ / หัวข้อ" autocomplete="off" value="${esc(mqQ)}" aria-label="ค้นหาข้อ"><span id="mqQn"></span></div>`;
   const Q0=mqList(rk),QT=srchTerms(mqQ),Q=QT.length?Q0.filter(q=>srchHit(mqSearchText(q),QT)):Q0;
-  if(rk==="unit"&&mqIsOS()&&!Q.length&&!QT.length)h+=`<div class="empty">${osUnitEmpty(v.utop)}</div>`;
+  if(OSU&&!Q.length){}
   else if(rk==="unit"&&!mqIsOS()&&!v.tags.length)h+=`<div class="empty">เลือกหัวข้ออย่างน้อย 1 หัวข้อ — Part ที่ติดหัวข้อนั้นจะแสดงที่นี่</div>`;
   else if(!Q.length&&QT.length)h+=`<div class="empty">ไม่พบข้อที่มีคำว่า “${esc(mqQ.trim())}”</div>`;
   else if(!Q.length)h+=`<div class="empty">${rk==="staff"?"ยังไม่มีข้อที่ต้องทวน — ทุก Part ที่ทำแล้วได้เต็ม":rk==="advisor"?`ยังไม่ได้ทำข้อ ${mqKN()} ใน Phase นี้`:"ไม่มีข้อในเงื่อนไขที่เลือก"}</div>`;
   else{if(rk==="service"){const nx=mqNextTodo(Q0);h+=nx?rsPage("pg:mqnext"+mqKind(),v.vt,`<button class="resume" type="button" id="mqNext" style="margin:0 0 10px"><span>▶ ไปข้อแรกที่ยังไม่ได้ทำ: <b>${mqKN()} ข้อ ${esc(mqNum(nx))}</b><span class="rd">${esc(nx.set)}${nx.ro?" · "+esc(nx.ro):""} · ${esc(mqTitle(nx))}</span></span><span class="go">→</span></button>`):`<p class="hint" style="margin:0 0 10px">✓ ทำครบทุกข้อในชุดที่เลือกแล้ว (Phase ${ph()})</p>`;}
-    h+=`<div class="tsum">${Q.length} ข้อ · แตะเลขข้อหรือ Part เพื่อเริ่มทำ</div><div class="trows">`+Q.map(q=>mqRowHTML(q,rk)).join("")+`</div>`;}
+    h+=`<div class="tsum">${OSU?`${Q.length} สถานีในรอบนี้ · แตะเพื่อไปสถานีนั้น`:`${Q.length} ข้อ · แตะเลขข้อหรือ Part เพื่อเริ่มทำ`}</div><div class="trows">`+Q.map(q=>mqRowHTML(q,rk)).join("")+`</div>`;}
   h+=`</div>`;$("main").innerHTML=h;
   {const nb=$("mqNext");if(nb)nb.onclick=()=>{const nx=mqNextTodo(Q0);if(nx)mqOpen(nx.uid,undefined,"service");};}
   {const qi=$("mqQ"),qn=$("mqQn");if(qn)qn.textContent=QT.length?`พบ ${Q.length}/${Q0.length} ข้อ`:"";
     if(qi){let tm=0;qi.addEventListener("input",()=>{clearTimeout(tm);tm=setTimeout(()=>{mqQ=qi.value;const p0=qi.selectionStart;mqRList();const n=$("mqQ");if(n){n.focus();try{n.setSelectionRange(p0,p0);}catch(e){}}},160);});}}
   {const tw=$("tgWrap"),g=mqRTg(rk);if(tw&&g)tgWire(tw,g,()=>{mqVset({});save();mqRList();});}
-  document.querySelectorAll("[data-utop]").forEach(b=>b.onclick=()=>{const t=b.dataset.utop,us=Object.assign({},v.useed||{});if(!us[t])us[t]=Math.floor(Math.random()*1e9)+1;mqVset({utop:t,usub:"",useed:us});save();mqRList();});
-  document.querySelectorAll("[data-usub]").forEach(b=>b.onclick=()=>{mqVset({usub:b.dataset.usub});save();mqRList();});
-  document.querySelectorAll("[data-ushuf]").forEach(b=>b.onclick=()=>{const us=Object.assign({},v.useed||{});us[v.utop]=Math.floor(Math.random()*1e9)+1;mqVset({useed:us});save();mqRList();toast("สลับลำดับสถานีใหม่แล้ว");});
+  if(OSU)osUnitWire(v);
   document.querySelectorAll("[data-mtag]").forEach(b=>b.onclick=()=>{const k=b.dataset.mtag,a=v.tags;const i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);mqVset({});save();mqRList();});
   document.querySelectorAll("[data-msty]").forEach(b=>b.onclick=()=>{mqVset({style:b.dataset.msty});save();mqRList();});
   document.querySelectorAll("[data-mset]").forEach(b=>b.onclick=()=>{const k=b.dataset.mset;let sel=v.set==="all"?[]:v.set.split("|");if(k==="all")sel=[];else if(sel.includes(k))sel=sel.filter(x=>x!==k);else sel.push(k);mqVset({set:sel.length?sel.join("|"):"all"});save();mqRList();});

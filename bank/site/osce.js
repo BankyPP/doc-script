@@ -526,20 +526,32 @@ function mornXStart(type){
   const m=mqInitP(P_(),"MEQ"),d=mDay(),q=mqXFind("MORN|"+d);if(!q){toast(mornMQWait());return;}
   m.mopen=m.mopen||{};m.mopen[d]=1;Object.keys(m.mopen).sort().slice(0,-60).forEach(k=>delete m.mopen[k]);save();mqOpen(q.uid,undefined,"morning");}
 /* ---- Unit round OSCE: by big topic ---- */
-/* 22 Nov 2026 (user, ทวทว): a big topic draws from ALL its small topics in a random order (seeded per topic so the list keeps its order until re-shuffled) ·
-   or pick ONE small topic (e.g. Blood smear) · v.usub = small topic ("" = all) · v.useed[topic] = order seed */
+/* Unit round OSCE works like Unit round MCQ (user 22 Nov 2026, ทวทว): no picking stations from a list — choose big topics (none = all) and small topics (none = all),
+   how many to draw (any number), then a random set is drawn every time (repeats across rounds allowed) · v.utops = big topics · v.usubs = small topics · v.un = count · v.ul = this round's stations */
 const OS_SUBN={PBS:"Blood smear"};   /* display names of small topics (the data keeps the engine name, e.g. q.sub "PBS") */
 const osSubNm=s=>OS_SUBN[s]||s;
-const osHash=x=>{let h=2166136261;for(let i=0;i<x.length;i++){h^=x.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;};
-function osUnitList(t,sb,v){if(!t)return [];let L=osUnitAll().filter(q=>q.topic===t);if(sb)L=L.filter(q=>osSubOf(q)===sb);
-  const sd=String((v&&v.useed&&v.useed[t])||1);return L.map(q=>[osHash(q.uid+"|"+sd),q]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);}
+function osUnitPool(v){const T=v.utops||[],S=v.usubs||[];return osUnitAll().filter(q=>(!T.length||T.includes(q.topic))&&(!S.length||S.includes(osSubOf(q)||"อื่น ๆ")));}
+function osUnitList(v){const A=osUnitAll();return (v.ul||[]).map(u=>A.find(q=>q.uid===u)).filter(Boolean);}
 function osUnitCnt(){const A=osUnitAll();return `<span class="rcnt">มี <b>${A.length}</b> สถานี · ${osTopics().length} หัวข้อใหญ่</span>`;}
-function osUnitPicker(v){const A=osUnitAll(),T=osTopics();
-  return `<div class="tl-h">เลือกหัวข้อใหญ่</div><div class="chips tchips">${T.map(t=>{const L=A.filter(q=>q.topic===t.id),dn=L.filter(q=>xDone(q,"OSCE")).length;return `<button class="chip" type="button" data-utop="${esc(t.id)}" aria-pressed="${v.utop===t.id}"${L.length?"":' style="opacity:.55"'}>${esc(t.name)}<span class="cnt">${L.length?dn+"/"+L.length:"0"}</span></button>`;}).join("")||`<span class="hint">วอร์ดนี้ยังไม่ได้ตั้งหัวข้อ OSCE</span>`}</div>`+osUnitSubPicker(v,A);}
-function osUnitSubPicker(v,A){if(!v.utop)return "";const L=A.filter(q=>q.topic===v.utop);if(!L.length)return "";const by={};L.forEach(q=>{const k=osSubOf(q)||"อื่น ๆ";(by[k]=by[k]||[]).push(q);});
-  const ks=Object.keys(by).sort((a,b)=>by[b].length-by[a].length),cnt=x=>`<span class="cnt">${x.filter(q=>xDone(q,"OSCE")).length}/${x.length}</span>`;
-  return `<div class="tl-h" style="margin-top:8px">หัวข้อเล็ก <span class="hint" style="font-weight:400">ไม่เลือก = สุ่มคละจากทุกหัวข้อเล็กของ “${esc(osTN(v.utop))}”</span></div><div class="chips tchips"><button class="chip" type="button" data-usub="" aria-pressed="${!v.usub}">ทั้งหมด (สุ่มคละ)${cnt(L)}</button>${ks.map(k=>`<button class="chip" type="button" data-usub="${esc(k)}" aria-pressed="${v.usub===k}">${esc(osSubNm(k))}${cnt(by[k])}</button>`).join("")}<button class="chip" type="button" data-ushuf="1" title="สลับลำดับสถานีใหม่">🎲 สลับลำดับใหม่</button></div>`;}
-function osUnitEmpty(t){return t?`ยังไม่มีสถานี Unit round ในหัวข้อ “${esc(osTN(t))}” — รอ Claude แต่ง`:"เลือกหัวข้อใหญ่ 1 หัวข้อ — สถานีของหัวข้อนั้นจะแสดงที่นี่";}
+/* same layout as Unit round MCQ (rUnit): count · stacked topic buttons (multi-select, none = all) · statline · ล้างที่เลือก / เริ่มทำ n */
+function osUnitPicker(v){const A=osUnitAll(),T=osTopics(),TS=v.utops||[],SS=v.usubs||[],n=Math.max(1,Math.round(+v.un||10)),seen=L=>L.filter(q=>xRecs(q,"OSCE").length).length;
+  if(!A.length)return `<div class="card"><h3>ยังไม่มีสถานี Unit round ในวอร์ดนี้</h3><span class="rd" style="margin:0">ส่งไฟล์ให้ Claude แล้วจะแต่งสถานีให้ตามหัวข้อ OSCE ของวอร์ด</span></div>`;
+  const btn=(attr,k,on,title,L)=>`<button class="resume qprog" type="button" ${attr}="${esc(k)}" aria-pressed="${on}"${L.length?"":" disabled"}><span><b>${esc(title)}</b><span class="rd">${L.length?`เคยเจอแล้ว ${seen(L)}/${L.length} สถานี`:"ยังไม่มีสถานี — มีแค่หัวข้อไว้ก่อน"}</span></span><span class="go">${on?"✓":""}</span></button>`;
+  let h=nPickHTML("osu",n,"สถานี");
+  h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">หัวข้อใหญ่ <span class="hint" style="font-weight:400">เลือกได้หลายหัวข้อ · ไม่เลือกเลย = สุ่มรวมทุกหัวข้อ · ตัวเลข = เคยเจอแล้ว/ทั้งหมด</span></div><div class="stack" style="margin-top:0">${T.map(t=>btn("data-utop",t.id,TS.includes(t.id),t.name,A.filter(q=>q.topic===t.id))).join("")}</div>`;
+  const inT=A.filter(q=>!TS.length||TS.includes(q.topic)),by={};inT.forEach(q=>{const k=osSubOf(q)||"อื่น ๆ";(by[k]=by[k]||[]).push(q);});
+  const ks=Object.keys(by).sort((x,y)=>by[y].length-by[x].length);
+  if(ks.length>1||(ks.length===1&&ks[0]!=="อื่น ๆ"))h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">หัวข้อเล็ก <span class="hint" style="font-weight:400">เลือกได้หลายหัวข้อ · ไม่เลือกเลย = สุ่มคละทุกหัวข้อเล็ก</span></div><div class="stack" style="margin-top:0">${ks.map(k=>btn("data-usub",k,SS.includes(k),osSubNm(k),by[k])).join("")}</div>`;
+  const pool=osUnitPool(v),lab=TS.length===1?osTN(TS[0]):TS.length?`จาก ${TS.length} หัวข้อที่เลือก`:"สุ่มรวมทุกหัวข้อ";
+  h+=`<p class="statline" style="margin-top:10px">${esc(lab)}${SS.length?" · "+esc(SS.map(osSubNm).join(", ")):""} · มีสถานี ${pool.length} สถานี (เคยเจอแล้ว ${seen(pool)})</p><div class="row2"><button class="btn ghost" id="osUClr" type="button" ${TS.length||SS.length?"":"disabled"}>ล้างที่เลือก</button><span class="spacer"></span><button class="btn primary" id="osUGo" type="button" ${pool.length?"":"disabled"}>เริ่มทำ ${Math.min(n,pool.length)} สถานี</button></div>`;
+  return h;}
+function osUnitWire(v){
+  nPickWire("osu",x=>{mqVset({un:x});save();mqRList();});
+  const tog=(a,k)=>a.includes(k)?a.filter(x=>x!==k):a.concat(k);
+  document.querySelectorAll("[data-utop]").forEach(b=>b.onclick=()=>{const T=tog(v.utops||[],b.dataset.utop),A=osUnitAll().filter(q=>!T.length||T.includes(q.topic)),ok=new Set(A.map(q=>osSubOf(q)||"อื่น ๆ"));mqVset({utops:T,usubs:(v.usubs||[]).filter(k=>ok.has(k))});save();mqRList();});
+  document.querySelectorAll("[data-usub]").forEach(b=>b.onclick=()=>{mqVset({usubs:tog(v.usubs||[],b.dataset.usub)});save();mqRList();});
+  {const c=$("osUClr");if(c)c.onclick=()=>{mqVset({utops:[],usubs:[]});save();mqRList();};}
+  {const g=$("osUGo");if(g)g.onclick=()=>{const n=Math.max(1,Math.round(+v.un||10)),L=shuffle(osUnitPool(v)).slice(0,n).map(q=>q.uid);if(!L.length)return;mqVset({ul:L});save();mqOpen(L[0],undefined,"unit");};}}
 /* ---- Specialty round OSCE (#/<ward>/osspc) ---- */
 var OSSPC={busy:0,err:""};
 const osSpcUnits=()=>spcUnits(ward,"OSCE");

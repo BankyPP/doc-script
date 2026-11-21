@@ -825,9 +825,22 @@ function yrToggle(h){const yr=h.closest(".yr"),c=yrChips(yr);if(c.length<2)retur
   keys.forEach(([a,v])=>{const b=[...document.querySelectorAll(`[${a}]`)].find(x=>x.getAttribute(a)===v);if(b&&(b.getAttribute("aria-pressed")==="true")!==on)b.click();});
   yrPaint();toast(on?`เลือกทุก Ro ของ ${h.textContent.trim()} แล้ว`:`ยกเลิกทุก Ro ของ ${h.textContent.trim()} แล้ว`);}
 document.addEventListener("click",e=>{const h=e.target.closest&&e.target.closest(".yr .yh");if(h&&h.classList.contains("yh-all")){e.preventDefault();yrToggle(h);return;}
-  if(e.target.closest&&e.target.closest(".yr .chips"))setTimeout(yrPaint,0);});
+  if(e.target.closest&&e.target.closest(".yr .chips"))setTimeout(()=>{yrPaint();yrAllPaint();},0);});
 document.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const h=e.target.closest&&e.target.closest(".yr .yh.yh-all");if(h){e.preventDefault();yrToggle(h);}});
-{let yrT=0;new MutationObserver(()=>{if(yrT)return;yrT=requestAnimationFrame(()=>{yrT=0;yrPaint();});}).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});}
+/* every year picker gets a "ทุกชุด" chip (user 22 Nov 2026, ทวทว — union of every picker's features): pressed = nothing picked (= all sets);
+   tapping it un-picks every chip through the page's own chips (like yrToggle) · pickers that already have their own "all" chip (data-*="all") keep theirs */
+function yrPickers(){const out=[];document.querySelectorAll(".yr").forEach(yr=>{const par=yr.parentElement;if(par&&!out.includes(par))out.push(par);});return out;}
+function yrAllHas(par){const first=par.querySelector(":scope>.yr");for(let e=par.firstElementChild;e&&e!==first;e=e.nextElementSibling){if(e.classList.contains("yrall"))return "mine";
+  if([...e.querySelectorAll("button")].some(b=>[...b.attributes].some(a=>/^data-.*set$/.test(a.name)&&a.value==="all")))return "own";}return "";}
+function yrAllPaint(){yrPickers().forEach(par=>{let has=yrAllHas(par);if(has==="own")return;
+  if(!has){const d=document.createElement("div");d.className="chips yrall";d.innerHTML=`<button class="chip" type="button" data-yrall="1">ทุกชุด</button>`;par.insertBefore(d,par.querySelector(":scope>.yr"));}
+  const c=[...par.querySelectorAll(":scope>.yr .chips button.chip")].filter(yrChipKey),n=c.filter(b=>b.getAttribute("aria-pressed")==="true").length,b=par.querySelector(":scope>.yrall button"),t=n?`ทุกชุด (เลือก ${n})`:"ทุกชุด";
+  if(b.textContent!==t)b.textContent=t;const pr=String(!n);if(b.getAttribute("aria-pressed")!==pr)b.setAttribute("aria-pressed",pr);});}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-yrall]");if(!b)return;e.preventDefault();const par=b.closest(".yrall").parentElement;
+  const keys=[...par.querySelectorAll(":scope>.yr .chips button.chip")].filter(x=>x.getAttribute("aria-pressed")==="true").map(yrChipKey).filter(Boolean);
+  keys.forEach(([a,v])=>{const x=[...document.querySelectorAll(`[${a}]`)].find(y=>y.getAttribute(a)===v);if(x&&x.getAttribute("aria-pressed")==="true")x.click();});
+  setTimeout(()=>{yrPaint();yrAllPaint();},0);if(keys.length)toast("เลือกทุกชุดแล้ว");});
+{let yrT=0;new MutationObserver(()=>{if(yrT)return;yrT=requestAnimationFrame(()=>{yrT=0;yrPaint();yrAllPaint();});}).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});}
 /* year groups for set keys "<year> <Ro>" (MEQ / OSCE pickers) — keys whose year can't be found stay in a plain row first */
 function yrGroupHTML(keys,yearOf,chip){const g=new Map(),loose=[];keys.forEach(k=>{const y=yearOf(k);if(!y){loose.push(k);return;}if(!g.has(y))g.set(y,[]);g.get(y).push(k);});
   return (loose.length?`<div class="chips">${loose.map(k=>chip(k,k)).join("")}</div>`:"")+[...g].map(([y,ks])=>`<div class="yr">${YHD(y)}<div class="chips">${ks.map(k=>chip(k,k.slice(y.length).trim()||"ทั้งชุด")).join("")}</div></div>`).join("");}
@@ -1295,12 +1308,18 @@ function inkPad(box,key,onSave){
 }
 
 /* ---------------- Unit round ---------------- */
+/* "สุ่มครั้งละ" picker shared by Unit round MCQ + OSCE (user 22 Nov 2026, ทวทว): quick chips + any number typed in */
+const N_OPTS=[5,10,20,40];
+function nPickHTML(id,n,unit){const custom=!N_OPTS.includes(n);
+  return `<div class="yh" style="font-family:var(--num);font-weight:700;margin-bottom:6px">สุ่มครั้งละ <span class="hint" style="font-weight:400">แตะตัวเลข หรือพิมพ์จำนวนเองกี่${unit}ก็ได้</span></div><div class="chips npick">${N_OPTS.map(x=>`<button class="chip" type="button" data-np-${id}="${x}" aria-pressed="${x===n}">${x} ${unit}</button>`).join("")}<label class="chip npc" aria-pressed="${custom}">กำหนดเอง <input class="field-in num" type="number" min="1" max="999" inputmode="numeric" id="np-${id}" value="${custom?n:""}" placeholder="${n}" aria-label="จำนวน${unit}ที่จะสุ่ม"> ${unit}</label></div>`;}
+function nPickWire(id,cb){document.querySelectorAll(`[data-np-${id}]`).forEach(b=>b.onclick=()=>cb(+b.getAttribute(`data-np-${id}`)));
+  const i=$("np-"+id);if(!i)return;const ok=()=>{if(i._d)return;const x=Math.round(+i.value);if(x>=1){i._d=1;setTimeout(()=>cb(Math.min(999,x)),0);}};i.addEventListener("change",ok);i.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ok();}});}
 function rUnit(){
   const W=W_(),P=P_(),Ls=W.UNIT;
   let h=`<h1 class="h2">Unit round</h1><p class="sub">โจทย์ใหม่แบบ case-based ที่สร้างจาก lecture แต่ละบท ครอบคลุมทุกจุดในสไลด์ เก็บไว้ในคลังแล้ว ทำได้ทั้งในเว็บและใน Claude ไม่ต้องสร้างใหม่ · สุ่มใหม่ทุกครั้งที่เริ่ม (เจอข้อซ้ำได้) ใช้ร่วมกันทั้งสอง Phase</p>`;
   if(!Ls.length){h+=`<div class="card"><h3>ยังไม่มีโจทย์ Unit round ในวอร์ดนี้</h3><span class="rd" style="margin:0">ส่งไฟล์ lecture ให้ Claude แล้วจะสร้างโจทย์ case-based ภาษาอังกฤษให้บทละประมาณ 200 ข้อ ครอบคลุมทุกเรื่องในสไลด์</span></div>`;$("main").innerHTML=h;return;}
-  const opts=[10,20,40];let n=opts.includes(st.unitN)?st.unitN:10;
-  h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin-bottom:6px">สุ่มครั้งละ</div><div class="chips">${opts.map(x=>`<button class="chip" data-un="${x}" aria-pressed="${x===n}">${x} ข้อ</button>`).join("")}</div>`;
+  let n=Math.max(1,Math.round(+st.unitN||10));
+  h+=nPickHTML("un",n,"ข้อ");
   const all=[].concat(...Ls.map(Lc=>Lc.QB)),seen=a=>a.filter(q=>uAtts(P,q.uid).length).length;
   const sel=new Set((st.unitSel||[]).filter(id=>W.byLec[id]));
   h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">บท <span class="hint" style="font-weight:400">เลือกได้หลายบท · ไม่เลือกเลย = สุ่มรวมทุกบท · ตัวเลข = เคยเจอแล้ว/ทั้งหมด</span></div>`;
@@ -1308,7 +1327,7 @@ function rUnit(){
   const pool=sel.size?[].concat(...Ls.filter(Lc=>sel.has(Lc.id)).map(Lc=>Lc.QB)):all;
   h+=`<p class="statline" style="margin-top:10px">${sel.size?`จาก ${sel.size} บทที่เลือก`:"สุ่มรวมทุกบท"} · มีโจทย์ ${pool.length} ข้อ (เคยเจอแล้ว ${seen(pool)})</p><div class="row2"><button class="btn ghost" id="uClr" type="button" ${sel.size?"":"disabled"}>ล้างที่เลือก</button><span class="spacer"></span><button class="btn primary" id="uGo" type="button" ${pool.length?"":"disabled"}>เริ่มทำ ${Math.min(n,pool.length)} ข้อ</button></div>`;
   $("main").innerHTML=h;
-  document.querySelectorAll("[data-un]").forEach(b=>b.onclick=()=>{st.unitN=+b.dataset.un;persist();rUnit();});
+  nPickWire("un",x=>{st.unitN=x;persist();rUnit();});
   document.querySelectorAll("[data-lec]").forEach(b=>b.onclick=()=>{const id=b.dataset.lec;if(sel.has(id))sel.delete(id);else sel.add(id);st.unitSel=[...sel];persist();rUnit();});
   $("uClr").onclick=()=>{st.unitSel=[];persist();rUnit();};
   $("uGo").onclick=()=>{const t=sel.size===1?W.byLec[[...sel][0]].title:sel.size?sel.size+" บท":"ทุกบท";startSess("unit","Unit round · "+t,shuffle(pool).slice(0,n).map(q=>q.uid));};
@@ -1476,7 +1495,7 @@ function rQuality(){
   h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">ชุดจับเวลา</div><div class="stack" style="margin-top:0">`+PG.map(pg=>`<button class="resume qprog" data-pg="${esc(pg.id)}" aria-pressed="${pg.id===q.sel}"><span><b>${esc(pg.name)}</b>${pg.builtin?' <span class="tag">preset</span>':''}<span class="rd">${qDesc(pg)}</span></span><span class="go">${pg.id===q.sel?"✓":""}</span></button>`).join("")+`</div>`;
   {const chips=(id,list,cur)=>`<div class="chips" id="${id}">${list.map(([v,t])=>`<button class="chip" data-v="${esc(v)}" aria-pressed="${String(v)===String(cur)}">${t}</button>`).join("")}</div>`;
     h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">ข้อสอบที่จะทำ</div>${chips("qMode",[["all","สุ่มจากข้อสอบเก่าทั้งหมด"],["sets","เลือกปีที่จะทำ"]],q.mode)}`;
-    h+=`<p class="hint" style="margin:6px 0 0">${q.mode==="all"?"สุ่มลำดับจากข้อสอบเก่าทุกปีในคลัง ไม่ว่าเคยทำแล้วหรือยัง":"เหมือน Service round แต่จับเวลา — เรียงข้อตามชุดที่เลือก ไม่เลือกเลย = ทุกชุด · ตัวเลข = ทำแล้ว/ทั้งหมด ใน Phase "+p}</p>`;
+    h+=`<p class="hint" style="margin:6px 0 0">${q.mode==="all"?"สุ่มลำดับจากข้อสอบเก่าทุกปีในคลัง ไม่ว่าเคยทำแล้วหรือยัง":"เหมือน Service round แต่จับเวลา — เรียงข้อตามชุดที่เลือก เลือกได้หลายชุด ไม่เลือกเลย = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น · แถบสี/ตัวเลข = ทำแล้ว/ทั้งหมด ใน Phase "+p}</p>`;
     if(q.mode==="sets"){const sel=new Set(q.sets),years=[...new Set(W.QB.map(x=>x.set))];
       h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=W.QB.filter(x=>setKey(x)===k),d=qs.filter(x=>atts(P,p,x.uid).length).length,g=pcChip(d,qs.length);return `<button class="chip${g.c}" data-qk="${esc(k)}" aria-pressed="${sel.has(k)}"${g.s}>${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${g.t}</span></button>`;}).join("")}</div></div>`;}).join("");}
     h+=`<label class="chk"><input type="checkbox" id="qFresh" ${q.fresh?"checked":""}><span>เฉพาะข้อที่ยังไม่เคยทำใน Phase ${p}</span></label>`;
@@ -1718,7 +1737,7 @@ function rAdvisor(){
   h+=`<div class="lbl">ข้อมาจาก <span class="hint">เลือกได้หลายแหล่ง · ตัวเลข = ทำแล้ว/ทั้งหมด</span></div><div class="chips" id="aSrc">${ADVSRC.map(([k,t])=>`<button class="chip" data-src="${k}" aria-pressed="${src.has(k)}" ${!SQ[k].length&&!src.has(k)?"disabled":""}>${t}<span class="c">${dn(SQ[k])}/${SQ[k].length}</span></button>`).join("")}</div>`;
   if(a.src.some(k=>k!=="ac"))h+=`<p class="hint" style="margin:6px 0 0">โจทย์ที่ไม่ใช่ข้อสอบเก่า (Unit · Admission · Specialty · โจทย์ AI ของ Legendary) นับประวัติรวมทั้ง 2 Phase และรีเซ็ตไม่ได้ — กด “ทำข้อนี้ใหม่” ในเฉลยแทนได้</p>`;
   h+=`<div class="lbl">ใช้ประวัติการตอบจาก${a.src.some(k=>k!=="ac")?` <span class="hint">(มีผลกับข้อสอบเก่า)</span>`:""}</div>${chips("aHp",[["all","ทั้ง 2 Phase"],["p",`เฉพาะ Phase ${ph()}`]],a.hp)}`;
-  if(src.has("ac")&&QB.length){h+=`<div class="lbl">ข้อสอบเก่า · ปีและ rotation <span class="hint">ไม่เลือกเลย = ทุกชุด · ตัวเลข = ทำแล้ว/ทั้งหมด</span></div>`;
+  if(src.has("ac")&&QB.length){h+=`<div class="lbl">ข้อสอบเก่า · ปีและ rotation <span class="hint">ไม่เลือกเลย = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น · แถบสี/ตัวเลข = ทำแล้ว/ทั้งหมด</span></div>`;
     h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=dn(qs),g=pcChip(d,qs.length);return `<button class="chip${g.c}" data-k="${esc(k)}" aria-pressed="${sel.has(k)}"${g.s}>${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${g.t}</span></button>`;}).join("")}</div></div>`;}).join("");}
   if(src.has("unit")){const LS=W.UNIT.filter(Lc=>(Lc.QB||[]).length);if(LS.length)h+=`<details class="grp"${lsel.size?" open":""}><summary>Unit round · เลือกบท <span class="hint">${lsel.size?`เลือกไว้ ${lsel.size} บท`:"ไม่เลือกเลย = ทุกบท"}</span></summary><div class="chips" id="aLec">${LS.map(Lc=>`<button class="chip" data-lec="${esc(Lc.id)}" aria-pressed="${lsel.has(Lc.id)}">${esc(Lc.short||Lc.title)}<span class="c">${dn(Lc.QB)}/${Lc.QB.length}</span></button>`).join("")}</div></details>`;}
   h+=`<div class="lbl">ถูก / ผิด</div>${chips("aF",ADVF,a.f)}`;

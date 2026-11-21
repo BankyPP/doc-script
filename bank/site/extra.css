@@ -1101,3 +1101,7 @@ details.gbox .chip.gdef{font-size:12px;padding:0 9px;line-height:1.6;white-space
 details.ospic{margin:6px 0 10px;padding:6px 10px;border:1px dashed var(--rule);border-radius:6px;font-size:13px}
 details.ospic summary{cursor:pointer;color:var(--muted)}
 details.ospic .row2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0}
+
+/* "สุ่มครั้งละ" picker (Unit round MCQ + OSCE): chips + typed number */
+.npick .npc{display:inline-flex;align-items:center;gap:6px;cursor:text}
+.npick .npc .field-in{width:64px;padding:2px 6px;font-size:14px;line-height:1.4;text-align:center}

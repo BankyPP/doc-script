@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu f3af46c 2026-11-22 SI Med: Unit round OSCE Blood smear 100 stations (R03 Chaicharoen atlas, R04 Mindray atlas) + Round I/O/resources R03-R04; Unit OSCE small-topic picker with seeded random mix
+BankyPP/ac-mdcu 1fce5fa 2026-11-22 Unit round OSCE works like Unit MCQ (multi-select topics/subtopics, random draw, any count); 'สุ่มครั้งละ' custom count for Unit MCQ+OSCE; every year picker gets a ทุกชุด chip + progress bars + same hints
