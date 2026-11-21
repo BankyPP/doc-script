@@ -303,7 +303,7 @@ function route(){
   if(v==="sess"&&!validSess())v="home";
   if(v==="result"&&!P_().sess)v="home";
   if(!["home","service","svc","grand","sess","result","hy","kw","unit","quality","qedit","adm","spc","advisor","report","legend","exam","lres","lrev","admq","lcase","staff","launch","lhist","teach","mhist","dates","mqr","mq","mqhy","mqin","io","tch","taker","case","osl","osx","osr","osh","osq","osspc"].includes(v))v="home";
-  if((v==="mqr"||v==="mqhy")&&!mqL().length&&!mqXAny())v="home";if(v==="mq"&&!mqL().length&&!mqFindU(mqS().v.u))v="home";
+  if((v==="mqr"||v==="mqhy")&&!mqL().length&&!mqXAny()&&!(v==="mqhy"&&(((W_()||{}).cfg||{}).hyGo||{})[mqKN()]))v="home";if(v==="mq"&&!mqL().length&&!mqFindU(mqS().v.u))v="home";
   if(v==="osx"&&!osRunCur())v=osLastRes()?"osr":"osl";if(v==="osr"&&!osLastRes())v="osl";
   if(v==="exam"&&!P_().leg)v="legend";
   if((v==="lres"||v==="lrev")&&!(bank[st.legSel]&&st.legSel.split("|")[1]===ward))v="legend";
@@ -351,6 +351,7 @@ function rWards(){
   let h=`<h1 class="h1">${esc(CFG.siteName||"คลังข้อสอบเก่า")}</h1><p class="sub">เลือกวอร์ดที่กำลังวนอยู่</p>`;
   if(SUBJ.length)h+=`<button class="grline" id="toGrades" type="button">📊 <b>สรุปเกรด</b>${(()=>{const L_=SUBJ.map(S=>{const G=(st.grades||{})[S.id]||{},g=GPARTS.map(([k])=>G[k]||"–");return g.some(x=>x!=="–")?`${esc(S.name)} ${g.map(esc).join("/")}`:"";}).filter(Boolean);return L_.length?`<span>${L_.join(" · ")}</span>`:`<span>ยังไม่ได้ใส่เกรด</span>`;})()}<span class="go">→</span></button>${SUBJ.some(S=>GPARTS.some(([k])=>((st.grades||{})[S.id]||{})[k]))&&!G1?`<p class="hint" style="margin:-8px 0 12px">เรียง Theory / Competency / Performance</p>`:""}`;
   h+=WL.map(w=>{const n=(WARDS[w.id]||{QB:[]}).QB.length;const nu=totalN(w.id);return `<a class="wcard" href="#/${esc(w.id)}"><span class="wb" style="font-size:${(()=>{const n=Math.max(...String(w.short||w.id).split(" ").map(x=>x.length));return n>5?11:n>4?12.5:14;})()}px">${esc(w.short||w.id)}</span><span><b>${esc(w.name)}</b><span class="rd">${esc(w.sub||"")}</span>${acCounts(w)}${examDates(w).map(x=>{const c=cdOf(x),sc=x.score&&scoreOf(x.score);return `<span class="wcd${c.hot?" hot":""}${c.done?" done":""}">สอบ${x.part?" "+esc(x.part):""}${x.label?" "+esc(x.label):""} · ${cdHTML(x)}${c.hot?` — ควรเริ่ม Phase 2 ของ ${esc(x.part||"ข้อสอบ")}`:""}${sc?` · คะแนน ${esc(sc)}`:""}</span>`;}).join("")}</span>${(()=>{const S=subjOf(w.id),G=S&&(st.grades||{})[S.id]||{},g=GPARTS.map(([k])=>G[k]);return g.some(Boolean)?`<span class="wgr" title="Theory / Competency / Performance">${g.map(x=>x?`<span class="${gCls(x)}">${esc(x)}</span>`:`<span class="hint">–</span>`).join("")}</span>`:"";})()}</a>`;}).join("");
+  if((CFG.extArt||[]).length)h+=CFG.extArt.map(w=>`<a class="wcard" href="${esc(w.art)}" target="_blank" rel="noopener"><span class="wb" style="font-size:12px">${esc(w.short||w.id)}</span><span><b>${esc(w.name)} ↗</b><span class="rd">${esc(w.sub||"")} · เปิด artifact ของวอร์ดนี้ (มีรูปและเฉลยครบ)</span></span></a>`).join("");   /* main Claude artifact: wards that have their own artifact */
   {const pend=ld(SPKEY),n=pend?Object.values(pend).reduce((x,a)=>x+a.length,0):0;if(n&&fbOn()&&!(fb&&fb.user))h+=`<div class="card"><h3>🌐 มีโจทย์รอแชร์ให้ทุกคน ${n} ข้อ</h3><span class="rd">เข้าสู่ระบบแล้วระบบจะแชร์ขึ้นคลังรวมให้ทันที</span><button class="btn" data-act="acct" type="button">เข้าสู่ระบบ</button></div>`;}
   h+=acctCard();
   $("main").innerHTML=h;bindAcctCard();{const b=$("toGrades");if(b)b.onclick=()=>go("grades");}
@@ -375,19 +376,27 @@ function examDates(w){return wDates(w).map(x=>{
   const m=/^(\d{4})-(\d\d)-(\d\d)(?:T(\d\d):(\d\d))?/.exec(x.at||"");if(!m)return null;
   const y=+m[1],mo=+m[2],d=+m[3],hasT=!!m[4],at=Date.UTC(y,mo-1,d,hasT?+m[4]:0,hasT?+m[5]:0)-7*3600e3;
   const e=/^(\d\d):(\d\d)$/.exec(x.end||""),dur=hasT&&e?(+e[1]*60+ +e[2])-(+m[4]*60+ +m[5]):(((w.exam||{})[x.part]||{}).min)||0;
-  return {part:x.part||"",label:`${d} ${TH_MON[mo-1]} ${String(y+543).slice(2)}${hasT?` ${m[4]}:${m[5]}${e?"–"+x.end:""}`:""}`,at,hasT,dur,score:x.score||""};}).filter(Boolean);}
-function rDates(){const w=W_().cfg,o=wOv(w.id),D=wDates(w).map(x=>Object.assign({},x)),rot=wRot(w),parts=["MCQ","MEQ","OSCE"];
+  return {part:x.part||"",label:`${d} ${TH_MON[mo-1]} ${String(y+543).slice(2)}${hasT?` ${m[4]}:${m[5]}${e?"–"+x.end:""}`:""}`,at,hasT,dur,score:x.score||""};}).filter(Boolean).sort(edCmp);}
+/* display order (21 Nov 2026, every ward on every site): exam day → start time (no time = start of the day) → end time (no end = after one with an end) → MCQ, MEQ, OSCE · "done" rows without a date first */
+const ED_PO=["MCQ","MEQ","OSCE"];
+const edEnd=x=>x.hasT&&x.dur?x.at+x.dur*60e3:Infinity;
+function edCmp(a,b){if(!!a.fixedDone!==!!b.fixedDone)return a.fixedDone?-1:1;
+  const da=Math.floor((a.at+7*3600e3)/864e5),db=Math.floor((b.at+7*3600e3)/864e5);if(da!==db)return da-db;
+  if(a.at!==b.at)return a.at-b.at;const ea=edEnd(a),eb=edEnd(b);if(ea!==eb)return ea<eb?-1:1;
+  const pa=ED_PO.indexOf(a.part),pb=ED_PO.indexOf(b.part);return (pa<0?99:pa)-(pb<0?99:pb);}
+/* same order for the raw rows in the Admit · ICU · Discharge editor (rows that don't parse go last) */
+function edSortRaw(D,w){return D.map(x=>[x,examDates({dates:[x],exam:w.exam})[0]]).sort((p,q)=>!p[1]||!q[1]?(!p[1])-(!q[1]):edCmp(p[1],q[1])).map(p=>p[0]);}
+function rDates(){const w=W_().cfg,o=wOv(w.id),D=edSortRaw(wDates(w).map(x=>Object.assign({},x)),w),rot=wRot(w),parts=["MCQ","MEQ","OSCE"];
   const row=(x,i)=>{const m=/^(\d{4}-\d\d-\d\d)(?:T(\d\d:\d\d))?/.exec(x.at||"")||[];return `<div class="dtrow" data-i="${i}">
     <label>สอบ<select data-f="part">${[...new Set(parts.concat(x.part?[x.part]:[]))].concat([""]).map(p=>`<option value="${esc(p)}"${p===(x.part||"")?" selected":""}>${p||"(ไม่ระบุ)"}</option>`).join("")}</select></label>
     <label>วันที่<input type="date" data-f="d" value="${esc(m[1]||"")}"></label>
     <label>เริ่ม<input type="time" data-f="t" value="${esc(m[2]||"")}"></label>
     <label>จบ<input type="time" data-f="e" value="${esc(x.end||"")}"></label>
     <label class="ck"><input type="checkbox" data-f="done"${x.done&&!x.at?" checked":""}> สอบไปแล้ว (ไม่ต้องใส่วัน)</label>
-    <span class="dtmv"><span class="dtgrip" data-grip title="กดค้างแล้วลากเพื่อย้าย" aria-label="ลากเพื่อย้าย">☰ ลาก</span><button class="btn" type="button" data-mv="-1" aria-label="เลื่อนขึ้น">↑ ขึ้น</button><button class="btn" type="button" data-mv="1" aria-label="เลื่อนลง">↓ ลง</button></span>
     <button class="link" type="button" data-del="${i}">ลบ</button></div>`;};
   let h=`<h1 class="h2">Admit · ICU · Discharge — ${esc(w.name)}</h1><p class="sub">แก้แล้วกดบันทึก นับถอยหลัง คำเตือน Phase 2 และหน้าประวัติ Morning round ใช้ค่านี้ทันที · เข้าสู่ระบบไว้จะใช้ค่าเดียวกันทุกเครื่อง${o?` · <b>กำลังใช้ค่าที่แก้เอง</b> (แก้ล่าสุด ${fmtDT(o.ts)})`:" · ตอนนี้ใช้ค่าตั้งต้นของเว็บ"}</p>`;
   h+=`<div class="card"><h3>ICU <span class="hint" style="font-weight:400">(วันสอบ)</span></h3><div id="dtRows">${D.map(row).join("")||`<p class="hint">ยังไม่มี ICU</p>`}</div><button class="btn" id="dtAdd" type="button">+ เพิ่ม ICU</button>
-    <p class="hint" style="margin-top:8px">ลำดับในหน้านี้ = ลำดับที่โชว์ในหน้าวอร์ดและหน้าแรก (บนสุด = ซ้ายสุด/ก่อน) — กด ☰ ค้างแล้วลาก หรือกด ↑ ขึ้น / ↓ ลง · ไม่ใส่เวลาเริ่ม = นับถอยหลังเป็นวัน · ใส่เวลาเริ่มและจบ = ระหว่างสอบขึ้น "กำลังสอบ ✍️" · เหลือ ≤14 วันกล่องเป็นสีแดงและเตือนให้เริ่ม Phase 2</p></div>`;
+    <p class="hint" style="margin-top:8px">ลำดับเรียงให้อัตโนมัติทั้งในหน้านี้ หน้าวอร์ด และหน้าแรก: วันสอบก่อน → วันเดียวกันเอาเวลาเริ่มก่อน → เริ่มพร้อมกันเอาที่จบก่อน → เหมือนกันเป๊ะเรียง MCQ · MEQ · OSCE · ไม่ใส่เวลาเริ่ม = นับถอยหลังเป็นวัน · ใส่เวลาเริ่มและจบ = ระหว่างสอบขึ้น "กำลังสอบ ✍️" · เหลือ ≤14 วันกล่องเป็นสีแดงและเตือนให้เริ่ม Phase 2</p></div>`;
   {const E0=Object.assign({},(w.exam||{}).MCQ,o&&o.exam);h+=`<div class="card"><h3>MCQ สอบจริง <span class="hint" style="font-weight:400">(จำนวนข้อ · เวลา — ใช้กับ Legendary round)</span></h3><div class="dtrow"><label>จำนวนข้อ<input type="number" id="exN" min="1" max="500" value="${esc(E0.n||"")}" placeholder="เช่น 100"></label><label>เวลา (นาที)<input type="number" id="exM" min="1" max="600" value="${esc(E0.min||"")}" placeholder="เช่น 150"></label></div><span class="rd">เว้นว่าง = ใช้ค่าตั้งต้นของเว็บ${(w.exam||{}).MCQ?` (${w.exam.MCQ.n} ข้อ ${w.exam.MCQ.min} นาที)`:" (ยังไม่มี)"} · MEQ ยังไม่มี Legendary round</span></div>`;}
   if(!(w.noExam||[]).includes("OSCE")){const E1=Object.assign({},(w.exam||{}).OSCE,o&&o.examOS);h+=`<div class="card"><h3>OSCE สอบจริง <span class="hint" style="font-weight:400">(จำนวนข้อ · เวลาต่อข้อ — ค่าตั้งต้นของ Legendary round OSCE)</span></h3><div class="dtrow"><label>จำนวนข้อ (ไม่นับข้อพัก)<input type="number" id="osN" min="1" max="80" value="${esc(E1.n||"")}" placeholder="เช่น 25"></label><label>เวลาต่อข้อ (นาที)<input type="number" id="osM" min="1" max="60" step="0.5" value="${esc(E1.min||"")}" placeholder="เช่น 5"></label></div><span class="rd">เว้นว่าง = ใช้ค่าตั้งต้นของเว็บ${(w.exam||{}).OSCE?` (${w.exam.OSCE.n} ข้อ ข้อละ ${w.exam.OSCE.min} นาที)`:" (ยังไม่มี)"} · เปลี่ยนได้อีกตอนเริ่มสอบ</span></div>`;}
   h+=`<div class="card"><h3>Admit &amp; Discharge</h3><span class="rd">วันเริ่มและวันจบวอร์ด — ใช้กับหน้าประวัติ Morning round (เรียงครบทุกวันในช่วงนี้)</span><div class="dtrow"><label>Admit<input type="date" id="rtS" value="${esc(rot.start||"")}"></label><label>Discharge<input type="date" id="rtE" value="${esc(rot.end||"")}"></label></div></div>`;
@@ -396,7 +405,7 @@ function rDates(){const w=W_().cfg,o=wOv(w.id),D=wDates(w).map(x=>Object.assign(
   const read=()=>[...document.querySelectorAll("#dtRows .dtrow")].map(r=>{const g=f=>r.querySelector(`[data-f="${f}"]`),i=+r.dataset.i,old=D[i]||{},part=g("part").value,d=g("d").value,t=g("t").value,e=g("e").value,done=g("done").checked;
     const x={part};if(old.score)x.score=old.score;if(d){x.at=d+(t?"T"+t:"");if(t&&e)x.end=e;}else if(done)x.done=true;else return null;return x;}).filter(Boolean);
   const bindRow=r=>{r.querySelector("[data-del]").onclick=()=>r.remove();
-    const g=r.querySelector("[data-grip]");g.onpointerdown=e=>{e.preventDefault();r.classList.add("drag");
+    const g=r.querySelector("[data-grip]");if(g)g.onpointerdown=e=>{e.preventDefault();r.classList.add("drag");
       /* window listeners: moving the row drops pointer capture on the grip */
       const pm=ev=>{if(ev.pointerId!==e.pointerId)return;const box=$("dtRows"),rows=[...box.querySelectorAll(".dtrow")].filter(x=>x!==r);let before=null;for(const x of rows){const b=x.getBoundingClientRect();if(ev.clientY<b.top+b.height/2){before=x;break;}}if(before){if(before!==r.nextElementSibling)box.insertBefore(r,before);}else if(r!==box.lastElementChild)box.appendChild(r);};
       const pu=ev=>{if(ev.pointerId!==e.pointerId)return;r.classList.remove("drag");window.removeEventListener("pointermove",pm);window.removeEventListener("pointerup",pu);window.removeEventListener("pointercancel",pu);};
@@ -1119,7 +1128,7 @@ function explain(q,done,R,p){
   h+=`<div class="tagline">`;
   if(q.rep)h+=`<span class="tag rep">repeated x${q.rep}</span>`;
   if(view==="lrev"){const X=legPaper(),sr=legSrc(X,q.uid);
-    h+=`<span class="tag rep">ที่มาของข้อนี้: ${sr==="unit"?`Unit round — ${esc((W.byLec[q.unit]||{}).title||q.set)}`:sr==="adm"?`Admission round — เคสที่ AI เคยสร้างให้คุณ${q.topic?` (${esc(q.topic)})`:""}`:sr==="spc"?`Specialty round — โจทย์ที่ AI เคยสร้างให้คุณจากไฟล์ของวอร์ด${q.srcRes?` (${esc(q.srcRes)})`:""}`:sr==="ai"?`โจทย์ใหม่ที่ AI สร้างขึ้นเฉพาะข้อสอบชุดนี้${q.topic?` (${esc(q.topic)})`:""} — ไม่เคยเจอที่ไหนมาก่อน และจะกลับมาอีกเฉพาะใน Ward staff round`:`ข้อสอบเก่า (AC) ${esc(q.set)} ${esc(q.ro)} · ข้อ ${q.id} ในคลัง${sr==="acd"?" · ตอนสอบเป็นข้อที่คุณเคยทำแล้ว":sr==="acn"?" · ตอนสอบเป็นข้อที่ยังไม่เคยทำ":""}`}</span>`;
+    h+=`<span class="tag rep">ที่มาของข้อนี้: ${sr==="unit"?`Unit round — ${esc((W.byLec[q.unit]||{}).title||q.set)}`:sr==="adm"?`Admission round — เคสที่ AI เคยสร้างให้คุณ${q.topic?` (${esc(q.topic)})`:""}`:sr==="spc"?`Specialty round — โจทย์ที่ AI เคยสร้างให้คุณจากไฟล์ของวอร์ด${q.srcRes?` (${esc(q.srcRes)})`:""}`:sr==="ai"||sr==="aio"?`${sr==="aio"?"โจทย์ใหม่ที่ AI สร้างจากความรู้นอกไฟล์ของวอร์ด":"โจทย์ใหม่ที่ AI สร้างจากไฟล์ของวอร์ด"}${q.srcRes?` — ${esc(q.srcRes)}`:q.topic?` (${esc(q.topic)})`:""} · เฉพาะข้อสอบชุดนี้ ไม่เคยเจอที่ไหนมาก่อน และจะกลับมาอีกเฉพาะใน Ward staff round`:`ข้อสอบเก่า (AC) ${esc(q.set)} ${esc(q.ro)} · ข้อ ${q.id} ในคลัง${sr==="acd"?" · ตอนสอบเป็นข้อที่คุณเคยทำแล้ว":sr==="acn"?" · ตอนสอบเป็นข้อที่ยังไม่เคยทำ":""}`}</span>`;
     if(X.star[q.uid])h+=`<span class="tag starTag">★ ติดดาวไว้ตอนสอบ</span>`;}
   if(adv)h+=advResetBtn(q);
   h+=`<button class="link redo" id="redo" type="button">ทำข้อนี้ใหม่</button>`;
@@ -1539,7 +1548,8 @@ function qeSum(){const el=$("qeSum");if(!el||!QED)return;el.innerHTML=qDesc(QED)
 
 /* ---------------- Admission round: a new AI-written case each time ---------------- */
 /* link into the Claude version of this site at a given page — the page is in both the query (?go=) and the hash, since the host may pass only one of them into the frame */
-const artLink=path=>CFG.artifactUrl?CFG.artifactUrl+"?go="+encodeURIComponent(path)+"#/"+path:"";
+/* a ward with its own Claude artifact (config wards[].art, 19 Nov 2026: Subspe) opens that one; the rest open the main artifact */
+const artLink=path=>{const w=WL.find(x=>x.id===String(path).split("/")[0]),u=(w&&w.art)||CFG.artifactUrl;return u?u+"?go="+encodeURIComponent(path)+"#/"+path:"";};
 const AIKEY=KEY+"-ai";                 /* {key, model}: kept only in this browser, never synced */
 const aiCfg=()=>ld(AIKEY)||{};
 let admBusy=false,admErr="",admSetup=false,admWant=false;
@@ -1918,29 +1928,40 @@ const fmtDT=t=>{const d=new Date(t);return fmtD(t)+" "+String(d.getHours()).padS
 /* a paper mixes old-exam questions already done / not yet done (this phase), Unit round questions and the viewer's own Admission cases — the share of each is random every time */
 const legQw=(wid,u)=>qAny(u,wid)||((bank[st.legSel]||{}).aq||{})[u]||null;
 const legQ=u=>legQw(ward,u);
-const LSRC={acd:"ข้อสอบเก่า (AC) ที่เคยทำแล้ว",acn:"ข้อสอบเก่า (AC) ที่ยังไม่เคยทำ",unit:"Unit round (โจทย์ที่แต่งจาก lecture)",adm:"Admission round (เคสที่ AI เคยสร้างให้คุณ)",spc:"Specialty round (โจทย์ที่ AI เคยสร้างให้คุณจากไฟล์ของวอร์ด)",ai:"โจทย์ใหม่ที่ AI สร้างขึ้นเฉพาะข้อสอบชุดนี้"};
-const LSRS={acd:"AC เคยทำ",acn:"AC ใหม่",unit:"Unit",adm:"Admission",spc:"Specialty",ai:"AI ใหม่"};
-function legPools(){const W=W_(),P=P_(),p=ph(),o={acd:[],acn:[],unit:[],adm:[],spc:[]};
+const LSRC={acd:"ข้อสอบเก่า (AC) ที่เคยทำแล้ว",acn:"ข้อสอบเก่า (AC) ที่ยังไม่เคยทำ",unit:"Unit round (โจทย์ที่แต่งจาก lecture)",adm:"Admission round (เคสที่ AI เคยสร้างให้คุณ)",spc:"Specialty round (โจทย์ที่ AI เคยสร้างให้คุณจากไฟล์ของวอร์ด)",ai:"โจทย์ใหม่ที่ AI สร้างจากไฟล์ของวอร์ด (L/R/T/N) เฉพาะข้อสอบชุดนี้",aio:"โจทย์ใหม่ที่ AI สร้างจากความรู้นอกไฟล์ของวอร์ด เฉพาะข้อสอบชุดนี้"};
+const LSRS={acd:"AC เคยทำ",acn:"AC ใหม่",unit:"Unit",adm:"Admission",spc:"Specialty",ai:"AI จากไฟล์",aio:"AI นอกไฟล์"};
+/* 22 Nov 2026 (user, ทวทว — MCQ): every paper = old exams 60–70% · questions from the ward's own files (L/R/T/N) 20–30% · questions from outside the ward's files 5–10%
+   — the three shares are drawn fresh for every paper (they always add up to the whole paper)
+   file group   = Unit round + Specialty round + Admission cases built on a ward file + brand-new AI questions built on one L/R/T/N page (checked against guidelines)
+   outside group = Admission cases from general knowledge + brand-new AI questions from outside the ward's files
+   inside each group the mix of its sources is random too · a group that cannot be filled (no AI on the website, nothing in the bank) is topped up with old exams */
+function legPools(){const W=W_(),P=P_(),p=ph(),o={acd:[],acn:[],unit:[],adm:[],admF:[],admO:[],spc:[]};
   W.QB.forEach(q=>o[atts(P,p,q.uid).length?"acd":"acn"].push(q.uid));
-  {const E=examCfg();if(E&&E.ai)return o;}   /* fixed mix (config exam.MCQ.ai, e.g. OB-GYN 70% AC + 30% AI): the rest of the paper is old-exam questions only */
   W.UNIT.forEach(Lc=>Lc.QB.forEach(q=>o.unit.push(q.uid)));
-  ["adm","spc"].forEach(kd=>bankItems(kd,ward).forEach(x=>{if(x.q&&x.q.uid&&Array.isArray(x.q.opts))o[kd].push(x.q.uid);}));return o;}
-function legDraw(n){const pools=legPools(),ks=Object.keys(pools).filter(k=>pools[k].length),w={};ks.forEach(k=>{w[k]=Math.random();});
-  const tot=ks.reduce((a,k)=>a+w[k],0)||1,cnt={};ks.forEach(k=>{cnt[k]=Math.min(pools[k].length,Math.floor(n*w[k]/tot));});
-  let sum=ks.reduce((a,k)=>a+cnt[k],0);
-  while(sum<n){const av=ks.filter(k=>cnt[k]<pools[k].length);if(!av.length)break;cnt[av[Math.floor(Math.random()*av.length)]]++;sum++;}
-  const src={},list=[];ks.forEach(k=>shuffle(pools[k]).slice(0,cnt[k]).forEach(u=>{src[u]=k;list.push(u);}));
+  ["adm","spc"].forEach(kd=>bankItems(kd,ward).forEach(x=>{if(!(x.q&&x.q.uid&&Array.isArray(x.q.opts)))return;o[kd].push(x.q.uid);if(kd==="adm")o[x.q.srcRes?"admF":"admO"].push(x.q.uid);}));return o;}
+function legPlan(n){let o,f;do{o=5+Math.random()*5;f=20+Math.random()*10;}while(o+f<30||o+f>40);
+  const nO=Math.round(n*o/100),nF=Math.round(n*f/100);return {n,nO,nF,nA:Math.max(0,n-nO-nF)};}
+/* random split of k over sources with capacity cap[key] (each source gets a random weight; the rest goes one by one to sources that still have room) */
+function legMix(cap,k){const ks=Object.keys(cap).filter(x=>cap[x]>0),w={},c={};ks.forEach(x=>{w[x]=Math.random();c[x]=0;});const tot=ks.reduce((a,x)=>a+w[x],0)||1;
+  ks.forEach(x=>{c[x]=Math.min(cap[x],Math.floor(k*w[x]/tot));});let sum=ks.reduce((a,x)=>a+c[x],0);
+  while(sum<k){const av=ks.filter(x=>c[x]<cap[x]);if(!av.length)break;c[av[Math.floor(Math.random()*av.length)]]++;sum++;}return c;}
+function legDraw(plan,aiQs){aiQs=aiQs||[];const PL=legPools(),used=new Set(),src={},list=[];
+  const take=(k,c)=>{let got=0;for(const u of shuffle(PL[k].filter(u=>!used.has(u)))){if(got>=c)break;used.add(u);src[u]=/^adm/.test(k)?"adm":k;list.push(u);got++;}return got;};
+  const fill=(keys,k)=>{const cap={};keys.forEach(x=>cap[x]=PL[x].filter(u=>!used.has(u)).length);const c=legMix(cap,k);let got=0;keys.forEach(x=>{got+=take(x,c[x]||0);});return k-got;};
+  const aiF=aiQs.filter(q=>q.lsrc!=="aio").length,aiO=aiQs.length-aiF;
+  const sF=fill(["unit","spc","admF"],Math.max(0,plan.nF-aiF)),sO=fill(["admO"],Math.max(0,plan.nO-aiO));
+  let sA=fill(["acd","acn"],plan.nA+sF+sO);
+  if(sA>0)sA=fill(["unit","spc","admF","admO"],sA);   /* not enough old exams: use what the other groups still have */
   /* every topic of the old-exam bank gets at least one question when possible: swap in an AC question for each missing topic, taking out one from the most crowded topic */
   {const W=W_(),P=P_(),p=ph(),tp=u=>{const q=W.byU[u];return q&&!q.unit?topicOf(W,q):"";},cnt2={};list.forEach(u=>{const t=tp(u);if(t)cnt2[t]=(cnt2[t]||0)+1;});
     const all=[...new Set(W.QB.map(q=>topicOf(W,q)))],inList=new Set(list);
     shuffle(all).forEach(t=>{if(cnt2[t])return;const cand=W.QB.filter(q=>topicOf(W,q)===t&&!inList.has(q.uid));if(!cand.length)return;
       const big=Object.keys(cnt2).sort((a,b)=>cnt2[b]-cnt2[a])[0];if(!big||cnt2[big]<2)return;
-      const outs=list.filter(u=>tp(u)===big),out=outs[Math.floor(Math.random()*outs.length)],q=cand[Math.floor(Math.random()*cand.length)];
+      const outs=list.filter(u=>tp(u)===big&&/^ac/.test(src[u])),out=outs[Math.floor(Math.random()*outs.length)];if(!out)return;const q=cand[Math.floor(Math.random()*cand.length)];
       list[list.indexOf(out)]=q.uid;delete src[out];inList.delete(out);inList.add(q.uid);src[q.uid]=atts(P,p,q.uid).length?"acd":"acn";cnt2[big]--;cnt2[t]=1;});}
   return {list:shuffle(list),src};}
 /* brand-new questions the AI writes for one Legendary paper only: never shown in any other round, except Ward staff round once answered (bank "lai") */
 const legAIOK=()=>HAS_CLAUDE()||!!aiCfg().key;
-function legAIn(n){const E=examCfg();if(E&&E.ai)return Math.max(1,Math.round(n*E.ai));if(n<10)return Math.max(1,Math.round(n*0.1));const lo=Math.ceil(n*0.05),hi=Math.ceil(n*0.15);return lo+Math.floor(Math.random()*(hi-lo+1));}
 function legAIPrompt(W,specs){const w=W.cfg,y=yrN(),yr=y?ord(y)+"-year":"clinical-year";
   return `Write ${specs.length} brand-new multiple-choice questions for a simulated end-of-rotation exam (the real ward MCQ exam) taken by ${yr} medical students at ${INST.en}, Thailand, at the end of their ${w.name.replace(/\s*Y\d+$/,"")} rotation. They are mixed into a paper of past-exam questions, so match the style and difficulty of a real final exam.
 
@@ -1948,7 +1969,11 @@ Scope (stay inside it): ${w.scope||w.name}.
 Level: what a ${yr} medical student is expected to know and use in real clinical practice, from standard textbooks and current international or Thai guidelines. Common and uncommon conditions are both fine.
 
 Write the questions in this order, one per line below (topic to use, and the position of the correct answer):
-${specs.map((x,i)=>x.base?`${i+1}. based on PAST-EXAM QUESTION ${i+1} below — correct answer at position ${"ABCDE"[x.pos]} (index ${x.pos})`:`${i+1}. topic: ${x.res?"from attached resource "+(x.res.code||x.res.title):x.topic||"any topic inside the scope"} — correct answer at position ${"ABCDE"[x.pos]} (index ${x.pos})${x.res?" — build it mainly on that resource (listed below); the key point tested must come from it":""}`).join("\n")}
+${specs.map((x,i)=>x.base?`${i+1}. based on PAST-EXAM QUESTION ${i+1} below — correct answer at position ${"ABCDE"[x.pos]} (index ${x.pos})`:x.file?`${i+1}. from WARD FILE ${i+1} below (${x.file.kind==="N"?"ward note":x.file.code}) — correct answer at position ${"ABCDE"[x.pos]} (index ${x.pos}) — the key point tested must come from that file`:x.out?`${i+1}. topic: ${x.topic||"any topic inside the scope"} — from general knowledge (standard textbooks, current guidelines), NOT from this ward's own lecture / resource / note files — correct answer at position ${"ABCDE"[x.pos]} (index ${x.pos})`:`${i+1}. topic: ${x.res?"from attached resource "+(x.res.code||x.res.title):x.topic||"any topic inside the scope"} — correct answer at position ${"ABCDE"[x.pos]} (index ${x.pos})${x.res?" — build it mainly on that resource (listed below); the key point tested must come from it":""}`).join("\n")}
+${specs.some(x=>x.file)?`
+Ward files (this ward's own lecture (L) / resource (R) / textbook (T) / ward-note (N) pages). For each question N that names WARD FILE N: test a point that is in that file, at the level the file teaches. CHECK every fact you take from the file against current guidelines and standard textbooks before using it (order of trust: guideline / textbook > lecture > resource > ward note). If the file is wrong or outdated on that point, write the question on the correct fact and explain the difference in Thai in "why". Do not copy the file's wording into the stem.
+${specs.map((x,i)=>x.file?`WARD FILE ${i+1} — ${spcLabel(x.file)}:\n${String(x.file.text||"").slice(0,6000)}`:"").filter(Boolean).join("\n\n")}
+`:""}
 ${specs.some(x=>x.base)?`
 Past-exam questions (real old exam items of this ward). For each new question N that names PAST-EXAM QUESTION N: test knowledge from the same content area (the same disease, topic or the key points listed), but it MUST NOT duplicate that past question or any other past-exam question — use a different patient scenario AND ask a different point with a different correct answer (for example, if the past question asks the diagnosis, ask the management, investigation, complication, mechanism or a related criterion instead; never just reword it).
 ${specs.map((x,i)=>x.base?`PAST-EXAM QUESTION ${i+1}: ${pastBrief(x.base)}`:"").filter(Boolean).join("\n")}
@@ -1978,28 +2003,30 @@ Reply with only a JSON object {"questions": [ … ]} holding ${specs.length} obj
 const pastBrief=q=>{const t=x=>String(x||"").replace(/<[^>]+>/g,"").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&").replace(/\s+/g," ").trim();return `${t(q.stem).slice(0,420)} | Correct answer: ${t(q.opts[q.ans])}${Array.isArray(q.summary)&&q.summary.length?" | Key points: "+q.summary.slice(0,4).map(t).join("; ").slice(0,500):""}`;};
 let LG=null;   /* AI questions being written before a Legendary paper starts: {k,done,wid,stop} */
 function paintLG(){const el=$("lgAIn");if(el&&LG)el.textContent=LG.done+"/"+LG.k;}
-async function legGenAI(k){
-  const W=W_(),tp=shuffle([...new Set(W.QB.map(q=>topicOf(W,q)))].filter(t=>t&&t!=="Others")),specs=[];
-  const E=examCfg(),fromAC=!!(E&&E.aiFromAC),base=fromAC?shuffle(W.QB.slice()):[];
-  for(let i=0;i<k;i++)specs.push(fromAC&&base.length?{base:base[i%base.length],pos:Math.floor(Math.random()*5)}:{topic:tp.length?tp[i%tp.length]:"",pos:Math.floor(Math.random()*5),res:pickSrc(W)});
+async function legGenAI(kF,kO){
+  const W=W_(),tp=shuffle([...new Set(W.QB.map(q=>topicOf(W,q)))].filter(t=>t&&t!=="Others")),FU=shuffle(spcUnits(ward,"MCQ")),specs=[],k=kF+kO;
+  for(let i=0;i<kF;i++){const f=FU.length?FU[i%FU.length]:null;specs.push(f?{file:f,pos:Math.floor(Math.random()*5)}:{out:1,topic:tp.length?tp[i%tp.length]:"",pos:Math.floor(Math.random()*5)});}
+  for(let i=0;i<kO;i++)specs.push({out:1,topic:tp.length?tp[(i+kF)%tp.length]:"",pos:Math.floor(Math.random()*5)});
   const B=[];for(let i=0;i<specs.length;i+=3)B.push(specs.slice(i,i+3));
   const out=[];let err=null,bi=0,fatal=false;
   const worker=async()=>{while(bi<B.length&&!fatal&&LG&&!LG.halt){const b=B[bi++];
     try{const o=await aiJSON(legAIPrompt(W,b),12000);const L_=Array.isArray(o&&o.questions)?o.questions:Array.isArray(o)?o:[];
-      L_.slice(0,b.length).forEach((x,j)=>{try{const q=admCheck(x);if(b[j]&&b[j].res)q.srcRes=resLabel(b[j].res);out.push(q);}catch(e){}});}
+      L_.slice(0,b.length).forEach((x,j)=>{try{const q=admCheck(x),sp=b[j]||{};if(sp.file){q.srcRes=spcLabel(sp.file);q.lsrc="ai";}else q.lsrc="aio";out.push(q);}catch(e){}});}
     catch(e){err=e;const c=e&&e.code;if(["no_ai","not_granted","sampling_disabled","session_expired"].includes(c)||(c==="api"&&[401,403,404].includes(e.status)))fatal=true;}
     if(LG){LG.done=out.length;paintLG();}}};
   const stop=new Promise(r=>{LG.stop=r;});
   await Promise.race([Promise.all(k>20?[worker(),worker(),worker()]:[worker(),worker()]),stop]);
   return {qs:out.slice(0,k),err};}
-async function legBegin(n){
-  if(!(st.legAI!==false&&legAIOK())){legStart([]);return;}
-  const k=legAIn(n),wid=ward;LG={k,done:0,wid,halt:false};rLegend();
-  const r=await legGenAI(k),lg=LG;LG=null;
+async function legBegin(n){const plan=legPlan(n);
+  if(!(st.legAI!==false&&legAIOK())){legStart([],plan);return;}
+  const PL=legPools(),cF=legMix({unit:PL.unit.length,spc:PL.spc.length,admF:PL.admF.length,ai:plan.nF},plan.nF),cO=legMix({admO:PL.admO.length,aio:plan.nO},plan.nO);
+  const kF=cF.ai||0,kO=cO.aio||0,k=kF+kO;if(!k){legStart([],plan);return;}
+  const wid=ward;LG={k,done:0,wid,halt:false};rLegend();
+  const r=await legGenAI(kF,kO),lg=LG;LG=null;
   if(!lg||lg.halt==="abort"||ward!==wid){if(view==="legend")rLegend();return;}
   if(!r.qs.length&&lg.halt!=="now"){if(!await uiAsk(`สร้างโจทย์ใหม่ด้วย AI ไม่สำเร็จ${r.err?` (${admMsg(r.err)||"ไม่ทราบสาเหตุ"})`:""}\nเริ่มสอบโดยใช้แต่ข้อในคลังเลยไหม?`)){rLegend();return;}}
   else if(r.qs.length<k&&lg.halt!=="now")toast(`AI สร้างโจทย์ใหม่ได้ ${r.qs.length}/${k} ข้อ ที่เหลือใช้ข้อในคลังแทน`);
-  legStart(r.qs);}
+  legStart(r.qs,plan);}
 function legPreFields(X,u){const o=(X&&X.pre||{})[u];if(!o)return `<span class="field seen new"><b>ก่อนสอบ</b>ข้อใหม่ ไม่เคยเจอ</span>`;let h="";
   if(o.s&&o.s.length)h+=`<span class="field seen"><b>ก่อนสอบเคยเจอใน</b>${esc(rkNames(o.s))}</span>`;
   if(o.r&&o.r.length)h+=`<span class="field seen rel"><b>ข้อคล้ายเคยเจอใน</b>${esc(rkNames(o.r))}</span>`;return h;}
@@ -2011,16 +2038,16 @@ function rLegend(){
   const W=W_(),P=P_(),E=examCfg(),QB=W.QB;
   let h=`<h1 class="h2">Legendary round</h1><p class="sub">จำลองสอบจริง จำนวนข้อและเวลาเท่ากับสอบจริงของวอร์ดนี้ ทำรวดเดียวโดยไม่เฉลยทีละข้อ ส่งแล้วได้เกรดทันที · หมดเวลาระบบส่งให้เอง ข้อที่ยังไม่ทำนับเป็นไม่ได้คะแนน</p>`;
   if(!E){h+=`<div class="card"><h3>ยังไม่ได้ตั้งค่าการสอบจริงของวอร์ดนี้</h3><span class="rd" style="margin:0">บอก Claude ว่าวอร์ดนี้สอบ MCQ กี่ข้อ กี่นาที แล้วจะเปิด Legendary round ให้</span></div>`;$("main").innerHTML=h;return;}
-  const PL=legPools(),avail=PL.acd.length+PL.acn.length+PL.unit.length+PL.adm.length,n=Math.min(E.n,avail),L_=P.leg;
+  const PL=legPools(),avail=PL.acd.length+PL.acn.length+PL.unit.length+PL.adm.length+PL.spc.length,n=Math.min(E.n,avail),L_=P.leg;
   h+=`<div class="lgbig"><span class="w">สอบจริง ${esc(W.cfg.short||W.cfg.name)}</span><span><b>${E.n}</b> ข้อ</span><span class="dot">·</span><span><b>${E.min}</b> นาที</span></div>`;
   if(L_){const a=Object.keys(L_.ans).length,s=Object.keys(L_.star).filter(u=>L_.star[u]).length;
     h+=rsPage("pg:leg",Math.max(L_.vt||0,L_.t0||0),`<button class="resume" id="lgResume"><span>กำลังสอบอยู่ · <b>เหลือเวลา <span id="lgLeft">${hms(L_.end-now())}</span></b><span class="rd">ตอบแล้ว ${a}/${L_.list.length} ข้อ${s?` · ★ ${s}`:""} · เวลาเดินต่อแม้ปิดหน้า เหมือนสอบจริง</span></span><span class="go">→</span></button>`,`<button class="linkbtn rs2" id="lgResume">กำลังสอบอยู่ · เหลือเวลา <span id="lgLeft">${hms(L_.end-now())}</span> · <b>กลับไปทำต่อ</b> →</button>`)+`<div class="row2" style="margin-top:0"><span class="spacer"></span><button class="btn primary" id="lgSub" type="button">Submit ส่งข้อสอบเลย</button></div>`;}
   else{
     h+=`<div class="card"><h3>MCQ ${n} ข้อ · ${E.min} นาที</h3><span class="rd">เหมือนสอบจริงของ ${esc(W.cfg.short||W.cfg.name)}${n<E.n?` (มีข้อให้สุ่มทั้งหมด ${avail} ข้อ จึงใช้ทั้งหมด)`:""} · เปลี่ยนคำตอบได้จนหมดเวลา · กด ☆ ติดดาวข้อที่อยากกลับมาดู · ส่งแล้วจะเห็นเกรดก่อน แล้วค่อยเลือกดู Short answer paper หรือ Long explanation</span>
-    ${E.ai?`<span class="rd">สัดส่วนตามที่ตั้งไว้: <b>ข้อสอบเก่า (AC) ${Math.round((1-E.ai)*100)}% = ${E.n-Math.round(E.n*E.ai)} ข้อ</b> สุ่มใหม่ทุกครั้ง + <b>โจทย์ใหม่ที่ AI แต่ง ${Math.round(E.ai*100)}% = ${Math.round(E.n*E.ai)} ข้อ</b>${E.aiFromAC?" จากเนื้อหาที่เจอในข้อสอบเก่า แต่ไม่ซ้ำข้อสอบเก่า (สถานการณ์ใหม่ ถามคนละประเด็น)":""} — ถ้า AI สร้างได้ไม่ครบหรือไม่มี AI ใช้ข้อสอบเก่าแทนส่วนที่ขาด · พยายามให้มีครบทุกหัวข้อในชุดเดียว · ระหว่างทำไม่บอกข้อมูลอะไรเลย ตอนเฉลยจึงบอกว่าแต่ละข้อมาจากไหนและเคยเจอมาก่อนหรือไม่</span>`:`<span class="rd">ข้อสอบจริงอาจตรงหรือไม่ตรงกับข้อสอบเก่า จึง<b>สุ่มทุกอย่างใหม่ทุกครั้ง</b> ทั้งจำนวนข้อที่ซ้ำกับที่เคยเจอ ข้อสอบเก่าที่ยังไม่เคยทำ โจทย์ Unit round เคสจาก Admission round ของคุณ และ<b>โจทย์ใหม่ที่ AI สร้างขึ้นเฉพาะชุดนั้น</b> (ไม่เคยเจอที่ไหน และจะกลับมาอีกเฉพาะใน Ward staff round) และพยายามให้มีครบทุกหัวข้อในชุดเดียว — ระหว่างทำไม่บอกข้อมูลอะไรเลย ตอนเฉลยจึงบอกว่าแต่ละข้อมาจากไหนและเคยเจอมาก่อนหรือไม่</span>`}
-    <p class="hint" style="margin:0">ตอนนี้มีให้สุ่ม: ข้อสอบเก่า ${PL.acd.length+PL.acn.length} ข้อ (เคยทำใน Phase ${ph()} แล้ว ${PL.acd.length}) · Unit round ${PL.unit.length} · Admission ของคุณ ${PL.adm.length}</p>
+    <span class="rd">ข้อสอบจริงอาจตรงหรือไม่ตรงกับข้อสอบเก่า จึง<b>สุ่มใหม่ทุกครั้ง</b> ตามสัดส่วนนี้ (สุ่มตัวเลขใหม่ทุกชุด):<br>• <b>ข้อสอบเก่า (AC) 60–70%</b> ทั้งข้อที่เคยทำแล้วและยังไม่เคยทำ<br>• <b>โจทย์จากไฟล์ของวอร์ด (L/R/T/N) 20–30%</b> = Unit round · Specialty round · เคส Admission ที่สร้างจากไฟล์ · โจทย์ใหม่ที่ AI แต่งจากไฟล์ (ตรวจกับ guideline/ตำราก่อนใช้)<br>• <b>โจทย์จากนอกไฟล์ของวอร์ด 5–10%</b> = เคส Admission จากความรู้ทั่วไป · โจทย์ใหม่ที่ AI แต่งจากความรู้นอกไฟล์<br>ส่วนที่สุ่มไม่ได้ (เช่น ไม่มี AI หรือคลังว่าง) ใช้ข้อสอบเก่าแทน · โจทย์ใหม่ของ AI ใช้เฉพาะชุดนั้น (กลับมาอีกเฉพาะใน Ward staff round) · พยายามให้มีครบทุกหัวข้อในชุดเดียว — ระหว่างทำไม่บอกข้อมูลอะไรเลย ตอนเฉลยจึงบอกว่าแต่ละข้อมาจากไหนและเคยเจอมาก่อนหรือไม่</span>
+    <p class="hint" style="margin:0">ตอนนี้มีให้สุ่ม: ข้อสอบเก่า ${PL.acd.length+PL.acn.length} ข้อ (เคยทำใน Phase ${ph()} แล้ว ${PL.acd.length}) · Unit round ${PL.unit.length} · Specialty ของคุณ ${PL.spc.length} · Admission ของคุณ ${PL.adm.length} (จากไฟล์ ${PL.admF.length} · นอกไฟล์ ${PL.admO.length}) · หน้าไฟล์ L/R/T/N ให้ AI ใช้ ${spcUnits(ward,"MCQ").length} หน้า</p>
     ${LG&&LG.wid===ward?`<div class="lgai"><b>กำลังเตรียมข้อสอบ</b> — AI กำลังเขียนโจทย์ใหม่ <b id="lgAIn">${LG.done}/${LG.k}</b> ข้อ · เวลาสอบยังไม่เริ่มนับ (ใช้เวลาประมาณ ${LG.k>20?Math.ceil(LG.k/9)+"–"+Math.ceil(LG.k/4.5):"1–3"} นาที)<div class="row2" style="margin-top:8px"><button class="btn ghost" id="lgAIx">ยกเลิก</button><span class="spacer"></span><button class="btn" id="lgAInow">เริ่มเลย ไม่ต้องรอ</button></div></div>`
-    :`<label class="chk"><input type="checkbox" id="lgAI" ${st.legAI!==false&&legAIOK()?"checked":""} ${legAIOK()?"":"disabled"}><span><b>มีโจทย์ใหม่ที่ AI สร้างปนอยู่${E.ai?` ${Math.round(E.n*E.ai)} ข้อ (${Math.round(E.ai*100)}%)`:"บางข้อ"}</b>${E.ai?"":" — สุ่มจำนวนเองทุกครั้ง"}${legAIOK()?"":HAS_CLAUDE()?"":` · ต้องเปิดใน Claude${CFG.artifactUrl?` (<a href="${esc(artLink(ward+"/legend"))}" target="_blank" rel="noopener">เปิด Legendary round ใน Claude</a>)`:""} หรือใส่ API key ที่ Admission round ก่อน`}</span></label>
+    :`<label class="chk"><input type="checkbox" id="lgAI" ${st.legAI!==false&&legAIOK()?"checked":""} ${legAIOK()?"":"disabled"}><span><b>มีโจทย์ใหม่ที่ AI สร้างปนอยู่บางข้อ</b> — สุ่มจำนวนเองทุกครั้ง (อยู่ในส่วน "จากไฟล์" และ "นอกไฟล์")${legAIOK()?"":HAS_CLAUDE()?"":` · ต้องเปิดใน Claude${CFG.artifactUrl?` (<a href="${esc(artLink(ward+"/legend"))}" target="_blank" rel="noopener">เปิด Legendary round ใน Claude</a>)`:""} หรือใส่ API key ที่ Admission round ก่อน`}</span></label>
     <div class="row2"><span class="spacer"></span><button class="btn primary" id="lgGo">เริ่มสอบ</button></div>`}</div>`;}
   const H=bankItems("leg",ward).reverse();
   h+=`<button class="resume" id="lgHist" style="margin-top:18px"><span>📜 <b>ประวัติการสอบ Legendary round</b><span class="rd">${H.length?`สอบไปแล้ว ${H.length} ครั้ง · ดูผลและเฉลยย้อนหลังได้ทุกครั้ง`:"ยังไม่เคยสอบ"}${HAS_CLAUDE()?" · ส่งผลสอบไปดูในเว็บได้":""}</span></span><span class="go">→</span></button>`;
@@ -2087,7 +2114,7 @@ function sharedLcHTML(){const L_=(SHARED[ward]||[]).filter(x=>x.kind==="lc"&&!ba
 function bindSharedLc(){document.querySelectorAll("[data-shlc]").forEach(b=>b.onclick=()=>{const x=(SHARED[ward]||[]).find(y=>y.id===b.dataset.shlc);if(!x)return;const k="lc|"+ward+"|S"+x.id;bankPut(k,{case:x.case,step:0,my:{},shared:now()+10000});P_().lcCur=k;st.lcView="";save();rLCase();window.scrollTo(0,0);});}
 
 /* ---------------- Legendary history: every paper, and sending papers made in Claude to the website ---------------- */
-function legRows(H,total){return `<div class="card" style="padding:6px">${H.map((x,i)=>{const nai=Object.values(x.src||{}).filter(v=>v==="ai").length,used=Math.round(((x.t1||0)-(x.t0||0))/1000);
+function legRows(H,total){return `<div class="card" style="padding:6px">${H.map((x,i)=>{const nai=Object.values(x.src||{}).filter(v=>v==="ai"||v==="aio").length,used=Math.round(((x.t1||0)-(x.t0||0))/1000);
   return `<button class="srow" data-lk="${esc(x.key)}"><span class="lgg ${gCls(gradeOf(x.pct))}">${esc(gradeOf(x.pct))}</span><span class="meta" style="flex:1"><b>ครั้งที่ ${total-i}</b> · ${fmtDT(x.t1)}<br>${x.score}/${x.n} (${(+x.pct||0).toFixed(1)}%) · ${x.auto?"หมดเวลา":"ใช้เวลา "+mmss(used)}${nai?` · โจทย์ AI ${nai}`:""}${x.via==="claude"||nai?" · ทำใน Claude":x.via==="web"?" · ทำในเว็บ":""}</span><span class="go">→</span></button>`;}).join("")}</div>`;}
 function rLHist(){
   const H=bankItems("leg",ward).reverse(),n=H.length;
@@ -2145,12 +2172,12 @@ function checkLegImport(){const m=/[#&](?:legs|bank)=([zj]\.[A-Za-z0-9_-]+)/.exe
     go(w+"/"+(np?"lhist":keys.some(k=>k.startsWith("spc|"))&&!keys.some(k=>k.startsWith("adm|"))?"spc":"adm"));}
   catch(e){console.warn(e);uiAlert("ลิงก์ผลสอบไม่ถูกต้อง หรือไม่ครบ (ลองคัดลอกลิงก์ใหม่ทั้งหมด)");}})();
   return true;}
-function legStart(aiQs){
-  aiQs=aiQs||[];const P=P_(),W=W_(),E=examCfg(),p=ph(),t=now(),id=t.toString(36),D=legDraw(Math.max(0,E.n-aiQs.length));if(!D.list.length&&!aiQs.length){toast("ยังไม่มีข้อให้สุ่ม");return;}
-  aiQs.forEach((q,i)=>{q.lai=1;q.uid="LAI|"+id+"|"+(i+1);q.set="AI สร้างใหม่";q.ro=fmtD(t);q.ts=t;bankPut("lai|"+ward+"|"+q.uid,{q,h:[],paper:id});D.src[q.uid]="ai";D.list.push(q.uid);});
+function legStart(aiQs,plan){
+  aiQs=aiQs||[];const P=P_(),W=W_(),E=examCfg(),p=ph(),t=now(),id=t.toString(36);plan=plan||legPlan(E.n);const D=legDraw(plan,aiQs);if(!D.list.length&&!aiQs.length){toast("ยังไม่มีข้อให้สุ่ม");return;}
+  aiQs.forEach((q,i)=>{q.lai=1;q.uid="LAI|"+id+"|"+(i+1);q.set="AI สร้างใหม่";q.ro=fmtD(t);q.ts=t;bankPut("lai|"+ward+"|"+q.uid,{q,h:[],paper:id});D.src[q.uid]=q.lsrc==="aio"?"aio":"ai";D.list.push(q.uid);});
   if(aiQs.length)D.list=shuffle(D.list);
   const pre={};D.list.forEach(u=>{const a=seenIn(P,u),b=relSeen(P,W,u);if(a.length||b.length)pre[u]={s:a,r:b};});   /* where each question had been seen before this exam */
-  P.leg={id,list:D.list,src:D.src,pre,ans:{},star:{},cur:0,t0:t,end:t+E.min*60000,min:E.min,ph:p};qStop();save();go(ward+"/exam");
+  P.leg={id,list:D.list,src:D.src,plan:{nA:plan.nA,nF:plan.nF,nO:plan.nO},pre,ans:{},star:{},cur:0,t0:t,end:t+E.min*60000,min:E.min,ph:p};qStop();save();go(ward+"/exam");
 }
 function legPick(i){const X=P_().leg;if(!X)return;const u=X.list[X.cur];if(X.ans[u]===i)delete X.ans[u];else X.ans[u]=i;save();rExam();}
 function rExam(){
@@ -2217,7 +2244,7 @@ function rLRes(){
     h+=`<div class="score">${X.score}<span style="font-size:22px;color:var(--muted)"> / ${X.n}</span></div><p class="statline" style="text-align:center"><b>${X.pct.toFixed(1)}%</b> · ถูก ${X.score} · ผิด ${wr} · ไม่ได้ทำ ${X.n-nA}${nS?` · ★ ${nS}`:""}</p>`;
     {const pre=X.pre||{},sn=qs.filter(q=>pre[q.uid]&&pre[q.uid].s&&pre[q.uid].s.length).length,rl=qs.filter(q=>pre[q.uid]&&!(pre[q.uid].s&&pre[q.uid].s.length)&&pre[q.uid].r&&pre[q.uid].r.length).length;
       if(X.pre)h+=`<p class="hint" style="text-align:center">ก่อนสอบ: เคยเจอข้อนั้นมาแล้ว ${sn} ข้อ · มีข้อคล้ายที่เคยเจอ ${rl} ข้อ · ข้อใหม่ ${qs.length-sn-rl} ข้อ</p>`;}
-    {const c={};qs.forEach(q=>{const k=legSrc(X,q.uid);c[k]=(c[k]||0)+1;});h+=`<p class="hint" style="text-align:center">ชุดนี้สุ่มได้: ${["acd","acn","ac","unit","adm","spc","ai"].filter(k=>c[k]).map(k=>`${LSRS[k]||"ข้อสอบเก่า (AC)"} ${c[k]}`).join(" · ")}</p>`;}
+    {const c={};qs.forEach(q=>{const k=legSrc(X,q.uid);c[k]=(c[k]||0)+1;});h+=`<p class="hint" style="text-align:center">ชุดนี้สุ่มได้: ${["acd","acn","ac","unit","adm","spc","ai","aio"].filter(k=>c[k]).map(k=>`${LSRS[k]||"ข้อสอบเก่า (AC)"} ${c[k]}`).join(" · ")}</p>`;}
     h+=`<p class="hint" style="text-align:center">เกณฑ์: A ≥80% · B+ 75 · B 70 · C+ 65 · C 60 · D+ 55 · D 50 · F &lt;50%</p>`;
     h+=`<div class="chips" id="lrF">${[["all","ทั้งหมด"],["wrong","ผิด"],["todo","ไม่ได้ทำ"],["star","★ ติดดาว"]].map(([v,t])=>`<button class="chip" data-v="${v}" aria-pressed="${f===v}">${t}</button>`).join("")}</div>`;
     const v=X.list.map((u,i)=>[legQ(u),i]).filter(([q])=>{if(!q)return false;const a=X.ans[q.uid];return f==="wrong"?a!=null&&a!==q.ans:f==="todo"?a==null:f==="star"?!!X.star[q.uid]:true;});

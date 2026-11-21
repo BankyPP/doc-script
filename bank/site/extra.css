@@ -1097,3 +1097,7 @@ details.gbox[open]>summary .gt::before{transform:rotate(90deg)}
 details.gbox .gwarn{font-size:12px;opacity:.75;margin-left:4px}
 details.gbox>.gray{border-left:0;padding-left:0;margin:4px 0 0}
 details.gbox .chip.gdef{font-size:12px;padding:0 9px;line-height:1.6;white-space:nowrap;color:var(--muted)}
+/* 22 Nov 2026: ใส่รูปเองในสถานี OSCE ที่ไม่มีรูป (ทุก round) */
+details.ospic{margin:6px 0 10px;padding:6px 10px;border:1px dashed var(--rule);border-radius:6px;font-size:13px}
+details.ospic summary{cursor:pointer;color:var(--muted)}
+details.ospic .row2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0}

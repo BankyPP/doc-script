@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 15a8edf 2026-11-18 Answer sheet of every round: pick sets, chapters/parts and status like Service round (MCQ sessions + MEQ/OSCE rounds; MDCU + SI)
+BankyPP/ac-mdcu f3af46c 2026-11-22 SI Med: Unit round OSCE Blood smear 100 stations (R03 Chaicharoen atlas, R04 Mindray atlas) + Round I/O/resources R03-R04; Unit OSCE small-topic picker with seeded random mix

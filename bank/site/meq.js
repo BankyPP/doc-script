@@ -44,7 +44,7 @@ const MQ_STY=[["all","ทุกแบบ"],["case","Case (สไตล์ 1)"],[
 function mqStyOk(q,sty){sty=sty||mqS().v.style;if(mqIsOS())return sty==="all"||!["ex","noex"].includes(sty)||(sty==="ex"?!!q.ex:!q.ex);return sty==="all"||(sty==="sa"?!!q.sa:!q.sa);}
 const OS_STY=[["all","ทุกข้อ"],["noex","ไม่มีอาจารย์"],["ex","มีอาจารย์"]];
 const mqSTY=()=>mqIsOS()?OS_STY:MQ_STY;
-function mqNum(q){return String(q.orig||q.n+1).replace(/^ข้อ\s*/,"");}
+function mqNum(q){return String(q.num||q.orig||q.n+1).replace(/^ข้อ\s*/,"");}   /* q.num = display-only number (e.g. Subspe OSCE "SA 5"); orig stays the key */
 function mqTitle(q){return q.title||plain(q.gray||"").replace(/^\d+(\.\d+)?\.?\s*/,"")||plain(q.stem).slice(0,70);}
 function mqGL(q,pi){if(mqIsOS())return "ทุกข้อย่อย";const S=q.parts[pi].subs;if(!S.length)return "Part";const a=S[0]._i+1,b=S[S.length-1]._i+1;return a===b?"Part "+a:"Part "+a+"–"+b;}
 function mqReo(r,i){return !!(r&&r.reo&&r.reo[i]);}
@@ -242,7 +242,8 @@ function mqTPass(q,f){const ps=mqTParts(q);if(!ps.length)return false;if(f==="to
   if(f==="notfull"){const r=mqCnt(mqRec(q));return ps.some(pi=>mqTDone(q,pi)&&mqTsubs(q,pi).some(s=>!(r&&r.g&&r.g[s._i]===2)));}if(f==="star")return mqStar(q);if(f==="note")return noted(q.uid);return true;}
 const mqSK=q=>q.ro?q.set+" "+q.ro:q.set;   /* chip key of a MEQ set (rotation kept apart) */
 /* พาร์ทในไฟล์ รวมชื่อเดียวกันทุกปี: "Part 1: MEQ" / "Part I: MEQ" / "MEQ OB" → MEQ · Recall / Short answer → Recall · Long case */
-const mqSecG=q=>{const s=String(q.sec||"").replace(/^Part\s+[\dIVX]+\s*[:.\-–]\s*/i,"").trim();if(!s)return "";if(/long\s*case/i.test(s))return "Long case";if(/recall|short\s*answer/i.test(s))return "Recall / Short answer";if(/^MEQ\b/i.test(s))return "MEQ";return s;};
+const mqSecG=q=>{const s=String(q.sec||"").replace(/^Part\s+[\dIVX]+\s*[:.\-–]\s*/i,"").trim();if(!s)return "";if(/^OS\|/.test(q.uid||""))return s;   /* OSCE: keep the file section name as is (e.g. Subspe "Short Answers", 20 Nov 2026) */
+  if(/long\s*case/i.test(s))return "Long case";if(/recall|short\s*answer/i.test(s))return "Recall / Short answer";if(/^MEQ\b/i.test(s))return "MEQ";return s;};
 const MQ_SECO=["MEQ","Recall / Short answer","Long case"];
 const mqSecs=L=>{const a=[...new Set(L.map(mqSecG).filter(Boolean))];return a.sort((x,y)=>{const i=MQ_SECO.indexOf(x),j=MQ_SECO.indexOf(y);return (i<0?99:i)-(j<0?99:j);});};
 const mqSecOk=q=>{const v=mqS().v;return !v.sec||v.sec==="all"||v.sec.split("|").includes(mqSecG(q));};
@@ -251,7 +252,7 @@ function mqList(rk){const v=mqS().v,L=mqL(),setOk=q=>v.set==="all"||v.set.split(
   if(rk==="advisor")return mqAdvL().filter(q=>mqStyOk(q)&&tgPass(mqQTagsX(q),v.tga));
   if(rk==="morning")return mornXList();
   if(rk==="spc")return osSpcList();
-  if(rk==="unit"&&mqIsOS())return osUnitList(v.utop);
+  if(rk==="unit"&&mqIsOS())return osUnitList(v.utop,v.usub,v);
   if(rk==="unit")return v.tags.length?L.filter(q=>setOk(q)&&mqSecOk(q)&&mqStyOk(q)&&mqTPass(q,v.status)):[];
   if(rk==="grand")return v.gl.map(u=>L.find(q=>q.uid===u)).filter(Boolean);
   return L.filter(q=>setOk(q)&&mqSecOk(q)&&mqStyOk(q)&&mqPass(q,v.status)&&(rk!=="service"||tgPass(mqQTags(q),v.tg)));}
@@ -259,7 +260,9 @@ function mqList(rk){const v=mqS().v,L=mqL(),setOk=q=>v.set==="all"||v.set.split(
 function mqHomeHTML(type){type=type||"MEQ";const P=P_(),p=ph(),L=mqL(ward,type),W=W_(),done=L.filter(q=>mqCaseDone(q)),scs=done.map(mqScoreC).filter(s=>s&&s.all);
   const avg=scs.length?Math.round(scs.reduce((a,s)=>a+s.got/s.tot,0)/scs.length*100):null,nC=L.filter(q=>!q.sa).length,nS=L.length-nC,sl=mqStaffL().length;
   let h=type==="OSCE"?osHomeTop(L):"";
-  if(!L.length)h+=`<div class="card"><h3>ยังไม่มีข้อสอบ ${type} ในคลัง</h3><span class="rd" style="margin:0">ส่งไฟล์ข้อสอบเก่า ${type} (PDF/รูป/เอกสาร) ให้ Claude แล้วให้เพิ่มเข้าเว็บ ปุ่ม round ด้านล่างจะใช้ได้เมื่อมีข้อสอบ (Round I/O, Teaching และ Long case ใช้ได้เลย)</span></div>`;
+  const hyGo=!L.length&&((W&&W.cfg&&W.cfg.hyGo)||{})[type];   /* MEQ ที่สอบรวมกับ OSCE (Subspe Sx, 21 พ.ย. 2026) → ชี้ไปแท็บ OSCE */
+  if(hyGo)h+=`<div class="card"><h3>${type} สอบรวมกับ ${hyGo}</h3><span class="rd" style="margin:0">ข้อสอบเก่าพาร์ท ${type} ของวอร์ดนี้อยู่ในแท็บ ${hyGo} (พาร์ท Short Answers) — ฝึกและดูสรุป High-yield ที่แท็บ ${hyGo}</span><div class="tools" style="margin-top:8px"><button class="tool" type="button" data-type="${hyGo}">ไปแท็บ ${hyGo} →</button><button class="tool" data-go="mqhy">📘 สรุป High-yield ${type}</button></div></div>`;
+  else if(!L.length)h+=`<div class="card"><h3>ยังไม่มีข้อสอบ ${type} ในคลัง</h3><span class="rd" style="margin:0">ส่งไฟล์ข้อสอบเก่า ${type} (PDF/รูป/เอกสาร) ให้ Claude แล้วให้เพิ่มเข้าเว็บ ปุ่ม round ด้านล่างจะใช้ได้เมื่อมีข้อสอบ (Round I/O, Teaching และ Long case ใช้ได้เลย)</span></div>`;
   h+=`<p class="statline">คลังมี <b>${L.length}</b> ข้อ${type==="OSCE"&&L.length?` (ไม่มีอาจารย์ ${L.filter(q=>!q.ex).length} · มีอาจารย์ ${L.filter(q=>q.ex).length})`:""} · ข้อสอบเก่า <b>${L.length}</b> ข้อ${type==="MEQ"&&L.length?` (case ${nC} · short answer ${nS})`:""} · Phase ${p} ทำแล้ว <b>${done.length}</b> ข้อ · คะแนนเฉลี่ย <b>${avg==null?"–":avg+"%"}</b></p>`;
   const v=mqS().v,cq=v.u&&L.find(q=>q.uid===v.u);
   if(cq&&!mqCaseDone(cq)&&mqAnyDone(cq)&&!rsHidden(P,"mq"+type,v.vt))h+=rsBox("mq"+type,`<button class="resume" id="mqResume"><span>ทำต่อ: <b>${type} ข้อ ${esc(mqNum(cq))}</b><span class="rd">${esc(cq.set)} · ${esc(mqTitle(cq))}</span></span><span class="go">→</span></button>`);
@@ -337,7 +340,9 @@ function mqRList(){const v=mqS().v,rk=v.r||"service",L=mqL(),T=mqTopics();
   {const qi=$("mqQ"),qn=$("mqQn");if(qn)qn.textContent=QT.length?`พบ ${Q.length}/${Q0.length} ข้อ`:"";
     if(qi){let tm=0;qi.addEventListener("input",()=>{clearTimeout(tm);tm=setTimeout(()=>{mqQ=qi.value;const p0=qi.selectionStart;mqRList();const n=$("mqQ");if(n){n.focus();try{n.setSelectionRange(p0,p0);}catch(e){}}},160);});}}
   {const tw=$("tgWrap"),g=mqRTg(rk);if(tw&&g)tgWire(tw,g,()=>{mqVset({});save();mqRList();});}
-  document.querySelectorAll("[data-utop]").forEach(b=>b.onclick=()=>{mqVset({utop:b.dataset.utop});save();mqRList();});
+  document.querySelectorAll("[data-utop]").forEach(b=>b.onclick=()=>{const t=b.dataset.utop,us=Object.assign({},v.useed||{});if(!us[t])us[t]=Math.floor(Math.random()*1e9)+1;mqVset({utop:t,usub:"",useed:us});save();mqRList();});
+  document.querySelectorAll("[data-usub]").forEach(b=>b.onclick=()=>{mqVset({usub:b.dataset.usub});save();mqRList();});
+  document.querySelectorAll("[data-ushuf]").forEach(b=>b.onclick=()=>{const us=Object.assign({},v.useed||{});us[v.utop]=Math.floor(Math.random()*1e9)+1;mqVset({useed:us});save();mqRList();toast("สลับลำดับสถานีใหม่แล้ว");});
   document.querySelectorAll("[data-mtag]").forEach(b=>b.onclick=()=>{const k=b.dataset.mtag,a=v.tags;const i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);mqVset({});save();mqRList();});
   document.querySelectorAll("[data-msty]").forEach(b=>b.onclick=()=>{mqVset({style:b.dataset.msty});save();mqRList();});
   document.querySelectorAll("[data-mset]").forEach(b=>b.onclick=()=>{const k=b.dataset.mset;let sel=v.set==="all"?[]:v.set.split("|");if(k==="all")sel=[];else if(sel.includes(k))sel=sel.filter(x=>x!==k);else sel.push(k);mqVset({set:sel.length?sel.join("|"):"all"});save();mqRList();});
@@ -406,7 +411,7 @@ function mqView(){const c=mqCur();if(!c){go(ward);return;}const {q}=c;mqVisTouch
   if(tm){if(TP.length>1)h+=`<div class="psteps">${TP.map(j=>{const d=mqTDone(q,j);return `<button class="pstep ${d?"done":"open"}${j===pi?" on":""}" data-mpart="${j}">${d?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;}
   else if(NP>1)h+=`<div class="psteps">${q.parts.map((p,j)=>{const lock=j>ps;return `<button class="pstep ${j<ps?"done":j===ps?"open":"lock"}${j===pi?" on":""}" data-mpart="${j}" ${lock?'disabled title="ส่งคำตอบ Part ก่อนหน้าก่อน"':""}>${lock?"🔒 ":j<ps?"✓ ":""}${mqGL(q,j)}</button>`;}).join("")}</div>`;
   if(mqCaseDone(q))h+=myNoteTop(q);   /* 📝 my after-answer note above the question — only once the whole case has been answered (user 28 Oct 2026) */
-  if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">${q.mday?"เคสประจำวัน":"ข้อ"} ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?grayBox(q.gray,q.uid+"|c"):""}</section>`;
+  if(!q.sa){h+=`<section class="case${pi>0?" old":""}"><div class="case-lab">${q.mday?"เคสประจำวัน":"ข้อ"} ${esc(mqNum(q))}${pi>0?' <span class="oldtag">ข้อมูลเดิม</span>':""}</div><div class="stem">${q.stem}</div>${mqIsOS()?osPicBlock(q,false):mqImgs(q.img,q.imgNote)}${q.gray&&!(mqIsOS()&&!mqCaseDone(q))?grayBox(q.gray,q.uid+"|c"):""}</section>`;
     const prev=q.parts.slice(0,pi).filter(p=>p.info||p.img);
     if(prev.length)h+=`<details class="prev old" open><summary>ข้อมูลเพิ่มเติมจาก Part ก่อนหน้า <span class="oldtag">ข้อมูลเดิม</span></summary>${prev.map(p=>`<div class="pinfo"><span class="pn">${esc(mqGL(q,p.i).replace("Part ","P"))}</span><div>${p.info?`<div>${p.info}</div>`:""}${p.info&&(p.igray||p.gray)?grayBox(p.igray||p.gray,q.uid+"|i"+p.i):""}${mqImgs(p.img,p.imgNote)}</div></div>`).join("")}</details>`;}
   const pm=SUBS.reduce((a,s)=>a+mqMk(s),0);
@@ -438,7 +443,7 @@ function mqView(){const c=mqCur();if(!c){go(ward);return;}const {q}=c;mqVisTouch
   h+=`</section></div>`;
   {const done=Q.filter(x=>mqCaseDone(x)).length;$("pos").textContent=k>=0?`${k+1} / ${Q.length}`:"";$("count").textContent=`${done}/${Q.length}`;$("prog").style.width=(Q.length?done/Q.length*100:0)+"%";
     $("prev").textContent="ก่อนหน้า";$("next").textContent=v.r==="grand"?"สุ่มข้อถัดไป":v.r==="spc"&&k===Q.length-1?"สร้างสถานีถัดไป":"ถัดไป";$("prev").disabled=false;$("next").disabled=false;$("next").classList.toggle("primary",pDone);$("next").classList.toggle("ghost",!pDone);}
-  $("main").innerHTML=h;mqBindView(q,pi);mqTStart();mqTPaint();
+  $("main").innerHTML=h;mqBindView(q,pi);if(mqIsOS())osPicWire(q,()=>{const c2=mqCur();if(c2&&c2.q.uid===q.uid)mqView();});mqTStart();mqTPaint();
   if(pDone&&mqAiAvail()&&HAS_CLAUDE()){const kk=q.uid+"#"+pi;if(!MQAI.auto)MQAI.auto={};if(!MQAI.auto[kk]&&SUBS.some(x=>!mqReo(r,x._i)&&((r.t&&r.t[x._i])||"").trim()&&!(r.ai&&r.ai[x._i]))){MQAI.auto[kk]=1;setTimeout(()=>mqAiRun(q,pi,false),0);}}}
 function mqDoneSub(q,pi,s,r,t){const i=s._i,typed=!!t.trim(),ai=(r.ai&&r.ai[i])||null,kk=q.uid+"#"+pi,sg=mqSug(s,r);let h="";
   h+=`<div class="mmine-lab">คำตอบของฉัน <span>· ส่งแล้ว</span></div><textarea class="ans ro" readonly rows="3" placeholder="— ไม่ได้พิมพ์คำตอบ —">${esc(t)}</textarea><div class="sbody">`;

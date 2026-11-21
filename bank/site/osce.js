@@ -50,7 +50,9 @@ const osFmt=sec=>{sec=Math.max(0,Math.ceil(sec));return Math.floor(sec/60)+":"+S
 /* station lookup: old-exam station (W.OS) or an AI station kept inside the run */
 function osNorm(q){if(q._n)return q;q._n=1;if(!Array.isArray(q.parts)||!q.parts.length)q.parts=[{subs:q.subs||[]}];q.subs=[];
   q.parts.forEach((p,pi)=>{p.i=pi;p.subs=p.subs||[];p.subs.forEach((s,k)=>{s._p=pi;s._k=k;s._i=q.subs.length;if(!(s.tags||[]).length&&q.topic)s.tags=[q.topic];q.subs.push(s);});});return q;}
-function osSt(run,u){if(!u)return null;if(run.gen&&run.gen[u]){const g=osNorm(run.gen[u]);if(!g.uid)g.uid=u;return g;}return mqL(ward,"OSCE").find(q=>q.uid===u)||null;}
+function osSt(run,u){if(!u)return null;if(run.gen&&run.gen[u]){const g=osNorm(run.gen[u]);if(!g.uid)g.uid=u;return g;}
+  if(/^OSU\|/.test(u))return osUnitAll().find(q=>q.uid===u)||null;   /* Unit round stations and the viewer's Specialty stations (file group of Legendary, 22 Nov 2026) */
+  return mqL(ward,"OSCE").find(q=>q.uid===u)||osSpcQ(u)||null;}
 const osSlotType=(run,sl)=>{if(sl.k==="rest")return "rest";const q=osSt(run,sl.u);const t=q?{ex:!!q.ex,proc:!!q.proc}:osTopicEx(sl.topic);return t.proc?"proc":t.ex?"ex":"noex";};
 const OS_TI={noex:"📝",ex:"👨‍⚕️",proc:"🩺",rest:"☕"},OS_TT={noex:"ไม่มีอาจารย์",ex:"มีอาจารย์",proc:"หัตถการ (มีอาจารย์ ไม่มีข้อพักตามหลัง)",rest:"ข้อพัก"};
 const osA=()=>mqInitP(P_(),"OSCE")["a"+ph()];
@@ -60,11 +62,23 @@ const OSIMG={};   /* uid → dataURL | false (looked up, none) */
 function osIDB(){return new Promise((res,rej)=>{try{const r=indexedDB.open("os-img",1);r.onupgradeneeded=()=>r.result.createObjectStore("img");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);}catch(e){rej(e);}});}
 async function osImgPut(k,v){const db=await osIDB();return new Promise((res,rej)=>{const t=db.transaction("img","readwrite"),s=t.objectStore("img");if(v==null)s.delete(k);else s.put(v,k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error);});}
 async function osImgGet(k){const db=await osIDB();return new Promise(res=>{const t=db.transaction("img").objectStore("img").get(k);t.onsuccess=()=>res(t.result||null);t.onerror=()=>res(null);});}
-async function osImgLoad(run,again){const U=Object.keys((run&&run.gen)||{}).filter(u=>OSIMG[u]===undefined);if(!U.length)return;for(const u of U){try{OSIMG[u]=(await osImgGet(u))||false;}catch(e){OSIMG[u]=false;}}if(again)again();}
+async function osImgLoad(run,again){const U=[...new Set(Object.keys((run&&run.gen)||{}).concat(((run&&run.seq)||[]).filter(s=>s.k==="st"&&s.u&&!(run.gen||{})[s.u]).map(s=>s.u).filter(u=>osNeedsImg(osSt(run,u)))))].filter(u=>OSIMG[u]===undefined);if(!U.length)return;for(const u of U){try{OSIMG[u]=(await osImgGet(u))||false;}catch(e){OSIMG[u]=false;}}if(again)again();}
 function osShrink(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onerror=()=>rej(fr.error);fr.onload=()=>{const im=new Image();im.onerror=()=>rej(new Error("img"));im.onload=()=>{const m=1400,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",0.85));};im.src=fr.result;};fr.readAsDataURL(file);});}
-const osNeedsImg=q=>!!(q&&q.ai&&(q.imgNeed||q.imgAlt));
-function osAiImgHTML(q,reveal){if(!osNeedsImg(q))return "";const d=OSIMG[q.uid];
-  return (d?`<div class="stem-img"><img src="${d}" alt="รูปประกอบโจทย์ที่ใส่เอง"></div>`:q.imgAlt?`<div class="img-missing">🖼 ไม่ได้ใส่รูป — คำบรรยายแทนรูป: ${q.imgAlt}</div>`:"")+(reveal&&q.imgNeed?`<p class="hint">รูปที่ข้อนี้ต้องใช้: ${q.imgNeed}</p>`:"");}
+/* 22 Nov 2026 (user, ทวทว): every OSCE station that has no picture of its own — AI / Unit / Specialty / Morning / old stations whose file had no picture —
+   can take a picture the user finds himself (🔎 ค้นรูป → ใส่รูป, kept in this browser only, IndexedDB "os-img", key = station uid) */
+const osHasPic=q=>[].concat((q&&q.img)||[]).some(k=>IMGS[k]);
+const osNeedsImg=q=>!!(q&&!osHasPic(q)&&(q.imgNeed||q.imgAlt||q.imgNote));
+function osPicQ(q){const t=x=>plain(String(x||"")).trim(),n=t(q.imgNote);return t(q.imgNeed)||(n&&!/ไม่มีรูป/.test(n)?n:"")||t(q.imgAlt)||t(q.title);}
+/* picture block of a station: the real picture(s) if any · else the picture the user put in · else the "no picture" note + (outside the timed exam) tools to add one */
+function osPicBlock(q,lock){const real=mqImgs(q.img,q.imgNote);if(!osNeedsImg(q))return real;const d=OSIMG[q.uid];
+  let h=d?`<div class="stem-img"><img src="${d}" alt="รูปที่ใส่เอง"><div class="img-note">🖼 รูปที่ใส่เอง — เก็บในเครื่องนี้เท่านั้น</div></div>`:(q.imgNote?real:q.imgAlt&&!String(q.stem||"").includes(q.imgAlt)?`<div class="img-missing">🖼 ยังไม่มีรูป — คำบรรยายแทนรูป: ${q.imgAlt}</div>`:`<div class="img-missing">🖼 ยังไม่มีรูปในข้อนี้</div>`);
+  if(!lock)h+=`<details class="ospic"><summary>${d?"🖼 เปลี่ยน / ลบรูปที่ใส่เอง":"🖼 ใส่รูปเอง"}</summary><p class="hint" style="margin:4px 0 6px">กด “ค้นรูป” แล้วบันทึกรูปลงเครื่อง จากนั้นกด “ใส่รูป” · รูปเก็บในเบราว์เซอร์นี้เท่านั้น (ใช้ได้ทุก round ที่สถานีนี้ออก) · คำค้นอาจบอกคำตอบ</p><div class="row2"><a class="btn sm" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(osPicQ(q))}">🔎 ค้นรูป ↗</a><label class="btn sm osup">${d?"เปลี่ยนรูป":"ใส่รูป"}<input type="file" accept="image/*" data-osimg="${esc(q.uid)}" hidden></label>${d?`<button class="link" type="button" data-osimgdel="${esc(q.uid)}">ลบรูป</button>`:""}</div></details>`;
+  return h;}
+/* load the user's picture of q (once) and wire the add / remove buttons · re = redraw the page */
+function osPicWire(q,re){if(!osNeedsImg(q))return;
+  if(OSIMG[q.uid]===undefined){OSIMG[q.uid]=false;osImgGet(q.uid).then(d=>{if(d){OSIMG[q.uid]=d;re();}}).catch(()=>{});}
+  document.querySelectorAll("[data-osimg]").forEach(el=>el.onchange=async()=>{const f=el.files&&el.files[0];if(!f)return;try{const d=await osShrink(f);await osImgPut(el.dataset.osimg,d);OSIMG[el.dataset.osimg]=d;re();toast("ใส่รูปแล้ว");}catch(e){toast("ใส่รูปไม่สำเร็จ — ลองไฟล์ JPG/PNG อื่น");}});
+  document.querySelectorAll("[data-osimgdel]").forEach(b=>b.onclick=async()=>{if(!await uiAsk("ลบรูปที่ใส่เองของข้อนี้?"))return;try{await osImgPut(b.dataset.osimgdel,null);}catch(e){}OSIMG[b.dataset.osimgdel]=false;re();});}
 /* the website has no AI of its own: AI stations need the Claude version of this site (or the viewer's own API key) */
 const osAiOK=()=>HAS_CLAUDE()||!!aiCfg().key;
 function osAiBtns(rt){if(osAiOK())return "";const u=typeof artLink==="function"&&artLink(ward+(rt||"/osl"));
@@ -102,16 +116,31 @@ function osExMax(seq,tyOf){const N=seq.length;if(!N)return 0;const isEx=sl=>sl.k
   let best=0,cur=0;for(let k=0;k<2*N;k++){const sl=seq[k%N];if(sl.k==="rest"){cur=0;continue;}if(isEx(sl)){cur++;best=Math.max(best,cur);}else cur=0;}return Math.min(best,N);}
 function osStartPick(seq){const ix=seq.map((s,i)=>s.k==="rest"?-1:i).filter(i=>i>=0);return ix.length?ix[Math.floor(Math.random()*ix.length)]:0;}
 function osNewRun(o){return Object.assign({id:now().toString(36),ts:now(),stage:"prep",kind:"legend",seq:[],start:0,gen:{},ans:{},tick:{},ut:{},gm:{},ai:{},short:0},o);}
-/* Legendary: cfg {mode,n,per,rest,order,topics,nAI} — nAI stations written by AI, the rest old exams (AI also fills any shortage when AI is on) */
-function osBuild(cfg){const P=P_(),aiOn=(cfg.nAI||0)>0,nAI=Math.max(0,Math.min(cfg.n,cfg.nAI||0)),auto=!cfg.quota;let Q=auto?osQuotaAuto(cfg.n,cfg.topics,aiOn):Object.assign({},cfg.quota);
-  if(!auto){let left=cfg.n-Object.values(Q).reduce((a,b)=>a+b,0);if(left>0){const X=osQuotaAuto(left,[],aiOn);Object.keys(X).forEach(t=>{Q[t]=(Q[t]||0)+X[t];});}}
-  /* ข้อ AI แบ่งตามสัดส่วนของโควตา (สุ่มจากโควตาทุกข้อ) ที่เหลือใช้ข้อสอบเก่า */
-  const bag=shuffle(Object.keys(Q).flatMap(t=>Array(Q[t]).fill(t))),aiT=bag.slice(0,nAI),Qo={},cnt={};bag.slice(nAI).forEach(t=>{Qo[t]=(Qo[t]||0)+1;});
-  const R=osPickOld(Qo,cnt,true);let sts=R.out,short=0;const fillAI=[];Object.keys(R.short).forEach(t=>{for(let i=0;i<R.short[t];i++){if(aiOn)fillAI.push(t);else short++;}});
+/* Legendary (22 Nov 2026, user, ทวทว): cfg {mode,n,per,rest,order,topics,quota,mix}
+   mix "mix" (default) = old exams 90% : stations from the ward's own files 10% (because the real OSCE repeats old stations a lot)
+     file group = Unit round stations + the viewer's Specialty stations + new AI stations built on one L/R/T/N page of the OSCE tab (needs AI) — random mix
+     the 10% is n × 0.1 with the fraction rounded up or down at random · anything the file group cannot fill → old exams · old exams short + AI on → AI fills (as before)
+   mix "old" = old exams only */
+const OS_FILE=0.1;
+function osFileN(n){const x=n*OS_FILE,f=Math.floor(x);return f+(Math.random()<x-f?1:0);}
+function osBuild(cfg){const P=P_(),mix=cfg.mix!=="old",aiOK=mix&&osAiOK(),auto=!cfg.quota,nF=mix?osFileN(cfg.n):0,nOld=cfg.n-nF;
+  let Q=auto?osQuotaAuto(nOld,cfg.topics,aiOK):Object.assign({},cfg.quota);
+  if(!auto){let tot=Object.values(Q).reduce((a,b)=>a+b,0);if(tot>nOld){const bag=shuffle(Object.keys(Q).flatMap(t=>Array(Q[t]).fill(t))).slice(0,nOld);Q={};bag.forEach(t=>{Q[t]=(Q[t]||0)+1;});tot=nOld;}
+    const left=nOld-tot;if(left>0){const X=osQuotaAuto(left,[],aiOK);Object.keys(X).forEach(t=>{Q[t]=(Q[t]||0)+X[t];});}}
+  const cnt={},R=osPickOld(Q,cnt,true);let sts=R.out,short=0;const fillAI=[];Object.keys(R.short).forEach(t=>{for(let i=0;i<R.short[t];i++){if(aiOK)fillAI.push(t);else short++;}});
   /* สุ่มกระจาย + ไม่มี AI: หัวข้อไหนข้อเก่าไม่พอ ย้ายไปหัวข้ออื่นที่ยังเติมได้ */
   if(auto&&short>0){const hasU=new Set(sts.map(x=>x.u)),pool=shuffle(mqL(ward,"OSCE").filter(q=>!hasU.has(q.uid)&&(!cfg.topics.length||cfg.topics.includes(q.topic))));for(const q of pool){if(short<=0)break;const k=osSubKey(q.topic,osSubOf(q));if(k&&(cnt[k]||0)>=OS_SUBLIM)continue;if(k)cnt[k]=(cnt[k]||0)+1;sts.push({k:"st",u:q.uid,topic:q.topic||""});short--;}}
-  aiT.concat(fillAI).forEach(t=>{sts.push({k:"st",src:"ai",topic:t,u:"",sub:osAiSub(t,cnt)});});
-  const run=osNewRun({mode:cfg.mode,per:cfg.per,rest:cfg.rest,order:cfg.order,topics:cfg.topics,n:cfg.n,nAI,short:Math.max(0,short),quotaCfg:cfg.quota||null});
+  fillAI.forEach(t=>{sts.push({k:"st",src:"ai",topic:t,u:"",sub:osAiSub(t,cnt)});});
+  /* file group */
+  let fShort=0;if(nF>0){const inT=q=>!cfg.topics.length||cfg.topics.includes(q.topic),used=new Set(sts.map(x=>x.u)),
+      U=shuffle(osUnitAll().filter(q=>inT(q)&&!used.has(q.uid))),S=shuffle(osSpcList().filter(q=>inT(q)&&!used.has(q.uid))),fu=aiOK?spcUnits(ward,"OSCE"):[];
+    const c=typeof legMix==="function"?legMix({u:U.length,s:S.length,ai:fu.length?nF:0},nF):{u:Math.min(U.length,nF),s:0,ai:0};
+    U.slice(0,c.u||0).forEach(q=>sts.push({k:"st",u:q.uid,topic:q.topic||"",fsrc:"unit"}));S.slice(0,c.s||0).forEach(q=>sts.push({k:"st",u:q.uid,topic:q.topic||"",fsrc:"spc"}));
+    for(let i=0;i<(c.ai||0);i++)sts.push({k:"st",src:"ai",fsrc:"file",topic:cfg.topics.length?cfg.topics[i%cfg.topics.length]:"",u:"",sub:""});
+    fShort=nF-(c.u||0)-(c.s||0)-(c.ai||0);
+    if(fShort>0){const hasU=new Set(sts.map(x=>x.u)),pool=shuffle(mqL(ward,"OSCE").filter(q=>!hasU.has(q.uid)&&inT(q)));for(const q of pool){if(fShort<=0)break;const k=osSubKey(q.topic,osSubOf(q));if(k&&(cnt[k]||0)>=OS_SUBLIM)continue;if(k)cnt[k]=(cnt[k]||0)+1;sts.push({k:"st",u:q.uid,topic:q.topic||""});fShort--;}
+      short+=Math.max(0,fShort);}}
+  const run=osNewRun({mode:cfg.mode,per:cfg.per,rest:cfg.rest,order:cfg.order,topics:cfg.topics,n:cfg.n,mix:mix?"mix":"old",nF,short:Math.max(0,short),quotaCfg:cfg.quota||null});
   sts.forEach(sl=>{sl.ty=osSlotType(run,sl);});
   if(cfg.order!=="custom"){if(cfg.order==="block"){const a=shuffle(sts.filter(s=>s.ty==="noex")),b=shuffle(sts.filter(s=>s.ty!=="noex"));sts=a.concat(b);}else sts=shuffle(sts);
     run.seq=osOpt("autoRest")===false?sts:osRests(sts);run.start=osStartPick(run.seq);}
@@ -119,9 +148,9 @@ function osBuild(cfg){const P=P_(),aiOn=(cfg.nAI||0)>0,nAI=Math.max(0,Math.min(c
 /* real exam count/time — set here when the ward has none yet (same place as the Admit · ICU · Discharge page) */
 function osSetReal(n,min){const id=W_().cfg.id,o=wOv(id);st.wcfg=st.wcfg||{};st.wcfg[id]=Object.assign({},o||{},{examOS:{n:Math.round(n),min:Math.round(min*2)/2},ts:now()});delete st.wcfg[id].reset;save();}
 /* ---- Legendary setup page (#/<ward>/osl) ---- */
-function osSetup(){const P=P_(),E=osExamCfg(),L=mqL(ward,"OSCE"),T=osTopics(),v=P.osSet=Object.assign({mode:"irl",rest:OS_REST,order:"block",topics:[],aiOn:false,nAI:0},P.osSet||{});
+function osSetup(){const P=P_(),E=osExamCfg(),L=mqL(ward,"OSCE"),T=osTopics(),v=P.osSet=Object.assign({mode:"irl",rest:OS_REST,order:"block",topics:[],mix:"mix"},P.osSet||{});if(v.mix!=="old")v.mix="mix";
   if(osPrep())return osPrepView();
-  const n=E?E.n:0,defAI=Math.max(1,Math.round(n*0.2));if(!(v.nAI>0))v.nAI=defAI;if(n&&v.nAI>n)v.nAI=n;
+  const n=E?E.n:0;
   let h=`<div class="mqv osv"><div class="whead"><h1 class="h2">Legendary round · OSCE</h1><a href="#/${esc(ward)}">กลับหน้าวอร์ด</a></div>
     <p class="sub" style="margin:0 0 10px">จำลองสอบจริง — จำนวนข้อและเวลาต่อข้อเท่าสอบจริงของวอร์ด · เปิดทีละข้อ ข้อย่อยขึ้นพร้อมกัน หมดเวลาเปลี่ยนข้อเอง · ข้อสอบเก่าในคลัง <b>${L.length}</b> ข้อ</p>`;
   const cur=osRunCur();if(cur)h+=rsPage("pg:osrun",Math.max(cur.vt||0,cur.ts||0),`<button class="resume" id="osResume"><span>กำลังทำอยู่: <b>${osKindN(cur.kind)} · ${cur.mode==="irl"?"IRL":"SIM"}</b><span class="rd">ช่องที่ ${(cur.pos||0)+1}/${cur.seq.length} — กดเพื่อทำต่อ</span></span><span class="go">→</span></button>`,`<button class="linkbtn rs2" id="osResume">กำลังทำ ${osKindN(cur.kind)} ค้างอยู่ · ช่องที่ ${(cur.pos||0)+1}/${cur.seq.length} · <b>กลับไปทำต่อ</b> →</button>`);
@@ -133,9 +162,10 @@ function osSetup(){const P=P_(),E=osExamCfg(),L=mqL(ward,"OSCE"),T=osTopics(),v=
   h+=`<div class="card"><h3>2. หัวข้อที่อยากสอบ</h3>${T.length?`<div class="osord" style="margin:6px 0 8px">${[["auto","สุ่มกระจายให้","สุ่มแล้วจัดสัดส่วนให้พอดี ไม่เยอะหรือน้อยเกินไป · ออกครบทุกหัวข้อถ้าจำนวนข้อพอ"],["manual","กำหนดเองว่าหัวข้อละกี่ข้อ","ใส่จำนวนข้อของแต่ละหัวข้อใหญ่ · ส่วนที่เหลือสุ่มกระจายให้"]].map(([k,nm,d])=>`<button class="osopt" type="button" data-osqm="${k}" aria-pressed="${qm===k}"><b>${nm}</b><span>${d}</span></button>`).join("")}</div>`:""}${qm==="manual"?`<div class="osqgrid">${T.map(t=>`<label class="osqrow"><span>${OS_TI[t.proc?"proc":t.ex?"ex":"noex"]} ${esc(t.name)} <span class="hint">คลัง ${cnt[t.id]||0}${OS_SUBON?` · ใช้ได้ ${osCap(t.id)}`:""}</span></span><input type="number" min="0" max="${n||80}" data-osq="${esc(t.id)}" value="${esc(qv[t.id]||"")}" placeholder="0"></label>`).join("")}</div><p class="${n&&qSum>n?"hint osqbad":"hint"}" id="osQSum" style="margin:6px 0 0">รวม <b>${qSum}</b>${n?` จาก ${n} ข้อ${qSum>n?" — เกินจำนวนข้อสอบจริง":qSum<n?` · อีก ${n-qSum} ข้อสุ่มกระจายให้`:""}`:""}</p>`:T.length?`<div class="chips">${T.map(t=>`<button class="chip" type="button" data-ost="${esc(t.id)}" aria-pressed="${v.topics.includes(t.id)}">${OS_TI[t.proc?"proc":t.ex?"ex":"noex"]} ${esc(t.name)}<span class="cnt">${cnt[t.id]||0}</span></button>`).join("")}</div><span class="rd" style="margin-top:4px">ไม่เลือก = ทุกหัวข้อ</span>`:`<span class="rd">วอร์ดนี้ยังไม่มีรายการหัวข้อ OSCE — สุ่มจากทุกข้อในคลัง</span>`}
     <span class="rd" style="margin-top:6px">📝 ไม่มีอาจารย์ · 👨‍⚕️ มีอาจารย์ · 🩺 หัตถการ · ตัวเลข = ข้อสอบเก่าในคลัง${OS_SUBON?` · หัวข้อเล็กเรื่องเดียวกัน (เช่น PBS, CXR) ออกไม่เกิน ${OS_SUBLIM} ข้อต่อชุด แม้ต่างโรค`:""}</span></div>`;
   const inT=qm==="manual"?T.reduce((a,t)=>a+osCap(t.id),0):T.filter(t=>!v.topics.length||v.topics.includes(t.id)).reduce((a,t)=>a+osCap(t.id),0)||L.filter(q=>!v.topics.length||v.topics.includes(q.topic)).length;
-  h+=`<div class="card"><h3>3. โจทย์นอกข้อสอบเก่า</h3><div class="osord">${[["0","ข้อสอบเก่าเท่านั้น","ทุกข้อมาจากข้อสอบเก่าในคลัง"],["1","เพิ่มโจทย์ใหม่จาก AI","AI ดูข้อสอบเก่าเป็นแนวว่าออกประมาณไหน แต่แต่งใหม่ไม่ซ้ำ (เปลี่ยนโรคหรือเปลี่ยนค่า) · ข้อที่ต้องใช้รูป AI จะบอกว่าเป็นรูปอะไร แล้วคุณใส่รูปเองก่อนเริ่ม"]].map(([k,nm,d])=>`<button class="osopt" type="button" data-osai="${k}" aria-pressed="${(v.aiOn?"1":"0")===k}"><b>${nm}</b><span>${d}</span></button>`).join("")}</div>
-    ${v.aiOn?`<div class="dtrow" style="margin-top:8px"><label>จำนวนข้อที่ให้ AI แต่ง${n?` (จาก ${n} ข้อ)`:""}<input type="number" id="osNAI" min="1" max="${n||80}" value="${esc(v.nAI)}"></label></div>${osAiBtns()}<span class="rd">ต้องเปิดใน Claude หรือใส่ API key · AI ดึงรูปจากอินเทอร์เน็ตไม่ได้ — ข้อที่ต้องใช้รูปมีลิงก์ค้นรูปใน Google ให้ แล้วใส่รูปเองได้ (ไม่ใส่ก็สอบได้ จะขึ้นคำบรรยายแทนรูป)</span>`:""}
-    ${n&&!v.aiOn&&inT<n?`<p class="hint" style="margin:8px 0 0">ข้อสอบเก่าในหัวข้อที่เลือกใช้ได้ ${inT} ข้อ${OS_SUBON?` (หลังจำกัดหัวข้อเล็กละ ${OS_SUBLIM} ข้อ)`:""} ไม่ครบ ${n} — จะสอบแค่ ${inT} ข้อ หรือเลือก "เพิ่มโจทย์ใหม่จาก AI" ให้ AI เติมส่วนที่ขาด</p>`:""}</div>`;
+  {const nU=osUnitAll().length,nS=osSpcList().length,nP=spcUnits(ward,"OSCE").length;
+  h+=`<div class="card"><h3>3. สัดส่วนข้อสอบ</h3><div class="osord">${[["mix","ข้อสอบเก่า 90% + จากไฟล์ของวอร์ด 10%","OSCE จริงชอบออกตรงข้อสอบเก่า จึงให้ข้อสอบเก่าเป็นหลัก · อีก 10% สุ่มปนจาก สถานี Unit round · สถานี Specialty ของคุณ · สถานีใหม่ที่ AI แต่งจากไฟล์ L/R/T/N ของวอร์ด (ต้องมี AI) — สุ่มสัดส่วนใหม่ทุกชุด"],["old","ข้อสอบเก่าเท่านั้น","ทุกข้อมาจากข้อสอบเก่าในคลัง"]].map(([k,nm,d])=>`<button data-osmix="${k}" aria-pressed="${v.mix===k}"><b>${nm}</b><span>${d}</span></button>`).join("")}</div>
+    ${v.mix==="mix"?`<p class="rd" style="margin:8px 0 0">ตอนนี้มีให้สุ่มในส่วน 10%: Unit round ${nU} สถานี · Specialty ของคุณ ${nS} สถานี · หน้าไฟล์ให้ AI แต่ง ${nP} หน้า${osAiOK()?"":" (ยังไม่มี AI — ใช้ได้แค่ Unit / Specialty ส่วนที่ขาดใช้ข้อสอบเก่าแทน)"}${n?` · ชุด ${n} ข้อ ≈ จากไฟล์ ${Math.floor(n*OS_FILE)}${n*OS_FILE%1?"–"+Math.ceil(n*OS_FILE):""} ข้อ`:""}</p>${osAiBtns()}<span class="rd">AI ดึงรูปจากอินเทอร์เน็ตไม่ได้ — ข้อที่ต้องใช้รูปมีลิงก์ค้นรูปใน Google ให้ แล้วใส่รูปเองได้ (ไม่ใส่ก็สอบได้ จะขึ้นคำบรรยายแทนรูป) · ข้อสอบเก่าไม่พอและมี AI: AI แต่งเติมส่วนที่ขาด</span>`:""}
+    ${n&&(v.mix==="old"||!osAiOK())&&inT<n?`<p class="hint" style="margin:8px 0 0">ข้อสอบเก่าในหัวข้อที่เลือกใช้ได้ ${inT} ข้อ${OS_SUBON?` (หลังจำกัดหัวข้อเล็กละ ${OS_SUBLIM} ข้อ)`:""} ไม่ครบ ${n} — ${v.mix==="old"?`จะสอบแค่ ${inT} ข้อ หรือเลือกแบบ 90 : 10 แล้วเปิด AI ให้เติมส่วนที่ขาด`:"ถ้าไม่มี AI จะสอบเท่าที่มี"}</p>`:""}</div>`;}
   h+=`<div class="card"><h3>4. วิธีเรียงข้อและข้อพัก</h3><div class="osord">${[["block","แยกกลุ่ม","ข้อไม่มีอาจารย์อยู่ก่อน (เรียงสุ่ม) แล้วข้อมีอาจารย์อยู่ติดกันท้ายสุด · สุ่มข้อเริ่ม แล้วทำไล่ไปจนครบวง"],["random","สุ่มปนกัน","สุ่มลำดับข้อมีและไม่มีอาจารย์ปนกัน · สุ่มข้อเริ่มเหมือนกัน"],["custom","ออกแบบเอง","วางเองทีละข้อ ว่าข้อไหนหัวข้ออะไร ใช้ข้อสอบเก่าหรือให้ AI แต่งตามที่ต้องการ และใส่ข้อพักตรงไหน"]].map(([k,nm,d])=>`<button class="osopt" type="button" data-oso="${k}" aria-pressed="${v.order===k}"><b>${nm}</b><span>${d}</span></button>`).join("")}</div>
     <div class="dtrow" style="margin-top:8px"><label>ข้อพัก (วินาที)<input type="number" id="osRest" min="5" max="600" step="5" value="${esc(v.rest)}"></label></div>
     ${v.order!=="custom"?`<p class="rd" style="margin:6px 0 0">ข้อพัก: หลังข้อมีอาจารย์ทุกข้อ (ยกเว้นหัตถการ) และทุก 3–5 ข้อไม่มีอาจารย์ (สุ่ม) · นับเป็น 1 เลขข้อ · แก้ตำแหน่งได้ในหน้าถัดไป</p>`:`<p class="rd" style="margin:6px 0 0">ออกแบบเอง: จำนวนข้อตามที่วาง · เวลาต่อข้อตามสอบจริง</p>`}</div>`;
@@ -147,16 +177,15 @@ function osSetup(){const P=P_(),E=osExamCfg(),L=mqL(ward,"OSCE"),T=osTopics(),v=
   {const b=$("osRSave");if(b)b.onclick=()=>{const a=+$("osRN").value,m=+$("osRM").value;if(!(a>0&&m>0)){toast("ใส่ทั้งจำนวนข้อและเวลาต่อข้อ");return;}osSetReal(a,m);toast("บันทึกจำนวนข้อและเวลาสอบจริงแล้ว");osSetup();};}
   document.querySelectorAll("[data-osm]").forEach(b=>b.onclick=()=>upd({mode:b.dataset.osm}));
   document.querySelectorAll("[data-oso]").forEach(b=>b.onclick=()=>upd({order:b.dataset.oso}));
-  document.querySelectorAll("[data-osai]").forEach(b=>b.onclick=()=>upd({aiOn:b.dataset.osai==="1"}));
+  document.querySelectorAll("[data-osmix]").forEach(b=>b.onclick=()=>upd({mix:b.dataset.osmix}));
   document.querySelectorAll("[data-osqm]").forEach(b=>b.onclick=()=>upd({qm:b.dataset.osqm}));
   document.querySelectorAll("[data-osq]").forEach(e=>e.oninput=()=>{const x=Math.max(0,Math.round(+e.value)||0);if(x)qv[e.dataset.osq]=x;else delete qv[e.dataset.osq];v.qv=qv;P.osSet=v;save();const S=T.reduce((a,t)=>a+(+qv[t.id]||0),0),el=$("osQSum");if(el){el.className=n&&S>n?"hint osqbad":"hint";el.innerHTML=`รวม <b>${S}</b>${n?` จาก ${n} ข้อ${S>n?" — เกินจำนวนข้อสอบจริง":S<n?` · อีก ${n-S} ข้อสุ่มกระจายให้`:""}`:""}`;}});
   document.querySelectorAll("[data-ost]").forEach(b=>b.onclick=()=>{const k=b.dataset.ost,a=v.topics.slice(),i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);upd({topics:a});});
-  {const e=$("osNAI");if(e)e.onchange=()=>{const x=Math.round(+e.value);if(x>0){v.nAI=x;P.osSet=v;save();}};}
   $("osRest").onchange=()=>{const x=Math.round(+$("osRest").value);if(x>0){v.rest=x;P.osSet=v;save();}};
   $("osGo").onclick=async()=>{if(!E)return;const rest=Math.round(+$("osRest").value);if(!(rest>0)){toast("ใส่เวลาข้อพัก");return;}
     if(cur&&!await uiAsk("มีชุดที่ทำค้างอยู่ — สร้างชุดใหม่แทน? (ชุดเดิมจะถูกยกเลิก ไม่เก็บผล)"))return;
     {const S=T.reduce((a,t)=>a+(+qv[t.id]||0),0);if(qm==="manual"&&S>E.n){toast(`รวมหัวข้อ ${S} ข้อ เกินจำนวนข้อสอบจริง ${E.n} ข้อ`);return;}}
-    v.rest=rest;P.osSet=v;const qc=qm==="manual"&&v.order!=="custom"?Object.assign({},qv):null;osBuild({mode:v.mode,n:E.n,per:E.min*60,rest,order:v.order,topics:qm==="manual"?[]:v.topics.slice(),quota:qc,nAI:v.aiOn?Math.min(E.n,v.nAI||1):0});osPrepView();};}
+    v.rest=rest;P.osSet=v;const qc=qm==="manual"&&v.order!=="custom"?Object.assign({},qv):null;osBuild({mode:v.mode,n:E.n,per:E.min*60,rest,order:v.order,topics:qm==="manual"?[]:v.topics.slice(),quota:qc,mix:v.mix});osPrepView();};}
 function osInfoHTML(){return `<details class="card osinfo"><summary><b>เกณฑ์คะแนนที่เว็บใช้</b></summary><div class="rd">เฉลยแต่ละข้อย่อยเป็น checklist แบบ OSCE จริง: "ต้องมีคำนี้" หรือ "ต้องได้ n จาก m อย่าง" · คะแนนข้อย่อย = สัดส่วน checklist ที่ได้ × คะแนนเต็มข้อย่อย (กดให้คะแนนเองทับได้) · คะแนนแต่ละข้อคิดเป็น % แล้วเฉลี่ยทุกข้อ (ข้อพักไม่นับ) · เกรดเหมือน Legendary MCQ (A ≥ 80 … F &lt; 50) · <b>ผ่านข้อ = ได้ ≥ 60%</b> (สมมติไว้ เกณฑ์จริงของคณะไม่เปิดเผย และมักคิดจากคะแนนทั้งรุ่น)</div></details>`;}
 /* ---- Legendary prep page: see the paper, AI stations + their pictures, move / add / remove rest stations, re-roll; custom = design every slot ---- */
 function osPrepView(){const run=osPrep();if(!run)return osSetup();const N=run.seq.length,cust=run.order==="custom",T=osTopics(),L=mqL(ward,"OSCE");
@@ -171,7 +200,7 @@ function osPrepView(){const run=osPrep();if(!run)return osSetup();const N=run.se
   if(N){h+=`<div class="ostart">เริ่มที่ <b>ข้อ ${run.start+1}</b> <select id="osStartSel" aria-label="เลือกข้อเริ่ม">${run.seq.map((s,i)=>s.k==="rest"?"":`<option value="${i}"${i===run.start?" selected":""}>ข้อ ${i+1}</option>`).join("")}</select> <button class="btn" type="button" id="osReStart">🎲 สุ่มข้อเริ่มใหม่</button></div>`;}
   h+=`<div class="osslots">${run.seq.map((sl,i)=>{const ty=osSlotType(run,sl),q=sl.k==="st"?osSt(run,sl.u):null,isS=i===run.start;
     if(sl.k==="rest")return `<div class="osslot rest"><span class="on">${i+1}</span><span class="oi">☕</span><span class="ot">ข้อพัก <span class="hint">${run.rest} วินาที</span></span><span class="oa"><button class="btn sm" type="button" data-osmv="${i}" data-d="-1" aria-label="เลื่อนขึ้น">↑</button><button class="btn sm" type="button" data-osmv="${i}" data-d="1" aria-label="เลื่อนลง">↓</button><button class="link" type="button" data-osdel="${i}">ลบ</button></span></div>`;
-    const src=sl.src==="ai"?`<span class="tag">AI ${sl.u?"แต่งแล้ว":"จะแต่งใหม่"}${sl.brief?" · "+esc(sl.brief.slice(0,40)):""}${q&&osNeedsImg(q)?(OSIMG[q.uid]?" · 🖼 ใส่รูปแล้ว":" · 🖼 ยังไม่มีรูป"):""}</span>`:q?`<span class="tag">ข้อสอบเก่า ${esc(q.set)}${q.ro?" "+esc(q.ro):""}</span>`:"";
+    const src=sl.src==="ai"?`<span class="tag">AI ${sl.fsrc==="file"?"จากไฟล์ของวอร์ด ":""}${sl.u?"แต่งแล้ว":"จะแต่งใหม่"}${sl.brief?" · "+esc(sl.brief.slice(0,40)):""}${q&&osNeedsImg(q)?(OSIMG[q.uid]?" · 🖼 ใส่รูปแล้ว":" · 🖼 ยังไม่มีรูป"):""}</span>`:q?(/^OSU\|/.test(q.uid)?`<span class="tag">Unit round</span>`:/^OSAI\|/.test(q.uid)?`<span class="tag">Specialty ของคุณ</span>`:`<span class="tag">ข้อสอบเก่า ${esc(q.set)}${q.ro?" "+esc(q.ro):""}</span>`):"";
     return `<div class="osslot${isS?" start":""}"><span class="on">${i+1}</span><span class="oi" title="${OS_TT[ty]}">${OS_TI[ty]}</span><span class="ot">${esc(osTN(sl.topic||(q&&q.topic)))} ${src}${isS?' <b class="sflag">◀ เริ่มที่นี่</b>':""}</span><span class="oa">${run.seq[i+1]&&run.seq[i+1].k==="rest"?"":`<button class="link" type="button" data-osaddr="${i}">+ พักหลังข้อนี้</button>`}${cust?`<button class="btn sm" type="button" data-osmv="${i}" data-d="-1" aria-label="เลื่อนขึ้น">↑</button><button class="btn sm" type="button" data-osmv="${i}" data-d="1" aria-label="เลื่อนลง">↓</button><button class="link" type="button" data-osdel="${i}">ลบ</button>`:""}</span></div>`;}).join("")||`<p class="hint">ยังไม่มีข้อ — เพิ่มข้อด้านล่าง</p>`}</div>`;
   if(cust){h+=`<div class="card"><h3>+ เพิ่มข้อ</h3><div class="dtrow"><label>หัวข้อ<select id="osCT">${T.map(t=>`<option value="${esc(t.id)}">${OS_TI[t.proc?"proc":t.ex?"ex":"noex"]} ${esc(t.name)}</option>`).join("")||`<option value="">ไม่ระบุ</option>`}</select></label>
       <label>โจทย์จาก<select id="osCS"><option value="ac">ข้อสอบเก่า (สุ่มในหัวข้อนี้)</option><option value="ai">ให้ AI แต่งใหม่</option>${L.length?`<optgroup label="เลือกข้อสอบเก่าเอง">${L.map(q=>`<option value="u:${esc(q.uid)}">${esc(q.set)} ข้อ ${esc(mqNum(q))} · ${esc(osTN(q.topic))}</option>`).join("")}</optgroup>`:""}</select></label></div>
@@ -196,7 +225,7 @@ function osPrepView(){const run=osPrep();if(!run)return osSetup();const N=run.se
   document.querySelectorAll("[data-osdel]").forEach(b=>b.onclick=()=>{const i=+b.dataset.osdel,st0=run.seq[run.start];run.seq.splice(i,1);run.start=Math.max(0,run.seq.indexOf(st0));re();});
   document.querySelectorAll("[data-osaddr]").forEach(b=>b.onclick=()=>{const i=+b.dataset.osaddr,st0=run.seq[run.start];run.seq.splice(i+1,0,{k:"rest"});run.start=run.seq.indexOf(st0);re();});
   {const b=$("osReRest");if(b)b.onclick=()=>{const st0=run.seq[run.start];run.seq=osRests(run.seq.filter(s=>s.k!=="rest").map(s=>Object.assign(s,{ty:osSlotType(run,s)})));run.start=Math.max(0,run.seq.indexOf(st0));re();};}
-  {const b=$("osReAll");if(b)b.onclick=()=>{osBuild({mode:run.mode,n:run.n,per:run.per,rest:run.rest,order:run.order,topics:run.topics,quota:run.quotaCfg||null,nAI:run.nAI||0});osPrepView();};}
+  {const b=$("osReAll");if(b)b.onclick=()=>{osBuild({mode:run.mode,n:run.n,per:run.per,rest:run.rest,order:run.order,topics:run.topics,quota:run.quotaCfg||null,mix:run.mix||(run.nAI?"mix":"old")});osPrepView();};}
   {const b=$("osCAdd");if(b)b.onclick=()=>{const t=$("osCT").value,s=$("osCS").value,brief=$("osCB").value.trim();let sl;
     if(s.startsWith("u:")){const q=L.find(x=>x.uid===s.slice(2));if(!q)return;sl={k:"st",u:q.uid,topic:q.topic||""};}
     else if(s==="ac"){const used=new Set(run.seq.map(x=>x.u).filter(Boolean)),pool=shuffle(L.filter(q=>(q.topic||"")===t&&!used.has(q.uid)));if(!pool.length){toast("หัวข้อนี้ไม่มีข้อสอบเก่าที่ยังไม่ได้ใช้ — เลือก \"ให้ AI แต่งใหม่\"");return;}sl={k:"st",u:pool[0].uid,topic:t};}
@@ -212,7 +241,11 @@ async function osBegin(run){if(OSAI.busy)return;OSAI.err="";const need=run.seq.f
   if(need.length){let mode="";try{mode=await aiMode();}catch(e){}
     if(!mode){OSAI.err=`ต้องให้ AI แต่ง ${need.length} ข้อ แต่ยังใช้ AI ไม่ได้ — เปิดหน้านี้ใน Claude หรือใส่ API key (หน้า Admission round) หรือกลับไปเลือก "ข้อสอบเก่าเท่านั้น"`;osPrepView();return;}
     OSAI.busy=1;let k=0;
-    try{for(const sl of need){k++;OSAI.msg=`AI กำลังแต่งโจทย์ ${k}/${need.length} (${osTN(sl.topic)}) …`;osPrepView();const q=await osGen(run,sl);run.gen[q.uid]=q;OSIMG[q.uid]=false;sl.u=q.uid;sl.ty=osSlotType(run,sl);save();}}
+    try{const FU=shuffle(spcUnits(ward,"OSCE"));let fi=0;
+      for(const sl of need){k++;OSAI.msg=`AI กำลังแต่งโจทย์ ${k}/${need.length}${sl.fsrc==="file"?" (จากไฟล์ของวอร์ด)":` (${osTN(sl.topic)})`} …`;osPrepView();
+        let g=sl,pg=null;if(sl.fsrc==="file"&&FU.length){pg=FU[fi++%FU.length];g=Object.assign({},sl,{src:pg.text.slice(0,9000),srcLabel:spcLabel(pg),only:run.topics&&run.topics.length?run.topics:null,legFile:1,avoidPts:[]});}
+        const q=await osGen(run,g);if(pg){sl.topic=g.topic;q.srcRes=spcLabel(pg);q.notes=`📄 ที่มา: ${esc(q.srcRes)}${q.imgNeed?`<br>🖼 รูปที่ควรใช้: ${q.imgNeed}`:""}`;}
+        run.gen[q.uid]=q;OSIMG[q.uid]=false;sl.u=q.uid;sl.ty=osSlotType(run,sl);save();}}
     catch(e){OSAI.busy=0;OSAI.err=(typeof admMsg==="function"&&admMsg(e))||"AI แต่งโจทย์ไม่สำเร็จ — ลองกดใหม่";osPrepView();return;}
     OSAI.busy=0;OSAI.msg="";if(run.seq.some(s=>s.u&&osNeedsImg(run.gen[s.u])))run.imgOpen=false;save();osPrepView();return;}   /* stop on the prep page so pictures can be added */
   if(!run.seq.some(s=>s.k==="st")){toast("ยังไม่มีข้อสอบ");return;}
@@ -230,7 +263,7 @@ function osGenPrompt(run,sl){const w=W_().cfg,tn=osTN(sl.topic),te=osTopicEx(sl.
   const cn={};run.seq.forEach(x=>{if(x.k!=="st"||x===sl)return;const q=osSt(run,x.u),k=q?osSubOf(q):x.sub,t=q?q.topic:x.topic;if(k&&t===sl.topic)cn[k]=(cn[k]||0)+1;});const full=Object.keys(cn).filter(k=>cn[k]>=OS_SUBLIM);
   const refs=osRefFor(sl.topic,sb).map(x=>"["+x.title+"]\n"+x.text).join("\n\n");
   return `Write ONE brand-new OSCE station for Thai ${INST.stu} (medical students) in Year 4 at ${INST.en}, ${w.name} rotation.
-${sl.src?`Station topic: choose the ONE station topic that best fits the source below, from this list (id = name): ${osTopics().map(t=>t.id+" = "+t.name+(t.proc?" (procedure, examiner)":t.ex?" (examiner)":" (written, no examiner)")).join("; ")}. Put its id in "topic".`:`Station topic: ${tn}${te.proc?" (procedure station with an examiner)":te.ex?" (station with an examiner: the student talks to a standardized patient or examines one)":" (written station, no examiner: the student reads the material and writes answers)"}.`} Time: ${osFmt(run.per)} minutes.
+${sl.src?`Station topic: choose the ONE station topic that best fits the source below, from this list (id = name): ${osTopics().filter(t=>!sl.only||sl.only.includes(t.id)).map(t=>t.id+" = "+t.name+(t.proc?" (procedure, examiner)":t.ex?" (examiner)":" (written, no examiner)")).join("; ")}. Put its id in "topic".`:`Station topic: ${tn}${te.proc?" (procedure station with an examiner)":te.ex?" (station with an examiner: the student talks to a standardized patient or examines one)":" (written station, no examiner: the student reads the material and writes answers)"}.`} Time: ${osFmt(run.per)} minutes.
 ${sb?"Small topic of this station: "+sb+" (write the station on this small topic).\n":""}${sl.brief?"The student asked for: "+sl.brief+"\n":""}Scope: ${w.scope||w.name}. Level: what a Year-4 student must know. Content from current standard textbooks and guidelines.
 Old exams of this ward show how the exam is written, so match their level, length and way of asking. But this station must be NEW: never repeat an old station. Change the disease, or change the values/findings/presentation, so it is a different question.
 Old stations on this topic (do not reuse as they are):
@@ -246,7 +279,7 @@ Rules:
 - For an examiner station write "sp": the script for the standardized patient / examiner in Thai (patient details, answers to likely questions, examination findings to give when asked).
 - Each sub-question has an OSCE checklist key: "points" = list of items; an item is either a string (must be said) or {"label": "...", "any": ["...", "..."], "need": n} (any n of these). "kw" = for each item, case-insensitive JavaScript regex strings (Thai or English keywords) that detect it in a typed answer: for a string item an array of strings; for an "any" item an array of arrays, one per option.
 - "ans": model answer (English with Thai explanation allowed, <b> for emphasis). "exp": short Thai explanation with the key facts.
-${sl.src?`CONTENT RULE (Specialty round of OSCE): build this station ONLY from the source below, which comes from this ward's own Round I/O (${sl.srcLabel||"file"}). The key facts tested and the model answers must be stated in, or follow directly from, the source; general knowledge only for case details. If the source disagrees with the newest guideline or textbook, still key what is correct per that guideline and explain the difference in Thai in "keyNote". Do not repeat these points already asked from this source: ${(sl.avoidPts||[]).join("; ")||"none yet"}.
+${sl.src?`CONTENT RULE (${sl.legFile?"station from this ward's own files, mixed into a mock exam of old stations":"Specialty round of OSCE"}): build this station ONLY from the source below, which comes from this ward's own Round I/O (${sl.srcLabel||"file"}). Check every fact you take from it against current guidelines and standard textbooks (order of trust: guideline / textbook > lecture > resource > ward note). The key facts tested and the model answers must be stated in, or follow directly from, the source; general knowledge only for case details. If the source disagrees with the newest guideline or textbook, still key what is correct per that guideline and explain the difference in Thai in "keyNote". Do not repeat these points already asked from this source: ${(sl.avoidPts||[]).join("; ")||"none yet"}.
 Source:
 ${sl.src}
 `:""}Reply with only a JSON object:
@@ -310,7 +343,7 @@ function osRunView(){const run=osRunCur();if(!run)return go(ward+"/osl");rsVisit
     <div class="osctl"><button class="btn sm" type="button" id="osPause">${run.paused?"▶ เดินเวลาต่อ":"⏸ หยุดเวลา"}</button><button class="btn sm" type="button" id="osSkip">⏭ ไปข้อถัดไปเลย</button><button class="btn sm" type="button" id="osEnd">■ จบการสอบ</button></div>`;
   if(sl.k==="rest")h+=`<div class="osrest"><div class="big">☕</div><b>ข้อพัก</b><p>${nsl?`ข้อถัดไป: ข้อ ${nx+1} ${nsl.k==="rest"?"":OS_TT[osSlotType(run,nsl)]}`:"ข้อสุดท้ายแล้ว"}</p></div>`;
   else{const q=osSt(run,sl.u);if(!q)h+=`<div class="empty">ไม่พบโจทย์ข้อนี้</div>`;
-    else{h+=`<section class="case"><div class="case-lab">ข้อ ${ix+1}</div><div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${osAiImgHTML(q,false)}</section><section class="part">`;
+    else{h+=`<section class="case"><div class="case-lab">ข้อ ${ix+1}</div><div class="stem">${q.stem}</div>${osPicBlock(q,true)}</section><section class="part">`;
       q.subs.forEach(s=>{const i=s._i,t=((run.ans[ix]||{})[i])||"";h+=`<div class="subq"><div class="sh"><div class="sq">${osQ(s,ix,!sim)}</div><span class="mk">${mqMk(s)} คะแนน</span></div>${mqImgs(s.img,s.imgNote)}${sim?`<textarea class="ans" data-osa="${i}" rows="3" placeholder="${q.ex?"พิมพ์สิ่งที่จะถาม / ทำ / พูด":"พิมพ์คำตอบ"}">${esc(t)}</textarea>`:""}</div>`;});
       h+=`</section>`;
       if(!sim)h+=`<details class="card osproc"><summary><b>สำหรับผู้คุม</b> — บทผู้ป่วย และ checklist ให้ติ๊กระหว่างสอบ (ผู้สอบอย่าเปิด)</summary>${q.sp?`<div class="box ossp">${q.sp}</div>`:""}${q.subs.map(s=>osChkHTML(run,ix,q,s)).join("")}</details>`;}}
@@ -354,7 +387,7 @@ const osOpt=k=>{const w=W_().cfg;return ((w.exam||{}).OSCE||{})[k];};   /* Med M
 function osResView(){const P=P_(),rs=osLastRes();if(!rs)return go(ward+"/osl");const TT=osTotal(rs),g=osGrade(TT.pct),O=osOrder(rs),Q=rs.kind==="quality";
   osImgLoad(rs,()=>{if(view==="osr")osResView();});
   let h=`<div class="mqv osv"><div class="whead"><h1 class="h2">ผล ${osKindN(rs.kind)} · OSCE</h1><a href="#/${esc(ward)}">กลับหน้าวอร์ด</a></div>
-    <p class="sub" style="margin:0 0 10px">${fmtDT(rs.ts)} · <b>${rs.mode==="irl"?"IRL":"SIM"}</b> · ${TT.S.length} ข้อ · ข้อละ ${osFmt(rs.per)} นาที · ${Q?esc(rs.label||""):rs.order==="custom"?"ออกแบบเอง":rs.order==="block"?"แยกกลุ่ม":"สุ่มปนกัน"}${Q?"":` · เริ่มที่ข้อ ${rs.start+1}`}${rs.nAI?` · โจทย์ AI ${rs.nAI} ข้อ`:""}</p>
+    <p class="sub" style="margin:0 0 10px">${fmtDT(rs.ts)} · <b>${rs.mode==="irl"?"IRL":"SIM"}</b> · ${TT.S.length} ข้อ · ข้อละ ${osFmt(rs.per)} นาที · ${Q?esc(rs.label||""):rs.order==="custom"?"ออกแบบเอง":rs.order==="block"?"แยกกลุ่ม":"สุ่มปนกัน"}${Q?"":` · เริ่มที่ข้อ ${rs.start+1}`}${(()=>{const g=Object.keys(rs.gen||{}).length,f=(rs.seq||[]).filter(x=>x.fsrc==="unit"||x.fsrc==="spc").length;return (rs.nAI?` · โจทย์ AI ${rs.nAI} ข้อ`:g?` · โจทย์ AI ${g} ข้อ`:"")+(f?` · Unit/Specialty ${f} ข้อ`:"")+(rs.mix==="mix"?" · สัดส่วน 90 : 10":"");})()}</p>
     <div class="osgrade">${osOpt("grade")===false?`<span class="p">${TT.pct.toFixed(0)}%</span><span class="hint">คะแนนคร่าว ๆ (ไม่ตัดเกรด — เกณฑ์จริงไม่ทราบ)</span>`:`<span class="g">${g}</span><span class="p">${TT.pct.toFixed(1)}%</span><span class="hint">ผ่าน (≥ 60%) <b>${TT.pass}/${TT.S.length}</b> ข้อ</span>`}</div>`;
   if(rs.mode==="irl"){const un=TT.S.filter(x=>{const q=x.q;return q&&!q.subs.some(s=>((rs.ut||{})[x.ix]||{})[s._i]||((rs.gm||{})[x.ix]||{})[s._i]!=null);}).length;if(un)h+=`<p class="hint">IRL: ยังไม่ได้ติ๊ก checklist ${un} ข้อ — ข้อที่ไม่ติ๊กนับ 0 คะแนน ติ๊กย้อนหลังด้านล่างได้</p>`;}
   else h+=`<p class="hint">SIM: เว็บติ๊ก checklist ให้จากคำสำคัญในคำตอบ (คร่าว ๆ) — ตรวจและแก้ติ๊กเอง หรือกดให้คะแนนเองได้ทุกข้อย่อย${mqAiAvail()?" · ให้ AI ตรวจได้ทีละข้อ":""}</p>`;
@@ -364,7 +397,7 @@ function osResView(){const P=P_(),rs=osLastRes();if(!rs)return go(ward+"/osl");c
     const q=osSt(rs,sl.u),sc=osStScore(rs,ix),reached=O.indexOf(ix)<(rs.reached||O.length);if(!q)return;
     h+=`<details class="osr"${P.osOpen===ix?" open":""} data-osr="${ix}"><summary><span class="on">${ix+1}</span><span class="oi">${OS_TI[osSlotType(rs,sl)]}</span><span class="ot">${esc(osTN(q.topic))} · ${esc(q.title||"")}${q.ai?' <span class="tag">AI</span>':""}${reached?"":' <span class="tag warn">ไม่ได้ทำ</span>'}</span><b class="osp" style="color:${mqPct(Math.round(sc.pct))}">${sc.pct.toFixed(0)}%</b></summary><div class="osrb">`;
     h+=myNoteTop(q);   /* 📝 my note above the station (result page = answers revealed) */
-    h+=`<div class="stem">${q.stem}</div>${mqImgs(q.img,q.imgNote)}${osAiImgHTML(q,true)}`;
+    h+=`<div class="stem">${q.stem}</div>${osPicBlock(q,true)}${q.imgNeed&&!osHasPic(q)?`<p class="hint">รูปที่ข้อนี้ต้องใช้: ${q.imgNeed}</p>`:""}`;
     q.subs.forEach(s=>{const i=s._i,t=(((rs.ans||{})[ix]||{})[i]||"").trim(),f=osSubFrac(rs,ix,s),gm=((rs.gm||{})[ix]||{})[i],ai=((rs.ai||{})[ix]||{})[i];
       h+=`<div class="subq"><div class="sh"><div class="sq">${osQ(s,ix)}</div><span class="mk">${f===null?"–":+(mqMk(s)*f).toFixed(1)}/${mqMk(s)}</span></div>`;
       if(rs.mode==="sim")h+=`<div class="mmine-lab">คำตอบของฉัน</div><div class="osmine">${t?mqNl(t):'<span class="muted">— ไม่ได้พิมพ์ —</span>'}</div>`;
@@ -434,7 +467,7 @@ const xClone=o=>JSON.parse(JSON.stringify(o));
 function mornMQOn(wid){const W=WARDS[wid||ward];return !!(W&&W.cfg&&W.cfg.mornMEQ);}
 function mornMQAll(){const W=W_();return (W&&W.MORN||[]).map(c=>{const u="MORN|"+c.day;if(!XQ[u]){const q=mqNormX(Object.assign(xClone(c),{uid:u,set:"Morning round",ro:"",orig:dayTH(c.day),file:"Morning",page:"",title:"เคส Morning round · "+dayTH(c.day)}),false);delete q.day;q.mday=c.day;XQ[u]=q;}return XQ[u];});}
 function osUnitAll(){const W=W_(),cnt={};return (W&&W.OSU||[]).map(c=>{const t=c.topic||"";cnt[t]=(cnt[t]||0)+1;const u="OSU|"+t+"|"+(c.id||cnt[t]);
-  if(!XQ[u])XQ[u]=mqNormX(Object.assign(xClone(c),{uid:u,set:"Unit round",ro:osTN(t),orig:String(c.id||cnt[t]),file:c.file||"Unit",page:c.page||""}),true);return XQ[u];});}
+  if(!XQ[u])XQ[u]=mqNormX(Object.assign(xClone(c),{uid:u,set:"Unit round",ro:osTN(t)+(c.sub?" · "+osSubNm(c.sub):""),orig:String(c.id||cnt[t]),file:c.file||"Unit",page:c.page||""}),true);return XQ[u];});}
 function osSpcS(){const m=mqInitP(P_(),"OSCE");const S=m.spc=m.spc||{};S.sel=S.sel||{all:0,T:[],U:[]};["T","U"].forEach(k=>{if(!Array.isArray(S.sel[k]))S.sel[k]=[];});
   S.bag=S.bag||{sig:"",list:[]};S.list=Array.isArray(S.list)?S.list:[];S.B=S.B||{};S.pts=S.pts||{};return S;}
 function osSpcQ(u){const S=osSpcS(),raw=S.B[u];if(!raw)return null;const k="S"+u;if(!XQ[k])XQ[k]=mqNormX(xClone(raw),true);return XQ[k];}
@@ -493,11 +526,20 @@ function mornXStart(type){
   const m=mqInitP(P_(),"MEQ"),d=mDay(),q=mqXFind("MORN|"+d);if(!q){toast(mornMQWait());return;}
   m.mopen=m.mopen||{};m.mopen[d]=1;Object.keys(m.mopen).sort().slice(0,-60).forEach(k=>delete m.mopen[k]);save();mqOpen(q.uid,undefined,"morning");}
 /* ---- Unit round OSCE: by big topic ---- */
-function osUnitList(t){return t?osUnitAll().filter(q=>q.topic===t):[];}
+/* 22 Nov 2026 (user, ทวทว): a big topic draws from ALL its small topics in a random order (seeded per topic so the list keeps its order until re-shuffled) ·
+   or pick ONE small topic (e.g. Blood smear) · v.usub = small topic ("" = all) · v.useed[topic] = order seed */
+const OS_SUBN={PBS:"Blood smear"};   /* display names of small topics (the data keeps the engine name, e.g. q.sub "PBS") */
+const osSubNm=s=>OS_SUBN[s]||s;
+const osHash=x=>{let h=2166136261;for(let i=0;i<x.length;i++){h^=x.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;};
+function osUnitList(t,sb,v){if(!t)return [];let L=osUnitAll().filter(q=>q.topic===t);if(sb)L=L.filter(q=>osSubOf(q)===sb);
+  const sd=String((v&&v.useed&&v.useed[t])||1);return L.map(q=>[osHash(q.uid+"|"+sd),q]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);}
 function osUnitCnt(){const A=osUnitAll();return `<span class="rcnt">มี <b>${A.length}</b> สถานี · ${osTopics().length} หัวข้อใหญ่</span>`;}
 function osUnitPicker(v){const A=osUnitAll(),T=osTopics();
-  return `<div class="tl-h">เลือกหัวข้อใหญ่</div><div class="chips tchips">${T.map(t=>{const L=A.filter(q=>q.topic===t.id),dn=L.filter(q=>xDone(q,"OSCE")).length;return `<button class="chip" type="button" data-utop="${esc(t.id)}" aria-pressed="${v.utop===t.id}"${L.length?"":' style="opacity:.55"'}>${esc(t.name)}<span class="cnt">${L.length?dn+"/"+L.length:"0"}</span></button>`;}).join("")||`<span class="hint">วอร์ดนี้ยังไม่ได้ตั้งหัวข้อ OSCE</span>`}</div>`;}
-function osUnitEmpty(t){return t?`ยังไม่มีสถานี Unit round ในหัวข้อ “${esc(osTN(t))}” — รอ Claude แต่ง (หัวข้อละ 50 สถานี)`:"เลือกหัวข้อใหญ่ 1 หัวข้อ — สถานีของหัวข้อนั้นจะแสดงที่นี่";}
+  return `<div class="tl-h">เลือกหัวข้อใหญ่</div><div class="chips tchips">${T.map(t=>{const L=A.filter(q=>q.topic===t.id),dn=L.filter(q=>xDone(q,"OSCE")).length;return `<button class="chip" type="button" data-utop="${esc(t.id)}" aria-pressed="${v.utop===t.id}"${L.length?"":' style="opacity:.55"'}>${esc(t.name)}<span class="cnt">${L.length?dn+"/"+L.length:"0"}</span></button>`;}).join("")||`<span class="hint">วอร์ดนี้ยังไม่ได้ตั้งหัวข้อ OSCE</span>`}</div>`+osUnitSubPicker(v,A);}
+function osUnitSubPicker(v,A){if(!v.utop)return "";const L=A.filter(q=>q.topic===v.utop);if(!L.length)return "";const by={};L.forEach(q=>{const k=osSubOf(q)||"อื่น ๆ";(by[k]=by[k]||[]).push(q);});
+  const ks=Object.keys(by).sort((a,b)=>by[b].length-by[a].length),cnt=x=>`<span class="cnt">${x.filter(q=>xDone(q,"OSCE")).length}/${x.length}</span>`;
+  return `<div class="tl-h" style="margin-top:8px">หัวข้อเล็ก <span class="hint" style="font-weight:400">ไม่เลือก = สุ่มคละจากทุกหัวข้อเล็กของ “${esc(osTN(v.utop))}”</span></div><div class="chips tchips"><button class="chip" type="button" data-usub="" aria-pressed="${!v.usub}">ทั้งหมด (สุ่มคละ)${cnt(L)}</button>${ks.map(k=>`<button class="chip" type="button" data-usub="${esc(k)}" aria-pressed="${v.usub===k}">${esc(osSubNm(k))}${cnt(by[k])}</button>`).join("")}<button class="chip" type="button" data-ushuf="1" title="สลับลำดับสถานีใหม่">🎲 สลับลำดับใหม่</button></div>`;}
+function osUnitEmpty(t){return t?`ยังไม่มีสถานี Unit round ในหัวข้อ “${esc(osTN(t))}” — รอ Claude แต่ง`:"เลือกหัวข้อใหญ่ 1 หัวข้อ — สถานีของหัวข้อนั้นจะแสดงที่นี่";}
 /* ---- Specialty round OSCE (#/<ward>/osspc) ---- */
 var OSSPC={busy:0,err:""};
 const osSpcUnits=()=>spcUnits(ward,"OSCE");

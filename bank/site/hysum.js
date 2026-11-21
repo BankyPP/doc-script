@@ -64,28 +64,44 @@ function hsStatsHtml(type,its,TOP,OPEN){
   let rows="",rid=0;
   const walk=(n,lv,pid,vis)=>{const kids=[...n.ch.values()].sort((a,b)=>b.q.size-a.q.size||a.lab.localeCompare(b.lab));
     kids.forEach(c=>{const id=pid+"/"+c.lab,has=c.ch.size>0,open=!!SO.r[id],hid=!vis;
-      rows+=`<tr class="stl${lv}${hid?" sthid":""}" data-stp="${esc(pid)}"><th scope="row">${has?`<button type="button" class="sttg" data-str="${esc(id)}" aria-expanded="${open}">${open?"▾":"▸"}</button>`:`<span class="stsp"></span>`}<span>${esc(c.lab)}</span></th>`+
+      if(has)hsStatIds.push(id);
+      if(!hid)rows+=`<tr class="stl${lv}" data-stp="${esc(pid)}"><th scope="row">${has?`<button type="button" class="sttg" data-str="${esc(id)}" aria-expanded="${open}">${open?"▾":"▸"}</button>`:`<span class="stsp"></span>`}<span>${esc(c.lab)}</span></th>`+
         `<td class="stn">${c.q.size}</td><td class="stp">${pct(c.q.size)}%</td>`+cols.map(col=>{const k=cnt(c,col);return `<td class="stc${col.sub?" stro":""}${k?" sth"+Math.min(4,k):""}">${k||""}</td>`;}).join("")+`</tr>`;
       if(has)walk(c,lv+1,id,vis&&open);});};
-  walk(root,1,"",true);
+  hsStatIds=[];walk(root,1,"",true);
   const head=`<tr><th class="st0">หัวข้อ / เรื่อง</th><th>${caseW}</th><th>%</th>`+cols.map(c=>{const nR=Y[c.y].size;
     if(c.sub)return `<th class="stro"><button type="button" class="styh" data-sty="${esc(c.y)}" title="ยุบกลับเป็นปี">${esc(c.y.replace(/^(MDCU|SI)/,""))}<br>${esc(c.lab)}</button></th>`;
     return `<th>${nR>1?`<button type="button" class="styh" data-sty="${esc(c.y)}" title="แตกเป็นราย rotation">${esc(c.y.replace(/^(MDCU|SI)/,""))} ▸<br><small>${nR} Ro</small></button>`:`${esc(c.y.replace(/^(MDCU|SI)/,""))}<br><small>${esc([...Y[c.y]][0]==="—"?"":[...Y[c.y]][0])}</small>`}</th>`;}).join("")+`</tr>`;
   const foot=`<tr class="sttot"><th scope="row">รวมทั้งคลัง</th><td class="stn">${TOT}</td><td class="stp">100%</td>`+cols.map(c=>{let k=0;uq.forEach(q=>{if(hsYr(q)===c.y&&(!c.sub||String(q.ro||"—")===c.r))k++;});return `<td class="stc${c.sub?" stro":""}">${k}</td>`;}).join("")+`</tr>`;
-  return `<details class="sumt sumstat" data-k="stat" ${OPEN.stat?"open":""}><summary><span class="st-name">📊 Stats — ออกเยอะแค่ไหน ปีไหนบ้าง</span><span class="st-meta">${TOT} ${caseW} · ${years.length} รุ่น</span></summary>
+  return `<details class="sumt sumstat" data-k="stat" ${OPEN.stat?"open":""}><summary><span class="st-name">📊 Stats — ออกเยอะแค่ไหน ปีไหนบ้าง</span><span class="st-meta">${TOT} ${caseW} · ${years.length} รุ่น</span></summary>`+hsLz(OPEN.stat,`
     <div class="stbody"><p class="hint">นับจาก${type==="OSCE"?"สถานี":"ข้อ"}สอบเก่าทั้งหมดในคลัง (Service round) · ตัวเลข = จำนวน${caseW}ที่ออกเรื่องนั้น · % เทียบกับ${caseW}ทั้งหมด ${TOT} ${caseW}${type==="MCQ"?" (ข้อหนึ่งติดได้หลายหัวข้อ จึงรวมเกิน 100% ได้)":""} · คอลัมน์ปีใหม่สุดอยู่ซ้ายสุด แตะหัวปีที่มี ▸ เพื่อแยกราย rotation · แตะ ▸ หน้าแถวเพื่อเปิด${type==="OSCE"?"หัวข้อเล็ก / หัตถการย่อย และเรื่องย่อย":"เรื่องย่อย"}</p>
     <div class="sum-tools"><button class="chip" type="button" id="stOpenAll">เปิดทุกแถว</button><button class="chip" type="button" id="stCloseAll">ปิดทุกแถว</button><button class="chip" type="button" id="stRoAll">แยกทุกปีเป็นราย Ro</button><button class="chip" type="button" id="stRoNone">รวมเป็นรายปี</button></div>
-    <div class="stwrap"><table class="sttab"><thead>${head}</thead><tbody>${rows}</tbody><tfoot>${foot}</tfoot></table></div></div></details>`;}
+    <div class="stwrap"><table class="sttab"><thead>${head}</thead><tbody>${rows}</tbody><tfoot>${foot}</tfoot></table></div></div>`)+`</details>`;}
+/* 18 Nov 2026 (หน้า High-yield ค้างตอนเปิด/ปิดกล่อง และรีเฟรชแล้วจอว่าง — iPad และมือถือ): the page used to build every box's
+   content up front, closed or not — Gen Sx MCQ ≈ 60,000 elements (25,000 of them the Stats table's hidden rows), which Safari
+   chokes on. Now a closed box holds only a placeholder; its content is built the first time it is opened (hsLz / hsFill),
+   and the Stats table holds only the rows that are showing. */
+let hsStatIds=[],HS_LZ={},hsLzN=0,hsBindIn=null;
+function hsLz(open,html){if(open)return html;const id="z"+(++hsLzN);HS_LZ[id]=html;return `<div class="hslz" data-lz="${id}"></div>`;}
+function hsFill(d){if(!d)return;const ph=[...d.children].filter(c=>c.classList&&c.classList.contains("hslz"));
+  ph.forEach(z=>{const html=HS_LZ[z.dataset.lz];delete HS_LZ[z.dataset.lz];const t=document.createElement("template");t.innerHTML=html||"";const nodes=[...t.content.childNodes];z.replaceWith(...nodes);
+    nodes.forEach(n=>{if(n.nodeType===1&&typeof hsBindIn==="function")hsBindIn(n);});});}
 function hsStatsBind(type,OPEN,keep){const SO=OPEN._st;if(!SO)return;const re=()=>{keep();const y=scrollY,w=document.querySelector(".stwrap"),x=w?w.scrollLeft:0;rHySum(type);scrollTo(0,y);const w2=document.querySelector(".stwrap");if(w2)w2.scrollLeft=x;};
   document.querySelectorAll("[data-sty]").forEach(b=>b.onclick=()=>{const y=b.dataset.sty;SO.y[y]=!SO.y[y];re();});
   document.querySelectorAll("[data-str]").forEach(b=>b.onclick=()=>{const id=b.dataset.str;SO.r[id]=!SO.r[id];re();});
-  const ids=()=>[...document.querySelectorAll("[data-str]")].map(b=>b.dataset.str);
+  const ids=()=>hsStatIds.slice();
   const st=$("stOpenAll");if(st){st.onclick=()=>{ids().forEach(i=>{SO.r[i]=true;});re();};
     $("stCloseAll").onclick=()=>{SO.r={};re();};
     $("stRoAll").onclick=()=>{document.querySelectorAll("th [data-sty]").forEach(b=>{SO.y[b.dataset.sty]=true;});re();};
     $("stRoNone").onclick=()=>{SO.y={};re();};}}
 function rHySum(type){
-  const W=W_(),P=P_(),ALL=hsItems(type);
+  const W=W_(),P=P_();
+  /* วอร์ดที่ MEQ สอบรวมกับ OSCE (config ward.hyGo={MEQ:"OSCE"}, ผู้ใช้สั่ง 21 พ.ย. 2026 Subspe Sx): สรุป MEQ = ป้ายให้ไปดูสรุป OSCE */
+  const GO=type==="MEQ"&&W.cfg&&W.cfg.hyGo&&W.cfg.hyGo.MEQ;
+  if(GO){$("main").innerHTML=`<div class="mqv hysum"><div class="whead"><h1 class="h2">สรุป High-yield · MEQ</h1><a href="#/${esc(ward)}">กลับหน้าวอร์ด</a></div>
+    <div class="empty">MEQ ของวอร์ดนี้<b>สอบรวมกับ OSCE</b> (วันเวลาเดียวกัน) — ข้อสอบเก่าพาร์ท MEQ อยู่ในแท็บ OSCE (พาร์ท Short Answers) จึงสรุปรวมไว้ใน <b>สรุป High-yield OSCE</b><br><br><button class="tool" type="button" id="hsGoOs">📘 ไปดูสรุป High-yield OSCE</button></div></div>`;
+    $("hsGoOs").onclick=()=>{P.type=GO;save();go(ward+"/mqhy");};return;}
+  const ALL=hsItems(type);
   P.hyOpen=P.hyOpen||{};const OPEN=P.hyOpen[type]=P.hyOpen[type]||{};
   const STY=type==="MEQ"&&ALL.some(o=>o.sty==="sa")&&ALL.some(o=>o.sty==="case"),sty=STY?(OPEN._sty==="sa"?"sa":"case"):"";
   const its=STY?ALL.filter(o=>o.sty===sty):ALL,byKey={};its.forEach(o=>{byKey[o.key]=o;});
@@ -110,6 +126,7 @@ function rHySum(type){
     if(top.some(t2=>{if(t2.t===o.t)return false;const B=t2.x.members||[];const n=B.filter(m=>A.has(m)).length;return n/(A.size+B.length-n)>0.6;}))return;top.push(o);});
   const nQ=new Set(its.map(o=>o.q.uid)).size,nR=new Set(its.map(o=>o.rot)).size,nSec=all.length;
   const TN=type+(STY?" · "+(sty==="sa"?"Short answer":"Case"):"");
+  HS_LZ={};
   let h=`<div class="mqv hysum"><div class="whead"><h1 class="h2">สรุป High-yield · ${TN}</h1><a href="#/${esc(ward)}">กลับหน้าวอร์ด</a></div>`;
   if(!its.length){h+=`<div class="empty">ยังไม่มีข้อสอบ ${type} ในวอร์ดนี้ — สรุปจะขึ้นเองเมื่อเพิ่มข้อสอบเก่าเข้า Service round</div></div>`;$("main").innerHTML=h;return;}
   h+=`<div class="sum-head"><div class="tl-h">สรุปแนวข้อสอบ ${TN} จากคลังทั้งหมด</div><p class="hint">รวบรวมทุกเรื่องที่เคยออกใน ${nQ} ${caseW}${type==="MCQ"?"":` ${its.length} ข้อย่อย`} จาก ${nR} rotation (เฉพาะข้อสอบเก่าใน Service round) แยกตาม ${TOP.length} หัวข้อ → กลุ่ม → เรื่อง${nSec?` (${nSec} เรื่อง)`:""} · rotation = ชุดข้อสอบ (รุ่น + rotation) ที่เรื่องนั้นเคยออก · สถานะข้อเป็นของ Phase ${ph()} · แตะเลขข้อเพื่อไปทำข้อนั้น</p>
@@ -121,12 +138,14 @@ function rHySum(type){
   else h+=`<div class="card"><span class="rd">Claude ยังไม่ได้เขียนสรุปของ ${type} วอร์ดนี้ ระหว่างนี้ด้านล่างคือรายการข้อทั้งหมดแยกตามหัวข้อ</span></div>`;
   TOP.forEach(t=>{const ns=t.groups.reduce((a,g)=>a+g.sections.filter(e=>!e.x.auto).length,0);
     h+=`<details class="sumt" data-k="t:${esc(t.tag)}" ${OPEN["t:"+t.tag]?"open":""}><summary><span class="st-name">${esc(t.title)}</span><span class="st-meta">${t.mine.length} ${unitW}${ns?` · ${ns} เรื่อง`:""} · ${hsProgTxt(hsProg(type,t.mine))}</span></summary>`;
+    const hT=h;h="";
     if(t.intro)h+=`<div class="sum-intro">${W.R?W.R(t.intro):t.intro}</div>`;
     {const ov=[];t.groups.forEach(g=>g.sections.forEach(({x,z})=>{if(!x.auto)ov.push(`<button class="link hsov" type="button" data-hsjump="${esc(t.tag+"::"+x.id)}">${esc(x.title)}</button><small>${z.nr}</small>`);}));
       if(ov.length)h+=`<div class="hs-ov"><b>${type==="OSCE"?"เรื่องที่เคยออกในสถานีแบบนี้":"เรื่อง / โรคที่เคยออก"}</b> (${ov.length}) · ${ov.join(" · ")}</div>`;}
     t.groups.forEach(g=>{h+=`<div class="sumg"><div class="sumg-h">${esc(g.title)}</div>`;
       g.sections.forEach(({x,z})=>{const L=HS_LV(z.nr),k="s:"+t.tag+"::"+x.id;
-        h+=`<details class="sums${x.auto?" hsnew":""}" id="${esc("hs-"+t.tag+"::"+x.id)}" data-k="${esc(k)}" ${OPEN[k]?"open":""}><summary><span class="ss-name">${esc(x.title)}</span><span class="lv ${L[0]}">${L[1]}</span><span class="nums">${z.subs.length} ${unitW}${type==="MCQ"?"":` · ${z.nc} ${caseW}`}</span>${hsProgTxt(hsProg(type,z.subs))}</summary><div class="sums-b">`;
+        h+=`<details class="sums${x.auto?" hsnew":""}" id="${esc("hs-"+t.tag+"::"+x.id)}" data-k="${esc(k)}" ${OPEN[k]?"open":""}><summary><span class="ss-name">${esc(x.title)}</span><span class="lv ${L[0]}">${L[1]}</span><span class="nums">${z.subs.length} ${unitW}${type==="MCQ"?"":` · ${z.nc} ${caseW}`}</span>${hsProgTxt(hsProg(type,z.subs))}</summary>`;
+        const hS=h;h=`<div class="sums-b">`;
         h+=`<p class="trend">📈 เคยออก ${z.nr} rotation: ${esc(z.rots.join(", "))}${x.trend?` — ${x.trend}`:""}</p>`;
         if(x.asked&&x.asked.length)h+=`<div class="sb-h">แนวคำถามที่เคยออก</div><ul>${x.asked.map(a=>`<li>${a}</li>`).join("")}</ul>`;
         if(x.flow&&x.flow.length)h+=`<div class="sb-h">${type==="OSCE"?"ในสถานีต้องทำ / ตอบอะไรตามลำดับ":"เคสดำเนินไปอย่างไร (ข้อมูลที่ให้ → ถามอะไร)"}</div><ol class="flow">${x.flow.map(a=>`<li>${a}</li>`).join("")}</ol>`;
@@ -136,17 +155,22 @@ function rHySum(type){
         if(x.pearls&&x.pearls.length)h+=`<div class="sb-h warn">ระวัง / กับดัก</div><ul class="pearl">${x.pearls.map(a=>`<li>${a}</li>`).join("")}</ul>`;
         if(x.auto)h+=`<p class="hint" style="margin:6px 0 0">ข้อเหล่านี้เข้าคลังแล้ว แต่ Claude ยังไม่ได้ใส่ในสรุป — ขอให้ Claude อัปเดตสรุป High-yield ได้</p>`;
         h+=`<div class="sb-h">ข้อที่เคยออก (แตะเพื่อไปทำ) ${hsProgTxt(hsProg(type,z.subs))}</div><div class="refs">${z.subs.map(o=>hsRef(type,o)).join("")}</div>`;
-        h+=`</div></details>`;});
+        h+=`</div>`;h=hS+hsLz(OPEN[k],h)+`</details>`;});
       h+=`</div>`;});
-    h+=`</details>`;});
+    h=hT+hsLz(OPEN["t:"+t.tag],h)+`</details>`;});
   h+=`</div>`;$("main").innerHTML=h;
   const keep=()=>{P.hyOpen[type]=OPEN;save();};
-  document.querySelectorAll(".hysum details[data-k]").forEach(d=>d.addEventListener("toggle",()=>{if(!!OPEN[d.dataset.k]===d.open&&d.dataset.k!=="top")return;OPEN[d.dataset.k]=d.open;keep();}));
-  $("hsOpenAll").onclick=()=>{document.querySelectorAll(".hysum details[data-k]").forEach(d=>{d.open=true;OPEN[d.dataset.k]=true;});keep();};
+  /* binds everything inside root — the page now, and each box's content when it is first built (hsFill) */
+  hsBindIn=root=>{
+    root.querySelectorAll("details[data-k]").forEach(d=>d.addEventListener("toggle",()=>{if(d.open)hsFill(d);if(!!OPEN[d.dataset.k]===d.open&&d.dataset.k!=="top")return;OPEN[d.dataset.k]=d.open;keep();}));
+    root.querySelectorAll("[data-hsjump]").forEach(b=>b.onclick=()=>{const j=b.dataset.hsjump,tg=document.querySelector(`.hysum details[data-k="${CSS.escape("t:"+j.split("::")[0])}"]`);
+      if(tg){tg.open=true;hsFill(tg);OPEN[tg.dataset.k]=true;}
+      const el=document.getElementById("hs-"+j);if(!el)return;let p=el.parentElement;
+      while(p&&p!==document.body){if(p.tagName==="DETAILS"){p.open=true;hsFill(p);if(p.dataset.k)OPEN[p.dataset.k]=true;}p=p.parentElement;}el.open=true;hsFill(el);OPEN[el.dataset.k]=true;keep();el.scrollIntoView({block:"start"});scrollBy(0,-110);});
+    root.querySelectorAll("[data-hsu]").forEach(b=>b.onclick=()=>hsOpenRef(type,b.dataset.hsu,b.dataset.hsp));
+    if(root.querySelector("#stOpenAll")||root.querySelector("[data-str]"))hsStatsBind(type,OPEN,keep);};
+  hsBindIn(document.querySelector(".hysum"));
+  $("hsOpenAll").onclick=()=>{let ds;do{ds=[...document.querySelectorAll(".hysum details[data-k]")].filter(d=>!d.open);ds.forEach(d=>{d.open=true;hsFill(d);OPEN[d.dataset.k]=true;});}while(ds.length);keep();};
   $("hsCloseAll").onclick=()=>{document.querySelectorAll(".hysum details[data-k]").forEach(d=>{if(d.dataset.k==="top")return;d.open=false;OPEN[d.dataset.k]=false;});keep();};
-  document.querySelectorAll("[data-hsjump]").forEach(b=>b.onclick=()=>{const el=document.getElementById("hs-"+b.dataset.hsjump);if(!el)return;let p=el.parentElement;
-    while(p&&p!==document.body){if(p.tagName==="DETAILS"){p.open=true;if(p.dataset.k)OPEN[p.dataset.k]=true;}p=p.parentElement;}el.open=true;OPEN[el.dataset.k]=true;keep();el.scrollIntoView({block:"start"});scrollBy(0,-110);});
-  document.querySelectorAll("[data-hsu]").forEach(b=>b.onclick=()=>hsOpenRef(type,b.dataset.hsu,b.dataset.hsp));
-  hsStatsBind(type,OPEN,keep);
   document.querySelectorAll("[data-hssty]").forEach(b=>b.onclick=()=>{OPEN._sty=b.dataset.hssty;keep();rHySum(type);scrollTo(0,0);});
 }
