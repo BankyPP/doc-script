@@ -85,7 +85,7 @@ function rSpc(){
     const dim=S.all?` style="opacity:.55"`:"";
     const row=(attr,on,title,meta)=>`<button class="resume qprog" ${attr} aria-pressed="${on}"${dim}><span><b>${esc(title)}</b>${meta?`<span class="rd">${meta}</span>`:""}</span><span class="go">${on?"✓":""}</span></button>`;
     const acc=t=>{const x=stat[t];return x?` · ถูก ${Math.round(x[1]/x[0]*100)}% (${x[0]} ข้อ)`:"";};
-    h+=`<div class="stack" style="margin-top:8px">`;
+    h+=`<div class="chips" style="margin:8px 0 0">${saBtn("#spcRows > button.resume, #spcRows > .spcdoc > button.resume")}</div><div class="stack" id="spcRows" style="margin-top:8px">`;
     if(tab==="TP"){if(!T.size)h+=`<p class="hint">ยังไม่มีเรื่อง</p>`;
       for(const [t,us] of T){const k=["L","R","T","N"].map(x=>[x,us.filter(u=>u.kind===x).length]).filter(x=>x[1]).map(x=>`${x[0]} ${x[1]}`).join(" · ");h+=row(`data-sptopic="${esc(t)}"`,S.T.includes(t),t,`${k} หน้า${acc(t)}`);}}
     else{const D=new Map();av.filter(u=>u.kind===tab).forEach(u=>{const c=tab==="N"?u.key:u.code;if(!D.has(c))D.set(c,[]);D.get(c).push(u);});

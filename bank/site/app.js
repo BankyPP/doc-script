@@ -768,7 +768,7 @@ function tgColor(all,id){const i=all.findIndex(a=>a[0]===id);return TG_COL[(i<0?
 function tgPanel(all,g,cnt,n){
   let h=`<div class="tgbox"><label class="tgon"><input type="checkbox" id="tgOn"${g.on?" checked":""}><span class="tgt"><b>เลือกหัวข้อด้วย</b><span class="hint">ติ้กเพื่อทำเฉพาะบางหัวข้อตาม Tag · ไม่ติ้ก = ทุกหัวข้อ</span></span></label>`;
   if(g.on){
-    h+=`<div class="tgs">${all.map(([k,t])=>{const c=cnt[k]||0;return `<button class="tg${c?"":" zero"}" type="button" data-tg="${esc(k)}" aria-pressed="${g.tags.includes(k)}" style="--tg:${tgColor(all,k)}">${esc(t)}<span class="n">${c}</span></button>`;}).join("")}</div>`;
+    h+=`<div class="chips" style="margin:2px 0 6px">${saBtn(".tgs [data-tg]")}</div><div class="tgs">${all.map(([k,t])=>{const c=cnt[k]||0;return `<button class="tg${c?"":" zero"}" type="button" data-tg="${esc(k)}" aria-pressed="${g.tags.includes(k)}" style="--tg:${tgColor(all,k)}">${esc(t)}<span class="n">${c}</span></button>`;}).join("")}</div>`;
     h+=`<div class="tgmh">Mode</div><div class="tgms">
       <button class="tgm" type="button" data-tgm="min" aria-pressed="${g.mode!=="max"}"><b>Minimum</b><span>มี Tag ที่เลือกอย่างน้อย 1 อัน มี Tag อื่นปนได้</span></button>
       <button class="tgm" type="button" data-tgm="max" aria-pressed="${g.mode==="max"}"><b>Maximum</b><span>มีได้แค่ Tag ที่เลือก ห้ามมี Tag อื่นปน</span></button></div>`;
@@ -813,6 +813,17 @@ function rService(){
     {const nx=svcNextTodo();if(nx)s.cur=nx.uid;else{toast("ทำครบทุกข้อในชุดที่เลือกแล้ว");const c=W.byU[s.cur];if(!c||!inSet(c)){const v=svcVisible();s.cur=(svcStart(v)||svcList()[0]).uid;}}}save();go(ward+"/svc");};
 }
 
+
+/* "เลือกทั้งหมด" on every topic picker (user 22 Nov 2026, ทวทว): pick all then un-pick the one you don't want · works through the page's own chips
+   (each re-found by its data key after every click, since some pages re-render per click) · label flips to "ยกเลิกทั้งหมด" when everything is picked */
+const saBtn=sel=>`<button class="chip saall" type="button" data-saall="${esc(sel)}">เลือกทั้งหมด</button>`;
+function saItems(sel){return [...document.querySelectorAll(sel)].filter(b=>!b.disabled&&b.getAttribute("aria-disabled")!=="true"&&b.hasAttribute("aria-pressed"));}
+function saPaint(){document.querySelectorAll("[data-saall]").forEach(b=>{const L=saItems(b.dataset.saall),all=L.length>0&&L.every(x=>x.getAttribute("aria-pressed")==="true"),t=all?"ยกเลิกทั้งหมด":"เลือกทั้งหมด";if(b.textContent!==t)b.textContent=t;b.disabled=!L.length;});}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-saall]");if(!b)return;e.preventDefault();const sel=b.dataset.saall,L=saItems(sel),on=!(L.length&&L.every(x=>x.getAttribute("aria-pressed")==="true"));
+  L.map(yrChipKey).filter(Boolean).forEach(([a,v])=>{const x=saItems(sel).find(y=>y.getAttribute(a)===v);if(x&&(x.getAttribute("aria-pressed")==="true")!==on)x.click();});
+  setTimeout(saPaint,0);toast(on?"เลือกทั้งหมดแล้ว — แตะหัวข้อที่ไม่เอาเพื่อเอาออก":"ยกเลิกทั้งหมดแล้ว");});
+document.addEventListener("click",e=>{if(e.target.closest&&!e.target.closest("[data-saall]"))setTimeout(saPaint,0);});
+{let saT=0;new MutationObserver(()=>{if(saT)return;saT=requestAnimationFrame(()=>{saT=0;saPaint();});}).observe(document.getElementById("main")||document.body,{childList:true,subtree:true});}
 
 /* ---------------- tap a year heading → pick / unpick every Ro of that year (user 13 Nov 2026, every ward on every site) ----------------
    Works on any year group <div class="yr"><div class="yh">…</div><div class="chips">chips with a data-* key</div></div>:
@@ -1322,7 +1333,7 @@ function rUnit(){
   h+=nPickHTML("un",n,"ข้อ");
   const all=[].concat(...Ls.map(Lc=>Lc.QB)),seen=a=>a.filter(q=>uAtts(P,q.uid).length).length;
   const sel=new Set((st.unitSel||[]).filter(id=>W.byLec[id]));
-  h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">บท <span class="hint" style="font-weight:400">เลือกได้หลายบท · ไม่เลือกเลย = สุ่มรวมทุกบท · ตัวเลข = เคยเจอแล้ว/ทั้งหมด</span></div>`;
+  h+=`<div class="yh" style="font-family:var(--num);font-weight:700;margin:14px 0 6px">บท <span class="hint" style="font-weight:400">เลือกได้หลายบท · ไม่เลือกเลย = สุ่มรวมทุกบท · ตัวเลข = เคยเจอแล้ว/ทั้งหมด</span></div><div class="chips" style="margin:0 0 6px">${saBtn("[data-lec]")}</div>`;
   h+=`<div class="stack" style="margin-top:0">`+Ls.map(Lc=>`<button class="resume qprog${Lc.nolec?" nolec":""}" data-lec="${esc(Lc.id)}" aria-pressed="${sel.has(Lc.id)}"><span><b>${esc(Lc.title)}</b><span class="rd">${Lc.QB.length?`เคยเจอแล้ว ${seen(Lc.QB)}/${Lc.QB.length} ข้อ`:Lc.nolec?"ยังไม่มีไฟล์ lecture — มีแค่หัวข้อบทไว้ก่อน":"ยังไม่มีโจทย์ — มีแค่หัวข้อบทไว้ก่อน"}</span></span><span class="go">${sel.has(Lc.id)?"✓":""}</span></button>`).join("")+`</div>`;
   const pool=sel.size?[].concat(...Ls.filter(Lc=>sel.has(Lc.id)).map(Lc=>Lc.QB)):all;
   h+=`<p class="statline" style="margin-top:10px">${sel.size?`จาก ${sel.size} บทที่เลือก`:"สุ่มรวมทุกบท"} · มีโจทย์ ${pool.length} ข้อ (เคยเจอแล้ว ${seen(pool)})</p><div class="row2"><button class="btn ghost" id="uClr" type="button" ${sel.size?"":"disabled"}>ล้างที่เลือก</button><span class="spacer"></span><button class="btn primary" id="uGo" type="button" ${pool.length?"":"disabled"}>เริ่มทำ ${Math.min(n,pool.length)} ข้อ</button></div>`;
@@ -1739,7 +1750,7 @@ function rAdvisor(){
   h+=`<div class="lbl">ใช้ประวัติการตอบจาก${a.src.some(k=>k!=="ac")?` <span class="hint">(มีผลกับข้อสอบเก่า)</span>`:""}</div>${chips("aHp",[["all","ทั้ง 2 Phase"],["p",`เฉพาะ Phase ${ph()}`]],a.hp)}`;
   if(src.has("ac")&&QB.length){h+=`<div class="lbl">ข้อสอบเก่า · ปีและ rotation <span class="hint">ไม่เลือกเลย = ทุกชุด · แตะชื่อปีเพื่อเลือกทุก Ro ในปีนั้น · แถบสี/ตัวเลข = ทำแล้ว/ทั้งหมด</span></div>`;
     h+=years.map(y=>{const ks=W.sets.filter(k=>W.QB.some(q=>q.set===y&&setKey(q)===k));return `<div class="yr"><div class="yh" role="button" tabindex="0" title="แตะเพื่อเลือก/ยกเลิกทุก Ro ในปีนี้">${esc(y)}</div><div class="chips">${ks.map(k=>{const qs=QB.filter(q=>setKey(q)===k),d=dn(qs),g=pcChip(d,qs.length);return `<button class="chip${g.c}" data-k="${esc(k)}" aria-pressed="${sel.has(k)}"${g.s}>${esc(k.slice(y.length).trim()||"ทั้งชุด")}<span class="c">${g.t}</span></button>`;}).join("")}</div></div>`;}).join("");}
-  if(src.has("unit")){const LS=W.UNIT.filter(Lc=>(Lc.QB||[]).length);if(LS.length)h+=`<details class="grp"${lsel.size?" open":""}><summary>Unit round · เลือกบท <span class="hint">${lsel.size?`เลือกไว้ ${lsel.size} บท`:"ไม่เลือกเลย = ทุกบท"}</span></summary><div class="chips" id="aLec">${LS.map(Lc=>`<button class="chip" data-lec="${esc(Lc.id)}" aria-pressed="${lsel.has(Lc.id)}">${esc(Lc.short||Lc.title)}<span class="c">${dn(Lc.QB)}/${Lc.QB.length}</span></button>`).join("")}</div></details>`;}
+  if(src.has("unit")){const LS=W.UNIT.filter(Lc=>(Lc.QB||[]).length);if(LS.length)h+=`<details class="grp"${lsel.size?" open":""}><summary>Unit round · เลือกบท <span class="hint">${lsel.size?`เลือกไว้ ${lsel.size} บท`:"ไม่เลือกเลย = ทุกบท"}</span></summary><div class="chips" id="aLec">${saBtn("#aLec [data-lec]")}${LS.map(Lc=>`<button class="chip" data-lec="${esc(Lc.id)}" aria-pressed="${lsel.has(Lc.id)}">${esc(Lc.short||Lc.title)}<span class="c">${dn(Lc.QB)}/${Lc.QB.length}</span></button>`).join("")}</div></details>`;}
   h+=`<div class="lbl">ถูก / ผิด</div>${chips("aF",ADVF,a.f)}`;
   {const ks=advRKs(a),rs=new Set(a.rk);if(ks.length||rs.size)h+=`<div class="lbl">ทำใน round <span class="hint">ไม่เลือกเลย = ทุก round · เลือกแล้ว = ข้อที่เคยตอบใน round นั้น</span></div><div class="chips" id="aRk">${[...new Set(ks.concat(a.rk))].map(k=>`<button class="chip" data-rk="${esc(k)}" aria-pressed="${rs.has(k)}">${k==="?"?"ไม่ได้บันทึก round":esc(RKL[k]||k)}</button>`).join("")}</div>`;}
   h+=`<label class="chk" style="display:flex;gap:8px;align-items:center;margin-top:12px;font-size:15px"><input type="checkbox" id="aFlag" ${a.flag?"checked":""} style="width:20px;height:20px"> เฉพาะข้อที่ติด ⚑ ไม่มั่นใจ</label>`;

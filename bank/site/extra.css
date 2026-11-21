@@ -1105,3 +1105,6 @@ details.ospic .row2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margi
 /* "สุ่มครั้งละ" picker (Unit round MCQ + OSCE): chips + typed number */
 .npick .npc{display:inline-flex;align-items:center;gap:6px;cursor:text}
 .npick .npc .field-in{width:64px;padding:2px 6px;font-size:14px;line-height:1.4;text-align:center}
+
+/* "เลือกทั้งหมด" on topic pickers */
+.chip.saall{border-style:dashed;font-weight:600}

@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 1fce5fa 2026-11-22 Unit round OSCE works like Unit MCQ (multi-select topics/subtopics, random draw, any count); 'สุ่มครั้งละ' custom count for Unit MCQ+OSCE; every year picker gets a ทุกชุด chip + progress bars + same hints
+BankyPP/ac-mdcu 741c371 2026-11-22 Manual: TOC pages
