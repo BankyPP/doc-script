@@ -19,7 +19,10 @@ FONT_OLD = re.compile(r'<link href="https://fonts.googleapis.com/css2\?family=Ch
 FONT_NEW = '<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">'
 JS_PATCH = [('const GKEY=KEY+"-trusted";', 'const GKEY="poy-trusted";'),
             ('sessionStorage.getItem(KEY+"-pass")', 'sessionStorage.getItem("poy-pass")'),
-            ('sessionStorage.setItem(KEY+"-pass",', 'sessionStorage.setItem("poy-pass",')]
+            ('sessionStorage.setItem(KEY+"-pass",', 'sessionStorage.setItem("poy-pass",'),
+            # 23 Nov 2026: the banks are one-file builds (no core_site.js?v=…), so the engine's yellow "new version" box never ran here —
+            # drop that one condition: the check then uses Last-Modified of index.html (every GitHub Pages deploy re-stamps every file)
+            ('if(IN_FRAME||!ST_RUN.core_site||!/^https?:$/.test(location.protocol))', 'if(IN_FRAME||!/^https?:$/.test(location.protocol))')]
 
 def build(inst):
     out = os.path.join(PACK, inst) if PACK else os.path.join(REPO, 'docs', 'bank', inst)

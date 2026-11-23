@@ -94,7 +94,7 @@ for w in cfg.get('wards',[]):
         js.append('(function(QB){\n'+open(f,encoding='utf-8').read()+'\n})(WARDS['+wid+'].QB);')
     fx=os.path.join(d,'fixes.js') if d!='data' else 'fixes.js'
     if os.path.exists(fx): js.append('(function(QB){\n'+open(fx,encoding='utf-8').read()+'\n})(WARDS['+wid+'].QB);')
-    for ofn,arr in (('opinions.js','QB'),):   # "ความเห็นของผม" of old exams written later (17 Nov 2026): O["set|ro|orig[#n]"] → q.opinion when empty
+    for ofn,arr in (('opinions.js','QB'),('explain.js','QB')):   # "ความเห็นของผม" of old exams written later (17 Nov 2026): O["set|ro|orig[#n]"] → q.opinion when empty
         op=os.path.join(d,ofn)
         if os.path.exists(op): js.append('(function(QB){\n'+open(op,encoding='utf-8').read()+'\n})(WARDS['+wid+'].'+arr+');')
     for f in sorted(glob.glob(os.path.join(d,'unit_*.js'))):     # Unit round banks: W.UNIT.push({id,title,short,src,QB:[…]})

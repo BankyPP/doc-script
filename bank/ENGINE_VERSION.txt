@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 741c371 2026-11-22 Manual: TOC pages
+BankyPP/ac-mdcu 650f2bb 2026-11-23 build เว็บ: Subspe MDCU66 เฉลยครบ
