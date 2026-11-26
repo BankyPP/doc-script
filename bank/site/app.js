@@ -517,7 +517,7 @@ const MF_LIT=10,MF_MEDAL=12;
    MCQ ≥10 of the day's set · MEQ the day's case submitted to the last Part · OSCE every station of the day's set · medal day = MCQ ≥12 right or MEQ / OSCE ≥80% (one per day)
    on-time MEQ / OSCE results are written to P.mornX[day] by mornXMark() on every save while that day is still running; today is read live. Box colours stay per exam type. */
 const MX_GOOD=0.8;
-function mornXMark(){if(!ward||!WARDS[ward]||typeof mornXState!=="function")return;const P=P_(),d=mDay(),s=mornXState(d);if(!s.meq&&!s.os)return;
+function mornXMark(){if(!ward||!WARDS[ward]||typeof mornXState!=="function")return;try{osMornSnap();}catch(e){}const P=P_(),d=mDay(),s=mornXState(d);if(!s.meq&&!s.os)return;
   const o=P.mornX=P.mornX||{},c=Object.assign({},o[d]||{});["meq","os"].forEach(k=>{const v=s[k];if(!v||!v.done)return;c[k]=1;if(v.pct!=null&&v.pct>(c[k+"P"]||0))c[k+"P"]=+v.pct.toFixed(3);});
   if(JSON.stringify(c)!==JSON.stringify(o[d]||{}))o[d]=c;}
 function mornGame(){const rec=mornRecs(),today=mDay(),days={},X=Object.assign({},P_().mornX||{});
@@ -537,7 +537,8 @@ const mGameHTML=G=>`<span class="mgame"><span class="mfire${G.on?" on":""}${G.ri
 function mhFire(d,today,G){if(d>today)return "";
   if(d===today){const c=G.on?"on":G.risk?"frz":"wait";return `<span class="mhf ${c}" title="${G.on?"วันนี้ไฟติดแล้ว":G.risk?"ไฟแข็ง — เมื่อวานทำไม่ถึง 10 ข้อ ถ้าวันนี้ไม่ทำ พรุ่งนี้ไฟเหลือ 0":"วันนี้ยังไม่ติดไฟ (ทำให้ได้ ≥10 ข้อ)"}"><span class="ff">🔥</span><i>${G.fire}</i><small>ตอนนี้</small></span>`;}
   const e=G.end[d]||{f:0,s:"out"};return `<span class="mhf ${e.s}" title="ไฟตอนจบวัน (07:29 ของวันถัดไป): ${e.s==="on"?"ติด "+e.f+" วัน":e.s==="frz"?"แข็ง (ผ่อนผัน 1 วัน) ยังเหลือ "+e.f:"ดับ"}"><span class="ff">🔥</span><i>${e.f}</i></span>`;}
-function rMHist(){const W=W_(),rec=mornRecs(),today=mDay(),rot=wRot(W.cfg);
+function rMHist(){{const T=P_().type||"MCQ";if(T!=="MCQ"&&mhTypes().includes(T))return rMHistX(T);}   /* MEQ / OSCE daily history (site/osce.js, 26 Nov 2026) — the page follows the tab it was opened from */
+  const W=W_(),rec=mornRecs(),today=mDay(),rot=wRot(W.cfg);
   const keys=Object.keys(rec).sort(),start=rot.start||keys[0]||today,end=rot.end||(keys.length&&keys[keys.length-1]>today?keys[keys.length-1]:today);
   const days=[];for(let d=start;d<=end&&days.length<400;d=addDay(d,1))days.push(d);keys.forEach(k=>{if(!days.includes(k))days.push(k);});days.sort();
   let full=0,partial=0,miss=0,ans=0,right=0,streak=0,run=0;
@@ -549,7 +550,7 @@ function rMHist(){const W=W_(),rec=mornRecs(),today=mDay(),rot=wRot(W.cfg);
     return {d,L,S,n,dn:mdn,all:dn,rt,st:st_};});
   rows.filter(r=>r.d<=today).forEach(r=>{if(r.st==="full")run++;else if(r.st!=="today")run=0;});streak=run;
   const past=rows.filter(r=>r.d<=today).length,MG=mornGame();
-  let h=`<h1 class="h2">ประวัติ Morning round</h1><p class="sub">ทุกวันของวอร์ดนี้${rot.start?` (${dayTH(rot.start)} – ${dayTH(rot.end||end)})`:""} · วันนับตั้งแต่ 07:30 ถึง 07:29 ของวันถัดไป · แตะวันที่เพื่อดูทั้ง 15 ข้อและเฉลย · เรียงจากวันแรกลงมา เปิดหน้ามาจะเลื่อนไปที่วันนี้ให้</p>`;
+  let h=mhTypeBar("MCQ")+`<h1 class="h2">ประวัติ Morning round${mhTypes().length>1?" MCQ":""}</h1><p class="sub">ทุกวันของวอร์ดนี้${rot.start?` (${dayTH(rot.start)} – ${dayTH(rot.end||end)})`:""} · วันนับตั้งแต่ 07:30 ถึง 07:29 ของวันถัดไป · แตะวันที่เพื่อดูทั้ง 15 ข้อและเฉลย · เรียงจากวันแรกลงมา เปิดหน้ามาจะเลื่อนไปที่วันนี้ให้</p>`;
   h+=`<div class="card mhsum"><div><b>${full}</b><span>วันที่ทำครบ</span></div><div><b>${partial}</b><span>ทำไม่ครบ</span></div><div><b class="${miss?"bad":""}">${miss}</b><span>ไม่ได้ทำ</span></div><div><b>${ans}</b><span>ข้อที่ตอบ</span></div><div><b>${ans?Math.round(right/ans*100)+"%":"–"}</b><span>ถูก ${right} ข้อ</span></div><div><b>🔥 ${MG.fire}</b><span>ไฟติดกัน (≥10 ข้อ/วัน)</span></div><div><b>🏅 ${MG.medals}</b><span>วันที่ถูก ≥12 ข้อ</span></div></div>`;
   h+=`<p class="hint" style="margin:6px 0 10px">ผ่านมาแล้ว ${past} จาก ${rows.length} วัน${HAS_CLAUDE()?" · ประวัตินี้เก็บแยกในเว็บกับใน Claude (เข้าสู่ระบบในเว็บเพื่อรวมหลายเครื่อง)":""}</p><div class="mhlist">`;
   rows.forEach(r=>{
@@ -566,7 +567,7 @@ function rMHist(){const W=W_(),rec=mornRecs(),today=mDay(),rot=wRot(W.cfg);
         return `<li><button class="mhopen" type="button" data-md="${esc(r.d)}" data-mp="${x.p}" data-mi="${i}"><span class="mhsrc">${src}</span><span class="mhst">${esc(plain(q.stem).slice(0,110))}${plain(q.stem).length>110?"…":""}</span>${res}</button></li>`;}).join("")}</ol>`;});
     h+=`</details>`;});
   h+=`</div>`;
-  $("main").innerHTML=h;
+  $("main").innerHTML=h;mhTypeWire();
   {const t=$("mhToday");if(t&&rows.indexOf(rows.find(r=>r.d===today))>2)setTimeout(()=>t.scrollIntoView({block:"start"}),30);}
   document.querySelectorAll("[data-md]").forEach(b=>b.onclick=()=>{const d=b.dataset.md,p=+b.dataset.mp,i=+b.dataset.mi,x=(mornRecs()[d]||[]).find(y=>y.p===p);if(!x)return;
     const P=P_();if(d===mDay()&&P.morn[1]&&P.morn[1].day===d&&p===1){qStop();P.sess={kind:"morning",title:"Morning round",ph:ph(),day:d,list:P.morn[1].list.slice(),ans:Object.assign({},P.morn[1].ans),cur:i,ts:now()};save();return go(ward+"/sess");}

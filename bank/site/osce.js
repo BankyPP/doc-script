@@ -442,7 +442,7 @@ function osHistView(){const P=P_(),H=(P.osHist||[]).slice().reverse();
 function osMerge(l,r){const del=Object.assign({},l.osDel||{},r.osDel||{});l.osDel=del;const m=new Map();(l.osHist||[]).concat(r.osHist||[]).forEach(x=>{if(!x||del[x.id])return;const a=m.get(x.id);if(!a||(x.end||0)>=(a.end||0))m.set(x.id,x);});
   l.osHist=[...m.values()].sort((a,b)=>a.ts-b.ts).slice(-40);
   if(r.osRun&&(!l.osRun||(r.osRun.ts||0)>(l.osRun.ts||0)))l.osRun=r.osRun;if(l.osRun&&l.osHist.some(x=>x.id===l.osRun.id))l.osRun=null;
-  if(r.osSet&&!l.osSet)l.osSet=r.osSet;if(r.osQ&&!l.osQ)l.osQ=r.osQ;}
+  if(r.osSet&&!l.osSet)l.osSet=r.osSet;if(r.osQ&&!l.osQ)l.osQ=r.osQ;try{osMornMerge(l,r);}catch(e){}}
 /* ward home top of the OSCE tab */
 function osHomeTop(L){const E=osExamCfg(),T=osTopics(),cur=osRunCur();
   let h=`<p class="hint" style="margin:6px 0 10px">${E?`สอบจริง <b>${E.n} ข้อ ข้อละ ${E.min} นาที</b> (<a href="#/${esc(ward)}/dates">แก้</a>)`:`ยังไม่ได้ตั้งจำนวนข้อ/เวลาสอบจริง (<a href="#/${esc(ward)}/dates">ตั้งที่หน้า Admit · ICU · Discharge</a>)`}${T.length?` · หัวข้อ: ${T.map(t=>esc(t.name)).join(", ")}`:""}</p>`;
@@ -505,26 +505,115 @@ function mornXState(d){const out={},P=P_(),W=W_();if(!W)return out;
   const pc=(q,r)=>{const s=mqScoreOf(q.subs,r);return s.all&&s.tot?s.got/s.tot:null;},best=a=>{const v=a.filter(x=>x!=null);return v.length?Math.max(...v):null;};
   if((W.MORN||[]).some(c=>c.day===d)){const q=mornMQAll().find(x=>x.mday===d);if(q){const R=xRecs(q,"MEQ").filter(r=>mqCaseDone(q,r));out.meq={done:R.length>0,pct:best(R.map(r=>pc(q,r)))};}}
   const m=P.osce,x=m&&(m.morn&&m.morn.day===d?m.morn:(m.mornH||{})[d]);
-  if(x&&(x.list||[]).length){const qs=mqKindDo("OSCE",()=>x.list.map(u=>mqFindU(u)).filter(Boolean)),dn=qs.filter(q=>xDone(q,"OSCE"));
-    const ps=dn.map(q=>best(xRecs(q,"OSCE").filter(r=>mqCaseDone(q,r)).map(r=>pc(q,r))));
+  if(x&&(x.list||[]).length){const qs=mqKindDo("OSCE",()=>x.list.map(u=>mqFindU(u)).filter(Boolean)),dn=qs.filter(q=>osMDone(q,x));
+    const ps=dn.map(q=>osMPct(q,x));
     out.os={done:qs.length>0&&dn.length>=qs.length,n:dn.length,tot:qs.length,pct:dn.length>=qs.length&&ps.every(v=>v!=null)?ps.reduce((a,b)=>a+b,0)/ps.length:null};}
   return out;}
 /* Morning box colours for MEQ / OSCE (per exam type): green = today's case / set done, red = not yet · gold edge = done on time · aura = ≥80% */
 function mornXFx(type){const s=mornXState(mDay())[type==="OSCE"?"os":"meq"];if(!s)return [];const c=[s.done?"mgood":"mwarn"];if(s.done)c.push("mgold");if(s.done&&s.pct!=null&&s.pct>=MX_GOOD)c.push("maura");return c;}
-function mornXList(){if(mqIsOS()){const x=osMorn(false);return x?x.list.map(u=>mqFindU(u)).filter(Boolean):[];}const q=mqXFind("MORN|"+mDay());return q?[q]:[];}
+/* d = the day of the set being worked on (default today) — a set opened before 07:30 keeps its own list after the day turns (bug 26 Nov 2026: started 07:28 → after 07:30 the station showed 0/0, ← greyed, "ข้อสุดท้าย")
+   answers given after the day ended still go into that set, like Morning MCQ, but do not count as ทันวัน */
+function osMSet(d){const m=mqInitP(P_(),"OSCE");if(!d||d===mDay())return osMorn(false);return m.morn&&m.morn.day===d?m.morn:(m.mornH||{})[d]||null;}
+function mornXList(d){d=d||mDay();if(mqIsOS()){const x=osMSet(d);return x?x.list.map(u=>mqFindU(u)).filter(Boolean):[];}const q=mqXFind("MORN|"+d);return q?[q]:[];}
+function mornDayOf(u,pref){const t=mDay();if(mqIsOS()){const has=d=>{const x=osMSet(d);return !!x&&(x.list||[]).includes(u);};return has(t)?t:pref&&has(pref)?pref:null;}
+  const m=/^MORN\|(.+)$/.exec(u||"");return m?m[1]:null;}
 function mornXBox(type){let clock=`<span class="mclock">${type==="OSCE"?"ชุดใหม่":"เคสใหม่"}ใน <b id="mClock">${hms(mNext()-now())}</b></span>`;let t;
   if(type==="OSCE"){const x=osMorn(false);
     if(!x){const can=mqL(ward,"OSCE").length||osUnitAll().length;t=can?"🎁 ยังไม่ได้เปิดกล่องวันนี้":"🎁 ยังไม่มีสถานีให้เปิดกล่อง — รอข้อสอบเก่า OSCE / สถานี Unit round";}
-    else{const L=mornXList(),dn=L.filter(q=>xDone(q,"OSCE")).length;t=!dn&&!L.some(q=>xTouched(q,"OSCE"))?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":dn<L.length?`วันนี้ทำไป ${dn}/${L.length} สถานี`:`✓ ครบ ${dn}/${L.length} สถานีแล้ว`;}}
+    else{const L=mornXList(),dn=L.filter(q=>osMDone(q,x)).length;t=!dn&&!L.some(q=>osMTouched(q,x))?"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ":dn<L.length?`วันนี้ทำไป ${dn}/${L.length} สถานี`:`✓ ครบ ${dn}/${L.length} สถานีแล้ว`;}}
   else{const P=P_(),m=mqInitP(P,"MEQ"),d=mDay(),q=mqXFind("MORN|"+d),op=m.mopen&&m.mopen[d];
     if(!q)clock="";/* waiting for a later case: the wait text already gives the day + 07:30, the countdown would point at tomorrow */
     t=!q?mornMQWait():!op?"🎁 ยังไม่ได้เปิดกล่องวันนี้":xDone(q,"MEQ")?"✓ ทำเคสวันนี้ครบแล้ว":xTouched(q,"MEQ")?"ทำไปบางส่วน — ทำต่อให้ครบนะ":"เปิดกล่องแล้ว ยังไม่ได้ทำ — ทำด้วยนะ";}
-  return `<span class="mtodo${/^✓/.test(t)?" ok":""}">${t}</span>${clock}`;}
+  return `<span class="mtodo${/^✓/.test(t)?" ok":""}">${t}</span>${clock}<span class="mhist" data-mhist="1">📅 ประวัติรายวัน →</span>`;}
 function mornXStart(type){
   if(type==="OSCE"){const x=osMorn(true);if(!x){toast(osMornOut?"Morning round ออกครบทุกสถานีในวอร์ดนี้แล้ว — ไม่มีสถานีใหม่ที่ยังไม่เคยออก":"ยังไม่มีสถานีให้ทำ — รอข้อสอบเก่า OSCE / สถานี Unit round");return;}
-    const L=mornXList(),q=L.find(z=>!xDone(z,"OSCE"))||L[0];if(!q){toast("ไม่พบสถานีของวันนี้");return;}return mqOpen(q.uid,undefined,"morning");}
+    const L=mornXList(),q=L.find(z=>!osMDone(z,x))||L[0];if(!q){toast("ไม่พบสถานีของวันนี้");return;}return mqOpen(q.uid,undefined,"morning");}
   const m=mqInitP(P_(),"MEQ"),d=mDay(),q=mqXFind("MORN|"+d);if(!q){toast(mornMQWait());return;}
   m.mopen=m.mopen||{};m.mopen[d]=1;Object.keys(m.mopen).sort().slice(0,-60).forEach(k=>delete m.mopen[k]);save();mqOpen(q.uid,undefined,"morning");}
+/* ---- Morning OSCE counts only what is done for THIS day's set (user 26 Nov 2026) ----
+   The set draws old stations already done first, so a station's lifetime record cannot say whether it was done this morning:
+   done / touched / score = a record submitted (at) or changed (ts) after the set was made (x.ts) · opening a Morning station whose record is older than the set
+   starts it fresh (same as "ทำข้อนี้ใหม่" for the whole station, no question asked) so the old answers and key are not shown before answering */
+const osMRecs=(q,x)=>xRecs(q,"OSCE").filter(r=>((r.at||r.ts||0)>=((x&&x.ts)||0)));
+const osMDone=(q,x)=>osMRecs(q,x).some(r=>mqCaseDone(q,r));
+const osMTouched=(q,x)=>xRecs(q,"OSCE").some(r=>(r.ts||0)>=((x&&x.ts)||0)&&q.subs.some(s=>mqSubDone(q,s,r)));
+function osMPct(q,x){const v=osMRecs(q,x).filter(r=>mqCaseDone(q,r)).map(r=>{const s=mqScoreOf(q.subs,r);return s.all&&s.tot?s.got/s.tot:null;}).filter(v=>v!=null);return v.length?Math.max(...v):null;}
+function osMornFresh(q,d){const x=osMSet(d);if(!x||!(x.list||[]).includes(q.uid))return;const A=mqA(),o=A[q.uid];if(!o||(o.ts||0)>=(x.ts||0))return;
+  if(!q.subs.some(s=>mqSubDone(q,s,o))&&!Object.keys(o.t||{}).length)return;
+  A[q.uid]={t:{},g:{},gm:{},c:{},cs:{},ps:0,sd:{},ts:now()};}
+/* the day's results kept inside the set (x.res {uid:{p,t}}) while that day is still running — the daily history shows them as "ทันวัน" (called from mornXMark on every save) */
+function osMornSnap(){const P=P_(),m=P&&P.osce,x=m&&m.morn;if(!x||x.day!==mDay()||!(x.list||[]).length)return;
+  mqKindDo("OSCE",()=>x.list.forEach(u=>{const q=mqFindU(u);if(!q||!osMDone(q,x))return;const p=osMPct(q,x),pp=p==null?null:+p.toFixed(3);x.res=x.res||{};const o=x.res[u];
+    if(!o)x.res[u]={p:pp,t:now()};else if(pp!=null&&(o.p==null||pp>o.p))o.p=pp;}));}
+/* account sync of the Morning OSCE sets (P.osce.morn + mornH) and of the opened Morning MEQ boxes (P.meq.mopen) — before 26 Nov 2026 each device kept its own set
+   one set per day on every device: same list → answers joined · different lists → the one with more stations done for it, then the one made first */
+function osMornMerge(l,r){const a=mqInitP(l,"OSCE"),c=(r&&r.osce)||{};const D={};
+  const prog=x=>(x.list||[]).filter(u=>[a.a1[u],a.a2[u]].some(z=>z&&(z.at||z.ts||0)>=(x.ts||0)&&(z.sub||z.ps))).length+Object.keys(x.res||{}).length;
+  const pick=(x,y)=>{if(!x)return y;if(!y)return x;
+    if((x.list||[]).join()===(y.list||[]).join()){const res=Object.assign({},y.res||{});for(const u in x.res||{}){const i=x.res[u],j=res[u];res[u]=!j?i:{p:i.p==null?j.p:j.p==null?i.p:Math.max(i.p,j.p),t:Math.min(i.t||9e15,j.t||9e15)};}
+      const o=Object.assign({},x,{ts:Math.min(x.ts||9e15,y.ts||9e15)});if(Object.keys(res).length)o.res=res;return o;}
+    const px=prog(x),py=prog(y);if(px!==py)return px>py?x:y;return (y.ts||0)<(x.ts||0)?y:x;};
+  [a.mornH,c.mornH].forEach(H=>{for(const d in H||{}){const x=H[d];if(x&&x.day)D[x.day]=pick(D[x.day],x);}});
+  [a.morn,c.morn].forEach(x=>{if(x&&x.day)D[x.day]=pick(D[x.day],x);});
+  const ks=Object.keys(D).sort();if(ks.length){const last=ks[ks.length-1];a.morn=D[last];a.mornH={};ks.slice(0,-1).forEach(d=>{a.mornH[d]=D[d];});}
+  const am=mqInitP(l,"MEQ"),cm=(r&&r.meq)||{};if(cm.mopen)am.mopen=Object.assign({},cm.mopen,am.mopen||{});}
+/* ---- Morning round daily history of MEQ / OSCE (user 26 Nov 2026, ทวทว: "มันเป็นฟีเจอร์ก็ให้มีทุกที่") ----
+   #/<ward>/mhist shows the exam type of the tab it was opened from (P.type); chips switch MCQ · MEQ · OSCE · tapping a station / case of an earlier day
+   opens it in round "mhday" (its own list, back to the history) — today's set opens in the Morning round itself */
+function mhTypes(){const o=["MCQ"];if(mornMQOn())o.push("MEQ");if(mqL(ward,"OSCE").length||osUnitAll().length)o.push("OSCE");return o;}
+function mhTypeBar(t){const T=mhTypes();return T.length<2?"":`<div class="tabs" role="tablist" style="margin:0 0 12px">${T.map(k=>`<button class="tab" role="tab" type="button" aria-selected="${k===t}" data-mht="${k}">Morning ${k}</button>`).join("")}</div>`;}
+function mhTypeWire(){document.querySelectorAll("[data-mht]").forEach(b=>b.onclick=()=>{P_().type=b.dataset.mht;save();rMHist();scrollTo(0,0);});}
+function mhOSSets(){const m=mqInitP(P_(),"OSCE");osMorn(false);const o=Object.assign({},m.mornH||{});if(m.morn&&m.morn.day)o[m.morn.day]=m.morn;return o;}
+function mhDayList(d){if(mqIsOS()){const x=mhOSSets()[d];return x?(x.list||[]).map(u=>mqFindU(u)).filter(Boolean):[];}const q=mqXFind("MORN|"+d);return q?[q]:[];}
+function mhOpen(d,u){const today=mDay();if(d===today&&(mqIsOS()?(osMorn(false)||{}).day===d:true)){if(!mqIsOS()){const m=mqInitP(P_(),"MEQ");m.mopen=m.mopen||{};m.mopen[d]=1;}return mqOpen(u,undefined,"morning");}
+  mqVset({mhday:d});mqOpen(u,undefined,"mhday");}
+function rMHistX(type){const OS=type==="OSCE",P=P_(),W=W_(),today=mDay(),rot=wRot(W.cfg),MG=mornGame(),X=P.mornX||{},pc=v=>v==null?"–":Math.round(v*100)+"%";
+  P.type=type;
+  const SETS=OS?mhOSSets():{},CASES={};if(!OS)(W.MORN||[]).forEach(c=>{CASES[c.day]=c;});
+  const keys=Object.keys(OS?SETS:CASES).sort(),first=keys.find(k=>k<=today)||today;
+  const start=rot.start||first,end=rot.end||(!OS&&keys.length&&keys[keys.length-1]>today?keys[keys.length-1]:today);
+  const days=[];for(let d=start;d<=end&&days.length<400;d=addDay(d,1))days.push(d);keys.forEach(k=>{if(!days.includes(k))days.push(k);});days.sort();
+  let full=0,part=0,late=0,miss=0,nDone=0,sumP=0,nP=0;
+  const rows=days.map(d=>{const fut=d>today;
+    if(OS){const x=SETS[d];if(!x||fut)return {d,fut,st:fut?"future":d===today?"today0":"miss"};
+      const qs=mqKindDo("OSCE",()=>(x.list||[]).map(u=>mqFindU(u)).filter(Boolean)),res=x.res||{};
+      const it=qs.map(q=>{const r=res[q.uid],on=d===today?osMDone(q,x):!!r,p=r&&r.p!=null?r.p:d===today&&on?osMPct(q,x):null;
+        return {q,on,p,lateDone:!on&&osMDone(q,x),touch:!on&&osMTouched(q,x)};});
+      const n=it.length,on=it.filter(i=>i.on).length,lt=it.filter(i=>i.lateDone).length,ps=it.filter(i=>i.on&&i.p!=null).map(i=>i.p),avg=ps.length?ps.reduce((a,b)=>a+b,0)/ps.length:null;
+      const st=d===today?(n&&on>=n?"full":"today"):on>=n&&n?"full":on||lt?"part":"miss";
+      return {d,x,it,n,on,lt,avg,st};}
+    const c=CASES[d];if(fut)return {d,fut,st:c?"future":"none"};if(!c)return {d,st:"none"};
+    const q=mqXFind("MORN|"+d);if(!q)return {d,st:"none"};const x=X[d]||{},onT=!!x.meq,dn=xDone(q,"MEQ"),tc=xTouched(q,"MEQ");
+    let p=onT?(x.meqP||null):null;if(p==null&&dn){const s=mqKindDo("MEQ",()=>{const R=xRecs(q,"MEQ").filter(r=>mqCaseDone(q,r)).map(r=>{const s=mqScoreOf(q.subs,r);return s.all&&s.tot?s.got/s.tot:null;}).filter(v=>v!=null);return R.length?Math.max(...R):null;});p=s;}
+    const st=onT?"full":d===today?(dn?"full":"today"):dn?"late":tc?"part":"miss";
+    return {d,q,c,onT,dn,tc,p,st};});
+  rows.forEach(r=>{if(r.d>today)return;if(r.st==="full")full++;else if(r.st==="part")part++;else if(r.st==="late")late++;else if(r.st==="miss")miss++;
+    if(OS&&r.it){nDone+=r.on;r.it.forEach(i=>{if(i.on&&i.p!=null){sumP+=i.p;nP++;}});}else if(!OS&&r.q&&(r.onT||r.dn)){nDone++;if(r.p!=null){sumP+=r.p;nP++;}}});
+  const UNIT=OS?"สถานี":"เคส";
+  let h=mhTypeBar(type)+`<h1 class="h2">ประวัติ Morning round ${type}</h1><p class="sub">ทุกวันของวอร์ดนี้${rot.start?` (${dayTH(rot.start)} – ${dayTH(rot.end||end)})`:""} · วันนับตั้งแต่ 07:30 ถึง 07:29 ของวันถัดไป · ${OS?"วันละ 3 สถานี · แตะวันที่เพื่อดูสถานีของวันนั้น แล้วแตะสถานีเพื่อเปิดดูคำตอบ/เฉลย":"วันละ 1 เคส · แตะวันที่แล้วแตะเคสเพื่อเปิดดูคำตอบ/เฉลย"} · "ทันวัน" = ทำเสร็จภายในวันนั้น · เรียงจากวันแรกลงมา เปิดหน้ามาจะเลื่อนไปที่วันนี้ให้</p>`;
+  h+=`<div class="card mhsum"><div><b>${full}</b><span>${OS?"วันที่ทำครบทันวัน":"เคสที่ทำครบทันวัน"}</span></div><div><b>${OS?part:late}</b><span>${OS?"ทำไม่ครบ":"ทำภายหลัง"}</span></div><div><b class="${miss?"bad":""}">${miss}</b><span>ไม่ได้ทำ</span></div><div><b>${nDone}</b><span>${UNIT}ที่ทำทันวัน</span></div><div><b>${nP?Math.round(sumP/nP*100)+"%":"–"}</b><span>คะแนนเฉลี่ย</span></div><div><b>🔥 ${MG.fire}</b><span>ไฟติดกัน (ใช้ร่วม MCQ · MEQ · OSCE)</span></div><div><b>🏅 ${MG.medals}</b><span>วันที่ได้เหรียญ</span></div></div>`;
+  h+=`<p class="hint" style="margin:6px 0 10px">ผ่านมาแล้ว ${rows.filter(r=>r.d<=today).length} จาก ${rows.length} วัน${HAS_CLAUDE()?" · ประวัตินี้เก็บแยกในเว็บกับใน Claude (เข้าสู่ระบบในเว็บเพื่อรวมหลายเครื่อง)":""}</p><div class="mhlist">`;
+  rows.forEach(r=>{const d=r.d,isT=d===today;
+    const lab=r.st==="future"?`<span class="mhs fut">ยังไม่ถึง</span>`:r.st==="none"?`<span class="mhs fut">ไม่มีเคสวันนี้</span>`:r.st==="miss"?`<span class="mhs miss">${OS&&!r.x?"ไม่ได้เปิดกล่อง":"ไม่ได้ทำ"}</span>`
+      :r.st==="today0"?`<span class="mhs part">🎁 ยังไม่ได้เปิดกล่องวันนี้</span>`
+      :OS?(r.st==="today"?`<span class="mhs part">${r.on?`วันนี้ทำไป ${r.on}/${r.n} สถานี`:"เปิดกล่องแล้ว ยังไม่ได้ทำ"}</span>`:r.st==="part"?`<span class="mhs part">ทันวัน ${r.on}/${r.n}${r.lt?` · ทำภายหลัง ${r.lt}`:""}</span>`:`<span class="mhs ok">ครบ ${r.on}/${r.n} ทันวัน</span>`)
+      :(r.st==="today"?`<span class="mhs part">${r.tc?"ทำไปบางส่วน — ทำต่อให้ครบนะ":(mqInitP(P,"MEQ").mopen||{})[d]?"เปิดกล่องแล้ว ยังไม่ได้ทำ":"🎁 ยังไม่ได้เปิดกล่องวันนี้"}</span>`:r.st==="late"?`<span class="mhs part">ทำภายหลัง (ไม่ทันวัน)</span>`:r.st==="part"?`<span class="mhs part">ทำค้างไว้</span>`:`<span class="mhs ok">✓ ทำครบทันวัน</span>`);
+    const sc=OS?(r.it&&r.on?`<span class="mhr">คะแนนเฉลี่ย <b>${pc(r.avg)}</b> (${r.on} สถานีที่ทำทันวัน)</span>`:""):(r.q&&r.dn?`<span class="mhr">คะแนน <b>${pc(r.p)}</b>${r.onT?"":" (ทำภายหลัง)"}</span>`:"");
+    const head=`<span class="mhd${isT?" now":""}">${dayTH(d)}</span>${mhFire(d,today,MG)}${lab}${sc}`;
+    const fx=d>today||r.st==="none"||r.st==="today0"?[]:OS?(()=>{if(!r.it)return isT?[]:["mred"];const c=[r.on>=r.n&&r.n?"mgood":"mred"];if(r.on>=r.n&&r.n)c.push("mgold");if(r.on>=r.n&&r.avg!=null&&r.avg>=MX_GOOD)c.push("maura");return c;})()
+      :(()=>{const c=[r.onT||(isT&&r.dn)?"mgood":"mred"];if(r.onT)c.push("mgold");if(r.onT&&r.p!=null&&r.p>=MX_GOOD)c.push("maura");return c;})();
+    const id=(isT?' id="mhToday"':"")+(fx.length?` data-fx="${fx.join(" ")}"`:"")+(fx.includes("maura")?` style="${auraVars(d)}"`:"");const fxc=fx.length?" "+fx.join(" "):"";
+    const items=OS?(r.it||[]).map(i=>{const q=i.q,res=i.on?`<span class="mhx ok">✓ ทันวัน · ${pc(i.p)}</span>`:i.lateDone?`<span class="mhx no">ทำภายหลัง</span>`:i.touch?`<span class="mhx no">ทำค้าง</span>`:`<span class="mhx na">ไม่ได้ทำ</span>`;
+        const src=/^OSU\|/.test(q.uid)?`Unit · ${esc(q.ro||"")}`:`AC ${esc(q.set)} ${esc(q.ro||"")} · ข้อ ${esc(mqNum(q))} · ${esc(osTN(q.topic||""))}`;
+        return `<li><button class="mhopen" type="button" data-mxd="${esc(d)}" data-mxu="${esc(q.uid)}"><span class="mhsrc">${src}</span><span class="mhst">${esc(plain(q.stem||"").slice(0,110))}${plain(q.stem||"").length>110?"…":""}</span>${res}</button></li>`;})
+      :(r.q?[(()=>{const q=r.q,res=r.onT?`<span class="mhx ok">✓ ทันวัน · ${pc(r.p)}</span>`:r.dn?`<span class="mhx no">ทำภายหลัง · ${pc(r.p)}</span>`:r.tc?`<span class="mhx no">ทำค้าง</span>`:`<span class="mhx na">ไม่ได้ทำ</span>`;
+        return `<li><button class="mhopen" type="button" data-mxd="${esc(d)}" data-mxu="${esc(q.uid)}"><span class="mhsrc">${r.c&&r.c.no?`เคสที่ ${esc(r.c.no)}`:"เคสประจำวัน"} · ${q.parts.length} Part</span><span class="mhst">${esc(plain(q.stem||"").slice(0,110))}${plain(q.stem||"").length>110?"…":""}</span>${res}</button></li>`;})()]:[]);
+    if(!items.length){h+=`<div class="mhrow${fxc}"${id}>${head}</div>`;return;}
+    h+=`<details class="mhrow${fxc}"${id}${isT?" open":""}><summary>${head}</summary><ol class="mhq">${items.join("")}</ol></details>`;});
+  h+=`</div>`;
+  $("main").innerHTML=h;mhTypeWire();
+  {const t=$("mhToday");if(t&&rows.indexOf(rows.find(r=>r.d===today))>2)setTimeout(()=>t.scrollIntoView({block:"start"}),30);}
+  document.querySelectorAll("[data-mxd]").forEach(b=>b.onclick=()=>mhOpen(b.dataset.mxd,b.dataset.mxu));}
 /* ---- Unit round OSCE: by big topic ---- */
 /* Unit round OSCE works like Unit round MCQ (user 22 Nov 2026, ทวทว): no picking stations from a list — choose big topics (none = all) and small topics (none = all),
    how many to draw (any number), then a random set is drawn every time (repeats across rounds allowed) · v.utops = big topics · v.usubs = small topics · v.un = count · v.ul = this round's stations */

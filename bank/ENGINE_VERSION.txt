@@ -1,1 +1,1 @@
-BankyPP/ac-mdcu 650f2bb 2026-11-23 build เว็บ: Subspe MDCU66 เฉลยครบ
+BankyPP/ac-mdcu 27e019dd 2026-11-26 Morning MEQ/OSCE: ประวัติรายวัน + ข้าม 07:30 ไม่พัง + นับเฉพาะชุดวันนั้น + ซิงก์ข้ามเครื่อง (ทวทว)
