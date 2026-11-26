@@ -69,9 +69,9 @@ function osShrink(file){return new Promise((res,rej)=>{const fr=new FileReader()
 const osHasPic=q=>[].concat((q&&q.img)||[]).some(k=>IMGS[k]);
 const osNeedsImg=q=>!!(q&&!osHasPic(q)&&(q.imgNeed||q.imgAlt||q.imgNote));
 function osPicQ(q){const t=x=>plain(String(x||"")).trim(),n=t(q.imgNote);return t(q.imgNeed)||(n&&!/ไม่มีรูป/.test(n)?n:"")||t(q.imgAlt)||t(q.title);}
-/* picture block of a station: the real picture(s) if any · else the picture the user put in · else the "no picture" note + (outside the timed exam) tools to add one */
+/* picture block of a station: the real picture(s) if any · else the picture the user put in · else the written description of the picture (imgAlt — shown whenever there is no picture, also on old stations whose file had none, user 26 Nov 2026) · else the "no picture" note + (outside the timed exam) tools to add one */
 function osPicBlock(q,lock){const real=mqImgs(q.img,q.imgNote);if(!osNeedsImg(q))return real;const d=OSIMG[q.uid];
-  let h=d?`<div class="stem-img"><img src="${d}" alt="รูปที่ใส่เอง"><div class="img-note">🖼 รูปที่ใส่เอง — เก็บในเครื่องนี้เท่านั้น</div></div>`:(q.imgNote?real:q.imgAlt&&!String(q.stem||"").includes(q.imgAlt)?`<div class="img-missing">🖼 ยังไม่มีรูป — คำบรรยายแทนรูป: ${q.imgAlt}</div>`:`<div class="img-missing">🖼 ยังไม่มีรูปในข้อนี้</div>`);
+  let h=d?`<div class="stem-img"><img src="${d}" alt="รูปที่ใส่เอง"><div class="img-note">🖼 รูปที่ใส่เอง — เก็บในเครื่องนี้เท่านั้น</div></div>`:(q.imgAlt&&!String(q.stem||"").includes(q.imgAlt)?`<div class="img-missing">🖼 ${/ไม่มีรูปในไฟล์/.test(q.imgNote||"")?"ไม่มีรูปในไฟล์":"ยังไม่มีรูป"} — คำบรรยายแทนรูป: ${q.imgAlt}</div>`:q.imgNote?real:`<div class="img-missing">🖼 ยังไม่มีรูปในข้อนี้</div>`);
   if(!lock)h+=`<details class="ospic"><summary>${d?"🖼 เปลี่ยน / ลบรูปที่ใส่เอง":"🖼 ใส่รูปเอง"}</summary><p class="hint" style="margin:4px 0 6px">กด “ค้นรูป” แล้วบันทึกรูปลงเครื่อง จากนั้นกด “ใส่รูป” · รูปเก็บในเบราว์เซอร์นี้เท่านั้น (ใช้ได้ทุก round ที่สถานีนี้ออก) · คำค้นอาจบอกคำตอบ</p><div class="row2"><a class="btn sm" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(osPicQ(q))}">🔎 ค้นรูป ↗</a><label class="btn sm osup">${d?"เปลี่ยนรูป":"ใส่รูป"}<input type="file" accept="image/*" data-osimg="${esc(q.uid)}" hidden></label>${d?`<button class="link" type="button" data-osimgdel="${esc(q.uid)}">ลบรูป</button>`:""}</div></details>`;
   return h;}
 /* load the user's picture of q (once) and wire the add / remove buttons · re = redraw the page */
@@ -272,7 +272,7 @@ Avoid these stations already in this exam: ${used||"none"}.
 ${full.length?"Do not write on these small topics, they already appear "+OS_SUBLIM+" times in this exam: "+full.join(", ")+".\n":""}${refs?"Reference from the school (use it for the checklist and the model answer; if a newer guideline or textbook disagrees, follow the more reliable source and say so in keyNote):\n"+refs+"\n":""}Answer key: old-exam keys ("fileKey") are written by students and are only a guide. If you disagree with how they answer a similar question, write what you believe is most correct and explain the difference in Thai in "keyNote"; otherwise leave "keyNote" empty.
 Pictures: the website cannot make pictures — the student will insert one himself. If this station needs a picture (EKG, film, CT, smear, Gram stain, KOH, urine sediment, skin lesion, photo of a physical sign, etc.):
 - "imgNeed": exactly which picture to find (e.g. "12-lead EKG: atrial fibrillation with rapid ventricular response") — may name the finding, it is shown only to the person who inserts the picture.
-- "imgAlt": a short neutral written description used only if no picture is inserted (measurements, morphology, distribution) WITHOUT naming the diagnosis or the sign the student must identify.
+- "imgAlt": a written description in Thai (medical terms in English) shown in place of the picture until one is inserted: describe what the picture shows (morphology, colour, size, number, distribution, location, key positive and negative findings, measurements) in enough detail that a student who knows the disease can reach the expected answer from the words alone — but WITHOUT naming the diagnosis or the named sign the student must identify. Vary the length from station to station (sometimes one short line, sometimes 2–4 sentences).
 - The stem says the picture "is shown". Otherwise set both to "".
 Rules:
 - Stem and questions in formal English like a real exam. 1–4 sub-questions (e.g. "1.1 Diagnosis"); stations with an examiner usually have one long task (take a history / examine / perform) plus a short question at the end.
@@ -562,7 +562,7 @@ function osMornMerge(l,r){const a=mqInitP(l,"OSCE"),c=(r&&r.osce)||{};const D={}
    opens it in round "mhday" (its own list, back to the history) — today's set opens in the Morning round itself */
 function mhTypes(){const o=["MCQ"];if(mornMQOn())o.push("MEQ");if(mqL(ward,"OSCE").length||osUnitAll().length)o.push("OSCE");return o;}
 function mhTypeBar(t){const T=mhTypes();return T.length<2?"":`<div class="tabs" role="tablist" style="margin:0 0 12px">${T.map(k=>`<button class="tab" role="tab" type="button" aria-selected="${k===t}" data-mht="${k}">Morning ${k}</button>`).join("")}</div>`;}
-function mhTypeWire(){document.querySelectorAll("[data-mht]").forEach(b=>b.onclick=()=>{P_().type=b.dataset.mht;save();rMHist();scrollTo(0,0);});}
+function mhTypeWire(){document.querySelectorAll("[data-mht]").forEach(b=>b.onclick=()=>{P_().type=b.dataset.mht;save();mhNoJump=true;rMHist();});}
 function mhOSSets(){const m=mqInitP(P_(),"OSCE");osMorn(false);const o=Object.assign({},m.mornH||{});if(m.morn&&m.morn.day)o[m.morn.day]=m.morn;return o;}
 function mhDayList(d){if(mqIsOS()){const x=mhOSSets()[d];return x?(x.list||[]).map(u=>mqFindU(u)).filter(Boolean):[];}const q=mqXFind("MORN|"+d);return q?[q]:[];}
 function mhOpen(d,u){const today=mDay();if(d===today&&(mqIsOS()?(osMorn(false)||{}).day===d:true)){if(!mqIsOS()){const m=mqInitP(P_(),"MEQ");m.mopen=m.mopen||{};m.mopen[d]=1;}return mqOpen(u,undefined,"morning");}
@@ -612,7 +612,7 @@ function rMHistX(type){const OS=type==="OSCE",P=P_(),W=W_(),today=mDay(),rot=wRo
     h+=`<details class="mhrow${fxc}"${id}${isT?" open":""}><summary>${head}</summary><ol class="mhq">${items.join("")}</ol></details>`;});
   h+=`</div>`;
   $("main").innerHTML=h;mhTypeWire();
-  {const t=$("mhToday");if(t&&rows.indexOf(rows.find(r=>r.d===today))>2)setTimeout(()=>t.scrollIntoView({block:"start"}),30);}
+  {const t=$("mhToday");if(!mhNoJump&&t&&rows.indexOf(rows.find(r=>r.d===today))>2)setTimeout(()=>t.scrollIntoView({block:"start"}),30);mhNoJump=false;}
   document.querySelectorAll("[data-mxd]").forEach(b=>b.onclick=()=>mhOpen(b.dataset.mxd,b.dataset.mxu));}
 /* ---- Unit round OSCE: by big topic ---- */
 /* Unit round OSCE works like Unit round MCQ (user 22 Nov 2026, ทวทว): no picking stations from a list — choose big topics (none = all) and small topics (none = all),

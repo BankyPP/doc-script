@@ -246,19 +246,23 @@ const flagged=(P,u)=>!!(P.flag[u]&&P.flag[u][0]);
 /* 📝 the question has an after-answer note (typed or handwritten, P.post) — marked in every answer sheet and filterable wherever ⚑ ไม่มั่นใจ / ★ is (user 13 Nov 2026) */
 function noted(u){return !!u&&noteHas("post",0,u);}
 /* recall text from the AC file (q.gray) under the question/case/part: a collapsible box, because it often carries the note-taker's answer or hints (user 14 Nov 2026, ทวทว)
-   st.grayOpen = default for every question (synced with the account; unset = closed) · grayU = boxes opened/closed by hand, kept while moving between questions, cleared on leaving the question pages (show()) */
+   st.grayOpen = default per exam type {MCQ,MEQ,OSCE} (synced with the account; unset = closed) — separate defaults per tab (user 26 Nov 2026, ทวทว);
+   an older plain true/false still counts for MCQ and MEQ (OSCE was hidden until answered then, so it starts closed)
+   grayU = boxes opened/closed by hand, kept while moving between questions, cleared on leaving the question pages (show()) */
 const grayU={};
-const grayDef=()=>!!st.grayOpen;
-/* one chip right of the title: shows the current default, tap = switch it (fits on one line on a phone) */
-const grayChip=d=>`<button type="button" class="chip gdef" data-gdef="${d?0:1}" title="ค่าเริ่มต้นของทุกข้อ — แตะเพื่อสลับ">ค่าเริ่มต้น: ${d?"เปิด":"ปิด"}</button>`;
-function grayBox(t,k,cls){if(!t)return "";const o=Object.prototype.hasOwnProperty.call(grayU,k)?grayU[k]:grayDef(),d=grayDef();
-  return `<details class="gbox${cls?" "+cls:""}" data-grk="${esc(k)}"${o?" open":""}><summary><span class="gt">📄 ข้อความในไฟล์ <span class="gwarn">อาจมีเฉลย/คำใบ้</span></span>${grayChip(d)}</summary><p class="gray">${esc(t)}</p></details>`;}
+const GRAY_TN={MCQ:"MCQ",MEQ:"MEQ",OSCE:"OSCE"};
+const grayDef=ty=>{ty=GRAY_TN[ty]?ty:"MCQ";const g=st.grayOpen;if(g&&typeof g==="object")return !!g[ty];return ty==="OSCE"?false:!!g;};
+/* one chip right of the title: shows the current default of this tab, tap = switch it (fits on one line on a phone) */
+const grayChip=(d,ty)=>{ty=GRAY_TN[ty]?ty:"MCQ";return `<button type="button" class="chip gdef" data-gdef="${d?0:1}" data-gty="${ty}" title="ค่าเริ่มต้นของทุกข้อในแท็บ ${ty} (แยกจากแท็บอื่น) — แตะเพื่อสลับ">ค่าเริ่มต้น ${ty}: ${d?"เปิด":"ปิด"}</button>`;};
+function grayBox(t,k,cls,ty){if(!t)return "";ty=GRAY_TN[ty]?ty:"MCQ";const o=Object.prototype.hasOwnProperty.call(grayU,k)?grayU[k]:grayDef(ty),d=grayDef(ty);
+  return `<details class="gbox${cls?" "+cls:""}" data-grk="${esc(k)}" data-gty="${ty}"${o?" open":""}><summary><span class="gt">📄 ข้อความในไฟล์ <span class="gwarn">อาจมีเฉลย/คำใบ้</span></span>${grayChip(d,ty)}</summary><p class="gray">${esc(t)}</p></details>`;}
 document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.classList&&d.classList.contains("gbox"))grayU[d.dataset.grk]=d.open;},true);
 document.addEventListener("click",e=>{const b=e.target&&e.target.closest&&e.target.closest("[data-gdef]");if(!b)return;e.preventDefault();
-  const on=b.dataset.gdef==="1",me=b.closest("details.gbox");st.grayOpen=on;save();
-  for(const k in grayU)delete grayU[k];if(me)grayU[me.dataset.grk]=me.open;   /* the box being used stays as it is; every other box follows the new default */
-  document.querySelectorAll("details.gbox").forEach(x=>{if(x!==me)x.open=on;x.querySelectorAll("[data-gdef]").forEach(c=>c.outerHTML=grayChip(on));});
-  toast(on?"ค่าเริ่มต้น: เปิดข้อความในไฟล์ทุกข้อ":"ค่าเริ่มต้น: ปิดข้อความในไฟล์ทุกข้อ");});
+  const on=b.dataset.gdef==="1",ty=GRAY_TN[b.dataset.gty]?b.dataset.gty:"MCQ",me=b.closest("details.gbox");
+  const g={};Object.keys(GRAY_TN).forEach(x=>g[x]=grayDef(x));g[ty]=on;st.grayOpen=g;save();
+  document.querySelectorAll("details.gbox").forEach(x=>{if((x.dataset.gty||"MCQ")!==ty)return;if(x!==me){x.open=on;delete grayU[x.dataset.grk];}x.querySelectorAll("[data-gdef]").forEach(c=>c.outerHTML=grayChip(on,ty));});   /* the box being used stays as it is; every other box of this tab follows the new default */
+  if(me)grayU[me.dataset.grk]=me.open;
+  toast(`ค่าเริ่มต้น ${ty}: ${on?"เปิด":"ปิด"}ข้อความในไฟล์ทุกข้อ`);});
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
 /* ---------------- toast ---------------- */
@@ -537,6 +541,8 @@ const mGameHTML=G=>`<span class="mgame"><span class="mfire${G.on?" on":""}${G.ri
 function mhFire(d,today,G){if(d>today)return "";
   if(d===today){const c=G.on?"on":G.risk?"frz":"wait";return `<span class="mhf ${c}" title="${G.on?"วันนี้ไฟติดแล้ว":G.risk?"ไฟแข็ง — เมื่อวานทำไม่ถึง 10 ข้อ ถ้าวันนี้ไม่ทำ พรุ่งนี้ไฟเหลือ 0":"วันนี้ยังไม่ติดไฟ (ทำให้ได้ ≥10 ข้อ)"}"><span class="ff">🔥</span><i>${G.fire}</i><small>ตอนนี้</small></span>`;}
   const e=G.end[d]||{f:0,s:"out"};return `<span class="mhf ${e.s}" title="ไฟตอนจบวัน (07:29 ของวันถัดไป): ${e.s==="on"?"ติด "+e.f+" วัน":e.s==="frz"?"แข็ง (ผ่อนผัน 1 วัน) ยังเหลือ "+e.f:"ดับ"}"><span class="ff">🔥</span><i>${e.f}</i></span>`;}
+/* opening the page jumps to today; switching Morning MCQ/MEQ/OSCE with the tabs at the top does not (user 26 Nov 2026) */
+let mhNoJump=false;
 function rMHist(){{const T=P_().type||"MCQ";if(T!=="MCQ"&&mhTypes().includes(T))return rMHistX(T);}   /* MEQ / OSCE daily history (site/osce.js, 26 Nov 2026) — the page follows the tab it was opened from */
   const W=W_(),rec=mornRecs(),today=mDay(),rot=wRot(W.cfg);
   const keys=Object.keys(rec).sort(),start=rot.start||keys[0]||today,end=rot.end||(keys.length&&keys[keys.length-1]>today?keys[keys.length-1]:today);
@@ -568,10 +574,10 @@ function rMHist(){{const T=P_().type||"MCQ";if(T!=="MCQ"&&mhTypes().includes(T))
     h+=`</details>`;});
   h+=`</div>`;
   $("main").innerHTML=h;mhTypeWire();
-  {const t=$("mhToday");if(t&&rows.indexOf(rows.find(r=>r.d===today))>2)setTimeout(()=>t.scrollIntoView({block:"start"}),30);}
+  {const t=$("mhToday");if(!mhNoJump&&t&&rows.indexOf(rows.find(r=>r.d===today))>2)setTimeout(()=>t.scrollIntoView({block:"start"}),30);mhNoJump=false;}
   document.querySelectorAll("[data-md]").forEach(b=>b.onclick=()=>{const d=b.dataset.md,p=+b.dataset.mp,i=+b.dataset.mi,x=(mornRecs()[d]||[]).find(y=>y.p===p);if(!x)return;
     const P=P_();if(d===mDay()&&P.morn[1]&&P.morn[1].day===d&&p===1){qStop();P.sess={kind:"morning",title:"Morning round",ph:ph(),day:d,list:P.morn[1].list.slice(),ans:Object.assign({},P.morn[1].ans),cur:i,ts:now()};save();return go(ward+"/sess");}
-    qStop();P.sess={kind:"mday",title:"Morning round · "+dayTH(d),ph:ph(),day:d,mp:p,list:mornStat(x).list,ans:Object.assign({},x.ans),cur:i,ts:now()};save();go(ward+"/sess");});
+    qStop();P.sess={kind:"mday",title:"Morning round · ชุดวัน "+dayTH(d),ph:ph(),day:d,mp:p,list:mornStat(x).list,ans:Object.assign({},x.ans),cur:i,ts:now()};save();go(ward+"/sess");});
 }
 function startMorning(){const m=morning(true);if(!m){toast(mOut?"Morning round ออกครบทุกข้อในวอร์ดนี้แล้ว — ไม่มีข้อใหม่ที่ยังไม่เคยออก":"ยังไม่มีข้อให้ทำ — ยังไม่มีข้อสอบเก่าหรือโจทย์ Unit round ในวอร์ดนี้");return;}
   qStop();const i=m.list.findIndex(u=>m.ans[u]===undefined);
@@ -1033,7 +1039,7 @@ function rQuiz0(){
   else if(view==="lrev"){const X=legPaper(),i=legIdx();h+=`<div class="sessbar">Legendary round · เฉลยข้อ ${i+1}/${X.list.length} · ได้เกรด ${esc(gradeOf(X.pct))}${X.star[q.uid]?" · ★ ติดดาวไว้":""}</div>`;}
   else if(view==="admq"){const L_=bankItems(AM,ward),i=L_.findIndex(x=>x.key===st.admSel);h+=`<div class="sessbar">${AMN()} · คลังของฉัน ข้อ ${i+1}/${L_.length} · สร้างเมื่อ ${fmtD(bank[st.admSel].c)}</div>`;}
   else if(isAdv()){const s=P.sess;h+=`<div class="sessbar">${esc(s.title)} · ข้อ ${s.cur+1}/${s.list.length} · อ่านเฉลย · ประวัติ${s.hp==="p"?` Phase ${s.ph}`:"ทั้ง 2 Phase"}</div>`;}
-  else if(isSess()){const s=P.sess;h+=`<div class="sessbar">${esc(s.title)} · ข้อ ${s.cur+1}/${s.list.length} · Phase ${s.ph}</div>`;}
+  else if(isSess()){const s=P.sess;h+=`<div class="sessbar">${esc(s.title)}${s.kind==="morning"&&s.day&&!String(s.title).includes("·")?" · ชุดวัน "+esc(dayTH(s.day)):""} · ข้อ ${s.cur+1}/${s.list.length} · Phase ${s.ph}</div>`;}
   const lab=q.lai?["โจทย์","Legendary"]:q.spc?["เคส","Specialty"]:q.adm?["เคส","Admission"]:q.unit?["Lecture","Unit"]:[CFG.setLabel||"ปี",CFG.roLabel||"Rotation"];
   h+=`<div class="qhead"><div class="qnum">${view==="lrev"?legIdx()+1:q.adm?"A":q.id}.</div><div class="fields"><span class="field"><b>${lab[0]}</b>${esc(q.set)}</span><span class="field"><b>${lab[1]}</b>${esc(q.ro)}</span>${view==="lrev"?legPreFields(legPaper(),q.uid):seenFields(q,curRK())}</div>${q.adm?"":`<button class="flag" id="flagBtn" aria-pressed="${flagged(P,q.uid)}" title="ทำเครื่องหมายข้อที่ยังไม่มั่นใจ">⚑ ไม่มั่นใจ</button>`}</div>`;
   h+=tagRow(q);
